@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+		<!-- add header row -->
+		<tr>
+		</tr>
+		<h:form id="premiumAccountSetup">
+		
+		<tr>
+			<td>
+				<rich:simpleTogglePanel 
+									id="errorPanel" 
+									switchType="client"
+									opened="false">			
+						<f:facet name="header">				
+							<h:outputText 
+								id="err" styleClass="#{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.messageStyle}"
+								value="#{commonmsg.errorPanel$heading} #{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.errorMap['current'] !=null? PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.errorMap['current']:PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.warningMap['current']}" />
+						</f:facet>
+							<h:outputText 
+								id="errorMessages" styleClass="ErrorMessages"
+								value="#{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.errorMessages}"
+								style="color: red; font-style: italic;font-weight:bold;" escape="false" />
+							<h:messages  styleClass="ErrorMessages" id="msg" rendered="#{planMasterSearch.globalMsgRender}"/>
+							<h:outputText 
+									id="warningMessages" styleClass="WarningMessages"
+									value="#{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.warningMessages}"
+									style="color: green; font-style: italic;font-weight:bold;" 
+									escape="false" />		
+							</rich:simpleTogglePanel>
+			</td>
+		</tr>
+		<!-- Body row -->
+		<tr>
+		<td>
+
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/>
+						</td>
+						<td>
+							Main Account<h:inputText value="#{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.mainAccount}"/>
+						</td>
+						
+						<td>
+							<a4j:commandButton value="#{commonmsg.searchButton$caption}" id="a4link"  styleClass="button">
+								<a4j:support 
+								     action="#{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.fetchDataBaseDetails}" 
+								     event="onclick" 
+								     reRender="dataTableId">
+								</a4j:support>
+							</a4j:commandButton>
+						</td>
+					</tr>
+				</table>
+				
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId" value="#{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.premuimAccountSetupList}"
+					var="premiumAccountSetup" cellpadding="5px" rows="10" border="1" width="100%">
+					<!-- Attach scroller as footer of the tab.le-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index" align="right">
+						</rich:datascroller>
+					</f:facet>
+			
+					<!-- next column -->
+					
+					<rich:column filterValue="#{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.storedMainAccount}" filterBy="#{premiumAccountSetup.PAS_MAIN_ACNT_CODE}" sortBy="#{premiumAccountSetup.PAS_MAIN_ACNT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Main Account" />
+						</f:facet>
+					 <h:commandLink action="#{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.navigationToMainPage}" >
+						 	<h:outputText value="#{premiumAccountSetup.PAS_MAIN_ACNT_CODE}" />
+						 	<f:param name="rowid" value="#{premiumAccountSetup.ROWID}"/>
+					 </h:commandLink>
+					</rich:column>
+					
+					<rich:column filterValue="#{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.storedSubAccount}" filterBy="#{premiumAccountSetup.PAS_SUB_ACNT_CODE}" sortBy="#{premiumAccountSetup.PAS_SUB_ACNT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Sub Account" />
+						</f:facet>
+						<h:outputText value="#{premiumAccountSetup.PAS_SUB_ACNT_CODE} " />
+					</rich:column>
+					
+					<rich:column filterValue="#{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.storedBranchNumber}" filterBy="#{premiumAccountSetup.PAS_DIVN_CODE}" sortBy="#{premiumAccountSetup.PAS_DIVN_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Branch Details" />
+						</f:facet>
+						<h:outputText value="#{premiumAccountSetup.PAS_DIVN_CODE} " />
+					</rich:column>
+					
+				</rich:dataTable>
+				<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+					<tr>
+						<td align="left">
+							<h:commandButton value = "Insert" action="#{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.goToPremiumSetup}"  styleClass="button">
+							</h:commandButton>
+						</td>
+					</tr>
+				</table>
+			
+		</td>
+		</tr>
+		</h:form>
+		<!-- add footer to the page-->
+		<tr>
+		</tr>
+	</table>
+	</f:view>
+</ui:define>
+</ui:composition>
+

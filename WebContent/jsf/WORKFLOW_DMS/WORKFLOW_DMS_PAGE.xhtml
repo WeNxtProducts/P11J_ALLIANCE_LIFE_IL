@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:loadBundle basename="messageProperties_SSO" var="message" />
+		<f:view beforePhase="#{WORKFLOW_DMS_ACTION.onLoad}"  locale="#{sessionScope['pageLocale']}">
+				<h:form id="workflowdms">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText escape="true" id="err"
+									styleClass="#{WORKFLOW_DMS_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{WORKFLOW_DMS_ACTION.errorMap['current'] !=null? WORKFLOW_DMS_ACTION.errorMap['current']: WORKFLOW_DMS_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{WORKFLOW_DMS_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{WORKFLOW_DMS_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{WORKFLOW_DMS_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<rich:dataTable
+								border="1" cellpadding="5px" id="PolicyLedgerQuery" rows="10"
+								value="#{WORKFLOW_DMS_ACTION.pgimList}"
+								var="colData" width="100%">
+		
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText id="AUTOID_1"
+											value="Name" />
+									</f:facet>
+									<h:commandLink
+										action="#{WORKFLOW_DMS_ACTION.executeQuery}"
+										id="POL_CUST_CODE">
+										<h:outputText id="AUTOID_2" value="#{colData.PWB_DESC}" />
+										<f:param name="PWB_WORKSTEP_ID" value="#{colData.PWB_WORKSTEP_ID}" />
+									</h:commandLink>
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText id="AUTOID_POL_CUST_NAME"
+											value="TxnCount" />
+									</f:facet>
+									<h:outputText id="AUTOID_4_PC" value="No.of Transaction(s) : #{colData.transactionCount}" />
+									<f:param name="DRCR_DOC_NO" value="#{colData.transactionCount}" />
+								</rich:column>
+								<f:facet name="footer">
+									<rich:datascroller align="right" for="PolicyLedgerQuery" />
+								</f:facet>
+							</rich:dataTable>
+						</td>
+					</tr>
+				</table>
+				</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

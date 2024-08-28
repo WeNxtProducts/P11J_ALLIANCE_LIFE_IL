@@ -1,0 +1,1158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+		<f:view
+			beforePhase="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM061_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_FUND_ACCOUNT_SETUP" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><!--  <h:commandButton
+							action="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.preForm}"
+							id="buttontest"
+							binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PREFORMBUTTON}"
+							immediate="true" style="display: none" /> --> <rich:toolBar
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.backToSearch}"
+											id="AUTOID_1" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_2"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.saveRecord}"
+											id="AUTOID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_5"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.delete}"
+											id="AUTOID_10" style="text-decoration:none" immediate="true"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_11"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="r"
+												image="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="AUTOID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.errorMap['current'] !=null? PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.errorMap['current']: PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								style="color: red; font-style: italic;font-weight:bold;"
+								value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.globalMsgRender}"
+								style="color: red;font-style: italic;font-weight:bold;" />
+							<h:outputText escape="false" id="warningMessages"
+								style="color: green; font-style: italic;font-weight:bold;"
+								value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td>
+								<h:outputLabel id="FORM_CAPTION"
+									value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$displayCaption}" />
+									</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="width: 100%; height: 550px; overflow: auto;">
+						<table align="center" class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+								<td valign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowfreeze" colspan="4"/>
+										<td class="oddrowfreeze"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_FRZ_FLAG_LABEL}"
+											for="FAS_FRZ_FLAG" id="FAS_FRZ_FLAG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_FRZ_FLAG$caption}" />
+										<h:selectBooleanCheckbox id="FAS_FRZ_FLAG"
+												title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_FRZ_FLAG$tooltip}"
+												rendered="true" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_SRC_BUS_FM_LABEL}"
+											for="FAS_SRC_BUS_FM" id="FAS_SRC_BUS_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_SRC_BUS_FM$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_SRC_BUS_FM}"
+											disabled="false" id="FAS_SRC_BUS_FM" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_SRC_BUS_FM$tooltip}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_SRC_BUS_FM}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.sourceBusFromwhenValidate}"
+												event="onblur" id="AUTOID_22" immediate="true"
+												reRender="errorPanel,FAS_SRC_BUS_FM,FAS_SRC_BUS_FM_LOV" />
+										</h:inputText> <rich:suggestionbox for="FAS_SRC_BUS_FM" height="200"
+											id="FAS_SRC_BUS_FM_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getSourceBusFromTo}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_23" value="#{lov.FAS_SRC_BUS_FM}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_24"
+													value="#{lov.FAS_SRC_BUS_FM_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_25" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_SRC_BUS_TO_LABEL}"
+											for="FAS_SRC_BUS_TO" id="FAS_SRC_BUS_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_SRC_BUS_TO$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_SRC_BUS_TO}"
+											disabled="false" id="FAS_SRC_BUS_TO" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_SRC_BUS_TO$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validator_sourceBusTo}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_SRC_BUS_TO}">
+
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.sourceBusTowhenValidate}"
+												event="onblur" id="AUTOID_26" immediate="true"
+												reRender="FAS_SRC_BUS_TO,errorPanel,FAS_SRC_BUS_TO_LOV" />
+										</h:inputText> <rich:suggestionbox for="FAS_SRC_BUS_TO" height="200"
+											id="FAS_SRC_BUS_TO_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getSourceBusFromTo}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_27" value="#{lov.FAS_SRC_BUS_FM}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_28"
+													value="#{lov.FAS_SRC_BUS_FM_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_29" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DIVN_FM_CODE_LABEL}"
+											for="FAS_DIVN_FM_CODE" id="FAS_DIVN_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DIVN_FM_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DIVN_FM_CODE}"
+											disabled="false" id="FAS_DIVN_FM_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DIVN_FM_CODE$tooltip}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_DIVN_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.divisionFromwhenValidate}"
+												event="onblur" id="AUTOID_30" immediate="true"
+												reRender="errorPanel,FAS_DIVN_FM_CODE,FAS_DIVN_FM_CODE_LOV" />
+										</h:inputText> <rich:suggestionbox for="FAS_DIVN_FM_CODE" height="200"
+											id="FAS_DIVN_FM_CODE_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getDivisionRangeFromTo}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_31" value="#{lov.FAS_DIVN_FM_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_32"
+													value="#{lov.FAS_DIVN_FM_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_33" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DIVN_TO_CODE_LABEL}"
+											for="FAS_DIVN_TO_CODE" id="FAS_DIVN_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DIVN_TO_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DIVN_TO_CODE}"
+											disabled="false" id="FAS_DIVN_TO_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DIVN_TO_CODE$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validator_divisionTo}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_DIVN_TO_CODE}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.divisionTowhenValidate}"
+												event="onblur" id="AUTOID_34" immediate="true"
+												reRender="FAS_DIVN_TO_CODE,errorPanel,FAS_DIVN_TO_CODE_LOV" />
+										</h:inputText> <rich:suggestionbox for="FAS_DIVN_TO_CODE" height="200"
+											id="FAS_DIVN_TO_CODE_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getDivisionRangeFromTo}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_35" value="#{lov.FAS_DIVN_FM_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_36"
+													value="#{lov.FAS_DIVN_FM_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_37" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DEPT_FM_CODE_LABEL}"
+											for="FAS_DEPT_FM_CODE" id="FAS_DEPT_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DEPT_FM_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DEPT_FM_CODE}"
+											disabled="false" id="FAS_DEPT_FM_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DEPT_FM_CODE$tooltip}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_DEPT_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.departmentFromwhenValidate}"
+												event="onblur" id="style_1" immediate="true"
+												reRender="errorPanel,FAS_DEPT_FM_CODE,FAS_DEPT_FM_CODE_LOV" />
+										</h:inputText><rich:suggestionbox for="FAS_DEPT_FM_CODE" height="200"
+											id="FAS_DEPT_FM_CODE_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getDepartmentRangeFrom}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_38" value="#{lov.FAS_DEPT_FM_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_39"
+													value="#{lov.FAS_DEPT_FM_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_40" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DEPT_TO_CODE_LABEL}"
+											for="FAS_DEPT_TO_CODE" id="FAS_DEPT_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DEPT_TO_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DEPT_TO_CODE}"
+											disabled="false" id="FAS_DEPT_TO_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DEPT_TO_CODE$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validator_departmentTo}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_DEPT_TO_CODE}">
+
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.departmentTowhenValidate}"
+												event="onblur" id="style_2" immediate="true"
+												reRender="FAS_DEPT_TO_CODE,errorPanel,FAS_DEPT_TO_CODE_LOV" />
+										</h:inputText> <rich:suggestionbox for="FAS_DEPT_TO_CODE" height="200"
+											id="FAS_DEPT_TO_CODE_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getDepartmentRangeTo}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_41" value="#{lov.FAS_DEPT_TO_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_42"
+													value="#{lov.FAS_DEPT_TO_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_43" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DOC_FM_TYPE_LABEL}"
+											for="FAS_DOC_FM_TYPE" id="FAS_DOC_FM_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DOC_FM_TYPE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DOC_FM_TYPE}"
+											disabled="false" id="FAS_DOC_FM_TYPE" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DOC_FM_TYPE$tooltip}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_DOC_FM_TYPE}">
+
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.docNoFromwhenValidate}"
+												event="onblur" id="style_3" immediate="true"
+												reRender="FAS_DOC_FM_TYPE,errorPanel,FAS_DOC_FM_TYPE_LOV" />
+										</h:inputText> <rich:suggestionbox for="FAS_DOC_FM_TYPE" height="200"
+											id="FAS_DOC_FM_TYPE_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getDocCodeFromTo}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_44" value="#{lov.FAS_DOC_FM_TYPE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_45"
+													value="#{lov.FAS_DOC_FM_TYPE_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_46" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DOC_TO_TYPE_LABEL}"
+											for="FAS_DOC_TO_TYPE" id="FAS_DOC_TO_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DOC_TO_TYPE$caption}" />
+										</td>
+
+										<td class="oddrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DOC_TO_TYPE}"
+											disabled="false" id="FAS_DOC_TO_TYPE" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DOC_TO_TYPE$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validator_docNoTo}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_DOC_TO_TYPE}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.docNoTowhenValidate}"
+												event="onblur" id="style_4" immediate="true"
+												reRender="FAS_DOC_TO_TYPE,errorPanel,FAS_DOC_TO_TYPE_LOV" />
+										</h:inputText> <rich:suggestionbox for="FAS_DOC_TO_TYPE" height="200"
+											id="FAS_DOC_TO_TYPE_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getDocCodeFromTo}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_47" value="#{lov.FAS_DOC_FM_TYPE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_48"
+													value="#{lov.FAS_DOC_FM_TYPE_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_49" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_PROD_CODE_FM_LABEL}"
+											for="FAS_PROD_CODE_FM" id="FAS_PROD_CODE_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_PROD_CODE_FM$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_PROD_CODE_FM}"
+											disabled="false" id="FAS_PROD_CODE_FM" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_PROD_CODE_FM$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validator_prodCodeFrom}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_PROD_CODE_FM}">
+
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.prodCodeFromwhenValidate}"
+												event="onblur" id="style_5" immediate="true"
+												reRender="FAS_PROD_CODE_FM,errorPanel,FAS_PROD_CODE_FM_LOV" />
+										</h:inputText> <rich:suggestionbox for="FAS_PROD_CODE_FM" height="200"
+											id="FAS_PROD_CODE_FM_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getProdCodeFromTo}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_50" value="#{lov.FAS_PROD_CODE_FM}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_51"
+													value="#{lov.FAS_PROD_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_52" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_PROD_CODE_TO_LABEL}"
+											for="FAS_PROD_CODE_TO" id="FAS_PROD_CODE_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_PROD_CODE_TO$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_PROD_CODE_TO}"
+											disabled="false" id="FAS_PROD_CODE_TO" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_PROD_CODE_TO$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validator_prodCodeTo}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_PROD_CODE_TO}">
+
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.prodCodeTowhenValidate}"
+												event="onblur" id="style_6" immediate="true"
+												reRender="FAS_PROD_CODE_TO,errorPanel,FAS_PROD_CODE_TO_LOV" />
+										</h:inputText> <rich:suggestionbox for="FAS_PROD_CODE_TO" height="200"
+											id="FAS_PROD_CODE_TO_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getProdCodeFromTo}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_53" value="#{lov.FAS_PROD_CODE_FM}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_54"
+													value="#{lov.FAS_PROD_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_55" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_FUND_CODE_FM_LABEL}"
+											for="FAS_FUND_CODE_FM" id="FAS_FUND_CODE_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_FUND_CODE_FM$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_FUND_CODE_FM}"
+											disabled="false" id="FAS_FUND_CODE_FM" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_FUND_CODE_FM$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validator_fundCodeFrom}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_FUND_CODE_FM}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fundCodeFromwhenValidate}"
+												event="onblur" id="style_7" immediate="true"
+												reRender="FAS_FUND_CODE_FM,errorPanel,FAS_FUND_CODE_FM_LOV" />
+										</h:inputText> <rich:suggestionbox for="FAS_FUND_CODE_FM" height="200"
+											id="FAS_FUND_CODE_FM_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getFundCodeFromTo}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_56" value="#{lov.FAS_FUND_CODE_FM}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_57"
+													value="#{lov.FAS_FUND_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_58" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_FUND_CODE_TO_LABEL}"
+											for="FAS_FUND_CODE_TO" id="FAS_FUND_CODE_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_FUND_CODE_TO$caption}" />
+										</td>
+
+										<td class="oddrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_FUND_CODE_TO}"
+											disabled="false" id="FAS_FUND_CODE_TO" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_FUND_CODE_TO$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validator_fundCodeTo}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_FUND_CODE_TO}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fundCodeTowhenValidate}"
+												event="onblur" id="style_8" immediate="true"
+												reRender="FAS_FUND_CODE_TO,errorPanel,FAS_FUND_CODE_TO_LOV" />
+										</h:inputText><rich:suggestionbox for="FAS_FUND_CODE_TO" height="200"
+											id="FAS_FUND_CODE_TO_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getFundCodeFromTo}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_59" value="#{lov.FAS_FUND_CODE_FM}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_60"
+													value="#{lov.FAS_FUND_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_61" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_POL_YR_FM_LABEL}"
+											for="FAS_POL_YR_FM" id="FAS_POL_YR_FM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_POL_YR_FM$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_POL_YR_FM}"
+											disabled="false" id="FAS_POL_YR_FM" maxlength="2"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_POL_YR_FM$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validator_policyYearsFrom}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_POL_YR_FM}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.actionFAS_POL_YR_FM}"
+												event="onblur" id="style_9" immediate="true"
+												reRender="FAS_POL_YR_FM,errorPanel" />
+										</h:inputText></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_POL_YR_TO_LABEL}"
+											for="FAS_POL_YR_TO" id="FAS_POL_YR_TO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_POL_YR_TO$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_POL_YR_TO}"
+											disabled="false" id="FAS_POL_YR_TO" maxlength="2"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_POL_YR_TO$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validator_policyYearsTo}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_POL_YR_TO}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.actionCACS_YRS_TO}"
+												event="onblur" id="style_10" immediate="true"
+												reRender="FAS_POL_YR_TO,errorPanel" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_SETUP_FOR_LABEL}"
+											for="FAS_SETUP_FOR" id="FAS_SETUP_FOR_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_SETUP_FOR$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_SETUP_FOR}"
+											disabled="false" id="FAS_SETUP_FOR" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_SETUP_FOR$tooltip}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_SETUP_FOR}">
+											<f:selectItems id="SELF_ID_1"
+												value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.listFAS_SETUP_FOR}" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DRCR_FLAG_LABEL}"
+											for="FAS_DRCR_FLAG" id="FAS_DRCR_FLAG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DRCR_FLAG$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DRCR_FLAG}"
+											disabled="false" id="FAS_DRCR_FLAG" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DRCR_FLAG$tooltip}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_DRCR_FLAG}">
+											<f:selectItems id="style_11"
+												value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.listFAS_DRCR_FLAG}" />
+										</h:selectOneMenu></td>
+
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_SEQ_NO_LABEL}"
+											for="FAS_SEQ_NO" id="FAS_SEQ_NO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_SEQ_NO$caption}" />
+										<h:graphicImage id="AUTOID_62" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_SEQ_NO}"
+											disabled="false" id="FAS_SEQ_NO" maxlength="10"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_SEQ_NO$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validator_sequenceNo}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_SEQ_NO}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.seqNowhenValidate}"
+												event="onblur" id="style_12" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_NARRATION_CODE_LABEL}"
+											for="FAS_NARRATION_CODE" id="FAS_NARRATION_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_NARRATION_CODE$caption}" />
+										<h:graphicImage id="AUTOID_63" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_NARRATION_CODE}"
+											disabled="false" id="FAS_NARRATION_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_NARRATION_CODE$tooltip}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_NARRATION_CODE}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="style_12AS" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText><rich:suggestionbox for="FAS_NARRATION_CODE" height="200"
+											id="FAS_NARRATION_CODE_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getNarration}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_64"
+													value="#{lov.FAS_NARRATION_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_65"
+													value="#{lov.FAS_NARRATION_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_66" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_FORCE_DIVN_YN_LABEL}"
+											for="FAS_FORCE_DIVN_YN" id="FAS_FORCE_DIVN_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_FORCE_DIVN_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_FORCE_DIVN_YN}"
+											disabled="false" id="FAS_FORCE_DIVN_YN" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_FORCE_DIVN_YN$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.FAS_FORCE_DIVN_YN_WHEN_VALIDATE_ITEM}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_FORCE_DIVN_YN}">
+											<f:selectItems id="style_13"
+												value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.listFAS_FORCE_DIVN_YN}" />
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onchange" id="style_14" immediate="true"
+												reRender="errorPanel,FAS_FORCE_DEPT_YN,FAS_DIVN_CODE,FAS_DEPT_CODE,mandatory3,mandatory4" />
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="style_90" immediate="true"
+												reRender="errorPanel,FAS_FORCE_DEPT_YN,FAS_DIVN_CODE_LOV,FAS_DEPT_CODE_LOV,FAS_DIVN_CODE,FAS_DEPT_CODE,mandatory3,mandatory4" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_FORCE_DEPT_YN_LABEL}"
+											for="FAS_FORCE_DEPT_YN" id="FAS_FORCE_DEPT_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_FORCE_DEPT_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_FORCE_DEPT_YN}"
+											disabled="true" id="FAS_FORCE_DEPT_YN" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_FORCE_DEPT_YN$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validatorFAS_FORCE_DEPT_YN}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_FORCE_DEPT_YN}">
+											<f:selectItems id="style_15"
+												value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.listFAS_FORCE_DEPT_YN}" />
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="style_16A" immediate="true"
+												reRender="errorPanel" />
+										</h:selectOneMenu></td>
+
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_MAIN_ACNT_CODE_LABEL}"
+											for="FAS_MAIN_ACNT_CODE" id="FAS_MAIN_ACNT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_MAIN_ACNT_CODE$caption}" />
+										<h:graphicImage id="AUTOID_67" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_MAIN_ACNT_CODE}"
+											disabled="false" id="FAS_MAIN_ACNT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_MAIN_ACNT_CODE$tootltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validatorFAS_MAIN_ACNT_CODE}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_MAIN_ACNT_CODE}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="style_16" immediate="true"
+												reRender="errorPanel,FAS_ACTY_CODE_1,UI_M_MAIN_ACNT_NAME,FAS_MAIN_ACNT_CODE_LOV,mandatory2,mandatory6" />
+										</h:inputText> <rich:suggestionbox for="FAS_MAIN_ACNT_CODE" height="200"
+											id="FAS_MAIN_ACNT_CODE_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getMainAccount}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_68"
+													value="#{lov.FAS_MAIN_ACNT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_69"
+													value="#{lov.FAS_MAIN_ACNT_NAME}" />
+											</h:column>
+										</rich:suggestionbox><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_UI_M_MAIN_ACNT_NAME}"
+											disabled="true" id="UI_M_MAIN_ACNT_NAME" maxlength="100"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.UI_M_MAIN_ACNT_NAME}" />
+										<h:graphicImage id="AUTOID_70" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright" />
+										<td class="evenrow">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_SUB_ACNT_CODE_LABEL}"
+											for="FAS_SUB_ACNT_CODE" id="FAS_SUB_ACNT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_SUB_ACNT_CODE$caption}" />
+											<h:outputText id="mandatory2" 
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_SUB_ACNT_CODE.required ? '*':''}"
+											styleClass="mandatory"/>
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_SUB_ACNT_CODE}"
+											disabled="false" id="FAS_SUB_ACNT_CODE" maxlength="12"
+											rendered="true"  styleClass="inputsmall"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_SUB_ACNT_CODE$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validatorFAS_SUB_ACNT_CODE}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_SUB_ACNT_CODE}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="style_17" immediate="true"
+												reRender="errorPanel,UI_M_SUB_ACNT_NAME,FAS_SUB_ACNT_CODE_LOV" />
+										</h:inputText><rich:suggestionbox for="FAS_SUB_ACNT_CODE" height="200"
+											id="FAS_SUB_ACNT_CODE_LOV" immediate="true"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getSubAccount}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_71"
+													value="#{lov.FAS_SUB_ACNT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_72"
+													value="#{lov.FAS_SUB_ACNT_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_UI_M_SUB_ACNT_NAME}"
+											disabled="true" id="UI_M_SUB_ACNT_NAME" maxlength="100"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.UI_M_SUB_ACNT_NAME}" />
+										<h:graphicImage id="AUTOID_73" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="oddrow" colspan="3"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DIVN_CODE_LABEL}"
+											for="FAS_DIVN_CODE" id="FAS_DIVN_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DIVN_CODE$caption}" />
+										<h:outputText id="mandatory3" 
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DIVN_CODE.required ? '*':''}"
+											styleClass="mandatory"/>
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DIVN_CODE}"
+											disabled="false" id="FAS_DIVN_CODE" maxlength="12"
+											rendered="true"  styleClass="inputsmall"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DIVN_CODE$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validatorFAS_DIVN_CODE}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_DIVN_CODE}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="style_18" immediate="true"
+												reRender="errorPanel,UI_M_DIVN_NAME,FAS_DIVN_CODE_LOV" />
+										</h:inputText> <rich:suggestionbox for="FAS_DIVN_CODE" height="200"
+											id="FAS_DIVN_CODE_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getDivisionRangeFromTo}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_75" value="#{lov.FAS_DIVN_FM_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_76"
+													value="#{lov.FAS_DIVN_FM_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_UI_M_DIVN_NAME}"
+											disabled="true" id="UI_M_DIVN_NAME" maxlength="100"
+											 rendered="true" styleClass="input" title=""
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.UI_M_DIVN_NAME}" />
+										<h:graphicImage id="AUTOID_77" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="evenrow" />
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DEPT_CODE_LABEL}"
+											for="FAS_DEPT_CODE" id="FAS_DEPT_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DEPT_CODE$caption}" />
+											<h:outputText id="mandatory4" 
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DEPT_CODE.required ? '*':''}"
+											styleClass="mandatory"/>
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_DEPT_CODE}"
+											disabled="false" id="FAS_DEPT_CODE" maxlength="12"
+											rendered="true"  styleClass="inputsmall"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_DEPT_CODE$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validatorFAS_DEPT_CODE}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_DEPT_CODE}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="style_19" immediate="true"
+												reRender="errorPanel,UI_M_DEPT_NAME,FAS_DEPT_CODE_LOV" />
+										</h:inputText> <rich:suggestionbox for="FAS_DEPT_CODE" height="200"
+											id="FAS_DEPT_CODE_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getBranch}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_78" value="#{lov.FAS_DEPT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_79"
+													value="#{lov.FAS_DEPT_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_UI_M_DEPT_NAME}"
+											disabled="true" id="UI_M_DEPT_NAME" maxlength="100"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.UI_M_DEPT_NAME}" />
+										<h:graphicImage id="AUTOID_80" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="oddrow"  colspan="3"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_ANLY_CODE_1_LABEL}"
+											for="FAS_ANLY_CODE_1" id="FAS_ANLY_CODE_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_ANLY_CODE_1$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_ANLY_CODE_1}"
+											disabled="false" id="FAS_ANLY_CODE_1" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_ANLY_CODE_1$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validatorFAS_ANLY_CODE_1}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_ANLY_CODE_1}">
+
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="style_20" immediate="true"
+												reRender="errorPanel,UI_M_ANLY_NAME,FAS_ANLY_CODE_1_LOV" />
+										</h:inputText><rich:suggestionbox for="FAS_ANLY_CODE_1" height="200"
+											id="FAS_ANLY_CODE_1_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getAnlyCode1}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_81" value="#{lov.FAS_ANLY_CODE_1}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_82"
+													value="#{lov.FAS_ANLY_CODE_1_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_UI_M_ANLY_NAME}"
+											disabled="true" id="UI_M_ANLY_NAME" maxlength="100"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME}" />
+										<h:graphicImage id="AUTOID_83" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="evenrow" />
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_ANLY_CODE_2_LABEL}"
+											for="FAS_ANLY_CODE_2" id="FAS_ANLY_CODE_2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_ANLY_CODE_2$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_ANLY_CODE_2}"
+											disabled="false" id="FAS_ANLY_CODE_2" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_ANLY_CODE_2$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validatorFAS_ANLY_CODE_2}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_ANLY_CODE_2}">
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="style_21" immediate="true"
+												reRender="errorPanel,UI_M_ANLY_NAME_1,FAS_ANLY_CODE_2_LOV" />
+										</h:inputText><rich:suggestionbox for="FAS_ANLY_CODE_2" height="200"
+											id="FAS_ANLY_CODE_2_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.getAnlyCode2}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_84" value="#{lov.FAS_ANLY_CODE_2}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_85"
+													value="#{lov.FAS_ANLY_CODE_2_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_UI_M_ANLY_NAME_1}"
+											disabled="true" id="UI_M_ANLY_NAME_1" maxlength="100"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME_1}" />
+										<h:graphicImage id="AUTOID_86" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="oddrow" colspan="3"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_ACTY_CODE_1_LABEL}"
+											for="FAS_ACTY_CODE_1" id="FAS_ACTY_CODE_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_ACTY_CODE_1$caption}" />
+											<h:outputText id="mandatory6" 
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_ACTY_CODE_1.required ? '*':''}"
+											styleClass="mandatory"/>
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_ACTY_CODE_1}"
+											disabled="false" id="FAS_ACTY_CODE_1" maxlength="12"
+											rendered="true"  styleClass="inputsmall"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_ACTY_CODE_1$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validatorFAS_ACTY_CODE_1}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_ACTY_CODE_1}" >
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="style_21A" immediate="true"
+												reRender="errorPanel,UI_M_ACTY_NAME,FAS_ACTY_CODE_1_LOV" />
+											</h:inputText>
+											<rich:suggestionbox for="FAS_ACTY_CODE_1" height="200"
+											id="FAS_ACTY_CODE_1_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.lovFAS_ACTY_CODE_1}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_78A" value="#{lov.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_79A"
+													value="#{lov.name}" />
+											</h:column>
+										</rich:suggestionbox>
+										<h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_UI_M_ACTY_NAME}"
+											disabled="true" id="UI_M_ACTY_NAME" maxlength="100"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME}" />
+										<h:graphicImage id="AUTOID_86A" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" />
+										</td>
+										<td class="evenrow" />
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_ACTY_CODE_2_LABEL}"
+											for="FAS_ACTY_CODE_2" id="FAS_ACTY_CODE_2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_ACTY_CODE_2$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_FAS_ACTY_CODE_2}"
+											disabled="false" id="FAS_ACTY_CODE_2" maxlength="12"
+											rendered="true"  styleClass="inputsmall"
+											title="#{message.PILM061_APAC$PM_IL_FUND_ACCOUNT_SETUP$FAS_ACTY_CODE_2$tooltip}"
+											validator="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.validatorFAS_ACTY_CODE_2}"
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.FAS_ACTY_CODE_2}" >
+											<a4j:support
+												actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="style_21B" immediate="true"
+												reRender="errorPanel,UI_M_ACTY_NAME_1,FAS_ACTY_CODE_2_LOV" />
+											</h:inputText>
+											<rich:suggestionbox for="FAS_ACTY_CODE_2" height="200"
+											id="FAS_ACTY_CODE_2_LOV"
+											suggestionAction="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.lovFAS_ACTY_CODE_2}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTOID_78B" value="#{lov.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_79B"
+													value="#{lov.name}" />
+											</h:column>
+										</rich:suggestionbox>
+										<h:inputText
+											binding="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.COMP_UI_M_ACTY_NAME_1}"
+											disabled="true" id="UI_M_ACTY_NAME_1" maxlength="100"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.PM_IL_FUND_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME_1}" />
+										<h:graphicImage id="AUTOID_86B" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" />
+										</td>
+										<td class="oddrow" colspan="3" />
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.saveRecord}"
+											id="AUTOID_87" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_88"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTOID_89"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_90" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_91"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_92"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											actionListener="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.delete}"
+											id="AUTOID_93" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_94"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_95"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_96" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_97"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTOID_98"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM061_APAC_PM_IL_FUND_ACCOUNT_SETUP_ACTION.back}"
+											id="AUTOID_99" immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_100"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTOID_101"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_102" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_103"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_104"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_105" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_106"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_107"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

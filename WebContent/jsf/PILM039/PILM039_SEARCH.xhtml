@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+<f:view locale="#{sessionScope['pageLocale']}">
+
+	<f:loadBundle basename="messageProperties_PILM039" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />	
+
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<!-- add header row -->
+		<tr>
+		</tr>
+
+		<!-- Body row -->
+		<tr>
+			<td><h:form id="userFrom">
+				<tr>
+					<td colspan="3" width="100%" vAlign="top" height="20">
+                     <rich:simpleTogglePanel id="errorPanel"
+								switchType="client" opened="false">
+								<f:facet name="header">
+									<h:outputText id="err"
+										styleClass="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.messageStyle}"
+										value="#{commonmsg.errorPanel$heading} #{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.errorMap['current'] !=null? PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.errorMap['current']:PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.warningMap['current']}" />
+								</f:facet>
+								<h:outputText id="errorMessages" styleClass="ErrorMessages"
+									value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.errorMessages}"
+									escape="false" />
+								<h:messages styleClass="ErrorMessages" id="msg"
+									rendered="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.globalMsgRender}" />
+								<h:outputText id="warningMessages" styleClass="WarningMessages"
+									value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.warningMessages}"
+									escape="false" />
+							</rich:simpleTogglePanel>
+					</td>
+				</tr>
+
+				<h:inputHidden id="hiddenROWID"
+					value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_ACTION_BEAN.PM_IL_APPR_SETUP_BEAN.ROWID}" />
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%" cellpadding="0" cellspacing="0"
+					id="masthead">
+
+					<tr>
+						<td><h:outputText value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+						<td>User Id &nbsp; &nbsp;<h:inputText
+							value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.initUserId}" /></td>
+						<td>From Product Code &nbsp; &nbsp; <h:inputText
+							value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.initFromCode}" /></td>
+						<td>To Product Code &nbsp; &nbsp; <h:inputText
+							value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.initToCode}" /></td>
+						<td><a4j:commandButton styleClass="button"
+							value="#{commonmsg.searchButton$caption}"
+							id="a4link">
+							<a4j:support
+								action="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.fetchSearchDetails}"
+								event="onclick" reRender="dataTableId,errorPanel"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.listValue}"
+					var="userapproval" cellpadding="5px" rows="10" border="1"
+					width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+
+					<!-- next column -->
+
+					<rich:column filterBy="#{userapproval.AS_USER_ID}"
+						sortBy="#{policy.AS_USER_ID}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM039$SEARCH$AS_USER_ID$caption}" />
+						</f:facet>
+						<h:commandLink
+							action="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.clearList}"
+							onclick="document.getElementById('userFrom:hiddenROWID').value='#{userapproval.ROWID}';">
+								<h:outputText value="#{userapproval.AS_USER_ID} " />
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column filterBy="#{userapproval.AS_FM_PROD_CODE}"
+						sortBy="#{userapproval.AS_FM_PROD_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM039$SEARCH$AS_FM_PROD_CODE$caption}" />
+						</f:facet>
+						<h:outputText value="#{userapproval.AS_FM_PROD_CODE}" />
+					</rich:column>
+
+					<rich:column filterBy="#{userapproval.AS_TO_PROD_CODE}"
+						sortBy="#{userapproval.AS_TO_PROD_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM039$SEARCH$AS_TO_PROD_CODE$caption}" />
+						</f:facet>
+						<h:outputText value="#{userapproval.AS_TO_PROD_CODE}" />
+					</rich:column>
+				</rich:dataTable>
+
+				<h:commandButton
+					value="Insert"
+					styleClass="button"
+					action="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_APPR_SETUP_SEARCH_ACTION_BEAN.newRecordAction}" />
+			</h:form></td>
+
+		</tr>
+		<!-- add footer to the page-->
+		<tr>
+		</tr>
+	</table>
+	</f:view>
+	</ui:define>
+</ui:composition>

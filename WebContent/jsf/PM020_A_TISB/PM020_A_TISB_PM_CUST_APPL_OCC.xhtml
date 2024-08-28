@@ -1,0 +1,337 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PM020_A_TISB" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+
+		<tr>
+			
+
+		</tr>
+		<h:form id="PM_CUST_APPL_OCC">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20"></td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">
+				<table width="100%" id="toolbartable" cellpadding="0"
+					cellspacing="0" border="0">
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup styleClass="toolBarGroupStyle">
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle"
+									action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.saveData}">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle" value="./../../images/save.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none" disabled="true"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/savenext.GIF" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none" rendered="false"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/deleteRecord.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									action="cclassmaster" styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/firstrec.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none" action="appl_users"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/prevpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		   <rich:simpleTogglePanel id="errorPanel"
+						switchType="client" opened="false">
+						<f:facet name="header">
+							<h:outputText id="err"
+								styleClass="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.messageStyle}"
+								value="#{commonmsg.errorPanel$heading} #{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.errorMap['current'] !=null? PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.errorMap['current']:PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.warningMap['current']}" />
+						</f:facet>
+						<h:outputText id="errorMessages" styleClass="ErrorMessages"
+							value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.errorMessages}"
+							escape="false" />
+						<h:messages styleClass="ErrorMessages" id="msg"
+							rendered="# {PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.globalMsgRender}" />
+						<h:outputText id="warningMessages" styleClass="WarningMessages"
+							value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.warningMessages}"
+							escape="false" />
+					</rich:simpleTogglePanel>
+
+				<tr>
+
+					<td colspan="3" width="100%">
+
+					<table width="100%" id="globalLink" cellpadding="0" cellspacing="0"
+						border="0">
+
+
+						<tr>
+							<td><!-- Tab implementation --> <h:inputHidden
+								value="#{PM020_A_TISB_COMPOSITE_ACTION.tabbedBar.tabClicked}"
+								id="myhidden" /> <h:panelGroup id="mypanel" style="border:0">
+								<table width="100%" cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<td width="90%"><a4j:repeat
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+											var="currtab">
+											<h:commandLink
+												onclick="document.getElementById('PM_CUST_APPL_OCC:myhidden').value='#{currtab.id}'"
+												value="#{currtab.value}" disabled="#{currtab.disabled}"
+												action="#{PM020_A_TISB_COMPOSITE_ACTION.tabbedBar.tabAction}"
+												styleClass="#{currtab.styleString}" />
+
+										</a4j:repeat></td>
+										<td width="*"><a4j:commandButton immediate="true"
+											disabled="#{PM020_A_TISB_COMPOSITE_ACTION.tabbedBar.navigable}"
+											alt="first" image="./../../images/firstrec.gif"
+											action="#{PM020_A_TISB_COMPOSITE_ACTION.tabbedBar.gotoFirstTab}"
+											reRender="mypanel" /> <a4j:commandButton immediate="true"
+											disabled="#{PM020_A_TISB_COMPOSITE_ACTION.tabbedBar.navigable}"
+											alt="previous" image="./../../images/prevpage.gif"
+											action="#{PM020_A_TISB_COMPOSITE_ACTION.tabbedBar.gotoPrevTab}"
+											reRender="mypanel" /> <a4j:commandButton immediate="true"
+											disabled="#{PM020_A_TISB_COMPOSITE_ACTION.tabbedBar.navigable}"
+											alt="next" image="./../../images/nextpage.gif"
+											action="#{PM020_A_TISB_COMPOSITE_ACTION.tabbedBar.gotoNextTab}"
+											reRender="mypanel" /> <a4j:commandButton immediate="true"
+											disabled="#{PM020_A_TISB_COMPOSITE_ACTION.tabbedBar.navigable}"
+											alt="last" image="./../../images/lastRecord.gif"
+											action="#{PM020_A_TISB_COMPOSITE_ACTION.tabbedBar.gotoLastTab}"
+											reRender="mypanel" /></td>
+									</tr>
+								</table>
+							</h:panelGroup></td>
+						</tr>
+						<!-- Completed the error Panel -->
+					</table>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<table width="100%" id="linkstable" cellpadding="0" cellspacing="0"
+					border="0">
+					<tr>
+						<td><h:outputText
+							value="#{message.CustomerOccupationHeading}" /></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+				<div style="width: 100%; height: 460px; overflow: auto;">
+				<table width="95%" align="center" cellpadding="0" cellspacing="0"
+					border="0">
+					<tr>
+						<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td width="100%" vAlign="top">
+						<table id="bordertable" align="left" border="0">
+							<tr>
+								<td><h:commandButton value="Add New" styleClass="button"
+									action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.addNew}" />
+								<h:commandButton value="Delete" styleClass="button"
+									action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.deleteRows}" /></td>
+							</tr>
+							<tr>
+								<td><rich:panel style="width:960px;overflow:auto">
+									<rich:dataTable id="PM_CUST_APPL_OCC"
+										rows="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.recordsPerPage}"
+										value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.dataTableList}"
+										binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.dataTable}"
+										var="datatable">
+										<f:facet name="footer">
+											<rich:datascroller id="scroller"
+												page="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.currPage}"
+												align="left"></rich:datascroller>
+										</f:facet>
+										<rich:column sortable="true" width="40px" rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="label" />
+											</f:facet>
+											<h:selectBooleanCheckbox id="checkBox"
+												value="#{datatable.CHECK_BOX}" />
+										</rich:column>
+										<!-- [ Added for grid implementation change, Added by: Rajesh Kundala, Dated: 16-Feb-2009 -->
+										<rich:column rendered="true" styleClass="gridsaveColoumn">
+											<f:facet name="header">
+												<h:outputText styleClass="label"
+													value="#{commonmsg.IL_GRID$SAVE_COLUMN_HEADER$caption}" />
+											</f:facet>
+											<a4j:commandLink style="text-decoration:none"
+												disabled="false" immediate="true" reRender="errorPanel"
+												title="#{commonmsg.IL_GRID$UI_M_BUT_RECORD_SAVE$title}"
+												action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.saveCurrentRecord}">
+												<h:graphicImage style="border: thin solid white"
+													value="./../../images/insupd.gif" />
+												<h:outputText
+													value="#{commonmsg.IL_GRID$UI_M_BUT_RECORD_SAVE$caption}" />
+											</a4j:commandLink>
+										</rich:column>
+										<!-- Added for grid implementation change, Added by: Rajesh Kundala, Dated: 16-Feb-2009 ] -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM020_A_TISB$PM_CUST_APPL_OCC$CAO_OCC_CODE$caption}" />
+											</f:facet>
+											<h:inputText id="CAO_OCC_CODE" style="width:75px;"
+												rendered="true"
+												binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.COMP_CAO_OCC_CODE}"
+												validator="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.validateCode}"
+												value="#{datatable.CAO_OCC_CODE}">
+												<rich:suggestionbox height="250" width="250"
+													value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.codeList}"
+													suggestionAction="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.suggestionAction}"
+													for="CAO_OCC_CODE" var="occCode">
+													<h:column>
+														<h:outputText value="#{occCode.CAO_OCC_CODE}" />
+													</h:column>
+													<h:column>
+														<h:outputText value="#{occCode.UI_M_CAO_OCC_DESC}" />
+													</h:column>
+													<a4j:support event="onselect" immediate="true"
+														actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.getcodeDesc}"
+														reRender="UI_M_CAO_OCC_DESC" />
+												</rich:suggestionbox>
+												<a4j:support event="onblur" immediate="true"
+													actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.fireFieldValidation}"
+													reRender="err,errorMessages,warningMessages" />
+
+
+											</h:inputText>
+										</rich:column>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM020_A_TISB$PM_CUST_APPL_OCC$UI_M_CAO_OCC_DESC$caption}" />
+											</f:facet>
+											<h:inputText id="UI_M_CAO_OCC_DESC" style="width:215px;"
+												disabled="true"
+												binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.COMP_UI_M_CAO_OCC_DESC}"
+												value="#{datatable.UI_M_CAO_OCC_DESC}"
+												validator="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.validateDescr}" />
+										</rich:column>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="label"
+													value="#{message.PM020_A_TISB$PM_CUST_APPL_OCC$CAO_FRZ_FLAG$caption}" />
+											</f:facet>
+											<h:selectBooleanCheckbox id="CAO_FRZ_FLAG" value="">
+											</h:selectBooleanCheckbox>
+										</rich:column>
+										<!-- [ Added for grid implementation change, Added by: Rajesh Kundala, Dated: 16-Feb-2009 -->
+										<rich:column rendered="true" styleClass="gridsaveColoumn">
+											<f:facet name="header">
+												<h:outputText styleClass="label"
+													value="#{commonmsg.IL_GRID$SAVE_COLUMN_HEADER$caption}" />
+											</f:facet>
+											<a4j:commandLink style="text-decoration:none"
+												disabled="false" immediate="true" reRender="errorPanel"
+												title="#{commonmsg.IL_GRID$UI_M_BUT_RECORD_SAVE$title}"
+												action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.saveCurrentRecord}">
+												<h:graphicImage style="border: thin solid white"
+													value="./../../images/insupd.gif" />
+												<h:outputText
+													value="#{commonmsg.IL_GRID$UI_M_BUT_RECORD_SAVE$caption}" />
+											</a4j:commandLink>
+										</rich:column>
+										<!-- Added for grid implementation change, Added by: Rajesh Kundala, Dated: 16-Feb-2009 ] -->
+									</rich:dataTable>
+								</rich:panel></td>
+							</tr>
+						</table>
+						</td>
+						<td></td>
+					</tr>
+				</table>
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="5" width="100%" align="right"><rich:toolBar
+					styleClass="toolBarStyle" width="100%">
+					<rich:toolBarGroup location="right" styleClass="toolBarGroupStyle">
+						<h:commandLink style="text-decoration:none"
+							styleClass="toolbarCommandLinkStyle"
+							action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_APPL_OCC_ACTION_BEAN.saveData}">
+							<h:graphicImage style="border: thin solid white"
+								styleClass="toolbarImageStyle" value="./../../images/save.gif" />
+							<h:outputText styleClass="toolbaroutputTextStyle"
+								value="#{menumessage.jsf$header$image$save}" />
+						</h:commandLink>
+						<h:commandLink style="text-decoration:none" disabled="true"
+							styleClass="toolbarCommandLinkStyle" rendered="false">
+							<h:graphicImage style="border: thin solid white"
+								styleClass="toolbarImageStyle"
+								value="./../../images/savenext.GIF" />
+							<h:outputText styleClass="toolbaroutputTextStyle"
+								value="#{menumessage.jsf$header$image$savenext}" />
+						</h:commandLink>
+						<h:commandLink style="text-decoration:none" rendered="false"
+							styleClass="toolbarCommandLinkStyle">
+							<h:graphicImage style="border: thin solid white"
+								styleClass="toolbarImageStyle"
+								value="./../../images/deleteRecord.gif" />
+							<h:outputText styleClass="toolbaroutputTextStyle"
+								value="#{menumessage.jsf$header$image$deleteRecord}" />
+						</h:commandLink>
+						<h:commandLink style="text-decoration:none" action="cclassmaster"
+							styleClass="toolbarCommandLinkStyle">
+							<h:graphicImage style="border: thin solid white"
+								styleClass="toolbarImageStyle"
+								value="./../../images/firstrec.gif" />
+							<h:outputText styleClass="toolbaroutputTextStyle"
+								value="#{menumessage.jsf$header$image$firstrec}" />
+						</h:commandLink>
+						<h:commandLink style="text-decoration:none" action="appl_users"
+							styleClass="toolbarCommandLinkStyle">
+							<h:graphicImage style="border: thin solid white"
+								styleClass="toolbarImageStyle"
+								value="./../../images/prevpage.gif" />
+							<h:outputText styleClass="toolbaroutputTextStyle"
+								value="#{menumessage.jsf$header$image$prevpage}" />
+						</h:commandLink>
+					</rich:toolBarGroup>
+				</rich:toolBar></td>
+			</tr>
+		</td></tr></h:form>
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

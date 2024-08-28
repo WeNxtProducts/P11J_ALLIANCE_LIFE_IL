@@ -1,0 +1,7 @@
+package com.iii.pel.forms.PILM013_APAC;
+
+public interface PM_IL_TODO_GROUP_CONSTANTS {
+	
+	public String PM_IL_TODO_GROUP_GROUP_TYPE = "SELECT DECODE(PS_VALUE,1,'Y','N') FROM PP_SYSTEM WHERE PS_TYPE = 'IL_TODO_GRP' AND PS_CODE = ?";
+
+}

@@ -1,0 +1,655 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view beforePhase="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.onLoad}" locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PLM006_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_DEPT_DRCR_LINK" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.backToSearch}"
+											id="AUTO_ID_1" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_1"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="serial_2"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.saveRecord}"
+											id="AUTO_ID_2" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_3"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="serial_4"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_3" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="serial_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_4" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_7"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="serial_8"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.getFirstPage}"
+											id="AUTO_ID_5" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_9"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="serial_10"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.getPreviousPage}"
+											id="AUTO_ID_6" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="serial_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_13"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="serial_14"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_8" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_15"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="serial_16"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.errorMap['current'] !=null? PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.errorMap['current']:PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.warningMap['current']}" />
+
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.warningMessages}" />
+
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><h:outputText id="serial_17"
+									value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$Title$caption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="width: 100%; height: 430px; overflow: auto;">
+						<table align="center" class="noborder" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+
+								<td vAlign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowfreeze" colspan="5"><h:outputLabel
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_FRZ_FLAG_LABEL}"
+											for="DDL_FRZ_FLAG" id="DDL_FRZ_FLAG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_FRZ_FLAG$caption}" />
+										<h:selectBooleanCheckbox
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_FRZ_FLAG}"
+											id="DDL_FRZ_FLAG" rendered="true"
+											title="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_FRZ_FLAG$tooltip}"
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.DDL_FRZ_FLAG_VALUE}" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_DIVN_CODE_LABEL}"
+											for="DDL_DIVN_CODE" id="DDL_DIVN_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_DIVN_CODE$caption}" />
+										<h:graphicImage id="serial_18" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_DIVN_CODE}"
+											disabled="false" id="DDL_DIVN_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_DIVN_CODE$tooltip}"
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.DDL_DIVN_CODE}"
+											validator="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_DIVN_CODE_WHEN_VALIDATE_ITEM}"
+											style=" width : 80px;">
+											<a4j:support
+												actionListener="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_9" immediate="true"
+												reRender="err,errorMessages,DDL_DIVN_CODE_LOV,UI_M_DIVN_NAME" />
+										</h:inputText> <rich:suggestionbox for="DDL_DIVN_CODE" height="200"
+											id="DDL_DIVN_CODE_LOV"
+											suggestionAction="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_DIVN_CODE_KEY_LISTVAL}"
+											var="divn_Code" width="300">
+											<h:column>
+												<h:outputText id="serial_19" value="#{divn_Code.DIVN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_20" value="#{divn_Code.DIVN_NAME}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_21"
+													value="#{divn_Code.DIVN_BL_NAME}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTO_ID_10"
+												immediate="true" reRender="errorPanel,UI_M_DIVN_NAME" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_UI_M_DIVN_NAME}"
+											disabled="true" id="UI_M_DIVN_NAME" maxlength="30"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.UI_M_DIVN_NAME}"
+											style=" width : 200px;" /><h:graphicImage id="serial_22"
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_DEPT_CODE_LABEL}"
+											for="DDL_DEPT_CODE" id="DDL_DEPT_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_DEPT_CODE$caption}" />
+										<h:graphicImage id="serial_23" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_DEPT_CODE}"
+											disabled="false" id="DDL_DEPT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_DEPT_CODE$tooltip}"
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.DDL_DEPT_CODE}"
+											style=" width : 80px;"
+											validator="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_DEPT_CODE_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_11" immediate="true"
+												reRender="err,errorMessages,DDL_DEPT_CODE_LOV,UI_M_DEPT_NAME" />
+										</h:inputText> <rich:suggestionbox for="DDL_DEPT_CODE" height="200"
+											id="DDL_DEPT_CODE_LOV"
+											suggestionAction="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_DEPT_CODE_KEY_LISTVAL}"
+											var="dept_Code" width="300">
+											<h:column>
+												<h:outputText id="serial_24" value="#{dept_Code.DEPT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_25" value="#{dept_Code.DEPT}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTO_ID_12"
+												immediate="true" reRender="errorPanel,UI_M_DEPT_NAME" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_UI_M_DEPT_NAME}"
+											disabled="true" id="UI_M_DEPT_NAME" maxlength="30"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.UI_M_DEPT_NAME}"
+											style=" width : 200px;" /> <h:graphicImage id="serial_26"
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_DR_TXN_CODE_LABEL}"
+											for="DDL_DR_TXN_CODE" id="DDL_DR_TXN_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_DR_TXN_CODE$caption}" />
+										<h:graphicImage id="serial_27" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_DR_TXN_CODE}"
+											disabled="false" id="DDL_DR_TXN_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_DR_TXN_CODE$tooltip}"
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.DDL_DR_TXN_CODE}"
+											style=" width : 80px;"
+											validator="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_DR_TXN_CODE_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_13" immediate="true"
+												reRender="err,errorMessages,DDL_DR_TXN_CODE_LOV,UI_M_TXN_DR_NAME" />
+										</h:inputText> <rich:suggestionbox for="DDL_DR_TXN_CODE" height="200"
+											id="DDL_DR_TXN_CODE_LOV"
+											suggestionAction="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_DR_TXN_CODE_KEY_LISTVAL}"
+											var="txn_Code" width="300">
+											<h:column>
+												<h:outputText id="serial_28" value="#{txn_Code.TRAN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_29" value="#{txn_Code.TRAN_NAME}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTO_ID_14"
+												immediate="true" reRender="errorPanel,UI_M_TXN_DR_NAME" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_UI_M_TXN_DR_NAME}"
+											disabled="true" id="UI_M_TXN_DR_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.UI_M_TXN_DR_NAME}"
+											style=" width : 200px;" /> <h:graphicImage id="serial_30"
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_CR_TXN_CODE_LABEL}"
+											for="DDL_CR_TXN_CODE" id="DDL_CR_TXN_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_CR_TXN_CODE$caption}" />
+										<h:graphicImage id="serial_31" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_CR_TXN_CODE}"
+											disabled="false" id="DDL_CR_TXN_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_CR_TXN_CODE$tooltip}"
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.DDL_CR_TXN_CODE}"
+											style=" width : 80px;"
+											validator="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_CR_TXN_CODE_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_15" immediate="true"
+												reRender="err,errorMessages,DDL_CR_TXN_CODE_LOV,UI_M_TXN_CR_NAME" />
+										</h:inputText> <rich:suggestionbox for="DDL_CR_TXN_CODE" height="200"
+											id="DDL_CR_TXN_CODE_LOV"
+											suggestionAction="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_CR_TXN_CODE_KEY_LISTVAL}"
+											var="txn_Code" width="300">
+											<h:column>
+												<h:outputText id="serial_32" value="#{txn_Code.TRAN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_33" value="#{txn_Code.TRAN_NAME}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTO_ID_16"
+												immediate="true" reRender="errorPanel,UI_M_TXN_CR_NAME" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_UI_M_TXN_CR_NAME}"
+											disabled="true" id="UI_M_TXN_CR_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.UI_M_TXN_CR_NAME}"
+											style=" width : 200px;" /> <h:graphicImage id="serial_34"
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_RCT_TXN_CODE_LABEL}"
+											for="DDL_RCT_TXN_CODE" id="DDL_RCT_TXN_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_RCT_TXN_CODE$caption}" />
+										<h:graphicImage id="serial_35" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_RCT_TXN_CODE}"
+											disabled="false" id="DDL_RCT_TXN_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_RCT_TXN_CODE$tooltip}"
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.DDL_RCT_TXN_CODE}"
+											style=" width : 80px;"
+											validator="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_RCT_TXN_CODE_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_17" immediate="true"
+												reRender="err,errorMessages,DDL_RCT_TXN_CODE_LOV,UI_M_TXN_RCT_NAME" />
+										</h:inputText> <rich:suggestionbox for="DDL_RCT_TXN_CODE" height="200"
+											id="DDL_RCT_TXN_CODE_LOV"
+											suggestionAction="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_RCT_TXN_CODE_KEY_LISTVAL}"
+											var="txn_Code" width="300">
+											<h:column>
+												<h:outputText id="serial_36" value="#{txn_Code.TRAN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_37" value="#{txn_Code.TRAN_NAME}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTO_ID_18"
+												immediate="true" reRender="errorPanel,UI_M_TXN_RCT_NAME" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_UI_M_TXN_RCT_NAME}"
+											disabled="true" id="UI_M_TXN_RCT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.UI_M_TXN_RCT_NAME}"
+											style=" width : 200px;" /> <h:graphicImage id="serial_38"
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_PAY_TXN_CODE_LABEL}"
+											for="DDL_PAY_TXN_CODE" id="DDL_PAY_TXN_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_PAY_TXN_CODE$caption}" />
+										<h:graphicImage id="a1" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_PAY_TXN_CODE}"
+											disabled="false" id="DDL_PAY_TXN_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_PAY_TXN_CODE$tooltip}"
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.DDL_PAY_TXN_CODE}"
+											style=" width : 80px;"
+											validator="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_PAY_TXN_CODE_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_19" immediate="true"
+												reRender="err,errorMessages,DDL_PAY_TXN_CODE_LOV,UI_M_TXN_PAY_NAME" />
+										</h:inputText> <rich:suggestionbox for="DDL_PAY_TXN_CODE" height="200"
+											id="DDL_PAY_TXN_CODE_LOV"
+											suggestionAction="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_PAY_TXN_CODE_KEY_LISTVAL}"
+											var="txn_Code" width="300">
+											<h:column>
+												<h:outputText id="serial_39" value="#{txn_Code.TRAN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_40" value="#{txn_Code.TRAN_NAME}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTO_ID_20"
+												immediate="true" reRender="errorPanel,UI_M_TXN_PAY_NAME" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_UI_M_TXN_PAY_NAME}"
+											disabled="true" id="UI_M_TXN_PAY_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.UI_M_TXN_PAY_NAME}"
+											style=" width : 200px;" /> <h:graphicImage id="serial_41"
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_JV_TXN_CODE_LABEL}"
+											for="DDL_JV_TXN_CODE" id="DDL_JV_TXN_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_JV_TXN_CODE$caption}" />
+										<h:graphicImage id="g2" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_JV_TXN_CODE}"
+											disabled="false" id="DDL_JV_TXN_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_JV_TXN_CODE$tooltip}"
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.DDL_JV_TXN_CODE}"
+											style=" width : 80px;"
+											validator="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_JV_TXN_CODE_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_21" immediate="true"
+												reRender="err,errorMessages,DDL_JV_TXN_CODE_LOV,UI_M_TXN_JV_NAME" />
+										</h:inputText> <rich:suggestionbox for="DDL_JV_TXN_CODE" height="200"
+											id="DDL_JV_TXN_CODE_LOV"
+											suggestionAction="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_JV_TXN_CODE_KEY_LISTVAL}"
+											var="txn_Code" width="300">
+											<h:column>
+												<h:outputText id="serial_42" value="#{txn_Code.TRAN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_22" value="#{txn_Code.TRAN_NAME}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTO_ID_23"
+												immediate="true" reRender="errorPanel,UI_M_TXN_JV_NAME" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_UI_M_TXN_JV_NAME}"
+											disabled="true" id="UI_M_TXN_JV_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$UI_M_TXN_JV_NAME$tooltip}"
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.UI_M_TXN_JV_NAME}"
+											style=" width : 200px;" /> <h:graphicImage id="serial_43"
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_TXN_TYPE_FM_LABEL}"
+											for="DDL_TXN_TYPE_FM" id="DDL_TXN_TYPE_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_TXN_TYPE_FM$caption}" />
+										<h:graphicImage id="g3" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_TXN_TYPE_FM}"
+											disabled="false" id="DDL_TXN_TYPE_FM" maxlength="6"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_TXN_TYPE_FM$tooltip}"
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.DDL_TXN_TYPE_FM}"
+											style=" width : 80px;"
+											validator="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_TXN_TYPE_FM_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_24" immediate="true"
+												reRender="err,errorMessages,DDL_TXN_TYPE_FM_LOV,UI_M_DDL_TXN_TYPE_FM_DESC" />
+										</h:inputText> <rich:suggestionbox for="DDL_TXN_TYPE_FM" height="200"
+											id="DDL_TXN_TYPE_FM_LOV"
+											suggestionAction="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_TXN_TYPE_FM_KEY_LISTVAL}"
+											var="txn_type_fm" width="300">
+											<h:column>
+												<h:outputText id="serial_44" value="#{txn_type_fm.PS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_45"
+													value="#{txn_type_fm.PS_CODE_DESC}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_46"
+													value="#{txn_type_fm.PS_BL_CODE_DESC}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTO_ID_25"
+												immediate="true"
+												reRender="errorPanel,UI_M_DDL_TXN_TYPE_FM_DESC" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_UI_M_DDL_TXN_TYPE_FM_DESC}"
+											disabled="true" id="UI_M_DDL_TXN_TYPE_FM_DESC" maxlength="30"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.UI_M_DDL_TXN_TYPE_FM_DESC}"
+											style=" width : 200px;" /> <h:graphicImage id="g8"
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_TXN_TYPE_TO_LABEL}"
+											for="DDL_TXN_TYPE_TO" id="DDL_TXN_TYPE_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_TXN_TYPE_TO$caption}" />
+										<h:graphicImage id="g4" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_DDL_TXN_TYPE_TO}"
+											disabled="false" id="DDL_TXN_TYPE_TO" maxlength="6"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_TXN_TYPE_TO$tooltip}"
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.DDL_TXN_TYPE_TO}"
+											style=" width : 80px;"
+											validator="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_TXN_TYPE_TO_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_26" immediate="true"
+												reRender="err,errorMessages,DDL_TXN_TYPE_TO_LOV,UI_M_DDL_TXN_TYPE_TO_DESC" />
+										</h:inputText> <rich:suggestionbox for="DDL_TXN_TYPE_TO" height="200"
+											id="DDL_TXN_TYPE_TO_LOV"
+											suggestionAction="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.DDL_TXN_TYPE_TO_KEY_LISTVAL}"
+											var="txn_type_to" width="300">
+											<h:column>
+												<h:outputText id="s1" value="#{txn_type_to.PS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="s2" value="#{txn_type_to.PS_CODE_DESC}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="s3" value="#{txn_type_to.PS_BL_CODE_DESC}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTO_ID_27"
+												immediate="true"
+												reRender="errorPanel,UI_M_DDL_TXN_TYPE_TO_DESC" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.COMP_UI_M_DDL_TXN_TYPE_TO_DESC}"
+											disabled="true" id="UI_M_DDL_TXN_TYPE_TO_DESC"
+											maxlength="240" rendered="true" required="false"
+											styleClass="input" title=""
+											value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.PM_DEPT_DRCR_LINK_BEAN.UI_M_DDL_TXN_TYPE_TO_DESC}"
+											style=" width : 200px;" /> <h:graphicImage id="g55"
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+
+								</table>
+								</td>
+
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar id="serial_47" styleClass="toolBarStyle"
+									width="100%">
+									<rich:toolBarGroup id="serial_48" location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.backToSearch}"
+											id="AUTO_ID_28" immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_49"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="serial_50"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.saveRecord}"
+											id="AUTO_ID_29" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_51"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="serial_52"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_30" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_53"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="serial_54"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_31" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_55"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="serial_56"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.getFirstPage}"
+											id="AUTO_ID_32" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_57"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="serial_58"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.getPreviousPage}"
+											id="AUTO_ID_33" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_59"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="serial_60"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_34" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_61"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="serial_62"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_35" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_63"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="serial_64"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

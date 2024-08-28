@@ -1,0 +1,412 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="TumourQuestionnaire" pageWidth="595" pageHeight="842" columnWidth="495" leftMargin="60" rightMargin="40" topMargin="20" bottomMargin="20" uuid="bce3de9c-1dbd-40f3-ac94-4afca9f6bc42">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="POL_SYS_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[
+ SELECT CUST_FIRST_NAME,
+       CUST_SURNAME,
+       CUST_DOB,
+       CUST_NAME,
+       POL_DS_TYPE,
+       POL_NO,
+       POAD_AGE,
+       (SELECT PC_DESC
+          FROM PM_CODES
+         WHERE PC_TYPE = 'IL_OCCU'
+           AND PC_CODE = POAD_OCC_CODE) OCCUPATION,
+       CUST_ADDR1,
+       CUST_ADDR2,
+       CUST_ADDR3,
+       CUST_REF_ID1,
+       (SELECT PC_DESC
+          FROM PM_CODES
+         WHERE PC_TYPE = 'NATLITY'
+           AND PC_CODE = POAD_NATIONALITY) NATIONALITY,
+       (SELECT PS_CODE_DESC
+          FROM PP_SYSTEM
+         WHERE PS_TYPE = 'CATG'
+           AND PS_CODE = POAD_CATG_CODE) GENDER,
+           CUST_PHONE, CUST_POST_BOX_NO, CUST_PIN_NUMBER, POL_LC_SUM_ASSURED
+  FROM PT_IL_POLICY, PM_CUSTOMER, PT_IL_POL_ASSURED_DTLS
+ WHERE POL_CUST_CODE = CUST_CODE
+   AND POAD_POL_SYS_ID = POL_SYS_ID
+   AND POL_SYS_ID =$P{POL_SYS_ID}
+]]>
+	</queryString>
+	<field name="CUST_FIRST_NAME" class="java.lang.String"/>
+	<field name="CUST_SURNAME" class="java.lang.String"/>
+	<field name="CUST_DOB" class="java.sql.Timestamp"/>
+	<field name="CUST_NAME" class="java.lang.String"/>
+	<field name="POL_DS_TYPE" class="java.lang.String"/>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POAD_AGE" class="java.math.BigDecimal"/>
+	<field name="OCCUPATION" class="java.lang.String"/>
+	<field name="CUST_ADDR1" class="java.lang.String"/>
+	<field name="CUST_ADDR2" class="java.lang.String"/>
+	<field name="CUST_ADDR3" class="java.lang.String"/>
+	<field name="CUST_REF_ID1" class="java.lang.String"/>
+	<field name="NATIONALITY" class="java.lang.String"/>
+	<field name="GENDER" class="java.lang.String"/>
+	<field name="CUST_PHONE" class="java.lang.String"/>
+	<field name="CUST_POST_BOX_NO" class="java.lang.String"/>
+	<field name="CUST_PIN_NUMBER" class="java.lang.String"/>
+	<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="87" splitType="Stretch">
+			<staticText>
+				<reportElement x="183" y="30" width="166" height="20" uuid="36467b10-ed42-415e-a32b-d1ddaae61e7f"/>
+				<textElement>
+					<font fontName="Calibri" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tumour Questionnaire]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="163" y="50" width="202" height="20" uuid="d6abbc59-b028-4872-b765-f0990dea8bea"/>
+				<textElement>
+					<font fontName="Calibri" isBold="false" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[(for completion by the Medical Attendant)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="343" y="10" width="47" height="15" uuid="661f9560-9469-4758-a8c4-a4355568d2c7"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Form No.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="386" y="22" width="114" height="1" uuid="9b7527f8-586d-495a-b03e-d5c506daa88e"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+		</band>
+	</title>
+	<detail>
+		<band height="73" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="12" width="131" height="16" uuid="9006f2d3-8e71-4045-8aa7-e6d1c5b949e7"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Name of the Life to be assured :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="297" y="41" width="60" height="19" uuid="017d9d34-1037-4609-9047-6c55d3081435">
+					<printWhenExpression><![CDATA[$F{POL_DS_TYPE}.equals("1")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Proposal No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="39" width="60" height="20" uuid="9c56d892-5835-4929-bafe-d8f987ed0d9f"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Date of birth :	]]></text>
+			</staticText>
+			<line>
+				<reportElement x="131" y="23" width="169" height="1" uuid="03276070-6cf9-437b-801f-f883fd7a0da5"/>
+			</line>
+			<line>
+				<reportElement x="60" y="50" width="83" height="1" uuid="e7b54be5-a665-41e8-9755-e45372abce65"/>
+			</line>
+			<line>
+				<reportElement x="354" y="53" width="90" height="1" uuid="60c746b3-a96c-463b-89a4-65814ced8ff7"/>
+			</line>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="60" y="38" width="137" height="15" uuid="91adde6a-f2e5-4a30-ba58-1b393172c5d0"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_DOB}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="354" y="41" width="148" height="16" uuid="81d62611-c55a-4bc1-abbb-688ff9c12b26"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="131" y="4" width="313" height="19" uuid="d10f86bb-9014-4d31-8edb-25b9f9592e83"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="297" y="41" width="60" height="20" uuid="cc33aaa9-eb90-455f-a04b-fb9672b41e15">
+					<printWhenExpression><![CDATA[$F{POL_DS_TYPE}.equals("2")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Policy No:]]></text>
+			</staticText>
+		</band>
+		<band height="653">
+			<staticText>
+				<reportElement x="0" y="7" width="197" height="20" uuid="aca26144-3deb-4579-8394-232f92f93b19"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[1.  When was the tumour first detected?]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="34" width="505" height="1" uuid="1357d144-3a65-44d3-b9bb-2b466ff82c4a"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="45" width="217" height="20" uuid="50b6d2c4-851d-4492-a12e-d7c81928b326"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[2.  What was the site or organ involved?]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="73" width="505" height="1" uuid="2c9a1afd-7bbd-4a11-a0f0-64d493f9d85e"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="84" width="217" height="20" uuid="83f41954-f843-4fb2-b576-efaf8c35dcc0"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[3.  What was the histology of the growth?]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="117" width="505" height="1" uuid="e557f414-ef53-4fec-8f88-f5b0d628bcb8"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="128" width="300" height="20" uuid="11dd2ed4-678f-40b8-b7f1-89590ff033e8"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[4.  What was the stage of the growth at the time of treatment?]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="328" width="503" height="1" uuid="6690a62d-bed7-4c8d-b6a6-2603c1c6d83d"/>
+			</line>
+			<staticText>
+				<reportElement x="14" y="162" width="221" height="20" uuid="f3b5f883-c822-4841-b5ac-9d2b2eb290c9"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Stage 1     =   Localised to organ of origin.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="193" width="386" height="31" uuid="e3fd660b-eb0f-4489-81d2-48dfb79352d8"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Stage 2     =   Spread to blood vessels and covering membrane of the organ of
+                          origin or the adjoining tissues.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="233" width="386" height="20" uuid="55be05cf-9ea4-414d-ba6e-0339f4beab82"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Stage 3a   =   Invasion of one third or less of regional lymph nodes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="265" width="386" height="20" uuid="d530da8d-0628-4160-929e-618f930a89c7"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Stage 3b   =   Invasion of more than one third of regional lymph nodes.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="295" width="386" height="20" uuid="ca19f00e-367b-4cd3-8bd1-30e3755c125a"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Stage 4     =   Distant metastases.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="342" width="273" height="20" uuid="7fed3cb3-21e0-43da-a9d6-e98efe12611a"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[5.  Please give details of the treatment with dates.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="392" width="290" height="20" uuid="9388d6f6-8e5e-44c0-8d8a-f2f3ab49d3f0"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[6.  Has there been any sign of recurrence?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="440" width="290" height="20" uuid="f8baf234-79b5-4f9f-ae49-89ce07a35d6b"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[7.  Has any adverse  psychological reaction been noted?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="493" width="289" height="20" uuid="41dc8898-b3ae-4861-a4b9-e845540cedad"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[8.  Further comments:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="2" y="378" width="502" height="1" uuid="c11b2025-f678-43a8-bcab-2c2c1271ae52"/>
+			</line>
+			<line>
+				<reportElement x="2" y="426" width="502" height="1" uuid="f4e73e05-26c9-4674-bbc7-0ece683913c5"/>
+			</line>
+			<line>
+				<reportElement x="2" y="476" width="502" height="1" uuid="b8c1d832-8e7e-4527-acac-88d63449bb8e"/>
+			</line>
+			<line>
+				<reportElement x="3" y="529" width="501" height="1" uuid="45ea01cf-8463-4131-af18-cf937eb0b666"/>
+			</line>
+		</band>
+		<band height="452">
+			<staticText>
+				<reportElement x="390" y="11" width="115" height="20" uuid="c41bf0ca-5aa2-4db3-87af-fee49215d5e2"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Tumour Questionnaire]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="45" width="164" height="20" uuid="95487171-9606-4c6c-8a33-5ab6d0da8690"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[What was the exact diagnosis?]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="83" width="503" height="1" uuid="4cf7cd39-70c9-43b1-a373-e5190c949eda"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="98" width="272" height="20" uuid="e7f06859-f0fe-45d1-9d0e-ddefb963da51"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Please supply the results of any relevant investigations.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="135" width="504" height="1" uuid="72361ee7-06ea-412b-9b0a-4a46efd06cdd"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="152" width="313" height="20" uuid="adc07a14-8db0-40d3-8436-4d2199806166"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[a)  Please provide details of treatment prescribed.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="184" width="313" height="20" uuid="c0035c99-2bb8-4cbe-99ce-621006dbf9d6"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[b)  Is treatment still continuing?]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="222" width="503" height="1" uuid="c64e251e-9065-4a1f-9264-ce73a43ad06d"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="239" width="399" height="20" uuid="b612d223-e336-4da2-b501-cc78a004e1b5"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Have there been any further attacks?  (If yes, please give details including dates)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="276" width="504" height="1" uuid="390b6f1f-48dc-46ab-b9a4-76b8c6317331"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="290" width="234" height="20" uuid="5d9fe15a-8e15-43a3-ab9d-f4e30c7be611"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[What symptoms, if any are now present?]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="326" width="504" height="1" uuid="bb8dcd6b-a164-4335-a1ff-a0f17926c2c8"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="344" width="463" height="20" uuid="5b1c38f6-8fea-4e1b-b336-5fce108b5ed4"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Did the symptoms cause incapacity?  If yes, please give details including dates and duration.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="380" width="504" height="1" uuid="a320cfd4-9a72-43d0-98ca-dbc5087d404e"/>
+			</line>
+			<staticText>
+				<reportElement x="1" y="399" width="463" height="20" uuid="e31eb23b-bafd-475d-bffb-06d63913b6a8"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Are there any other factors present which may predispose to future illness or incapacity?]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="437" width="503" height="1" uuid="fe6bbf20-30b3-48d0-ae5a-c3e4fa1730cf"/>
+			</line>
+		</band>
+		<band height="226">
+			<staticText>
+				<reportElement x="0" y="18" width="100" height="20" uuid="3c811285-5f04-4532-93a4-35fec57832a3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Further comments:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="91" width="100" height="20" uuid="44cadd9a-8cd7-4704-a61a-3adc14245b01"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Signature :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="91" width="28" height="20" uuid="bab3fe12-172d-4f74-9ea4-47296d4e26ad"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="129" width="170" height="20" uuid="8a91ff3c-3c79-46d9-9380-bcd66a1aee70"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Name and address of Medical Attendant :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="170" y="144" width="334" height="1" uuid="a80612b7-313f-406c-8bb2-a1a156f2d315"/>
+			</line>
+			<line>
+				<reportElement x="1" y="172" width="504" height="1" uuid="d695fa88-1e4e-4ab9-83cb-ce5e6009f3b5"/>
+			</line>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="374" y="91" width="100" height="20" uuid="f25d5705-1f2b-467c-b8b3-30580333609f"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="30">
+			<textField>
+				<reportElement x="243" y="10" width="26" height="20" uuid="cb6a02f4-1660-4b0a-9f0e-f48ab6d13d6a"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

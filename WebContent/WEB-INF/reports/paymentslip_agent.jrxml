@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="paymentslip_agent" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="40" rightMargin="20" topMargin="20" bottomMargin="20" uuid="89495693-f46d-4aa0-9fcf-3ce685985adf">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="POL_SYS_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT (NVL(POL_LC_BASIC_PREM, 0) + NVL(ADDL_PREM, 0) + NVL(POL_FEES, 0) +
+       NVL(INSU_FEES, 0)) AMOUNT,
+       POL_ASSURED_NAME,
+       POL_PERIOD,
+       POL_NO,
+       POL_LC_SUM_ASSURED,
+       POL_PLAN_CODE,
+       (POL_LC_BASIC_PREM + ADDL_PREM) POL_LC_BASIC_PREM,
+       POL_FEES,
+       INSU_FEES,
+       (NVL(POL_LC_BASIC_PREM, 0) + NVL(ADDL_PREM, 0) + NVL(POL_FEES, 0) +
+       NVL(INSU_FEES, 0)) TOTAL_AMOUNT,
+       BROKER_CODE,
+       POL_DS_TYPE
+  FROM (SELECT (ROUND((POL_LC_BASIC_PREM * POL_MODE_OF_PYMT_RATE),
+                      CURR_DECIMAL)) POL_LC_BASIC_PREM,
+               (SELECT SUM(ROUND(NVL(POAC_LC_PREM, 0) *
+                                 (POL_MODE_OF_PYMT_RATE),
+                                 CURR_DECIMAL))
+                  FROM PT_IL_POL_ADDL_COVER
+                 WHERE POAC_POL_SYS_ID = $P{POL_SYS_ID}
+                ) ADDL_PREM,
+               POL_ASSURED_NAME,
+               POL_PERIOD,
+               POL_NO,
+               POL_LC_SUM_ASSURED,
+               POL_PLAN_CODE,
+               (SELECT ROUND((POC_LC_VALUE * (DECODE(POC_APPLY_PERIOD,
+                                                     'P',
+                                                     DECODE(POC_APPLIED_ON,
+                                                            '5',
+                                                            1,
+                                                            POL_MODE_OF_PYMT_RATE),
+                                                     1))),
+                             CURR_DECIMAL)
+                  FROM PT_IL_POL_CHARGE
+                 WHERE POC_POL_SYS_ID = POL_SYS_ID
+                   AND POC_CHRG_CODE LIKE '%POL%') POL_FEES,
+               (SELECT ROUND(POC_LC_VALUE * (DECODE(POC_APPLY_PERIOD,
+                                                    'P',
+                                                    DECODE(POC_APPLIED_ON,
+                                                           '5',
+                                                           1,
+                                                           POL_MODE_OF_PYMT_RATE),
+                                                    1)),
+                             CURR_DECIMAL)
+                  FROM PT_IL_POL_CHARGE
+                 WHERE POC_POL_SYS_ID = POL_SYS_ID
+                   AND POC_CHRG_CODE LIKE '%GOV%') INSU_FEES,
+               (SELECT POBH_BROKER_CODE || ' (' || CUST_NAME || ')'
+                  FROM PT_IL_POL_BROKER_HEAD, PM_CUSTOMER
+                 WHERE POBH_POL_SYS_ID = POL_SYS_ID
+                   AND POBH_BROKER_CODE = CUST_CODE
+                   AND POBH_SRNO = 1) BROKER_CODE,
+               POL_DS_TYPE
+          FROM PT_IL_POLICY, PM_CURRENCY
+         WHERE POL_CUST_CURR_CODE = CURR_CODE
+           AND POL_SYS_ID = $P{POL_SYS_ID}
+        )]]>
+	</queryString>
+	<field name="AMOUNT" class="java.math.BigDecimal"/>
+	<field name="POL_ASSURED_NAME" class="java.lang.String"/>
+	<field name="POL_PERIOD" class="java.math.BigDecimal"/>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<field name="POL_PLAN_CODE" class="java.lang.String"/>
+	<field name="POL_LC_BASIC_PREM" class="java.math.BigDecimal"/>
+	<field name="POL_FEES" class="java.math.BigDecimal"/>
+	<field name="INSU_FEES" class="java.math.BigDecimal"/>
+	<field name="TOTAL_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="BROKER_CODE" class="java.lang.String"/>
+	<field name="POL_DS_TYPE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90"/>
+	</title>
+	<pageHeader>
+		<band height="50">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 ? false:true]]></printWhenExpression>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="616" splitType="Stretch">
+			<staticText>
+				<reportElement x="174" y="55" width="216" height="20" uuid="4ecd9992-4c96-45d1-816a-9e558b95fdf1"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Falcon Insurance Company SAOC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="75" width="151" height="20" uuid="bbd24518-e4ab-4508-8a0c-54471afe1f58"/>
+				<textElement textAlignment="Center">
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Inter Office Memo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="138" width="36" height="20" uuid="5eadb38b-74f9-41dc-91ae-8f224abbf952"/>
+				<text><![CDATA[From: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="157" width="36" height="20" uuid="c88a413d-715d-4592-8a1f-e90d8f79eb67"/>
+				<text><![CDATA[To: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="199" width="442" height="20" uuid="16f54169-5892-42e8-a87d-aa01bcf64134"/>
+				<text><![CDATA[Please arrange to issue Proposal Deposit Receipt for Individual Life Proposal as per  detail:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="248" width="120" height="20" uuid="fd89a358-d24d-445e-9b64-e59d8c92c916"/>
+				<text><![CDATA[Amount]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="268" width="120" height="20" uuid="26b511c2-dbc7-40b9-8b90-4c3281860695"/>
+				<text><![CDATA[Proposer                  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="288" width="120" height="20" uuid="6b79a386-c688-436b-9ffe-57ba6f699ad3"/>
+				<text><![CDATA[Term                        ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="308" width="120" height="20" uuid="965e0cc2-885b-4b8e-a686-a079968d8cd7">
+					<printWhenExpression><![CDATA[$F{POL_DS_TYPE}.equals("1")?true:false]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[Proposal no              ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="328" width="120" height="20" uuid="7fcc726a-d06f-414c-bbdd-cebd92c34a2f"/>
+				<text><![CDATA[Sum Assured	      ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="348" width="120" height="20" uuid="100a5c0e-48f8-4b7a-8927-59d004dc9875"/>
+				<text><![CDATA[Product]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="84" y="368" width="120" height="20" uuid="6689bd5b-6076-4982-965f-6d2009c9357e"/>
+				<text><![CDATA[Agent                       ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="428" width="113" height="20" uuid="bfdfc28f-af20-47a2-baa4-8fded29acad2"/>
+				<text><![CDATA[Cover Premium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="448" width="113" height="20" uuid="f7b88a5b-9145-4ec4-96f4-0a2d7bd2ce36"/>
+				<text><![CDATA[Policy Fee  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="468" width="113" height="20" uuid="2b40bff4-8e5b-4637-ac8d-a7aaa7982d35"/>
+				<text><![CDATA[Insurance Fee ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="86" y="488" width="113" height="20" uuid="a57e3199-3919-4676-af67-06a20d3c84cc"/>
+				<text><![CDATA[Total   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="87" y="531" width="84" height="20" uuid="f2d1b9f1-e707-4ce2-8505-82dc3bc1cd3b"/>
+				<text><![CDATA[For Life Division]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="248" width="9" height="20" uuid="50dbde91-c7c3-4706-8ee5-7ceaf3a9fbd8"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="268" width="9" height="20" uuid="6e96947d-672b-413e-b5cf-0498e99afcb1"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="288" width="9" height="20" uuid="22269f18-fb23-4e50-8071-7a2f49ebd454"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="308" width="9" height="20" uuid="b4815a77-5c4c-4277-8b98-02ba5a0f36cc"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="328" width="9" height="20" uuid="e69cd74c-193c-4f62-84ae-b25efe93df38"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="348" width="9" height="20" uuid="473fd8f0-f008-45ef-b610-d2d702f2e3da"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="195" y="368" width="9" height="20" uuid="7c6fca15-10e2-4a42-9e1c-2efa57893f21"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="428" width="9" height="20" uuid="c1421f42-21df-4e84-8cf0-48cfc8d3e43e"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="448" width="9" height="20" uuid="3a81f672-29b4-404e-988f-345f0ce2c01d"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="468" width="9" height="20" uuid="af811ca7-b82f-4246-9efc-0981667c9860"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="190" y="488" width="9" height="20" uuid="da1696f9-3881-430e-8e0b-36254bbb6a13"/>
+				<box leftPadding="2"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="206" y="248" width="99" height="20" uuid="b19018b5-29c0-4575-8f73-2b0c29c95a9b"/>
+				<box leftPadding="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AMOUNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="206" y="328" width="100" height="20" uuid="26d881f4-b130-4e94-967f-2e726f24ba9a"/>
+				<box leftPadding="20"/>
+				<textFieldExpression><![CDATA[$F{POL_LC_SUM_ASSURED}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="206" y="268" width="133" height="20" uuid="7e9febdb-34a8-44c5-9250-fc09878b7410"/>
+				<textFieldExpression><![CDATA[$F{POL_ASSURED_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="206" y="288" width="17" height="20" uuid="bba350b8-9e5e-4e91-b694-050ca6137eb1"/>
+				<textFieldExpression><![CDATA[$F{POL_PERIOD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="206" y="368" width="299" height="20" uuid="b1d3c792-96c0-40b9-938c-d7f9ea4265e4"/>
+				<textFieldExpression><![CDATA[$F{BROKER_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="206" y="308" width="100" height="20" uuid="babc7c85-5f92-423b-b7f1-b1e4d028850f"/>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="219" y="488" width="70" height="20" uuid="bdccab46-eb2e-4ef4-9629-0678c797b09b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{TOTAL_AMOUNT}!=null) ? $F{TOTAL_AMOUNT} : "0.000"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="219" y="428" width="70" height="20" uuid="ad14b0cc-bd82-4358-a488-3c3ffc536879"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{POL_LC_BASIC_PREM} != null) ? $F{POL_LC_BASIC_PREM} : "0.000"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="219" y="448" width="71" height="20" uuid="249024f8-cf00-4913-af3d-4ddf5cba6250"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{POL_FEES}!=null) ? $F{POL_FEES} : "0.000"]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="219" y="468" width="70" height="20" uuid="168689d7-bcc7-45ce-bad8-888e2fc4b909"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[($F{INSU_FEES} != null) ? $F{INSU_FEES} : "0.000"]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="206" y="348" width="100" height="20" uuid="39a165ad-5ef6-4a18-b9f7-5d8c3d7340fe"/>
+				<textFieldExpression><![CDATA[$F{POL_PLAN_CODE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="135" y="138" width="100" height="20" uuid="037c8126-7411-4846-8b9c-ff553b42762e"/>
+				<text><![CDATA[Life Division]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="157" width="100" height="20" uuid="e3a0375f-4f58-4a59-9a20-a22be52cfd71"/>
+				<text><![CDATA[Cash Section]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="248" width="29" height="20" uuid="08e0e11f-04c0-4976-9d0c-62f4590319ec"/>
+				<text><![CDATA[RO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="428" width="18" height="20" uuid="cbaed8fe-c846-4809-bddf-24e249be64e5"/>
+				<text><![CDATA[RO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="447" width="18" height="21" uuid="0efa789a-8c96-41fd-abdf-f56ce05d5268"/>
+				<text><![CDATA[RO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="468" width="18" height="20" uuid="f8c30e74-dc16-46c6-b735-5fddf4fed3fd"/>
+				<text><![CDATA[RO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="201" y="488" width="18" height="20" uuid="de01d990-6ed5-49dd-b7c4-7c3d5928ccfb"/>
+				<text><![CDATA[RO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="328" width="29" height="20" uuid="a69c25ae-8bff-458f-a9c4-b59d1eb1c84f"/>
+				<text><![CDATA[RO]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="87" y="551" width="100" height="20" uuid="9c937b93-a513-4fd9-b443-853c59d1a62e"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="223" y="288" width="82" height="20" uuid="1afd518a-a20b-4042-adbd-3879fabf415c"/>
+				<text><![CDATA[Years]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="408" width="100" height="20" uuid="fa9a81ed-ccd7-4690-a5c6-d69281a64ab1"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Premium-Breakup]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="85" y="308" width="120" height="20" uuid="74d30284-ac52-44e8-81a0-af145cbe7139">
+					<printWhenExpression><![CDATA[$F{POL_DS_TYPE}.equals("2")?true:false]]></printWhenExpression>
+				</reportElement>
+				<text><![CDATA[Policy no.             ]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="90">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 ? true:false]]></printWhenExpression>
+		</band>
+	</pageFooter>
+</jasperReport>

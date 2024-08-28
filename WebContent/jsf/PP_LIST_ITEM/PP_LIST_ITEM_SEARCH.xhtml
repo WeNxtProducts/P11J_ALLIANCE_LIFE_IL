@@ -1,0 +1,163 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PP_LIST_ITEM" var="message" />
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0" >
+
+		<!-- add header row -->
+		<tr>
+			
+		</tr>
+
+		<!-- Body row -->
+		<tr>
+			<td><h:form id="listform">
+
+				<tr>
+					<td colspan="3" width="100%" vAlign="top" height="20">
+					<rich:simpleTogglePanel id="errorPanel"
+								switchType="client" opened="false">
+								<f:facet name="header">
+									<h:outputText id="err" styleClass="#{PP_LIST_ITEM_SEARCH_ACTION.messageStyle}"
+										value="#{commonmsg.errorPanel$heading} #{PP_LIST_ITEM_SEARCH_ACTION.errorMap['current'] !=null? PP_LIST_ITEM_SEARCH_ACTION.errorMap['current']:PP_LIST_ITEM_SEARCH_ACTION.warningMap['current']}" />
+								</f:facet>
+								<h:outputText id="errorMessages" styleClass="ErrorMessages"
+									value="#{PP_LIST_ITEM_SEARCH_ACTION.errorMessages}"
+									escape="false" />
+								<h:messages styleClass="ErrorMessages"
+									id="msg" rendered="#{PP_LIST_ITEM_SEARCH_ACTION.globalMsgRender}" />
+
+								<h:outputText id="warningMessages" styleClass="WarningMessages"
+									value="#{PP_LIST_ITEM_SEARCH_ACTION.warningMessages}"
+									escape="false" />
+							</rich:simpleTogglePanel>
+					</td>
+				</tr>
+
+				<h:inputHidden id="modulename"
+					value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_BEAN.LI_MODULE_NAME}" />
+
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td><h:outputText
+							value="#{message.PP_LIST_ITEM_ACTION$SEARCH$SEARCH_MODULE_NAME$caption}" /><h:inputText
+							id="LI_MODULE_NAME_SEARCH"
+							title="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_MODULE_NAME_SEARCH$tooltip}"
+							value="#{PP_LIST_ITEM_SEARCH_ACTION.LI_MODULE_NAME_SEARCH}" /></td>
+						<td><h:outputText
+							value="#{message.PP_LIST_ITEM_ACTION$SEARCH$SEARCH_BLOCK_NAME$caption}" /><h:inputText
+							id="LI_BLOCK_NAME_SEARCH"
+							title="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_BLOCK_NAME_SEARCH$tooltip}"
+							value="#{PP_LIST_ITEM_SEARCH_ACTION.LI_BLOCK_NAME_SEARCH}" /></td>
+						<td><h:outputText
+							value="#{message.PP_LIST_ITEM_ACTION$SEARCH$SEARCH_ITEM_NAME$caption}" /><h:inputText
+							id="LI_ITEM_NAME_SEARCH"
+							title="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_ITEM_NAME_SEARCH$tooltip}"
+							value="#{PP_LIST_ITEM_SEARCH_ACTION.LI_ITEM_NAME_SEARCH}" /></td>
+
+						<td><a4j:commandButton styleClass="button"
+							value="#{commonmsg.searchButton$caption}"
+							id="a4link">
+							<a4j:support action="#{PP_LIST_ITEM_SEARCH_ACTION.fetchListItem}"
+								event="onclick" reRender="dataTableId,errorPanel"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{PP_LIST_ITEM_SEARCH_ACTION.DATA}" var="searchValue"
+					cellpadding="5px" rows="10" border="1" width="100%">
+
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+					<rich:column filterBy="#{searchValue.LI_MODULE_NAME}"
+						sortBy="#{searchValue.LI_MODULE_NAME}" filterEvent="onkeyup"
+						filterValue="#{PP_LIST_ITEM_SEARCH_ACTION.LI_MODULE_NAME}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_MODULE_NAME$caption}" />
+						</f:facet>
+						<h:commandLink
+							action="#{PP_LIST_ITEM_SEARCH_ACTION.redirectToListItem}"
+							onclick="document.getElementById('listform:modulename').value='#{searchValue.LI_MODULE_NAME}';">
+							<h:outputText value="#{searchValue.LI_MODULE_NAME} " />
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column filterBy="#{searchValue.LI_BLOCK_NAME}"
+						sortBy="#{searchValue.LI_BLOCK_NAME}" filterEvent="onkeyup"
+						filterValue="#{PP_LIST_ITEM_SEARCH_ACTION.LI_BLOCK_NAME}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_BLOCK_NAME$caption}" />
+						</f:facet>
+						<h:outputText value="#{searchValue.LI_BLOCK_NAME}" />
+					</rich:column>
+
+					<rich:column filterBy="#{searchValue.LI_ITEM_NAME}"
+						sortBy="#{searchValue.LI_ITEM_NAME}" filterEvent="onkeyup"
+						filterValue="#{PP_LIST_ITEM_SEARCH_ACTION.LI_ITEM_NAME}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_ITEM_NAME$caption}" />
+						</f:facet>
+						<h:outputText value="#{searchValue.LI_ITEM_NAME}" />
+					</rich:column>
+
+					<rich:column filterBy="#{searchValue.LI_SYS_PARAM}"
+						sortBy="#{searchValue.LI_SYS_PARAM}" filterEvent="onkeyup"
+						filterValue="#{PP_LIST_ITEM_SEARCH_ACTION.LI_SYS_PARAM}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_SYS_PARAM$caption}" />
+						</f:facet>
+						<h:outputText value="#{searchValue.LI_SYS_PARAM}" />
+					</rich:column>
+
+					<rich:column filterBy="#{searchValue.LI_REMARKS}"
+						sortBy="#{searchValue.LI_REMARKS}" filterEvent="onkeyup"
+						filterValue="#{PP_LIST_ITEM_SEARCH_ACTION.LI_REMARKS}">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_REMARKS$caption}" />
+						</f:facet>
+						<h:outputText value="#{searchValue.LI_REMARKS}" />
+					</rich:column>
+
+				</rich:dataTable>
+				<tr>
+					<td><h:commandButton styleClass="button"
+						value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$CREATE_LIST$caption}"
+						action="#{PP_LIST_ITEM_SEARCH_ACTION.createNewListItem}">
+					</h:commandButton></td>
+				</tr>
+			</h:form></td>
+		</tr>
+		<!-- add footer to the page-->
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+
+</ui:define>
+</ui:composition>

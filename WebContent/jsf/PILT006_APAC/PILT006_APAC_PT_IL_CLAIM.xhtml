@@ -1,0 +1,2763 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="#{sessionScope['GLOBAL.SITE_CODE']}messageProperties_PILT006_APAC" 
+			var="message" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 Handson  On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PT_IL_CLAIM" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+			<style>
+			.stylesetlist li span {
+    float: left;
+    width: 50% !important;    
+}
+.stylesetlist li span .label {
+    float: left;
+   
+    
+}
+
+/* Added by raja on 06-03-2016 FOR RM018T - FSD_IL_ZB Life_013_Underwriting changes */ 
+.mandatory_lableset label{
+float:left;
+}
+.mandatory_lableset .mandatory{
+    font-weight: 400;
+    font-size: 14px;
+    color: #f00;
+} 
+ /* End */
+
+/* Added by saritha on 10-10-2017 for ssp call id ZBLIFE-1445721 */ 
+ .claimantname {
+    width: 90%;
+}
+
+ .mailid {
+    width: 90%;
+}
+
+#Reason_for_rejection textarea {
+    height: 20px;
+}
+/* End */
+
+ </style>
+			
+			
+			<script type="text/javascript"> 
+		
+												   window.onload = function() {
+													   
+												 //  document.getElementById('PT_IL_POLICY:POL_PROD_CODE').focus();
+													   loadDoc();
+													   } 
+
+												   function loadDoc() {
+													   var className = "";
+													  var componentCount = 0;
+													   var xmlObj = null;
+													   if(window.XMLHttpRequest){
+													       xmlObj = new XMLHttpRequest();
+													   } else if(window.ActiveXObject){
+													       xmlObj = new ActiveXObject("Microsoft.XMLHTTP");
+													   } else {
+													       return;
+													   }
+													   xmlObj.onreadystatechange = function()
+													   {
+														      
+														   if(xmlObj.readyState == 4){
+
+																 if(xmlObj.status == 200)
+																	 {
+ 
+														       var hideIds = xmlObj.responseText;
+														     
+ 
+														       
+														       var hideIdsArray = hideIds.split(",")
+														         var hideIdsLength = hideIdsArray.length;
+														       
+														      
+														        
+														    for (var componentId in hideIdsArray) {
+															   
+															     if(componentId == 'each')
+																     {
+ 
+																	break;
+																     }
+															     else
+																     {
+															    	 
+															    	var idValues = hideIdsArray[componentId].split("$$$");
+															    	var componentid = idValues[0];
+																	var liId = idValues[1];
+																	
+																	var defaultValue = idValues[2];
+																	var fieldVisibility = idValues[3];
+																	 
+															    	  if(document.getElementById(liId) != null)
+																    	  {
+															    		  
+																    	  if(fieldVisibility == "1")
+																	    	  {
+																    		  document.getElementById(liId).style.display = "none";
+																		    	 
+																	    		document.getElementById("PT_IL_CLAIM:"+componentid).value = defaultValue;
+																	    	  }
+																    	  else if(fieldVisibility == "2")
+																	    	  {
+																    	  
+																    	
+																    		  componentCount = componentCount + 1;
+																    		  if(document.getElementById(liId+"_LSPAN") != null)
+																    		  {
+																    			 
+																				  var LabelidName = liId+"_LSPAN";
+																    			  var CompidName = liId+"_CSPAN";
+																    			    if((componentCount % 2) == "1")
+																	    			  {
+																		    			    if(className == "")
+																			    			  {
+																		    				  className = "oddrowright";
+																					    	  }
+																    			    	  else
+																	    			    	  {
+																	    			    	  if(className == "oddrowright")
+																		    			    	  {
+																	    			    		  className = "evenrowright";
+																		    			    	  }
+																    			    		  else if(className == "evenrowright")
+																	    			    		  {
+																    			    			  className = "oddrowright";
+																	    			    		  }
+																	    			    		  
+																	    			    	  }  
+																		    	        
+																	    			  }  
+																    			 
+																    			      document.getElementById(LabelidName).className=className;
+																    				  document.getElementById(CompidName).className=className;  
+																	    		  }
+																    		  else
+																	    		  {
+																    			  
+																	    		  }
+																	    	  }
+																    	  }
+															    	   
+																    	
+															    	  
+															    	 
+																     }
+														        
+														    }
+														    	    
+															       
+														       
+													     }
+
+													   }
+													    }
+													    var currentURL = window.location.href;
+													    var currentURLsplit = currentURL.split("/");
+													   
+													    var url = currentURLsplit[0]+"//"+currentURLsplit[1]+"/"+currentURLsplit[2]+"/"+currentURLsplit[3]+"/DynamicPremiaScreen";
+													   
+													    var data="BLOCK_NAME=PT_IL_CLAIM&amp;MODULE_NAME=PILT006_APAC"
+													    xmlObj.open ('POST', url, true);
+													    xmlObj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+													     
+ 
+													    xmlObj.send (data);
+													  }
+													  
+												
+													</script> 
+			
+			<style>
+
+
+.stylesetlist{
+list-style-type:none;
+padding:15px;
+margin:0;
+display: inherit;
+}
+.stylesetlist li{
+float:left;
+width: 50%
+}
+.stylesetlist li span {
+    float: left;
+    width: 45%;
+    padding: 0;
+    padding: 0;
+    display: inline-block;
+    height: 28px;
+}
+</style>
+				<table class="noborder" width="100%">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+
+										<h:commandLink
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_BUT_BACK}"
+											action="#{PILT006_APAC_PT_IL_CLAIM_SEARCH_ACTION.backToSearch}"
+											id="AUTOID_1" immediate="true" rendered="true">
+											<h:commandButton id="AUTOID_2" accesskey="b"
+												image="./../../resources/images/back.png"
+												styleClass="toolbarButtonStyle" />
+											<h:outputText id="AUTOID_3"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+
+										<h:commandLink
+										binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_SAVE_COMMAND_LINK}"
+											action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.saveRecord}"
+											id="AUTOID_4" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="AUTOID_5"
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_SAVE_BUTTON}"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="AUTOID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_8" styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink id="AUTOID_10" rendered="false"
+											action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.deleteAction}"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="AUTOID_11"
+												styleClass="toolbarButtonStyle" accesskey="r"
+												image="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink id="AUTOID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_14" styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="AUTOID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_17" styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="AUTOID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="AUTOID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_20" styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="AUTOID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="AUTOID_22" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_23" styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="AUTOID_24"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILT006_APAC_COMPOSITE_ACTION.navigationEnabled}"
+											id="AUTOID_25" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_26" styleClass="searchimg"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="AUTOID_27"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+
+
+										<h:commandButton id="NAVIGATION_TOOLPRINT_FOOTER1"
+											rendered="false"
+											action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.callReportModalPanel}"
+											styleClass="toolbarButtonStyle"
+											image="./../../resources/images/printer.gif" />
+
+									</rich:toolBarGroup>
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD"
+										location="right">
+										<w:treeWizard
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.wizard}"
+											caption="Claims Entry" id="wizard" rendered="true">
+											<w:treeWizardItem
+												action="#{PILT006_APAC_COMPOSITE_ACTION.callPT_IL_CLAIM}"
+												id="0" label="Claim Entry" mandatory="true"
+												name="claimsEntry" parentId="null" wizardItem="true" />
+											<w:treeWizardItem
+												action="#{PILT006_APAC_COMPOSITE_ACTION.callPT_IL_CLAIM_COVER_DTLS}"
+												id="1" label="Claim Cover Details" mandatory="true"
+												name="claimCoverDetails" parentId="0" wizardItem="true" />
+										<!-- added by gopi for hands on feed back point serail no 16(Provision is required to enter deductibles) on 22/02/17* -->
+										<w:treeWizardItem
+												action="#{PILT006_APAC_COMPOSITE_ACTION.callPT_IL_CLAIM_CHARGES}"
+												id="8" label="Claim Charge" mandatory="true"
+												name="claimCharge" parentId="0" wizardItem="true" />
+										<!-- END -->
+											<w:treeWizardItem
+												action="#{PILT006_APAC_COMPOSITE_ACTION.callPT_IL_CLAIM_ESTIMATE}"
+												id="2" label="Claim Estimate" mandatory="true"
+												name="PILT006_APAC_PT_IL_CLAIM_ESTIMATE" parentId="0"
+												wizardItem="true" />
+											<w:treeWizardItem
+												action="#{PILT006_APAC_COMPOSITE_ACTION.callPM_IL_DOC_TODO_GROUP}"
+												id="5" label="#{message.PILT006_APAC$PT_IL_CLAIM$TODO_TAB$caption}" mandatory="true" name="toDoGroup"
+												parentId="0" wizardItem="true" />
+											<!-- <w:treeWizardItem
+												action="#{PILT006_APAC_COMPOSITE_ACTION.callPT_IL_DOC_TODO_LIST_STATUS}"
+												id="10" label="To Do Lists" mandatory="true" name="toDoList"
+												parentId="5" wizardItem="true" /> -->
+												
+													<!-- Caption changed to Claim Decision by Janani for ZB factory testing feedback on 24.05.2017 caption="Claim Status" -->
+											<w:treeWizardItem
+												action="#{PILT006_APAC_COMPOSITE_ACTION.callPT_IL_CLAIM_STATUS}"
+												id="3" label="Claim Decision" mandatory="true"
+												name="PILT006_APAC_PT_IL_CLAIM_STATUS" parentId="0"
+												wizardItem="true" />
+												
+												<!-- ENd -->
+											<w:treeWizardItem
+												action="#{PILT006_APAC_COMPOSITE_ACTION.callPT_IL_CLAIM_STATUS_2}"
+												id="4" label="Reminders" mandatory="true" name="reminders"
+												parentId="0" wizardItem="true" />
+											<w:treeWizardItem
+												action="#{PILT006_APAC_COMPOSITE_ACTION.callPT_IL_CLAIM_STATUS_3}"
+												id="6" label="Comments" mandatory="true"
+												name="PILT006_APAC_PT_IL_CLAIM_STATUS_3" parentId="0"
+												wizardItem="true" />
+											<w:treeWizardItem
+												action="#{PILT006_APAC_COMPOSITE_ACTION.callPT_IL_FUND_TRAN_DTL}"
+												id="7" label="Fund Details" mandatory="true"
+												name="PILT006_APAC_PT_IL_FUND_TRAN_DTL" parentId="0"
+												wizardItem="true" />
+										</w:treeWizard>
+									</rich:toolBarGroup>
+									<!-- Added by Janani on 13.9.2016 for File_upload -->
+									
+										<h:commandLink id="FILEUPLOAD_TOOL_HEADER" rendered="true"
+											action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.gotoFileUpload}"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="CMD_BTN_FILEUPLOAD_TOOL_HEADER"
+												binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_BUT_DOCUMENTS}"
+												styleClass="toolbarButtonStyle" accesskey="u"
+												image="./../../resources/images/fileupload.gif" />
+											<h:outputText id="TEXT_FILEUPLOAD_TOOL_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_DOCUMENT$caption}" />
+										</h:commandLink>								
+									
+									<!-- end -->	
+									
+										<!-- [ Added for DMS Integration, Added By: Janani, Added Date: 03-Jan-2017] -->
+										<h:commandLink id="DMS_TOOL_HEADER" rendered="true"
+											actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.callReportDmsModalPanel}"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="CMD_BTN_DMS_TOOL_HEADER"
+												styleClass="toolbarButtonStyle" accesskey="u"
+												image="./../../resources/images/fileupload.gif" />
+											<h:outputText id="TEXT_DMS_TOOL_HEADER"
+												styleClass="toolbaroutputTextStyle" value="DMS" />
+										</h:commandLink>
+										<!--[ Added for DMS Integration, Added By: Janani, Added Date: 03-Jan-2017]-->
+									
+									
+									
+									<rich:toolBarGroup>
+										<td><h:outputLabel style="color:black;text-decoration:none"
+											styleClass="toolbarCommandLinkStyle"	
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_POL_NO1$caption}">
+											
+											<!-- Style Modified by Janani on 31.07.2017 for ZBILQC-1733494
+											style="color:blue;align:right"
+											 -->
+											<h:outputText
+												value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_POL_NO}"
+												class="prop_pol_no"
+												 rendered="true" id="polnum" />
+												
+												<!-- End -->
+												
+										</h:outputLabel></td>
+									</rich:toolBarGroup>
+									
+									<rich:toolBarGroup>
+										<td><h:outputLabel styleClass="toolbarCommandLinkStyle" style="color:black;text-decoration:none"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_NO1$caption}">
+											
+											<!-- Style Modified by Janani on 31.07.2017 for ZBILQC-1733494 
+											style="color:blue;align:right" 
+											-->
+											<h:outputText
+												value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_NO}"
+												class="prop_pol_no"
+												rendered="true" id="Claimnum" />
+												
+												<!-- End -->
+												
+										</h:outputLabel></td>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="errormsgtable" width="100%">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.errorMap['current'] !=null? PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.errorMap['current']: PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.globalMsgRender}"
+										styleClass="ErrorMessages" />
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.warningMessages}" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+									
+					<tr>
+						<td align="right" colspan="3" valign="top"><h:commandButton
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_BUT_LOV_ACCNT_PAY_CODE}"
+							id="UI_M_BUT_LOV_ACCNT_PAY_CODE" rendered="false"
+							style="width:96px" styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_LOV_ACCNT_PAY_CODE$tooltip}"
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_LOV_ACCNT_PAY_CODE$caption}" />
+						<rich:spacer height="2" id="AUTOID_28" /> <h:commandButton
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_LOV_BUT_CLAIM_MED_CODE}"
+							id="UI_M_LOV_BUT_CLAIM_MED_CODE" rendered="false"
+							style="width:96px" styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_LOV_BUT_CLAIM_MED_CODE$tooltip}"
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_LOV_BUT_CLAIM_MED_CODE$caption}" />
+						<rich:spacer height="2" id="AUTOID_29" /> <h:commandButton
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_BUT_LOV_PRE_CLM_NO}"
+							id="UI_M_BUT_LOV_PRE_CLM_NO" rendered="false" style="width:96px"
+							styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_LOV_PRE_CLM_NO$tooltip}"
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_LOV_PRE_CLM_NO$caption}" />
+						<rich:spacer height="2" id="AUTOID_30" /><!-- ADDED BY JANANI ON 24.5.2016 -->
+						<!-- added by gopi for ssp call ZBILQC-1721875 on 04/03/17 -->
+						<!-- 
+						commented by Ameen on 16-03-2017 as per Vinoth sugg. to have interface
+						action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.callReportModalPanel}"
+						 -->
+						<h:commandButton
+							action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.busRulButtonAction}"
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.COMP_UI_M_BUS_RUL}"
+							id="UI_M_BUS_RUL" rendered="true" style="width:96px"
+							disabled="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_BUS_RULE_ERROR_MSG_ACTION_BEAN.dataList_PT_IL_CLAIM_BUS_RULE_ERROR_MSG == null ? false : 
+                     (PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_BUS_RULE_ERROR_MSG_ACTION_BEAN.dataList_PT_IL_CLAIM_BUS_RULE_ERROR_MSG.size() >0 ? false : true)}"
+							styleClass="button"
+								title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUS_RUL$tooltip}"
+								value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUS_RUL$caption}" />
+					<!-- End -->	
+					<rich:spacer id="AUTOID_38" width="2px" />	
+					<!-- disable commented by gopi for ssp call ZBILQC-1721875 on 01/08/17 -->
+					<!-- disabled="#{PILT006_APAC_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.DUMMY_BEAN.CS_STATUS_CODE == null ? false : 
+                     (PILT006_APAC_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.DUMMY_BEAN.CS_STATUS_CODE.equals('D05') ? false : true)}" -->
+						<h:commandButton
+							action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.callPrint}"
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_POL_PRINT}"
+							id="UI_M_BUT_PRINT" rendered="false" style="width:96px"
+							
+							styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_PRINT$tooltip}" 
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_PRINT$caption}" />
+						
+						<!-- END -->
+						
+						<!-- Added immediate attribute by Janani on 28.06.2017 for  -->
+						
+						 <h:commandButton
+							action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.preClaimDtlButPressed}"
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_BUT_PRE_CLAIM_DTLS}"
+							id="UI_M_BUT_PRE_CLAIM_DTLS" rendered="true" style="width:96px"
+							styleClass="button" immediate="true"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_PRE_CLAIM_DTLS$tooltip}"
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_PRE_CLAIM_DTLS$caption}" />
+							
+							<!-- End -->
+							
+						<rich:spacer height="2" id="AUTOID_31" /> <h:commandButton
+							action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.freezeButtonPressed}"
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_BUT_FRZ}"
+							id="UI_M_BUT_FRZ" rendered="true" style="width:96px"
+							styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_FRZ$tooltip}"
+							value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.freezCaption}" />
+						 <h:commandButton
+							action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.acctFIRDtlsPressed}"
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_BUTT_ACC_FIR_DTLS}"
+							id="UI_M_BUTT_ACC_FIR_DTLS" rendered="false" style="width:96px"
+							styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUTT_ACC_FIR_DTLS$tooltip}"
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUTT_ACC_FIR_DTLS$caption}" />
+						<rich:spacer height="2" id="AUTOID_33" /> <h:commandButton
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_LOV_BUT_EST_CURR_CODE}"
+							id="UI_M_LOV_BUT_EST_CURR_CODE" rendered="false"
+							style="width:96px" styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_LOV_BUT_EST_CURR_CODE$tooltip}"
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_LOV_BUT_EST_CURR_CODE$caption}" />
+						<rich:spacer height="2" id="AUTOID_34" /> <h:commandButton
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_BUT_EDI_CLIAM_REMARK}"
+							id="UI_M_BUT_EDI_CLIAM_REMARK" rendered="false"
+							style="width:96px" styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_EDI_CLIAM_REMARK$tooltip}"
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_EDI_CLIAM_REMARK$caption}" />
+						 <h:commandButton
+							action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.closeButtonPressed}"
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.COMP_UI_M_BUT_CLOSE}"
+							id="UI_M_BUT_CLOSE" rendered="true" style="width:96px"
+							styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_CLOSE$tooltip}"
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_CLOSE$caption}" />
+						<rich:spacer height="2" id="AUTOID_36" /> <h:commandButton
+							action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.statusChangeButPressed}"
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.COMP_UI_M_BUT_STAUS_CHANGE}"
+							id="UI_M_BUT_STAUS_CHANGE" rendered="true" style="width:96px"
+							styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_STAUS_CHANGE$tooltip}"
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_STAUS_CHANGE$caption}" />
+						<rich:spacer height="2" id="AUTOID_37" /> <h:commandButton
+							action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.settleButtonPressed}"
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.COMP_UI_M_BUT_SETTLEMENT}"
+							id="UI_M_BUT_SETTLEMENT" rendered="true" style="width:96px"
+							styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_SETTLEMENT$tooltip}"
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_SETTLEMENT$caption}" />
+						<rich:spacer height="2" id="AUTOID_40" /> 
+							<a4j:commandButton
+								binding="#{PILT006_APAC_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.COMP_UI_M_BUT_REOPEN}"
+								action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.reopenButPressed}"
+								id="CLAIM_ITERATION_BTN_HEADER" value="ReOpen" style="width:96px"
+								styleClass="button" />
+
+							<rich:componentControl for="CLAIM_ITERATION_PANEL"
+								id="CLAIM_ITERATION_BTN_CONTROL_HEADER"
+								attachTo="CLAIM_ITERATION_BTN_HEADER" operation="show"
+								event="onclick" />
+					<!-- <h:commandButton
+							action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.reopenButtonPressed}"
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.COMP_UI_M_BUT_REOPEN}"
+							id="UI_M_BUT_REOPEN" rendered="true"
+							
+							style="width:96px" styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_REOPEN$tooltip}"
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_REOPEN$caption}" />
+							<rich:componentControl for="CLAIM_ITERATION_PANEL"
+												id="CLAIM_ITERATION_BTN_CONTROL_HEADER"
+												attachTo="CLAIM_ITERATION_HEADER" operation="show"
+												event="onclick" />
+						<rich:spacer height="2" id="AUTOID_41" />  --><h:commandButton
+							action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.policyDtsButPressed}"
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_BUT_POLICY_DTLS}"
+							id="UI_M_BUT_POLICY_DTLS" rendered="true" style="width:96px"
+							styleClass="button"
+							title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_POLICY_DTLS$tooltip}"
+							value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_BUT_POLICY_DTLS$caption}" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel id="FORM_CAPTION"
+									value="#{message.PILT006_APAC$PT_IL_CLAIM$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3">
+						<div id="tablecontainer">
+						<div id="sidebar" style="width: 21%; vertical-align: top">
+						<div align="center" id="handle" style="width: 5%;"><a4j:commandLink
+							actionListener="#{PILT006_APAC_COMPOSITE_ACTION.wizard.toggle}"
+							id="BACK_TOOL_FOOTER1" immediate="true" rendered="true"
+							style="text-decoration:none;align:left"
+							styleClass="toolbarCommandLinkStyle">
+							<img align="left" alt="Click to toggle the sidebar" height="123"
+								onclick="toggleSideBar();"
+								src="./../../resources/images/toggle.jpg" style="border: 0;"
+								width="14" />
+						</a4j:commandLink></div>
+
+						<div id="sbText" style="display: compact;">
+						<div id="linkstable1" style="vertical-align: top; width: 95%">
+						<w:summary binding="#{PILT006_APAC_COMPOSITE_ACTION.comp}"
+							captionClass="testcaption" columns="1" id="S1"
+							title="Claims Details">
+							<w:summaryItem caption="Close Status" id="se1"
+								style="word-wrap: break-word;"
+								value="#{PILT006_APAC_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.DUMMY_BEAN.UI_M_CLOSE_FLAG}" />
+							
+							<!-- Caption changed to Claim Decision by Janani for ZB factory testing feedback on 24.05.2017 caption="Claim Status" -->
+							<w:summaryItem caption="Claim Decision" id="se2"
+								style="word-wrap: break-word;"
+								value="#{PILT006_APAC_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.DUMMY_BEAN.UI_CLAIM_STATUS}" />
+								
+								
+								<!-- End -->
+							<w:summaryItem caption="Additional Status" id="se3"
+								style="word-wrap: break-word;"
+								value="#{PILT006_APAC_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.DUMMY_BEAN.UI_M_CLAIM_ADDL_STATUS}" />
+						</w:summary> <w:treeWizardPanel
+							binding="#{PILT006_APAC_COMPOSITE_ACTION.wizard.wizardPanel}"
+							id="wizardPanel" /></div>
+						</div>
+						</div>
+						<div id="content" style="display: compact; width: 79%;">
+						<table width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td valign="top" width="100%">
+							
+								<ul align="left" class="noborder stylesetlist" id="bordertable"
+									width="100%">
+									<!-- Added by saranya for Hans on point no 11 on 04-02-2017 -->
+													<li id="NEW_IC_NUMBER">
+													<span id="NEW_IC_NUMBER_LSPAN"><h:outputLabel
+																binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_ASSRD_REF_ID1_LABEL}"
+																for="CLAIM_ASSRD_REF_ID1" id="PCI_ASSRD_REF_ID1_LABEL"
+																rendered="true" styleClass="label"
+																value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_ASSRD_REF_ID1$caption}" />
+																<h:graphicImage id="serial_30" style="" styleClass="searchimg"
+														value="./../../images/mandatory.jpg" />
+													</span> 
+													<span id="NEW_IC_NUMBER_CSPAN">
+											<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_ASSRD_REF_ID1}"
+											id="CLAIM_ASSRD_REF_ID1" maxlength="12" rendered="true"
+											required="true" styleClass="input" 
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_ASSRD_REF_ID1$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_ASSRD_REF_ID1}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_ASSRD_REF_ID1}">
+											<!-- <a4j:support
+												actionListener="#{PILT042_APAC_PT_IL_PRE_CLAIMS_INFO_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_33" immediate="true" focus="CLAIM_POL_NO" 
+												reRender="errorPanel,CLAIM_POL_NO,CLAIM_POL_NO_SB" /> -->
+												<a4j:support
+												actionListener="#{PILT042_APAC_PT_IL_PRE_CLAIMS_INFO_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_343" immediate="true"
+												reRender="errorPanel,CLAIM_POL_NO,CLAIM_POL_NO_SB" />
+											</h:inputText>
+												 <rich:suggestionbox for="CLAIM_ASSRD_REF_ID1" height="200"
+													id="CLAIM_ASSRD_REF_ID1_LOV"
+													suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.lovCLAIM_ASSRD_REF_ID1}"
+													var="panelCode" width="250">
+													<h:column id="COLUMN_SUGG_1">
+														<h:outputText id="AUTOID_40_1" value="#{panelCode.code}" />
+													</h:column>
+													<h:column id="COLUMN_SUGG_2">
+														<h:outputText id="AUTOID_41_2" value="#{panelCode.name}" />
+													</h:column>
+													<a4j:support ajaxSingle="true" event="onselect"
+														id="CLAIM_ASSRD_REF_ID1_SUGG_SUPPORT" immediate="true"
+														reRender="errorPanel">
+													</a4j:support>
+												</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_31" styleClass="searchimg"
+													value="./../../resources/images/Lov.gif" /></span></li>
+									<!-- End -->
+
+									<li id="PCI_REF_NO">
+										<span id="PCI_REF_NO_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_PCI_REF_NO_LABEL}"
+											for="CLAIM_PCI_REF_NO" id="CLAIM_PCI_REF_NO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_PCI_REF_NO$caption}" />
+										</span>
+										<span id="PCI_REF_NO_CSPAN">
+										<!-- Added CLAIM_POL_NO_SB,FOCUS SET in reRender by gopi on 14/12/2016 for RM018T - DEV_IL_ZB Life_012a_Claim Exclusions -->
+										<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_PCI_REF_NO}"
+											id="CLAIM_PCI_REF_NO" maxlength="40" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_PCI_REF_NO$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorPCI_REF_NO}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_PCI_REF_NO}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.firePreClmFieldValidation}"
+												event="onblur" id="SUPPORT_CLAIM_PCI_REF_NO_SUP" focus="CLAIM_POL_NO" 
+												reRender="errorPanel,CLAIM_ASSRD_REF_ID1,CLAIM_POL_NO,CLAIM_TYPE,CLAIM_LOSS_DT,CLAIM_INTM_DT,CLAIM_CUST_CODE,CLAIM_ASSR_CODE,UI_M_CLAIM_ASS_NAME
+												,UI_M_CUST_DESC,CLAIM_CLAIMANT_CODE,CLAIM_INT_MOBILE,CLAIM_INT_EMAIL" 
+												/>
+												<!-- Added by saritha on 11-08-2017 for ssp call id ZBILQC-1733746 -->
+												<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.firePreClmFieldValidation}"
+												event="onchange" id="SUPPORT_CLAIM_PCI_REF_NO_SUP_1" focus="CLAIM_POL_NO" 
+												reRender="errorPanel,CLAIM_ASSRD_REF_ID1,CLAIM_POL_NO,CLAIM_TYPE,CLAIM_LOSS_DT,CLAIM_INTM_DT,CLAIM_CUST_CODE,CLAIM_ASSR_CODE,UI_M_CLAIM_ASS_NAME
+												,UI_M_CUST_DESC,CLAIM_CLAIMANT_CODE,CLAIM_INT_MOBILE,CLAIM_INT_EMAIL" 
+												/>
+												<!-- End -->
+										</h:inputText> <rich:suggestionbox for="CLAIM_PCI_REF_NO" height="200"
+											id="CLAIM_PCI_REF_NO_SB" immediate="true"
+											suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PCI_REF_NO_SUGGESTION_LIST}"
+											var="PCI_REF_NO" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_45" value="#{PCI_REF_NO.code}" />
+											</h:column>
+											<!-- Commentted by saritha on 11-08-2017 for ssp call id ZBILQC-1733746 -->
+											<!-- <h:column>
+												<h:outputText id="AUTOID_46" value="#{PCI_REF_NO.name}" />
+											</h:column> -->
+											<!-- End -->
+											<a4j:support
+												action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.setPCI_REF_NO_SUGGESTION_VALUE}"
+												event="onselect" id="SUPPORT_CLAIM_PCI_REF_NO_SB" 
+												 />
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_47" style=""
+											styleClass="searchimg"
+											value="./../../resources/images/Lov.gif" /></span>
+										
+									</li>
+									
+													<li id="CLAIM_POLICY_NO">
+										<span id="CLAIM_POLICY_NO_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_POL_NO_LABEL}"
+											for="CLAIM_POL_NO" id="CLAIM_POL_NO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_POL_NO$caption}" />
+										<h:graphicImage id="AUTOID_48" style="" styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></span>
+										<span id="CLAIM_POLICY_NO_CSPAN">
+										<!-- Changes made in rerender and focus attribute by gopi on 14/12/2016 for RM018T - DEV_IL_ZB Life_012a_Claim Exclusions -->
+										<!-- ajax&rerender Added by saritha on 19-12-2016 RM018T -DEV_IL_ZB Life_015-Lapsation and commission clawback 2 -->
+										<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_POL_NO}"
+											id="CLAIM_POL_NO" maxlength="40" rendered="true"
+											required="true" styleClass="input" 
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_POL_NO$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorPCI_POL_NO}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_POL_NO}">
+											 
+											 <!-- errorPanel is removed from ajax by Janani on 29.06.2017 for ZBILQC-1728704 -->
+											 
+											   <a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorAjaxCLAIM_MEMB_CODE}"
+												event="onblur" id="SUPPORT_CLAIM_POL_NO"  immediate="true"
+												reRender="CLAIM_CUST_CODE,CLAIM_CURR_CODE,CLAIM_ASSR_CODE,CLAIM_ACCNT_PAY_CODE,
+												CLAIM_ASSR_CODE_LOV,CLAIM_POL_NO_SB,UI_M_CUST_DESC,UI_M_CLAIM_ACCNT_PAY_CODE_DESC,
+												UI_M_CLAIM_ASS_NAME,CLAIM_MEMB_CODE,CLAIM_MEMB_CODE_DESC,CLAIM_MEMB_CODE_SB,CLAIM_MEMB_CODE_required,
+												CLAIM_TYPE,CLAIM_DISEASES_CODE,CLAIM_DISEASES_CODE_required,CLAIM_ICD_DISEASES_DTL,ICD_DISEASES_required,
+												CLAIM_ICD_DISEASES_DTL_SUGG,CLAIM_DISEASES_CODE_SUGG"
+												 />
+												 <!-- End -->
+												
+												<!--  ADDED by RAJA ON 07-03-2017 FOR FUNERAL BENEFIT FSD-->
+												<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorAjaxCLAIM_MEMB_CODE}"
+												event="onchange" id="SUPPORT_CLAIM_POL_NO1"  immediate="true" 
+												reRender="errorPanel,CLAIM_CUST_CODE,CLAIM_CURR_CODE,CLAIM_ASSR_CODE,CLAIM_ACCNT_PAY_CODE,
+												CLAIM_ASSR_CODE_LOV,CLAIM_POL_NO_SB,UI_M_CUST_DESC,UI_M_CLAIM_ACCNT_PAY_CODE_DESC,
+												UI_M_CLAIM_ASS_NAME,CLAIM_MEMB_CODE,CLAIM_MEMB_CODE_DESC,CLAIM_MEMB_CODE_SB,CLAIM_MEMB_CODE_required,
+												CLAIM_TYPE,CLAIM_DISEASES_CODE,CLAIM_DISEASES_CODE_required,CLAIM_ICD_DISEASES_DTL,ICD_DISEASES_required,
+												CLAIM_ICD_DISEASES_DTL_SUGG,CLAIM_DISEASES_CODE_SUGG"
+												 /> 
+												<!--  UnCommentted by saranya for Hands on point 11 on 06-02-2017 -->
+												<!-- Commentted by saritha Assured code not defaulting -->
+												<!--  <a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CLAIM_POL_NO_1"
+												reRender="errorPanel,CLAIM_CUST_CODE,CLAIM_CURR_CODE,CLAIM_ASSR_CODE,CLAIM_ACCNT_PAY_CODE,CLAIM_ASSR_CODE_LOV,CLAIM_POL_NO_SB,UI_M_CUST_DESC,UI_M_CLAIM_ACCNT_PAY_CODE_DESC,UI_M_CLAIM_ASS_NAME"
+												immediate="true" /> -->
+												<!-- End -->
+												<!-- End -->
+										</h:inputText> <rich:suggestionbox for="CLAIM_POL_NO" height="200"
+											id="CLAIM_POL_NO_SB" immediate="true"
+											suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.lovClaim_Pol_No}"
+											var="PCI_POL_NO" width="250">
+										<!-- 	<h:column>
+												<h:outputText id="AUTOID_49" value="#{PCI_POL_NO.lovCode}" />
+											</h:column> -->
+											<h:column>
+												<h:outputText id="AUTOID_50" value="#{PCI_POL_NO.CLAIM_POL_NO}" />
+											</h:column>
+											<!-- <a4j:support
+												action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.setPCI_POL_NO_SUGGESTION_VALUE}"
+												event="onselect" id="SUPPORT_CLAIM_POL_NO_SB"
+												immediate="true"
+												oncomplete="setFocus('PT_IL_CLAIM:CLAIM_ASSR_CODE','PT_IL_CLAIM:CLAIM_POL_NO')" /> -->
+
+										</rich:suggestionbox><h:graphicImage id="AUTOID_51" styleClass="searchimg"
+											value="./../../resources/images/Lov.gif" /></span>
+											</li>
+										<li id="CUSTOMER_CODE">
+										<span id="CUSTOMER_CODE_LSPAN">
+										<h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_CUST_CODE_LABEL}"
+											for="CLAIM_CUST_CODE" id="CLAIM_CUST_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_CUST_CODE$caption}" />
+										</span >
+										<span id="CUSTOMER_CODE_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_CUST_CODE}"
+											id="CLAIM_CUST_CODE" maxlength="12" rendered="true"
+											required="false" styleClass="inputsmall" disabled="true"
+											onfocus="currFocus('PT_IL_CLAIM:CLAIM_CUST_CODE')"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_CUST_CODE$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_CUST_CODE}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_CUST_CODE}"
+												event="onchange" id="SUPPORT_CLAIM_CUST_CODE" immediate="true"
+												reRender="errorPanel,UI_M_CUST_DESC,UI_M_CLAIM_ACCNT_PAY_CODE_DESC" />
+										</h:inputText> <rich:suggestionbox for="CLAIM_CUST_CODE" height="200"
+											id="CLAIM_CUST_CODE_SB" immediate="true"
+											suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CUST_CODE_SUGGESTION_LIST}"
+											var="CUST_CODE" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_55"
+													value="#{CUST_CODE.CLAIM_CUST_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_56"
+													value="#{CUST_CODE.UI_M_CUST_DESC}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_57"
+													value="#{CUST_CODE.custFullName}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_58" value="#{CUST_CODE.custICNO}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_59"
+													value="#{CUST_CODE.custAddress}" />
+											</h:column>
+											<a4j:support
+												action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.setCUST_CODE_SUGGESTION_VALUE}"
+												event="onselect" id="SUPPORT_CLAIM_CUST_CODE_SB"
+												immediate="true"
+												oncomplete="setFocus('PT_IL_CLAIM:CLAIM_ASSR_CODE','PT_IL_CLAIM:CLAIM_CUST_CODE')"
+												reRender="errorPanel,UI_M_CUST_DESC" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_CUST_DESC}"
+											disabled="true" id="UI_M_CUST_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_CUST_DESC$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CUST_DESC}" />
+
+										<h:graphicImage id="AUTOID_60" styleClass="searchimg"
+											value="./../../resources/images/Lov.gif" />
+										</span>
+									</li>
+
+									<li id="ASSURED_NAME">
+										<span id="ASSURED_NAME_LSPAN">
+										
+										<h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_ASSR_CODE_LABEL}"
+											for="CLAIM_ASSR_CODE" id="CLAIM_ASSR_CODE_LABEL"
+										
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_ASSR_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_ASSR_CODE" style=""
+											styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></span>
+										<span id="ASSURED_NAME_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_ASSR_CODE}"
+											disabled="true" id="CLAIM_ASSR_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_CLAIM$CLAIM_ASSR_CODE$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_ASSR_CODE}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_ASSR_CODE}">
+											<a4j:support
+												binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CLAIM_ASSR_CODE_AJAX_SUPPORT_level}"
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="CLAIM_ASSR_CODE_AJAX_SUPPORT"
+												immediate="true" reRender="errorPanel,UI_M_CLAIM_ASS_NAME,CLAIM_ASSR_CODE_LOV" />
+												<!-- Added by saritha Assured code not defaulting -->
+											 	<a4j:support
+												binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CLAIM_ASSR_CODE_AJAX_SUPPORT_level}"
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="CLAIM_ASSR_CODE_AJAX_SUPPORT1"
+												immediate="true" reRender="errorPanel,UI_M_CLAIM_ASS_NAME,CLAIM_ASSR_CODE_LOV" />
+												<!-- End -->
+												</h:inputText>
+											<rich:suggestionbox for="CLAIM_ASSR_CODE" height="200"
+												id="CLAIM_ASSR_CODE_LOV" nothingLabel="No Values Found"
+												suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.lovCLAIM_ASSR_CODE}"
+												var="panelCode" width="250">
+												<h:column id="COLUMN_SUGG_1">
+													<h:outputText id="AUTOID_40" value="#{panelCode.lovCode}" />
+												</h:column>
+												<h:column id="COLUMN_SUGG_2">
+													<h:outputText id="AUTOID_41" value="#{panelCode.lovName}" />
+												</h:column>
+												<a4j:support ajaxSingle="true" event="onselect"
+													id="CLAIM_ASSR_CODE_SUGG_SUPPORT" immediate="true"
+													reRender="errorPanel,UI_M_CLAIM_ASS_NAME">
+													<f:setPropertyActionListener id="AUTOID_42"
+														target="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_ASS_NAME}"
+														value="#{panelCode.name}" />
+												</a4j:support>
+											</rich:suggestionbox>
+										 <h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_CLAIM_ASS_NAME}"
+											disabled="true" id="UI_M_CLAIM_ASS_NAME" maxlength="30"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_CLAIM_ASS_NAME$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_ASS_NAME}" />
+											<h:graphicImage id="IMAGE_SUGG_3" styleClass="searchimg"
+												value="./../../images/Lov.gif" /></span>
+											</li>
+										<li id="ACCOUNT_PAY_CODE">
+										<span id="ACCOUNT_PAY_CODE_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_ACCNT_PAY_CODE_LABEL}"
+											for="CLAIM_ACCNT_PAY_CODE" id="CLAIM_ACCNT_PAY_CODE_LABEL"
+											oninputfocus="currFocus('PT_IL_CLAIM:CUST_CODE')"
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_ACCNT_PAY_CODE$caption}" />
+										</span>
+										<span id="ACCOUNT_PAY_CODE_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_ACCNT_PAY_CODE}"
+											id="CLAIM_ACCNT_PAY_CODE" maxlength="12" rendered="true"
+											required="false" styleClass="inputsmall" disabled="true"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_ACCNT_PAY_CODE$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_ACCNT_PAY_CODE}">
+											<!-- sujatha comented for temporarily and defaulting the customer code itself in this field 
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_ACCNT_PAY_CODE}" 
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_ACCNT_PAY_CODE}"
+												event="onblur" id="SUPPORT_CLAIM_ACCNT_PAY_CODE"
+												immediate="true"
+												reRender="UI_M_CLAIM_ACCNT_PAY_CODE_DESC, CLAIM_TYPE" />-->
+										</h:inputText> <h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_CLAIM_ACCNT_PAY_CODE_DESC}"
+											disabled="true" id="UI_M_CLAIM_ACCNT_PAY_CODE_DESC"
+											maxlength="240" rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_CLAIM_ACCNT_PAY_CODE_DESC$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_ACCNT_PAY_CODE_DESC}" />
+										<rich:suggestionbox for="CLAIM_ACCNT_PAY_CODE" height="200"
+											id="CLAIM_ACCNT_PAY_CODE_SB" immediate="true"
+											suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.ACCNT_PAY_CODE_SUGGESTION_LIST}"
+											var="ACCNT_PAY_CODE" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_61" value="#{ACCNT_PAY_CODE.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_62" value="#{ACCNT_PAY_CODE.name}" />
+											</h:column>
+											<a4j:support
+												action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.setACCNT_PAY_CODE_SUGGESTION_VALUE}"
+												event="onselect" id="SUPPORT_CLAIM_ACCNT_PAY_CODE_SB"
+												immediate="true"
+												reRender="errorPanel,UI_M_CLAIM_ACCNT_PAY_CODE_DESC" />
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_63" styleClass="searchimg"
+											value="./../../resources/images/Lov.gif" /></span>
+									</li>
+
+									
+										<li id="CLAIM_TYPE">
+										<span id="CLAIM_TYPE_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_TYPE_LABEL}"
+											for="CLAIM_TYPE" id="CLAIM_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_TYPE$caption}" />
+										<h:graphicImage id="AUTOID_67" style="" styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></span>
+										<span id="CLAIM_TYPE_CSPAN"><!-- 
+										Modified by Ram on 26/11/2016 for Claim type Others issue
+										<h:selectOneMenu
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_TYPE}"
+											id="CLAIM_TYPE" rendered="true" required="true"
+											styleClass="input"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_TYPE}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_TYPE}">
+											<f:selectItems
+												value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CLAIM_TYPE_LIST}" />
+											<a4j:support 
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_TYPE}"											
+												event="onblur" id="SUPPORT_CLAIM_TYPE" 
+												reRender="CLAIM_TYPE,CLAIM_MED_CODE,UI_M_CLAIM_MED_CODE_NAME,CLAIM_MED_CODE_SB,errorPanel,CLAIM_DIS_CERT_DT_LABEL,CLAIM_DIS_CERT_DT,
+														  CLAIM_MED_EXP_DT_LABEL,CLAIM_MED_EXP_DT,CLAIM_SICKNESS_DT_LABEL,CLAIM_SICKNESS_DT">
+											</a4j:support>
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.whenListChangedClaimType}"
+												event="onblur" id="SUPPORT_CLAIM_TYPE1" immediate="true"
+												reRender="CLAIM_TYPE, CLAIM_MED_CODE, UI_M_CLAIM_MED_CODE_NAME,CLAIM_MED_CODE_SB, errorPanel">
+											</a4j:support>
+										</h:selectOneMenu> -->
+										<!-- Modified by saranya (value as claim_type_cpy to claim_type) -->
+										
+										<!-- Added CLAIM_MED_CODE_required in rerender by Janani on 16.06.2017 for ZBILQC-1723136  -->
+										
+										
+										<h:selectOneMenu
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_TYPE}"
+											id="CLAIM_TYPE" rendered="true"
+											styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_TYPE$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_TYPE}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_TYPE}">
+											<f:selectItems
+												value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CLAIM_TYPE_LIST}" />
+											<a4j:support 
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"											
+												event="onchange" id="SUPPORT_CLAIM_TYPE" immediate="true"
+												reRender="CLAIM_TYPE,CLAIM_MED_CODE,UI_M_CLAIM_MED_CODE_NAME,CLAIM_MED_CODE_SB,errorPanel,CLAIM_DIS_CERT_DT_LABEL,CLAIM_DIS_CERT_DT,
+														  CLAIM_MED_EXP_DT_LABEL,CLAIM_MED_EXP_DT,CLAIM_SICKNESS_DT_LABEL,CLAIM_SICKNESS_DT,CLAIM_LOSS_DT_LABEL,CLAIM_MED_CODE_required,CLAIM_HOSP_DSCHG_DT,CLAIM_HOSP_ADDM_DT,CLAIM_HOSP_DSCHG_DT_required,CLAIM_HOSP_ADDM_DT_required">
+											</a4j:support>
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.whenListChangedClaimType}"
+												event="onblur" id="SUPPORT_CLAIM_TYPE1" immediate="true"
+												reRender="CLAIM_TYPE,CLAIM_MED_CODE,UI_M_CLAIM_MED_CODE_NAME,CLAIM_MED_CODE_SB, errorPanel,CLAIM_LOSS_DT_LABEL,CLAIM_MED_CODE_required,CLAIM_HOSP_DSCHG_DT,CLAIM_HOSP_ADDM_DT,CLAIM_HOSP_DSCHG_DT_required,CLAIM_HOSP_ADDM_DT_required">
+											</a4j:support>
+										</h:selectOneMenu>
+										
+										<!-- End -->
+										
+										<!-- End -->
+										</span>
+									</li>
+									
+									
+									<!-- Field is moved next to claim type and made mandatory by Janani on 16.06.2017 for ZBILQC-1723136 -->
+									
+									<li id="MEDICAL_CODE">
+										<span id="MEDICAL_CODE_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_MED_CODE_LABEL}"
+											for="CLAIM_MED_CODE" id="CLAIM_MED_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_MED_CODE$caption}" />
+											<h:outputText id="CLAIM_MED_CODE_required"
+																			styleClass="mandatory"
+																			value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_MED_CODE.required?'*':'' }" />
+										</span>
+										<span id="MEDICAL_CODE_CSPAN">
+										
+										
+										<!-- Modified by Janani on 17.06.2017 for ZBILQC-1723136 -->
+										
+										<!-- <h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_MED_CODE}"
+											id="CLAIM_MED_CODE" maxlength="12" rendered="true"
+											styleClass="inputsmall" disabled="false"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_MED_CODE$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_MED_CODE}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_MED_CODE}" />
+										<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_CLAIM_MED_CODE_NAME}"
+											disabled="true" id="UI_M_CLAIM_MED_CODE_NAME" maxlength="200"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_CLAIM_MED_CODE_NAME$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_MED_CODE_NAME}" />
+										<rich:suggestionbox for="CLAIM_MED_CODE" height="200"
+											id="CLAIM_MED_CODE_SB" immediate="true"
+											suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CLAIM_MED_CODE_SUGGESTION_LIST}"
+											var="MED_CODE" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_64" value="#{MED_CODE.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_65" value="#{MED_CODE.name}" />
+											</h:column>
+											<a4j:support
+												action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.setCLAIM_MED_CODE_SUGGESTION_VALUE}"
+												event="onselect" id="SUPPORT_CLAIM_MED_CODE_SB"
+												immediate="true"
+												reRender="errorPanel,UI_M_CLAIM_MED_CODE_NAME" />
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_66" styleClass="searchimg"
+											value="./../../resources/images/Lov.gif" /> -->
+											
+											
+											
+											
+											<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_MED_CODE}"
+											id="CLAIM_MED_CODE" maxlength="12" rendered="true"
+											styleClass="inputsmall" disabled="false"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_MED_CODE$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_MED_CODE}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_MED_CODE}" >
+											
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.firefieldValidation}"
+												event="onblur" id="SUPPORT_CLAIM_MED_CODE"
+												reRender="errorPanel,UI_M_CLAIM_MED_CODE_NAME"
+												immediate="true" />
+												
+													<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.firefieldValidation}"
+												event="onselect" id="SUPPORT_CLAIM_MED_CODE_1"
+												reRender="errorPanel,UI_M_CLAIM_MED_CODE_NAME"
+												immediate="true" />
+												</h:inputText>
+											
+										<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_CLAIM_MED_CODE_NAME}"
+											disabled="true" id="UI_M_CLAIM_MED_CODE_NAME" maxlength="200"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_CLAIM_MED_CODE_NAME$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_MED_CODE_NAME}" />
+										<rich:suggestionbox for="CLAIM_MED_CODE" height="200"
+											id="CLAIM_MED_CODE_SB" immediate="true"
+											suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CLAIM_MED_CODE_SUGGESTION_LIST}"
+											var="MED_CODE" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_64" value="#{MED_CODE.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_65" value="#{MED_CODE.name}" />
+											</h:column>
+											<a4j:support
+												action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.setCLAIM_MED_CODE_SUGGESTION_VALUE}"
+												event="onselect" id="SUPPORT_CLAIM_MED_CODE_SB"
+												immediate="true"
+												reRender="errorPanel,UI_M_CLAIM_MED_CODE_NAME">
+												<f:setPropertyActionListener id="AUTOID_debit2"
+									target="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_MED_CODE_NAME}"
+									value="#{MED_CODE.name}" />
+									</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_66" styleClass="searchimg"
+											value="./../../resources/images/Lov.gif" />
+											
+											<!-- End -->
+											
+											</span>
+										</li>
+									
+									<!-- End -->
+									
+									
+									<!-- added by gopi for hand on feed back point,serial no 15 in zb on 01/02/17 -->
+									<li id="DISEASES">
+									<span id="CLAIM_DISEASES" >
+									<h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DISEASES_CODE_LABEL}"
+											for="CLAIM_DISEASES_CODE" id="CLAIM_DISEASES_CODE_LABEL"
+											 rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_DISEASES_CODE$caption}" />
+											<h:outputText id="CLAIM_DISEASES_CODE_required"
+											styleClass="mandatory"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DISEASES_CODE.required?'*':'' }" />
+										</span>
+										<span id="CLAIM_DISEASES_INPUT">
+										<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DISEASES_CODE}"
+											id="CLAIM_DISEASES_CODE" maxlength="40" rendered="true"
+											required="false" styleClass="inputsmall"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_DISEASES_CODE$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_DISEASES_CODE}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_DISEASES_CODE}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CLAIM_DISEASES_CODE"
+												reRender="errorPanel,UI_M_CLAIM_DISEASES_CODE_DESC,CLAIM_DISEASES_CODE_SUGG,CLAIM_DISEASES_REMARKS"
+												immediate="true" focus="CLAIM_DISEASES_REMARKS"/>
+												</h:inputText> 
+												<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_CLAIM_DISEASES_CODE}"
+											disabled="true" id="UI_M_CLAIM_DISEASES_CODE_DESC"
+											maxlength="240" rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_CLAIM_DISEASES_CODE_DESC$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_DISEASES_CODE_DESC}" />
+										<rich:suggestionbox for="CLAIM_DISEASES_CODE" height="200"
+											id="CLAIM_DISEASES_CODE_SUGG" immediate="true"
+											suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.lovCLAIM_DISEASES_CODE}"
+											var="PCI_REF_NO" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_45_11" value="#{PCI_REF_NO.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_46_11" value="#{PCI_REF_NO.name}" />
+											</h:column>
+										<a4j:support ajaxSingle="true" 
+										event="onselect"
+									id="CLAIM_DISEASES_CODE_DESC_SUPPORT" immediate="true"
+									reRender="errorPanel,UI_M_CLAIM_DISEASES_CODE_DESC">
+									<f:setPropertyActionListener id="AUTOID_debit20"
+									target="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_DISEASES_CODE_DESC}"
+									value="#{PCI_REF_NO.name}" />
+									</a4j:support>
+									</rich:suggestionbox> 
+									<h:graphicImage id="AUTOID_47_222" style=""
+											styleClass="searchimg"
+											value="./../../resources/images/Lov.gif" /></span>
+										</li>
+										<!-- end -->
+										<!-- added by gopi for hand on feed back point,serial no 15 in zb on 01/02/17 --> 
+									<li id="DISEASES_REMARK">
+									<span class="evenrowright" width="20%">
+									<h:outputLabel
+									binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DISEASES_REMARKS_LABEL}"
+									for="CLAIM_DISEASES_REMARKS" id="CLAIM_DISEASES_REMARKS_LABEL" 
+									styleClass="label" rendered="true"
+									value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_DISEASES_REMARKS$caption}" />
+									</span>
+									<span class="evenrow" width="100%"><h:inputText
+									binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DISEASES_REMARKS}"
+									id="CLAIM_DISEASES_REMARKS"  
+									required="false" rendered="true"
+									title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_DISEASES_REMARKS$tooltip}"
+									validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateDISEASES_REMARKS}"
+									value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_DISEASES_REMARKS}" />
+									</span>
+									</li>
+													<!-- end -->
+													
+													
+																										
+													
+													<!-- Added by Janani on 07.04.2017 as per Girish suggestion for hands-on-feedback point Claims Entry- Setup --> 
+										<li id="ICD_DISEASES">
+									<span id="CLAIM_ICD_DISEASES" >
+									<h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_ICD_DISEASES_DTL_LABEL}"
+											for="CLAIM_ICD_DISEASES_DTL" id="CLAIM_ICD_DISEASES_DTL_LABEL"
+											 rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_ICD_DISEASES_DTL$caption}" />
+											<h:outputText id="ICD_DISEASES_required"
+											styleClass="mandatory"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_ICD_DISEASES_DTL.required?'*':'' }" />
+										</span>
+										<span id="CLAIM_ICD_DISEASES_INPUT">
+										
+										<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_ICD_DISEASES_DTL}"
+											id="CLAIM_ICD_DISEASES_DTL" maxlength="40" rendered="true"
+											required="false" styleClass="inputsmall"
+											disabled="false"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_ICD_DISEASES_DTL$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_ICD_DISEASES_DTL}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_ICD_DISEASES_DTL}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CLAIM_ICD_DISEASES_DTL"
+												reRender="errorPanel,UI_M_CLAIM_ICD_DISEASES_DTL_DESC,CLAIM_ICD_DISEASES_DTL_SUGG,CLAIM_LOSS_DT"
+												immediate="true" focus="CLAIM_LOSS_DT"/>
+												</h:inputText> 
+												<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_CLAIM_ICD_DISEASES_DTL}"
+											disabled="true" id="UI_M_CLAIM_ICD_DISEASES_DTL_DESC"
+											maxlength="240" rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_CLAIM_ICD_DISEASES_DTL_DESC$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_ICD_DISEASES_DTL_DESC}" />
+										<rich:suggestionbox for="CLAIM_ICD_DISEASES_DTL" height="200"
+											id="CLAIM_ICD_DISEASES_DTL_SUGG" immediate="true"
+											suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.lovCLAIM_ICD_DISEASES_DTL}"
+											var="DISEASES_DTL_sugg" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_ICD_45_11" value="#{DISEASES_DTL_sugg.code}" />
+																							
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_ICD_46_11" value="#{DISEASES_DTL_sugg.name}" />
+											</h:column>
+										<a4j:support ajaxSingle="true" 
+										event="onselect"
+									id="CLAIM_ICD_DISEASES_DTL_DESC_SUPPORT" immediate="true"
+									reRender="errorPanel,UI_M_CLAIM_ICD_DISEASES_DTL_DESC">
+									<f:setPropertyActionListener id="AUTOID_ICD_debit20"
+									target="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_ICD_DISEASES_DTL_DESC}"
+									value="#{DISEASES_DTL_sugg.name}" />
+									</a4j:support>
+									</rich:suggestionbox> 
+									<h:graphicImage id="AUTOID_ICD_47_222" style=""
+											styleClass="searchimg"
+											value="./../../resources/images/Lov.gif" />
+										
+										
+										
+										</span>
+										</li>
+										
+										<!-- End -->
+													
+													
+													
+													
+									<li id="LOSS_DATE">
+									
+									
+								
+										<span id="LOSS_DATE_LSPAN">
+										
+											<!--Label value Commented & Added by Janani for SSP call ZBILQC-1721205 on 06.03.2017 -->
+									
+											<!-- value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_LOSS_DT$caption}" -->
+										
+										
+										<h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_LOSS_DT_LABEL}"
+											for="CLAIM_LOSS_DT" id="CLAIM_LOSS_DT_LABEL" rendered="true"
+											styleClass="label"
+											 value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CLAIM_LOSS_DT_LABEL}"/>
+											 
+											 <!-- End -->
+											 
+										<h:graphicImage id="AUTOID_68" style="" styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></span>
+										<!-- onfocus removed by gopi for hand on feed back point,serial no 15 in zb on 02/02/17 -->
+										<!-- Added by Saritha 09-Dec-2016 for RM018T - DEV_IL_ZB Life_012b_Claims waiting period v1.0.doc-->
+										<!--  ADDED A4J:SUPPORT by RAJA ON 07-03-2017 FOR FUNERAL BENEFIT FSD-->
+										<span id="LOSS_DATE_CSPAN"><rich:calendar
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_LOSS_DT}"
+											datePattern="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.datePattern}"
+											enableManualInput="true" id="CLAIM_LOSS_DT"
+											inputClass="calendarinput" inputSize="17" rendered="true"
+											required="false" style="height:px;width:px;"
+											styleClass="calendarstyleclass"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_LOSS_DT$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_LOSS_DT}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorClaimLossDate}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_LOSS_DATE}"
+												event="oninputchanged" id="SUPPORT_CLAIM_LOSS_DT" required="false"
+												immediate="true" reRender="errorPanel,REPORT_MODAL_PANEL_DELETE">
+											</a4j:support>
+											 <a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_LOSS_DATE}"
+												event="oninputblur" id="SUPPORT_CLAIM_LOSS_DT1"
+												immediate="true"
+												onsubmit="formatDate('PT_IL_CLAIM:CLAIM_LOSS_DT')"
+												reRender="errorPanel,REPORT_MODAL_PANEL_DELETE">
+											</a4j:support>  
+										<!-- End -->
+										</rich:calendar></span>
+										</li>
+										<li></li>
+										<li id="CLAIM_INTEMATION_DATE">
+										<span id="CLAIM_INTEMATION_DATE_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_INTM_DT_LABEL}"
+											for="CLAIM_INTM_DT" id="CLAIM_INTM_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_INTM_DT$caption}" />
+										</span>
+										<span id="CLAIM_INTEMATION_DATE_CSPAN"><rich:calendar
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_INTM_DT}"
+											datePattern="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.datePattern}"
+											enableManualInput="true" id="CLAIM_INTM_DT"
+											inputClass="calendarinput" inputSize="17" rendered="true"
+											required="false" style="height:px;width:px;"
+											styleClass="calendarstyleclass"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_INTM_DT$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorIntimationDate}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_INTM_DT}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="SUPPORT_CLAIM_INTM_DT"
+												immediate="true" reRender="errorPanel" />
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="oninputblur" id="SUPPORT_CLAIM_INTM_DT1"
+												immediate="true"
+												onsubmit="formatDate('PT_IL_CLAIM:CLAIM_INTM_DT')"
+												reRender="errorPanel" />
+										</rich:calendar></span>
+									</li>
+
+<!-- /*Added by R Raja on 24.01.2017 for RM018T - FSD_IL_ZB Life_010-Maximum Funeral  Benefit Limit*/ -->
+									<li id="CLAIM_MEMB_CODE">
+										<span id="CLAIM_MEMB_CODE_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_MEMB_CODE_LABEL}"
+											for="CLAIM_MEMB_CODE" id="CLAIM_MEMB_CODE_LABEL"
+											style="float:left"
+											rendered="true" styleClass="label" 
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_MEMB_CODE$caption}" />
+											<h:outputText id="CLAIM_MEMB_CODE_required"
+											styleClass="mandatory"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_MEMB_CODE.required?'*':'' }" />
+										</span>
+										<!-- validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_MEMB_CODE}" -->
+										<span id="CLAIM_MEMB_CODE_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_MEMB_CODE}"
+											id="CLAIM_MEMB_CODE" maxlength="40" rendered="true"
+											required="false" styleClass="inputsmall" disabled="true"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_DISEASES_CODE$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorGETTING_CLAIM_MEMB_CODE}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_MEMB_CODE}">
+											
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_MEMB_CODE}"
+												event="onchange" id="SUPPORT_CLAIM_DISEASES_CODE1"
+												reRender="errorPanel"
+												immediate="true" />
+												<!-- Added by saritha on 07-11-2017 for ssp call id ZBLIFE-1445282 -->
+												 <a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_MEMB_CODE}"
+												event="onblur" id="SUPPORT_CLAIM_DISEASES_CODE2"
+												reRender="errorPanel"
+												immediate="true" /> 
+												<!-- End -->
+												</h:inputText> 
+												<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_MEMB_CODE_DESC}"
+											disabled="true" id="CLAIM_MEMB_CODE_DESC"
+											maxlength="240" rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_MEMB_CODE_DESC$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_MEMB_CODE_DESC}" />
+										<rich:suggestionbox for="CLAIM_MEMB_CODE" height="200"
+											id="CLAIM_MEMB_CODE_SB" immediate="true"
+											suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CLAIM_MEMB_CODE_SUGGESTION_LIST}"
+											var="PCI_REF_NO" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_45_11" value="#{PCI_REF_NO.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_46_11" value="#{PCI_REF_NO.name}" />
+											</h:column>
+										<a4j:support ajaxSingle="true" 
+										event="onselect"
+									id="CLAIM_DISEASES_CODE_DESC_SUPPORT" immediate="true"
+									reRender="errorPanel,CLAIM_MEMB_CODE_DESC">
+									<f:setPropertyActionListener id="AUTOID_debit20"
+									target="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_MEMB_CODE_DESC}"
+									value="#{PCI_REF_NO.name}" />
+									</a4j:support>
+									</rich:suggestionbox> 
+									<h:graphicImage id="CLAIM_MEMB_CODE_DESC_AUTOID_47_222" style=""
+											styleClass="searchimg"
+											value="./../../resources/images/Lov.gif" />
+											</span>
+										</li>
+										<!-- end -->
+
+
+									<li id="LOCAL_RLA_AMOUNT">
+										<span id="LOCAL_RLA_AMOUNT_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_LC_RLA_AMOUNT_LABEL}"
+											for="CLAIM_LC_RLA_AMOUNT" id="CLAIM_LC_RLA_AMOUNT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_LC_RLA_AMOUNT$caption}" />
+										</span>
+										<span id="LOCAL_RLA_AMOUNT_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_LC_RLA_AMOUNT}"
+											id="CLAIM_LC_RLA_AMOUNT" maxlength="15" rendered="true"
+											required="false" styleClass="inputNumeric" disabled="true"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_LC_RLA_AMOUNT$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorClaimRLAAmount}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_LC_RLA_AMOUNT}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CLAIM_LC_RLA_AMOUNT"
+												immediate="true" reRender="errorPanel,CLAIM_LC_RLA_AMOUNT">
+											</a4j:support>
+
+										</h:inputText></span>
+										</li>
+									<li id="CLAIM_NUMBER">
+										<span id="CLAIM_NUMBER_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_NO_LABEL}"
+											for="CLAIM_NO" id="CLAIM_NO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_NO$caption}" />
+										<h:graphicImage id="AUTOID_CLAIM_NO" style=""
+											styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></span>
+										<span id="CLAIM_NUMBER_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_NO}"
+											id="CLAIM_NO" maxlength="40" rendered="true" required="false"
+											styleClass="input" disabled="true"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_NO$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorClaimNumber}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_NO}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CLAIM_NO" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></span>
+									</li>
+
+									<li id="CURR_CODE">
+										<span id="CURR_CODE_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_CURR_CODE_LABEL}"
+											for="CLAIM_CURR_CODE" id="CLAIM_CURR_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_CURR_CODE$caption}" />
+										</span>
+										<span id="CURR_CODE_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_CURR_CODE}"
+											id="CLAIM_CURR_CODE" maxlength="12" rendered="true"
+											required="false" styleClass="inputsmall"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_CURR_CODE$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCLAIM_CURR_CODE}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_CURR_CODE}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CLAIM_CURR_CODE" immediate="true"
+												reRender="UI_M_CLAIM_CURR_CODE_DESC, errorPanel,CLAIM_CURR_CODE_SB" />
+										</h:inputText> <rich:suggestionbox for="CLAIM_CURR_CODE" height="200"
+											id="CLAIM_CURR_CODE_SB" immediate="true"
+											suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CLAIM_CURR_CODE_SUGGESTION_LIST}"
+											var="CURR_CODE" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_69" value="#{CURR_CODE.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_70" value="#{CURR_CODE.name}" />
+											</h:column>
+											<a4j:support
+												action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.setCLAIM_CURR_CODE_SUGGESTION_VALUE}"
+												event="onselect" id="SUPPORT_CLAIM_CURR_CODE_SB"
+												immediate="true"
+												reRender="errorPanel,UI_M_CLAIM_CURR_CODE_DESC" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_CLAIM_CURR_CODE_DESC}"
+											disabled="true" id="UI_M_CLAIM_CURR_CODE_DESC"
+											maxlength="240" rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_CLAIM_CURR_CODE_DESC$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_CURR_CODE_DESC}" />
+										<h:graphicImage id="AUTOID_71" styleClass="searchimg"
+											value="./../../resources/images/Lov.gif" /></span>
+											</li>
+									<li id="REF_NO">
+										<span id="REF_NO_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_REF_NO_LABEL}"
+											for="CLAIM_REF_NO" id="CLAIM_REF_NO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_REF_NO$caption}" />
+										</span>
+										<span id="REF_NO_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_REF_NO}"
+											id="CLAIM_REF_NO" maxlength="30" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_REF_NO$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorClaimRefNumber}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_REF_NO}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CLAIM_REF_NO" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></span>
+
+									</li>
+
+									<li id="CLAIM_CURRENT_DATE">
+										<span id="CLAIM_CURRENT_DATE_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_CR_DT_LABEL}"
+											for="CLAIM_CR_DT" id="CLAIM_CR_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_CR_DT$caption}" />
+										</span>
+										<span id="CLAIM_CURRENT_DATE_CSPAN">
+										
+										<!-- validator added & ajax changed by Janani onb 16.06.2017 for ZBILQC-1723136 -->
+										
+										<rich:calendar
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_CR_DT}"
+											datePattern="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.datePattern}"
+											enableManualInput="true" id="CLAIM_CR_DT"
+											inputClass="calendarinput" inputSize="17" rendered="true" 
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_CR_DT$tooltip}"
+											required="false" style="height:px;width:px;"
+											styleClass="calendarstyleclass"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorCreationDate}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_CR_DT}">
+											<a4j:support event="oninputblur" id="AUTOID_72"
+											actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+											immediate="true"
+												onsubmit="formatDate('PT_IL_CLAIM:CLAIM_CR_DT')" 
+												reRender="errorPanel" />
+												
+												<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="SUPPORT_CLAIM_CR_DT"
+												immediate="true" reRender="errorPanel" />
+																		
+												
+										</rich:calendar>
+										<!-- End -->
+										
+										</span>
+										</li>
+										<!--Commented CLAIM_POL_VALID by pidugu raj dt: 23-10-2020 as suggested by Abhilash for Alliance IL -->
+									<!-- <li id="CLAIM_POL_VALID">
+										<span id="CLAIM_POL_VALID_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_POL_VALID_YN_LABEL}"
+											for="CLAIM_POL_VALID_YN" id="CLAIM_POL_VALID_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_POL_VALID_YN$caption}" />
+										</span>
+										
+										<span id="CLAIM_POL_VALID_CSPAN"><h:selectOneMenu
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_POL_VALID_YN}"
+											id="CLAIM_POL_VALID_YN" rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_POL_VALID_YN$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_POL_VALID_YN}">
+											<f:selectItems
+												value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.POLICY_VALID_LIST}" />
+										</h:selectOneMenu></span>
+									</li> -->
+									<!--EndCommented CLAIM_POL_VALID by pidugu raj dt: 23-10-2020 as suggested by Abhilash for Alliance IL -->
+									<li id="RESV_AMT">
+										<span id="RESV_AMT_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_RESV_AMT_LABEL}"
+											for="CLAIM_RESV_AMT" id="CLAIM_RESV_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_RESV_AMT$caption}" />
+										</span>
+										<span id="RESV_AMT_CSPAN">
+										
+										<!-- Disabled by Janani on 16.06.2017 for ZBILQC-1723136 -->
+										
+										<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_RESV_AMT}"
+											id="CLAIM_RESV_AMT" maxlength="19" rendered="true" disabled="true"
+											required="false" styleClass="inputNumeric"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_RESV_AMT$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_RESV_AMT}" />
+											
+											<!-- End -->
+											
+										</span>
+										</li>
+									<li id="WOP_UTIL_AMT">
+										<span id="WOP_UTIL_AMT_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_UTIL_AMT_LABEL}"
+											for="CLAIM_UTIL_AMT" id="CLAIM_UTIL_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_UTIL_AMT$caption}" />
+										</span>
+										<span id="WOP_UTIL_AMT_CSPAN">
+										
+										<!-- Disabled by Janani on 16.06.2017 for ZBILQC-1723136 -->
+										<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_UTIL_AMT}"
+											id="CLAIM_UTIL_AMT" maxlength="19" rendered="true" disabled="true"
+											required="false" styleClass="inputNumeric"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_UTIL_AMT$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_UTIL_AMT}" />
+											
+											<!-- End -->
+											
+										</span>
+									</li>
+									<!-- Added dy sankara narayanan for Hospital Cash Ploan on 26/04/2017 -->
+									<li id="HOSP_ADDM_DT">
+										<span id="HOSP_ADDM_DT_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_HOSP_ADDM_DT_LABEL}"
+											for="CLAIM_HOSP_ADDM_DT" id="CLAIM_HOSP_ADDM_DT_LABEL"
+											rendered="true" styleClass="label" 
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_HOSP_ADDM_DT$caption}" />
+											<h:outputText id="CLAIM_HOSP_ADDM_DT_required"
+											styleClass="mandatory"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_HOSP_ADDM_DT.required?'*':'' }" />
+											</span>
+										<span id="HOSP_ADDM_DT_CSPAN"><rich:calendar
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_HOSP_ADDM_DT}"
+											datePattern="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.dateAndTimePatternNew}"
+											enableManualInput="true" id="CLAIM_HOSP_ADDM_DT"
+											inputClass="calendarinputNew" inputSize="17" rendered="true"
+											required="false" style="height:px;width:px;"
+											styleClass="calendarstyleclass" disabled="false"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_HOSP_ADDM_DT$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_HOSP_ADDM_DT}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_HOSP_ADDM_DT}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="SUPPORT_CLAIM_HOSP_ADDM_DT"
+												immediate="true" reRender="errorPanel">
+											</a4j:support>
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="oninputblur" id="SUPPORT_CLAIM_HOSP_ADDM_DT1"
+												immediate="true"
+											
+												reRender="errorPanel">
+											</a4j:support>
+										</rich:calendar></span>
+									</li>
+									<li id="DSCHG_DT">
+										<span id="DSCHG_DT_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_HOSP_DSCHG_DT_LABEL}"
+											for="CLAIM_HOSP_DSCHG_DT" id="CLAIM_HOSP_DSCHG_DT_LABEL" rendered="true"
+											styleClass="label" disabled="false"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_HOSP_DSCHG_DT$caption}" />
+												<h:outputText id="CLAIM_HOSP_DSCHG_DT_required"
+											styleClass="mandatory"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_HOSP_DSCHG_DT.required?'*':'' }" />
+										</span>
+										<span id="DSCHG_DT_CSPAN"><rich:calendar
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_HOSP_DSCHG_DT}"
+											datePattern="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.dateAndTimePatternNew}"
+											enableManualInput="true" id="CLAIM_HOSP_DSCHG_DT"
+											inputClass="calendarinputNew" inputSize="17" rendered="true"
+											required="false" style="height:px;width:px;" popup="true"
+											styleClass="calendarstyleclass" disabled="false"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_HOSP_DSCHG_DT$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_HOSP_DSCHG_DT}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_HOSP_DSCHG_DT}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="SUPPORT_CLAIM_HOSP_DSCHG_DT"
+												immediate="true" reRender="errorPanel" />
+											
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="oninputblur" id="SUPPORT_CLAIM_HOSP_DSCHG_DT1"
+												immediate="true"
+												onsubmit="formatDate('PT_IL_CLAIM:CLAIM_HOSP_DSCHG_DT')"
+												reRender="errorPanel">
+											</a4j:support>
+										</rich:calendar>
+										</span>
+									</li>
+									
+									
+									
+									<!-- end -->
+									<li id="CLAIM_REMARK">
+										<span id="CLAIM_REMARK_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_REMARKS_LABEL}"
+											for="CLAIM_REMARKS" id="CLAIM_REMARKS_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_REMARKS$caption}" />
+											<h:outputText id="CLAIM_REMARKS_required"
+													styleClass="mandatory"
+													value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_REMARKS.required?'*':'' }" />
+										</span>
+										<span id="CLAIM_REMARK_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_REMARKS}"
+											id="CLAIM_REMARKS" maxlength="240" rendered="true"
+											required="true" styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_REMARKS$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_REMARKS}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_REMARKS}" >
+											
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="CLAIM_REMARKS_AJAX1" immediate="true"
+												reRender="errorPanel" />
+											</h:inputText>
+										</span>
+										</li>
+									<!-- <li id="CLAIM_DISABILITY">
+										<span id="CLAIM_DISABILITY_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DISABILTY_LABEL}"
+											for="CLAIM_DISABILTY" id="CLAIM_DISABILTY_LABEL"
+											rendered="true" styleClass="label" value="Disability" /></span>
+										<span id="CLAIM_DISABILITY_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DISABLITY}"
+											id="CLAIM_DISABILTY" maxlength="240" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_REMARKS$tooltip}"
+											value="" /></span>
+									</li> -->
+									<!-- Added by gopi on 14/12/2016 for RM018T - DEV_IL_ZB Life_012a_Claim Exclusions   -->
+									
+										<li id="CLAIM_DISABILITY">
+										<span class="oddrowright"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DISABILTY_LABEL}"
+											for="CLAIM_DISABILTY" id="CLAIM_DISABILTY_LABEL"
+											 rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_DISABILTY$caption}" />
+											<h:graphicImage id="AUTOID_DISABILITY_TYPE" style=""
+											styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" />
+										</span>
+										<!-- Added by saritha on 01-02-2017 event onchange to change onblur -->
+										
+										
+										<span class="oddrow"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DISABLITY}"
+											id="CLAIM_DISABILTY" maxlength="40" rendered="true"
+											required="false" styleClass="inputsmall"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_REMARKS$tooltip}"
+
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_EXCL_TYP}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorDisability_type}"
+												event="onblur" id="SUPPORT_CLAIM_DISABILTY"
+												reRender="errorPanel,UI_M_CLAIM_EXCL_TYP_DESC,REPORT_MODAL_PANEL_DISABILITY,UI_M_BUT_CLOSE,
+												UI_M_BUT_FRZ,UI_M_BUT_SETTLEMENT,CLAIM_ITERATION_BTN_HEADER,CLAIM_REASON_LABEL,CLAIM_REASON,CLM_EXCL_YN,1"
+												immediate="true" />
+												<!-- Commentted by saritha on 01-02-2017 for All Disablity type choosing Invalid Disablity type error coming -->
+												<!-- <a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorDisability_type}"
+												event="onchange" id="TWO_SUPPORT_CLAIM_DISABILTY"
+												reRender="errorPanel,UI_M_CLAIM_EXCL_TYP_DESC,REPORT_MODAL_PANEL_DISABILITY,UI_M_BUT_CLOSE,
+												UI_M_BUT_FRZ,UI_M_BUT_SETTLEMENT,CLAIM_ITERATION_BTN_HEADER,CLAIM_REASON_LABEL,CLAIM_REASON"
+												immediate="true" /> -->
+												<!-- Added by saritha on 01-02-2017 for Disability Type -->
+												<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validatorDisability_type}"
+												event="onselect" id="three_SUPPORT_CLAIM_DISABILTY"
+												reRender="errorPanel,UI_M_CLAIM_EXCL_TYP_DESC,REPORT_MODAL_PANEL_DISABILITY,UI_M_BUT_CLOSE,
+												UI_M_BUT_FRZ,UI_M_BUT_SETTLEMENT,CLAIM_ITERATION_BTN_HEADER,CLAIM_REASON_LABEL,CLAIM_REASON,CLM_EXCL_YN,1"
+												immediate="true" />
+												<!-- End -->
+												
+												</h:inputText> 
+												<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_CLAIM_EXCL_TYP}"
+											disabled="true" id="UI_M_CLAIM_EXCL_TYP_DESC"
+											maxlength="240" rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_CLAIM_EXCL_TYP_DESC$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_EXCL_TYP_DESC}" />
+										<rich:suggestionbox for="CLAIM_DISABILTY" height="200"
+											id="CLAIM_DISABILTY_NEW" immediate="true"
+											suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.DISABILITY_TYPE_SUGGESTION_LIST}"
+											var="PCI_REF_NO" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_45_1" value="#{PCI_REF_NO.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_46_1" value="#{PCI_REF_NO.name}" />
+											</h:column>
+										<a4j:support ajaxSingle="true" 
+										event="onselect"
+									id="POAD_source_of_buss_SUPPORT" immediate="true"
+									reRender="errorPanel,UI_M_CLAIM_EXCL_TYP_DESC">
+									<f:setPropertyActionListener id="AUTOID_debit2"
+									target="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_EXCL_TYP_DESC}"
+									value="#{PCI_REF_NO.name}" />
+									</a4j:support>
+									</rich:suggestionbox> 
+									<h:graphicImage id="AUTOID_47_22" style=""
+											styleClass="searchimg"
+											value="./../../resources/images/Lov.gif" /></span>
+										
+										
+										
+										</li>
+										
+										<!-- end -->
+										<!-- added by raja on 13-05-2017 -->
+										<li id="CLM_EXCL_YN">
+										<span id="CLM_EXCL_YN_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLM_EXCL_YN_LABEL}"
+											for="CLM_EXCL_YN" id="CLM_EXCL_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLM_EXCL_YN$caption}" />
+										</span>
+										
+										<span id="CLM_EXCL_YN_CSPAN"><h:selectOneMenu
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLM_EXCL_YN}"
+											id="CLM_EXCL_YN" rendered="true" required="false"
+											styleClass="input" disabled="true"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLM_EXCL_YN$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLM_EXCL_YN}">
+											<f:selectItems
+												value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CLM_EXCL_YN_LIST}" />
+										</h:selectOneMenu></span>
+									</li>
+										
+										<!-- end -->
+										
+									<li id="DIS_CERT_DT">
+										<span id="DIS_CERT_DT_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DIS_CERT_DT_LABEL}"
+											for="CLAIM_DIS_CERT_DT" id="CLAIM_DIS_CERT_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_DIS_CERT_DT$caption}" />
+										</span>
+										<span id="DIS_CERT_DT_CSPAN"><rich:calendar
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DIS_CERT_DT}"
+											datePattern="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.datePattern}"
+											enableManualInput="true" id="CLAIM_DIS_CERT_DT"
+											inputClass="calendarinput" inputSize="17" 
+											rendered="true"
+											required="false" 
+											styleClass="calendarstyleclass" disabled="true"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_DIS_CERT_DT$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_DIS_CERT_DT}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="SUPPORT_DIS_CERT_DT"
+												immediate="true" reRender="errorPanel" />
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_DIS_CERT_DT}"
+												event="oninputchanged" id="SUPPORT_CLAIM_DIS_CERT_DT"
+												immediate="true" reRender="errorPanel">
+											</a4j:support>
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_DIS_CERT_DT}"
+												event="oninputblur" id="SUPPORT_CLAIM_DIS_CERT_DT1"
+												immediate="true"
+												onsubmit="formatDate('PT_IL_CLAIM:CLAIM_DIS_CERT_DT')"
+												reRender="errorPanel">
+											</a4j:support>
+										</rich:calendar></span>
+										</li>
+									<li id="MED_EXP_DT">
+										<span id="MED_EXP_DT_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_MED_EXP_DT_LABEL}"
+											for="CLAIM_MED_EXP_DT" id="CLAIM_MED_EXP_DT_LABEL"
+											rendered="true" styleClass="label" 
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_MED_EXP_DT$caption}" /></span>
+										<span id="MED_EXP_DT_CSPAN"><rich:calendar
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_MED_EXP_DT}"
+											datePattern="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.datePattern}"
+											enableManualInput="true" id="CLAIM_MED_EXP_DT"
+											inputClass="calendarinput" inputSize="17" rendered="true"
+											required="false" style="height:px;width:px;"
+											styleClass="calendarstyleclass" disabled="true"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_MED_EXP_DT$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_MED_EXP_DT}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="SUPPORT_MED_EXP_DT"
+												immediate="true" reRender="errorPanel" />
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_MED_EXP_DT}"
+												event="oninputchanged" id="SUPPORT_CLAIM_MED_EXP_DT"
+												immediate="true" reRender="errorPanel">
+											</a4j:support>
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_MED_EXP_DT}"
+												event="oninputblur" id="SUPPORT_CLAIM_MED_EXP_DT1"
+												immediate="true"
+												onsubmit="formatDate('PT_IL_CLAIM:CLAIM_MED_EXP_DT')"
+												reRender="errorPanel">
+											</a4j:support>
+										</rich:calendar></span>
+									</li>
+									<li id="SICKNESS_DT">
+										<span id="SICKNESS_DT_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_SICKNESS_DT_LABEL}"
+											for="CLAIM_SICKNESS_DT" id="CLAIM_SICKNESS_DT_LABEL" rendered="true"
+											styleClass="label" disabled="false"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_SICKNESS_DT$caption}" />
+										</span>
+										<span id="SICKNESS_DT_CSPAN"><rich:calendar
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_SICKNESS_DT}"
+											datePattern="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.datePattern}"
+											enableManualInput="true" id="CLAIM_SICKNESS_DT"
+											inputClass="calendarinput" inputSize="17" rendered="true"
+											required="false" style="height:px;width:px;"
+											styleClass="calendarstyleclass" disabled="true"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_SICKNESS_DT$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_SICKNESS_DT}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="SUPPORT_SICKNESS_DT"
+												immediate="true" reRender="errorPanel" />
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_SICKNESS_DT}"
+												event="oninputchanged" id="SUPPORT_CLAIM_SICKNESS_DT"
+												immediate="true" reRender="errorPanel">
+											</a4j:support>
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_SICKNESS_DT}"
+												event="oninputblur" id="SUPPORT_CLAIM_SICKNESS_DT1"
+												immediate="true"
+												onsubmit="formatDate('PT_IL_CLAIM:CLAIM_SICKNESS_DT')"
+												reRender="errorPanel">
+											</a4j:support>
+										</rich:calendar>
+										</span>
+									</li>
+									<!--Added by gopi on 14/12/2016 for RM018T - DEV_IL_ZB Life_012a_Claim Exclusions    --> 
+									<li id="Reason_for_rejection">
+									<span class="evenrowright" width="20%"><h:outputLabel
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_REASON_LABEL}"
+														for="CLAIM_REASON" id="CLAIM_REASON_LABEL" 
+														 styleClass="label" rendered="true"
+														value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_REASON_FOR_REJECTION$caption}" />
+													</span>
+													<span class="evenrow" width="100%"><h:inputTextarea
+													binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_REASON}"
+													
+														id="CLAIM_REASON" maxlength="100" cols="27"
+														required="false" rendered="true"
+														title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_REASON$tooltip}"
+														validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validRejection}"
+														value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_EXCL_REASON}">
+														<a4j:support
+															actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="PMED_MED_DESCT_a4jSupport"
+															immediate="true">
+														</a4j:support>
+													</h:inputTextarea></span>
+													</li>
+													<!-- added by gopi for ssp call id ZBILQC-1721875 on 21/06/17 -->
+													
+													<!-- Commentted and modified by saritha on 09-10-2017 for ssp call id ZBLIFE-1445721 -->
+													
+													<!-- <li id="Claimant_CODE">
+										<span id="Claimant_CODE_LSPAN">
+										<h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIMANT_CODE_LABEL}"
+											for="CLAIMANT_CODE" id="CLAIMANT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIMANT_CODE$caption}" />
+											<h:graphicImage id="CLAIMANT_MANTORY" style="" styleClass="searchimg"
+														value="./../../images/mandatory.jpg" />
+										</span >
+										<span id="CLAIMANT_CODE_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIMANT_CODE}"
+											id="CLAIMANT_CODE" rendered="true"
+											required="false" styleClass="inputsmall"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIMANT_CODE$tooltip}" 
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIMANT_CODE}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_CLAIMANT_CODE}">
+											actionListener added by saritha on 08-07-2017 for ssp call id ZBILQC-1730887
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.actionListenerCLAIMANT_CODE}"
+												event="onblur" id="SUPPORT_CLAIMANT_CODE" immediate="false"
+												reRender="errorPanel,UI_M_CLAIMANT_DESC,CLAIMANT_CODE" />
+											    End 
+										</h:inputText> <rich:suggestionbox for="CLAIMANT_CODE" height="200"
+											id="CLAIMANT_CODE_SB" immediate="true"
+											suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.lovCLAIMANT_COD}"
+											var="CUST_CODE" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_555"
+													value="#{CUST_CODE.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_566"
+													value="#{CUST_CODE.name}" />
+											</h:column>
+							
+												<a4j:support  event="onselect"
+																		id="POL_CUST_CODE_SUGG_SUPPORT" immediate="true"
+																		reRender="errorPanel,UI_M_CLAIMANT_DESC">
+																		<f:setPropertyActionListener id="AUTOID_50"
+																			target="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_CLAIMANT_CODE_DESC}"
+																			value="#{CUST_CODE.name}" />
+																	</a4j:support>
+												
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_UI_M_CLAIM_CLAIMANT_CODE_DESC}"
+											disabled="true" id="UI_M_CLAIMANT_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_CLAIMANT_DESC$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.UI_M_CLAIM_CLAIMANT_CODE_DESC}" />
+
+										<h:graphicImage id="AUTOID_600" styleClass="searchimg"
+											value="./../../resources/images/Lov.gif" />
+										</span>
+									</li> -->
+									
+									 <li id="CLAIMANT_CODE">
+										<span id="CLAIMANT_CODE_LSPAN">
+										<h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIMANT_CODE_LABEL}"
+											for="CLAIM_CLAIMANT_CODE" id="CLAIMANT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_CLAIMANT_CODE$caption}" />
+											<h:graphicImage id="CLAIMANT_MANTORY" style="" styleClass="searchimg"
+														value="./../../images/mandatory.jpg" />
+										</span >
+										<span id="CLAIMANT_CODE_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIMANT_CODE}"
+											id="CLAIM_CLAIMANT_CODE" maxlength="100" rendered="true"
+											required="false" styleClass="input claimantname"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_CLAIMANT_CODE$tooltip}" 
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIMANT_CODE}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_CLAIMANT_CODE}">
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CLAIMANT_CODE" immediate="false"
+												reRender="errorPanel,CLAIMANT_CODE" />
+												<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_CLAIMANT_CODE_1" immediate="false"
+												reRender="errorPanel,CLAIMANT_CODE" />
+										</h:inputText> 
+										</span>
+									</li> 
+									<li id="CLAIMANT_MOBILE">
+										<span id="CLAIMANT_MOBILE_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_INT_MOBILE_LABEL}"
+											for="CLAIM_INT_MOBILE" id="CLAIM_INT_MOBILE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_INT_MOBILE$caption}" />
+										</span>
+										<span id="CLAIMANT_MOBILE_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_INT_MOBILE}"
+											disabled="false" 
+											id="CLAIM_INT_MOBILE" maxlength="20" rendered="true"
+											required="false" styleClass="input" 
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_INT_MOBILE$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_INT_MOBILE}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_INT_MOBILE}" />
+										</span>
+									</li>
+									<li id="CLAIMANT_EMAIL">
+										<span id="CLAIMANT_EMAIL_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_INT_EMAIL_LABEL}"
+											for="CLAIM_INT_EMAIL" id="CLAIM_INT_EMAIL_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_INT_EMAIL$caption}" />
+										</span>
+										<span id="CLAIMANT_EMAIL_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_INT_EMAIL}"
+											disabled="false" 
+											id="CLAIM_INT_EMAIL" maxlength="100" rendered="true"
+											required="false" styleClass="input mailid " 
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_INT_EMAIL$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_INT_EMAIL}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_INT_EMAIL}" >
+											<f:validator validatorId="emailValidator" />
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="style_312K11"
+												immediate="true" reRender="errorPanel" />
+												<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="style_312K21"
+												immediate="true" reRender="errorPanel" />
+											</h:inputText>
+										</span>
+									</li>
+									
+									<li id="LI_CLAIM_DTH_CERTI_NO">
+										<span id="CLAIM_DTH_CERTI_NO_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DTH_CERTI_NO_LABEL}"
+											for="CLAIM_DTH_CERTI_NO" id="CLAIM_DTH_CERTI_NO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_DTH_CERTI_NO$caption}" />
+										</span>
+										<span id="CLAIMANT_MOBILE_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_DTH_CERTI_NO}"
+											disabled="false" 
+											id="CLAIM_DTH_CERTI_NO" rendered="true"
+											required="false" styleClass="input" 
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_DTH_CERTI_NO$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_DTH_CERTI_NO}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_DTH_CERTI_NO}" />
+										</span>
+									</li>
+									<li id="LS_CLAIM_BURIAL_PERMIT_NO">
+										<span id="CLAIM_BURIAL_PERMIT_NO_LSPAN"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_BURIAL_PERMIT_NO_LABEL}"
+											for="CLAIM_BURIAL_PERMIT_NO" id="CLAIM_BURIAL_PERMIT_NO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_BURIAL_PERMIT_NO$caption}" />
+										</span>
+										<span id="CLAIM_BURIAL_PERMIT_NO_CSPAN"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_BURIAL_PERMIT_NO}"
+											disabled="false" 
+											id="CLAIM_BURIAL_PERMIT_NO"  rendered="true"
+											required="false" styleClass="input" 
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_BURIAL_PERMIT_NO$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.validateCLAIM_BURIAL_PERMIT_NO}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_BURIAL_PERMIT_NO}" />
+										</span>
+									</li>
+													
+													<!-- end -->
+													
+													
+													<!-- end -->
+											<!-- Added by gopi for Hands on feed back point num 16 in ZB on 16/02/2017 -->
+													<!-- <li id="HOSPITAL_FEE">
+										<span class="evenrowright">
+										<h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_FEE_HOSPITALS_LABEL}"
+											for="CLAIM_FEE_HOSPITALS" id="CLAIM_FEE_HOSPITALS_LABEL" rendered="true" styleClass="label" 
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_FEE_HOSPITALS$caption}"/>
+									</span>
+										<span class="evenrow">
+										<h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_FEE_HOSPITALS}"
+											id="CLAIM_FEE_HOSPITALS" maxlength="16"
+											rendered="true" required="false"
+											styleClass="inputNumeric"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_FEE_HOSPITALS$tooltip}"
+											validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.ValidateCLAIM_FEE_HOSPITALS}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_FEE_HOSPITALS}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CLAIM_HOSPITALS_FEE" immediate="true"
+												reRender="errorPanel" />
+											</h:inputText>
+										</span>
+										</li> -->
+									<!-- End -->				
+													
+									<!-- 
+									<li>
+										
+									</li>
+									<li>
+										<span class="evenrowright"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_LC_RISK_PREM_LABEL}"
+											for="CLAIM_LC_RISK_PREM" id="CLAIM_LC_RISK_PREM_LABEL"
+											rendered="false" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_LC_RISK_PREM$caption}" />
+										</span>
+										<span class="evenrow"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_LC_RISK_PREM}"
+											 id="CLAIM_LC_RISK_PREM" maxlength="17"
+											rendered="false" required="false" styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_LC_RISK_PREM$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_LC_RISK_PREM}">
+
+										</h:inputText></span>
+										<span class="evenrowright"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_LC_WAK_AMT_LABEL}"
+											for="CLAIM_LC_WAK_AMT" id="CLAIM_LC_WAK_AMT_LABEL"
+											rendered="false" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_LC_WAK_AMT$caption}" />
+										</span>
+										<span class="evenrow"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_LC_WAK_AMT}"
+											 id="CLAIM_LC_WAK_AMT" maxlength="16"
+											rendered="false" required="false" styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_LC_WAK_AMT$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_LC_WAK_AMT}">
+
+										</h:inputText></span>
+									</li>
+									<li>
+										<span class="oddrowright"><h:outputLabel
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_LC_SERV_FEE_LABEL}"
+											for="CLAIM_LC_SERV_FEE" id="CLAIM_LC_SERV_FEE_LABEL"
+											rendered="false" styleClass="label"
+											value="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_LC_SERV_FEE$caption}" />
+										</span>
+										<span class="oddrow"><h:inputText
+											binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_LC_SERV_FEE}"
+											 id="CLAIM_LC_SERV_FEE" maxlength="16"
+											rendered="false" required="false" styleClass="input"
+											title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_LC_SERV_FEE$tooltip}"
+											value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_LC_SERV_FEE}">
+
+										</h:inputText></span>
+									</li> -->
+								</ul>
+								
+								</td>
+							</tr>
+						</table>
+						</div>
+						</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.saveRecord}"
+									id="AUTOID_74" rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:commandButton id="AUTOID_75" styleClass="toolbarButtonStyle"
+										accesskey="s" image="./../../resources/images/save.gif" />
+									<h:outputText id="AUTOID_76"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="AUTOID_77" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_78" styleClass="searchimg"
+										value="./../../resources/images/savenext.GIF" />
+									<h:outputText id="AUTOID_79"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="AUTOID_80" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_81" styleClass="searchimg"
+										value="./../../resources/images/firstrec.gif" />
+									<h:outputText id="AUTOID_82"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="AUTOID_83" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_84" styleClass="searchimg"
+										value="./../../resources/images/prevpage.gif" />
+									<h:outputText id="AUTOID_85"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="AUTOID_86" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_87" styleClass="searchimg"
+										value="./../../resources/images/nextpage.gif" />
+									<h:outputText id="AUTOID_88"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="AUTOID_89" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_90" styleClass="searchimg"
+										value="./../../resources/images/lastRecord.gif" />
+									<h:outputText id="AUTOID_91"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="AUTOID_92" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_93" styleClass="searchimg"
+										value="./../../resources/images/navigation.gif" />
+									<h:outputText id="AUTOID_94"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+							<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM"
+								location="right">
+								<w:wizardPanelFooter
+									binding="#{PILT006_APAC_COMPOSITE_ACTION.wizard.wizardPanelFooter}" />
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+				<table class="noborder" width="100%">
+				</table>
+
+			</h:form>
+			<!-- ReOpen Confirmation -->
+			<!-- ReOpen Panel -->
+
+			<rich:modalPanel id="CLAIM_ITERATION_PANEL" width="500" height="300">
+				<f:facet name="header">
+					<h:panelGroup>
+						<h:outputText value="Claim ReOpen"></h:outputText>
+					</h:panelGroup>
+				</f:facet>
+
+				<f:facet name="controls">
+					<h:panelGroup>
+						<h:graphicImage value="./../../resources/images/close.png"
+							style="cursor:pointer" id="CLAIM_ITERATION_PANEL_hidelink" />
+						<rich:componentControl for="CLAIM_ITERATION_PANEL"
+							id="CLAIM_ITERATION_POP_CONTROL"
+							attachTo="CLAIM_ITERATION_PANEL_hidelink" operation="hide"
+							event="onclick" />
+					</h:panelGroup>
+				</f:facet>
+
+				<h:form id="test_id">
+					<table align="center" width="100%">
+						<tr align="center">
+							<td><!-- Error Display -->
+							<div class="errormessagebox" style="height: 50px;"><h:outputText
+								id="CLAIM_ITERATION_MESSAGE" styleClass="label"
+								value="Claim ReOpen" /></div>
+							</td>
+						</tr>
+						<tr>
+							<td>
+							<table width="100%">
+								<tr>
+									<td width="25%"><h:outputLabel id="reopen_date_label"
+										value="ReOpen Date" /></td>
+									<td><rich:calendar cellHeight="5px" jointPoint="top-right"
+										verticalOffset="-12"
+										binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_REOPEN_DT}"
+										datePattern="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.datePattern}"
+										enableManualInput="true" id="CLAIM_REOPEN_DT" disabled="false"
+										inputClass="calendarinput" inputSize="12" rendered="true"
+										required="true" styleClass="calendarstyleclass"
+										direction="top"
+										value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_REOPEN_DT}">
+
+									</rich:calendar></td>
+								</tr>
+								<tr>
+									<td width="25%"><h:outputLabel
+										id="CLAIM_REOPEN_REASON_LABEL" value="ReOpen Reason" /></td>
+									<td>
+									
+									<!-- Changed to Textarea by Janani on 14.06.2017 for ZBILQC-1723180 -->
+									<!-- <h:inputText -->
+									<h:inputTextarea
+										binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CLAIM_REOPEN_REASON}"
+										id="CLAIM_REOPEN_REASON" maxlength="4000" rendered="true"
+										required="false" styleClass="input" disabled="false"
+										title="#{message.PILT006_APAC$PT_IL_CLAIM$CLAIM_REOPEN_REASON$tooltip}"
+										value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.PT_IL_CLAIM_BEAN.CLAIM_REOPEN_REASON}" />
+										
+										<!-- End -->
+									</td>
+								</tr>
+							</table>
+							</td>
+						</tr>
+						<tr align="center">
+							<td><rich:separator id="CLAIM_ITERATION_BTNS_SEP"
+								width="100%" height="1px"></rich:separator> <a4j:commandButton
+								value="Ok"
+								action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.reopenButtonPressed}"
+								styleClass="button" style="width:90px"
+								id="CLAIM_ITERATION_PANEL_OK_BUTTON">
+								<rich:componentControl for="CLAIM_ITERATION_PANEL"
+									id="CLAIM_ITERATION_OK_CONTROL"
+									attachTo="CLAIM_ITERATION_PANEL_OK_BUTTON" operation="hide"
+									event="onclick" />
+							</a4j:commandButton> <rich:spacer id="CLAIM_ITERATION_BTNS_SPAC" height="20px"
+								width="5px"></rich:spacer> <a4j:commandButton value="Cancel"
+								styleClass="button" style="width:90px"
+								id="CLAIM_ITERATION_PANEL_CANCEL_BUTTON" immediate="true">
+								<rich:componentControl for="CLAIM_ITERATION_PANEL"
+									id="CLAIM_ITERATION_CANCEL_CONTROL"
+									attachTo="CLAIM_ITERATION_PANEL_CANCEL_BUTTON" operation="hide"
+									event="onclick" />
+							</a4j:commandButton></td>
+						</tr>
+					</table>
+				</h:form>
+			</rich:modalPanel>
+
+
+			<!-- ADDED BY AKASH FOR REPORT -->
+
+			<rich:modalPanel id="REPORT_MODAL_PANEL" height="110" width="300"
+				binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_REPORT_MODAL_PANEL}">
+				<f:facet name="header">
+					<h:panelGroup>
+						<h:outputText
+							value="#{commonmsg.IP_REP_INFO$DOCUMENT_PRINT$caption}" />
+					</h:panelGroup>
+				</f:facet>
+				<f:facet name="controls">
+					<h:panelGroup>
+						<h:form id="FT_REPORT_MODAL_PANEL_1">
+							<h:commandLink immediate="true" id="CLOSE_LINK"
+								action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.cancelModalPanel}">
+								<h:graphicImage value="./../../resources/images/close.png"
+									styleClass="toolbarImageStyle" style="cursor:pointer"
+									id="REPORT_MODAL_PANEL_hidelink" />
+							</h:commandLink>
+						</h:form>
+					</h:panelGroup>
+				</f:facet>
+				<h:form id="FT_REPORT_MODAL_PANEL_2">
+					<table width="100%">
+						<tr>
+							<td align="center"><h:outputText id="CONFIRMATION_MSG"
+								style="font-size: 14px;"
+								value="#{commonmsg.IP_REP_INFO$CONFIRMATION_MSG$caption}" /></td>
+						</tr>
+						<tr>
+							<td><rich:spacer id="SPACER_MODAL_1" width="100%;"
+								height="18px" /> <rich:separator id="SEPARATOR" width="100%"
+								height="1px" /></td>
+						</tr>
+						<tr>
+							<td align="center"><h:panelGroup>
+							
+							
+							
+							<!-- Modified by Janani on 07.12.2017 for ZB - DMS -->
+							
+								<!-- <h:commandLink immediate="true" id="PRINT_LINK" target="_blank"
+									action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.runActionAfterValidate}"> -->
+									
+									<h:commandLink immediate="true" id="PRINT_LINK" target="_blank"
+									action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.dms_runActionAfterValidate}">
+									
+									<!-- End -->
+									<a4j:commandButton reRender="REPORT_MODAL_PANEL,CLM_EXCL_YN"
+										action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.cancelModalPanel}"
+										id="OK_BUTTON" styleClass="button" style="width:70px;"
+										value="#{commonmsg.IP_REP_INFO$OK_BUTTON$caption}" />
+
+								</h:commandLink>
+							</h:panelGroup> <rich:spacer id="SPACER_MODAL_2" width="5px;" /> <a4j:commandButton
+								binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CANCEL_BUTTON}"
+								id="CANCEL_BUTTON" styleClass="button" style="width:70px;"
+								action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.cancelModalPanel}"
+								reRender="REPORT_MODAL_PANEL"
+								value="#{commonmsg.IP_REP_INFO$CANCEL_BUTTON$caption}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</rich:modalPanel>
+
+			<!-- ADDED BY AKASH FOR REPORT -->
+			<!-- Added by gopi on 09.11.2016for RM018T - DEV_IL_ZB Life_012a_Claim Exclusions   -->
+
+			<!-- Disability field while onchange ok & cancel PAnel START  -->
+
+			<rich:modalPanel id="REPORT_MODAL_PANEL_DISABILITY" height="170"
+				width="400"
+				binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_REPORT_MODAL_PANEL_DISABILITY}">
+				<f:facet name="header">
+					<h:panelGroup>
+						<h:outputLabel
+							value="Disability" />
+					</h:panelGroup>
+				</f:facet>
+				<f:facet name="controls">
+					<h:panelGroup>
+						<h:form id="FT_REPORT_MODAL_DISABILITY_PANEL_1"
+							onkeypress="return event.keyCode != 13">
+							<h:commandLink immediate="true" id="CLOSE_LINK"
+								action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.cancelModalPanelDelete}">
+								<h:graphicImage value="./../../resources/images/close.png"
+									styleClass="toolbarImageStyle" style="cursor:pointer"
+									id="REPORT_MODAL_PANEL_hidelink" />
+							</h:commandLink>
+						</h:form>
+					</h:panelGroup>
+				</f:facet>
+				<h:form id="FT_REPORT_MODAL_DISABILITY_PANEL_2"
+					onkeypress="return event.keyCode != 13">
+					<table width="100%">
+						<tr>
+							<td align="center"><h:outputText id="CONFIRMATION_MSG"
+									style="font-size: 14px;" 
+									binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_DISABILITY_DEATH_SUICIDE}"
+									value="Selected reason fall under excluded  reasons list.Do you want to proceed further?" /></td>
+						</tr>
+						<tr>
+							<td><rich:spacer id="SPACER_MODAL_1" width="100%;"
+									height="18px" /> <rich:separator id="SEPARATOR" width="100%"
+									height="1px" /></td>
+						</tr>
+						<tr>
+							<td align="center"><h:panelGroup>
+									<!-- <h:commandLink immediate="true" id="PRINT_LINK"
+										action="#{PILT002_APAC_QE_COMPOSITE_ACTION.PW_IL_QUICK_QUOTE_ACTION_BEAN.Deleterecord}"> -->
+										<a4j:commandButton reRender="REPORT_MODAL_PANEL_DISABILITY,CLAIM_REASON,CLM_EXCL_YN,UI_M_BUT_CLOSE,
+												UI_M_BUT_FRZ,UI_M_BUT_SETTLEMENT,CLAIM_ITERATION_BTN_HEADER" 
+											action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.cancelModalPanelOK}"
+											id="OK_BUTTON" styleClass="button" style="width:70px;"
+											value="#{commonmsg.IP_REP_INFO$OK_BUTTON$caption}" focus="CLAIM_REASON"/>
+
+									<!-- </h:commandLink> -->
+								</h:panelGroup> <rich:spacer id="SPACER_MODAL_2" width="5px;" /> <a4j:commandButton
+									binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_CANCEL_BUTTON_DELETE}"
+									id="CANCEL_BUTTON" styleClass="button" style="width:70px;"
+									action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.cancelModalPanelDelete}"
+									reRender="REPORT_MODAL_PANEL_DISABILITY"
+									value="#{commonmsg.IP_REP_INFO$CANCEL_BUTTON$caption}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</rich:modalPanel>
+
+			<!-- Disability field while onchange ok & cancel PAnel  ENDS  -->
+			
+			<!-- Added by Saritha 09-Dec-2016 for RM018T - DEV_IL_ZB Life_012b_Claims waiting period v1.0.doc-->
+			<rich:modalPanel id="REPORT_MODAL_PANEL_DELETE" height="130"
+				width="340"
+				binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_REPORT_MODAL_PANEL_DELETE}">
+				<f:facet name="header">
+					<h:panelGroup>
+						<h:outputText value="Claim Register" />
+					</h:panelGroup>
+				</f:facet>
+				<f:facet name="controls">
+					<h:panelGroup>
+						<h:form id="FT_REPORT_MODAL_DELETE_PANEL_1"
+							onkeypress="return event.keyCode != 13">
+							<h:commandLink immediate="true" id="CLOSE_LINK"
+								action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CancelPanelDelete}">
+								<h:graphicImage value="./../../resources/images/close.png"
+									styleClass="toolbarImageStyle" style="cursor:pointer"
+									id="REPORT_MODAL_PANEL_hidelink" />
+							</h:commandLink>
+						</h:form>
+					</h:panelGroup>
+				</f:facet>
+				<h:form id="FT_REPORT_MODAL__DELETE_PANEL_2"
+					onkeypress="return event.keyCode != 13">
+					<table width="100%">
+						<tr>
+							<td align="center"><h:outputText id="CONFIRMATION_MSG"
+									style="font-size: 14px;" value="The Claim is within the contestability period" /></td>
+						</tr>
+						<tr>
+							<td><rich:spacer id="SPACER_MODAL_1" width="100%;"
+									height="18px" /> <rich:separator id="SEPARATOR" width="100%"
+									height="1px" /></td>
+						</tr>
+						<tr>
+							<td align="center"><h:panelGroup>
+									<!-- <h:commandLink immediate="true" id="PRINT_LINK"
+										action="#{PILT002_APAC_QE_COMPOSITE_ACTION.PW_IL_QUICK_QUOTE_ACTION_BEAN.Deleterecord}"> -->
+										<a4j:commandButton reRender="errorpanel,REPORT_MODAL_PANEL_DELETE,CLAIM_INTM_DT"
+											action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.OkModalPanelDelete}"
+							id="OK_BUTTON" styleClass="button" style="width:70px;"
+											value="#{commonmsg.IP_REP_INFO$OK_BUTTON$caption}" 
+											focus="CLAIM_CURR_CODE"
+										
+											/>
+
+									<!-- </h:commandLink> -->
+								</h:panelGroup>
+								<!-- Commentted by saritha on 19-06-2017 for ssp call id ZBILQC-1718796 -->
+								 <!-- <rich:spacer id="SPACER_MODAL_2" width="5px;" /> <a4j:commandButton
+									id="CANCEL_BUTTON" styleClass="button" style="width:70px;"
+									action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.CancelPanelDelete}"
+									reRender="errorpanel,REPORT_MODAL_PANEL_DELETE" 
+									value="#{commonmsg.IP_REP_INFO$CANCEL_BUTTON$caption}" /> -->
+									<!-- End -->
+									</td>
+						</tr>
+					</table>
+				</h:form>
+			</rich:modalPanel>
+			<!-- End -->
+			
+			<!-- Added by saritha on 25-07-2017 for ssp call id ZBILQC-1732436--> 
+			<rich:modalPanel id="BUS_REPORT_MODAL_PANEL" height="400" width="600"
+				binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.COMP_BUS_REPORT_MODAL_PANEL}">
+				<f:facet name="header">
+					<h:panelGroup>
+						<h:outputText value="Business Rule" />
+					</h:panelGroup>
+				</f:facet>
+				<f:facet name="controls">
+					<h:panelGroup>
+						<h:form id="FT_REPORT_MODAL_PANEL_111"
+							onkeypress="return event.keyCode != 13">
+							<h:commandLink immediate="true" id="CLOSE_LINK"
+								action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_ACTION_BEAN.closeBusinessModalPanel}">
+								<h:graphicImage value="./../../resources/images/close.png"
+									styleClass="toolbarImageStyle" style="cursor:pointer"
+									id="REPORT_MODAL_PANEL_hidelink11" />
+							</h:commandLink>
+						</h:form>
+					</h:panelGroup>
+				</f:facet>
+				<h:form id="BUS_REPORT_MODAL_PANEL_2" target="_blank">
+					<table width="100%"> 
+						 
+						<tr>
+							<td align="center"><h:panelGroup>
+								 <rich:dataTable style="width:600"
+													binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_BUS_RULE_ERROR_MSG_ACTION_BEAN.dataTable}"
+													id="PT_BUS_RULE_ERROR_MSG_DATA_GRID" rows="5"
+													value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_BUS_RULE_ERROR_MSG_ACTION_BEAN.dataList_PT_IL_CLAIM_BUS_RULE_ERROR_MSG}"
+													var="tableVar">
+													<rich:column filterBy="#{tableVar.BREM_MSG}"
+														filterEvent="onkeyup" id="COLUMN_BREM_MSG" rendered="true"
+														sortBy="#{tableVar.BREM_MSG}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_BREM_MSG"
+																styleClass="forumRowHighlight"
+																value="Error Message" />
+														</f:facet>
+														<a4j:commandLink
+															 
+															id="GOTO_LINK_BREM_MSG" immediate="true"
+															reRender="errorPanel,PT_BUS_RULE_ERROR_MSG_PANEL">
+															<h:outputText id="LINK_CAPTION_BREM_MSG"
+																value="#{tableVar.BREM_MSG}" />
+														</a4j:commandLink>
+													</rich:column>
+													<rich:column filterBy="#{tableVar.BREM_ERR_FLAG}"
+														filterEvent="onkeyup" id="COLUMN_BREM_ERR_FLAG"
+														rendered="true" sortBy="#{tableVar.BREM_ERR_FLAG}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_BREM_ERR_FLAG"
+																styleClass="forumRowHighlight"
+																value="Business Type" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_BREM_ERR_FLAG" 
+															value="#{tableVar.BREM_ERR_FLAG == 'E' ? 'Error' : 'Warning'}" />
+													</rich:column>
+													
+													<rich:column filterBy="#{tableVar.BREM_APPLY_LEVEL}"
+														filterEvent="onkeyup" id="COLUMN_BREM_APPLY_LEVEL"
+														rendered="false" sortBy="#{tableVar.BREM_APPLY_LEVEL}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_BREM_APPLY_LEVEL"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT006_APAC$PT_BUS_RULE_ERROR_MSG$BREM_APPLY_LEVEL$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_BREM_APPLY_LEVEL"
+															value="#{tableVar.BREM_APPLY_LEVEL}" />
+													</rich:column>
+														<h:commandLink value="Print" 
+														action="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.runActionAfterValidate}" />
+														 
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PT_BUS_RULE_ERROR_MSG_SCROLL" page="1" />
+															 
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+							</h:panelGroup>  </td>
+						</tr>
+						 
+					</table>
+				</h:form>
+			</rich:modalPanel>
+
+			<!-- End -->
+		</f:view>
+	</ui:define>
+</ui:composition>

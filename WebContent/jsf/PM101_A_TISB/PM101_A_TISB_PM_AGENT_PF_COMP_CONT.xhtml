@@ -1,0 +1,520 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view beforePhase="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.onLoad}" 
+		    locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PM101_A_TISB" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PM_AGENT_PF_COMP_CONT">
+				<table class="noborder" width="100%">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar id="serial_1" styleClass="toolBarStyle"
+									width="100%">
+									<rich:toolBarGroup id="serial_2" styleClass="toolBarGroupStyle">
+										<h:commandLink action="#{PM101_A_TISB_SEARCH_ACTION.backToSearch}"
+											id="serial_3" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_4"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="serial_5"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.saveRecord}"
+											id="serial_6" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_7"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="serial_8"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.saveRecord}"
+											id="serial_9" style="text-decoration:none" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_10"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="serial_11"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.deleteRecord}"
+											id="serial_12" style="text-decoration:none" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_13"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="serial_14"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="serial_15" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_16"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="serial_17"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink action="#{PM101_A_TISB_utility.preBack}"
+											id="serial_18" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_19"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="serial_20"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="serial_21" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_22"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="serial_23"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="serial_24" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_25"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="serial_26"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.errorMap['current'] !=null?             PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.errorMap['current']:             PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><h:outputText id="clink_1"
+									value="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$title$caption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="width: 100%; height: 430px; overflow: auto;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+								<td vAlign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr style="height: 25px;">
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_MKT_CODE_LABEL}"
+											for="APCC_MKT_CODE" id="APCC_MKT_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_MKT_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_MKT_CODE}"
+											disabled="false" id="APCC_MKT_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_MKT_CODE$tooltip} "
+											validator="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.validateAPCC_MKT_CODE}"
+											value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.PM_AGENT_PF_COMP_CONT_BEAN.APCC_MKT_CODE}">
+											<a4j:support
+												actionListener="#{ PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.fireFieldValidation}"
+												event="onblur" id="APCC_MKT_CODE_SUPPORT" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText> <rich:suggestionbox for="APCC_MKT_CODE" height="200"
+											id="sugmkt"
+											suggestionAction="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.popLov4MktCode}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="serial_27"
+													value="#{lov.LOV_APCC_MKT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_28"
+													value="#{lov.LOV_APCC_MKT_CODE_DESC}" />
+											</h:column>
+											<a4j:support
+												action="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.popMktCodeDesc}"
+												event="onselect" id="clink_2" immediate="true"
+												reRender="UI_M_APCC_MKT_CODE_DESC">
+											</a4j:support>
+
+										</rich:suggestionbox> <h:inputText
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_UI_M_APCC_MKT_CODE_DESC}"
+											disabled="true" id="UI_M_APCC_MKT_CODE_DESC" maxlength="2000"
+											rendered="true" required="false" styleClass="input" 
+											title="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$UI_M_APCC_MKT_CODE_DESC$tooltip}"
+											value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.PM_AGENT_PF_COMP_CONT_BEAN.UI_M_APCC_MKT_CODE_DESC}" />
+										<h:graphicImage id="serial_29" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrow" >&nbsp;</td>
+										<td class="oddrowright" >&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_RANK_CODE_LABEL}"
+											for="APCC_RANK_CODE" id="APCC_RANK_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_RANK_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_RANK_CODE}"
+											disabled="false" id="APCC_RANK_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_RANK_CODE$tooltip}"
+											validator="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.validateAPCC_RANK_CODE}"
+											value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.PM_AGENT_PF_COMP_CONT_BEAN.APCC_RANK_CODE}">
+											<a4j:support
+												actionListener="#{ PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.fireFieldValidation}"
+												event="onblur" id="APCC_RANK_CODE_SUPPORT" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText> <rich:suggestionbox for="APCC_RANK_CODE" height="200"
+											id="sugrank"
+											suggestionAction="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.popLov4RankCode}"
+											var="ranklov" width="200">
+											<h:column>
+												<h:outputText id="serial_30"
+													value="#{ranklov.LOV_APCC_RANK_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_31"
+													value="#{ranklov.LOV_APCC_RANK_CODE_DESC}" />
+											</h:column>
+											<a4j:support
+												action="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.popRankCodeDesc}"
+												event="onselect" id="clink_3" immediate="true"
+												reRender="UI_M_APCC_RANK_CODE_DESC" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_UI_M_APCC_RANK_CODE_DESC}"
+											disabled="true" id="UI_M_APCC_RANK_CODE_DESC"
+											maxlength="2000" rendered="true" required="false"
+											styleClass="input" 
+											title="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$UI_M_APCC_RANK_CODE_DESC$tooltip}"
+											value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.PM_AGENT_PF_COMP_CONT_BEAN.UI_M_APCC_RANK_CODE_DESC}" />
+										<h:graphicImage id="g1" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow" />
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_PROD_TYPE_LABEL}"
+											for="APCC_PROD_TYPE" id="APCC_PROD_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_PROD_TYPE$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_PROD_TYPE}"
+											disabled="false" id="APCC_PROD_TYPE" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_PROD_TYPE$tooltip}"
+											value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.PM_AGENT_PF_COMP_CONT_BEAN.APCC_PROD_TYPE}">
+												<f:selectItems id="serial_32_PROD"
+												value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.productTypeList}" />
+										</h:selectOneMenu>
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_CONT_TYPE_LABEL}"
+											for="APCC_CONT_TYPE" id="APCC_CONT_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_CONT_TYPE$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_CONT_TYPE}"
+											disabled="false" id="APCC_CONT_TYPE" rendered="true"
+											styleClass="input" title="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_CONT_TYPE$tooltip}" 
+											value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.PM_AGENT_PF_COMP_CONT_BEAN.APCC_CONT_TYPE}">
+											<f:selectItems id="serial_32"
+												value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.contribTypeList}" />
+										</h:selectOneMenu></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_CONT_FM_LABEL}"
+											for="APCC_CONT_FM" id="APCC_CONT_FM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_CONT_FM$caption}" />
+										<h:graphicImage id="serial_33" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_CONT_FM}"
+											disabled="false" id="APCC_CONT_FM" maxlength="14"
+											rendered="true" required="true" styleClass="input" style="text-align : right;"
+											title="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_CONT_FM$tooltip}"
+											validator="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.validatorContrFrom}"
+											value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.PM_AGENT_PF_COMP_CONT_BEAN.APCC_CONT_FM}">
+											<f:validateDoubleRange minimum="0"/>
+											<a4j:support
+												actionListener="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.fireFieldValidation}"
+												event="onblur" id="clink_4" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_CONT_TO_LABEL}"
+											for="APCC_CONT_TO" id="APCC_CONT_TO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_CONT_TO$caption}" />
+										<h:graphicImage id="serial_34" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_CONT_TO}"
+											disabled="false" id="APCC_CONT_TO" maxlength="14"   
+											rendered="true" required="true" styleClass="input" style="text-align : right;"
+											title="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_CONT_TO$tooltip}"
+											validator="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.validatorContrTo}"
+											value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.PM_AGENT_PF_COMP_CONT_BEAN.APCC_CONT_TO}">
+											<f:validateDoubleRange minimum="0"/>
+											<a4j:support
+												actionListener="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.fireFieldValidation}"
+												event="onblur" id="clink_5" immediate="true" 
+												reRender="errorPanel" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_RATE_LABEL}"
+											for="APCC_RATE" id="APCC_RATE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_RATE$caption}" />
+										<h:graphicImage id="clink_6" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_RATE}"
+											disabled="false" id="APCC_RATE" maxlength="14"
+											rendered="true" required="true" styleClass="input" style="text-align : right;"
+											title="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_RATE$tooltip}"
+											value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.PM_AGENT_PF_COMP_CONT_BEAN.APCC_RATE}">
+											<f:validateDoubleRange minimum="0"/>
+											<a4j:support
+												actionListener="#{ PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.fireFieldValidation}"
+												event="onblur" id="clink_7" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_RATE_PER_LABEL}"
+											for="APCC_RATE_PER" id="APCC_RATE_PER_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_RATE_PER$caption}" />
+										<h:graphicImage id="serial_35" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_RATE_PER}"
+											disabled="false" id="APCC_RATE_PER" maxlength="10"
+											rendered="true" required="true" styleClass="input" style="text-align : right;"
+											title="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_RATE_PER$tooltip}"
+											value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.PM_AGENT_PF_COMP_CONT_BEAN.APCC_RATE_PER}">
+											<f:validateDoubleRange minimum="0"/>
+											<a4j:support
+												actionListener="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.fireFieldValidation}"
+												event="onblur" id="clink_8" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_EFF_FM_DT_LABEL}"
+											for="APCC_EFF_FM_DT" id="APCC_EFF_FM_DT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_EFF_FM_DT$caption}" />
+										<h:graphicImage id="serial_36" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_EFF_FM_DT}"
+											datePattern="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.datePattern}"
+											disabled="false" enableManualInput="true" id="APCC_EFF_FM_DT"
+											inputClass="calendarinput" inputSize="11" rendered="true"
+											required="true"
+											title="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_EFF_FM_DT$tooltip}"
+											validator="#{ PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.validateAPCC_EFF_FM_DT}"
+											value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.PM_AGENT_PF_COMP_CONT_BEAN.APCC_EFF_FM_DT}">
+											<a4j:support
+												actionListener="#{ PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.fireFieldValidation}"
+												event="onchanged" id="clink_9" immediate="true"
+												reRender="errorPanel" />
+											<a4j:support
+												actionListener="#{ PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.fireFieldValidation}"
+												event="oninputblur" id="clink_10" immediate="true"
+												onsubmit="formatDate('PM_AGENT_PF_COMP_CONT:APCC_EFF_FM_DT')"
+												reRender="errorPanel" />
+											<a4j:support
+												actionListener="#{ PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.fireFieldValidation}"
+												event="oninputchanged" id="clink_11" immediate="true"
+												reRender="errorPanel" />
+
+										</rich:calendar></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_EFF_TO_DT_LABEL}"
+											for="APCC_EFF_TO_DT" id="APCC_EFF_TO_DT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_EFF_TO_DT$caption}" />
+										<h:graphicImage id="serial_37" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.COMP_APCC_EFF_TO_DT}"
+											datePattern="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.datePattern}"
+											disabled="false" enableManualInput="true" id="APCC_EFF_TO_DT"
+											inputClass="calendarinput" inputSize="11" rendered="true"
+											required="true"
+											title="#{message.PM101_A_TISB$PM_AGENT_PF_COMP_CONT$APCC_EFF_TO_DT$tooltip}"
+											validator="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.validateAPCC_EFF_TO_DT}"
+											value="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.PM_AGENT_PF_COMP_CONT_BEAN.APCC_EFF_TO_DT}">
+											<a4j:support
+												actionListener="#{ PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.fireFieldValidation}"
+												event="oninputblur" id="clink_13" immediate="true"
+												onsubmit="formatDate('PM_AGENT_PF_COMP_CONT:APCC_EFF_TO_DT')"
+												reRender="errorPanel" />
+											<a4j:support
+												actionListener="#{ PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.fireFieldValidation}"
+												event="oninputchange" id="clink_14" immediate="true"
+												reRender="errorPanel" />
+
+										</rich:calendar></td>
+									</tr>
+								</table>
+								</td>
+								<td vAlign="top" width="10%">
+								<table class="noborder">
+									<tr>
+										<td />
+									</tr>
+									<tr>
+										<td />
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="5" width="100%"><rich:toolBar
+							id="serial_38" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="serial_39" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									action="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.saveRecord}"
+									id="serial_40" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_41" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="serial_42"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.saveRecord}"
+									id="serial_43" style="text-decoration:none" rendered="false"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_44" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="serial_45"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM101_A_TISB_PM_AGENT_PF_COMP_CONT_ACTION.deleteRecord}"
+									id="serial_46" style="text-decoration:none" rendered="false"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_47" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/deleteRecord.gif" />
+									<h:outputText id="serial_48"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+								</h:commandLink>
+								<h:commandLink id="serial_49" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_50" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="serial_51"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink action="#{PM101_A_TISB_utility.preBack}"
+									id="serial_52" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_53" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="serial_54"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink id="serial_55" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_56" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="serial_57"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink id="serial_58" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_59" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="serial_60"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

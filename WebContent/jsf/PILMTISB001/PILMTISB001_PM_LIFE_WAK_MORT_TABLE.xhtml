@@ -1,0 +1,772 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILMTISB001"
+				var="message_PILMTISB001" />
+			<h:form id="PM_LIFE_WAK_MORT_TABLE">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILMTISB001_COMPOSITE_ACTION.backButtonAction}"
+											id="commandLink_backButtonAction" immediate="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="BACK_TOOL_IMAGE_HEADER"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="SAVE_TOOL_IMAGE_HEADER_BACKBTN"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<a4j:commandLink rendered="true"
+											id="AUTOID_DEL" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_GI_DEL" 
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="r"
+												image="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_OT_DEL"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+											<rich:componentControl attachTo="AUTOID_DEL"
+												event="onclick" for="DELETE_PANEL" id="DELETE_COMP_CONTROL"
+												operation="show" />
+										</a4j:commandLink>
+										
+										<!-- Delete confirmation Confirmation popup -->
+										<rich:modalPanel height="110" id="DELETE_PANEL" width="300">
+											<f:facet name="header">
+												<h:panelGroup>
+													<h:outputText id="AUTOID_1M"
+														style="color: #FFFFFF; font-size: 14px;font-weight: bold;"
+														value="#{commonmsg.premia$broker$delete$confirmation$caption}" />
+												</h:panelGroup>
+											</f:facet>
+											<f:facet name="controls">
+												<h:panelGroup>
+													<h:graphicImage id="DELETE_PANEL_hidelink"
+														style="cursor:pointer" styleClass="searchimg"
+														value="./../../resources/images/close.png" />
+													<rich:componentControl attachTo="DELETE_PANEL_hidelink"
+														event="onclick" for="DELETE_PANEL" operation="hide" />
+												</h:panelGroup>
+											</f:facet>
+											<table align="center" class="noborder" cellpadding="0" cellspacing="0">
+												<tr align="center">
+													<td><h:outputText id="AUTOID_2M"
+														value="#{commonmsg.premia$broker$delete$confirmation$message}" />
+													</td>
+												</tr>
+												<tr align="center">
+													<td><h:commandButton
+														action="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.deleteRecord}"
+														id="DELETE_PANEL_continuebutton" 
+														style="width:65px;height:20px;" styleClass="button"
+														value="#{commonmsg.premia$broker$delete$confirmation$ok}">
+														<rich:componentControl
+															attachTo="DELETE_PANEL_continuebutton" event="onclick"
+															for="DELETE_PANEL" operation="hide" />
+													</h:commandButton> <rich:spacer height="25" id="AUTOID_3M" width="10" /> <a4j:commandButton
+														id="DELETE_PANEL_cancelbutton" immediate="true"
+														style="width:65px;height:20px;" styleClass="button"
+														value="#{commonmsg.premia$broker$delete$confirmation$cancel}">
+														<rich:componentControl
+															attachTo="DELETE_PANEL_cancelbutton" event="onclick"
+															for="DELETE_PANEL" operation="hide" />
+													</a4j:commandButton> <br />
+													</td>
+												</tr>
+											</table>
+										</rich:modalPanel>
+
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILMTISB001_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.errorMap['current'] !=null? PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.errorMap['current']: PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><h:outputLabel id="FORM_CAPTION"
+									value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 430px; overflow: auto;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td valign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_PROD_CODE_LABEL}"
+											for="WAKM_PROD_CODE" id="WAKM_PROD_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_PROD_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_PROD_CODE}"
+											disabled="false" id="WAKM_PROD_CODE" rendered="true"
+											required="false" 
+											styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_PROD_CODE$tooltip}"
+											validator="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.WAKM_PROD_CODE_Validator}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_PROD_CODE}">
+											<a4j:support
+												actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_WAKM_PROD_CODE"
+												immediate="true" reRender="errorPanel,UI_M_WAKM_PROD_DESC" />
+											<a4j:support
+												actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_WAKM_PROD_CODE1" immediate="true"
+												reRender="errorPanel,UI_M_WAKM_PROD_DESC" />
+
+											<f:selectItems id="SEL_ITEMS_WAKM_PROD_CODE"
+												value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.listWAKM_PROD_CODE}" />
+										</h:selectOneMenu>
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"> 
+										<h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_UI_M_WAKM_PROD_DESC_LABEL}"
+											for="UI_M_WAKM_PROD_DESC" id="UI_M_WAKM_PROD_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$UI_M_WAKM_PROD_DESC$caption}" />
+											</td>
+										<td class="oddrow">
+										<h:inputText
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_UI_M_WAKM_PROD_DESC}"
+											disabled="true" id="UI_M_WAKM_PROD_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$UI_M_WAKM_PROD_DESC$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.UI_M_WAKM_PROD_DESC}" />
+										</td>
+										</tr>
+										<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_COVER_CODE_LABEL}"
+											for="WAKM_COVER_CODE" id="WAKM_COVER_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_COVER_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_COVER_CODE}"
+											disabled="false" id="WAKM_COVER_CODE" rendered="true"
+											required="false" 
+											styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_COVER_CODE$tooltip}"
+											validator="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.WAKM_COVER_CODE_Validator}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_COVER_CODE}">
+											<a4j:support
+												actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_WAKM_COVER_CODE"
+												immediate="true" reRender="errorPanel,UI_M_COVER_DESC" />
+
+											<a4j:support
+												actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_WAKM_COVER_CODE1"
+												immediate="true" reRender="errorPanel,UI_M_COVER_DESC" />
+
+											<f:selectItems id="SEL_ITEMS_WAKM_COVER_CODE"
+												value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.listWAKM_COVER_CODE}" />
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">
+										<h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_UI_M_COVER_DESC_LABEL}"
+											for="UI_M_COVER_DESC" id="UI_M_COVER_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$UI_M_COVER_DESC$caption}" />
+											</td>
+											<td class="evenrow">
+										 <h:inputText
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_UI_M_COVER_DESC}"
+											disabled="true" id="UI_M_COVER_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$UI_M_COVER_DESC$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.UI_M_COVER_DESC}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_MORT_CODE_LABEL}"
+											for="WAKM_MORT_CODE" id="WAKM_MORT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_MORT_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_MORT_CODE}"
+											disabled="false" id="WAKM_MORT_CODE" rendered="true"
+											required="false" 
+											styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_MORT_CODE$tooltip}"
+											validator="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.WAKM_MORT_CODE_Validator}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_MORT_CODE}">
+											<a4j:support
+												actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_WAKM_MORT_CODE" immediate="true"
+												reRender="errorPanel,UI_M_MORT_CODE_DESC" />
+
+											<a4j:support
+												actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_WAKM_MORT_CODE1"
+												immediate="true" reRender="errorPanel,UI_M_MORT_CODE_DESC" />
+
+											<f:selectItems id="SEL_ITEMS_WAKM_MORT_CODE"
+												value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.listWAKM_MORT_CODE}" />
+										</h:selectOneMenu>
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright">
+										<h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_UI_M_MORT_CODE_DESC_LABEL}"
+											for="UI_M_MORT_CODE_DESC" id="UI_M_MORT_CODE_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$UI_M_MORT_CODE_DESC$caption}" />
+										</td>
+										<td class="oddrow"> 
+										<h:inputText
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_UI_M_MORT_CODE_DESC}"
+											disabled="true" id="UI_M_MORT_CODE_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$UI_M_MORT_CODE_DESC$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.UI_M_MORT_CODE_DESC}" />
+										</td>
+										</tr>
+										<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_ASSUR_TYPE_LABEL}"
+											for="WAKM_ASSUR_TYPE" id="WAKM_ASSUR_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_ASSUR_TYPE$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_ASSUR_TYPE}"
+											disabled="false" id="WAKM_ASSUR_TYPE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_ASSUR_TYPE$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_ASSUR_TYPE}">
+											<f:selectItems id="SEL_ITEMS_WAKM_ASSUR_TYPE"
+												value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.listWAKM_ASSUR_TYPE}" />
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_SA_TYPE_LABEL}"
+											for="WAKM_SA_TYPE" id="WAKM_SA_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_SA_TYPE$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_SA_TYPE}"
+											disabled="false" id="WAKM_SA_TYPE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_SA_TYPE$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_SA_TYPE}">
+											<f:selectItems id="SEL_ITEMS_WAKM_SA_TYPE"
+												value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.listWAKM_SA_TYPE}" />
+										</h:selectOneMenu></td>
+
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_SELECT_RATE_LABEL}"
+											for="WAKM_SELECT_RATE" id="WAKM_SELECT_RATE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_SELECT_RATE$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_SELECT_RATE}"
+											disabled="false" id="WAKM_SELECT_RATE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_SELECT_RATE$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_SELECT_RATE}">
+											<f:selectItems id="SEL_ITEMS_WAKM_SELECT_RATE"
+												value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.listWAKM_SELECT_RATE}" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_SUBSEQ_YN_LABEL}"
+											for="WAKM_SUBSEQ_YN" id="WAKM_SUBSEQ_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_SUBSEQ_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_SUBSEQ_YN}"
+											disabled="false" id="WAKM_SUBSEQ_YN" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_SUBSEQ_YN$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_SUBSEQ_YN}">
+											<f:selectItems id="SEL_ITEMS_WAKM_SUBSEQ_YN"
+												value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.listWAKM_SUBSEQ_YN}" />
+										</h:selectOneMenu></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_ANLY_CODE_1_LABEL}"
+											for="WAKM_ANLY_CODE_1" id="WAKM_ANLY_CODE_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_ANLY_CODE_1$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_ANLY_CODE_1}"
+											disabled="false" id="WAKM_ANLY_CODE_1" rendered="true"
+											required="false" 
+											styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_ANLY_CODE_1$tooltip}"
+											validator="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.WAKM_ANLY_CODE_1_Validator}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_ANLY_CODE_1}">
+
+											<a4j:support
+												actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_WAKM_ANLY_CODE_1"
+												immediate="true"
+												reRender="errorPanel,UI_M_WAKM_ANLY_CODE_1_DESC" />
+
+											<a4j:support
+												actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_WAKM_ANLY_CODE_1_1"
+												immediate="true"
+												reRender="errorPanel,UI_M_WAKM_ANLY_CODE_1_DESC" />
+
+											<f:selectItems id="SEL_ITEMS_WAKM_ANLY_CODE_1"
+												value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.listWAKM_ANLY_CODE_1}" />
+										</h:selectOneMenu> </td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">
+										<h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_UI_M_WAKM_ANLY_CODE_1_DESC_LABEL}"
+											for="UI_M_WAKM_ANLY_CODE_1_DESC" id="UI_M_WAKM_ANLY_CODE_1_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$UI_M_WAKM_ANLY_CODE_1_DESC$caption}" />
+											</td>
+										<td class="evenrow">
+										<h:inputText
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_UI_M_WAKM_ANLY_CODE_1_DESC}"
+											disabled="true" id="UI_M_WAKM_ANLY_CODE_1_DESC"
+											maxlength="240" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$UI_M_WAKM_ANLY_CODE_1_DESC$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.UI_M_WAKM_ANLY_CODE_1_DESC}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_ANLY_CODE_2_LABEL}"
+											for="WAKM_ANLY_CODE_2" id="WAKM_ANLY_CODE_2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_ANLY_CODE_2$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_ANLY_CODE_2}"
+											disabled="false" id="WAKM_ANLY_CODE_2" rendered="true"
+											required="false" 
+											styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_ANLY_CODE_2$tooltip}"
+											validator="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.WAKM_ANLY_CODE_2_Validator}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_ANLY_CODE_2}">
+											<a4j:support
+												actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_WAKM_ANLY_CODE_2"
+												immediate="true"
+												reRender="errorPanel,UI_M_WAKM_ANLY_CODE_2_DESC" />
+											<a4j:support
+												actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_WAKM_ANLY_CODE_2_1"
+												immediate="true"
+												reRender="errorPanel,UI_M_WAKM_ANLY_CODE_2_DESC" />
+
+											<f:selectItems id="SEL_ITEMS_WAKM_ANLY_CODE_2"
+												value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.listWAKM_ANLY_CODE_2}" />
+										</h:selectOneMenu>
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright">
+										<h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_UI_M_WAKM_ANLY_CODE_2_DESC_LABEL}"
+											for="UI_M_WAKM_ANLY_CODE_2_DESC" id="UI_M_WAKM_ANLY_CODE_2_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$UI_M_WAKM_ANLY_CODE_2_DESC$caption}" />
+										</td>
+										<td class="oddrow"> 
+										<h:inputText
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_UI_M_WAKM_ANLY_CODE_2_DESC}"
+											disabled="true" id="UI_M_WAKM_ANLY_CODE_2_DESC"
+											maxlength="240" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$UI_M_WAKM_ANLY_CODE_2_DESC$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.UI_M_WAKM_ANLY_CODE_2_DESC}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_EXP_CODE_LABEL}"
+											for="WAKM_EXP_CODE" id="WAKM_EXP_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_EXP_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_EXP_CODE}"
+											disabled="false" id="WAKM_EXP_CODE" rendered="true"
+											required="false" 
+											styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_EXP_CODE$tooltip}"
+											validator="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.WAKM_EXP_CODE_Validator}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_EXP_CODE}">
+											<a4j:support
+												actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_WAKM_EXP_CODE" immediate="true"
+												reRender="errorPanel,UI_M_EXP_CODE_DESC" />
+											<a4j:support
+												actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_WAKM_EXP_CODE1" immediate="true"
+												reRender="errorPanel,UI_M_EXP_CODE_DESC" />
+
+											<f:selectItems id="SEL_ITEMS_WAKM_EXP_CODE"
+												value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.listWAKM_EXP_CODE}" />
+										</h:selectOneMenu>
+										</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">
+										<h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_UI_M_EXP_CODE_DESC_LABEL}"
+											for="UI_M_EXP_CODE_DESC" id="UI_M_EXP_CODE_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$UI_M_EXP_CODE_DESC$caption}" />
+											</td>
+									   <td class="evenrow"> 
+										<h:inputText
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_UI_M_EXP_CODE_DESC}"
+											disabled="true" id="UI_M_EXP_CODE_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$UI_M_EXP_CODE_DESC$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.UI_M_EXP_CODE_DESC}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_EFF_FM_DT_LABEL}"
+											for="WAKM_EFF_FM_DT" id="WAKM_EFF_FM_DT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_EFF_FM_DT$caption}" />
+										</td>
+										<td class="oddrow"><rich:calendar
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_EFF_FM_DT}"
+											datePattern="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true" id="WAKM_EFF_FM_DT"
+											inputClass="calendarinput" inputSize="11" rendered="true"
+											required="false"
+											validator="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.validateWAKM_EFF_FM_DT}"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_EFF_FM_DT$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_EFF_FM_DT}">
+											<a4j:support event="oninputblur" id="date_1" reRender="errorPanel"
+											    actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												onsubmit="formatDate('PM_LIFE_WAK_MORT_TABLE:WAKM_EFF_FM_DT')" />
+											<a4j:support event="oninputchanged" id="date_FM" reRender="errorPanel"
+											    actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												onsubmit="formatDate('PM_LIFE_WAK_MORT_TABLE:WAKM_EFF_FM_DT')" />
+										</rich:calendar></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_EFF_TO_DT_LABEL}"
+											for="WAKM_EFF_TO_DT" id="WAKM_EFF_TO_DT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_EFF_TO_DT$caption}" />
+										</td>
+										<td class="oddrow"><rich:calendar
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_EFF_TO_DT}"
+											datePattern="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true" id="WAKM_EFF_TO_DT"
+											inputClass="calendarinput" inputSize="11" rendered="true"
+											validator="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.validateWAKM_EFF_TO_DT}"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_EFF_TO_DT$tooltip}"
+											required="false"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_EFF_TO_DT}">
+											<a4j:support event="oninputblur" id="date_2" reRender="errorPanel"
+											    actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												onsubmit="formatDate('PM_LIFE_WAK_MORT_TABLE:WAKM_EFF_TO_DT')" />
+											<a4j:support event="oninputchange" id="date_TO" reRender="errorPanel"
+											    actionListener="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.fireFieldValidation}"
+												onsubmit="formatDate('PM_LIFE_WAK_MORT_TABLE:WAKM_EFF_TO_DT')" />
+										</rich:calendar></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_SURPRO_PER_LABEL}"
+											for="WAKM_SURPRO_PER" id="WAKM_SURPRO_PER_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_SURPRO_PER$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_SURPRO_PER}"
+											disabled="false" id="WAKM_SURPRO_PER" maxlength="9"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_SURPRO_PER$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_SURPRO_PER}">
+											<f:validateDoubleRange minimum="0" maximum="99999.999"/>
+											</h:inputText>
+										</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_COVER_PERC_LABEL}"
+											for="WAKM_COVER_PERC" id="WAKM_COVER_PERC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_COVER_PERC$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_COVER_PERC}"
+											disabled="false" id="WAKM_COVER_PERC" maxlength="9"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_COVER_PERC$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_COVER_PERC}">
+											<f:validateDoubleRange minimum="0" maximum="999.99"/>
+											</h:inputText>
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_SA_RISK_TYPE_LABEL}"
+											for="WAKM_SA_RISK_TYPE" id="WAKM_SA_RISK_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_SA_RISK_TYPE$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_SA_RISK_TYPE}"
+											disabled="false" id="WAKM_SA_RISK_TYPE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_SA_RISK_TYPE$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_SA_RISK_TYPE}">
+											<f:selectItems id="SEL_ITEMS_WAKM_SA_RISK_TYPE"
+												value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.listWAKM_SA_RISK_TYPE}" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_WAK_CALC_TYPE_LABEL}"
+											for="WAKM_WAK_CALC_TYPE" id="WAKM_WAK_CALC_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_WAK_CALC_TYPE$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.COMP_WAKM_WAK_CALC_TYPE}"
+											disabled="false" id="WAKM_WAK_CALC_TYPE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILMTISB001.PILMTISB001$PM_LIFE_WAK_MORT_TABLE$WAKM_WAK_CALC_TYPE$tooltip}"
+											value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.PM_LIFE_WAK_MORT_TABLE_BEAN.WAKM_WAK_CALC_TYPE}">
+											<f:selectItems id="SEL_ITEMS_WAKM_WAK_CALC_TYPE"
+												value="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.listWAKM_WAK_CALC_TYPE}" />
+										</h:selectOneMenu></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									action="#{PILMTISB001_COMPOSITE_ACTION.PM_LIFE_WAK_MORT_TABLE_ACTION_BEAN.saveRecord}"
+									id="SAVE_TOOL_FOOTER" rendered="true"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

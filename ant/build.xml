@@ -1,0 +1,114 @@
+<project name="PELTAKAFUL" basedir="../" default="war">
+
+    <!-- Project settings -->
+    <property name="project.distname" value="PELTAKAFUL"/>
+
+    <!-- Local system paths -->
+    <property file="${basedir}/ant/build.properties"/>
+    <property name="webroot.dir" value="${basedir}/WebContent"/>
+    <property name="webinf.dir" value="${webroot.dir}/WEB-INF"/>
+    <property name="build.dir" value="build"/>
+
+    <!-- classpath for JSF 1.1.01 -->
+    <path id="compile.classpath">
+        <pathelement path ="${webinf.dir}/lib/commons-beanutils.jar"/>
+        <pathelement path ="${webinf.dir}/lib/commons-collections.jar"/>
+        <pathelement path ="${webinf.dir}/lib/commons-digester.jar"/>
+        <pathelement path ="${webinf.dir}/lib/commons-logging.jar"/>
+        <pathelement path ="${webinf.dir}/lib/jsf-api.jar"/>
+        <pathelement path ="${webinf.dir}/lib/jsf-impl.jar"/>
+        <pathelement path ="${webinf.dir}/lib/jstl.jar"/>
+        <pathelement path ="${webinf.dir}/lib/standard.jar"/>
+        <pathelement path ="${webinf.dir}/lib/persistence.jar"/>
+        <pathelement path ="${webinf.dir}/classes"/>
+        <pathelement path ="${classpath.external}"/>
+        <pathelement path ="${classpath}"/>
+    </path>
+
+    <!-- define your folder for deployment -->
+    <property name="server.dir" value="D:\jboss-4.2.2.GA\server"/>
+	<property name="deploy.dir" value="${server.dir}\default\deploy"/>
+	<property name="backup.dir" value="D:\build_backup"/>
+	
+	<target name="backup">
+		<tstamp >
+			<format property="datetime" pattern="ddMMMyyyy_HHmm"/>
+		</tstamp>
+		<copy file="${build.dir}/${project.distname}.war" todir="${backup.dir}/${datetime}"/>
+	</target>
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+        <tstamp/>
+    </target>
+
+    <!-- Copy any resource or configuration files -->
+    <target name="resources">
+        <copy todir="${webinf.dir}/classes" includeEmptyDirs="no">
+            <fileset dir="JavaSource">
+            <patternset>
+                <include name="**/*.conf"/>
+                <include name="**/*.properties"/>
+                <include name="**/*.xml"/>
+            </patternset>
+            </fileset>
+        </copy>
+    </target>
+	
+    <!-- Normal build of application -->
+    <target name="compile" depends="prepare,resources">
+       <javac srcdir="JavaSource" destdir="${webinf.dir}/classes">
+            <classpath refid="compile.classpath"/>
+        </javac>    	
+    </target>
+
+	<!-- Apply security to application -->
+	<target name="applysecurity" depends="compile" description="runs main method of class YourMainClass">
+	    <java classname="com.iii.pel.commonimpl.devutils.AntTest"
+	          failonerror="true"
+	          fork="true">
+	        <sysproperty key="DEBUG" value="true"/>
+	        <arg value="${basedir}/"/>
+	        <classpath>
+	            <pathelement location="compile.classpath"/>
+	            <pathelement path ="${webinf.dir}/classes"/>
+	        </classpath>
+	    </java>
+	</target>
+
+    <!-- Remove classes directory for clean build -->
+    <target name="clean"
+      description="Prepare for clean build">
+      <delete dir="${webinf.dir}/classes"/>
+      <delete dir="${server.dir}/default/tmp"/>
+      <delete dir="${server.dir}/default/work"/>
+      <mkdir  dir="${webinf.dir}/classes"/>
+    </target>
+
+    <target name="build" depends="prepare,compile"/>
+    <target name="rebuild" depends="clean,prepare,compile"/>
+
+    <!-- Create binary distribution -->
+    <target name="war" depends="build">
+      <mkdir dir="${build.dir}"/>
+      <war
+        basedir="${webroot.dir}"
+        warfile="${build.dir}/${project.distname}.war"
+        webxml="${webinf.dir}/web.xml">
+        <exclude name="WEB-INF/${build.dir}/**"/>
+        <exclude name="WEB-INF/src/**"/>
+        <exclude name="WEB-INF/web.xml"/>
+    	<exclude name="WEB-INF/lib/jsf-impl.jar"/>
+      	<exclude name="WEB-INF/lib/jsf-api.jar"/>
+      	<exclude name="WEB-INF/lib/servlet-api.jar"/>  
+       </war>
+
+    </target>
+
+	<!--<target name="deploy" depends="war">
+       <delete file="${deploy.dir}/${project.distname}.war"/>
+       <delete dir="${deploy.dir}/${project.distname}"/>
+       <copy file="${build.dir}/${project.distname}.war" todir="${deploy.dir}"/>
+    </target>-->
+
+</project>

@@ -1,0 +1,1014 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}" beforePhase="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.preForm}">
+			<f:loadBundle basename="messageProperties_PILM021" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_CUST_ACCOUNT_SETUP" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar id="Style_1" styleClass="toolBarStyle"
+									width="100%">
+									<rich:toolBarGroup id="Style_2" styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.backToSearch}"
+											id="Style_15" style="text-decoration:none" immediate="true"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="Style_16"
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="Style_17"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.createRecord}"
+											id="Style_3" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="Style_4"
+												styleClass="searchimg" value="./../../images/save.gif" />
+											<h:outputText id="Style_5"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="Style_6" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="Style_7" 
+												styleClass="toolbarButtonStyle" accesskey="s" 
+												image="./../../images/savenext.GIF" />
+											<h:outputText id="Style_8"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink disabled="false" 
+											action="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.delete}"
+										id="Style_9" rendered="true" immediate="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="Style_10"
+												 styleClass="toolbarButtonStyle" accesskey="r"
+												image="./../../images/deleteRecord.gif" />
+											<h:outputText id="Style_11"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="Style_12" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="Style_13"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="Style_14"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="Style_18" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="Style_19"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="Style_20"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="Style_21" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="Style_22"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="Style_23"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.errorMap['current'] !=null? PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.errorMap['current']:PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.warningMap['current']}" />
+
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td>Customer Account Setup</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+					
+						<table align="center" class="noborder" width="100%">
+							<tr>
+
+								<td valign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+										width="100%">
+									<tr>
+										<td class="oddrowfreeze" colspan="4"/>
+										<td class="oddrowfreeze"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_FRZ_FLAG_LABEL}"
+											for="CAS_FRZ_FLAG" id="CAS_FRZ_FLAG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_FRZ_FLAG$caption}" />
+										<h:selectBooleanCheckbox
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_FRZ_FLAG}"
+											id="CAS_FRZ_FLAG" rendered="true"
+											title="Freeze"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.FRZ_FLAG}" />
+											</td>
+											
+									</tr>
+									<tr>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_SRC_BUS_FM_LABEL}"
+											for="CAS_SRC_BUS_FM" id="CAS_SRC_BUS_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_SRC_BUS_FM$caption}" />
+										<h:graphicImage id="style_88" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_SRC_BUS_FM}"
+											disabled="false" id="CAS_SRC_BUS_FM" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the  Source of Business From"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.validate_Bussiness_From}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_SRC_BUS_FM}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.WHEN_VALIDATE_CAS_SRC_BUS_FM}"
+												event="onblur" id="style_81" immediate="true"
+												reRender="errorPanel,CAS_SRC_BUS_FM,CAS_SRC_BUS_FM_LOV">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_SRC_BUS_FM" height="200"
+											id="CAS_SRC_BUS_FM_LOV" immediate="true"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_SRC_BUS_FM_lovAction}"
+											var="CAS_SRC_BUS_FM" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_1"
+													value="#{CAS_SRC_BUS_FM.PC_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_2"
+													value="#{CAS_SRC_BUS_FM.PC_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_87" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" width="4%"/>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_SRC_BUS_TO_LABEL}"
+											for="CAS_SRC_BUS_TO" id="CAS_SRC_BUS_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_SRC_BUS_TO$caption}" />
+										<h:graphicImage id="style_48" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_SRC_BUS_TO}"
+											disabled="false" id="CAS_SRC_BUS_TO" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the eneding code for source of business"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.validate_Bussiness_From}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_SRC_BUS_TO}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.WHEN_VALIDATE_CAS_SRC_BUS_TO}"
+												event="onblur" id="AUTOID_3" immediate="true"
+												reRender="errorPanel,CAS_SRC_BUS_TO,CAS_SRC_BUS_TO_LOV">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_SRC_BUS_TO" height="200"
+											id="CAS_SRC_BUS_TO_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_SRC_BUS_FM_lovAction}"
+											var="CAS_SRC_BUS_TO" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_4"
+													value="#{CAS_SRC_BUS_TO.PC_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_5"
+													value="#{CAS_SRC_BUS_TO.PC_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_82" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_CUST_FM_CLASS_LABEL}"
+											for="CAS_CUST_FM_CLASS" id="CAS_CUST_FM_CLASS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_CUST_FM_CLASS$caption}" />
+										<h:graphicImage id="style_90" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_CUST_FM_CLASS}"
+											disabled="false" id="CAS_CUST_FM_CLASS" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Starting Code for the Customer Class Range"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.validate_CustomerClass_From}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_CUST_FM_CLASS}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.WHEN_VALIDATE_CAS_CUST_FM_CLASS}"
+												event="onblur" id="style_86" immediate="true"
+												reRender="errorPanel,CAS_CUST_FM_CLASS,CAS_CUST_FM_CLASS_LOV">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_CUST_FM_CLASS" height="200"
+											id="CAS_CUST_FM_CLASS_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_CUST_FM_CLASS_lovAction}"
+											var="CAS_CUST_FM_CLASS" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_6"
+													value="#{CAS_CUST_FM_CLASS.CCLAS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_7"
+													value="#{CAS_CUST_FM_CLASS.CCLAS_CLASS_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_8" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow"/>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_CUST_TO_CLASS_LABEL}"
+											for="CAS_CUST_TO_CLASS" id="CAS_CUST_TO_CLASS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_CUST_TO_CLASS$caption}" />
+										<h:graphicImage id="AUTOID_9" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_CUST_TO_CLASS}"
+											disabled="false" id="CAS_CUST_TO_CLASS" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Ending Code for the Customer Class Range"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.validate_CustomerClass_From}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_CUST_TO_CLASS}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.WHEN_VALIDATE_CAS_CUST_TO_CLASS}"
+												event="onblur" id="style_70" immediate="true"
+												reRender="errorPanel,CAS_CUST_TO_CLASS_LOV,CAS_CUST_TO_CLASS">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_CUST_TO_CLASS" height="200"
+											id="CAS_CUST_TO_CLASS_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_CUST_FM_CLASS_lovAction}"
+											var="CAS_CUST_TO_CLASS" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_10"
+													value="#{CAS_CUST_TO_CLASS.CCLAS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_11"
+													value="#{CAS_CUST_TO_CLASS.CCLAS_CLASS_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_83" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DIVN_FM_CODE_LABEL}"
+											for="CAS_DIVN_FM_CODE" id="CAS_DIVN_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_DIVN_FM_CODE$caption}" />
+										<h:graphicImage id="style_49" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DIVN_FM_CODE}"
+											disabled="false" id="CAS_DIVN_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Starting Code for the Branch Range"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.validate_Divison_From}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_DIVN_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.WHEN_VALIDATE_CAS_DIVN_FM_CODE}"
+												event="onblur" id="style_47" immediate="true"
+												reRender="errorPanel,CAS_DIVN_FM_CODE,CAS_DIVN_FM_CODE_LOV">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_DIVN_FM_CODE" height="200"
+											id="CAS_DIVN_FM_CODE_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_DIVN_FM_CODE_lovAction}"
+											var="CAS_DIVN_FM_CODE" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_12"
+													value="#{CAS_DIVN_FM_CODE.DIVN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_13"
+													value="#{CAS_DIVN_FM_CODE.DIVN_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_50" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td class="evenrow"/>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DIVN_TO_CODE_LABEL}"
+											for="CAS_DIVN_TO_CODE" id="CAS_DIVN_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_DIVN_TO_CODE$caption}" />
+										<h:graphicImage id="style_51" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DIVN_TO_CODE}"
+											disabled="false" id="CAS_DIVN_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Ending Code for the Branch Range"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.validate_Divison_From}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_DIVN_TO_CODE}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.WHEN_VALIDATE_CAS_DIVN_TO_CODE}"
+												event="onblur" id="AUTOID_14" immediate="true"
+												reRender="errorPanel,CAS_DIVN_TO_CODE_LOV,CAS_DIVN_TO_CODE">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_DIVN_TO_CODE" height="200"
+											id="CAS_DIVN_TO_CODE_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_DIVN_FM_CODE_lovAction}"
+											var="CAS_DIVN_TO_CODE" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_15"
+													value="#{CAS_DIVN_TO_CODE.DIVN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_16"
+													value="#{CAS_DIVN_TO_CODE.DIVN_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_52" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DEPT_FM_CODE_LABEL}"
+											for="CAS_DEPT_FM_CODE" id="CAS_DEPT_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_DEPT_FM_CODE$caption}" />
+										<h:graphicImage id="AUTOID_17" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DEPT_FM_CODE}"
+											disabled="false" id="CAS_DEPT_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Starting Code for the Department Range"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.validate_Department_From}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_DEPT_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.WHEN_VALIDATE_CAS_DEPT_FM_CODE}"
+												event="onblur" id="AUTOID_18" immediate="true"
+												reRender="errorPanel,CAS_DEPT_FM_CODE_LOV,CAS_DEPT_FM_CODE">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_DEPT_FM_CODE" height="200"
+											id="CAS_DEPT_FM_CODE_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_DEPT_FM_CODE_lovAction}"
+											var="CAS_DEPT_FM_CODE" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_19"
+													value="#{CAS_DEPT_FM_CODE.DEPT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_20"
+													value="#{CAS_DEPT_FM_CODE.DEPT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_53" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow"/>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DEPT_TO_CODE_LABEL}"
+											for="CAS_DEPT_TO_CODE" id="CAS_DEPT_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_DEPT_TO_CODE$caption}" />
+										<h:graphicImage id="AUTOID_21" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DEPT_TO_CODE}"
+											disabled="false" id="CAS_DEPT_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Ending Code for the Department Range"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.validate_Department_From}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_DEPT_TO_CODE}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.WHEN_VALIDATE_CAS_DEPT_TO_CODE}"
+												event="onblur" id="AUTOID_22" immediate="true"
+												reRender="errorPanel,CAS_DEPT_TO_CODE_LOV,CAS_DEPT_TO_CODE">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_DEPT_TO_CODE" height="200"
+											id="CAS_DEPT_TO_CODE_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_DEPT_FM_CODE_lovAction}"
+											var="CAS_DEPT_TO_CODE" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_23"
+													value="#{CAS_DEPT_TO_CODE.DEPT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_24"
+													value="#{CAS_DEPT_TO_CODE.DEPT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="styel_54" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_BUS_TYPE_FM_LABEL}"
+											for="CAS_BUS_TYPE_FM" id="CAS_BUS_TYPE_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_BUS_TYPE_FM$caption}" />
+										<h:graphicImage id="AUTOID_25" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_BUS_TYPE_FM}"
+											disabled="false" id="CAS_BUS_TYPE_FM" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Starting Code for the Business Range"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.validate_BusinessRange_From}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_BUS_TYPE_FM}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.WHEN_VALIDATE_CAS_BUS_TYPE_FM}"
+												event="onblur" id="AUTOID_26" immediate="true"
+												reRender="errorPanel,CAS_BUS_TYPE_FM,CAS_BUS_TYPE_FM_LOV">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_BUS_TYPE_FM" height="200"
+											id="CAS_BUS_TYPE_FM_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_BUS_TYPE_FM_lovAction}"
+											var="CAS_BUS_TYPE_FM" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_27"
+													value="#{CAS_BUS_TYPE_FM.PS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_28"
+													value="#{CAS_BUS_TYPE_FM.PS_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_54" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td class="evenrow"/>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_BUS_TYPE_TO_LABEL}"
+											for="CAS_BUS_TYPE_TO" id="CAS_BUS_TYPE_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_BUS_TYPE_TO$caption}" />
+										<h:graphicImage id="AUTOID_29" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_BUS_TYPE_TO}"
+											disabled="false" id="CAS_BUS_TYPE_TO" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Ending Code for the Business Range"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.validate_BusinessRange_From}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_BUS_TYPE_TO}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.WHEN_VALIDATE_CAS_BUS_TYPE_TO}"
+												event="onblur" id="AUTOID_30" immediate="true"
+												reRender="errorPanel,CAS_BUS_TYPE_TO,CAS_BUS_TYPE_TO_LOV">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_BUS_TYPE_TO" height="200"
+											id="CAS_BUS_TYPE_TO_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_BUS_TYPE_FM_lovAction}"
+											var="CAS_BUS_TYPE_TO" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_31"
+													value="#{CAS_BUS_TYPE_TO.PS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_32"
+													value="#{CAS_BUS_TYPE_TO.PS_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_55" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_ASSURED_TYPE_LABEL}"
+											for="CAS_ASSURED_TYPE" id="CAS_ASSURED_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_ASSURED_TYPE$caption}" />
+										<h:graphicImage id="style_71" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_ASSURED_TYPE}"
+											disabled="false" id="CAS_ASSURED_TYPE" rendered="true"
+											required="true" styleClass="input" title="Assured Type"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_ASSURED_TYPE}">
+											<f:selectItems
+												value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_ASSURED_TYPE_LIST}" />
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.pilm021_pm_il_cust_account_setup_cas_assured_type_when_validate_item}"
+												event="onblur" id="style_72" immediate="true"
+												reRender="errorPanel,CAS_ASSURED_TYPE" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_FORCE_DIVN_YN_LABEL}"
+											for="CAS_FORCE_DIVN_YN" id="CAS_FORCE_DIVN_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_FORCE_DIVN_YN$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_FORCE_DIVN_YN}"
+											disabled="false" id="CAS_FORCE_DIVN_YN" rendered="true"
+											required="true" styleClass="input" title="Force Branch Yn"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_FORCE_DIVN_YN}">
+											<f:selectItems
+												value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_FORCE_DIVN_YN_LIST}" />
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.ForceBranchChange}"
+												event="onblur" id="style_74" immediate="true"
+												reRender="errorPanel,CAS_FORCE_DEPT_YN,CAS_DIVN_CODE,CAS_DEPT_CODE,CAS_DIVN_CODE_LOV,CAS_DEPT_CODE_LOV" />
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.ForceBranchChange}"
+												event="onchange" id="style_75" immediate="true"
+												reRender="errorPanel,CAS_FORCE_DEPT_YN,CAS_DIVN_CODE,CAS_DIVN_CODE_LOV,CAS_DEPT_CODE,CAS_DEPT_CODE_LOV" />
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow"/>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_FORCE_DEPT_YN_LABEL}"
+											for="CAS_FORCE_DEPT_YN" id="CAS_FORCE_DEPT_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_FORCE_DEPT_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_FORCE_DEPT_YN}"
+											disabled="true" id="CAS_FORCE_DEPT_YN" rendered="true"
+											required="true" styleClass="input" title="Force Dept Yn"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_FORCE_DEPT_YN}">
+											<f:selectItems id="style_93"
+												value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_FORCE_DEPT_YN_LIST}" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow"/>
+									</tr>
+									<!-- As suggested by siva sir sadded by gopi for toi on 04/09/2018 -->
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DOC_DRCR_LABEL}"
+											for="CAS_DOC_DRCR" id="CAS_DOC_DRCR_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_DOC_DRCR$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DOC_DRCR}"
+											disabled="false" id="CAS_DOC_DRCR" rendered="true"
+											required="true" styleClass="input"
+											title="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_DOC_DRCR$tooltip}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_DOC_DRCR}">
+											<f:selectItems
+												value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_DOC_DRCR_LIST}" />
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.ValidateCAS_DOC_DRCR}"
+												event="onchange" id="AUTOID_4644" immediate="true"
+												reRender="errorPanel">
+											</a4j:support>
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.ValidateCAS_DOC_DRCR}"
+												event="onblur" id="AUTOID_477" immediate="true"
+												reRender="errorPanel">
+											</a4j:support>
+										</h:selectOneMenu></td>
+									<!-- end -->	
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_MAIN_ACNT_CODE_LABEL}"
+											for="CAS_MAIN_ACNT_CODE" id="CAS_MAIN_ACNT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_MAIN_ACNT_CODE$caption}" />
+										<h:graphicImage id="style_77" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_MAIN_ACNT_CODE}"
+											disabled="false" id="CAS_MAIN_ACNT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="Enter the Control Account "
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.pilm021_pm_il_cust_account_setup_cas_main_acnt_code_when_validate_item}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_MAIN_ACNT_CODE}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="style_78" immediate="true"
+												reRender="errorPanel,UI_M_MAIN_ACNT_NAME,CAS_MAIN_ACNT_CODE,CAS_MAIN_ACNT_CODE_LOV,CAS_ACTY_CODE_1_LABEL,
+													CAS_ACTY_CODE_2_LABEL,CAS_ACTY_CODE_1,CAS_ACTY_CODE_2,CAS_ACTY_CODE_1_LOV,CAS_ACTY_CODE_2_LOV">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_MAIN_ACNT_CODE" height="200"
+											id="CAS_MAIN_ACNT_CODE_LOV" style="position:absolute"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_MAIN_ACNT_CODE_lovAction}"
+											var="CAS_MAIN_ACNT_CODE" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_33"
+													value="#{CAS_MAIN_ACNT_CODE.MAIN_ACNT_CODE}" />
+
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_34"
+													value="#{CAS_MAIN_ACNT_CODE.MAIN_ACNT_NAME}" />
+											</h:column>
+
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_UI_M_MAIN_ACNT_NAME}"
+											disabled="true" id="UI_M_MAIN_ACNT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.UI_M_MAIN_ACNT_NAME}" />
+										<h:graphicImage id="style_56" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrow"/>
+										<td class="evenrowright">&nbsp;</td>
+									</tr>
+									<tr>
+
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DIVN_CODE_LABEL}"
+											for="CAS_DIVN_CODE" id="CAS_DIVN_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_DIVN_CODE$caption}" />
+										<h:graphicImage id="AUTOID_35" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DIVN_CODE}"
+											id="CAS_DIVN_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="Enter the Branch Code"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.pilm021_pm_il_cust_account_setup_cas_divn_code_when_validate_item}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_DIVN_CODE}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_36" immediate="true"
+												reRender="errorPanel,UI_M_DIVN_NAME,CAS_DIVN_CODE,CAS_DIVN_CODE_LOV">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_DIVN_CODE" height="200"
+											id="CAS_DIVN_CODE_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_DIV_COMP_CODE_lovAction}"
+											var="CAS_DIVN_CODE" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_37"
+													value="#{CAS_DIVN_CODE.DIVN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_38"
+													value="#{CAS_DIVN_CODE.DIVN_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_UI_M_DIVN_NAME}"
+											disabled="true" id="UI_M_DIVN_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.UI_M_DIVN_NAME}" />
+										<h:graphicImage id="style_57" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DEPT_CODE_LABEL}"
+											for="CAS_DEPT_CODE" id="CAS_DEPT_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_DEPT_CODE$caption}" />
+										<h:graphicImage id="AUTOID_39" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_DEPT_CODE}"
+											disabled="false" id="CAS_DEPT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="Enter the Department Code"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.pilm021_pm_il_cust_account_setup_cas_dept_code_when_validate_item}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_DEPT_CODE}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_40" immediate="true"
+												reRender="errorPanel,UI_M_DEPT_NAME,CAS_DEPT_CODE,CAS_DEPT_CODE_LOV">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_DEPT_CODE" height="200"
+											id="CAS_DEPT_CODE_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_DEPT_CODE_lovAction}"
+											var="CAS_DEPT_CODE" width="250">
+											<h:column>
+												<h:outputText id="style_79"
+													value="#{CAS_DEPT_CODE.DEPT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="style_80"
+													value="#{CAS_DEPT_CODE.DEPT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_UI_M_DEPT_NAME}"
+											disabled="true" id="UI_M_DEPT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.UI_M_DEPT_NAME}" />
+										<h:graphicImage id="style_58" styleClass="searchimg"
+											value="./../../images/Lov.gif" />
+											</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow"/>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_ANLY_CODE_1_LABEL}"
+											for="CAS_ANLY_CODE_1" id="CAS_ANLY_CODE_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_ANLY_CODE_1$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_ANLY_CODE_1}"
+											disabled="false" id="CAS_ANLY_CODE_1" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Analysis  Code [1]"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.pilm021_pm_il_cust_account_setup_cas_anly_code_1_when_validate_item}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_ANLY_CODE_1}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_41" immediate="true"
+												reRender="errorPanel,UI_M_ANLY_NAME,CAS_ANLY_CODE_1,CAS_ANLY_CODE_1_LOV">
+											</a4j:support>
+
+										</h:inputText> <rich:suggestionbox for="CAS_ANLY_CODE_1" height="200"
+											id="CAS_ANLY_CODE_1_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_ANLY_CODE_1_lovAction}"
+											var="CAS_ANLY_CODE_1" width="250">
+											<h:column>
+												<h:outputText id="style_81"
+													value="#{CAS_ANLY_CODE_1.ANLY_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="style_82"
+													value="#{CAS_ANLY_CODE_1.ANLY_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_UI_M_ANLY_NAME}"
+											disabled="true" id="UI_M_ANLY_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME}" />
+										<h:graphicImage id="style_59" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_ANLY_CODE_2_LABEL}"
+											for="CAS_ANLY_CODE_2" id="CAS_ANLY_CODE_2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$CAS_ANLY_CODE_2$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_ANLY_CODE_2}"
+											disabled="false" id="CAS_ANLY_CODE_2" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Analysis  Code [2]"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.pilm021_pm_il_cust_account_setup_cas_anly_code_2_when_validate_item}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_ANLY_CODE_2}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_42" immediate="true"
+												reRender="errorPanel,UI_M_ANLY_NAME_1,CAS_ANLY_CODE_2,CAS_ANLY_CODE_2_LOV">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_ANLY_CODE_2" height="200"
+											id="CAS_ANLY_CODE_2_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_ANLY_CODE_2_lovAction}"
+											var="CAS_ANLY_CODE_2" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_43"
+													value="#{CAS_ANLY_CODE_2.ANLY_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_44"
+													value="#{CAS_ANLY_CODE_2.ANLY_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_UI_M_ANLY_NAME_1}"
+											disabled="true" id="UI_M_ANLY_NAME_1" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME_1}" />
+										<h:graphicImage id="style_60" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow"/>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_ACTY_CODE_1_LABEL}"
+											for="CAS_ACTY_CODE_1" id="CAS_ACTY_CODE_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.BP_BEAN.BP_CAS_ACTY_CODE_1}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_ACTY_CODE_1}"
+											id="CAS_ACTY_CODE_1" maxlength="12"
+											rendered="true"  styleClass="inputsmall"
+											title="Enter the Activity  Code [1]"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.pilm021_pm_il_cust_account_setup_cas_acty_code_1_when_validate_item}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_ACTY_CODE_1}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_45" immediate="true"
+												reRender="errorPanel,UI_M_ACTY_NAME,CAS_ACTY_CODE_1,CAS_ACTY_CODE_1_LOV">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_ACTY_CODE_1" height="200"
+											id="CAS_ACTY_CODE_1_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_ACTY_CODE_lovAction}"
+											var="CAS_ACTY_CODE_1" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_46"
+													value="#{CAS_ACTY_CODE_1.AVAL_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_47"
+													value="#{CAS_ACTY_CODE_1.AVAL_VALUE_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_UI_M_ACTY_NAME}"
+											disabled="true" id="UI_M_ACTY_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME}" />
+										<h:graphicImage id="style_61" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_ACTY_CODE_2_LABEL}"
+											for="CAS_ACTY_CODE_2" id="CAS_ACTY_CODE_2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.BP_BEAN.BP_CAS_ACTY_CODE_2}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_CAS_ACTY_CODE_2}"
+											 id="CAS_ACTY_CODE_2" maxlength="12"
+											rendered="true"  styleClass="inputsmall"
+											title="Enter the Activity  Code [2]"
+											validator="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.pilm021_pm_il_cust_account_setup_cas_acty_code_2_when_validate_item}"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.CAS_ACTY_CODE_2}">
+											<a4j:support
+												actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_48" immediate="true"
+												reRender="errorPanel,UI_M_ACTY_NAME_1,CAS_ACTY_CODE_2,CAS_ACTY_CODE_2_LOV">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CAS_ACTY_CODE_2" height="200"
+											id="CAS_ACTY_CODE_2_LOV"
+											suggestionAction="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.CAS_ACTY_CODE_2_lovAction}"
+											var="CAS_ACTY_CODE_2" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_49"
+													value="#{CAS_ACTY_CODE_2.AVAL_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_50"
+													value="#{CAS_ACTY_CODE_2.AVAL_VALUE_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_UI_M_ACTY_NAME_1}"
+											disabled="true" id="UI_M_ACTY_NAME_1" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME_1}" />
+										<h:graphicImage id="style_62" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow"/>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_UI_M_BUS_TYPE_FM_DESC_LABEL}"
+											for="UI_M_BUS_TYPE_FM_DESC" id="UI_M_BUS_TYPE_FM_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$UI_M_BUS_TYPE_FM_DESC$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_UI_M_BUS_TYPE_FM_DESC}"
+											disabled="false" id="UI_M_BUS_TYPE_FM_DESC" maxlength="30"
+											rendered="true" required="false" styleClass="input"
+											title="Enter Business From Description"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.UI_M_BUS_TYPE_FM_DESC}" />
+										</td>
+										<td class="oddrow"/>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_UI_M_BUS_TYPE_TO_DESC_LABEL}"
+											for="UI_M_BUS_TYPE_TO_DESC" id="UI_M_BUS_TYPE_TO_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$UI_M_BUS_TYPE_TO_DESC$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.COMP_UI_M_BUS_TYPE_TO_DESC}"
+											disabled="false" id="UI_M_BUS_TYPE_TO_DESC" maxlength="30"
+											rendered="true" required="false" styleClass="input"
+											title="Enter Business To Description"
+											value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PM_IL_CUST_ACCOUNT_SETUP_BEAN.UI_M_BUS_TYPE_TO_DESC}" />
+										</td>
+									</tr>
+
+								</table>
+								</td>
+
+							</tr>
+						</table>
+						
+						</td>
+					</tr>
+
+					<tr>
+						<td><rich:toolBar id="Style_24" styleClass="toolBarStyle"
+							width="100%">
+							<rich:toolBarGroup id="Style_25" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									action="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.createRecord}"
+									id="Style_26" rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:commandButton  id="Style_27" 
+										styleClass="toolbarButtonStyle" accesskey="s" 
+										image="./../../images/save.gif" />
+									<h:outputText id="Style_28" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink id="Style_29" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="Style_30" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="Style_31" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink disabled="true" id="Style_32" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="Style_33" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/deleteRecord.gif" />
+									<h:outputText id="Style_34" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+								</h:commandLink>
+								<h:commandLink id="Style_35" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="Style_36" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="Style_37" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.PreviousPage}"
+									id="Style_38" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="Style_39" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="Style_40" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink id="Style_41" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="Style_42" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="Style_43" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink id="Style_44" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="Style_45" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="Style_46" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

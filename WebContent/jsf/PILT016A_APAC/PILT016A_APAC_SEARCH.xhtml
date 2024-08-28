@@ -1,0 +1,125 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILT016A_APAC" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<f:loadBundle basename="messageProperties" var="commonmessage" />
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+			<tr>
+				
+			</tr>
+			<tr>
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILT016A_APAC_SEARCHBEAN_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILT016A_APAC_SEARCHBEAN_ACTION.errorMap['current'] !=null? PILT016A_APAC_SEARCHBEAN_ACTION.errorMap['current']:PILT016A_APAC_SEARCHBEAN_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PILT016A_APAC_SEARCHBEAN_ACTION.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PILT016A_APAC_SEARCHBEAN_ACTION.globalMsgRender}" />
+
+							<h:outputText id="warningMessages"
+								value="#{PILT016A_APAC_SEARCHBEAN_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+			</tr>
+			
+	<h:form id="PILT016A_APAC_PT_IL_DEPOSIT_SEARCH">
+			<table width="100%" border="0" cellpadding="0"
+				cellspacing="0" id="masthead">
+				<tr>
+					<td>
+						<h:outputText value="#{commonmessage.intialSearchCriteria$Caption}"/>
+					</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<TD><h:outputLabel for="newICno" value="New IC/ ID No" /> <h:inputText
+						id="newICno"
+						binding="#{PILT016A_APAC_SEARCHBEAN_ACTION.DEP_CONT_REF_ID1}"
+						value="#{PILT016A_APAC_SEARCHBEAN_ACTION.valueBean.DEP_CONT_REF_ID1}" />
+					</TD>
+					<td><h:outputLabel for="refno" value="Reference No"></h:outputLabel>
+					<h:inputText id="refno"
+						value="#{PILT016A_APAC_SEARCHBEAN_ACTION.valueBean.DEP_REF_NO}"
+						binding="#{PILT016A_APAC_SEARCHBEAN_ACTION.DEP_REF_NO}" /></td>
+					<td><a4j:commandButton value="#{commonmessage.searchButton$caption}" id="fetch"
+						action="#{PILT016A_APAC_SEARCHBEAN_ACTION.search}"
+						reRender="fetchList,dsID">
+					</a4j:commandButton>
+					</td>
+				</tr>
+			</table>
+			<table cellpadding="0" cellspacing="0"	border="0">
+				<tr>
+					<td>
+						<h:commandButton rendered="false" value="Delete" action="#{PILT016A_APAC_SEARCHBEAN_ACTION.delete}"/>
+					</td>
+				</tr>
+			</table>
+			<rich:dataTable
+				binding="#{PILT016A_APAC_SEARCHBEAN_ACTION.dataTableComp}"
+				id="fetchList"
+				value="#{PILT016A_APAC_SEARCHBEAN_ACTION.dataTableList}"
+				width="100%" var="colData" cellpadding="5px" rows="10" border="1">
+				<rich:column rendered="false">
+					<f:facet name="header">
+						<h:outputText value="#{commonmessage.selectColumn$caption}"/>
+					</f:facet>
+					<h:selectBooleanCheckbox value="#{colData.checkBox}"/>
+				</rich:column>
+				<rich:column filterBy="#{colData.DEP_REF_NO}"
+					filterValue="#{PILT016A_APAC_SEARCHBEAN_ACTION.valueBean.filterText}"
+					sortBy="#{colData.DEP_REF_NO}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Reference No" />
+					</f:facet>
+					<h:commandLink action="#{PILT016A_APAC_SEARCHBEAN_ACTION.openForm}"
+						id="dep_ref_no">						
+							<h:outputText value="#{colData.DEP_REF_NO}" />
+					</h:commandLink>
+				</rich:column>
+				<rich:column filterBy="#{colData.DEP_CONT_REF_ID1}"
+					sortBy="#{colData.DEP_CONT_REF_ID1}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="new IC/ ID No" />
+					</f:facet>
+						<h:outputText value="#{colData.DEP_CONT_REF_ID1}" />
+				</rich:column>
+				<rich:column filterBy="#{colData.DEP_CONT_REF_ID2}"
+					sortBy="#{colData.DEP_CONT_REF_ID2}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Old IC No" />
+					</f:facet>
+						<h:outputText value="#{colData.DEP_CONT_REF_ID2}" />
+				</rich:column>
+				<f:facet name="footer">
+				<rich:datascroller id="dsID" for="fetchList" align="right" />
+				</f:facet>
+			</rich:dataTable>	
+<!-- [ BugId:Fix129 MMuthu 05-Feb-2009 Changed a4j command button h:command button -->		
+		<h:commandButton action="#{PILT016A_APAC_PT_IL_DEPOSIT_ACTION.insert}" 
+			styleClass="button" value="#{commonmessage.insertButton$caption}">
+		</h:commandButton>
+<!-- BugId:Fix129 MMuthu 05-Feb-2009 Changed a4j command button h:command button ]-->
+	</h:form>
+		<tr>
+			
+		</tr>
+	</table>	
+</f:view>
+</ui:define>
+</ui:composition>

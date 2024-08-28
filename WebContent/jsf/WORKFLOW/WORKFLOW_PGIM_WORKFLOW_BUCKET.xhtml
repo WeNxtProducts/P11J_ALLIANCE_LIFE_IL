@@ -1,0 +1,752 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_WORKFLOW" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PGIM_WORKFLOW_BUCKET"
+				onkeypress="return event.keyCode != 13">
+				
+				<style>
+				.textlength {
+    width: 350px;
+}
+				
+				</style>
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+							<table class="noborder" width="100%">
+								<tr>
+									<td><rich:toolBar id="TOOLBAR_HEADER"
+											styleClass="toolBarStyle" width="100%">
+											<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+												styleClass="toolBarGroupStyle">
+												<!-- Modified by saranya for Avoidance of POST button required in all screens on 22-02-2017 -->
+												<h:commandLink
+													action="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.saveRecord}"
+													id="SAVE_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:commandButton id="SAVE_TOOL_IMAGE_HEADER"
+														styleClass="toolbarButtonStyle" accesskey="s"
+														image="./../../resources/images/save.gif" />
+													<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+												<!-- End -->
+												<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/savenext.GIF" />
+													<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$savenext}" />
+												</h:commandLink>
+												<h:commandLink id="DELETERECORD_TOOL_HEADER"
+													rendered="false" style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/deleteRecord.gif" />
+													<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$deleteRecord}" />
+												</h:commandLink>
+												<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/firstrec.gif" />
+													<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$firstrec}" />
+												</h:commandLink>
+												<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/prevpage.gif" />
+													<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$prevpage}" />
+												</h:commandLink>
+												<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/nextpage.gif" />
+													<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$nextpage}" />
+												</h:commandLink>
+												<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/lastRecord.gif" />
+													<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$lastRecord}" />
+												</h:commandLink>
+												<!-- Modified by kavitha for RoadMap-->
+												<h:commandLink
+													action="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.reload}"
+													id="NAVIGATION_TOOL_HEADER" immediate="true"
+													rendered="true" style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:commandButton id="NAVIGATION_TOOL_IMAGE_HEADER"
+														styleClass="toolbarButtonStyle" accesskey="u"
+														image="./../../resources/images/navigation.gif" />
+													<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$undo}" />
+												</h:commandLink>
+											</rich:toolBarGroup>
+											<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD"
+												location="right">
+												<w:treeWizard
+													binding="#{PILT002_APAC_COMPOSITE_ACTION.wizard}" />
+											</rich:toolBarGroup>
+											
+										</rich:toolBar></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+								id="errorPanel" opened="false" switchType="client">
+								<f:facet name="header">
+									<h:outputText id="err"
+										styleClass="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.messageStyle}"
+										value="#{commonmsg.errorPanel$heading}#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.errorMap['current'] !=null? WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.errorMap['current']: WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.warningMap['current']}" />
+								</f:facet>
+								<h:outputText escape="false" id="errorMessages"
+									styleClass="ErrorMessages"
+									value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.errorMessages}" />
+								<h:messages id="msg"
+									rendered="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.globalMsgRender}"
+									styleClass="ErrorMessages" />
+								<h:outputText escape="false" id="warningMessages"
+									styleClass="WarningMessages"
+									value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.warningMessages}" />
+							</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" id="linkstable">
+							<tr>
+								<td><h:outputText styleClass="forumRowHighlight"
+									value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$UI_WORKFLOW_BUCKETP_HEADER$caption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<div id="content" style="width: 100%;">
+								<table width="100%">
+									<tr>
+										<td>&nbsp;</td>
+										<td valign="top" width="100%"><h:panelGroup
+												id="PGIM_WORKFLOW_BUCKET_PANEL"
+												style="border:0;height:15%;">
+												<table align="left" class="noborder" id="bordertable"
+													width="100%">													
+													<tr>
+														<td><rich:panel style="width:100%;overflow:auto">
+																<rich:dataTable
+																	binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.dataTable}"
+																	id="PGIM_WORKFLOW_BUCKET_BEAN" rows="5"
+																	value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.dataTableList}"
+																	var="tableVar" width="100%">
+																	<rich:column filterBy="#{tableVar.PWB_CODE}"
+																		filterEvent="onkeyup" id="COLUMN_PWB_CODE"
+																		rendered="true" sortBy="#{tableVar.PWB_CODE}"																		
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PWB_CODE"
+																				styleClass="forumRowHighlight" value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_CODE$caption}" />
+																		</f:facet>
+																		<a4j:commandLink
+																			action="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.displayRecords}"
+																			id="GOTO_LINK_PWB_CODE" immediate="true"
+																			reRender="errorPanel,PGIM_WORKFLOW_BUCKET_PANEL">
+																			<h:outputText id="LINK_CAPTION_PWB_CODE"
+																				value="#{tableVar.PWB_CODE}" />
+																		</a4j:commandLink>
+																	</rich:column>
+																	<rich:column filterBy="#{tableVar.PWB_MAIN_BUKT}"
+																		filterEvent="onkeyup" id="COLUMN_PWB_MAIN_BUKT"
+																		rendered="true" sortBy="#{tableVar.PWB_MAIN_BUKT}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PWB_MAIN_BUKT"
+																				styleClass="forumRowHighlight"
+																				value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_MAIN_BUKT$caption}" />
+																		</f:facet>
+																		<h:outputText id="LINK_CAPTION_PWB_MAIN_BUKT"
+																			value="#{tableVar.PWB_MAIN_BUKT}" />
+																	</rich:column>
+																<rich:column filterBy="#{tableVar.PWB_WORKSTEP_ID}"
+																		filterEvent="onkeyup" id="COLUMN_PWB_WORKSTEP_ID"
+																		rendered="true" sortBy="#{tableVar.PWB_WORKSTEP_ID}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PWB_WORKSTEP_ID"
+																				styleClass="forumRowHighlight"
+																				value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_WORKSTEP_ID$caption}" />
+																		</f:facet>
+																		<h:outputText id="LINK_CAPTION_PWB_WORKSTEP_ID"
+																			value="#{tableVar.PWB_WORKSTEP_ID}" />
+																	</rich:column>
+																	<rich:column filterBy="#{tableVar.PWB_DESC}"
+																		filterEvent="onkeyup" id="COLUMN_PWB_DESC"
+																		rendered="true" sortBy="#{tableVar.PWB_DESC}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PWB_DESC"
+																				styleClass="forumRowHighlight"
+																				value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_DESC$caption}" />
+																		</f:facet>
+																		<h:outputText id="LINK_CAPTION_PWB_DESC"
+																			value="#{tableVar.PWB_DESC}" />
+																	</rich:column>
+																	<rich:column filterBy="#{tableVar.PWB_SR_NO}"
+																		filterEvent="onkeyup" id="COLUMN_PWB_SR_NO"
+																		rendered="true" sortBy="#{tableVar.PWB_SR_NO}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PWB_SR_NO"
+																				styleClass="forumRowHighlight"
+																				value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_SR_NO$caption}" />
+																		</f:facet>
+																		<h:outputText id="LINK_CAPTION_PWB_SR_NO"
+																			value="#{tableVar.PWB_SR_NO}" />
+																	</rich:column>
+																	<rich:column filterBy="#{tableVar.PWB_ENABLE_YN}"
+																		filterEvent="onkeyup" id="COLUMN_PWB_ENABLE_YN"
+																		rendered="true" sortBy="#{tableVar.PWB_ENABLE_YN}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PWB_ENABLE_YN"
+																				styleClass="forumRowHighlight"
+																				value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_ENABLE_YN$caption}" />
+																		</f:facet>
+																		<h:outputText id="LINK_CAPTION_PWB_ENABLE_YN"
+																			value="#{tableVar.PWB_ENABLE_YN=='1'?'Yes':'No'}" />
+																	</rich:column>
+																	<rich:column filterBy="#{tableVar.PWB_MAIL_ONLY_YN}"
+																		filterEvent="onkeyup" id="COLUMN_PWB_MAIL_ONLY_YN"
+																		rendered="true" sortBy="#{tableVar.PWB_MAIL_ONLY_YN}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PWB_MAIL_ONLY_YN"
+																				styleClass="forumRowHighlight"
+																				value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_MAIL_ONLY_YN$caption}" />
+																		</f:facet>
+																		<h:outputText id="LINK_CAPTION_PWB_MAIL_ONLY_YN"
+																			value="#{tableVar.PWB_MAIL_ONLY_YN=='1'?'Yes':'No'}" />
+																	</rich:column>
+																	<rich:column filterBy="#{tableVar.PWB_SMS_YN}"
+																		filterEvent="onkeyup" id="COLUMN_PWB_SMS_YN"
+																		rendered="true" sortBy="#{tableVar.PWB_SMS_YN}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PWB_SMS_YN"
+																				styleClass="forumRowHighlight"
+																				value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_SMS_YN$caption}" />
+																		</f:facet>
+																		<h:outputText id="LINK_CAPTION_PWB_SMS_YN"
+																			value="#{tableVar.PWB_SMS_YN=='1'?'Yes':'No'}" />
+																	</rich:column>
+
+																	<f:facet name="footer">
+																		<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+																			<rich:datascroller align="right"
+																				id="PGIM_WORKFLOW_BUCKET_PANEL_SCROLL" page="1" />
+																			<a4j:commandButton
+																				actionListener="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.addRow}"
+																				id="addRow" immediate="true" accesskey="c"
+																				reRender="PGIM_WORKFLOW_BUCKET_PANEL,errorPanel"
+																				style="width:80px;" styleClass="button"
+																				value="#{commonmsg.addNewButtonCaption}" />
+																			<a4j:commandButton
+																				actionListener="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.deleteRow}"
+																				id="deleteRow" immediate="true" accesskey="r"
+																				reRender="PGIM_WORKFLOW_BUCKET_PANEL,errorPanel"
+																				style="width:80px;" styleClass="button"
+																				value="#{commonmsg.deleteButtonCaption}" />
+
+																			<a4j:commandButton
+																				actionListener="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.saveRecords}"
+																				id="postRecord" accesskey="p"
+																				reRender="errorPanel,PGIM_WORKFLOW_BUCKET_BEAN"
+																				style="width:80px;" styleClass="button" value="Save" />
+
+																		</h:panelGroup>
+																	</f:facet>
+																</rich:dataTable>
+															</rich:panel></td>
+													</tr>
+													<tr>
+														<td colspan="3">
+															<table class="noborder" width="100%">
+															<tr>
+													<td align="right" colspan="5">
+													
+													<h:commandButton											
+											id="UI_M_BUT_PGIM_WF_WORKSTEP_MAPPING" rendered="true" style="width:140px;"
+											styleClass="button"
+											action="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.redirectWorkstepMap}"											
+											value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$UI_M_BUT_PGIM_WF_WORKSTEP_MAPPING$caption}" />
+											
+											<h:commandButton											
+											id="UI_M_BUT_PGIM_WF_MAIL_USGRP_MAPPING" rendered="true" style="width:140px;"
+											styleClass="button"
+											action="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.redirectMailUserGroupMap}"											
+											value="#{message.WORKFLOW$PGIM_WF_MAIL_USGRP$UI_M_BUT_PGIM_WF_MAIL_USGRP_MAPPING$caption}" />
+													</td>
+													
+													</tr>
+															
+																<tr>
+																	<td class="oddrowright" width="20%"><h:outputLabel
+																			for="PWB_CODE" id="PWB_CODE_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_CODE$caption}" />
+																		<h:graphicImage id="PWB_CODE_TYPE1" style=""
+																			styleClass="searchimg"
+																			value="./../../images/mandatory.gif" /></td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_CODE}"
+																			id="PWB_CODE" 
+																			rendered="true" required="true" styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_CODE$tooltip}"
+																			validator="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.validatorPWB_CODE}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_CODE}">
+																		<a4j:support
+																				actionListener="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="PWB_CODE_312K11"
+																				immediate="true" reRender="errorPanel" />
+																		</h:inputText></td>
+																	<td class="oddrow">&nbsp;</td>
+
+																	<td class="oddrowright"><h:outputLabel
+																			for="PWB_MAIN_BUKT" id="PWB_MAIN_BUKT_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_MAIN_BUKT$caption}" />
+																		<h:graphicImage id="AUTOID_43_TYPE2" style=""
+																			styleClass="searchimg"
+																			value="./../../images/mandatory.gif" /></td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_MAIN_BUKT}"
+																			id="PWB_MAIN_BUKT" rendered="true"
+																			required="true" styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_MAIN_BUKT$tooltip}"
+																			validator="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.validatorPWB_MAIN_BUKT}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_MAIN_BUKT}">
+																		<a4j:support
+																				actionListener="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="PWB_MAIN_BUKT_312K11"
+																				immediate="true" reRender="errorPanel" />
+																		</h:inputText></td>
+
+																</tr>
+																<tr>
+																	<td class="oddrowright" style="display:none"><h:outputLabel
+																			for="BANK_UNIVERSAL_CODE" id="BANK_UNIVERSAL_CODE_LABEL"
+																			rendered="false" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$BANK_UNIVERSAL_CODE$caption}" />
+																		</td>
+																	
+																	
+<td class="oddrowright"><h:outputLabel
+																			for="PWB_WORKSTEP_ID" id="PWB_WORKSTEP_ID_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_WORKSTEP_ID$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_WORKSTEP_ID}"
+																			id="PWB_WORKSTEP_ID" rendered="true" maxlength="60"
+																			required="false" styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_WORKSTEP_ID$tooltip}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_WORKSTEP_ID}">
+																		</h:inputText></td>
+																		<td class="oddrow">&nbsp;</td>
+																		<td class="oddrowright"><h:outputLabel
+																			for="PWB_DESC" id="PWB_DESC_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_DESC$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_DESC}"
+																			id="PWB_DESC" maxlength="60"
+																			rendered="true" required="false" styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_DESC$tooltip}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_DESC}">
+																		</h:inputText></td>
+																</tr>
+																
+																<tr>
+																
+																	<td class="oddrowright"><h:outputLabel
+																			for="PWB_SR_NO" id="PWB_SR_NO_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_SR_NO$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_SR_NO}"
+																			id="PWB_SR_NO"  rendered="true" maxlength="60"
+																			required="false" styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_SR_NO$tooltip}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_SR_NO}">
+																		</h:inputText></td>
+																		<td class="oddrow">&nbsp;</td>
+																		<td class="oddrowright"><h:outputLabel
+																			for="PWB_ENABLE_YN" id="PWB_ENABLE_YN_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_ENABLE_YN$caption}" />
+																		</td>
+																	<td class="oddrow"><!-- <h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_ENABLE_YN}"
+																			id="PWB_ENABLE_YN" 
+																			rendered="true" required="false" styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_ENABLE_YN$tooltip}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_ENABLE_YN}">
+																		</h:inputText> -->
+																		<h:selectOneMenu
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_ENABLE_YN}"
+																			id="PWB_ENABLE_YN" rendered="true" required="false"
+																			styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_ENABLE_YN$tooltip}"
+																			validator="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.validatorPWB_ENABLE_YN}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_ENABLE_YN}">
+																			<f:selectItems id="selectitems_PWB_ENABLE_YN"
+																				value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.itemListPWB_ENABLE_YN}" />
+																			<a4j:support
+																				actionListener="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="SUPPORT_PWB_ENABLE_YN"
+																				immediate="true"
+																				reRender="errorPanel" />
+
+																		</h:selectOneMenu>
+																		
+																		
+																		</td>
+																	
+
+																</tr>
+																
+																
+																<tr>
+																	
+
+																	<td class="oddrowright"><h:outputLabel
+																			for="PWB_MAIL_ONLY_YN" id="PWB_MAIL_ONLY_YN_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_MAIL_ONLY_YN$caption}" />
+																		</td>
+																	<td class="oddrow"><!-- <h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_MAIL_ONLY_YN}"
+																			id="PWB_MAIL_ONLY_YN" rendered="true"
+																			required="false" styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_MAIL_ONLY_YN$tooltip}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_MAIL_ONLY_YN}">
+																		
+																			<a4j:support
+																				actionListener="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="style_312K11"
+																				immediate="true" reRender="errorPanel" />
+																					</h:inputText> -->
+																					<h:selectOneMenu
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_MAIL_ONLY_YN}"
+																			id="PWB_MAIL_ONLY_YN" rendered="true" required="false"
+																			styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_MAIL_ONLY_YN$tooltip}"
+																			validator="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.validatorPWB_MAIL_ONLY_YN}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_MAIL_ONLY_YN}">
+																			<f:selectItems id="selectitems_PWB_MAIL_ONLY_YN"
+																				value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.itemListPWB_MAIL_ONLY_YN}" />
+																			<a4j:support
+																				actionListener="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="style_PWB_MAIL_ONLY_YN"
+																				immediate="true" reRender="errorPanel" />
+
+																		</h:selectOneMenu>
+																		</td>
+																		<td class="oddrow">&nbsp;</td>
+																	<td class="oddrowright"><h:outputLabel
+																			for="PWB_SMS_YN" id="PWB_SMS_YN_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_SMS_YN$caption}" />
+																		</td>
+																	<td class="oddrow"><!-- <h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_SMS_YN}"
+																			id="PWB_SMS_YN" 
+																			rendered="true" required="false" styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_SMS_YN$tooltip}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_SMS_YN}">
+																		</h:inputText> -->
+																		<h:selectOneMenu
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_SMS_YN}"
+																			id="PWB_SMS_YN" rendered="true" required="false"
+																			styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_SMS_YN$tooltip}"
+																			validator="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.validatorPWB_SMS_YN}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_SMS_YN}">
+																			<f:selectItems id="selectitems_PWB_SMS_YN"
+																				value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.itemListPWB_SMS_YN}" />
+																			<a4j:support
+																				actionListener="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="style_PWB_SMS_YN"
+																				immediate="true" reRender="errorPanel" />
+
+																		</h:selectOneMenu>
+																		
+																		
+																		</td>	
+																</tr>
+																
+																
+																<tr>
+																	
+																		<td class="oddrowright"><h:outputLabel
+																			for="PWB_OUTCOME_DET" id="PWB_OUTCOME_DET_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_OUTCOME_DET$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_OUTCOME_DET}"
+																			id="PWB_OUTCOME_DET" rendered="true"
+																			required="false" styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_OUTCOME_DET$tooltip}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_OUTCOME_DET}">
+																		</h:inputText></td>
+
+<td class="oddrow">&nbsp;</td>
+																		<td class="oddrowright"><h:outputLabel
+																			for="PWB_LIMIT_FROM" id="PWB_LIMIT_FROM_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_LIMIT_FROM$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_LIMIT_FROM}"
+																			id="PWB_LIMIT_FROM" rendered="true"
+																			required="false" styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_LIMIT_FROM$tooltip}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_LIMIT_FROM}">
+																		</h:inputText></td>
+																		
+																</tr>
+																<tr>
+																<td class="oddrowright"><h:outputLabel
+																			for="PWB_LIMIT_TO" id="PWB_LIMIT_TO_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_LIMIT_TO$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_LIMIT_TO}"
+																			id="PWB_LIMIT_TO" 
+																			rendered="true" required="false" styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_LIMIT_TO$tooltip}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_LIMIT_TO}">
+																		</h:inputText></td>
+																		<!-- End -->
+																		
+																	<!-- Added by kavitha on 01.11.2019 for RoadMap -->	
+																	<td class="oddrow">&nbsp;</td>
+																
+																	<td class="oddrowright"><h:outputLabel
+																			for="PWB_TOBE_OUTCOME" id="PWB_TOBE_OUTCOME_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_TOBE_OUTCOME$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_TOBE_OUTCOME}"
+																			id="PWB_TOBE_OUTCOME" rendered="true"
+																			required="false" styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_TOBE_OUTCOME$tooltip}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_TOBE_OUTCOME}">
+																		</h:inputText></td>
+																
+																</tr>
+																
+																<tr>
+																
+																
+																
+																<td class="oddrowright"><h:outputLabel
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_STATUS_CODE_LABEL}"
+																			for="PWB_STATUS_CODE"
+																			id="PWB_STATUS_CODE_LABEL" rendered="true"
+																			styleClass="label"
+																			value="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_STATUS_CODE$caption}" />
+																</td>
+																		
+																<td class="oddrow">		<h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_PWB_STATUS_CODE}"
+																			disabled="false" id="PWB_STATUS_CODE"
+																			 rendered="true" required="false"
+																			styleClass="inputsmall"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$PWB_STATUS_CODE$tooltip}"
+																			validator="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.validatePWB_STATUS_CODE}"	
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.PWB_STATUS_CODE}">
+																			<a4j:support id="SUPP_PWB_STATUS_CODE" immediate="true"
+																				actionListener="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.fireFieldValidationNew}"
+																				event="onblur"
+																				reRender="errorPanel,UI_M_PWB_STATUS_CODE_DESC">
+																			</a4j:support>
+																			
+																			
+																		</h:inputText> <h:inputText
+																			binding="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.COMP_UI_M_PWB_STATUS_CODE_DESC}"
+																			disabled="true" id="UI_M_PWB_STATUS_CODE_DESC"
+																			maxlength="100" rendered="true" required="false"
+																			styleClass="input"
+																			title="#{message.WORKFLOW$PGIM_WORKFLOW_BUCKET$UI_M_PWB_STATUS_CODE_DESC$tooltip}"
+																			value="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.UI_M_PWB_STATUS_CODE_DESC}" />
+																		<rich:suggestionbox for="PWB_STATUS_CODE"
+																			height="200" id="PWB_STATUS_CODE_LOV"
+																			suggestionAction="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.lovPWB_STATUS_CODE}"
+																			var="panelCode" width="250">
+																			<h:column id="COLUMN_SUGG_1A">
+																				<h:outputText id="AUTOID_25"
+																					value="#{panelCode.code}" />
+																			</h:column>
+																			<h:column id="COLUMN_SUGG_2A">
+																				<h:outputText id="AUTOID_26"
+																					value="#{panelCode.name}" />
+																			</h:column>
+																			<a4j:support ajaxSingle="true" event="onselect"
+																				id="PWB_STATUS_CODE_SUGG_SUPPORT"
+																				immediate="true"
+																				reRender="errorPanel,UI_M_PWB_STATUS_CODE_DESC">
+																				<f:setPropertyActionListener id="AUTOID_1A1A"
+																					target="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.PGIM_WORKFLOW_BUCKET_BEAN.UI_M_PWB_STATUS_CODE_DESC}"
+																					value="#{panelCode.name}" />
+																			</a4j:support>
+																		</rich:suggestionbox><h:graphicImage id="IMAGE_SUGG_2A1as"
+																			styleClass="searchimg" value="./../../images/Lov.gif" /> 
+																		</td>
+																		
+																		<td class="oddrow">&nbsp;</td>
+																		<td class="oddrow">&nbsp;</td>
+																		<td class="oddrow">&nbsp;</td>
+																</tr>
+																
+															</table>
+														</td>
+													</tr>
+												</table>
+											</h:panelGroup></td>
+										<td />
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+								id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+								<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+									styleClass="toolBarGroupStyle">
+									<!-- Modified by saranya for Avoidance of POST button required in all screens on 22-02-2017 -->
+									<h:commandLink id="SAVE_TOOL_FOOTER" rendered="false"
+										action="#{WORKFLOW_COMPOSITE_ACTION.PGIM_WORKFLOW_BUCKET_ACTION_BEAN.saveRecord}"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:commandButton id="SAVE_TOOL_IMAGE_FOOTER" accesskey="s"
+											styleClass="toolbarButtonStyle"
+											image="./../../images/save.gif" />
+										<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$save}" />
+									</h:commandLink>
+									<!-- End -->
+									<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/savenext.GIF" />
+										<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$savenext}" />
+									</h:commandLink>
+									<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/firstrec.gif" />
+										<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$firstrec}" />
+									</h:commandLink>
+									<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/prevpage.gif" />
+										<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$prevpage}" />
+									</h:commandLink>
+									<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/nextpage.gif" />
+										<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$nextpage}" />
+									</h:commandLink>
+									<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/lastRecord.gif" />
+										<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$lastRecord}" />
+									</h:commandLink>
+									<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/navigation.gif" />
+										<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$navigation}" />
+									</h:commandLink>
+								</rich:toolBarGroup>
+
+								<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM"
+									location="right">
+									<w:wizardPanelFooter
+										binding="#{PILT002_APAC_COMPOSITE_ACTION.wizard.wizardPanelFooter}" />
+								</rich:toolBarGroup>
+							</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,1230 @@
+<!DOCTYPE html 
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/login-template.xhtml">
+	<!-- Page Title -->
+	<ui:define name="pageTitle">#{property.premia_login_title}</ui:define>
+	<ui:define name="body">
+		<h:form id="login">
+										   
+			<f:view
+				beforePhase="#{loginManagedBean.loginVirtualKeyboardAction.beforePhase}"
+				locale="#{loginManagedBean.loginLocale}">
+				<f:loadBundle var="property" basename="login" />
+
+
+				<!-- [ New login implementation -->
+				<div class="box">
+				<div class="topbg">
+				<div style="text-align: center;padding-left:0px" class="blueheading"><h:outputLabel id="PRODUCT_NAME"
+					value="#{property.premia_loginPage_header}" /></div>
+				</div>
+				<!-- [ Login page middle body -->
+				<div class="middlebg">
+				<div id="main">
+				<div id="content-scroll"><!-- [ VCARD Holder -->
+				<div id="content-holder"><!-- [ VCARD --> <a4j:repeat
+					id="VCARD_TABLE" value="#{loginManagedBean.vcardAction.vcardList}"
+					binding="#{loginManagedBean.vcardAction.vcardTable}" var="vcard"
+					width="100%" rows="3">
+					<div class="content-item">
+					<div class="userbox">
+					<table width="100px" style="height: 100px" border="0"
+						cellspacing="0" cellpadding="0">
+						<tr>
+							<td colspan="2" class="bluecaption"><h:outputLabel
+								id="VCARD1_HEADER" styleClass="label" style="weight:bold"
+								value="#{vcard.userName}" /></td>
+						</tr>
+						<tr>
+							<!-- src="./../../resources/images/login/usericon.gif" 
+						src="#{vcard.imagePath}"
+						-->
+							<td width="37%" align="center" class="login_profilephoto"><img
+								src="#{vcard.imagePath}" width="46"
+								height="55" alt="User" /></td>
+							<td width="63%" class="text"><h:panelGrid id="VCARD_GRID"
+								columns="2">
+								<h:outputLabel id="COMPANY_LABEL" styleClass="vcardlabel"
+									value="#{property.premia_vcard_company_label}" />
+								<h:outputLabel id="COMPANY" styleClass="vcardlabel"
+									value="#{vcard.companyCode}" />
+								<h:outputLabel id="BRANCH_LABEL" styleClass="vcardlabel"
+									value="#{property.premia_vcard_branch_label}" />
+								<h:outputLabel id="BRANCH" styleClass="vcardlabel"
+									value="#{vcard.branchCode}" />
+								<h:outputLabel id="DEPARTMENT_LABEL" styleClass="vcardlabel"
+									value="#{property.premia_vcard_department_label}" />
+								<h:outputLabel id="DEPARTMENT" styleClass="vcardlabel"
+									value="#{vcard.department}" />
+								<h:outputLabel id="LANG_LABEL" styleClass="vcardlabel"
+									value="#{property.premia_vcard_language_label}" />
+								<h:outputLabel id="LANG" styleClass="vcardlabel"
+									value="#{vcard.language}" />
+							</h:panelGrid></td>
+						</tr>
+						<tr>
+						
+						<!-- added by raja on 03-04-2017 for set focus on username -->
+							<td colspan="2" align="center" class="text"><rich:separator
+								width="100%" height="1px"></rich:separator> <a4j:commandButton
+								id="USE_VCARD_BUTTON" binding="#{loginManagedBean.vcardButton}"
+								value="#{property.premia_vcard_title}" styleClass="button"
+								reRender="username,companyCode,divisionCode,departmentCode,RESET_PASSWORD_MODAL_PANEL,reset_password_button,forgot_button"
+								immediate="true" focus="password"
+								actionListener="#{loginManagedBean.vcardAction.userVcardAction}" />
+							</td>
+							
+							<!-- End -->
+						</tr>
+					</table>
+					</div>
+					</div>
+					<!-- VCARD ] -->
+				</a4j:repeat></div>
+				<!-- VCARD Holder ] --></div>
+				</div>
+				<!-- Login page body -->
+
+				<table width="860" border="0" cellspacing="1" cellpadding="0"
+					align="center">
+					<tr>
+						<td width="428" valign="top" style="padding-top: 5px;"><!-- Login Details -->
+
+						<table width="90%" border="0" cellspacing="1" cellpadding="2"
+							align="right">
+							
+							<tr>
+								<td class="caption"><img
+									src="./../../resources/images/login/Loginicon.jpg" width="36"
+									height="36" alt="Login" style="vertical-align: middle" /> <strong>
+								<h:outputLabel id="LOGIN_TITLE"
+									value="#{property.premia_login_caption}"></h:outputLabel> </strong></td>
+									<!-- Added by Ram on 30/11/2016 for Display error Message in label -->
+								<td class="caption"><strong>
+								<h:outputLabel id="ERROR_TITLE" binding="#{loginManagedBean.COMP_ERROR_MESSAGE}" style="color:red;"
+									value="#{loginManagedBean.errorMessage}"></h:outputLabel> </strong></td>
+							</tr>
+							<!-- End -->
+							<tr>
+								<td class="caption"><h:outputLabel id="OUTLABEL_1"
+									styleClass="label"
+									value="#{property.premia_login_label_username}"
+									binding="#{loginManagedBean.userNameLabel}" for="username" />
+								</td>
+								<td><!-- <h:inputText
+									value="#{loginManagedBean.loginBean.userName}" id="username"
+									binding="#{loginManagedBean.userName}" required="false"
+									styleClass="input">
+									<a4j:support id="A4J1_1"
+										actionListener="#{loginManagedBean.userNameAction}"
+										event="onblur" reRender="errorMessages, errorPanel"
+										immediate="true" />
+								</h:inputText> -->
+								<!-- Changed by Gopi on 5/3/2016 for set Default Brach code.Changed field names are divisionCode,departmentCode -->
+								<!--comented by dhinesh for ssp call id : FALCONLIFE-1347884 on 30-11-2016
+								 <h:inputText
+	value="#{loginManagedBean.loginBean.userName}" id="username"
+	binding="#{loginManagedBean.userName}" required="false"
+	styleClass="input">
+	<a4j:support id="A4J1_1"
+	actionListener="#{loginManagedBean.userNameAction}"
+	event="onchange" 
+
+	reRender="errorPanel,divisionCode,departmentCode,companyCode" 
+
+	/>
+	</h:inputText> -->
+	
+	
+	<!-- reRender="errorPanel,divisionCode,departmentCode,companyCode,ERROR_TITLE" -->
+	
+	
+	<!--commented by raja reRender="errorPanel,divisionCode,departmentCode,companyCode" -->
+	
+	<h:inputText
+	value="#{loginManagedBean.loginBean.userName}" id="username"
+	binding="#{loginManagedBean.userName}" required="false"
+	validator="#{loginManagedBean.userNameAction}"
+	styleClass="input">
+	<a4j:support id="A4J1_1"
+	 actionListener="#{loginManagedBean.fireFieldValidation}"
+	event="onchange" immediate="true"
+	reRender="ERROR_TITLE,companyCode_sugg,divisionCode_sugg,departmentCode_sugg,errorPanel,divisionCode,departmentCode,companyCode,reset_password_button,forgot_button,RESET_PASSWORD_MODAL_PANEL"  
+	/>
+	
+<!-- 	Added by Raja on 13/04/2017 -->
+	<!-- 
+	Commeneted by Raja on 20/04/2017
+	<a4j:support id="A4J1_10"
+	 actionListener="#{loginManagedBean.fireFieldValidation_resetPassword}"
+	event="onblur" immediate="true"
+	reRender="ERROR_TITLE,companyCode_sugg,divisionCode_sugg,departmentCode_sugg,errorPanel,divisionCode,departmentCode,companyCode,reset_password_button,forgot_button,RESET_PASSWORD_MODAL_PANEL"  
+	/> -->
+	
+	<a4j:support id="A4J1_10"
+	 actionListener="#{loginManagedBean.fireFieldValidation}"
+	event="oninputblur" immediate="true"
+	reRender="reset_password_button,forgot_button,RESET_PASSWORD_MODAL_PANEL"  
+	/>
+	
+	<!-- End -->
+	
+	</h:inputText>
+								</td>
+							</tr>
+							<tr>
+								<td width="28%" class="caption"><h:outputLabel
+									id="label_password" styleClass="label"
+									value="#{property.premia_login_label_password}"
+									binding="#{loginManagedBean.passwordLabel}" /></td>
+								<td width="58%"><h:inputSecret
+									value="#{loginManagedBean.loginBean.password}" id="password"
+									binding="#{loginManagedBean.password}" required="false"
+									redisplay="true" styleClass="input">
+									<a4j:support id="A4JSUPP1"
+										actionListener="#{loginManagedBean.passwordAction}"
+										event="onblur" reRender="errorMessages,errorPanel"
+										immediate="true" />
+								</h:inputSecret></td>
+							</tr>
+							<tr>
+								<td class="caption"><h:outputLabel styleClass="label"
+									value="#{property.premia_login_company_code}"
+									binding="#{loginManagedBean.companyCodeLabel}" /></td>
+								<td><h:inputText id="companyCode"
+									oninputfocus="currFocus('login:companyCode')"
+									binding="#{loginManagedBean.companyCodeBox}"
+									value="#{loginManagedBean.loginBean.companyCode}"
+									required="false" rendered="true" styleClass="input">
+									<a4j:support id="A4JSUPP2"
+										actionListener="#{loginManagedBean.compCodeAction}"
+										event="onblur" reRender="errorMessages" immediate="true" />
+								</h:inputText> <rich:suggestionbox height="100" width="250"
+									reRender="errorPanel" id="companyCode_sugg"
+									suggestionAction="#{loginManagedBean.getCompCodeList}"
+									for="companyCode" var="compCode" immediate="true">
+									<h:column>
+										<h:outputText id="ser_1" value="#{compCode.companyCode}" />
+									</h:column>
+									<h:column>
+										<h:outputText id="ser_2" value="#{compCode.companyCodeDesc}" />
+									</h:column>
+								</rich:suggestionbox></td>
+							</tr>
+							<tr>
+								<td class="caption"><h:outputLabel styleClass="label"
+									value="#{property.premia_login_division_code}"
+									binding="#{loginManagedBean.divisionCodeLabel}" /></td>
+								<td><h:inputText id="divisionCode"
+									binding="#{loginManagedBean.divisionCodeBox}"
+									value="#{loginManagedBean.loginBean.divisionCode}"
+									required="false" rendered="true" styleClass="input">
+									<a4j:support id="A4JSUPP3"
+										actionListener="#{loginManagedBean.divnCodeAction}"
+										event="onblur" reRender="errorMessages" immediate="true" />
+								</h:inputText> <rich:suggestionbox height="100" width="250"
+									reRender="errorPanel" id="divisionCode_sugg"
+									suggestionAction="#{loginManagedBean.getDivCodeList}"
+									for="divisionCode" var="divnCode" immediate="true">
+									<h:column>
+										<h:outputText id="ser_3" value="#{divnCode.divisionCode}" />
+									</h:column>
+									<h:column>
+										<h:outputText id="ser_4" value="#{divnCode.divisionCodeDesc}" />
+									</h:column>
+								</rich:suggestionbox></td>
+							</tr>
+							<tr>
+								<td class="caption"><h:outputLabel styleClass="label"
+									value="#{property.premia_login_department_code}"
+									binding="#{loginManagedBean.departmentCodeLabel}" /></td>
+								<td><h:inputText id="departmentCode"
+									value="#{loginManagedBean.loginBean.departmentCode}"
+									binding="#{loginManagedBean.departmentCodeBox}"
+									required="false" rendered="true" styleClass="input">
+									<a4j:support id="A4JSUPP4"
+										actionListener="#{loginManagedBean.deptCodeAction}"
+										event="onblur" reRender="errorMessages" immediate="true" />
+								</h:inputText> <rich:suggestionbox height="100" width="250"
+									reRender="errorPanel" id="departmentCode_sugg"
+									suggestionAction="#{loginManagedBean.getDepartCodeList}"
+									for="departmentCode" var="deptCode" immediate="true">
+									<h:column>
+										<h:outputText id="ser_5" value="#{deptCode.departmentCode}" />
+									</h:column>
+									<h:column>
+										<h:outputText id="ser_6"
+											value="#{deptCode.departmentCodeDesc}" />
+									</h:column>
+								</rich:suggestionbox></td>
+							</tr>
+							<tr>
+								<td class="caption"><h:outputLabel id="OUTLABEL_11"
+									styleClass="label"
+									value="#{property.premia_vcard_language_label}"
+									for="lang_select" /></td>
+								<td colspan="2"><h:selectOneMenu id="lang_select"
+									binding="#{loginManagedBean.language}"
+									value="#{loginManagedBean.loginBean.pageLocale}"
+									onchange="submit()"
+									valueChangeListener="#{loginManagedBean.localeChanged}">
+									<f:selectItems id="sel_item"
+										value="#{loginManagedBean.langConst.langCodeList}" />
+									<a4j:support event="onchange" immediate="true"
+										id="sel_item_support"
+										actionListener="#{loginManagedBean.fireFieldValidation}"
+										reRender="errorPanel,loginPanelGroup"></a4j:support>
+								</h:selectOneMenu></td>
+							</tr>
+							
+							<tr>
+								<td class="caption" colspan="2"><h:outputLabel for="Check"
+									id="CHECK_LABEL" styleClass="label"
+									binding="#{loginManagedBean.loginVirtualKeyboardAction.COMP_UI_B_CHECK_LABEL}"
+									value="#{property.premia_virtual_keyboard_checkBox_caption}" />
+								<h:selectBooleanCheckbox
+									binding="#{loginManagedBean.loginVirtualKeyboardAction.COMP_CHECK}"
+									id="Check" rendered="true" styleClass="checkstyleclass"
+									value="#{loginManagedBean.loginVirtualKeyboardAction.loginVirtualKeyboardBean.check}">
+									<a4j:support
+										actionListener="#{loginManagedBean.loginVirtualKeyboardAction.validateCheck}"
+										event="onclick" id="SUPPORT_Check_FLAG" focus="password"
+										immediate="true"
+										reRender="errorPanel,password,VKB_TOP_PG,VKB_PG_NUMERIC,SPL_KEYS" />
+								</h:selectBooleanCheckbox></td>
+							</tr>
+
+							<tr>
+								<td colspan="2"><h:commandButton id="login_button"
+									image="./../../resources/images/login/Loginbutton.jpg"
+									binding="#{loginManagedBean.loginButton}"
+									value="#{property.premia_login_button_login}" type="submit"
+									action="#{loginManagedBean.loginAction}" /> <rich:spacer
+									width="10px" height="25px"></rich:spacer> <h:commandButton
+									id="reset_button"
+									image="./../../resources/images/login/Resetbutton.jpg"
+									binding="#{loginManagedBean.resetButton}"
+									value="#{property.premia_login_button_reset}"
+									action="#{loginManagedBean.resetValue}" />
+									
+									<!-- added by gopi for forgot password -->
+									<!--Changed by Raja 
+									
+									action="#{loginManagedBean.sendmail}"  -->
+									<h:commandButton id="forgot_button"
+										 image="./../../resources/images/login/forgotbuttion.jpg"        
+										 binding="#{loginManagedBean.forgotButton}"
+										 value="#{property.premia_login_button_forgot_password_Forgot}"
+										 
+										 action="#{loginManagedBean.forgotpasswordsendmail}"/>
+									
+									<!-- end -->
+									
+									 <h:commandButton id="reset_password_button"
+										 image="./../../resources/images/login/ResetPasswordButtion.jpg"        
+										 binding="#{loginManagedBean.resetpasswordButton}"
+										 value="#{property.premia_login_button_forgot_password_Forgot}"
+										 action="#{loginManagedBean.resetpasswordsendmail}"/> 
+									
+									
+									</td>
+							</tr>
+						</table>
+
+
+						</td>
+						<td width="429" valign="top" style="padding-top: 5px;"><!-- Virtual Keyboard -->
+						<table width="98%" border="0" cellspacing="2" cellpadding="0"
+							align="center">
+							<tr>
+								<td class="caption"><strong> <h:outputLabel
+									id="VIRTUAL_KEYBOARD"
+									value="#{property.premia_virtual_keyboard_title}">
+								</h:outputLabel> </strong></td>
+							</tr>
+							<tr>
+								<td align="center"><h:panelGrid id="VKB_TOP_PG"
+									binding="#{loginManagedBean.loginVirtualKeyboardAction.COMP_VIRTUAL_GRID}"
+									columns="2">
+									<h:panelGrid id="VKB_PG_ALPHABET_SPL_CHARS" columns="1">
+										<h:panelGroup id="ALPHABETS">
+											<h:panelGrid id="VKB_PG_ALPHABET" columns="10"
+												binding="#{loginManagedBean.loginVirtualKeyboardAction.COMP_ALPHABET_GRID}">
+												<h:commandButton id="A" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="B" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="C" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="D" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="E" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="F" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="G" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="H" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="I" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="J" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="K" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="L" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="M" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="N" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="O" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="P" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="Q" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="R" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="S" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="T" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="U" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="V" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="W" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="X" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="Y" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="Z" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+											</h:panelGrid>
+										</h:panelGroup>
+										<h:panelGroup id="PANEL_CHARS">
+											<h:panelGrid id="VKB_SPL_CHARS" columns="10"
+												binding="#{loginManagedBean.loginVirtualKeyboardAction.COMP_SPLKEYS_GRID}">
+												<h:commandButton id="SPL_C1" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C2" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C3" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C4" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C5" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C6" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C7" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C8" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C9" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C10" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C11" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C12" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C13" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C14" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C15" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C16" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C17" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C18" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C19" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C20" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C21" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C22" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C23" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C24" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C25" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C26" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C27" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C28" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C29" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+												<h:commandButton id="SPL_C30" style="width:25px"
+													styleClass="button"
+													onmousedown="buttonDown(this);return false;"
+													onmouseup="buttonUp(this);return false;"
+													onmouseout="buttonUp(this);return false;"
+													onclick="return false;"
+													ondblclick="buttonDown(this);return false;"
+													onkeydown="notallowed();return false;"
+													onkeyup="notallowed();return false;" />
+											</h:panelGrid>
+										</h:panelGroup>
+									</h:panelGrid>
+									<h:panelGrid id="VKB_PG_NUMERIC" columns="3"
+										binding="#{loginManagedBean.loginVirtualKeyboardAction.COMP_NUMERIC_GRID}">
+										<h:commandButton id="NUM0" style="width:25px"
+											styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+										<h:commandButton id="NUM1" style="width:25px"
+											styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+										<h:commandButton id="NUM2" style="width:25px"
+											styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+										<h:commandButton id="NUM3" style="width:25px"
+											styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+										<h:commandButton id="NUM4" style="width:25px"
+											styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+										<h:commandButton id="NUM5" style="width:25px"
+											styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+										<h:commandButton id="NUM6" style="width:25px"
+											styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+										<h:commandButton id="NUM7" style="width:25px"
+											styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+										<h:commandButton id="NUM8" style="width:25px"
+											styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+										<h:commandButton id="NUM9" style="width:25px"
+											styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+									</h:panelGrid>
+									<h:panelGrid id="SPL_KEYS" columns="3">
+										<h:commandButton id="BackSpace" value="Back Space"
+											style="width:76px" styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+										<h:commandButton id="Clr" value="Clear" style="width:70px"
+											styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+										<h:commandButton id="CpsLock" value="Caps Lock"
+											style="width:76px" styleClass="button"
+											onmousedown="buttonDown(this);return false;"
+											onmouseup="buttonUp(this);return false;"
+											onmouseout="buttonUp(this);return false;"
+											onclick="return false;"
+											ondblclick="buttonDown(this);return false;"
+											onkeydown="notallowed();return false;"
+											onkeyup="notallowed();return false;" />
+									</h:panelGrid>
+								</h:panelGrid></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+				</div>
+				<!-- Login page middle body ] --> <!-- [ Login page footer -->
+				<div class="bottombg"></div>
+				<div class="copyright">
+				<table width="100%" border="0" cellspacing="1" cellpadding="0"
+					class="copyright">
+					<tr>
+						<td><h:outputLabel id="FOOTER_CAPTION"
+							value="#{property.premia_loginPage_footer_caption}"
+							escape="false" /></td>
+						<td align="right"><h:outputLabel id="FOOTER_INFO"
+							value="#{property.premia_loginPage_footer_info}" /> <img
+							src="./../../resources/images/login/3ilogo.gif" width="50"
+							alt="3i Infotech" style="vertical-align: middle" /><!-- removed hiegth and chahed width for new logo on 08-02-2018 -->
+						</td>
+					</tr>
+				</table>
+				</div>
+				</div>
+				<!-- New login implementation ] -->
+				<!--[Modal Panel Implementation  -->
+
+				<rich:modalPanel id="LOGIN_ERROR_PANEL" width="350" height="185">
+					<f:facet name="header">
+						<h:panelGroup>
+							<h:outputText
+								value="Login Error Message"
+								style="color: #FFFFFF; font-size: 14px;font-weight: bold;"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+					<f:facet name="controls">
+						<h:panelGroup>
+							<h:graphicImage value="./../../resources/images/close.png"
+								style="cursor:pointer" id="LOGIN_ERROR_PANEL_hidelink" />
+							<rich:componentControl for="LOGIN_ERROR_PANEL"
+								attachTo="LOGIN_ERROR_PANEL_hidelink" operation="hide"
+								event="onclick" />
+						</h:panelGroup>
+					</f:facet>
+					<table align="center" width="100%">
+						<tr align="center">
+							<td><!-- Error Display -->
+							<div class="errormessagebox"><h:panelGrid id="errorPanel">
+								<h:messages id="jsfMessages"
+									style="font-family:Arial; font-size:12px; color:RED"
+									escape="false" rendered="true" />
+							</h:panelGrid></div>
+							</td>
+						</tr>
+						<tr align="center">
+							<td><rich:separator width="100%" height="1px"></rich:separator>
+							<a4j:commandButton value="Ok" styleClass="button"
+								id="LOGIN_ERROR_PANEL_OK_BUTTON" immediate="true">
+								<rich:componentControl for="LOGIN_ERROR_PANEL"
+									attachTo="LOGIN_ERROR_PANEL_OK_BUTTON" operation="hide"
+									event="onclick" />
+							</a4j:commandButton></td>
+						</tr>
+					</table>
+				</rich:modalPanel>
+				<!--Modal Panel Implementation ] -->
+			
+
+
+
+
+
+				
+				<!--[Modal Panel Implementation  -->
+
+				<rich:modalPanel id="LOGIN_FORGOT_PANEL" width="350" height="185">
+					<f:facet name="header">
+						<h:panelGroup>
+							<h:outputText
+								binding="#{loginManagedBean.COM_PANEL_VALUE}"
+								value="Login Error Message"
+								style="color: #FFFFFF; font-size: 14px;font-weight: bold;"></h:outputText>
+						</h:panelGroup>
+					</f:facet>
+					<f:facet name="controls">
+						<h:panelGroup>
+							<h:graphicImage value="./../../resources/images/close.png"
+								style="cursor:pointer" id="LOGIN_FORGOT_PANEL_hidelink" />
+							<rich:componentControl for="LOGIN_FORGOT_PANEL"
+								attachTo="LOGIN_FORGOT_PANEL_hidelink" operation="hide"
+								event="onclick" />
+						</h:panelGroup>
+					</f:facet>
+					<table align="center" width="100%">
+						<tr align="center">
+							<td><!-- Error Display -->
+							<div class="errormessagebox  forgotmessagebox"><h:panelGrid id="fotgotPanel">
+								<h:messages id="jsfMessages1" class="forgotmessagebox"
+									style="font-family:Arial; font-size:12px; color:RED"
+									escape="false" rendered="true" />
+							</h:panelGrid></div>
+							</td>
+						</tr>
+						<tr align="center">
+							<td><rich:separator width="100%" height="1px"></rich:separator>
+							<a4j:commandButton value="Ok" styleClass="button"
+								id="LOGIN_FORGOT_PANEL_OK_BUTTON" immediate="true">
+								<rich:componentControl for="LOGIN_FORGOT_PANEL"
+									attachTo="LOGIN_FORGOT_PANEL_OK_BUTTON" operation="hide"
+									event="onclick" />
+							</a4j:commandButton></td>
+						</tr>
+					</table>
+				</rich:modalPanel>
+				<!--Modal Panel Implementation ] -->
+				
+				
+				
+				
+				
+				
+				
+				
+				
+				<h:inputHidden id="loginerrorflag"
+					value="#{loginManagedBean.loginError}" />
+					
+					<h:inputHidden id="loginforgotflag"
+					value="#{loginManagedBean.loginforgot}" />
+				
+				
+				<script>
+					if(document.getElementById('login:loginerrorflag').value == 'true'){
+						Richfaces.showModalPanel('LOGIN_ERROR_PANEL');
+					} 
+
+
+					if(document.getElementById('login:loginforgotflag').value == 'true'){
+						Richfaces.showModalPanel('LOGIN_FORGOT_PANEL');
+					} 
+				</script>
+				<script type="text/javascript"> 
+				   window.onload = function() {
+				   document.getElementById('login:username').focus();
+					   }
+												   </script>
+				<style >
+				.forgotmessagebox ul{list-style-type: none;padding:0 0 10px 0 !important;}
+				.forgotmessagebox ul li:nth-child(2){padding-left:10px;padding-top: 10px;}
+				</style>
+
+
+
+
+
+
+
+			</f:view>
+
+		</h:form>
+		
+		<!-- New login implementation ] -->
+				
+				<!-- MODEL PANEL FOR RESET PASSWORD -->
+				  <rich:modalPanel id="RESET_PASSWORD_MODAL_PANEL" height="130"
+				width="340"
+				binding="#{loginManagedBean.COMP_RESET_PASSWORD_MODAL_PANEL}">
+				<f:facet name="header">
+					<h:panelGroup id="header_panel" >
+						<h:outputText id="header_text" value="Reset the Password" />
+					</h:panelGroup>
+				</f:facet>
+				<f:facet name="controls">
+					<h:panelGroup id="controlgroup">
+						<h:form id="FT_RESET_PASSWORD_MODAL_DELETE_PANEL_1"
+							onkeypress="return event.keyCode != 13">
+							<h:commandLink immediate="true" id="RESET_PASSWORD_CLOSE_LINK"
+								action="#{loginManagedBean.CancelPanelDelete}">
+								<h:graphicImage value="./../../resources/images/close.png"
+									styleClass="toolbarImageStyle" style="cursor:pointer"
+									id="RESET_PASSWORD_MODAL_PANEL_hidelink" />
+							</h:commandLink>
+						</h:form>
+					</h:panelGroup>
+				</f:facet>
+				<h:form id="FT_RESET_PASSWORD_MODAL__DELETE_PANEL_2"
+					onkeypress="return event.keyCode != 13">
+					<table width="100%">
+						<tr>
+							<td align="center"><h:outputText id="CONFIRMATION_MSG"
+									style="font-size: 14px;" value="Your password is expired please click the resetpassword button" /></td>
+						</tr>
+						<tr>
+							<td><rich:spacer id="SPACER_MODAL_1" width="100%;"
+									height="18px" /> <rich:separator id="SEPARATOR" width="100%"
+									height="1px" /></td>
+						</tr>
+						<tr>
+							<td align="center"><h:panelGroup>
+									
+										<!-- <a4j:commandButton reRender="errorpanel,RESET_PASSWORD_MODAL_PANEL"
+										binding="#{loginManagedBean.COMP_OK_BUTTON}"
+											action="#{loginManagedBean.showresetbutton}"
+							id="OK_BUTTON" styleClass="button" style="width:70px;" focus="password"
+											value="#{commonmsg.IP_REP_INFO$OK_BUTTON$caption}" 
+											/> -->
+											
+											<a4j:commandButton id="PRINT_LINK"
+									action="#{loginManagedBean.showresetbutton}"
+									value="#{commonmsg.IP_REP_INFO$OK_BUTTON$caption}" focus="password"
+									styleClass="button" style="width:70px"
+									reRender="errorpanel,RESET_PASSWORD_MODAL_PANEL,reset_password_button,forgot_button"> 
+									 <rich:componentControl
+															id="OK_BUTTON"
+															for="REPORT_MODAL_PANEL"
+															attachTo="PRINT_LINK"
+															operation="hide" event="onclick" /> 
+								</a4j:commandButton>
+									
+								</h:panelGroup> <rich:spacer id="SPACER_MODAL_2" width="5px;" /> <a4j:commandButton
+									binding="#{loginManagedBean.COMP_CANCEL_BUTTON}"
+									id="CANCEL_BUTTON" styleClass="button" style="width:70px;"
+									action="#{loginManagedBean.CancelPanelDelete}"
+									reRender="errorpanel,RESET_PASSWORD_MODAL_PANEL" focus="password"
+									value="#{commonmsg.IP_REP_INFO$CANCEL_BUTTON$caption}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</rich:modalPanel>  
+				<!-- END -->
+				
+				
+				<!--Modal Panel Implementation ] -->
+	</ui:define>
+</ui:composition>

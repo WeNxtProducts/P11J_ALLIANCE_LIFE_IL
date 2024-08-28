@@ -1,0 +1,692 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.onLoad}">
+			<f:loadBundle basename="messageProperties_PILT024" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			
+				<h:form id="PS_IL_POL_INVEST_SUMMARY">
+<!--/*ADDED BY RAJA ON 15-07-2017 FOR ZBILQC-1731999*/-->	
+				<style>
+			.evenrecord{
+	font-size:12px;
+	color:blue;
+	font-weight: bold;
+}
+
+<!--Added by Janani on 12.01.2018 as per Gaurav sugges.-->	
+.withdrawalRecord{
+	font-size:12px;
+	color:red;
+	font-weight: bold;
+}
+
+.topupRecord{
+	font-size:12px;
+	color:brown;
+	font-weight: bold;
+}
+
+<!--end-->	
+
+/* .rich-table tr:nth-child(even) td span,.rich-table tr:nth-child(even) td span input {color:blue}
+.rich-table tr:nth-child(odd) td span,.rich-table tr:nth-child(odd) td span input {color: #000} */
+
+</style>
+
+<!--end-->	
+				<table cellpadding="0" cellspacing="0" width="100%" border="0">
+					<tr>
+						<td colspan="3" width="100%" valign="top">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILT024_COMPOSITE_ACTION.navigationEnabled}"
+											rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20"><rich:simpleTogglePanel
+							id="errorPanel" switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.errorMap['current'] !=null? PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.errorMap['current']: PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right"><h:commandButton
+							binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_UI_M_BUT_MAIN_2}"
+							disabled="false" id="UI_M_BUT_MAIN_2" rendered="true"
+							styleClass="button" style="width:86px;"
+							action="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.mainButAction}"
+							title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$UI_M_BUT_MAIN_2$tooltip}"
+							value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$UI_M_BUT_MAIN_2$caption}" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td width="100%" valign="top"><h:panelGroup
+									id="PS_IL_POL_INVEST_SUMMARY_PANEL"
+									style="border:0;height:15%;">
+									<table id="bordertable" align="left" width="100%">
+										<tr>
+										<!--/*ADDED BY RAJA ON 15-07-2017 FOR ZBILQC-1731999*/-->	
+											<td><rich:dataTable width="100%"
+												binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.dataTable}"
+												id="PS_IL_POL_INVEST_SUMMARY_DATA_GRID" rows="5"
+												value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.dataList_PS_IL_POL_INVEST_SUMMARY}"
+												var="tableVar">
+
+												<rich:column filterBy="#{tableVar.PIS_SR_NO}"
+													filterEvent="onkeyup" id="COLUMN_PIS_SR_NO" rendered="true"
+													sortBy="#{tableVar.PIS_SR_NO}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PIS_SR_NO"
+															styleClass="forumRowHighlight"
+															value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_SR_NO$caption}" />
+													</f:facet>
+													<a4j:commandLink
+																action="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.getDetails}"
+																id="serialp_171" immediate="true"
+																reRender="errorPanel,PS_IL_POL_INVEST_SUMMARY_PANEL">
+
+																<h:outputText id="serialp_41"
+																styleClass="#{tableVar.evenrecord}"
+																	value="#{tableVar.PIS_SR_NO} " />
+
+															</a4j:commandLink>
+												</rich:column>
+												<rich:column filterBy="#{tableVar.PIS_DT}"
+													filterEvent="onkeyup" id="COLUMN_PIS_DT" rendered="true"
+													sortBy="#{tableVar.PIS_DT}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PIS_DT"
+															styleClass="forumRowHighlight"
+															value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_DT$caption}" />
+													</f:facet>
+													 <rich:calendar
+														datePattern="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.datePattern}"
+														id="COLUMN_CAL_PIS_DT" inputSize="11" 
+														value="#{tableVar.PIS_DT}" disabled = "true" /> 
+												</rich:column>
+												<rich:column filterBy="#{tableVar.PIS_FC_MOP_INVEST_AMT}"
+													filterEvent="onkeyup" id="COLUMN_PIS_FC_MOP_INVEST_AMT"
+													rendered="true" sortBy="#{tableVar.PIS_FC_MOP_INVEST_AMT}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PIS_FC_MOP_INVEST_AMT"
+															styleClass="forumRowHighlight"
+															value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_MOP_INVEST_AMT$caption}" />
+													</f:facet>
+													<h:outputText id="LINK_CAPTION_PIS_FC_MOP_INVEST_AMT"
+													styleClass="#{tableVar.evenrecord}"
+														style="text-align: right; display: inline-block; width: 100%;"
+														value="#{tableVar.PIS_FC_MOP_INVEST_AMT}" >
+													<f:converter converterId="PELNumberFormatter" />
+													</h:outputText>
+												</rich:column>
+												<rich:column filterBy="#{tableVar.PIS_FC_OPBAL}"
+													filterEvent="onkeyup" id="COLUMN_PIS_FC_OPBAL"
+													rendered="true" sortBy="#{tableVar.PIS_FC_OPBAL}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PIS_FC_OPBAL"
+															styleClass="forumRowHighlight"
+															value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_OPBAL$caption}" />
+													</f:facet>
+													<h:outputText id="LINK_CAPTION_PIS_FC_OPBAL"
+													styleClass="#{tableVar.evenrecord}"
+														style="text-align: right; display: inline-block; width: 100%;"
+														value="#{tableVar.PIS_FC_OPBAL}" >
+														<f:converter converterId="PELNumberFormatter" />
+													</h:outputText>
+												</rich:column>
+												
+												<rich:column filterBy="#{tableVar.PIS_FC_TOTAL_CONTR}"
+													filterEvent="onkeyup" id="COLUMN_PIS_FC_TOTAL_CONTR_FC" rendered="true"
+													sortBy="#{tableVar.PIS_FC_TOTAL_CONTR}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PIS_FC_TOTAL_CONTR_FC"
+															styleClass="forumRowHighlight"
+															value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_TOTAL_CONTR$caption}" />
+													</f:facet>
+													<h:outputText id="LINK_CAPTION_PIS_FC_TOTAL_CONTR_FC"
+													styleClass="#{tableVar.evenrecord}"
+														style="text-align: right; display: inline-block; width: 100%;"
+														value="#{tableVar.PIS_FC_TOTAL_CONTR} ">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:outputText>
+												</rich:column>
+												<rich:column filterBy="#{tableVar.PIS_FC_TOTAL_INTEREST}"
+													filterEvent="onkeyup" id="COLUMN_PIS_FC_TOTAL_INTEREST" rendered="true"
+													sortBy="#{tableVar.PIS_FC_TOTAL_INTEREST}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PIS_FC_TOTAL_INTEREST"
+															styleClass="forumRowHighlight"
+															value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_TOTAL_INTEREST$caption}" />
+													</f:facet>
+													<h:outputText id="LINK_CAPTION_PIS_FC_TOTAL_INTEREST"
+													styleClass="#{tableVar.evenrecord}"
+														style="text-align: right; display: inline-block; width: 100%;"
+														value="#{tableVar.PIS_FC_TOTAL_INTEREST} " >
+														<f:converter converterId="PELNumberFormatter" />
+													</h:outputText>
+												</rich:column>
+												<rich:column filterBy="#{tableVar.PIS_FC_CLBAL}"
+													filterEvent="onkeyup" id="COLUMN_PIS_FC_CLBAL"
+													rendered="true" sortBy="#{tableVar.PIS_FC_CLBAL}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PIS_FC_CLBAL"
+															styleClass="forumRowHighlight"
+															value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_CLBAL$caption}" />
+													</f:facet>
+													<h:outputText id="LINK_CAPTION_PIS_FC_CLBAL"
+													styleClass="#{tableVar.evenrecord}"
+														style="text-align: right; display: inline-block; width: 100%;"
+														value="#{tableVar.PIS_FC_CLBAL}" >
+														<f:converter converterId="PELNumberFormatter" />
+													</h:outputText>
+												</rich:column>
+												<rich:column filterBy="#{tableVar.PIS_FC_CURR_SA}"
+													filterEvent="onkeyup" id="COLUMN_PIS_FC_CURR_SA"
+													rendered="true" sortBy="#{tableVar.PIS_FC_CURR_SA}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PIS_FC_CURR_SA"
+															styleClass="forumRowHighlight"
+															value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_CURR_SA$caption}" />
+													</f:facet>
+													<h:outputText id="LINK_CAPTION_PIS_FC_CURR_SA"
+													styleClass="#{tableVar.evenrecord}"
+														style="text-align: right; display: inline-block; width: 100%;"
+														value="#{tableVar.PIS_FC_CURR_SA}" >
+														<f:converter converterId="PELNumberFormatter" />
+													</h:outputText>
+												</rich:column>
+												<f:facet name="footer">
+													<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+														<rich:datascroller align="right"
+															id="PS_IL_POL_INVEST_SUMMARY_SCROLL" page="1" />
+														<a4j:commandButton
+															actionListener="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.addRow}"
+															id="addRow" rendered="false"
+															reRender="PS_IL_POL_INVEST_SUMMARY_PANEL,errorPanel"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.addNewButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.deleteRow}"
+															id="deleteRow" rendered="false"
+															reRender="PS_IL_POL_INVEST_SUMMARY_PANEL,errorPanel"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.deleteButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.postRecord}"
+															id="postRecord" rendered="false"
+															reRender="PS_IL_POL_INVEST_SUMMARY_PANEL,errorPanel"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.postButtonCaption}" />
+													</h:panelGroup>
+												</f:facet>
+											</rich:dataTable></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table width="100%">
+												
+												<tr>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_SR_NO_LABEL}"
+														for="PIS_SR_NO" id="PIS_SR_NO_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_SR_NO$caption}" />
+													</td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_SR_NO}"
+														id="PIS_SR_NO" maxlength="5"
+														rendered="true" required="false"
+														styleClass="input" disabled="true"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_SR_NO$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_SR_NO}" />
+													</td>
+													<td>&nbsp;</td>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_DT_LABEL}"
+														for="PIS_DT" id="PIS_DT_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_DT$caption}" />
+													</td>
+													<td><rich:calendar
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_DT}"
+														datePattern="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.datePattern}"
+														disabled="true" enableManualInput="true" id="PIS_DT"
+														inputSize="11" rendered="false" required="false"
+														styleClass="calendarstyleclass"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_DT}" />
+													</td>
+												</tr>
+												<!-- Added by Ameen on 29-05-2017 as per Gaurav sugg. -->
+												<tr>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FLEX_03_LABEL}"
+														for="PIS_FLEX_03" id="PIS_FLEX_03_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$UI_M_PREMIUM_DUE_DATE$caption}" />
+													</td>
+													<td><rich:calendar
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FLEX_03}"
+														datePattern="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.datePattern}"
+														disabled="true" enableManualInput="true" id="PIS_FLEX_03"
+														inputSize="11" rendered="true" required="false"
+														styleClass="calendarstyleclass"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_FLEX_03}" />
+													</td>
+													<td>&nbsp;</td>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FLEX_04_LABEL}"
+														for="PIS_FLEX_04" id="PIS_FLEX_04_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$UI_M_PREMIUM_PAID_DATE$caption}" />
+													</td>
+													<td><rich:calendar
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FLEX_04}"
+														datePattern="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.datePattern}"
+														disabled="true" enableManualInput="true" id="PIS_FLEX_04"
+														inputSize="11" rendered="true" required="false"
+														styleClass="calendarstyleclass"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_FLEX_04}" />
+													</td>
+												</tr>
+												<!-- End -->
+												<tr>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FC_MOP_INVEST_AMT_LABEL}"
+														for="PIS_FC_MOP_INVEST_AMT"
+														id="PIS_FC_MOP_INVEST_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_MOP_INVEST_AMT$caption}" />
+													</td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FC_MOP_INVEST_AMT}"
+														disabled="true" id="PIS_FC_MOP_INVEST_AMT" maxlength="19"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_MOP_INVEST_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_FC_MOP_INVEST_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td>&nbsp;</td>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_LC_MOP_INVEST_AMT_LABEL}"
+														for="PIS_LC_MOP_INVEST_AMT"
+														id="PIS_LC_MOP_INVEST_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_LC_MOP_INVEST_AMT$caption}" /></td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_LC_MOP_INVEST_AMT}"
+														disabled="true" id="PIS_LC_MOP_INVEST_AMT" maxlength="19"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_LC_MOP_INVEST_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_LC_MOP_INVEST_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													
+												</tr>
+												<tr>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FC_TOTAL_CONTR_LABEL}"
+														for="PIS_FC_TOTAL_CONTR" id="PIS_FC_TOTAL_CONTR_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_TOTAL_CONTR$caption}" />
+													</td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FC_TOTAL_CONTR}"
+														disabled="true" id="PIS_FC_TOTAL_CONTR" maxlength="19"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_TOTAL_CONTR$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_FC_TOTAL_CONTR}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td>&nbsp;</td>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_LC_TOTAL_CONTR_LABEL}"
+														for="PIS_LC_TOTAL_CONTR" id="PIS_LC_TOTAL_CONTR_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_LC_TOTAL_CONTR$caption}" />
+													</td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_LC_TOTAL_CONTR}"
+														disabled="true" id="PIS_LC_TOTAL_CONTR" maxlength="19"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_LC_TOTAL_CONTR$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_LC_TOTAL_CONTR}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												
+												<tr>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FC_OPBAL_LABEL}"
+														for="PIS_FC_OPBAL" id="PIS_FC_OPBAL_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_OPBAL$caption}" />
+													</td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FC_OPBAL}"
+														disabled="true" id="PIS_FC_OPBAL" maxlength="19"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_OPBAL$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_FC_OPBAL}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td>&nbsp;</td>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_LC_OPBAL_LABEL}"
+														for="PIS_LC_OPBAL" id="PIS_LC_OPBAL_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_LC_OPBAL$caption}" />
+													</td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_LC_OPBAL}"
+														disabled="true" id="PIS_LC_OPBAL" maxlength="19"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_LC_OPBAL$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_LC_OPBAL}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FC_TOTAL_INTEREST_LABEL}"
+														for="PIS_FC_TOTAL_INTEREST"
+														id="PIS_FC_TOTAL_INTEREST_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_TOTAL_INTEREST$caption}" />
+													</td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FC_TOTAL_INTEREST}"
+														disabled="true" id="PIS_FC_TOTAL_INTEREST" maxlength="19"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_TOTAL_INTEREST$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_FC_TOTAL_INTEREST}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td>&nbsp;</td>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_LC_TOTAL_INTEREST_LABEL}"
+														for="PIS_LC_TOTAL_INTEREST"
+														id="PIS_LC_TOTAL_INTEREST_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_LC_TOTAL_INTEREST$caption}" />
+													</td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_LC_TOTAL_INTEREST}"
+														disabled="true" id="PIS_LC_TOTAL_INTEREST" maxlength="19"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_LC_TOTAL_INTEREST$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_LC_TOTAL_INTEREST}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FC_CLBAL_LABEL}"
+														for="PIS_FC_CLBAL" id="PIS_FC_CLBAL_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_CLBAL$caption}" />
+													</td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FC_CLBAL}"
+														disabled="true" id="PIS_FC_CLBAL" maxlength="19"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FC_CLBAL$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_FC_CLBAL}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td>&nbsp;</td>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_LC_CLBAL_LABEL}"
+														for="PIS_LC_CLBAL" id="PIS_LC_CLBAL_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_LC_CLBAL$caption}" />
+													</td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_LC_CLBAL}"
+														disabled="true" id="PIS_LC_CLBAL" maxlength="19"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_LC_CLBAL$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_LC_CLBAL}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<!-- Added by Ameen on 29-05-2017 as per Gaurav sugg. -->
+												<tr>
+													
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FLEX_01_LABEL}"
+														for="PIS_FLEX_01"
+														id="PIS_FLEX_01_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FLEX_01$caption}" />
+													</td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FLEX_01}"
+														disabled="true" id="PIS_FLEX_01" maxlength="19"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FLEX_01$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_FLEX_01}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td>&nbsp;</td>
+													<td><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FLEX_02_LABEL}"
+														for="PIS_FLEX_02"
+														id="PIS_FLEX_02_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FLEX_02$caption}" />
+													</td>
+													<td><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.COMP_PIS_FLEX_02}"
+														disabled="true" id="PIS_FLEX_02" maxlength="19"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PS_IL_POL_INVEST_SUMMARY$PIS_FLEX_02$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PS_IL_POL_INVEST_SUMMARY_ACTION_BEAN.PS_IL_POL_INVEST_SUMMARY_BEAN.PIS_FLEX_02}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<!-- End -->
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\save.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\savenext.GIF" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\firstrec.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\prevpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\nextpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\lastRecord.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\navigation.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+					</table>
+				</h:form>
+			
+		</f:view>
+	</ui:define>
+</ui:composition>

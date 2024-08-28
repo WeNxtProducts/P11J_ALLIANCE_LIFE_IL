@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle var="message" basename="messageProperties_PILM016_APAC" />
+		
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0" >
+		<!-- add header row -->
+		<tr>
+		</tr>
+		<h:form id="PILM016_APAC_PM_IL_CONTRACTOR_SEARCH">
+
+			<tr>
+				<td><!-- hidden value for navigating to next screen --> <!-- initial filter to search and list -->
+				<table border="0" width="100%" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+								value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td><h:outputLabel value="Assured Code" /> <h:inputText
+							value="#{PILM016_APAC_Search.assuredCode}" /></td>
+						<td><h:outputLabel value="Contractor Name" /> <h:inputText
+							value="#{PILM016_APAC_Search.contractorName}" /></td>
+						<td><a4j:commandButton rendered="true" value="#{commonmsg.searchButton$caption}"
+							id="a4link" styleClass="button">
+							<a4j:support action="#{PILM016_APAC_Search.fetchClassDetails}"
+								event="onclick" reRender="dataTableId"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+				<!-- using rich data table --> <rich:dataTable id="dataTableId"
+					value="#{PILM016_APAC_Search.classMasterList}" var="contractor"
+					cellpadding="5px" rows="10" border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+					<!-- next column -->
+					
+					<rich:column filterBy="#{contractor.CONT_CODE}"
+						sortBy="#{contractor.CONT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Assured Code" />
+						</f:facet>
+						<h:commandLink
+							action="#{PILM016_APAC_Search.navigationToMainPage}">
+								<h:outputText value="#{contractor.CONT_CODE}" />
+							<f:param name="Assured Code" value="#{contractor.CONT_CODE}" />
+						</h:commandLink>
+					</rich:column>
+
+
+					<rich:column filterBy="#{contractor.CONT_REF_ID1}"
+						sortBy="#{contractor.CONT_REF_ID1}" filterEvent="onkeyup">
+
+						<f:facet name="header">
+							<h:outputText value="National ID" />
+						</f:facet>
+						<h:outputText value="#{contractor.CONT_REF_ID1}" />
+					</rich:column>
+					
+					<rich:column filterBy="#{contractor.CONT_REF_ID2}"
+						sortBy="#{contractor.CONT_REF_ID2}" filterEvent="onkeyup">
+
+						<f:facet name="header">
+							<h:outputText value="Old IC Number" />
+						</f:facet>
+						<h:outputText value="#{contractor.CONT_REF_ID2}" />
+					</rich:column>
+					
+					<rich:column filterBy="#{contractor.CONT_NAME}"
+						sortBy="#{contractor.CONT_NAME}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Contractor Name" />
+						</f:facet>
+						<h:outputText value="#{contractor.CONT_NAME} " />
+					</rich:column>
+				</rich:dataTable>
+				<table width="100%" cellpadding="0" cellspacing="0"	border="0" >
+					<tr>
+						<td align="left"><h:commandButton value="Insert" styleClass="button"
+							action="#{PILM016_APAC_Search.clearSession}" /></td>
+						<td align="right"><h:commandButton value="Delete" rendered="false"
+							id="deleteButton" styleClass="button">
+							<a4j:support action="#{PILM016_APAC_Search.deleteButton}"
+								event="onclick" reRender="dataTableId,"></a4j:support>
+						</h:commandButton></td>
+
+
+
+					</tr>
+
+					<!-- add footer to the page-->
+					<tr>
+					</tr>
+					</table>
+					</td>
+					</tr>
+					</h:form>
+					</table>
+					
+					
+	</f:view>
+	</ui:define>
+</ui:composition>
+	

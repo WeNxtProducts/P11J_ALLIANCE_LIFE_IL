@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PM076_A" var="message" />
+	<f:loadBundle basename="messageProperties" var="mainmessage" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			
+		</tr>
+		<h:form id="PM076_A_SEARCH">
+			<tr>
+				<td width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM076_A_SEARCH_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM076_A_SEARCH_ACTION.errorMap['current'] !=null? PM076_A_SEARCH_ACTION.errorMap['current']:PM076_A_SEARCH_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" styleClass="ErrorMessages"
+								value="#{PM076_A_SEARCH_ACTION.errorMessages}" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PM076_A_SEARCH_ACTION.globalMsgRender}" />
+							<h:outputText id="warningMessages" styleClass="WarningMessages"
+								value="#{PM076_A_SEARCH_ACTION.warningMessages}" escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">
+				<table width="100%" id="toolbartable" height="10%" border="0"
+					cellpadding="0" cellspacing="0">
+					<h:inputHidden id="HIDDENROWID"
+						value="#{PM076_A_SEARCH_ACTION.bchCodeRowId}" />
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0"
+					id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+						<td><h:outputLabel
+							value=" #{message.PM076_A$PM_BROKER_COMM_HDR$BCH_CODE$caption} :" />
+						<h:inputText value="#{PM076_A_SEARCH_ACTION.initBch_Code}" /></td>
+
+						<td><a4j:commandButton
+							value="#{commonmsg.searchButton$caption}" id="a4link"
+							styleClass="button">
+							<a4j:support
+								action="#{PM076_A_SEARCH_ACTION.getSearchHeaderValues}"
+								event="onclick" reRender="dataTableId,errorPanel"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+				<!-- using rich data table --> <rich:dataTable id="dataTableId"
+					value="#{PM076_A_SEARCH_ACTION.listValue}" var="customerMatser"
+					cellpadding="5px" rows="#{PM076_A_SEARCH_ACTION.rowCount}"
+					border="1" width="100%">
+
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right" page="#{PM076_A_SEARCH_ACTION.currPage}">
+						</rich:datascroller>
+					</f:facet>
+					<!-- next column -->
+
+					<rich:column filterBy="#{customerMatser.BCH_CODE}"
+						filterValue="#{PM076_A_SEARCH_ACTION.filterBch_Code}"
+						sortBy="#{customerMatser.BCH_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PM076_A$PM_BROKER_COMM_HDR$BCH_CODE$caption}" />
+						</f:facet>
+						<h:commandLink action="#{PM076_A_SEARCH_ACTION.clearList}"
+							onclick="document.getElementById('PM076_A_SEARCH:HIDDENROWID').value='#{customerMatser.ROWID}';">
+						
+								<h:outputText value="#{customerMatser.BCH_CODE} " />
+						
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column filterBy="#{customerMatser.BCH_DESC}"
+						filterValue="#{PM076_A_SEARCH_ACTION.filterBch_Desc}"
+						sortBy="#{customerMatser.BCH_DESC}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PM076_A$PM_BROKER_COMM_DTL$FORM$CAPTION}" />
+						</f:facet>
+						<h:outputText value="#{customerMatser.BCH_DESC}" />
+					</rich:column>
+
+				</rich:dataTable> <h:commandButton value="#{mainmessage.insertButton$caption}"
+					styleClass="button"
+					action="#{PM076_A_SEARCH_ACTION.newRecordAction}" /></td>
+			</tr>
+
+		</h:form>
+	</table>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+
+
+</ui:define>
+</ui:composition>

@@ -1,0 +1,563 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}" >
+			<f:loadBundle basename="messageProperties_PM006_A_APAC"
+				var="message" />
+			<h:form id="PM_CUST_MERGE">
+				<table cellpadding="0" cellspacing="0" width="100%" border="0" class="noborder">
+					<tr>
+						<td colspan="3" width="100%" vAlign="top">
+						<table width="100%" cellpadding="0" cellspacing="0" class="noborder">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PM006_A_APAC_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table cellspacing="0" width="100%" id="errormsgtable" class="noborder">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.errorMap['current'] !=null? PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.errorMap['current']: PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.globalMsgRender}" />
+									<h:outputText id="warningMessages"
+										value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0" class="noborder"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel id="FORM_CAPTION"
+									value="#{message.PM006_A_APAC$PW_GL_RENEWAL$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="3" valign="top" width="100%">
+						 <h:commandButton
+							disabled="false" id="UI_M_BUT_BACK" rendered="true"
+							style="width:96px;" styleClass="button"
+							value="Main"  immediate="true"
+							action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.goMain}"/>
+						<h:commandButton 
+							id="CUST_DUP" rendered="true" immediate="true"
+							value="Duplicate" style="width:90px;" styleClass="button" 
+							action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.checkRecord}" />	
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table cellpadding="0" cellspacing="0" width="100%" class="noborder">
+							<tr>
+									<td class="oddrow">
+											<h:outputLabel
+													binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_UI_CUST_CODE_LABEL}"
+													for="UI_CUST_CODE" id="UI_CUST_CODE_LABEL"
+													rendered="true" styleClass="label"
+													value="#{message.PM006_A_APAC$PW_GL_RENEWAL$UI_CUST_CODE_FM$caption}" />
+											</td>
+											<td class="oddrowright">
+												<h:inputText
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_UI_CUST_CODE}"
+														disabled="false" id="UI_CUST_CODE" maxlength="40"
+														rendered="true" required="true"
+														styleClass="input"
+														title="#{message.PM006_A_APAC$PW_GL_RENEWAL$UI_CUST_CODE$tooltip}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.PM_CUST_MERGE_BEAN.UI_CUST_CODE}" >
+														</h:inputText>
+													<h:inputText
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_UI_CUST_NAME}"
+														disabled="false" id="UI_CUST_NAME" maxlength="40"
+														rendered="true" required="true"
+														styleClass="input"
+														title="#{message.PM006_A_APAC$PW_GL_RENEWAL$UI_CUST_NAME$tooltip}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.PM_CUST_MERGE_BEAN.UI_CUST_NAME}" >
+													</h:inputText>
+											</td>
+											<td class="oddrowright">&nbsp;</td>
+											<td class="oddrowright">
+												<h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_UI_CUST_GROUP_CODE_LABEL}"
+														for="UI_CUST_GROUP_CODE" id="UI_CUST_GROUP_CODE_LABEL"
+														rendered="true" styleClass="label"
+														value="Group Code" />
+												</td>
+											<td class="oddrowright">
+												<h:inputText
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_UI_CUST_GROUP_CODE}"
+														disabled="false" id="UI_CUST_GROUP_CODE" maxlength="40"
+														rendered="true" required="false"
+														styleClass="input"
+														title="#{message.PM006_A_APAC$PW_GL_RENEWAL$UI_CUST_GROUP_CODE$tooltip}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.PM_CUST_MERGE_BEAN.UI_CUST_GROUP_CODE}" >
+												</h:inputText>
+											</td>	
+										</tr>
+										
+										
+							<tr>
+								<td width="100%" valign="top" colspan="5"><h:panelGroup
+									id="PM_CUST_MERGE_PANEL" style="border:0;height:15%;">
+									<table id="bordertable" align="left" width="100%" class="noborder">
+										<tr>
+											<td>
+												<rich:dataTable
+													binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.dataTable}"
+													id="PM_CUST_MERGE_GRID" rows="5"
+													value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.dataList_PM_CUST_MERGE}"
+													var="tableVar" width="100%">
+													<rich:column filterBy="#{tableVar.UI_CUST_CODE}"
+														filterEvent="onkeyup" id="COLUMN_UI_CUST_CODE"
+														rendered="true" sortBy="#{tableVar.UI_CUST_CODE}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_CUST_CODE"
+																styleClass="forumRowHighlight"
+																value="#{message.PM006_A_APAC$PW_GL_RENEWAL$UI_CUST_CODE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_UI_CUST_CODE"
+															value="#{tableVar.UI_CUST_CODE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.UI_CUST_NAME}"
+														filterEvent="onkeyup" id="COLUMN_UI_CUST_NAME"
+														rendered="true" sortBy="#{tableVar.UI_CUST_NAME}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_CUST_NAME"
+																styleClass="forumRowHighlight"
+																value="#{message.PM006_A_APAC$PW_GL_RENEWAL$UI_CUST_NAME$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_UI_CUST_NAME"
+															value="#{tableVar.UI_CUST_NAME}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.UI_CUST_REF_ID}"
+														filterEvent="onkeyup" id="COLUMN_UI_CUST_REF_ID"
+														rendered="true" sortBy="#{tableVar.UI_CUST_REF_ID}" >
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_CUST_REF_ID"
+																styleClass="forumRowHighlight"
+																value="#{message.PM006_A_APAC$PW_GL_RENEWAL$UI_CUST_REF_ID$caption}" />
+														</f:facet>
+															<h:outputText id="LINK_CAPTION_UI_CUST_REF_ID"
+																value="#{tableVar.UI_CUST_REF_ID}" />
+													</rich:column>
+													
+													<rich:column filterBy="#{tableVar.UI_CUST_GROUP_CODE_VAR}"
+														filterEvent="onkeyup" id="COLUMN_UI_CUST_GROUP_CODE"
+														rendered="true" sortBy="#{tableVar.UI_CUST_GROUP_CODE_VAR}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_CUST_GROUP_CODE"
+																styleClass="forumRowHighlight"
+																value="#{message.PM006_A_APAC$PW_GL_RENEWAL$UI_CUST_GROUP_CODE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_UI_CUST_GROUP_CODE"
+															value="#{tableVar.UI_CUST_GROUP_CODE_VAR}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.UI_CUST_YES_NO}"
+														filterEvent="onkeyup" id="COLUMN_UI_CUST_YES_NO"
+														rendered="true" sortBy="#{tableVar.UI_CUST_YES_NO}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_CUST_YES_NO"
+																styleClass="forumRowHighlight"
+																value="#{message.PM006_A_APAC$PW_GL_RENEWAL$UI_CUST_YES_NO$caption}" />
+														</f:facet>
+														<h:selectOneMenu
+															disabled="false" id="UI_CUST_YES_NO" rendered="true"
+															required="false" 
+															styleClass="combostyleclass"
+															title="#{message.PM006_A_APAC$PW_GL_RENEWAL$UI_CUST_YES_NO$tooltip}"
+															value="#{tableVar.UI_CUST_YES_NO}">
+														<f:selectItems id="SEL_ITEMS_UI_CUST_YES_NO"
+															value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.listUI_CUST_YES_NO}" />
+															<a4j:support
+																actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.onBlurSelectYN}"
+																event="onchange" id="ST_2" immediate="true"
+																reRender="errorPanel">
+															</a4j:support>
+															<a4j:support
+																actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.onBlurSelectYN}"
+																event="onblur" id="ST_2_1" immediate="true"
+																reRender="errorPanel">
+															</a4j:support>
+														</h:selectOneMenu>
+													</rich:column>
+													
+													
+													
+													
+													<rich:column filterBy="#{tableVar.UI_UNGROUP_YN}"
+														filterEvent="onkeyup" id="COLUMN_UI_UNGROUP_YN"
+														rendered="true" sortBy="#{tableVar.UI_UNGROUP_YN}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_UNGROUP_YN"
+																styleClass="forumRowHighlight"
+																value="UnGroup YN" />
+														</f:facet>
+														<h:selectOneMenu
+															disabled="false" id="UI_UNGROUP_YN" rendered="true"
+															required="false" 
+															styleClass="combostyleclass"
+															title="#{message.PM006_A_APAC$PW_GL_RENEWAL$UI_UNGROUP_YN$tooltip}"
+															value="#{tableVar.UI_UNGROUP_YN}">
+														<f:selectItems id="SEL_ITEMS_UI_UNGROUP_YN"
+															value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.listUI_CUST_YES_NO}" />
+															<a4j:support
+																actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.onBlurUnGroupYN}"
+																event="onchange" id="ST_2_1_1" immediate="true"
+																reRender="errorPanel">
+															</a4j:support>
+															<a4j:support
+																actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.onBlurUnGroupYN}"
+																event="onblur" id="ST_2_1_0" immediate="true"
+																reRender="errorPanel">
+															</a4j:support>
+														</h:selectOneMenu>
+													</rich:column>
+													
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PW_GL_RENEWAL_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.addRow}"
+																id="addRow" reRender="PW_GL_RENEWAL_PANEL,errorPanel" rendered="false"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.postUngroup}"
+																id="deleteRow" reRender="PM_CUST_MERGE_PANEL,errorPanel"
+																style="width:80px;" styleClass="button" rendered="true"
+																value="UnGroup" />
+															<a4j:commandButton
+																actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.post}"
+																id="postRecord" rendered="true"
+																reRender="UI_CUST_GROUP_CODE,PM_CUST_MERGE_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="Merge" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</td>
+										</tr>
+									<!-- 	<tr>
+											<td colspan="3">
+											<table width="100%" class="noborder">
+												<tr>
+													<td class="oddrow"><h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_REN_RETAIN_RATE_LABEL}"
+														for="REN_RETAIN_RATE" id="REN_RETAIN_RATE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM006_A_APAC$PW_GL_RENEWAL$REN_RETAIN_RATE$caption}" />
+													</td>
+													<td class="oddrowright"><h:selectOneMenu
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_REN_RETAIN_RATE}"
+														disabled="false" id="REN_RETAIN_RATE" rendered="true"
+														required="false" 
+														styleClass="combostyleclass"
+														title="#{message.PM006_A_APAC$PW_GL_RENEWAL$REN_RETAIN_RATE$tooltip}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.PM_CUST_MERGE_BEAN.REN_RETAIN_RATE}">
+														<f:selectItems id="SEL_ITEMS_REN_RETAIN_RATE"
+															value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.listREN_RETAIN_RATE}" />
+													</h:selectOneMenu></td>
+													<td class="oddrowright">&nbsp;</td>
+													<td class="oddrow"><h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_REN_SELECT_YN_LABEL}"
+														for="REN_SELECT_YN" id="REN_SELECT_YN_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM006_A_APAC$PW_GL_RENEWAL$REN_SELECT_YN$caption}" />
+													</td>
+													<td class="oddrowright"><h:selectOneMenu
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_REN_SELECT_YN}"
+														disabled="false" id="REN_SELECT_YN" rendered="true"
+														required="false" 
+														styleClass="combostyleclass"
+														title="#{message.PM006_A_APAC$PW_GL_RENEWAL$REN_SELECT_YN$tooltip}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.PM_CUST_MERGE_BEAN.REN_SELECT_YN}">
+														<f:selectItems id="SEL_ITEMS_REN_SELECT_YN"
+															value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.listREN_SELECT_YN}" />
+													</h:selectOneMenu></td>
+												</tr>
+												<tr>
+													<td class="evenrow"><h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_REN_POL_FM_DT_LABEL}"
+														for="REN_POL_FM_DT" id="REN_POL_FM_DT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM006_A_APAC$PW_GL_RENEWAL$REN_POL_FM_DT$caption}" />
+													</td>
+													<td class="evenrowright">
+													<h:inputText
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_REN_POL_FM_DT}"
+														disabled="false" id="REN_POL_FM_DT" maxlength="40"
+														rendered="true" required="false"
+														styleClass="input"
+														title="#{message.PM006_A_APAC$PW_GL_RENEWAL$REN_POL_FM_DT$tooltip}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.PM_CUST_MERGE_BEAN.REN_POL_FM_DT}" />
+													</td>
+													<td class="evenrowright">&nbsp;</td>
+													<td class="evenrow"><h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_REN_POL_TO_DT_LABEL}"
+														for="REN_POL_TO_DT" id="REN_POL_TO_DT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM006_A_APAC$PW_GL_RENEWAL$REN_POL_TO_DT$caption}" />
+													</td>
+													<td class="evenrowright"><h:inputText
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_REN_POL_TO_DT}"
+														disabled="false" id="REN_POL_TO_DT" maxlength="40"
+														rendered="true" required="false"
+														styleClass="input"
+														title="#{message.PM006_A_APAC$PW_GL_RENEWAL$REN_POL_TO_DT$tooltip}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.PM_CUST_MERGE_BEAN.REN_POL_TO_DT}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="oddrow"><h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_REN_POL_PROD_CODE_LABEL}"
+														for="REN_POL_PROD_CODE" id="REN_POL_PROD_CODE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM006_A_APAC$PW_GL_RENEWAL$REN_POL_PROD_CODE$caption}" />
+													</td>
+													<td class="oddrowright"><h:inputText
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_REN_POL_PROD_CODE}"
+														disabled="false" id="REN_POL_PROD_CODE" maxlength="40"
+														rendered="true" required="false"
+														styleClass="input"
+														title="#{message.PM006_A_APAC$PW_GL_RENEWAL$REN_POL_PROD_CODE$tooltip}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.PM_CUST_MERGE_BEAN.REN_POL_PROD_CODE}" />
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrow"><h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_REN_POL_NO_LABEL}"
+														for="REN_POL_NO" id="REN_POL_NO_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PM006_A_APAC$PW_GL_RENEWAL$REN_POL_NO$caption}" />
+													</td>
+													<td class="oddrowright">
+													<h:inputText
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.COMP_REN_POL_NO}"
+														disabled="false" id="REN_POL_NO" maxlength="40"
+														rendered="true" required="false"
+														styleClass="input"
+														title="#{message.PM006_A_APAC$PW_GL_RENEWAL$REN_POL_NO$tooltip}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.PM_CUST_MERGE_BEAN.REN_POL_NO}" />
+													</td>
+												</tr> 
+											</table>
+											</td>
+										</tr> -->
+									</table>
+								</h:panelGroup></td>
+								<td></td>
+							</tr>
+						</table>
+						</td>
+						</tr>						
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+								action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MERGE_ACTION_BEAN.saveRecord}"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle" value="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

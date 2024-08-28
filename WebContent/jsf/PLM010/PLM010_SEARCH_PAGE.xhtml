@@ -1,0 +1,137 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PLM010" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+		<table cellpadding="0" cellspacing="0" width="100%" border="0">
+		<!-- add header row -->
+		<tr>
+			
+		</tr>
+
+		<!-- Body row -->
+		<tr>
+			<td><h:form id="PM_ASSURED_BEAN">
+
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%"  cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputText value="#{commonmsg.intialSearchCriteria$Caption}" />
+						</td>
+						<td><h:outputText
+							value="#{message.PLM010$PM_CUSTOMER$CUST_CODE$caption}" />: <h:inputText
+							value="#{PLM010_SEARCH_ACTION.initCustCode}" /></td>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td><h:outputText
+							value="#{message.PLM010$PM_CUSTOMER$CUST_NAME$caption}" />: <h:inputText
+							value="#{PLM010_SEARCH_ACTION.initCustName}" /></td>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+							<td><h:outputText
+							value="#{message.PLM010$PM_ASSURED$ASSR_CODE$caption}" />: <h:inputText
+							value="#{PLM010_SEARCH_ACTION.initAssrCode}" /></td>
+							<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+						<td><h:outputText
+							value="#{message.PLM010$PM_ASSURED$ASSR_NAME$caption}" />: <h:inputText
+							value="#{PLM010_SEARCH_ACTION.initAssrName}" /></td>
+
+						<td><a4j:commandButton styleClass="button"
+							value="#{commonmsg.searchButton$caption}" immediate="true"
+							id="a4link" action="#{PLM010_SEARCH_ACTION.fetchCustomerDetails}"
+							reRender="dataTableId" />
+						</td>
+					</tr>
+				</table>
+
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{PLM010_SEARCH_ACTION.namesList}" var="PM_ASSURED_BEAN"
+					cellpadding="5px" rows="10" border="0" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+
+					<rich:column width="5" rendered="false">
+						<f:facet name="header">
+						</f:facet>
+
+					<h:selectBooleanCheckbox rendered="false" value="#{PM_ASSURED_BEAN.checkBoxSelected}"/>
+
+
+					</rich:column>
+					<rich:column filterBy="#{PM_ASSURED_BEAN.ASSR_CUST_CODE}"
+						sortBy="#{PM_ASSURED_BEAN.ASSR_CUST_CODE}" filterEvent="onkeyup">
+
+						<f:facet name="header">
+							<h:outputText value="#{message.PLM010$PM_CUSTOMER$CUST_CODE$caption}" />
+						</f:facet>
+						<h:commandLink action="#{PLM010_SEARCH_ACTION.clearList}">
+						
+								<h:outputText value="#{PM_ASSURED_BEAN.ASSR_CUST_CODE}" />
+						
+							<f:param  name="CURRENT_ROWID" value="#{PM_ASSURED_BEAN.ROWID}" />
+							<f:param name="CustCode" value="#{PM_ASSURED_BEAN.ASSR_CUST_CODE}" />
+							<f:param name="CustName" value="#{PM_ASSURED_BEAN.CUST_NAME}" />
+							<f:param name="AssrCode" value="#{PM_ASSURED_BEAN.ASSR_CODE}" />
+							<f:param name="AssrName" value="#{PM_ASSURED_BEAN.ASSR_NAME}" />
+						</h:commandLink>
+
+					</rich:column>
+					
+					<rich:column filterBy="#{PM_ASSURED_BEAN.CUST_NAME}"
+						sortBy="#{PM_ASSURED_BEAN.CUST_NAME}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PLM010$PM_CUSTOMER$CUST_NAME$caption}" />
+						</f:facet>
+						<h:outputText value="#{PM_ASSURED_BEAN.CUST_NAME}" />
+					</rich:column>
+					
+					<rich:column filterBy="#{PM_ASSURED_BEAN.ASSR_CODE}"
+						sortBy="#{PM_ASSURED_BEAN.ASSR_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PLM010$PM_ASSURED$ASSR_CODE$caption}" />
+						</f:facet>
+						<h:outputText value="#{PM_ASSURED_BEAN.ASSR_CODE}" />
+					</rich:column>
+					
+					<rich:column filterBy="#{PM_ASSURED_BEAN.ASSR_NAME}"
+						sortBy="#{PM_ASSURED_BEAN.ASSR_NAME}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PLM010$PM_ASSURED$ASSR_NAME$caption}" />
+						</f:facet>
+						<h:outputText value="#{PM_ASSURED_BEAN.ASSR_NAME}" />
+					</rich:column>
+				</rich:dataTable>
+				<tr>
+					<td><h:commandButton value="Insert" styleClass="button"
+						id="insert" action="#{PLM010_SEARCH_ACTION.clearSession}">
+						</h:commandButton>
+						</td>
+					<td><a4j:commandButton id="delete" value="Delete" rendered="false"
+						action="#{PLM010_SEARCH_ACTION.deleteRow}" reRender="dataTableId"></a4j:commandButton></td>
+				</tr>
+			</h:form></td>
+
+		</tr>
+		<!-- add footer to the page-->
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,436 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILQ_AGI"
+				var="message_PILQ_AGI" />
+			<h:form id="AGENT_INCENTIVES">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td valign="top">
+						<table class="noborder" width="100%">
+
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td valign="top" width="100%" colspan="5"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.errorMap['current'] !=null? PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.errorMap['current']: PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="5" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><h:outputLabel id="FORM_CAPTION"
+									value="#{message_PILQ_AGI.PILQ_AGI$AGENT_INCENTIVES$displayCaption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="5" width="80%">
+						<div id="content" style="width: 80%;">
+						<table class="noborder" width="80%" id="bordertable">
+
+
+							<tr>
+								<td class="evenrowright" width="30%"></td>
+								<td class="evenrowright"><h:outputLabel
+									binding="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.COMP_AGENT_CODE_LABEL}"
+									for="AGENT_CODE" id="AGENT_CODE_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message_PILQ_AGI.PILQ_AGI$AGENT_INCENTIVES$AGENT_CODE$caption}" />
+								<h:graphicImage id="AUTOID_1" style="" styleClass="searchimg"
+									value="./../../images/mandatory.gif" /></td>
+								<td class="evenrow"><h:inputText id="AGENT_CODE"
+									binding="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.COMP_AGENT_CODE}"
+									rendered="true" required="true" styleClass="input"
+									
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.AGENT_CODE}" 
+									validator="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.validator_AGENT_CODE}">
+									<a4j:support
+										actionListener="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.fireFieldValidation}"
+										event="onblur" id="AAGENT_CODE_AJAX_SUPPORT1"
+										immediate="true"
+										reRender="errorPanel" />
+									</h:inputText>
+								<h:inputText id="AGENT_CODE_DESC" rendered="true"
+									required="false" styleClass="input" disabled="true"
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.AGENT_CODE_DESC}" />
+								<rich:suggestionbox for="AGENT_CODE" height="200"
+									id="AGENT_CODE_LOV"
+									suggestionAction="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.lovAGENT_CODE}"
+									var="suggest" width="400">
+									<h:column>
+										<h:outputText id="SELFID_24" value="#{suggest.code}" />
+									</h:column>
+									<h:column>
+										<h:outputText id="SELFID_25" value="#{suggest.name}" />
+									</h:column>
+									<a4j:support ajaxSingle="true" event="onselect"
+										id="AGENT_CODE_SUGG_SUPPORT" immediate="true"
+										reRender="errorPanel,AGENT_CODE_DESC">
+										<f:setPropertyActionListener id="AUTOID_37"
+											target="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.AGENT_CODE}"
+											value="#{suggest.code}" />
+										<f:setPropertyActionListener id="AUTOID_34"
+											target="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.AGENT_CODE_DESC}"
+											value="#{suggest.name}" />
+									</a4j:support>
+								</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_2" styleClass="searchimg"
+									value="./../../images/Lov16x16.gif" /></td>
+								<td class="evenrow">&nbsp;</td>
+								<td class="evenrow">&nbsp;</td>
+							</tr>
+
+							<tr>
+								<td class="oddrowright" width="30%"></td>
+								<td class="oddrowright"><h:outputLabel
+									binding="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.COMP_AGENT_PERIOD_LABEL}"
+									for="AGENT_PERIOD" id="AGENT_PERIOD_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message_PILQ_AGI.PILQ_AGI$AGENT_INCENTIVES$AGENT_PERIOD$caption}" />
+								</td>
+								<td class="oddrow"><h:selectOneMenu
+									binding="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.COMP_AGENT_PERIOD}"
+									id="AGENT_PERIOD" rendered="true" required="false"
+									styleClass="input"
+									validator="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.validator_AGENT_PERIOD}"
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.AGENT_PERIOD}">
+									<f:selectItems id="SEL_ITEMS_AGENT_PERIOD"
+										value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.listAGENT_PERIOD}" />
+									<a4j:support
+										actionListener="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.fireFieldValidation}"
+										event="onblur" id="AGENT_PERIOD_AJAX_SUPPORT1"
+										immediate="true"
+										reRender="errorPanel,AGENT_TRGT,UI_M_EFF_FM_DT,UI_M_EFF_TO_DT" />
+									<a4j:support
+										actionListener="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.fireFieldValidation}"
+										event="onchange" id="AGENT_PERIOD_AJAX_SUPPORT2"
+										immediate="true"
+										reRender="errorPanel,AGENT_TRGT,UI_M_EFF_FM_DT,UI_M_EFF_TO_DT" />
+								</h:selectOneMenu> <rich:spacer id="SPACE_1" width="5" /> <h:outputLabel
+									binding="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.COMP_AGENT_TRGT_LABEL}"
+									for="AGENT_TRGT" id="AGENT_TRGT_LABEL" rendered="true"
+									value="#{message_PILQ_AGI.PILQ_AGI$AGENT_INCENTIVES$AGENT_TRGT$caption}" />
+								<rich:spacer id="SPACE_111" width="3" /> <h:outputText
+									id="AGENT_TRGT"
+									binding="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.COMP_AGENT_TRGT}"
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.AGENT_TRGT}" />
+								</td>
+								<td class="oddrow">&nbsp;</td>
+								<td class="oddrow">&nbsp;</td>
+							</tr>
+
+
+
+							<tr>
+								<td class="evenrowright" width="30%"></td>
+								<td class="evenrowright"><h:outputLabel
+									binding="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.COMP_UI_M_EFF_FM_DT_LABEL}"
+									for="UI_M_EFF_FM_DT" id="UI_M_EFF_FM_DT_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message_PILQ_AGI.PILQ_AGI$AGENT_INCENTIVES$UI_M_EFF_FM_DT$caption}" />
+								<h:graphicImage id="AUTOID_2" style="" styleClass="searchimg"
+									value="./../../images/mandatory.gif" /></td>
+								<td class="evenrow"><rich:calendar
+									binding="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.COMP_UI_M_EFF_FM_DT}"
+									enableManualInput="true" id="UI_M_EFF_FM_DT"
+									datePattern="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.datePattern}"
+									inputClass="calendarinput" inputSize="11"
+									oninputfocus="currFocus('PT_POLICY:UI_M_EFF_FM_DT')"
+									rendered="true"
+									validator="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.validator_UI_M_EFF_FM_DT}"
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_EFF_FM_DT}">
+									<a4j:support
+										actionListener="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.fireFieldValidation}"
+										event="oninputchanged" id="UI_M_EFF_FM_DT_a4jSupport"
+										onsubmit="formatDate('AGENT_INCENTIVES:UI_M_EFF_FM_DT')"
+										immediate="true" reRender="errorPanel">
+									</a4j:support>
+									<a4j:support
+										actionListener="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.fireFieldValidation}"
+										event="oninputblur" id="UI_M_EFF_FM_DT1_a4jSupport"
+										onsubmit="formatDate('AGENT_INCENTIVES:UI_M_EFF_FM_DT')"
+										immediate="true" reRender="errorPanel">
+									</a4j:support>
+								</rich:calendar></td>
+								<td class="evenrowright">&nbsp;</td>
+								<td class="evenrowright">&nbsp;</td>
+							</tr>
+							<tr>
+								<td class="oddrowright" width="30%"></td>
+								<td class="oddrowright"><h:outputLabel
+									binding="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.COMP_UI_M_EFF_TO_DT_LABEL}"
+									for="UI_M_EFF_TO_DT" id="UI_M_EFF_TO_DT_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message_PILQ_AGI.PILQ_AGI$AGENT_INCENTIVES$UI_M_EFF_TO_DT$caption}" />
+								<h:graphicImage id="AUTOID_3" style="" styleClass="searchimg"
+									value="./../../images/mandatory.gif" /></td>
+								<td class="oddrow"><rich:calendar
+									binding="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.COMP_UI_M_EFF_TO_DT}"
+									enableManualInput="true" id="UI_M_EFF_TO_DT"
+									datePattern="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.datePattern}"
+									inputClass="calendarinput" inputSize="11"
+									oninputfocus="currFocus('AGENT_INCENTIVES:UI_M_EFF_TO_DT')"
+									rendered="true"
+									validator="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.validator_UI_M_EFF_TO_DT}"
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_EFF_TO_DT}">
+									<a4j:support
+										actionListener="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.fireFieldValidation}"
+										event="oninputchanged" id="UI_M_EFF_TO_DT_a4jSupport"
+										onsubmit="formatDate('AGENT_INCENTIVES:UI_M_EFF_TO_DT')"
+										immediate="true" reRender="errorPanel">
+									</a4j:support>
+									<a4j:support
+										actionListener="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.fireFieldValidation}"
+										event="oninputblur" id="UI_M_EFF_TO_DT1_a4jSupport"
+										onsubmit="formatDate('AGENT_INCENTIVES:UI_M_EFF_TO_DT')"
+										immediate="true" reRender="errorPanel">
+									</a4j:support>
+								</rich:calendar></td>
+								<td class="oddrowright">&nbsp;</td>
+								<td class="oddrowright">&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="5" align="center"><a4j:commandButton
+									binding="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.COMP_BUT_QUERY}"
+									action="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.queryButAction}"
+									id="UI_M_BUT_QUERY" rendered="true" style="width:90px;"
+									styleClass="button" immediate="false"
+									reRender="errorPanel,panelGrid1,panelGrid2,panelGrid3,UI_M_TOT_INCENTIV"
+									value="#{message_PILQ_AGI.PILQ_AGI$AGENT_INCENTIVES$UI_M_BUT_PREOCESS$caption}" />
+
+								<rich:spacer id="comm_1" width="2px"></rich:spacer> <a4j:commandButton
+									action="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.resetButAction}"
+									id="UI_M_BUT_RESET" rendered="true" style="width:90px;"
+									styleClass="button" immediate="true"
+									reRender="errorPanel,panelGrid1,panelGrid2,panelGrid3,UI_M_TOT_INCENTIV,
+													AGENT_CODE,AGENT_CODE_DESC,AGENT_CODE_LOV,UI_M_EFF_FM_DT,UI_M_EFF_TO_DT"
+									value="#{message_PILQ_AGI.PILQ_AGI$AGENT_INCENTIVES$UI_M_BUT_RESET$caption}" />
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+
+
+					<tr>
+						<td colspan="3" width="25%"><rich:panel id="panel12"
+							style="width:290px">
+							<f:facet name="header">
+								<h:outputText value="Balance Score Card"></h:outputText>
+							</f:facet>
+							<h:panelGrid id="panelGrid1" columns="3" cellspacing="2"
+								cellpadding="3">
+
+								<h:outputText value="Event" style="font-weight:bold;"></h:outputText>
+								<h:outputText value="No" style="font-weight:bold;" />
+								<h:outputText value="Score" style="font-weight:bold;" />
+
+								<h:outputText value="Number Of Policies"
+									style="font-family : courier new;"></h:outputText>
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_TOT_NO_OF_POLICIES}" />
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_NOP_SCORE}">
+									<f:converter converterId="PELNumberFormatter" />
+								</h:outputText>
+
+								<h:outputText value="Active Agent Grid"
+									style="font-family : courier new;"></h:outputText>
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_TOT_NO_OF_ACTIVE_AGENTS}" />
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_AAG_SCORE}">
+									<f:converter converterId="PELNumberFormatter" />
+								</h:outputText>
+
+								<h:outputText value="Renewal Collection"
+									style="font-family : courier new;"></h:outputText>
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_TOT_REN_COLLECTION}">
+									<f:converter converterId="PELNumberFormatter" />
+								</h:outputText>
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_RCF_SCORE}">
+									<f:converter converterId="PELNumberFormatter" />
+								</h:outputText>
+
+								<h:outputText value="Total Agents in the Book"
+									style="font-family : courier new;"></h:outputText>
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_TOT_NO_OF_AGENTS_BOOK}" />
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_TAIB_SCORE}">
+									<f:converter converterId="PELNumberFormatter" />
+								</h:outputText>
+
+								<h:outputText value="Total Score"
+									style="font-weight:bold;color:blue;font-size:11px;"></h:outputText>
+								<h:outputText value="" />
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_TOT_BSC_PERC}"
+									style="font-weight:bold;color:blue;font-size:13px;">
+									<f:converter converterId="PELNumberFormatter" />
+								</h:outputText>
+
+							</h:panelGrid>
+						</rich:panel></td>
+
+						<td width="20%">&nbsp;</td>
+						<td width="24%"><rich:panel id="panel1" style="width:290px">
+							<f:facet name="header">
+								<h:outputText value="BSC Rates"></h:outputText>
+							</f:facet>
+							<h:panelGrid id="panelGrid2" columns="3" cellspacing="2"
+								cellpadding="3">
+
+								<h:outputText value="Event" style="font-weight:bold;"></h:outputText>
+								<h:outputText value="Units" style="font-weight:bold;" />
+								<h:outputText value="Wiehtage" style="font-weight:bold;" />
+
+								<h:outputText value="Number Of Policies"
+									style="font-family : courier new;"></h:outputText>
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_NOP_UNITS}" />
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_NOP_WEIGHTAGE}" />
+
+								<h:outputText value="Active Agent Grid"
+									style="font-family : courier new;"></h:outputText>
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_AAD_UNITS}" />
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_AAD_WEIGHTAGE}" />
+
+								<h:outputText value="Renewal Collection"
+									style="font-family : courier new;"></h:outputText>
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_RCG_UNITS}" />
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_RCG_WEIGHTAGE}" />
+
+								<h:outputText value="Total Agents in the Book"
+									style="font-family : courier new;"></h:outputText>
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_TAINB_UNITS}" />
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_TAINB_WEIGHTAGE}" />
+
+
+								<h:outputText value=""></h:outputText>
+								<h:outputText value=""></h:outputText>
+								<h:outputText value=""></h:outputText>
+							</h:panelGrid>
+						</rich:panel></td>
+					</tr>
+					<tr>
+						<td colspan="5" align="center"><rich:panel id="panel3"
+							style="width:290px">
+							<f:facet name="header">
+								<h:outputText value="Incentives Breakup"></h:outputText>
+							</f:facet>
+							<h:panelGrid id="panelGrid3" columns="3" cellspacing="2"
+								cellpadding="3">
+
+								<h:outputText value="Event" style="font-weight:bold;"></h:outputText>
+								<h:outputText value="Units" style="font-weight:bold;" />
+								<h:outputText value="Perc" style="font-weight:bold;" />
+
+								<h:outputText value="Team Commission"
+									style="font-family : courier new;"></h:outputText>
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_TOT_TEAM_COMM_UNITS}" />
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_TOT_TEAM_COMM}">
+									<f:converter converterId="PELNumberFormatter" />
+								</h:outputText>
+
+								<h:outputText value="BSC" style="font-family : courier new;"></h:outputText>
+								<h:outputText value="" />
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_TOT_BSC_PERC}">
+									<f:converter converterId="PELNumberFormatter" />
+								</h:outputText>
+
+								<h:outputText value="Persistancy"
+									style="font-family : courier new;"></h:outputText>
+								<h:outputText value="" />
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_PERSISTANCY}">
+									<f:converter converterId="PELNumberFormatter" />
+								</h:outputText>
+
+								<h:outputText value="Direct Renewal Prem Collected"
+									style="font-family : courier new;"></h:outputText>
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_DIRECT_REN_PREM_UNITS}" />
+								<h:outputText
+									value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_DIRECT_REN_PREM}">
+									<f:converter converterId="PELNumberFormatter" />
+								</h:outputText>
+							</h:panelGrid>
+						</rich:panel></td>
+					</tr>
+					<tr>
+						<td><br />
+						</td>
+						<td><br />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="5" align="center"><h:outputLabel
+							value="INCENTIVE"
+							style="font-weight:bold;color:blue;font-size:13px;" /> <rich:spacer
+							width="20" /> <h:outputText id="UI_M_TOT_INCENTIV"
+							value="#{PILQ_AGI_COMPOSITE_ACTION.AGENT_INCENTIVES_ACTION_BEAN.AGENT_INCENTIVES_BEAN.UI_M_TOT_INCENTIV}"
+							style="font-weight:bold;color:blue;font-size:13px;">
+							<f:converter converterId="PELNumberFormatter" />
+						</h:outputText></td>
+					</tr>
+					<tr>
+						<td><br />
+						</td>
+						<td><br />
+						</td>
+					</tr>
+					<tr>
+						<td><br />
+						</td>
+						<td><br />
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

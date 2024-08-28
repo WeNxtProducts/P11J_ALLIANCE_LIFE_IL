@@ -1,0 +1,141 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_GNMNF003_A" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			<h:form id="GNMNF003_A_SEARCH">
+				<table class="noborder" width="100%">
+					<tr>
+
+					</tr>
+
+
+					<tr>
+
+					</tr>
+
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="errormsgtable" width="100%">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{GNMNF003_A_SEARCH_ACTION.messageStyle}"
+											value="#{commonmsg.errorPanel$heading} #{GNMNF003_A_SEARCH_ACTION.errorMap['current'] !=null? GNMNF003_A_SEARCH_ACTION.errorMap['current']:GNMNF003_A_SEARCH_ACTION.warningMap['current']}" />
+
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{GNMNF003_A_SEARCH_ACTION.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{GNMNF003_A_SEARCH_ACTION.globalMsgRender}"
+										styleClass="ErrorMessages" />
+
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{GNMNF003_A_SEARCH_ACTION.warningMessages}" />
+
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<table class="noborder" id="masthead" width="100%">
+							<tr>
+								<td><h:outputText id="AUTOID_1"
+									value="#{message.GNMNF003_A$MENU_ENTRY_SEARCH$SEARCH_CRITERIA$caption}" /></td>
+								<td><h:outputText id="AUTOID_2"
+									value="#{message.GNMNF003_A$MENU_ENTRY_SEARCH$$SEARCH_MENU_ID$caption}" /><h:inputText
+									value="#{GNMNF003_A_SEARCH_ACTION.SEARCH_BEAN.MENU_ID}" /></td>
+								<td><h:outputText id="AUTOID_3"
+									value="#{message.GNMNF003_A$MENU_ENTRY$MENU_SCR_NAME$caption}" /><h:inputText
+									value="#{GNMNF003_A_SEARCH_ACTION.SEARCH_BEAN.MENU_SCR_NAME}" /></td>
+								<td><h:outputText id="AUTOID_4"
+									value="#{message.GNMNF003_A$MENU_ENTRY_SEARCH$$SEARCH_MENU_ACTION$caption}" />
+								<h:inputText
+									value="#{GNMNF003_A_SEARCH_ACTION.SEARCH_BEAN.MENU_ACTION}" /></td>
+								<td><a4j:commandButton id="a4link" styleClass="button"
+									value="#{message.GNMNF003_A$MENU_ENTRY_SEARCH$FETCH_BUTTON$caption}">
+									<a4j:support
+										action="#{GNMNF003_A_SEARCH_ACTION.fetchMenuParamList}"
+										event="onclick" id="AUTOID_5"
+										reRender="dataTableId,errorPanel" />
+								</a4j:commandButton></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<rich:dataTable border="1" cellpadding="5px" id="dataTableId"
+						rows="10" value="#{GNMNF003_A_SEARCH_ACTION.QUERY_DATA_LIST}"
+						var="menuParameter" width="100%">
+						<!-- Attach scroller as footer of the table-->
+						<f:facet name="footer">
+							<rich:datascroller align="right" id="dsID" pageIndexVar="index"
+								pagesVar="pages">
+							</rich:datascroller>
+						</f:facet>
+
+						<!-- next column -->
+
+						<rich:column filterBy="#{menuParameter.MENU_ID}"
+							filterEvent="onkeyup"
+							filterValue="#{GNMNF003_A_SEARCH_ACTION.SEARCH_BEAN.MENU_ID_FILTER}"
+							sortBy="#{menuParameter.MENU_ID}">
+							<f:facet name="header">
+								<h:outputText id="AUTOID_6" value="Menu Id" />
+							</f:facet>
+							<h:commandLink action="#{GNMNF003_A_SEARCH_ACTION.redirect}"
+								id="AUTOID_7">
+								<h:outputText id="AUTOID_8" value="#{menuParameter.MENU_ID}" />
+								<f:param name="rowId" value="#{menuParameter.ROWID}" />
+							</h:commandLink>
+						</rich:column>
+						<rich:column filterBy="#{menuParameter.MENU_SCR_NAME}"
+							filterEvent="onkeyup"
+							filterValue="#{GNMNF003_A_SEARCH_ACTION.SEARCH_BEAN.MENU_SCR_NAME_FILTER}"
+							sortBy="#{menuParameter.MENU_SCR_NAME}">
+							<f:facet name="header">
+								<h:outputText id="AUTOID_9" value="Screen Name" />
+							</f:facet>
+							<h:outputText id="AUTOID_10"
+								value="#{menuParameter.MENU_SCR_NAME} ">
+							</h:outputText>
+						</rich:column>
+						<rich:column filterBy="#{menuParameter.MENU_ACTION}"
+							filterEvent="onkeyup"
+							filterValue="#{GNMNF003_A_SEARCH_ACTION.SEARCH_BEAN.MENU_ACTION_FILTER}"
+							sortBy="#{menuParameter.MENU_ACTION}">
+							<f:facet name="header">
+								<h:outputText id="AUTOID_11" value="Menu Action" />
+							</f:facet>
+							<h:outputText id="AUTOID_12"
+								value="#{menuParameter.MENU_ACTION} ">
+							</h:outputText>
+						</rich:column>
+					</rich:dataTable>
+
+					<h:commandButton
+						action="#{GNMNF003_A_SEARCH_ACTION.insertNewMenuParams}"
+						binding="#{GNMNF003_A_SEARCH_ACTION.COMP_MENU_PARAMS_INSERT_BUTTON}"
+						disabled="false" id="UI_M_BUT_MENU_PARAM_INSERT" rendered="true"
+						style="" styleClass="button" title="" value="Insert" />
+
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

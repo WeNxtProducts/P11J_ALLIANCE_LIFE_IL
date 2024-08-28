@@ -1,0 +1,566 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{ChartAction.onLoad}">
+			<f:loadBundle basename="messageProperties_CHART" var="message" />
+			<h:form id="CHART_CREATOR">
+				<table cellpadding="0" cellspacing="0" width="100%" border="0">
+					<tr>
+						<td colspan="3" width="100%" valign="top">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{ChartAction.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{ChartAction.undo}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" >
+						<table cellspacing="0" cellpadding="0" width="100%" id="errormsgtable">
+							<rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{ChartAction.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{ChartAction.errorMap['current'] !=null? ChartAction.errorMap['current']: ChartAction.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{ChartAction.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{ChartAction.globalMsgRender}" />
+									<h:outputText id="warningMessages"
+										value="#{ChartAction.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel id="FORM_CAPTION"
+									value="Dashboard Manager" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								
+								<td width="90%" valign="top"><h:panelGroup
+									id="CHART_PANEL_GROUP" style="border:0;height:15%;">
+									<table id="bordertable" align="left" width="100%">
+										<tr>
+											<td>
+												<rich:dataTable width="100%" 
+													binding="#{ChartAction.dataTable}"
+													id="CHART_TABLE" rows="5"
+													value="#{ChartAction.chartList}"
+													var="tableVar">
+													<rich:column filterBy="#{tableVar.CHART_ID}" styleClass="#{tableVar.rowSelected}"
+														filterEvent="onkeyup" id="COLUMN_CHART_ID"
+														rendered="true" sortBy="#{tableVar.CHART_ID}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CHART_ID"
+																styleClass="forumRowHighlight"
+																value="#{message.CHART$CHART_CREATOR$CHART_ID$caption}" />
+														</f:facet>
+														<a4j:commandLink
+															action="#{ChartAction.displayRecords}"
+															id="GOTO_LINK_CHART_ID" immediate="true"
+															reRender="errorPanel,CHART_PANEL_GROUP,CHART_TAB_PANEL">
+															<h:outputText id="LINK_CAPTION_CHART_ID"
+																value="#{tableVar.CHART_ID}" />
+														</a4j:commandLink>
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CHART_DESC}"  styleClass="#{tableVar.rowSelected}"
+														filterEvent="onkeyup" id="COLUMN_CHART_DESC"
+														rendered="true" sortBy="#{tableVar.CHART_DESC}">
+														<f:facet name="header">
+																<h:outputText id="COLUMN_CAPTION_CHART_DESC"
+																	styleClass="forumRowHighlight"
+																	value="#{message.CHART$CHART_CREATOR$CHART_DESC$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CHART_DESC"
+															value="#{tableVar.CHART_DESC}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CHART_TYPE}" styleClass="#{tableVar.rowSelected}"
+														filterEvent="onkeyup" id="COLUMN_CHART_TYPE"
+														rendered="true" sortBy="#{tableVar.CHART_TYPE}">
+														<f:facet name="header">
+																<h:outputText id="COLUMN_CAPTION_CHART_TYPE"
+																	styleClass="forumRowHighlight"
+																	value="#{message.CHART$CHART_CREATOR$CHART_TYPE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CHART_TYPE"
+															value="#{tableVar.CHART_TYPE}" />
+													</rich:column>
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="CHART_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{ChartAction.addRow}"
+																id="addRow" immediate="true"
+																reRender="CHART_PANEL_GROUP,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{ChartAction.deleteRow}"
+																id="deleteRow" immediate="true"
+																reRender="CHART_PANEL_GROUP,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{ChartAction.postRecord}"
+																id="postRecord" 
+																reRender="CHART_PANEL_GROUP,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table width="100%">
+												<tr>
+													<td id="td-background"><h:outputLabel
+														binding="#{ChartAction.COMP_CHART_TYPE_LABEL}"
+														for="CHART_TYPE" id="CHART_TYPE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.CHART$CHART_CREATOR$CHART_TYPE$caption}" />
+														<h:graphicImage id="CHART_TYPE_REQUIRED" 
+															value="./../../resources/images/mandatory.gif" />
+													</td>
+													<td align="left">
+														<h:selectOneMenu
+															binding="#{ChartAction.COMP_CHART_TYPE}"
+															disabled="false" id="CHART_TYPE"
+															style="width:100px"
+															rendered="true" required="true"
+															title="#{message.CHART$CHART_CREATOR$CHART_TYPE$tooltip}"
+															value="#{ChartAction.chartBean.CHART_TYPE}">
+															<f:selectItems id="CHART_TYPE_OPTIONS" value="#{ChartAction.chartTypes}"/>
+														</h:selectOneMenu>
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background"><h:outputLabel
+														binding="#{ChartAction.COMP_CHART_ID_LABEL}"
+														for="CHART_ID" id="CHART_ID_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.CHART$CHART_CREATOR$CHART_ID$caption}" />
+													<h:graphicImage id="CHART_ID_REQUIRED" 
+														value="./../../resources/images/mandatory.gif" /></td>
+													<td align="left"><h:inputText
+														binding="#{ChartAction.COMP_CHART_ID}"
+														disabled="false" id="CHART_ID" maxlength="3"
+														rendered="true" required="true"
+														style="width:96px;"
+														styleClass="forumRowHighlight"
+														title="#{message.CHART$CHART_CREATOR$CHART_ID$tooltip}"
+														validator="#{ChartAction.ChartIDValidator}"
+														value="#{ChartAction.chartBean.CHART_ID}">
+														<a4j:support
+															actionListener="#{ChartAction.fierFieldValidation}"
+															event="onblur" id="SUPPORT_CHART_ID"
+															immediate="true" reRender="errorPanel" />
+													</h:inputText>
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background"><h:outputLabel
+														binding="#{ChartAction.COMP_CHART_DESC_LABEL}"
+														for="CHART_DESC" id="CHART_DESC_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.CHART$CHART_CREATOR$CHART_DESC$caption}" />
+														<h:graphicImage id="CHART_DESC_REQUIRED" 
+															value="./../../resources/images/mandatory.gif" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{ChartAction.COMP_CHART_DESC}"
+														disabled="false" id="CHART_DESC" maxlength="100"
+														rendered="true" required="true"
+														style="width:227px;"
+														styleClass="forumRowHighlight"
+														title="#{message.CHART$CHART_CREATOR$CHART_DESC$tooltip}"
+														value="#{ChartAction.chartBean.CHART_DESC}">
+														<a4j:support
+															actionListener="#{ChartAction.fierFieldValidation}"
+															event="onblur" id="SUPPORT_CHART_DESC"
+															immediate="true" reRender="errorPanel" />
+														</h:inputText>
+													</td>
+												</tr>
+												<tr>
+													<td align="left" colspan="8">
+														<h:outputLabel
+															binding="#{ChartAction.COMP_CHART_QUERY_LABEL}"
+															for="CHART_QUERY" id="CHART_QUERY_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.CHART$CHART_CREATOR$CHART_QUERY$caption}" />
+														<h:graphicImage id="CHART_QUERY_REQUIRED" 
+															value="./../../resources/images/mandatory.gif" />
+														<br />
+														<h:inputTextarea
+															binding="#{ChartAction.COMP_CHART_QUERY}"
+															disabled="false" id="CHART_QUERY"
+															rows="5" cols="160"
+															rendered="true" required="true"
+															styleClass="forumRowHighlight"
+															title="#{message.CHART$CHART_CREATOR$CHART_QUERY$tooltip}"
+															value="#{ChartAction.chartBean.CHART_QUERY}">
+															<a4j:support
+																actionListener="#{ChartAction.fierFieldValidation}"
+																event="onblur" id="SUPPORT_CHART_QUERY"
+																immediate="true" reRender="errorPanel" />
+															</h:inputTextarea>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="8">
+														<rich:tabPanel id="CHART_TAB_PANEL">
+															<rich:tab id="QUERY_RESULT_TAB" label="Query Results">
+																<h:commandButton id="CHART_QUERY_RESULTS"
+																	style="width:80px;" styleClass="button" 
+																	action="#{ChartAction.executeQuery}" 
+																	value="Execute" reRender="CHART_QUERY_RESULTS_PREVIEW"/>
+																<a4j:region id="CHART_QUERY_RESULTS_PREVIEW">
+																	<rich:dataTable width="100%" 
+																		binding="#{ChartAction.queryResultDataTable}"
+																		id="CHART_QUERY_TABLE" rows="5"
+																		value="#{ChartAction.chartBean.queryResults.records}"
+																		var="record">
+																		<rich:column id="QUERY_COLUMN0" rendered="#{ChartAction.chartBean.queryResults.columnCount > 0}">
+																			<f:facet name="header">
+																				<h:outputText id="COLUMN_CAPTION0"
+																					styleClass="forumRowHighlight"
+																					value="#{ChartAction.chartBean.queryResults.metaData[0]}" />
+																			</f:facet>
+																			<h:outputText id="COLUMN_VALUE0"
+																				styleClass="forumRowHighlight"
+																				value="#{record.row[0]}" />
+																		</rich:column>
+																		<rich:column id="QUERY_COLUMN1" rendered="#{ChartAction.chartBean.queryResults.columnCount > 1}">
+																			<f:facet name="header">
+																				<h:outputText id="COLUMN_CAPTION1"
+																					styleClass="forumRowHighlight"
+																					value="#{ChartAction.chartBean.queryResults.metaData[1]}" />
+																			</f:facet>
+																			<h:outputText id="COLUMN_VALUE1"
+																				styleClass="forumRowHighlight"
+																				value="#{record.row[1]}" />
+																		</rich:column>
+																		<rich:column id="QUERY_COLUMN2" rendered="#{ChartAction.chartBean.queryResults.columnCount > 2}">
+																			<f:facet name="header">
+																				<h:outputText id="COLUMN_CAPTION2"
+																					styleClass="forumRowHighlight"
+																					value="#{ChartAction.chartBean.queryResults.metaData[2]}" />
+																			</f:facet>
+																			<h:outputText id="COLUMN_VALUE2"
+																				styleClass="forumRowHighlight"
+																				value="#{record.row[2]}" />
+																		</rich:column>
+																		<rich:column id="QUERY_COLUMN3" rendered="#{ChartAction.chartBean.queryResults.columnCount > 3}">
+																			<f:facet name="header">
+																				<h:outputText id="COLUMN_CAPTION3"
+																					styleClass="forumRowHighlight"
+																					value="#{ChartAction.chartBean.queryResults.metaData[3]}" />
+																			</f:facet>
+																			<h:outputText id="COLUMN_VALUE3"
+																				styleClass="forumRowHighlight"
+																				value="#{record.row[3]}" />
+																		</rich:column>
+																		<rich:column id="QUERY_COLUMN4" rendered="#{ChartAction.chartBean.queryResults.columnCount > 4}">
+																			<f:facet name="header">
+																				<h:outputText id="COLUMN_CAPTION4"
+																					styleClass="forumRowHighlight"
+																					value="#{ChartAction.chartBean.queryResults.metaData[4]}" />
+																			</f:facet>
+																			<h:outputText id="COLUMN_VALUE4"
+																				styleClass="forumRowHighlight"
+																				value="#{record.row[4]}" />
+																		</rich:column>
+																		<rich:column id="QUERY_COLUMN5" rendered="#{ChartAction.chartBean.queryResults.columnCount > 5}">
+																			<f:facet name="header">
+																				<h:outputText id="COLUMN_CAPTION5"
+																					styleClass="forumRowHighlight"
+																					value="#{ChartAction.chartBean.queryResults.metaData[5]}" />
+																			</f:facet>
+																			<h:outputText id="COLUMN_VALUE5"
+																				styleClass="forumRowHighlight"
+																				value="#{record.row[5]}" />
+																		</rich:column>
+																		<f:facet name="footer">
+																			<h:panelGroup id="CHART_QUERY_TABLE_FOOTER">
+																				<rich:datascroller align="right"
+																					id="CHART_QUERY_TABLE_SCROLL" page="1" />
+																			</h:panelGroup>
+																		</f:facet>
+																	</rich:dataTable>
+														        </a4j:region>
+															</rich:tab>
+															<rich:tab id="QUERY_CHART_PREVIEW" label="Chart Preview" action="#{ChartAction.generatePreview}">
+																<table cellpadding="0" cellspacing="0" border="0" align="center"  class="chartborder">
+																	<tr>
+																		<th class='dr-pnl-h' style="height:25px;">
+																			<h:outputText id="chart_header4" value="#{ChartAction.chartBean.CHART_DESC}"/>
+																		</th>
+																	</tr>
+																	<tr>
+																		<td bgcolor="#ffffff">
+																			<img src="#{ChartAction.chartBean.UI_CHART_URL}"/>
+																		</td>
+																	</tr>
+																</table>
+															</rich:tab>
+															<rich:tab id="QUERY_USER_ASSOCIATION_TAB" label="User Association">
+																<table align="center">
+																	<tr><td>
+																		<rich:pickList value="#{ChartAction.chartBean.associatedUserList}">
+																			<f:selectItems id="QUERY_USER_LIST" value="#{ChartAction.userList}"/>
+																		</rich:pickList>
+																	</td></tr>
+																</table>
+															</rich:tab>
+														</rich:tabPanel>
+													</td>
+												</tr>												
+												<!-- <tr>
+													<td colspan="5">
+														<a4j:commandButton id="CHART_PREVIEW_BUTTON" 
+															actionListener="#{ChartAction.generateChart}" 
+															value="Preview" reRender="CHART_PREVIEW"/>
+														<br/>
+														<a4j:region id="CHART_PREVIEW">
+													        <table>
+																	<tr>
+																		<td>
+																			<table class="chart-table">
+																				<tr class="chart-row">
+																					<th class='chart-header'>
+																						<h:outputText id="chart_header" 
+																							value="#{ChartAction.chartBean.CHART_DESC}"/>
+																					</th>
+																				</tr>
+																				<tr class="chart-row">
+																					<td class="chart-description">
+																						<img src="#{ChartAction.chartBean.UI_CHART_URL}" 
+																							width="600" height="200"/>
+																					</td>
+																				</tr>
+																			</table> 
+																		</td>
+																	</tr>
+													        </table>
+												        </a4j:region>
+													</td>
+												</tr> -->
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+									style="text-decoration:none"
+									action="#{ChartAction.saveRecord}"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle" value="./../../resources/images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../resources/images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../resources/images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../resources/images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../resources/images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../resources/images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../resources/images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,99 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<!-- add header row -->
+		<tr>
+		</tr>
+		<h:form id="documentSetup">
+			<!-- Body row -->
+			<tr>
+				<td><!-- initial filter to search and list -->
+				<table border="0" width="100%" cellpadding="0" cellspacing="0"
+					id="masthead">
+					<tr>
+						<td>Initial Search Criteria</td>
+						<td>PIFH_MAIN_ACNT_CODE: <h:inputText
+							value="#{PILM072_APAC_PM_IL_IF_ACCNT_SETUP_HDR_SEARCH_PAGE_ACTION.PM_IL_IF_ACCNT_SETUP_HDR_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE1}" />
+						</td>
+						<td>PIFH_SUB_ACNT_CODE: <h:inputText
+							value="#{PILM072_APAC_PM_IL_IF_ACCNT_SETUP_HDR_SEARCH_PAGE_ACTION.PM_IL_IF_ACCNT_SETUP_HDR_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE2}" />
+						</td>
+						<td><a4j:commandButton value="Fetch List" id="a4link"
+							styleClass="button"
+							actionListener="#{PILM072_APAC_PM_IL_IF_ACCNT_SETUP_HDR_SEARCH_PAGE_ACTION.fetchButtonClick}"
+							reRender="dataTableId">
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table --> <rich:dataTable id="dataTableId"
+					value="#{PILM072_APAC_PM_IL_IF_ACCNT_SETUP_HDR_SEARCH_PAGE_ACTION.recordList}"
+					var="PM_IL_IF_ACCNT_SETUP_HDR_BEAN" cellpadding="5px" rows="10"
+					border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+					<rich:column
+						filterValue="#{PILM072_APAC_PM_IL_IF_ACCNT_SETUP_HDR_SEARCH_PAGE_ACTION.PM_IL_IF_ACCNT_SETUP_HDR_SEARCH_PAGE_BEAN.FILTER_BY_VALUE1}"
+						filterBy="#{PM_IL_IF_ACCNT_SETUP_HDR_BEAN.PIFH_MAIN_ACNT_CODE}"
+						sortBy="#{PM_IL_IF_ACCNT_SETUP_HDR_BEAN.PIFH_MAIN_ACNT_CODE}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="PIFH_MAIN_ACNT_CODE" />
+						</f:facet>
+						<h:commandLink
+							action="#{PILM072_APAC_PM_IL_IF_ACCNT_SETUP_HDR_SEARCH_PAGE_ACTION.updateOrInsertRecordLinkClicked}">
+								<h:outputText
+									value="#{PM_IL_IF_ACCNT_SETUP_HDR_BEAN.PIFH_MAIN_ACNT_CODE}" />
+							<f:param name="CURRENT_ROWID"
+								value="#{PM_IL_IF_ACCNT_SETUP_HDR_BEAN.ROWID}" />
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column
+						filterValue="#{PILM072_APAC_PM_IL_IF_ACCNT_SETUP_HDR_SEARCH_PAGE_ACTION.PM_IL_IF_ACCNT_SETUP_HDR_SEARCH_PAGE_BEAN.FILTER_BY_VALUE2}"
+						filterBy="#{PM_IL_IF_ACCNT_SETUP_HDR_BEAN.PIFH_SUB_ACNT_CODE}"
+						sortBy="#{PM_IL_IF_ACCNT_SETUP_HDR_BEAN.PIFH_SUB_ACNT_CODE}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="PIFH_SUB_ACNT_CODE" />
+						</f:facet>
+						<h:outputText
+							value="#{PM_IL_IF_ACCNT_SETUP_HDR_BEAN.PIFH_SUB_ACNT_CODE} " />
+					</rich:column>
+
+				</rich:dataTable>
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td align="left"><h:commandButton value="Insert"
+							styleClass="button"
+							action="#{PILM072_APAC_PM_IL_IF_ACCNT_SETUP_HDR_SEARCH_PAGE_ACTION.updateOrInsertRecordLinkClicked}">
+						</h:commandButton></td>
+					</tr>
+				</table>
+
+				</td>
+			</tr>
+		</h:form>
+		<!-- add footer to the page-->
+		<tr>
+		</tr>
+	</table>	
+</f:view>
+</ui:define>
+</ui:composition>

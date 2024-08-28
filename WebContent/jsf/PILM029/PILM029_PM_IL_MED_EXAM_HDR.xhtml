@@ -1,0 +1,571 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM029" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_MED_EXAM_HDR" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.saveData}"
+											id="AUTO_ID_1" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTO_ID_2"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.saveAndNext}"
+											id="AUTO_ID_4" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_10" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.errorMap['current'] !=null? PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.errorMap['current']:PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="globalLink" width="100%">
+							<tr>
+								<td><!-- Tab implementation --> <h:inputHidden
+									id="myhidden"
+									value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.tabbedBar.tabClicked}" />
+								<h:panelGroup id="mypanel" style="border:0">
+									<table class="noborder" width="90%">
+										<tr>
+											<td width="90%"><a4j:repeat
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													action="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.tabbedBar.tabAction}"
+													disabled="#{currtab.disabled}" id="AUTOID_13"
+													onclick="document.getElementById('PM_IL_MED_EXAM_HDR:myhidden').value='#{currtab.id}'"
+													styleClass="#{currtab.styleString}"
+													value="#{currtab.value}" />
+
+											</a4j:repeat></td>
+
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3">
+						<table class="noborder" width="100%">
+							<tr>
+								<td vAlign="top" width="100%"><h:panelGroup
+									id="sectionDtls" style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%" border="0">
+
+										<tr>
+											<td colspan="5"><rich:dataTable
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.dataTable}"
+												border="0" cellpadding="0"
+												id="PM_IL_MED_EXAM_HDR_DATA_TABLE" rows="5"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.medicalExamList}"
+												var="table" width="100%">
+
+												<rich:column filterBy="#{table.MEH_SUM_ASSURED_FM}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.filterBySUBASSURED_FROM}"
+													sortBy="#{table.MEH_SUM_ASSURED_FM}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_22"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_SUM_ASSURED_FM$caption}">
+														</h:outputText>
+													</f:facet>
+										    	<!--added by raja on 18-03-2017 for ssp call -id ZBILQC-1717895-->
+													<a4j:commandLink
+														action="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.getDetails}"
+														immediate="true" reRender="sectionDtls,errorPanel">
+														<h:outputText id="MEH_SUM_ASSURED_FC"
+														style="width:100px;"
+														title="#{message.PILM029$PM_IL_MED_EXAM$MEH_SUM_ASSURED_TO$tooltip}"
+															value="#{table.MEH_SUM_ASSURED_FM}">
+															<f:converter converterId="PELNumberFormatter"/>
+															</h:outputText>
+													</a4j:commandLink>
+
+												</rich:column>
+
+												<rich:column filterBy="#{table.MEH_SUM_ASSURED_TO}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.filterBySUBASSURED_TO}"
+													sortBy="#{table.MEH_SUM_ASSURED_TO}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_24"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_SUM_ASSURED_TO$caption}" />
+													</f:facet>
+										<!--added by raja on 18-03-2017 for ssp call -id ZBILQC-1717895-->
+													<h:outputText id="MEH_SUM_ASSURED_TO" rendered="true"
+														style="width:100px;"
+														title="#{message.PILM029$PM_IL_MED_EXAM$MEH_SUM_ASSURED_TO$tooltip}"
+														value="#{table.MEH_SUM_ASSURED_TO}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:outputText>
+												</rich:column>
+												<rich:column filterBy="#{table.MEH_AGE_FM}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.filterByAGE_FROM}"
+													sortBy="#{table.MEH_AGE_FM}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_25"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_AGE_FM$caption}" />
+													</f:facet>
+													<h:outputText id="MEH_AGE_FM" rendered="true"
+														style="width:100px;" value="#{table.MEH_AGE_FM}">
+													</h:outputText>
+
+												</rich:column>
+												<rich:column filterBy="#{table.MEH_AGE_TO}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.filterByAGE_TO}"
+													sortBy="#{table.MEH_AGE_TO}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_26"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_AGE_TO$caption}" />
+													</f:facet>
+													<h:outputText id="MEH_AGE_TO" rendered="true"
+														style="width:100px;" value="#{table.MEH_AGE_TO}">
+													</h:outputText>
+
+												</rich:column>
+												<rich:column filterBy="#{table.MEH_PROD_CODE_FM}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.filterByPROD_CODE_FM}"
+													rendered="false" sortBy="#{table.MEH_PROD_CODE_FM}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_27"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_PROD_CODE_FM$caption}" />
+													</f:facet>
+													<h:outputText id="MEH_PROD_CODE_FM" rendered="true"
+														style="width:100px;" value="#{table.MEH_PROD_CODE_FM}">
+													</h:outputText>
+
+												</rich:column>
+												<rich:column filterBy="#{table.MEH_PROD_CODE_TO}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.filterByPROD_CODE_TO}"
+													rendered="false" sortBy="#{table.MEH_PROD_CODE_TO}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_28"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_PROD_CODE_TO$caption}" />
+													</f:facet>
+													<h:outputText id="MEH_PROD_CODE_TO" rendered="true"
+														style="width:100px;" value="#{table.MEH_PROD_CODE_TO}">
+													</h:outputText>
+
+												</rich:column>
+
+												<!-- Attach scroller as footer of the table-->
+												<f:facet name="footer">
+													<h:panelGroup id="footerpanel" style="border:0">
+														<rich:datascroller align="right" />
+														<a4j:commandButton
+															actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.AddRow}"
+															binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.UI_M_BUT_ADD}"
+															id="AUTO_ID_29" immediate="true"
+															reRender="errorPanel,sectionDtls" rendered="true"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.addNewButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.deleteRow}"
+															id="AUTO_ID_30" immediate="true"
+															reRender="errorPanel,sectionDtls" rendered="true"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.deleteButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.post}"
+															binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.UI_M_BUT_POST}"
+															id="AUTO_ID_31" reRender="errorPanel,sectionDtls"
+															rendered="true" style="width:81px" styleClass="button"
+															value="#{commonmsg.postButtonCaption}" />
+													</h:panelGroup>
+												</f:facet>
+											</rich:dataTable></td>
+										</tr>
+
+										<tr>
+											<td class="oddrowfreeze" colspan="4"></td>
+											<td class="oddrowfreeze"><h:outputLabel
+												for="MEH_FRZ_FLAG" id="MEH_FRZ_FLAG_LABEL"
+												styleClass="label"
+												value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_FRZ_FLAG$caption}" />
+											<h:selectBooleanCheckbox
+												title="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_FRZ_FLAG$tooltip}"
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_FRZ_FLAG}"
+												id="MEH_FRZ_FLAG" rendered="true"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.PM_IL_MED_EXAM_HDR_BEAN.CHECK_MEH_FRZ_FLAG}">
+												<a4j:support
+													actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.fireFieldValidation}"
+													event="onblur" id="style_8" immediate="true"
+													reRender="errorPanel" />
+											</h:selectBooleanCheckbox></td>
+										</tr>
+
+										<tr>
+											<!--Sub Assured From-->
+											<td class="evenrowright" width="20%"><h:outputLabel
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_SUM_ASSURED_FM_LABEL}"
+												for="MEH_SUM_ASSURED_FM" id="MEH_SUM_ASSURED_FM_LABEL"
+												styleClass="label"
+												value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_SUM_ASSURED_FM$caption}" />
+											<h:graphicImage id="AUTOID_113" style=""
+												styleClass="searchimg"
+												value="./../../resources/images/mandatory.jpg" /></td>
+											<td class="evenrow" width="28%"><h:inputText
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_SUM_ASSURED_FM}"
+												id="MEH_SUM_ASSURED_FM" rendered="true" required="true"
+												styleClass="inputNumeric"
+												title="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_SUM_ASSURED_FM$tooltip}"
+												validator="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.saFromWhenValidate}"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.PM_IL_MED_EXAM_HDR_BEAN.MEH_SUM_ASSURED_FM}">
+												<f:converter converterId="PELNumberFormatter" />
+												<f:validateDoubleRange minimum="1" maximum="99999999999.999" />
+												<a4j:support
+													actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.fireFieldValidation}"
+													event="onblur" id="a4j_SUM_ASSURED_FROM" immediate="true"
+													reRender="errorMessages,err,warningMessages" />
+											</h:inputText></td>
+											<!--Sub Assured To-->
+											<td class="evenrowright" width="4%">&nbsp;</td>
+											<td class="evenrowright" width="20%"><h:outputLabel
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_SUM_ASSURED_TO_LABEL}"
+												for="MEH_SUM_ASSURED_TO" id="MEH_SUM_ASSURED_TO_LABEL"
+												styleClass="label"
+												value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_SUM_ASSURED_TO$caption}" /><h:graphicImage
+												id="AUTOID_1812" style="" styleClass="searchimg"
+												value="./../../resources/images/mandatory.jpg" /></td>
+											<td class="evenrow" width="28%"><h:inputText
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_SUM_ASSURED_TO}"
+												id="MEH_SUM_ASSURED_TO" rendered="true" required="true"
+												styleClass="inputNumeric"
+												title="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_SUM_ASSURED_TO$tooltip}"
+												validator="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.saToWhenValidate}"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.PM_IL_MED_EXAM_HDR_BEAN.MEH_SUM_ASSURED_TO}">
+												<f:converter converterId="PELNumberFormatter" />
+												<f:validateDoubleRange minimum="1" maximum="99999999999.999" />
+												<a4j:support
+													actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.fireFieldValidation}"
+													event="onblur" id="a4j_SUM_ASSURED_TO" immediate="true"
+													reRender="errorMessages,err,warningMessages" />
+											</h:inputText></td>
+										</tr>
+										<tr>
+											<!--Age From-->
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_AGE_FM_LABEL}"
+												for="MEH_AGE_FM" id="MEH_AGE_FM_LABEL" styleClass="label"
+												value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_AGE_FM$caption}" /><h:graphicImage
+												id="AUTOID_1821" style="" styleClass="searchimg"
+												value="./../../resources/images/mandatory.jpg" /></td>
+											<td class="oddrow"><h:inputText
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_AGE_FM}"
+												id="MEH_AGE_FM" rendered="true" required="true"
+												styleClass="inputNumeric"
+												title="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_AGE_FM$tooltip}"
+												validator="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.ageFromValidation}"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.PM_IL_MED_EXAM_HDR_BEAN.MEH_AGE_FM}">
+												<f:validateLongRange minimum="1" maximum="100" />
+												<a4j:support
+													actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.fireFieldValidation}"
+													event="onblur" id="a4j_MEH_AGE_FM" immediate="true"
+													reRender="errorMessages,err,warningMessages" />
+											</h:inputText></td>
+											<!--Age To-->
+											<td class="oddrowright">&nbsp;</td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_AGE_TO_LABEL}"
+												for="MEH_AGE_TO" id="MEH_AGE_TO_LABEL" styleClass="label"
+												value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_AGE_TO$caption}" /><h:graphicImage
+												id="AUTOID_18221" style="" styleClass="searchimg"
+												value="./../../resources/images/mandatory.jpg" /></td>
+											<td class="oddrow"><h:inputText
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_AGE_TO}"
+												id="MEH_AGE_TO" rendered="true" required="true"
+												styleClass="inputNumeric"
+												title="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_AGE_TO$tooltip}"
+												validator="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.ageToWhenValidate}"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.PM_IL_MED_EXAM_HDR_BEAN.MEH_AGE_TO}">
+												<f:validateLongRange minimum="1" maximum="100" />
+												<a4j:support
+													actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.fireFieldValidation}"
+													event="onblur" id="a4j_MEH_AGE_TO" immediate="true"
+													reRender="errorMessages,err,warningMessages" />
+											</h:inputText></td>
+
+										</tr>
+										<tr>
+											<!--Age From-->
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_PROD_CODE_FM_LABEL}"
+												for="MEH_PROD_CODE_FM" id="MEH_PROD_CODE_FM_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_PROD_CODE_FM$caption}" /></td>
+											<td class="evenrow"><h:inputText
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_PROD_CODE_FM}"
+												id="MEH_PROD_CODE_FM" rendered="true" styleClass="input"
+												title="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_PROD_CODE_FM$tooltip}"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.PM_IL_MED_EXAM_HDR_BEAN.MEH_PROD_CODE_FM}">
+												<a4j:support
+													actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.productCode_FM_ActionListener}"
+													event="onblur" id="a4jFRZ_PROD_CODE_FM" immediate="true"
+													reRender="errorMessages,err,warningMessages,MEH_PROD_CODE_FM,AUTO_ID_1123" />
+											</h:inputText> <rich:suggestionbox for="MEH_PROD_CODE_FM" height="250"
+												id="AUTO_ID_1123"
+												suggestionAction="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.lovProdCode}"
+												var="code" width="250">
+												<h:column>
+													<h:outputText id="AUTO_ID_1212" value="#{code.lovCode}" />
+												</h:column>
+												<h:column>
+													<h:outputText id="AUTO_ID_1213" value="#{code.lovName}" />
+												</h:column>
+												<a4j:support ajaxSingle="true" event="onselect"
+													id="code_a4j21" immediate="true" reRender="errorPanel">
+												</a4j:support>
+											</rich:suggestionbox> <h:graphicImage id="MEH_PROD_CODE_FM_graphicImage_Lovgif"
+												styleClass="searchimg" value=".\..\..\images\Lov.gif" /></td>
+											<!--Age To-->
+											<td class="evenrowright">&nbsp;</td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_PROD_CODE_TO_LABEL}"
+												for="MEH_PROD_CODE_TO" id="MEH_PROD_CODE_TO_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_PROD_CODE_TO$caption}" /></td>
+											<td class="evenrow"><h:inputText
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.COMP_MEH_PROD_CODE_TO}"
+												id="MEH_PROD_CODE_TO" rendered="true" styleClass="input"
+												title="#{message.PILM029$PM_IL_MED_EXAM_HDR$MEH_PROD_CODE_TO$tooltip}"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.PM_IL_MED_EXAM_HDR_BEAN.MEH_PROD_CODE_TO}">
+												<a4j:support
+													actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.productCode_To_ActionListener}"
+													event="onblur" id="a4jFRZ_PROD_CODE_TO" immediate="true"
+													reRender="errorMessages,err,warningMessages,MEH_PROD_CODE_TO,AUTO_ID_1124" />
+											</h:inputText> <rich:suggestionbox for="MEH_PROD_CODE_TO" height="250"
+												id="AUTO_ID_1124"
+												suggestionAction="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.lovProdCode}"
+												var="code" width="250">
+												<h:column>
+													<h:outputText id="AUTO_ID_12122" value="#{code.lovCode}" />
+												</h:column>
+												<h:column>
+													<h:outputText id="AUTO_ID_12133" value="#{code.lovName}" />
+												</h:column>
+												<a4j:support ajaxSingle="true" event="onselect"
+													id="code_a4j212" immediate="true" reRender="errorPanel">
+												</a4j:support>
+											</rich:suggestionbox> <h:graphicImage id="MEH_PROD_CODE_TO_graphicImage_Lovgif"
+												styleClass="searchimg" value=".\..\..\images\Lov.gif" /></td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.saveData}"
+											id="AUTO_ID_32" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_33" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_34"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_HDR_ACTION.saveAndNext}"
+											id="AUTO_ID_35" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_36"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_37"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_38" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_39"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_40"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_41" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_42"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_43"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_44" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_45"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_46"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_47" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_48"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_49"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_50" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_51"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_52"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

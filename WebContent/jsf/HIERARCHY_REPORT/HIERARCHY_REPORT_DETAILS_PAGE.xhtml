@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:loadBundle basename="messageProperties_HIERARCHY_REPORT" var="message" />
+		<f:view beforePhase="#{HIERARCHY_REPORT_ACTION.onLoad}"  locale="#{sessionScope['pageLocale']}">
+				<h:form id="HIERARCHY_REPORT_DETAILS">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText escape="true" id="err"
+									styleClass="#{HIERARCHY_REPORT_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{HIERARCHY_REPORT_ACTION.errorMap['current'] !=null? HIERARCHY_REPORT_ACTION.errorMap['current']: HIERARCHY_REPORT_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{HIERARCHY_REPORT_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{HIERARCHY_REPORT_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{HIERARCHY_REPORT_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{HIERARCHY_REPORT_ACTION.backButton}"
+											id="commandLink_backButtonAction" immediate="true"
+											style="text-decoration:none;background: url(../../images/back.png) left top no-repeat;display: block;padding: 3px 20px 3px;"
+											styleClass="toolbarCommandLinkStyle">
+											 <!--  <h:commandButton  id="PM_SUB_CMD_GRPIS_BACKBTN"
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" /> 
+												-->
+											<h:outputText id="PM_SUB_CMD_OUTXT_BACKBTN"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										 <h:commandLink
+											action="#{HIERARCHY_REPORT_ACTION.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="SAVE_TOOL_IMAGE_HEADER"
+											binding="#{HIERARCHY_REPORT_ACTION.COMP_SAVE_BUTTON}"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										</rich:toolBarGroup>
+										</rich:toolBar>
+										</td>
+										</tr>
+					<tr>
+						<td colspan="3">
+							<rich:dataTable
+								binding="#{HIERARCHY_REPORT_ACTION.dataTable}"
+								border="1" cellpadding="5px" id="PolicyLedgerQuery" rows="10"
+								value="#{HIERARCHY_REPORT_ACTION.pendingList}"
+								var="colData" width="100%">
+		
+								<rich:column filterBy="#{colData.rowNo}"
+													filterEvent="onkeyup" id="COLUMN_ROW_ID"
+													rendered="true" sortBy="#{colData.rowNo}"
+													styleClass="#{colData.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_1"
+											value="Row No" />
+									</f:facet>
+									<h:outputText id="AUTOID_4_PC" value="#{colData.rowNo}" />								
+								</rich:column>
+								<rich:column filterBy="#{colData.policyNo}"
+													filterEvent="onkeyup" id="COLUMN_POL_NO"
+													rendered="true" sortBy="#{colData.policyNo}"
+													styleClass="#{colData.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_POL_CUST_NAME"
+											value="Policy No" />
+									</f:facet>
+									<h:outputText id="AUTOID_5_PC" value="#{colData.policyNo}" />
+								</rich:column>
+								<rich:column filterBy="#{colData.claimNumber}" rendered="#{HIERARCHY_REPORT_ACTION.visible}"
+													filterEvent="onkeyup" id="COLUMN_CLAIM_NO"
+													 sortBy="#{colData.claimNumber}"
+													styleClass="#{colData.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_CLAIM_NO"
+											value="Claim Number" />
+									</f:facet>
+									<h:outputText id="AUTOID_9_PC" value="#{colData.claimNumber}" />
+								</rich:column>
+								<rich:column>
+									<f:facet name="header">
+										<h:outputText id="AUTOID_POL_CUST_NAME1"
+											value="Assigned To" />
+									</f:facet>
+								 <h:selectOneMenu id="AUTOID_6_PC"  styleClass="input" 
+															 disabled="false" 
+													value="#{colData.user}">
+													<f:selectItems id="SEL_USERS"
+													value="#{HIERARCHY_REPORT_ACTION.assignedToList}" />
+													 <a4j:support event="onchange" immediate="true"
+														reRender="errorPanel,SAVE_TOOL_HEADER"
+														actionListener="#{HIERARCHY_REPORT_ACTION.setUser}">
+													</a4j:support> 
+												</h:selectOneMenu> 
+								</rich:column>
+								
+								 <rich:column filterBy="#{colData.UI_M_TASK_ASSIGNED_DT}"
+													filterEvent="onkeyup" id="COLUMN_TASK_DATE"
+													rendered="true" sortBy="#{colData.UI_M_TASK_ASSIGNED_DT}"
+													styleClass="#{colData.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_5"
+											value="Task Assigned Date" />
+									</f:facet>
+									<h:outputText id="AUTOID_7_PC" value="#{colData.UI_M_TASK_ASSIGNED_DT}" >	
+									
+									</h:outputText>							
+								</rich:column>
+								
+								<rich:column filterBy="#{colData.UI_M_TASK_DUE_DT}"
+													filterEvent="onkeyup" id="COLUMN_TASK_DUE_DATE"
+													rendered="true" sortBy="#{colData.UI_M_TASK_DUE_DT}"
+													styleClass="#{colData.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_6"
+											value="Task Due Date" />
+									</f:facet>
+									<h:outputText id="AUTOID_8_PC" value="#{colData.UI_M_TASK_DUE_DT}">	
+									</h:outputText>							
+								</rich:column> 
+								
+								
+								<f:facet name="footer">
+									<rich:datascroller align="right" for="PolicyLedgerQuery" />
+								</f:facet>
+							</rich:dataTable>
+						</td>
+					</tr>
+				</table>
+				</h:form>
+		</f:view>
+		<script type="text/javascript">
+		onclickback = function(){
+			localStorage.setItem("clickback",true);
+			if(typeof jsfcljs == 'function'){jsfcljs(document.getElementById('HIERARCHY_REPORT_DETAILS'),{'HIERARCHY_REPORT_DETAILS:commandLink_backButtonAction':'HIERARCHY_REPORT_DETAILS:commandLink_backButtonAction'},'');}return false
+
+			}
+		window.onload = function(){
+			var obj = document.getElementById("HIERARCHY_REPORT_DETAILS:commandLink_backButtonAction")
+    		obj.setAttribute("onclick","onclickback(this)")
+		}
+		</script>
+	</ui:define>
+</ui:composition>

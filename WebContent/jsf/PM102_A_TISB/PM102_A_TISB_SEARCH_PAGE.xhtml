@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+<html>
+<head>
+ 
+	 
+ 
+	 
+</head>
+<body>
+
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+		<!-- add header row -->
+		<tr>
+			
+		</tr>
+		
+		<!-- Body row -->
+		<tr>
+		<td>
+		<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+		<h:form id="pf_account_setup_form" onkeypress="return event.keyCode != 13">
+		<!-- End -->	
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%"  cellpadding="0" cellspacing="0" id="masthead">
+					<tr>
+						<td>Initial Search Criteria
+						</td>
+						<td>
+							 Account Type: <h:inputText value="#{PM_102_A_TISB_PM_AGENT_PF_SEARCH_PAGE_DETAILS_ACTION.initAPAT_CODE}"/>
+						</td>
+						<td>
+							Split %: <h:inputText value="#{PM_102_A_TISB_PM_AGENT_PF_SEARCH_PAGE_DETAILS_ACTION.initAPAT_RATE}"/>
+						</td>
+						<td>
+							<h:commandButton value="Fetch list" id="alink" action="#{PM_102_A_TISB_PM_AGENT_PF_SEARCH_PAGE_DETAILS_ACTION.fetchPolicyDetails}">
+							</h:commandButton>
+						</td>
+					</tr>
+				</table>
+				
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId" value="#{PM_102_A_TISB_PM_AGENT_PF_SEARCH_PAGE_DETAILS_ACTION.policyList}"
+					var="policy" cellpadding="5px" rows="10" border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index" align="right">
+						</rich:datascroller>
+					</f:facet>
+			
+					<!-- next column -->				
+					<rich:column filterBy="#{policy.APAT_CODE}" sortBy="#{policy.APAT_CODE}" filterEvent="onkeyup" >
+						<f:facet name="header">
+							<h:outputText value="Account Type" />
+						</f:facet>
+						<h:outputText value="#{policy.APAT_CODE} " />
+					</rich:column>
+					
+					<rich:column filterBy="#{policy.APAT_RATE}" sortBy="#{policy.APAT_RATE}">
+						<f:facet name="header">
+							<h:outputText value="Split %" />
+						</f:facet>
+						 <h:commandLink action="#{PM_102_A_TISB_PM_AGENT_PF_SEARCH_PAGE_DETAILS_ACTION.BringList}" >
+						<f:param name="ROWID" value="#{policy.ROWID}"/>
+					<h:outputText value="#{policy.APAT_RATE}" />
+						 </h:commandLink>
+					</rich:column>
+					
+					<rich:column filterBy="#{policy.APAT_AGE}" sortBy="#{policy.APAT_AGE}">
+						<f:facet name="header">
+							<h:outputText value="Minimum Age Of Withdrawal" />
+						</f:facet>
+						<h:outputText value="#{policy.APAT_AGE}" />
+					</rich:column>
+					</rich:dataTable>
+				<h:commandButton id="InsertLink" value="InsertRecord" action="#{PM_102_A_TISB_PM_AGENT_PF_SEARCH_PAGE_DETAILS_ACTION.clearSession}"/>
+			</h:form>
+		</td>
+		</tr>
+
+		<!-- add footer to the page-->
+		<tr>
+			
+		</tr>
+	</table>
+</body>
+</html>
+</f:view>
+</ui:define>
+</ui:composition>

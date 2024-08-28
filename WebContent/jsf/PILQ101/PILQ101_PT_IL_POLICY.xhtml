@@ -1,0 +1,833 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view 
+		beforePhase="#{PILQ101_PT_IL_POLICY_ACTION.onLoad}"
+		locale="#{sessionScope['pageLocale']}" >
+		<f:loadBundle basename="messageProperties_PILQ101" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 24-Feb-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PT_IL_POLICY" onkeypress="return event.keyCode != 13">
+			<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		
+				<tr>
+
+				</tr>
+				
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+							<tr><td>
+								<rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<!--Added by ganesh on 16-08-2017 for ZBILQC-1719657-->
+										
+										<h:commandLink id="PRINT_TOOL_FOOTER" rendered="true" disabled="#{(PILQ101_PT_IL_PREM_COLL_ACTION.beanList!=null and PILQ101_PT_IL_PREM_COLL_ACTION.beanList.size()>0)?false:true}"
+											action="#{PILQ101_PT_IL_POLICY_ACTION.PRINT_ACTION_BEAN.printButtonAction}"
+													style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="NAVIGATION_TOOLPRINT_FOOTER1"
+																		styleClass="toolbarButtonStyle" accesskey="p"
+												image="./../../resources/images/printer.gif" />
+											<h:outputText id="NAVIGATION_TOOL_PRINT_FOOTER"
+												styleClass="toolbaroutputTextStyle" value="Print" />
+										</h:commandLink>
+									
+										<h:commandLink id="EMAIL_TOOL_FOOTER" rendered="true" disabled="#{(PILQ101_PT_IL_PREM_COLL_ACTION.beanList!=null and PILQ101_PT_IL_PREM_COLL_ACTION.beanList.size()>0)?false:true}"
+											action="#{PILQ101_PT_IL_POLICY_ACTION.PRINT_ACTION_BEAN.emailButtonAction}"
+													style="text-decoration:none" styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="NAVIGATION_TOOLEMAIL_FOOTER1"
+											 accesskey="E" styleClass="toolbarButtonStyle"
+											image="./../../images/EMAIL_RI.png" />
+											<h:outputText id="NAVIGATION_TOOL_EMAIL_FOOTER"
+												styleClass="toolbaroutputTextStyle" value="Email" />
+										</h:commandLink>
+									
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+					<!-- <tr>
+						<td colspan="3" width="100%" vAlign="top">
+						<table width="100%" id="toolbartable" cellpadding="0" 
+							cellspacing="0" border="0" class="noborder">
+							  <tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false"
+											disabled="true">
+											<h:graphicImage style="border: thin solid white"
+												value="./../../images/save.gif"
+												styleClass="toolbarImageStyle" />
+											<h:outputText value="#{menumessage.jsf$header$image$save}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none" disabled="true"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												value="./../../images/savenext.GIF"
+												styleClass="toolbarImageStyle" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$savenext}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none" disabled="true"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												value="./../../images/deleteRecord.gif"
+												styleClass="toolbarImageStyle" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$deleteRecord}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none" disabled="true"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												value="./../../images/firstrec.gif"
+												styleClass="toolbarImageStyle" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$firstrec}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none" disabled="true"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												value="./../../images/prevpage.gif"
+												styleClass="toolbarImageStyle" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$prevpage}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none" disabled="true"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												value="./../../images/nextpage.gif"
+												styleClass="toolbarImageStyle" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$nextpage}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none" disabled="true"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												value="./../../images/lastRecord.gif"
+												styleClass="toolbarImageStyle" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$lastRecord}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr> 
+						</table>
+						</td>
+					</tr> -->
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20"><rich:simpleTogglePanel
+							id="errorPanel" switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILQ101_PT_IL_POLICY_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILQ101_PT_IL_POLICY_ACTION.errorMap['current'] !=null? PILQ101_PT_IL_POLICY_ACTION.errorMap['current']:PILQ101_PT_IL_POLICY_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PILQ101_PT_IL_POLICY_ACTION.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="UI_Msg"
+								rendered="#{PILQ101_PT_IL_POLICY_ACTION.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PILQ101_PT_IL_POLICY_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" id="linkstable" cellpadding="0"
+							cellspacing="0" border="0" class="noborder">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PILP024$DUMMY$SET_WINDOW_PROPERTY$caption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table width="100%" align="center" cellpadding="0" cellspacing="0"
+							border="0" class="noborder">
+							<tr>
+								<td width="100%" valign="top">
+								<table id="bordertable" align="left" width="100%" border="0" class="noborder">
+									<tr>
+									<td class="oddrowfreeze" colspan="5">
+									<!-- Modified by ganesh on 16-08-2017 for ZBILQC-1719657-->
+									<a4j:commandButton id="details" 
+												styleClass="button" immediate="true"
+												action="#{PILQ101_PT_IL_PREM_COLL_ACTION.populate_details}"
+												value="Process" reRender="PREM_COLL,UI_M_REINST_FC_CHARGE,UI_M_TOT_REINS_LC_CHARGE,UI_M_AVAIL_FC_DEP_AMT,UI_M_AVAIL_LC_DEP_AMT,UI_M_NET_FC_PAID_AMT,UI_M_NET_LC_PAID_AMT,M_FC_INTEREST,TOOLBAR_HEADER">
+											</a4j:commandButton>
+										</td>
+										</tr>
+										<tr>
+										<td class="evenrow" width="20%" ><h:outputLabel
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_POL_NO_LABEL}"
+											for="POL_NO" id="POL_NO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILQ101$PT_IL_POLICY$POL_NO$caption}" />
+										</td>
+										<td class="evenrowright" width="28%"><!-- <h:inputText
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_POL_NO}"
+											disabled="false" id="POL_NO" maxlength="40" rendered="true"
+											required="false"
+											styleClass="input" 
+											title="Enter Policy No."
+											validator="#{PILQ101_PT_IL_POLICY_ACTION.POST_QUERY}"
+											value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.POL_NO}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILQ101_PT_IL_POLICY_ACTION.fireFieldValidation}"
+												reRender="errorPanel,PREM_COLL,UI_M_POLICY_NO_LOV,POL_CUST_CODE,UI_M_POL_CUST_NAME,
+															POL_CONT_CODE,UI_M_POL_ASSURED_NAME,POL_ASSRD_REF_ID1,POL_ASSRD_REF_ID2,
+															M_REINST_CODE,M_REINST_CHARGE,M_TOT_REINS_LC_CHARGE,M_AVAIL_FC_DEP_AMT,REINST_CODE,
+															M_AVAIL_LC_DEP_AMT">
+											</a4j:support> 
+											<a4j:support event="onselect" immediate="true"
+												actionListener="#{PILQ101_PT_IL_POLICY_ACTION.fireFieldValidation}"
+												reRender="errorPanel,PREM_COLL,UI_M_POLICY_NO_LOV,POL_CUST_CODE,UI_M_POL_CUST_NAME,
+															POL_CONT_CODE,UI_M_POL_ASSURED_NAME,POL_ASSRD_REF_ID1,POL_ASSRD_REF_ID2,
+															M_REINST_CODE,M_REINST_CHARGE,M_TOT_REINS_LC_CHARGE,M_AVAIL_FC_DEP_AMT,REINST_CODE,
+															M_AVAIL_LC_DEP_AMT">
+											</a4j:support> 
+										</h:inputText> -->
+										<h:inputText
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_POL_NO}"
+											disabled="false" id="POL_NO" maxlength="40" rendered="true"
+											required="false"
+											styleClass="input" 
+											title="Enter Policy No."
+											value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.POL_NO}">
+											<a4j:support event="onchange" immediate="true"
+												actionListener="#{PILQ101_PT_IL_POLICY_ACTION.POST_QUERY}"
+												reRender="errorPanel,PREM_COLL,UI_M_POLICY_NO_LOV,POL_CUST_CODE,UI_M_POL_CUST_NAME,
+															POL_CONT_CODE,UI_M_POL_ASSURED_NAME,POL_ASSRD_REF_ID1,POL_ASSRD_REF_ID2,
+															M_REINST_CODE,M_REINST_CHARGE,M_TOT_REINS_LC_CHARGE,M_AVAIL_FC_DEP_AMT,REINST_CODE,
+															M_AVAIL_LC_DEP_AMT">
+											</a4j:support> 
+											<!-- <a4j:support event="onselect" immediate="true"
+												actionListener="#{PILQ101_PT_IL_POLICY_ACTION.POST_QUERY}"
+												reRender="errorPanel,PREM_COLL,UI_M_POLICY_NO_LOV,POL_CUST_CODE,UI_M_POL_CUST_NAME,
+															POL_CONT_CODE,UI_M_POL_ASSURED_NAME,POL_ASSRD_REF_ID1,POL_ASSRD_REF_ID2,
+															M_REINST_CODE,M_REINST_CHARGE,M_TOT_REINS_LC_CHARGE,M_AVAIL_FC_DEP_AMT,REINST_CODE,
+															M_AVAIL_LC_DEP_AMT">
+											</a4j:support> --> 
+										</h:inputText>
+										 <rich:suggestionbox height="100" width="200" immediate="true"
+											id="UI_M_POLICY_NO_LOV"
+											suggestionAction="#{PILQ101_PT_IL_POLICY_ACTION.UI_M_POLICY_NO_lovAction}"
+											for="POL_NO" var="POL_NO">
+											<h:column>
+												<h:outputText value="#{POL_NO.POL_NO}" />
+											</h:column>
+										</rich:suggestionbox> 
+										<h:graphicImage style="border: thin solid white"
+											value="./../../images/Lov.gif" />
+										</td>
+										<td class="evenrow" width="4%">&nbsp;</td>
+										<td class="evenrow"  width="20%"></td>
+										<td class="evenrow"  width="28%"></td>
+									</tr>
+									<tr>
+										<td class="oddrow"><h:outputLabel
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_POL_CUST_CODE_LABEL}"
+											for="POL_CUST_CODE" id="POL_CUST_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILQ101$PT_IL_POLICY$POL_CUST_CODE$caption}" />
+										</td>
+										<td class="oddrowright">
+										<h:inputText
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_POL_CUST_CODE}"
+											disabled="false" id="POL_CUST_CODE" maxlength="12"
+											rendered="true" required="false" readonly="true"
+											styleClass="inputsmall"
+											 title="Customer Code" tabindex="-1"
+											value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.POL_CUST_CODE}"/>
+										<h:inputText
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_UI_M_POL_CUST_NAME}"
+											disabled="true" id="UI_M_POL_CUST_NAME" maxlength="500"
+											rendered="true" required="false"
+											styleClass="input" 
+											value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.UI_M_POL_CUST_NAME}" />
+										</td>
+										<td class="oddrowright"></td>
+										<td class="oddrowright"></td>
+										<td class="oddrowright"></td>
+									</tr>
+									<tr>
+
+										<td class="evenrow"><h:outputLabel
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_POL_CONT_CODE_LABEL}"
+											for="POL_CONT_CODE" id="POL_CONT_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILQ101$PT_IL_POLICY$POL_CONT_CODE$caption}" />
+										</td>
+										<td class="evenrowright"><h:inputText
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_POL_CONT_CODE}"
+											disabled="false" id="POL_CONT_CODE" maxlength="12"
+											rendered="true" required="false" tabindex="-1"
+											readonly="true" 
+											styleClass="inputsmall" title="Assured Code"
+											value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.POL_CONT_CODE}" />
+											<h:inputText
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_UI_M_POL_ASSURED_NAME}"
+											disabled="true" id="UI_M_POL_ASSURED_NAME" maxlength="240"
+											rendered="true" required="false"
+											styleClass="input" title="" tabindex="-1"
+											value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.UI_M_POL_ASSURED_NAME}" />
+										</td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrow">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="oddrow"><h:outputLabel
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_POL_ASSRD_REF_ID1_LABEL}"
+											for="POL_ASSRD_REF_ID1" id="POL_ASSRD_REF_ID1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILQ101$PT_IL_POLICY$POL_ASSRD_REF_ID1$caption}" />
+										</td>
+										<td class="oddrowright"><h:inputText
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_POL_ASSRD_REF_ID1}"
+											disabled="false" id="POL_ASSRD_REF_ID1" maxlength="40"
+											rendered="true" required="false" readonly="true"
+											styleClass="input" title="IC No" tabindex="-1"
+											value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.POL_ASSRD_REF_ID1}" />
+										</td>
+										<td class="oddrow"></td>
+										<td class="oddrow"><h:outputLabel
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_POL_ASSRD_REF_ID2_LABEL}"
+											for="POL_ASSRD_REF_ID2" id="POL_ASSRD_REF_ID2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILQ101$PT_IL_POLICY$POL_ASSRD_REF_ID2$caption}" />
+										</td>
+										<td class="oddrowright"><h:inputText
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_POL_ASSRD_REF_ID2}"
+											disabled="false" id="POL_ASSRD_REF_ID2" maxlength="40"
+											rendered="true" required="false" readonly="true"
+											styleClass="input" title="Old IC No" tabindex="-1"
+											value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.POL_ASSRD_REF_ID2}" />
+										</td>
+
+									</tr>
+									
+									<tr>
+										<td class="evenrow"><h:outputLabel
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_REINST_CODE_LABEL}"
+											for="REINST_CODE" id="UI_M_REINST_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILQ101$PT_IL_POLICY$M_REINST_CODE$caption}" />
+											<h:graphicImage id="UI_Mandatory1_1" style=""
+													styleClass="searchimg" value="./../../images/mandatory.gif" />
+										</td>
+										<td class="evenrowright"><h:inputText
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_REINST_CODE}"
+											disabled="false" id="REINST_CODE" maxlength="40"
+											rendered="true" required="false" tabindex="2"
+											styleClass="inputNumeric" title="Enter Reinstatement Code"
+											value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.UI_M_REINST_CODE}">
+
+											<a4j:support event="onblur" immediate="true"
+												reRender="M_REINST_CODE,errorPanel"
+												actionListener="#{PILQ101_PT_IL_POLICY_ACTION.when_validate_rein_code}">
+											</a4j:support>
+										</h:inputText></td>
+										<td class="evenrow"></td>
+										<td class="evenrow"><h:outputLabel
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_REINSTMT_DT_LABEL}"
+											for="UI_M_REINSTMT_DT" id="REINSTMT_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILQ101$PT_IL_POLICY$M_REINSTMT_DT$caption}">
+											<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+										</h:outputLabel>
+										</td>
+										<td class="evenrowright">
+										<rich:calendar
+											datePattern="#{PILQ101_PT_IL_POLICY_ACTION.datePattern}"
+											binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_REINSTMT_DT}"
+											disabled="false" enableManualInput="true" id="UI_M_REINSTMT_DT"
+											inputSize="11" rendered="true" required="true"
+											styleClass="calendarstyleclass"
+											title="Reinstatement Date"
+											validator="#{PILQ101_PT_IL_POLICY_ACTION.validateUI_M_REINSTMT_DT}"
+											value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.UI_M_REINSTMT_DT}">
+											 <a4j:support
+											 actionListener="#{PILQ101_PT_IL_POLICY_ACTION.fireFieldValidation}" 
+											 event="oninputchanged" immediate="true"
+												id="date_1"
+												onsubmit="formatDate('PT_IL_POLICY:UI_M_REINSTMT_DT')"
+												
+												reRender="errorPanel">
+											</a4j:support>
+
+											<a4j:support event="oninputblur"
+												 actionListener="#{PILQ101_PT_IL_POLICY_ACTION.fireFieldValidation}" 
+												onsubmit="formatDate('PT_IL_POLICY:UI_M_REINSTMT_DT')"
+												immediate="true" id="date_2"
+												
+												reRender="errorPanel">
+											</a4j:support> 
+										</rich:calendar>
+										</td>
+
+									</tr>
+									<tr>
+										<td colspan="5" class="oddrow">
+										<rich:panel id="PREM_COLL"
+											style="width:100%;overflow:auto">
+
+											<rich:dataTable id="PT_IL_PREM_COLL"
+												value="#{PILQ101_PT_IL_PREM_COLL_ACTION.beanList}"
+												binding="#{PILQ101_PT_IL_PREM_COLL_ACTION.datatable}"
+												var="data" width="100%" rows="5">
+												<rich:column rendered="true">
+													<f:facet name="header">
+														<h:outputText styleClass="forumRowHighlight"
+															value="#{message.PILQ101$PT_IL_PREM_COLL$PC_SCHD_PYMT_DT$caption}" />
+													</f:facet>
+													<h:outputText id="OUT_RICH"  value="#{data.UI_GRID_DATE}"/>
+													
+												<!-- 	<rich:calendar id="PC_SCHD_PYMT_DT" inputSize="11"
+														value="#{data.PC_SCHD_PYMT_DT}" disabled="true"
+														binding="#{PILQ101_PT_IL_PREM_COLL_ACTION.COMP_PC_SCHD_PYMT_DT}">
+														<a4j:support event="oninputblur" id="date_3"
+															onsubmit="formatDate('PT_IL_POLICY:PC_SCHD_PYMT_DT')" />
+															</rich:calendar> -->
+												</rich:column>
+												<rich:column rendered="true">
+													<f:facet name="header">
+														<h:outputText styleClass="forumRowHighlight"
+															value="#{message.PILQ101$PT_IL_PREM_COLL$PC_FC_GROSS_PREM$caption}" />
+													</f:facet>
+													
+													<h:outputText id="OTEXT_1" value="#{data.UI_PC_FC_GROSS_PREM}" style="text-align: right; display: inline-block; width: 100%;"/>
+													
+													<!-- <h:inputText id="PC_FC_GROSS_PREM" style="width:98px;"
+														readonly="true" value="#{data.PC_FC_GROSS_PREM}"
+														styleClass="forumRowHighlightNumeric"
+														binding="#{PILQ101_PT_IL_PREM_COLL_ACTION.COMP_PC_FC_GROSS_PREM}" /> -->
+												</rich:column>
+												<rich:column rendered="true">
+													<f:facet name="header">
+														<h:outputText styleClass="forumRowHighlight"
+															value="#{message.PILQ101$PT_IL_PREM_COLL$PC_LC_GROSS_PREM$caption}" />
+													</f:facet>
+
+													<h:outputText id="OTEXT2" value="#{data.UI_PC_LC_GROSS_PREM}" style="text-align: right; display: inline-block; width: 100%;" />
+													<!-- <h:inputText id="PC_LC_GROSS_PREM" style="width:98px;"
+														readonly="true" value="#{data.PC_LC_GROSS_PREM}"
+														styleClass="forumRowHighlightNumeric"
+														binding="#{PILQ101_PT_IL_PREM_COLL_ACTION.COMP_PC_LC_GROSS_PREM}" /> -->
+												</rich:column>
+												<rich:column rendered="true">
+													<f:facet name="header">
+														<h:outputText styleClass="forumRowHighlight"
+															value="#{message.PILQ101$PT_IL_PREM_COLL$PC_FC_CHARGE$caption}" />
+													</f:facet>
+
+													<h:outputText id="OTEXT3" value="#{data.UI_PC_FC_CHARGE}" style="text-align: right; display: inline-block; width: 100%;"/>
+													<!-- <h:inputText id="PC_FC_CHARGE" style="width:98px;"
+														readonly="true" value="#{data.PC_FC_CHARGE}"
+														styleClass="forumRowHighlightNumeric"
+														binding="#{PILQ101_PT_IL_PREM_COLL_ACTION.COMP_PC_FC_CHARGE}" /> -->
+												</rich:column>
+												<rich:column rendered="true">
+													<f:facet name="header">
+														<h:outputText styleClass="forumRowHighlight"
+															value="#{message.PILQ101$PT_IL_PREM_COLL$PC_LC_CHARGE$caption}" />
+													</f:facet>
+													<h:outputText id="OTEXT4" value="#{data.UI_PC_LC_CHARGE}" style="text-align: right; display: inline-block; width: 100%;"/>
+												<!-- <h:inputText id="PC_LC_CHARGE" style="width:98px;"
+														readonly="true" value="#{data.PC_LC_CHARGE}"
+														styleClass="forumRowHighlightNumeric"
+														binding="#{PILQ101_PT_IL_PREM_COLL_ACTION.COMP_PC_LC_CHARGE}" /> -->
+												</rich:column>
+												<f:facet name="footer">
+													<rich:columnGroup>
+														<rich:column>
+															<h:outputText id="FOOTER_FC_COL1" value="#{message.PILQ101$PT_IL_POLICY$SUMMARY$caption}">
+															<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+														</rich:column>
+														<rich:column>
+															<h:outputText id="FOOTER_FC_COL2" 
+																value="#{PILQ101_PT_IL_PREM_COLL_ACTION.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_GROSS_PREM_SUM}" style="text-align: right; display: inline-block; width: 100%;">
+																<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+														</rich:column>
+														<rich:column>
+															<h:outputText id="FOOTER_FC_COL3" 
+																value="#{PILQ101_PT_IL_PREM_COLL_ACTION.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_GROSS_PREM_SUM}"  style="text-align: right; display: inline-block; width: 100%;" >
+																<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+														</rich:column>
+														<rich:column>
+															<h:outputText id="FOOTER_FC_COL4" 
+																value="#{PILQ101_PT_IL_PREM_COLL_ACTION.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_CHARGE_SUM}" style="text-align: right; display: inline-block; width: 100%;">
+																<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+														</rich:column>
+														<rich:column>
+															<h:outputText id="FOOTER_FC_COL5" 
+																value="#{PILQ101_PT_IL_PREM_COLL_ACTION.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_CHARGE_SUM}" style="text-align: right; display: inline-block; width: 100%;">
+																<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+														</rich:column>
+														
+														<!-- 2nd row in footer -->
+														<rich:column breakBefore="true">
+															<h:outputText id="FOOTER_FC_COL11" value="#{message.PILQ101$PT_IL_POLICY$OUTSTAND_AMOUNT$caption}" rendered="false">
+															<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+														</rich:column>
+														<rich:column>
+															<h:outputText id="FOOTER_FC_COL21" 
+																value="#{PILQ101_PT_IL_PREM_COLL_ACTION.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_GROSS_PREM_REMDR_SUM}" rendered="false" >
+																<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+														</rich:column>
+														<rich:column>
+															<h:outputText id="FOOTER_FC_COL31" 
+																value="#{PILQ101_PT_IL_PREM_COLL_ACTION.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_GROSS_PREM_REMDR_SUM}" rendered="false" >
+																<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+														</rich:column>
+														<rich:column>
+															<h:outputText id="FOOTER_FC_COL41" 
+																value="#{PILQ101_PT_IL_PREM_COLL_ACTION.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_CHARGE_REMDR_SUM}" rendered="false" >
+																<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+														</rich:column>
+														<rich:column>
+															<h:outputText id="FOOTER_FC_COL51" 
+																value="#{PILQ101_PT_IL_PREM_COLL_ACTION.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_CHARGE_REMDR_SUM}" rendered="false">
+																<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+														</rich:column>
+														
+														<!-- 3rd footer -->
+														<rich:column breakBefore="true" colspan="5">
+															<rich:datascroller id="SCROLLER" align="right"/>
+														</rich:column>
+													</rich:columnGroup>
+													<!-- <rich:column colspan="5">
+														<h:outputText styleClass="label"
+															value="#{message.PILQ101$PT_IL_POLICY$OUTSTAND_AMOUNT$caption}" />
+													</rich:column> -->
+												</f:facet>
+											</rich:dataTable>
+										</rich:panel> 
+									
+									<!-- 	<rich:panel
+											style="position:relative;width:100%;overflow:auto">
+											<rich:dataTable id="PT_IL_POLICY_REMDR_SUM" value=""
+												binding="#{PILQ101_PT_IL_PREM_COLL_ACTION.datatable3}"
+												var="dataTable" width="100%">
+												<rich:column rendered="true">
+
+													
+
+												</rich:column>
+												<rich:column rendered="true">
+
+													<h:inputText id="UI_M_PC_FC_GROSS_PREM_REMDR_SUM"
+														readonly="true" style="width:98px;"
+														styleClass="forumRowHighlightNumeric"
+														value="#{PILQ101_PT_IL_PREM_COLL_ACTION.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_GROSS_PREM_REMDR_SUM}"
+														binding="#{PILQ101_PT_IL_PREM_COLL_ACTION.COMP_UI_M_PC_FC_GROSS_PREM_REMDR_SUM}" />
+												</rich:column>
+												<rich:column rendered="true">
+													<h:inputText id="UI_M_PC_LC_GROSS_PREM_REMDR_SUM"
+														readonly="true" style="width:98px;"
+														styleClass="forumRowHighlightNumeric"
+														value="#{PILQ101_PT_IL_PREM_COLL_ACTION.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_GROSS_PREM_REMDR_SUM}"
+														binding="#{PILQ101_PT_IL_PREM_COLL_ACTION.COMP_UI_M_PC_LC_GROSS_PREM_REMDR_SUM}" />
+												</rich:column>
+												<rich:column rendered="true">
+													<h:inputText id="UI_M_PC_FC_CHARGE_REMDR_SUM"
+														readonly="true" style="width:98px;"
+														styleClass="forumRowHighlightNumeric"
+														value="#{PILQ101_PT_IL_PREM_COLL_ACTION.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_CHARGE_REMDR_SUM}"
+														binding="#{PILQ101_PT_IL_PREM_COLL_ACTION.COMP_UI_M_PC_FC_CHARGE_REMDR_SUM}" />
+												</rich:column>
+												<rich:column rendered="true">
+
+													<h:inputText id="UI_M_PC_LC_CHARGE_REMDR_SUM" readonly="true"
+														style="width:98px;" styleClass="forumRowHighlightNumeric"
+														value="#{PILQ101_PT_IL_PREM_COLL_ACTION.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_CHARGE_REMDR_SUM}"
+														binding="#{PILQ101_PT_IL_PREM_COLL_ACTION.COMP_UI_M_PC_LC_CHARGE_REMDR_SUM}" />
+												</rich:column>
+											</rich:dataTable>
+										</rich:panel>  -->
+										</td>
+									</tr>
+									<tr>
+										<td colspan="5" >
+										<table width="100%" cellpadding="0" cellspacing="0" border="0" class="noborder">
+											<tr>
+											<td width="30px%" align="center"></td>	
+											<td width="30%" align="left">										
+												<h:outputText
+													value="#{message.PILQ101$PT_IL_POLICY$FC$caption}"
+													styleClass="label" style="width:98px; font-weight:bold;" /></td>
+											<td width="20px" align="cemter"><h:outputText
+													value="#{message.PILQ101$PT_IL_POLICY$LC$caption}"
+													styleClass="label" style="width:95px; font-weight:bold;" /></td>
+												<td width="30%" align="left"></td>
+												
+												
+											</tr></table>
+											<table width="100%" cellpadding="0" cellspacing="0" border="0" class="noborder">
+											<tr>
+												<td class="oddrow" width="20%"><h:outputLabel
+													binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_REINST_CHARGE_LABEL}"
+													for="UI_M_REINST_FC_CHARGE" id="UI_M_REINST_CHARGE_LABEL"
+													rendered="true" styleClass="label"
+													value="#{message.PILQ101$PT_IL_POLICY$M_REINST_CHARGE$caption}" />
+												</td>
+												<td class="oddrowright" width="28%"><h:inputText
+													binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_REINST_CHARGE}"
+													disabled="true" id="UI_M_REINST_FC_CHARGE" maxlength="40"
+													rendered="true" required="false" tabindex="2"
+													 readonly="true"
+													styleClass="inputNumeric" 
+													title="Reinstatement Charge FC" 
+													value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.UI_M_REINS_FC_CHARGE}" >
+													<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												<td class="oddrow"  width="28%"><h:inputText readonly="true"
+													binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_TOT_REINS_LC_CHARGE}"
+													maxlength="40" tabindex="2" disabled="true"
+													id="UI_M_TOT_REINS_LC_CHARGE" 
+													title="Reinstatement Charge LC"
+													styleClass="inputNumeric" 
+													value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.UI_M_REINS_LC_CHARGE}" >
+													<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												
+												<td class="oddrow" width="5%"><h:outputLabel
+													binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_INTEREST_LABEL}"
+													for="M_FC_INTEREST" id="INTEREST_LABEL"
+													rendered="true" styleClass="label"
+													value="#{message.PILQ101$PT_IL_POLICY$INTEREST_LABEL$caption}" />
+												</td>
+												<td class="oddrowright" width="28%"><h:inputText
+													binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_INTEREST}"
+													disabled="true" id="M_FC_INTEREST" maxlength="40"
+													rendered="true" required="false" tabindex="2"
+													 readonly="true"
+													styleClass="inputNumeric" 
+													title="Reinstatement Charge FC" 
+													value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.UI_M_INTEREST}" >
+													<f:converter converterId="PELNumberFormatter" />
+													</h:inputText>
+													</td>
+													
+											</tr>
+											<tr>
+												<td class="evenrow"><h:outputLabel
+													binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_AVAIL_LC_DEP_AMT_LABEL}"
+													for="UI_M_AVAIL_LC_DEP_AMT_LABEL"
+													id="UI_M_AVAIL_LC_DEP_AMT_LABEL" rendered="true"
+													styleClass="label"
+													value="#{message.PILQ101$PT_IL_POLICY$M_AVAI_DEPOSIT$caption}" />
+												</td>
+												<td class="evenrowright"><h:inputText readonly="true"
+													binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_AVAIL_FC_DEP_AMT}"
+													disabled="true" id="UI_M_AVAIL_FC_DEP_AMT" maxlength="40"
+													rendered="true" required="false" tabindex="2"
+													styleClass="inputNumeric" 
+													title="Available Deposit FC" 
+													value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.UI_M_AVAIL_FC_DEP_AMT}">
+													<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												<td class="evenrow"><h:inputText readonly="true"
+													binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_AVAIL_LC_DEP_AMT}"
+													maxlength="40" tabindex="2" disabled="true"
+													id="UI_M_AVAIL_LC_DEP_AMT" 
+													title="Available Deposit LC"
+													styleClass="inputNumeric" 
+													value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.UI_M_AVAIL_LC_DEP_AMT}" ><f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="evenrow"></td>
+													<td class="evenrow"></td>
+											</tr>
+											<tr>
+
+												<td class="oddrow"><h:outputLabel
+													binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_AMT_PAID_LABEL}"
+													for="UI_M_NET_FC_PAID_AMT" id="UI_M_AMT_PAID_LABEL" rendered="true"
+													styleClass="label"
+													value="#{message.PILQ101$PT_IL_POLICY$M_AMT_PAID$caption}" />
+												</td>
+												<td class="oddrowright"><h:inputText readonly="true"
+													
+													disabled="true" id="UI_M_NET_FC_PAID_AMT" maxlength="40"
+													rendered="true" required="false" tabindex="2"
+													styleClass="inputNumeric" 
+													title="Net AMT to be paid FC "
+													 value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.UI_M_NET_FC_PAID_AMT}">
+													 <f:converter converterId="PELNumberFormatter"/>
+													</h:inputText>
+													</td>
+												<td class="oddrow"><h:inputText readonly="true"
+													binding="#{PILQ101_PT_IL_POLICY_ACTION.COMP_M_NET_LC_PAID_AMT}"
+													maxlength="40" tabindex="2" disabled="true"
+													id="UI_M_NET_LC_PAID_AMT" 
+													title="Net AMT to be paid LC "
+													styleClass="inputNumeric" 
+													value="#{PILQ101_PT_IL_POLICY_ACTION.PT_IL_POLICY_BEAN.UI_M_NET_LC_PAID_AMT}" >
+													<f:converter converterId="PELNumberFormatter"/>
+													</h:inputText></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrow">&nbsp;</td>
+											</tr>
+										</table>
+										</td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false"
+									disabled="true">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/save.gif" styleClass="toolbarImageStyle" />
+									<h:outputText value="#{menumessage.jsf$header$image$save}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none" disabled="true"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/savenext.GIF"
+										styleClass="toolbarImageStyle" />
+									<h:outputText value="#{menumessage.jsf$header$image$savenext}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none" disabled="true"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/deleteRecord.gif"
+										styleClass="toolbarImageStyle" />
+									<h:outputText
+										value="#{menumessage.jsf$header$image$deleteRecord}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none" disabled="true"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/firstrec.gif"
+										styleClass="toolbarImageStyle" />
+									<h:outputText value="#{menumessage.jsf$header$image$firstrec}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none" disabled="true"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/prevpage.gif"
+										styleClass="toolbarImageStyle" />
+									<h:outputText value="#{menumessage.jsf$header$image$prevpage}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none" disabled="true"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/nextpage.gif"
+										styleClass="toolbarImageStyle" />
+									<h:outputText value="#{menumessage.jsf$header$image$nextpage}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none" disabled="true"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/lastRecord.gif"
+										styleClass="toolbarImageStyle" />
+									<h:outputText
+										value="#{menumessage.jsf$header$image$lastRecord}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+			
+			</table>
+	</h:form>
+		<rich:modalPanel id="REPORT_MODAL_PANEL" height="110" width="300"
+				binding="#{PILQ101_PT_IL_POLICY_ACTION.PRINT_ACTION_BEAN.COMP_REPORT_MODAL_PANEL}">
+				<f:facet name="header">
+					<h:panelGroup>
+						<h:outputText
+							value="#{commonmsg.IP_REP_INFO$DOCUMENT_PRINT$caption}" />
+					</h:panelGroup>
+				</f:facet>
+				<f:facet name="controls">
+					<h:panelGroup>
+						<h:form id="FT_REPORT_MODAL_PANEL_1">
+							<h:commandLink immediate="true" id="CLOSE_LINK"
+								action="#{PILQ101_PT_IL_POLICY_ACTION.PRINT_ACTION_BEAN.cancelModalPanel}">
+								<h:graphicImage value="./../../resources/images/close.png"
+									styleClass="toolbarImageStyle" style="cursor:pointer"
+									id="REPORT_MODAL_PANEL_hidelink" />
+							</h:commandLink>
+						</h:form>
+					</h:panelGroup>
+				</f:facet>
+				<h:form id="FT_REPORT_MODAL_PANEL_2">
+					<table width="100%">
+						<tr>
+							<td align="center"><h:outputText id="CONFIRMATION_MSG"
+								style="font-size: 14px;"
+								value="#{commonmsg.IP_REP_INFO$CONFIRMATION_MSG$caption}" /></td>
+						</tr>
+						<tr>
+							<td><rich:spacer id="SPACER_MODAL_1" width="100%;"
+								height="18px" /> <rich:separator id="SEPARATOR" width="100%"
+								height="1px" /></td>
+						</tr>
+						<tr>
+							<td align="center"><h:panelGroup>
+								<h:commandLink immediate="true" id="PRINT_LINK" target="_blank"
+									action="#{PILQ101_PT_IL_POLICY_ACTION.PRINT_ACTION_BEAN.runActionAfterValidate}">
+									<a4j:commandButton reRender="REPORT_MODAL_PANEL"
+										action="#{PILQ101_PT_IL_POLICY_ACTION.PRINT_ACTION_BEAN.cancelModalPanel}"
+										id="OK_BUTTON" styleClass="button" style="width:70px;"
+										value="#{commonmsg.IP_REP_INFO$OK_BUTTON$caption}" />
+
+								</h:commandLink>
+							</h:panelGroup> <rich:spacer id="SPACER_MODAL_2" width="5px;" /> <a4j:commandButton
+								binding="#{PILQ101_PT_IL_POLICY_ACTION.PRINT_ACTION_BEAN.COMP_CANCEL_BUTTON}"
+								id="CANCEL_BUTTON" styleClass="button" style="width:70px;"
+								action="#{PILQ101_PT_IL_POLICY_ACTION.PRINT_ACTION_BEAN.cancelModalPanel}"
+								reRender="REPORT_MODAL_PANEL"
+								value="#{commonmsg.IP_REP_INFO$CANCEL_BUTTON$caption}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</rich:modalPanel>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

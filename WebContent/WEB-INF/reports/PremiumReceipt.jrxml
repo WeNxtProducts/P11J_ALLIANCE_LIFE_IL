@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PremiumReceipt" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4f672d31-1b5d-422f-8957-87fb1f236825">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="161"/>
+	<subDataset name="Payment_Mode" uuid="d88bbbe3-4e71-4417-8f3e-87317d78ee65">
+		<parameter name="POL_SYS_ID_SUBPARAM" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[select pd_pay_mode from pt_Il_pymt_dtls where pd_txn_sys_id ='86247']]>
+		</queryString>
+		<field name="PD_PAY_MODE" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="Payment_Desc" uuid="37b06fef-5f6c-4ca5-9e7e-589238303ec5">
+		<parameter name="PC_CODE" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select INITCAP(PC_DESC) PC_DESC from pm_codes where pc_type = 'IL_PAY_MODE' and pc_code = $P{PC_CODE}]]>
+		</queryString>
+		<field name="PC_DESC" class="java.lang.String"/>
+	</subDataset>
+	<parameter name="POL_SYS_ID_PARAM" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT DEP_SYS_ID      Q1_DEP_SYS_ID,
+     DEP_REF_NO      Q1_PROPOSAL_NO,
+     DEP_CONT_CODE   Q1_CUST_CODE,
+     DEP_LC_DEP_AMT  Q1_TOTAL_AMOUNT,
+    INITCAP( DEP_TXN_CODE|| '-' ||DEP_DOC_NO  )    Q1_DOC_NO,
+     DEP_DIVN_CODE   Q1_DIVN_CODE,
+                   TO_CHAR(DEP_DOC_DT,'DD/MM/RRRR' )     Q1_DOC_DATE,
+ INITCAP(to_char(to_date(ROUND(DEP_LC_DEP_AMT),'J'), 'JSP')) as amount_in_words
+FROM   PT_IL_DEPOSIT
+WHERE  DEP_SYS_ID = $P{POL_SYS_ID_PARAM}]]>
+	</queryString>
+	<field name="Q1_DEP_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="Q1_PROPOSAL_NO" class="java.lang.String"/>
+	<field name="Q1_CUST_CODE" class="java.lang.String"/>
+	<field name="Q1_TOTAL_AMOUNT" class="java.math.BigDecimal"/>
+	<field name="Q1_DOC_NO" class="java.lang.String"/>
+	<field name="Q1_DIVN_CODE" class="java.lang.String"/>
+	<field name="Q1_DOC_DATE" class="java.lang.String"/>
+	<field name="AMOUNT_IN_WORDS" class="java.lang.String"/>
+	<detail>
+		<band height="204" splitType="Stretch">
+			<rectangle>
+				<reportElement x="10" y="35" width="100" height="20" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="2b249622-0b7c-41ad-816a-da6055d6abd7"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="223" y="0" width="100" height="20" uuid="e35b4f5a-e766-4e3f-83d6-1133b3e6b4df"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Customer Copy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="35" width="100" height="20" forecolor="#000000" backcolor="#999999" uuid="60a9243d-19cb-48f9-a8d7-e6823ae3cb28"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[RECEIPT No.]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="133" y="35" width="247" height="20" isPrintWhenDetailOverflows="true" uuid="2a240c23-ebf3-41f3-9523-4028128862b2"/>
+				<box leftPadding="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DOC_NO}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="408" y="36" width="36" height="20" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="9172dc8d-dd16-41cd-a6f7-69cbc344f1ec"/>
+			</rectangle>
+			<textField>
+				<reportElement x="444" y="36" width="111" height="20" uuid="1cef732e-1843-4632-9bf1-9e1e9cd19906"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DOC_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="56" width="100" height="20" uuid="592c78d0-b9fb-4ce3-9ce6-ae4d08864a7f"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Received from :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="133" y="56" width="422" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="09538e62-1be1-4ed9-90cc-d20e08efbdc3"/>
+				<box leftPadding="10"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_CUST_CODE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="76" width="100" height="20" uuid="009d4125-61fa-4c83-a796-bece7c68dc90"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Ref. Details :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="133" y="76" width="422" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="2f66f199-7973-4cfe-9392-091ec1981d88"/>
+				<box leftPadding="10"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_PROPOSAL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="96" width="202" height="20" uuid="4c1ad233-9332-4cba-8f42-f8521ff61c05"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Cash/Chq No./Others(pls specify) :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="116" width="100" height="20" uuid="4dd1d641-0733-48cf-ae5e-8fbdab10192d"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Amount in words :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="172" width="100" height="20" uuid="5c5a48ff-2d89-4264-bd92-d530f7b2917f"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Amount in figures]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="172" width="100" height="20" uuid="90713780-066a-4e95-a13b-709cc98bc5e3"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Authorised Signatory]]></text>
+			</staticText>
+			<textField pattern="###0.00;(###0.00)">
+				<reportElement x="29" y="152" width="143" height="20" uuid="d76f3fda-d5af-453b-bc15-1d7e593281a4"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Lucida Sans Unicode" size="9" isUnderline="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_TOTAL_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="380" y="169" width="130" height="1" uuid="401561f8-1b20-49cb-b248-3a6e86e464eb"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="133" y="116" width="422" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="c1134ff6-d41d-43ad-9ea3-55bf986e25de"/>
+				<box leftPadding="10"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AMOUNT_IN_WORDS}+" Only "]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="50" y="203" width="455" height="1" uuid="c3c79767-65e2-4082-a325-86c4e63f1398"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<componentElement>
+				<reportElement x="212" y="96" width="342" height="20" uuid="8a034f02-11c4-43c6-9c9d-a9dd7f934e61"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Payment_Mode" uuid="b55aaf00-b5cf-4b25-9a3b-6c4309b01687">
+						<datasetParameter name="POL_SYS_ID_SUBPARAM">
+							<datasetParameterExpression><![CDATA[$P{POL_SYS_ID_PARAM}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="342">
+						<componentElement>
+							<reportElement x="0" y="0" width="342" height="20" uuid="8a034f02-11c4-43c6-9c9d-a9dd7f934e61"/>
+							<jr:list printOrder="Vertical">
+								<datasetRun subDataset="Payment_Desc" uuid="b55aaf00-b5cf-4b25-9a3b-6c4309b01687">
+									<datasetParameter name="PC_CODE">
+										<datasetParameterExpression><![CDATA[$F{PD_PAY_MODE}]]></datasetParameterExpression>
+									</datasetParameter>
+								</datasetRun>
+								<jr:listContents height="20" width="342">
+									<textField>
+										<reportElement x="0" y="0" width="100" height="20" uuid="56a3a4d0-ebaa-4224-882c-b8ace4ea1eca"/>
+										<textElement verticalAlignment="Middle">
+											<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{PC_DESC}]]></textFieldExpression>
+									</textField>
+								</jr:listContents>
+							</jr:list>
+						</componentElement>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="408" y="36" width="36" height="20" uuid="244be192-88fe-45a0-a3d1-c621b5d0a7f6"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+		</band>
+		<band height="214">
+			<rectangle>
+				<reportElement x="10" y="45" width="100" height="20" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="b8db6454-5b01-4f90-be26-a84f313067a4"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="223" y="10" width="100" height="20" uuid="4f2d6e9d-5cb6-489f-8570-ffa803e1268e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Account Copy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="45" width="100" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="91bd3b7b-0715-45b2-aa74-7c8ff3417e03"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[RECEIPT No.]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="110" y="45" width="235" height="20" isPrintWhenDetailOverflows="true" uuid="8f784a25-f0e6-4818-91d0-5e739b2cbaa2"/>
+				<box leftPadding="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DOC_NO}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="408" y="45" width="36" height="20" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="933e853e-705a-4cb8-9a43-11b82d4571cf"/>
+			</rectangle>
+			<textField>
+				<reportElement x="444" y="46" width="111" height="20" uuid="8a215110-fc2e-4c58-99da-02152d1bdcbd"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DOC_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="408" y="45" width="36" height="20" uuid="d96b3014-c742-406f-9e9c-141d0e06c33c"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Date.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="66" width="100" height="20" uuid="10e47b29-d2e9-4c57-b400-72992b4a2a8a"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Received from :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="110" y="66" width="445" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="cdbc446b-cb4c-424e-962f-cc6b685f68a8"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_CUST_CODE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="86" width="100" height="20" uuid="25d08358-d2a5-47a2-a288-ac51fea84169"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Ref. Details :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="110" y="86" width="445" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="79acbbce-89c6-40d7-aeca-4af3eda3707e"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_PROPOSAL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="106" width="162" height="20" uuid="6cfea0bc-2b69-4a03-9ef3-197fe7a99380"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Cash/Chq No./Others(pls specify) :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="126" width="100" height="20" uuid="17bcd573-4bc0-4d9e-b860-d7fba9c5e81e"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Amount in words :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="182" width="100" height="20" uuid="afd9d908-d240-4a78-aba7-a2a6f9c0b163"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Amount in figures]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="182" width="100" height="20" uuid="6e5232cb-ee4f-4fb5-984c-4d019d2a2028"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Authorised Signatory]]></text>
+			</staticText>
+			<textField pattern="###0.00;(###0.00)">
+				<reportElement x="29" y="162" width="143" height="20" uuid="df2ac8ed-5552-4cd2-9987-0478794b1efa"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Lucida Sans Unicode" size="9" isUnderline="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_TOTAL_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="380" y="179" width="130" height="1" uuid="33c73538-e3a9-4885-a083-69ca481d3f98"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="110" y="126" width="445" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="1648744c-748c-451b-afdc-8978bf9319ed"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AMOUNT_IN_WORDS}+" Only "]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="50" y="213" width="455" height="1" uuid="2f84750f-ce6d-44a0-b47c-741f27b361e5"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<componentElement>
+				<reportElement x="172" y="106" width="383" height="20" uuid="8a034f02-11c4-43c6-9c9d-a9dd7f934e61"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Payment_Mode" uuid="b55aaf00-b5cf-4b25-9a3b-6c4309b01687">
+						<datasetParameter name="POL_SYS_ID_SUBPARAM">
+							<datasetParameterExpression><![CDATA[$P{POL_SYS_ID_PARAM}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="383">
+						<componentElement>
+							<reportElement x="0" y="0" width="383" height="20" uuid="8a034f02-11c4-43c6-9c9d-a9dd7f934e61"/>
+							<jr:list printOrder="Vertical">
+								<datasetRun subDataset="Payment_Desc" uuid="b55aaf00-b5cf-4b25-9a3b-6c4309b01687">
+									<datasetParameter name="PC_CODE">
+										<datasetParameterExpression><![CDATA[$F{PD_PAY_MODE}]]></datasetParameterExpression>
+									</datasetParameter>
+								</datasetRun>
+								<jr:listContents height="20" width="383">
+									<textField>
+										<reportElement x="0" y="0" width="100" height="20" uuid="56a3a4d0-ebaa-4224-882c-b8ace4ea1eca"/>
+										<textElement verticalAlignment="Middle">
+											<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{PC_DESC}]]></textFieldExpression>
+									</textField>
+								</jr:listContents>
+							</jr:list>
+						</componentElement>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="214">
+			<rectangle>
+				<reportElement x="10" y="45" width="100" height="20" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="8d02efc3-77fd-43cb-aa57-49eccc3189d9"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="223" y="10" width="100" height="20" uuid="db38c3c8-bc71-4eba-b69b-5aa78b0d3b3b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[File Copy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="45" width="100" height="20" forecolor="#000000" backcolor="#999999" uuid="a55339b8-77ef-4b67-acff-d71b1b05e0cb"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[RECEIPT No.]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="110" y="45" width="235" height="20" isPrintWhenDetailOverflows="true" uuid="353cf766-ce28-410c-ab0d-19e661d5479c"/>
+				<box leftPadding="10"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DOC_NO}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="408" y="45" width="36" height="20" forecolor="#FFFFFF" backcolor="#CCCCCC" uuid="6c93b738-16cf-4979-878f-db4bce23a12c"/>
+			</rectangle>
+			<textField>
+				<reportElement x="444" y="46" width="111" height="20" uuid="f985870c-0142-42e3-84ab-73994b4aedfb"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DOC_DATE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="408" y="45" width="36" height="20" uuid="00bd80fa-0e49-47e7-a0ed-6e77c9a06c73"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Date.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="66" width="100" height="20" uuid="d6c7a9dc-85d4-4cd3-9011-2645b8b13b9e"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Received from :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="110" y="66" width="445" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="f22bfec1-a2a2-4bde-ab6c-efa978cb3e42"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_CUST_CODE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="86" width="100" height="20" uuid="1643b66d-b1ab-40e8-ad77-c3b62b5a7a02"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Ref. Details :]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="110" y="86" width="445" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="dd920f18-f73f-4408-8dee-5d40088d63f1"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_PROPOSAL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="106" width="162" height="20" uuid="2b46e76e-9a3c-489c-8ca0-3856042d2d1e"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Cash/Chq No./Others(pls specify) :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="126" width="100" height="20" uuid="bfcb3821-d92f-4919-8ce7-5a7a6be21087"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" isBold="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Amount in words :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="17" y="182" width="100" height="20" uuid="32e7b611-d579-4d42-bfce-db4ff1bb21d6"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Amount in figures]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="396" y="182" width="100" height="20" uuid="280a102e-7b43-4026-ba27-d5d0cd13c6a0"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Authorised Signatory]]></text>
+			</staticText>
+			<textField pattern="###0.00;(###0.00)">
+				<reportElement x="29" y="162" width="143" height="20" uuid="f8cc2912-c169-483e-b00d-73bff9e1466d"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Lucida Sans Unicode" size="9" isUnderline="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_TOTAL_AMOUNT}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="380" y="179" width="130" height="1" uuid="1a6d5d38-6607-4dfb-9d71-3a9776e24964"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</line>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="110" y="126" width="445" height="20" isRemoveLineWhenBlank="true" isPrintWhenDetailOverflows="true" uuid="063592eb-1bdd-40e8-8d24-b41596fa0b38"/>
+				<textElement>
+					<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AMOUNT_IN_WORDS}+" Only "]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="50" y="213" width="455" height="1" uuid="6829f3a3-d7dd-4894-9d91-ad769cae628d"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<componentElement>
+				<reportElement x="171" y="107" width="383" height="20" uuid="b852bf12-6c21-4587-a58d-14b901d4666c"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Payment_Mode" uuid="d8819433-9a93-49da-9432-a62a9a6c5308">
+						<datasetParameter name="POL_SYS_ID_SUBPARAM">
+							<datasetParameterExpression><![CDATA[$P{POL_SYS_ID_PARAM}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="383">
+						<componentElement>
+							<reportElement x="0" y="0" width="383" height="20" uuid="7a934775-d87e-4c1a-b0b2-9b1ec3c3971a"/>
+							<jr:list printOrder="Vertical">
+								<datasetRun subDataset="Payment_Desc" uuid="56360a21-e9a4-4079-baaf-2bbaf552986b">
+									<datasetParameter name="PC_CODE">
+										<datasetParameterExpression><![CDATA[$F{PD_PAY_MODE}]]></datasetParameterExpression>
+									</datasetParameter>
+								</datasetRun>
+								<jr:listContents height="20" width="383">
+									<textField>
+										<reportElement x="0" y="0" width="100" height="20" uuid="4b24c73e-ee87-4e78-a322-bcaff94995d9"/>
+										<textElement verticalAlignment="Middle">
+											<font fontName="Lucida Sans Unicode" size="9" pdfFontName="Helvetica"/>
+										</textElement>
+										<textFieldExpression><![CDATA[$F{PC_DESC}]]></textFieldExpression>
+									</textField>
+								</jr:listContents>
+							</jr:list>
+						</componentElement>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

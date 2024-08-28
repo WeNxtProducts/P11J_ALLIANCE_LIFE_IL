@@ -1,0 +1,126 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILM023" var="message" />
+	<html>
+			<head>
+			
+			<title>
+				<h:outputText value="#{message.PILM023$PM_IL_CODES_ACCOUNT_SETUP$PM_IL_CODES_ACCOUNT_SETUP$searchpagetitle}" />
+			</title>
+			</head>
+<body>
+	
+
+	<table cellpadding="0" cellspacing="0" width="100%" border="0">
+		<!-- Body row -->
+		<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20" cellpadding="0" cellspacing="0">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err" value="#{commonmsg.errorPanel$heading} #{PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.errorMap['current'] !=null? PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.errorMap['current']:PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" value="#{PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.errorMessages}"
+								style="color: red; font-style: italic;font-weight:bold;"
+								escape="false" />
+							<h:outputText id="warningMessages" 
+								value="#{PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.warningMessages}"
+								style="color: green; font-style: italic;font-weight:bold;" 
+								escape="false" />		
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+		<tr>
+		<td>
+		
+			<h:form id="accountSetup">
+	
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="masthead">
+					<tr>
+						<td>
+							<h:outputLabel
+								value="#{commonmsg.intialSearchCriteria$Caption}"/>
+							
+						</td>
+						<td>
+							<h:outputText value="#{message.PILM023$PM_IL_CODES_ACCOUNT_SETUP$PM_IL_CODES_ACCOUNT_SETUP$mainacctitle}" />
+							<h:inputText value="#{PILM023_PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.mainAccount}"/>
+						</td>
+						
+						<td>
+							<a4j:commandButton value="#{commonmsg.searchButton$caption}" styleClass="button"  id="a4link">
+								<a4j:support 
+								     action="#{PILM023_PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.fetchDataBaseDetails}" 
+								     event="onclick" 
+								     reRender="dataTableId">
+								</a4j:support>
+							</a4j:commandButton>
+						</td>
+					</tr>
+				</table>
+				
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId" value="#{PILM023_PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.accountSetupList}"
+					var="premiumAccountSetup" cellpadding="5px" rows="10" border="1" width="100%">
+					<!-- Attach scroller as footer of the tab.le-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index" align="right">
+						</rich:datascroller>
+					</f:facet>
+			
+					<!-- next column -->
+					
+					<rich:column filterValue="#{PILM023_PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.storedMainAccount}" filterBy="#{premiumAccountSetup.CACS_MAIN_ACNT_CODE}" sortBy="#{premiumAccountSetup.CACS_MAIN_ACNT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILM023$PM_IL_CODES_ACCOUNT_SETUP$PM_IL_CODES_ACCOUNT_SETUP$mainacctext}" />
+						</f:facet>
+					 <h:commandLink action="#{PILM023_PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.navigationToMainPage}" >
+						 	<h:outputText value="#{premiumAccountSetup.CACS_MAIN_ACNT_CODE}" />
+						 	<f:param name="rowid" value="#{premiumAccountSetup.ROWID}"/>
+					 </h:commandLink>
+					</rich:column>
+					
+					<rich:column filterValue="#{PILM023_PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.storedSubAccount}" filterBy="#{premiumAccountSetup.CACS_SUB_ACNT_CODE}" sortBy="#{premiumAccountSetup.CACS_SUB_ACNT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILM023$PM_IL_CODES_ACCOUNT_SETUP$PM_IL_CODES_ACCOUNT_SETUP$subacctext}" />
+						</f:facet>
+						<h:outputText value="#{premiumAccountSetup.CACS_SUB_ACNT_CODE} " />
+					</rich:column>
+					
+					<rich:column filterValue="#{PILM023_PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.storedBranchNumber}" filterBy="#{premiumAccountSetup.CACS_DIVN_CODE}" sortBy="#{premiumAccountSetup.CACS_DIVN_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILM023$PM_IL_CODES_ACCOUNT_SETUP$PM_IL_CODES_ACCOUNT_SETUP$branchdtlstext}" />
+						</f:facet>
+						<h:outputText value="#{premiumAccountSetup.CACS_DIVN_CODE} " />
+					</rich:column>
+					
+				</rich:dataTable>
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td align="left">
+						<h:commandButton styleClass="button" 
+							value="#{commonmsg.insertButton$caption}" 
+							action="#{PILM023_PM_IL_CODES_ACCOUNT_SETUP_SEARCH_PAGE.goToPremiumSetup}" />
+						
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</td>
+		</tr>
+	</table>
+	</body>
+	</html>
+</f:view>
+</ui:define>
+</ui:composition>

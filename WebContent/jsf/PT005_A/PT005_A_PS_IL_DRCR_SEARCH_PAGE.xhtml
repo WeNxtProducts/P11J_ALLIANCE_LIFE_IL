@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="header">
+	<ui:include src="/jsf/include/menu.xhtml" />
+	<style>
+        .rich-filter-input{
+            width:70px;
+        }
+    </style>
+	</ui:define>
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PT005_A" var="message" />
+			<h:form id="PolicyLedgerQuerySearchPage">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0" >
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText escape="true" id="err"
+									styleClass="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.errorMap['current'] !=null? PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.errorMap['current']: PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+					<tr>
+						<td colspan="3">
+							<table border="0"   width="100%" cellpadding="0" cellspacing="0" class="rich-mpnl-text rich-mpnl-header">
+								<tr>
+								<td>
+									<h:graphicImage id="INTIAL_IMG" width="30" height="30"  
+									value="./../../resources/images/img_intialsearch.gif"/>
+								</td>
+									<!--  <td><h:outputLabel
+										value="#{commonmsg.intialSearchCriteria$Caption}" /></td> -->
+									<td>
+										<h:outputLabel 
+											value="TxnCode" />
+										<br/>
+										<h:inputText 
+											id="POL_CUST_CODE" 
+											title="#{message.PT005_A$PS_IL_DRCR_SEARCH_PAGE$POL_CUST_CODE$tooltip}"
+											value="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.searchBean.DRCR_TXN_CODE}" />
+									</td>
+									<td>
+										<h:outputLabel
+											value="DocNo." />
+										<br/>
+										<h:inputText 
+											id="POL_CUST_NAME"
+											title="#{message.PT005_A$PS_IL_DRCR_SEARCH_PAGE$POL_CUST_NAME$tooltip}"
+											value="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.searchBean.DRCR_DOC_NO}" />
+									</td>
+									<td>
+										<h:outputLabel
+											value="DocDate" />
+										<br/>
+										<rich:calendar
+												id="CALENDAR_2"
+												datePattern="dd/MM/yyyy"
+												popup="true"
+												disabled="false" rendered="true"
+												enableManualInput="true" 
+												inputSize="11" required="false"
+												value="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.searchBean.DRCR_DOC_DT}">
+											</rich:calendar>
+									</td>
+									<td>
+										<h:outputLabel
+											value="SeqNo." />
+										<br/>
+										<h:inputText 
+											id="POL_END_NO"
+											value="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.searchBean.DRCR_SEQ_NO}" />
+									</td>
+									<!--</tr>
+									 <tr>
+									<td>&nbsp;</td>-->
+									<td>
+										<h:outputLabel
+											value="CustCode" />
+										<br/>
+										<h:inputText 
+											id="DRCR_TXN_CODE"
+											value="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.searchBean.POL_CUST_CODE}" />
+									</td>
+									  <!-- <td>
+										<h:outputLabel
+											value="Dr/Cr" />
+										<br/>
+										<h:inputText 
+											id="DRCR_DOC_NO"
+											value="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.searchBean.DRCR_DRCR_FLAG}" />
+									</td>   -->
+									<td>
+										<h:outputLabel
+											value="Proposal / PolicyNo" />
+										<br/>
+										<h:inputText 
+											id="DRCR_policy_NO"
+											value="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.searchBean.POL_NO}" />
+									</td>
+									  <td>
+										<h:outputLabel
+											value="ClaimNo" />
+										<br/>
+										<h:inputText 
+											id="DRCR_claim_NO"
+											value="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.searchBean.DRCR_CLAIM_NO}" />
+									</td>
+									 
+									<td><h:commandButton
+										action="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.fetchDataBaseDetails}"
+										id="fetch" reRender="PolicyLedgerQuery,errorPanel"
+										styleClass="button" value="#{commonmsg.searchButton$caption}">
+										
+									</h:commandButton></td>
+								 </tr> 
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<rich:dataTable
+								binding="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.dataTable}"
+								border="1" cellpadding="5px" id="PolicyLedgerQuery" rows="10"
+								value="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.searchList}"
+								var="colData" width="100%">
+		
+								<rich:column filterBy="#{colData.DRCR_TXN_CODE}"
+									filterEvent="onkeyup"
+									filterValue="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.searchBean.filterText}"
+									sortBy="#{colData.DRCR_TXN_CODE}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_1"
+											value="TxnCode" />
+									</f:facet>
+									<h:commandLink
+										action="#{PT005_A_PS_IL_DRCR_SEARCH_PAGE_ACTION.executeQuery}"
+										id="POL_CUST_CODE">
+										<h:outputText id="AUTOID_2" value="#{colData.DRCR_TXN_CODE}" />
+										<f:param name="rowID" value="#{colData.rowId}" />
+										<f:param name="POL_END_NO" value="#{colData.POL_END_NO}" />
+										<f:param name="POL_CUST_CODE" value="#{colData.POL_CUST_CODE}" />
+										
+									</h:commandLink>
+								</rich:column>
+								<rich:column filterBy="#{colData.DRCR_DOC_NO}" filterEvent="onkeyup"
+									sortBy="#{colData.DRCR_DOC_NO}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_POL_CUST_NAME"
+											value="DocNo." />
+									</f:facet>
+		
+									<h:outputText id="AUTOID_4_PC" value="#{colData.DRCR_DOC_NO}" />
+		
+									<f:param name="DRCR_DOC_NO" value="#{colData.DRCR_DOC_NO}" />
+								</rich:column>
+		
+								<rich:column filterBy="#{colData.DRCR_DOC_DT}" filterEvent="onkeyup"
+									sortBy="#{colData.DRCR_DOC_DT}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_3"
+											value="DocDate" />
+									</f:facet>
+										
+										<!-- Added  by sankara narayanan date format issue ZBILQC-1722714 on 24/03/2017 -->
+										 <rich:calendar
+												id="CALENDAR_02"
+												datePattern="dd/MM/yyyy"
+												popup="true"
+												disabled="true" rendered="true"
+												enableManualInput="true" 
+												inputSize="11" required="false"
+												value="#{colData.DRCR_DOC_DT}">
+											</rich:calendar> 
+											<!-- end -->
+										<!-- convert date is added by gopi for ssp call id ZBILQC-1718995 on 28/01/17-->
+									<!-- 
+									
+									Commented by sankara narayanan date format issue ZBILQC-1722714 on 24/03/2017
+									
+									 <h:outputText id="AUTOID_4" value="#{colData.DRCR_DOC_DT}" >
+								 	<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+									</h:outputText>  -->
+		
+									
+								</rich:column>
+		
+								<rich:column filterBy="#{colData.DRCR_SEQ_NO}"
+									filterEvent="onkeyup" sortBy="#{colData.DRCR_SEQ_NO}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_5"
+											value="SeqNo." />
+									</f:facet>
+									<h:outputText id="AUTOID_6" value="#{colData.DRCR_SEQ_NO}" />
+								</rich:column>
+		
+								<rich:column filterBy="#{colData.DRCR_DOC_TYPE}"
+									filterEvent="onkeyup" sortBy="#{colData.DRCR_DOC_TYPE}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_7"
+											value="CustCode" />
+									</f:facet>
+		
+									<h:outputText id="AUTOID_8" value="#{colData.POL_CUST_CODE}" />
+									<f:param name="POL_CUST_CODE" value="#{colData.POL_CUST_CODE}" />
+								</rich:column>
+		
+								<rich:column filterBy="#{colData.DRCR_DRCR_FLAG}"
+									filterEvent="onkeyup" sortBy="#{colData.DRCR_DRCR_FLAG}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_9"
+											value="Dr/Cr" />
+									</f:facet>
+									<h:outputText id="AUTOID_10" value="#{colData.DRCR_DRCR_FLAG}" />
+									<f:param name="DRCR_DRCR_FLAG" value="#{colData.DRCR_DRCR_FLAG}" />
+								</rich:column>
+		
+								<rich:column filterBy="#{colData.DRCR_CURR_CODE}"
+									filterEvent="onkeyup" sortBy="#{colData.DRCR_CURR_CODE}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_11"
+											value="Proposal / PolicyNo" />
+									</f:facet>
+		
+									<h:outputText id="AUTOID_12" value="#{colData.POL_NO}" />
+		
+									<f:param name="POL_NO" value="#{colData.POL_NO}" />
+								</rich:column>
+								
+								<rich:column filterBy="#{colData.DRCR_LC_AMT}"
+									filterEvent="onkeyup" sortBy="#{colData.DRCR_LC_AMT}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_188"
+											value="LCAmt" />
+									</f:facet>
+		
+									<h:outputText id="AUTOID_FC_13" value="#{colData.DRCR_LC_AMT}" style="text-align: right; display: inline-block; width: 100%;" >
+									<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+		
+									<f:param name="DRCR_LC_AMT" value="#{colData.DRCR_LC_AMT}" />
+								</rich:column>
+								<rich:column filterBy="#{colData.DRCR_MAIN_ACNT_CODE}"
+									filterEvent="onkeyup" sortBy="#{colData.DRCR_MAIN_ACNT_CODE}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_14"
+											value="Main A/c" />
+									</f:facet>
+		
+									<h:outputText id="AUTOID_15" value="#{colData.DRCR_MAIN_ACNT_CODE}" />
+		
+									<f:param name="DRCR_MAIN_ACNT_CODE" value="#{colData.DRCR_MAIN_ACNT_CODE}" />
+								</rich:column>
+								
+								
+								<rich:column filterBy="#{colData.DRCR_NARRATION}"
+									filterEvent="onkeyup" sortBy="#{colData.DRCR_NARRATION}">
+									<f:facet name="header">
+										<h:outputText id="MAIN_ACC_DESC"
+											value="Main A/c Desc" />
+									</f:facet>
+		
+									<h:outputText id="MAIN_ACC_DESC_TEXT" value="#{colData.DRCR_NARRATION}" />
+		
+									<f:param name="DRCR_MAIN_ACNT_CODE" value="#{colData.DRCR_NARRATION}" />
+								</rich:column>
+								
+								
+								<rich:column filterBy="#{colData.DRCR_SUB_ACNT_CODE}"
+									filterEvent="onkeyup" sortBy="#{colData.DRCR_SUB_ACNT_CODE}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_16"
+											value="Sub A/c" />
+									</f:facet>
+		
+									<h:outputText id="AUTOID_17" value="#{colData.DRCR_SUB_ACNT_CODE}" />
+		
+									<f:param name="DRCR_SUB_ACNT_CODE" value="#{colData.DRCR_SUB_ACNT_CODE}" />
+								</rich:column>
+								
+								<rich:column filterBy="#{colData.DRCR_BL_NARRATION}"
+									filterEvent="onkeyup" sortBy="#{colData.DRCR_BL_NARRATION}">
+									<f:facet name="header">
+										<h:outputText id="SUB_ACC_DESC_LABEL"
+											value="Sub A/c Desc" />
+									</f:facet>
+		
+									<h:outputText id="SUB_ACC_DESC_TEXT" value="#{colData.DRCR_BL_NARRATION}" />
+		
+									<f:param name="DRCR_SUB_ACNT_CODE" value="#{colData.DRCR_BL_NARRATION}" />
+								</rich:column>
+								
+								
+								
+											<rich:column filterBy="#{colData.DRCR_ACNT_YEAR}"
+									filterEvent="onkeyup" sortBy="#{colData.DRCR_ACNT_YEAR}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_18"
+											value="ClaimNo." />
+									</f:facet>
+		
+									<h:outputText id="AUTOID_19" value="#{colData.DRCR_CLAIM_NO}" />
+		
+									<f:param name="DRCR_CLAIM_NO" value="#{colData.DRCR_CLAIM_NO}" />
+								</rich:column>
+								<f:facet name="footer">
+									<rich:datascroller align="right" for="PolicyLedgerQuery" />
+								</f:facet>
+							</rich:dataTable>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

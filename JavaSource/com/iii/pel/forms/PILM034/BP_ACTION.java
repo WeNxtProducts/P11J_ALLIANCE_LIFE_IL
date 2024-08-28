@@ -1,0 +1,22 @@
+package com.iii.pel.forms.PILM034;
+
+import com.iii.premia.common.action.CommonAction;
+
+public class BP_ACTION extends CommonAction {
+
+	private BP BP_BEAN;
+	
+	public PILM034_COMPOSITE_ACTION compositeAction;
+
+	public BP_ACTION() {
+		BP_BEAN = new BP();
+	}
+
+	public BP getBP_BEAN() {
+		return BP_BEAN;
+	}
+
+	public void setBP_BEAN(BP BP_BEAN) {
+		this.BP_BEAN = BP_BEAN;
+	}
+}

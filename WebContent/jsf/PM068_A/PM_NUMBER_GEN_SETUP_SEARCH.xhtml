@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+		<tr>
+			<td colspan="3" width="100%" vAlign="top" height="1"></td>
+		</tr>
+		<tr>
+			<td height="1" vAlign="top"><rich:simpleTogglePanel
+				id="errorPanel" switchType="client" opened="false">
+				<f:facet name="header">
+					<h:outputText id="err"
+						styleClass="#{PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.messageStyle}"
+						value="#{commonmsg.errorPanel$heading} #{PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.errorMap['current'] !=null? PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.errorMap['current']:PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.warningMap['current']}" />
+
+				</f:facet>
+				<h:outputText id="errorMessages"
+					value="#{PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.errorMessages}"
+					styleClass="ErrorMessages" escape="false" />
+				<h:messages styleClass="ErrorMessages" id="msg"
+					rendered="#{PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.globalMsgRender}" />
+
+				<h:outputText id="warningMessages"
+					value="#{PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.warningMessages}"
+					styleClass="WarningMessages" escape="false" />
+
+			</rich:simpleTogglePanel></td>
+		</tr>
+		<!-- Body row -->
+
+		<h:form id="PM068_A_PM_NUMBER_GEN_SETUP_SEARCH">
+
+			<table border="0" width="100%" cellpadding="0" cellspacing="0"
+				id="masthead">
+
+				<tr>
+					<td><h:outputText
+						value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+					<td><h:outputLabel
+						value="Number Generation Code" />
+					<h:inputText
+						value="#{PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.searchBean.NGS_CODE}" /></td>
+					<td><a4j:commandButton styleClass="button"
+						value="#{commonmsg.searchButton$caption}" id="fetch">
+						<a4j:support action="#{PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.fetch}"
+							event="onclick" reRender="fetchList,errorPanel"></a4j:support>
+					</a4j:commandButton></td>
+				</tr>
+
+
+				<!-- using rich data table -->
+				<rich:dataTable id="fetchList" 
+					value="#{PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.dataTableBean}" 
+					var="colData" cellpadding="5px" rows="10" border="1" width="100%"
+					binding="#{PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.dataTable}"
+					rendered="true">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<rich:column filterBy="#{colData.NGS_CODE}"
+						sortBy="#{colData.NGS_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="Number Generation Code" />
+						</f:facet>
+						<h:commandLink
+							action="#{PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.fetchMasterRecord}"
+							id="NGS_PREFIX_Link">
+							
+								<h:outputText value="#{colData.NGS_CODE}" />
+					
+							
+							<f:param name="NGS_PREFIX" value="#{colData.NGS_PREFIX}" />
+							<f:param name="ROWID" value="#{colData.ROWID}" />
+						</h:commandLink>
+
+					</rich:column>
+					<rich:column filterBy="#{colData.NGS_PREFIX}"
+						filterValue="#{PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.searchBean.SEARCH_TEXT}"
+						sortBy="#{colData.NGS_PREFIX}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="Prefix" />
+						</f:facet>
+					
+							<h:outputText value="#{colData.NGS_PREFIX}" />
+		
+
+
+					</rich:column>
+
+					
+				</rich:dataTable>
+				<h:commandButton styleClass="button" id="insertLink"
+					value="#{commonmsg.insertButton$caption}"
+					action="#{PM068_A_PM_NUMBER_GEN_SETUP_SEARCH.insert}" />
+
+				<!-- add footer to the page-->
+				<tr>
+					
+				</tr>
+			</table>
+		</h:form>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

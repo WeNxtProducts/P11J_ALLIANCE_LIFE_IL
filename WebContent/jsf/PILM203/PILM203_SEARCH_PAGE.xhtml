@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:a4j="http://richfaces.org/a4j" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:rich="http://richfaces.org/rich" xmlns:ui="http://java.sun.com/jsf/facelets" template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILM203" var="message"/>
+	<f:loadBundle basename="menu" var="menumessage"/>
+	<f:loadBundle basename="messageProperties" var="commonmessage"/>
+	
+<h:form id="PILM203_SEARCH_FORM"><table class="noborder" width="100%">
+			
+			
+		<!--<h:commandLink value="#{commonmessage.insertButton$caption}" id="insert" action="#{PILM203_SEARCHBEAN_ACTION.insert}"/> -->
+	<tr>
+		</tr>
+	
+			<tr>
+				<rich:simpleTogglePanel id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err" styleClass="#{PILM203_SEARCHBEAN_ACTION.messageStyle}" value="#{commonmsg.errorPanel$heading} #{PILM203_SEARCHBEAN_ACTION.errorMap['current'] !=null? PILM203_SEARCHBEAN_ACTION.errorMap['current']:PILM203_SEARCHBEAN_ACTION.warningMap['current']}"/>
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages" styleClass="ErrorMessages" value="#{PILM203_SEARCHBEAN_ACTION.errorMessages}"/>
+							<h:messages id="msg" rendered="#{PILM203_SEARCHBEAN_ACTION.globalMsgRender}" styleClass="ErrorMessages"/>
+
+							<h:outputText escape="false" id="warningMessages" styleClass="WarningMessages" value="#{PILM203_SEARCHBEAN_ACTION.warningMessages}"/>
+						</rich:simpleTogglePanel>
+			</tr>
+	
+			<table class="noborder" id="masthead" width="100%">
+				<tr>
+					<td>
+						<h:outputText id="AUTO_ID_1" value="#{commonmessage.intialSearchCriteria$Caption}"/>
+					</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>&nbsp;</td>
+					<td>
+						<h:outputLabel for="coverCode" value="Cover Code "/>
+						<h:inputText binding="#{PILM203_SEARCHBEAN_ACTION.COVER_CODE}" id="coverCode" value="#{PILM203_SEARCHBEAN_ACTION.searchValueBean.COVER_CODE}"/>
+					</td>
+					<td>
+						<a4j:commandButton action="#{PILM203_SEARCHBEAN_ACTION.search}" binding="#{PILM203_SEARCHBEAN_ACTION.SEARCH_BUTTON}" id="searchButton" reRender="dataTable,dataScroller" styleClass="button" value="#{commonmessage.searchButton$caption}">
+						</a4j:commandButton>
+					</td>
+				</tr>
+			</table>
+			<table class="noborder">
+				<tr>
+					<td>
+						<h:commandButton action="#{PILM203_SEARCHBEAN_ACTION.delete}" rendered="false" value="Delete"/>
+					</td>
+				</tr>
+			</table>
+			<rich:dataTable binding="#{PILM203_SEARCHBEAN_ACTION.COMP_DATATABLE}" border="1" cellpadding="5px" id="dataTable" rows="10" value="#{PILM203_SEARCHBEAN_ACTION.LIST_DATATABLE}" var="colData" width="100%">
+					<rich:column rendered="false">
+						<f:facet name="header">
+							<h:outputText id="AUTO_ID_2" rendered="false" value="#{commonmessage.selectColumn$caption}"/>
+						</f:facet>
+						<h:selectBooleanCheckbox rendered="false" value="#{colData.checkBox}"/>
+					</rich:column>
+					
+					<rich:column filterBy="#{colData.COVER_CODE}" filterEvent="onkeyup" filterValue="#{PILM203_SEARCHBEAN_ACTION.searchValueBean.filterText}" sortBy="#{colData.COVER_CODE}">
+						<f:facet name="header">
+							<h:outputText id="AUTO_ID_3" value="Cover Code"/>
+						</f:facet>
+						<h:commandLink action="#{PILM203_SEARCHBEAN_ACTION.openForm}" id="LINK_COVER_CODE">
+							<h:outputText id="AUTO_ID_4" value="#{colData.COVER_CODE}"/>
+						</h:commandLink>
+					</rich:column>
+					<rich:column filterBy="#{colData.COVER_DESC}" filterEvent="onkeyup" sortBy="#{colData.COVER_DESC}">
+						<f:facet name="header">
+							<h:outputText id="AUTO_ID_5" value="Cover code description"/>
+						</f:facet>
+						<h:outputText id="AUTO_ID_6" value="#{colData.COVER_DESC}"/>	
+					</rich:column>
+					<rich:column rendered="false">
+						<f:facet name="header">
+							<h:outputText id="AUTO_ID_7" value="ROWID"/>
+						</f:facet>
+						<h:outputText id="AUTO_ID_8" value="#{colData.ROWID}"/>
+					</rich:column>
+			</rich:dataTable>
+			<rich:datascroller align="right" binding="#{PILM203_SEARCHBEAN_ACTION.COMP_DATASCROLLER}" for="dataTable" id="dataScroller"/>
+	</table></h:form></f:view>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,745 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILT010" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 Handson  On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PT_IL_RI_DETL_1" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%">
+					<tr>
+
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									value="#{commonmsg.errorPanel$heading} #{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.errorMap['current'] !=null? PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.errorMap['current']:PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								style="color: red; font-style: italic;font-weight:bold;"
+								value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.globalMsgRender}"
+								style="color: red;font-style: italic;font-weight:bold;" />
+
+							<h:outputText escape="false" id="warningMessages"
+								style="color: green; font-style: italic;font-weight:bold;"
+								value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+					<tr>
+						<td valign="top" align="right" width="100%" colspan="3"><h:commandButton
+							action="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.mainButtonAction}"
+							binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_UI_M_BUT_MAIN}"
+							id="UI_M_BUT_MAIN" style="width:96px;" styleClass="button"
+							value="#{message.PILT010$PT_IL_RI_DETL$UI_M_BUT_MAIN$caption}" />
+						</td>
+					</tr>
+
+
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><font color="White" size="2px"><b>Reinsurance premium allocation history</b></font></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6"><!-- 
+						<rich:tabPanel switchType="client">
+							<rich:tab label="ReInsurance">
+
+								<tr>
+									<td colspan="3">
+									<div id="tablecontainer">-->
+						 
+
+						<table class="noborder" width="100%">
+							<tr>
+								<td valign="top" width="100%"><rich:tabPanel 
+									switchType="client" >
+									<rich:tab label="ReInsurance">
+
+										<tr>
+											<td colspan="3">
+											<div id="tablecontainer"><h:panelGroup id="sectionDtls"
+												style="border:0;height:15%;">
+												<table align="left" class="noborder" id="bordertable"
+													width="100%">
+
+													<tr>
+														<td colspan="5"><rich:dataTable
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.dataTable}"
+															border="0" cellpadding="0" id="PT_IL_RI_DETL" rows="5"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.dataList_PT_IL_RI_DETL_1}"
+															var="table" width="100%">
+
+															<f:facet name="header">
+																<h:outputText id="AUTOID_1" style="text-align:left;"
+																	value="#{message.PILT010$PT_IL_RI_DETL$displayCaption}" />
+															</f:facet>
+
+															<rich:column filterBy="#{table.RD_COVER_CODE}"
+																filterEvent="onkeyup"
+																filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.filterByRD_COVER_CODE}"
+																sortBy="#{table.RD_COVER_CODE}"
+																styleClass="#{table.rowSelected}">
+																<f:facet name="header">
+																	<h:outputText id="AUTOID_2"
+																		styleClass="forumRowHighlight"
+																		value="#{message.PILT010$PT_IL_RI_DETL$RD_COVER_CODE$caption}" />
+																</f:facet>
+
+																<a4j:commandLink
+																	action="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.getDetails}"
+																	immediate="true" reRender="PT_IL_RI_DETL_1,sectionDtls">
+
+																	<h:outputText id="AUTOID_3"
+																		value="#{table.RD_COVER_CODE} " />
+
+																</a4j:commandLink>
+
+															</rich:column>
+
+															<rich:column filterBy="#{table.RD_ASSR_CODE}"
+																filterEvent="onkeyup"
+																filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.filterByRD_ASSR_CODE}"
+																sortBy="#{table.RD_ASSR_CODE}"
+																styleClass="#{table.rowSelected}">
+																<f:facet name="header">
+																	<h:outputText id="AUTOID_4"
+																		styleClass="forumRowHighlight"
+																		value="#{message.PILT010$PT_IL_RI_DETL$RD_ASSR_CODE$caption}" />
+																</f:facet>
+
+																<h:outputText id="AUTOID_5"
+																	value="#{table.RD_ASSR_CODE} " />
+
+															</rich:column>
+															<rich:column filterBy="#{table.RD_TAR_RATE_PER}"
+																filterEvent="onkeyup"
+																filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.filterByRD_TAR_RATE_PER}"
+																sortBy="#{table.RD_TAR_RATE_PER}"
+																styleClass="#{table.rowSelected}">
+																<f:facet name="header">
+																	<h:outputText id="AUTOID_6"
+																		styleClass="forumRowHighlight"
+																		value="#{message.PILT010$PT_IL_RI_DETL$RD_TAR_RATE_PER$caption}" />
+																</f:facet>
+
+																<h:outputText id="AUTOID_7"
+																	value="#{table.RD_TAR_RATE_PER} " />
+
+															</rich:column>
+
+															<rich:column filterBy="#{table.RD_TAR_RATE}"
+																filterEvent="onkeyup"
+																filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.filterByRD_TAR_RATE}"
+																sortBy="#{table.RD_TAR_RATE}"
+																styleClass="#{table.rowSelected}">
+																<f:facet name="header">
+																	<h:outputText id="AUTOID_8"
+																		styleClass="forumRowHighlight"
+																		value="#{message.PILT010$PT_IL_RI_DETL$RD_TAR_RATE$caption}" />
+																</f:facet>
+
+																<h:outputText id="AUTOID_9"
+																	value="#{table.RD_TAR_RATE} " />
+
+															</rich:column>
+															<f:facet name="footer">
+																<h:panelGroup id="footerpanel" style="border:0">
+																	<rich:datascroller align="right" />
+
+																</h:panelGroup>
+															</f:facet>
+														</rich:dataTable></td>
+													</tr>
+													<tr>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_COVER_CODE_LABEL}"
+															for="RD_COVER_CODE" id="RD_COVER_CODE_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_DETL$RD_COVER_CODE$caption}" />
+														</td>
+														<td class="oddrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_COVER_CODE}"
+															id="RD_COVER_CODE" maxlength="12" readonly="true"
+															rendered="true" required="true" styleClass="input"
+															title="Enter the Plan Code"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.PT_IL_RI_DETL_1_BEAN.RD_COVER_CODE}" />
+														</td>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_SCHD_DT_LABEL}"
+															for="RD_SCHD_DT" id="RD_SCHD_DT_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_DETL$RD_SCHD_DT$caption}" />
+														</td>
+														<td class="oddrow"><rich:calendar
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_SCHD_DT}"
+															datePattern="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.datePattern}"
+															disabled="true" id="RD_SCHD_DT"
+															inputClass="calendarinput" inputSize="9"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.PT_IL_RI_DETL_1_BEAN.RD_SCHD_DT}">
+															<a4j:support event="oninputblur" id="date_1"
+																onsubmit="formatDate('PT_IL_RI_DETL_1:RD_SCHD_DT')" />
+														</rich:calendar></td>
+													</tr>
+
+
+
+													<tr>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_FC_PREM_LABEL}"
+															for="RD_FC_PREM" id="RD_FC_PREM_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_DETL$RD_FC_PREM$caption}" />
+														</td>
+														<td class="oddrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_FC_PREM}"
+															id="RD_FC_PREM" maxlength="12" readonly="true"
+															rendered="true" required="true" styleClass="input"
+															title="Enter the FC Premium"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.PT_IL_RI_DETL_1_BEAN.RD_FC_PREM}" />
+														</td>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_LC_PRD_PREM_LABEL}"
+															for="RD_LC_PRD_PREM" id="RD_LC_PRD_PREM_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_DETL$RD_LC_PRD_PREM$caption}" />
+														</td>
+														<td class="oddrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_LC_PRD_PREM}"
+															id="RD_LC_PRD_PREM" maxlength="12" readonly="true"
+															rendered="true" required="true" styleClass="input"
+															title="Enter the SA"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.PT_IL_RI_DETL_1_BEAN.RD_LC_PRD_PREM}" />
+														</td>
+
+													</tr>
+
+													<tr>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_PRD_FM_DT_LABEL}"
+															for="RD_PRD_FM_DT" id="RD_PRD_FM_DT_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_DETL$RD_PRD_FM_DT$caption}" />
+														</td>
+														<td class="oddrow"><rich:calendar
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_PRD_FM_DT}"
+															datePattern="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.datePattern}"
+															disabled="true" id="RD_PRD_FM_DT"
+															inputClass="calendarinput" inputSize="9"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.PT_IL_RI_DETL_1_BEAN.RD_PRD_FM_DT}">
+															<a4j:support event="oninputblur" id="date_2"
+																onsubmit="formatDate('PT_IL_RI_DETL_1:RD_PRD_FM_DT')" />
+														</rich:calendar></td>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_PRD_TO_DT_LABEL}"
+															for="RD_PRD_TO_DT" id="RD_PRD_TO_DT_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_DETL$RD_PRD_TO_DT$caption}" />
+														</td>
+														<td class="oddrow"><rich:calendar
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_PRD_TO_DT}"
+															datePattern="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.datePattern}"
+															disabled="true" id="RD_PRD_TO_DT"
+															inputClass="calendarinput" inputSize="9"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.PT_IL_RI_DETL_1_BEAN.RD_PRD_TO_DT}">
+															<a4j:support event="oninputblur" id="date_3"
+																onsubmit="formatDate('PT_IL_RI_DETL_1:RD_PRD_TO_DT')" />
+														</rich:calendar></td>
+
+													</tr>
+
+													<tr>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_FRZ_FLAG_LABEL}"
+															for="RD_FRZ_FLAG" id="RD_FRZ_FLAG_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_DETL$RD_FRZ_FLAG$caption}" />
+														</td>
+														<td class="oddrow"><h:inputText disabled="true" binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_FRZ_FLAG}"
+															id="RD_FRZ_FLAG" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_DETL$RD_FRZ_FLAG$caption}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.PT_IL_RI_DETL_1_BEAN.RD_FRZ_FLAG}">
+															</h:inputText>
+														</td>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_REMARKS_LABEL}"
+															for="RD_REMARKS" id="RD_REMARKS_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_DETL$RD_REMARKS$caption}" />
+														</td>
+														<td class="oddrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.COMP_RD_REMARKS}"
+															id="RD_REMARKS" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_DETL$RD_REMARKS$caption}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_1_ACTION.PT_IL_RI_DETL_1_BEAN.RD_REMARKS}" />
+														</td>
+
+													</tr>
+												</table>
+
+											</h:panelGroup></div>
+											</td>
+										</tr>
+									</rich:tab>
+									<rich:tab label="Premium Allocation">
+										<tr>
+											<td colspan="3">
+											<div id="tablecontainer2"><h:panelGroup
+												id="sectionDtls1" style="border:0;height:15%;">
+												<table align="left" class="noborder" id="bordertable"
+													width="100%">
+
+													<tr>
+														<td colspan="5"><rich:dataTable
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.dataTable}"
+															border="0" cellpadding="0" id="PT_IL_RI_PREM_ALLOC_1"
+															rows="5"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.dataList_PT_IL_RI_PREM_ALLOC_1}"
+															var="tableVar" width="100%">
+															<f:facet name="header">
+																<rich:columnGroup>
+
+																	<rich:column colspan="3">
+																		<h:outputText id="AUTOID_1"
+																			styleClass="forumRowHighlight" value="Yearly details" />
+																	</rich:column>
+																	<rich:column colspan="3">
+																		<h:outputText id="AUTOID_2"
+																			styleClass="forumRowHighlight"
+																			value="Acc Submit Period details" />
+																	</rich:column>
+
+																	<rich:column breakBefore="true">
+																		<h:outputText id="AUTOID_3" rendered="false"
+																			style="width:110px;" styleClass="forumRowHighlight"
+																			value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_FC_PREM$caption}" />
+																	</rich:column>
+																	<rich:column>
+																		<h:outputText id="AUTOID_4" rendered="false"
+																			style="width:110px;" styleClass="forumRowHighlight"
+																			value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_FC_PREM$caption}" />
+																	</rich:column>
+																	<rich:column>
+																		<h:outputText id="AUTOID_5" rendered="false"
+																			style="width:110px;" styleClass="forumRowHighlight"
+																			value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_REINS_FC_COMM$caption}" />
+																	</rich:column>
+
+
+																	<rich:column>
+																		<h:outputText id="AUTOID_6" rendered="false"
+																			style="width:110px;" styleClass="forumRowHighlight"
+																			value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_LC_PRD_PREM$caption}" />
+																	</rich:column>
+																	<rich:column>
+																		<h:outputText id="AUTOID_7" rendered="false"
+																			style="width:110px;" styleClass="forumRowHighlight"
+																			value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_REINS_PRD_FC_COMM$caption}" />
+																	</rich:column>
+																</rich:columnGroup>
+															</f:facet>
+															<rich:column filterBy="#{tableVar.RPA_RI_FC_PREM}"
+																filterEvent="onkeyup"
+																filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.filterByRPA_RET_FC_PREM}"
+																rendered="true" sortBy="#{tableVar.RPA_RI_FC_PREM}"
+																styleClass="#{tableVar.rowSelected}">
+																<f:facet name="header">
+																	<h:outputText id="AUTOID_8"
+																		styleClass="forumRowHighlight"
+																		value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_FC_PREM$caption}" />
+																</f:facet>
+																<a4j:commandLink
+																	action="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.getDetails}"
+																	immediate="true" reRender="sectionDtls1">
+
+																	<h:outputText id="AUTOID_9"
+																		value="#{tableVar.RPA_RI_FC_PREM}" />
+
+																</a4j:commandLink>
+															</rich:column>
+
+															<rich:column filterBy="#{tableVar.RPA_RET_FC_PREM}"
+																filterEvent="onkeyup"
+																filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.filterByRPA_RET_FC_PREM}"
+																rendered="true" sortBy="#{tableVar.RPA_RET_FC_PREM}"
+																styleClass="#{tableVar.rowSelected}">
+																<f:facet name="header">
+																	<h:outputText id="AUTOID_10"
+																		styleClass="forumRowHighlight"
+																		value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_FC_PREM$caption}" />
+																</f:facet>
+																<h:outputText id="AUTOID_11"
+																	value="#{tableVar.RPA_RET_FC_PREM}" />
+															</rich:column>
+															<rich:column filterBy="#{tableVar.RPA_REINS_FC_COMM}"
+																filterEvent="onkeyup"
+																filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.filterByRPA_REINS_FC_COMM}"
+																rendered="true" sortBy="#{tableVar.RPA_REINS_FC_COMM}"
+																styleClass="#{tableVar.rowSelected}">
+																<f:facet name="header">
+																	<h:outputText id="AUTOID_12"
+																		styleClass="forumRowHighlight"
+																		value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_REINS_FC_COMM$caption}" />
+																</f:facet>
+																<h:outputText id="AUTOID_13"
+																	value="#{tableVar.RPA_REINS_FC_COMM}" />
+															</rich:column>
+															<rich:column filterBy="#{tableVar.RPA_RI_LC_PRD_PREM}"
+																filterEvent="onkeyup"
+																filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.filterByRPA_RI_LC_PRD_PREM}"
+																rendered="true" sortBy="#{tableVar.RPA_RI_LC_PRD_PREM}"
+																styleClass="#{tableVar.rowSelected}">
+																<f:facet name="header">
+																	<h:outputText id="AUTOID_14"
+																		styleClass="forumRowHighlight"
+																		value="#{message.PILT010$PT_IL_RI_PREM_ALLOC_1$RPA_RI_LC_PRD_PREM$caption}" />
+																</f:facet>
+																<h:outputText id="AUTOID_15"
+																	value="#{tableVar.RPA_RI_LC_PRD_PREM}" />
+															</rich:column>
+															<rich:column filterBy="#{tableVar.RPA_RET_LC_PRD_PREM}"
+																filterEvent="onkeyup"
+																filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.filterByRPA_RET_LC_PRD_PREM}"
+																rendered="true" sortBy="#{tableVar.RPA_RET_LC_PRD_PREM}"
+																styleClass="#{tableVar.rowSelected}">
+																<f:facet name="header">
+																	<h:outputText id="AUTOID_16"
+																		styleClass="forumRowHighlight"
+																		value="#{message.PILT010$PT_IL_RI_PREM_ALLOC_1$RPA_RET_LC_PRD_PREM$caption}" />
+																</f:facet>
+																<h:outputText id="AUTOID_17"
+																	value="#{tableVar.RPA_RET_LC_PRD_PREM}" />
+															</rich:column>
+
+															<f:facet name="footer">
+																<h:panelGroup id="footerpanel" style="border:0">
+																	<rich:datascroller align="right" />
+
+																</h:panelGroup>
+															</f:facet>
+														</rich:dataTable></td>
+													</tr>
+
+													
+													<tr>
+														<td class="oddrowright" width="20%"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_TREATY_TYPE_LABEL}"
+															for="RPA_TREATY_TYPE" id="RPA_TREATY_TYPE_LABEL"
+															rendered="true" styleClass="label" value="Treaty Type" /></td>
+														<td class="oddrow" width="28%"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_TREATY_TYPE}"
+															id="RPA_TREATY_TYPE" readonly="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_TREATY_TYPE$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_TREATY_TYPE}" />
+														</td>
+														<td class="oddrowright" width="4%"></td>
+														<td class="oddrowright" width="20%"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_FC_SA_LABEL}"
+															for="RPA_RI_FC_SA" id="RPA_RI_FC_SA_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_FC_SA$caption}" />
+														</td>
+														<td class="oddrow" width="28%"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_FC_SA}"
+															id="RPA_RI_FC_SA" readonly="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_FC_SA$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RI_FC_SA}" />
+														</td>
+													</tr>
+													<tr>
+														<td class="evenrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_FC_PREM_LABEL}"
+															for="RPA_RI_FC_PREM" id="RPA_RI_FC_PREM_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_FC_PREM$caption}" />
+														</td>
+														<td class="evenrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_FC_PREM}"
+															id="RPA_RI_FC_PREM" readonly="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_FC_PREM$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RI_FC_PREM}" />
+														</td>
+														<td class="evenrowright"></td>
+														<td class="evenrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_LC_PRD_PREM_LABEL}"
+															for="RPA_RI_LC_PRD_PREM" id="RPA_RI_LC_PRD_PREM_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_LC_PRD_PREM$caption}" />
+														</td>
+														<td class="evenrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_LC_PRD_PREM}"
+															id="RPA_RI_LC_PRD_PREM" readonly="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_LC_PRD_PREM$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RI_LC_PRD_PREM}" />
+														</td>
+														</tr>
+														<tr>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_FC_SA_LABEL}"
+															for="RPA_RET_FC_SA" id="RPA_RET_FC_SA_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_FC_SA$caption}" />
+														</td>
+														<td class="oddrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_FC_SA}"
+															id="RPA_RET_FC_SA" maxlength="12" readonly="true"
+															rendered="true" required="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_FC_SA$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RET_FC_SA}" />
+														</td>
+														<td class="oddrow"></td>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_LC_PRD_PREM_LABEL}"
+															for="RPA_RET_LC_PRD_PREM" id="RPA_RET_LC_PRD_PREM_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_LC_PRD_PREM$caption}" />
+														</td>
+														<td class="oddrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_LC_PRD_PREM}"
+															id="RPA_RET_LC_PRD_PREM" maxlength="12" readonly="true"
+															rendered="true" required="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_LC_PRD_PREM$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RET_LC_PRD_PREM}" />
+														</td>	
+														</tr>
+																											
+													<tr>
+														<td class="evenrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_FC_PREM_LABEL}"
+															for="RPA_RET_FC_PREM" id="RPA_RET_FC_PREM_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_FC_PREM$caption}" />
+														</td>
+														<td class="evenrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_FC_PREM}"
+															id="RPA_RET_FC_PREM" readonly="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_FC_PREM$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RET_FC_PREM}" />
+														</td>
+														<td class="evenrowright"></td>
+														<td class="evenrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_REINS_COMM_PERC_LABEL}"
+															for="RPA_REINS_COMM_PERC" id="RPA_REINS_COMM_PERC_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_REINS_COMM_PERC$caption}" />
+														</td>
+														<td class="evenrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_REINS_COMM_PERC}"
+															id="RPA_REINS_COMM_PERC" readonly="true"
+															styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_REINS_COMM_PERC$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_REINS_COMM_PERC}" />
+														</td>
+													</tr>
+													<tr>
+															<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_REINS_FC_COMM_LABEL}"
+															for="RPA_REINS_FC_COMM" id="RPA_REINS_FC_COMM_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_REINS_FC_COMM$caption}" />
+														</td>
+														<td class="oddrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_REINS_FC_COMM}"
+															id="RPA_REINS_FC_COMM" readonly="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_REINS_FC_COMM$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_REINS_FC_COMM}" />
+														</td>
+														<td class="oddrowright"></td>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_REINS_PRD_FC_COMM_LABEL}"
+															for="RPA_REINS_PRD_FC_COMM"
+															id="RPA_REINS_PRD_FC_COMM_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_REINS_PRD_FC_COMM$caption}" />
+														</td>
+														<td class="oddrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_REINS_PRD_FC_COMM}"
+															id="RPA_REINS_PRD_FC_COMM" readonly="true"
+															styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_REINS_PRD_FC_COMM$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_REINS_PRD_FC_COMM}" />
+														</td>
+													</tr>
+													<tr>
+														<td class="evenrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_FC_POL_SA_LABEL}"
+															for="RPA_RI_FC_POL_SA" id="RPA_RI_FC_POL_SA_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_FC_POL_SA$caption}" />
+														</td>
+														<td class="evenrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_FC_POL_SA}"
+															id="RPA_RI_FC_POL_SA" readonly="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_FC_POL_SA$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RI_FC_POL_SA}" />
+														</td>
+														<td class="evenrowright"></td>
+														<td class="evenrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_LC_POL_SA_LABEL}"
+															for="RPA_RI_LC_POL_SA" id="RPA_RI_LC_POL_SA_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_LC_POL_SA$caption}" />
+														</td>
+														<td class="evenrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_LC_POL_SA}"
+															id="RPA_RI_LC_POL_SA" readonly="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_LC_POL_SA$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RI_LC_POL_SA}" />
+														</td>
+													</tr>
+													<tr>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_FC_POL_PREM_LABEL}"
+															for="RPA_RI_FC_POL_PREM" id="RPA_RI_FC_POL_PREM_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_FC_POL_PREM$caption}" />
+														</td>
+														<td class="oddrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_FC_POL_PREM}"
+															id="RPA_RI_FC_POL_PREM" readonly="true"
+															styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_FC_POL_PREM$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RI_FC_POL_PREM}" />
+														</td>
+														<td class="oddrowright"></td>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_LC_POL_PREM_LABEL}"
+															for="RPA_RI_LC_POL_PREM" id="RPA_RI_LC_POL_PREM_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_LC_POL_PREM$caption}" />
+														</td>
+														<td class="oddrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RI_LC_POL_PREM}"
+															id="RPA_RI_LC_POL_PREM" readonly="true"
+															styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_LC_POL_PREM$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RI_LC_POL_PREM}" />
+														</td>
+													</tr>
+													<tr>
+													<td class="evenrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_FC_POL_SA_LABEL}"
+															for="RPA_RET_FC_POL_SA" id="RPA_RET_FC_POL_SA_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_FC_POL_SA$caption}" />
+														</td>
+														<td class="evenrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_FC_POL_SA}"
+															id="RPA_RET_FC_POL_SA" readonly="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_FC_POL_SA$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RET_FC_POL_SA}" />
+														</td>
+														<td class="evenrowright"></td>
+														<td class="evenrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_LC_POL_SA_LABEL}"
+															for="RPA_RET_LC_POL_SA" id="RPA_RET_LC_POL_SA_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_LC_POL_PREM$caption}" /></td>
+														<td class="evenrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_LC_POL_SA}"
+															id="RPA_RET_LC_POL_SA" readonly="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_LC_POL_SA$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RET_LC_POL_SA}" />
+														</td>
+													</tr>
+													<tr>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_FC_POL_PREM_LABEL}"
+															for="RPA_RET_FC_POL_PREM" id="RPA_RET_FC_POL_PREM_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_FC_POL_PREM$caption}" />
+														</td>
+														<td class="oddrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_FC_POL_PREM}"
+															id="RPA_RET_FC_POL_PREM" readonly="true"
+															styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RI_FC_POL_PREM$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RET_FC_POL_PREM}" />
+														</td>
+														<td class="oddrowright"></td>
+														<td class="oddrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_LC_POL_PREM_LABEL}"
+															for="RPA_RET_LC_POL_PREM" id="RPA_RET_LC_POL_PREM_LABEL"
+															rendered="true" styleClass="label"
+															value="Policy LC Retn Premium" />
+														</td>
+														<td class="oddrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_RET_LC_POL_PREM}"
+															id="RPA_RET_LC_POL_PREM" readonly="true"
+															styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$RPA_RET_LC_POL_PREM$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_RET_LC_POL_PREM}" />
+														</td>
+													</tr>
+													<tr>
+														<td class="evenrowright"><h:outputLabel
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_UI_M_TTY_DESC_LABEL}"
+															for="UI_M_TTY_DESC" id="UI_M_TTY_DESC_LABEL"
+															rendered="true" styleClass="label"
+															value="Treaty Description" /></td>
+														<td class="evenrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_UI_M_TTY_DESC}"
+															id="UI_M_TTY_DESC" maxlength="12" readonly="true"
+															rendered="true" required="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC$UI_M_TTY_DESC$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.UI_M_TTY_DESC}" />
+														</td>
+														<td class="evenrowright"></td>
+														<td class="evenrowright"><h:outputLabel
+															for="RPA_FC_EXTRA_PREM" id="RPA_FC_EXTRA_PREM_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILT010$PT_IL_RI_PREM_ALLOC_1$RPA_FC_EXTRA_PREM$caption}" />
+														</td>
+														<td class="evenrow"><h:inputText
+															binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.COMP_RPA_FC_EXTRA_PREM}"
+															id="RPA_FC_EXTRA_PREM" readonly="true" styleClass="input"
+															title="#{message.PILT010$PT_IL_RI_PREM_ALLOC_1$RPA_FC_EXTRA_PREM$tooltip}"
+															value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_PREM_ALLOC_1_ACTION.PT_IL_RI_PREM_ALLOC_1_BEAN.RPA_FC_EXTRA_PREM}" />
+														</td>
+													</tr>
+												</table>
+											</h:panelGroup></div>
+											</td>
+										</tr>
+
+									</rich:tab>
+								</rich:tabPanel></td>
+
+							</tr>
+
+						</table>
+						<!-- </div>
+									</td>
+
+								</tr>
+							</rich:tab>
+							<rich:tab label="Premium Allocation">
+
+							</rich:tab>
+						</rich:tabPanel> --></td>
+					</tr>
+
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

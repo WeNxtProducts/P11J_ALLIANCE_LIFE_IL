@@ -1,0 +1,2083 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+
+		<style>
+.address {
+	width: 80%;
+}
+</style>
+
+<!-- Added by saritha on 27-06-2017 for ssp call id ZBILQC-1730055 -->
+
+<style>
+ .firstname {
+    width: 60%;
+}
+</style>
+
+<style>
+ .middlename {
+    width: 60%;
+}
+</style>
+
+<style>
+ .surname {
+    width: 60%;
+}
+
+</style>
+
+<!-- End -->
+
+
+		<f:view
+			beforePhase="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="#{sessionScope['GLOBAL.SITE_CODE']}messageProperties_PILP134" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<f:loadBundle basename="messageProperties" var="commonMessages" />
+			<!-- onkeypress Added by saritha on 24-Feb-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="CUST_DETL_UPD" onkeypress="return event.keyCode != 13">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+							<table class="noborder" id="toolbartable" width="100%">
+								<tr>
+									<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+											<rich:toolBarGroup styleClass="toolBarGroupStyle">
+												<h:commandLink id="SELF_ID_1" rendered="true"
+													action="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.saveRecord}"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:commandButton id="SELF_ID_2"
+														style="border: thin solid white"
+														styleClass="toolbarButtonStyle" accesskey="s"
+														image="./../../images/save.gif" />
+													<h:outputText id="SELF_ID_3"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+
+												<h:commandLink id="SELF_ID_4" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_5"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/savenext.GIF" />
+													<h:outputText id="SELF_ID_6"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$savenext}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_7" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_8"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/deleteRecord.gif" />
+													<h:outputText id="SELF_ID_9"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$deleteRecord}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_10" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_11"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/firstrec.gif" />
+													<h:outputText id="SELF_ID_12"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$firstrec}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_13" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_14"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/prevpage.gif" />
+													<h:outputText id="SELF_ID_15"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$prevpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_16" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_17"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/nextpage.gif" />
+													<h:outputText id="SELF_ID_18"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$nextpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_19" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_20"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/lastRecord.gif" />
+													<h:outputText id="SELF_ID_21"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$lastRecord}" />
+												</h:commandLink>
+											</rich:toolBarGroup>
+										</rich:toolBar></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+								id="errorPanel" opened="false" switchType="client">
+								<f:facet name="header">
+									<h:outputText id="err"
+										styleClass="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.messageStyle}"
+										value="#{commonmsg.errorPanel$heading} #{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.errorMap['current'] !=null? PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.errorMap['current']: PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.warningMap['current']}" />
+								</f:facet>
+								<h:outputText escape="false" id="errorMessages"
+									style="color: red; font-style: italic;font-weight:bold;"
+									value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.errorMessages}" />
+								<h:messages id="msg"
+									rendered="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.globalMsgRender}"
+									styleClass="ErrorMessages" />
+								<h:outputText escape="false" id="warningMessages"
+									style="color: green; font-style: italic;font-weight:bold;"
+									value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.warningMessages}" />
+							</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+							<table class="noborder" id="linkstable" width="100%">
+								<tr>
+									<td><h:outputLabel
+											value="#{message.PILP134$CUST_DETL_UPD$caption}" /></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<table class="noborder" width="100%">
+								<tr>
+									<td valign="top" width="100%">
+										<table class="noborder" width="100%">
+											<tr>
+												<td class="oddrowright" width="31%"></td>
+												<!-- value changed by raja on 31-05-2017 for ZBILQC-1724387 -->
+												<td class="oddrowright"><h:outputLabel
+														binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_UI_M_POL_NO_FROM_LABEL}"
+														for="CDU_CUST_CODE" id="UI_M_POL_NO_FROM_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILP134$CUST_DETL_UPD$CDU_CUST_CODE$caption}" />
+													<h:graphicImage id="SELF_ID_3SI0" style=""
+														styleClass="searchimg"
+														value="./../../images/mandatory.jpg" /></td>
+												<td class="oddrow"><h:inputText
+														binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CUST_CODE}"
+														disabled="false" id="CDU_CUST_CODE" maxlength="40"
+														rendered="true" required="true" styleClass="input"
+														validator="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.valiadteCDU_CUST_CODE}"
+														value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CUST_REF_ID1}">
+														<a4j:support
+															actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="SELF_ID_22" immediate="true"
+															oncomplete="setFocus('PT_IL_SURR_MAT_VALUES:UI_M_POL_NO_TO','PT_IL_SURR_MAT_VALUES:UI_M_POL_NO_FROM')"
+															reRender="errorPanel,CDU_CUST_CODE_DESC" />
+													</h:inputText> <h:inputText
+														binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CUST_CODE_DESC}"
+														disabled="true" id="CDU_CUST_CODE_DESC" maxlength="40"
+														rendered="false" required="true" styleClass="input"
+														value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CUST_CODE_DESC}">
+													</h:inputText> <rich:suggestionbox for="CDU_CUST_CODE" height="200"
+														id="CDU_CUST_CODE_LOV"
+														suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCDU_CUST_CODE}"
+														var="panelCode" width="200">
+														<h:column id="COLUMN_SUGG_1AQC_2">
+															<h:outputText id="AUTOID_8WE5" value="#{panelCode.code}" />
+														</h:column>
+														<h:column id="COLUMN_SUGGX_Z2_3">
+															<h:outputText id="AUTOAID_8ZA6" value="#{panelCode.name}" />
+														</h:column>
+														<a4j:support ajaxSingle="true" event="onselect"
+															id="CDU_CUST_CODE_DESC_SUGG_SUPPORT" immediate="true"
+															reRender="errorPanel,CDU_CUST_CODE_DESC">
+															<f:setPropertyActionListener id="AUTOIDC_8C71"
+																target="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CUST_CODE_DESC}"
+																value="#{panelCode.name}" />
+														</a4j:support>
+													</rich:suggestionbox> <h:graphicImage id="SELF_ID_25" styleClass="searchimg"
+														value="./../../images/Lov16x16.gif" /></td>
+
+												<td class="oddrowright"></td>
+
+											</tr>
+											<tr>
+
+											</tr>
+											<tr>
+
+												<td class="evenrow"><a4j:commandButton
+														actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.whenButtonPressedFetch}"
+														binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_FETCH_BTN}"
+														disabled="false" id="FETCH_BTN" immediate="true"
+														rendered="true" style="width:80px;" styleClass="button"
+														title="" value="Fetch"
+														reRender="CDU_CORRES_ADDR1,CDU_CORRES_ADDR2,CDU_CORRES_ADDR3,
+														CDU_CORRES_CITY_CODE,CDU_CORRES_CITY_DESC,CDU_CORRES_COUNTRY,CDU_CORRES_COUNTRY_DESC,
+														CDU_CORRES_PHONE,CDU_MOBILE_NO,CDU_CORRES_FAX,CUST_EMAIL_ID_PER,CDU_CUST_MAR_STATUS,
+														CUST_ADDR1,CDU_BUS_ADDR2,CDU_BUS_ADDR3,CDU_BUS_COUNTRY,CDU_BUS_PHONE,CDU_BUS_MOBILE_NO,
+														CDU_BUS_FAX,CUST_EMAIL_ID_OFF,PT_IL_POL_BENEFICIARY_DATA_GRID,CDU_CORRES_CITY_CODE_LOV,
+														CDU_CORRES_COUNTRY_LOV,CDU_BUS_COUNTRY_LOV,CDU_MAR_STATUS_LIST,CDU_MAR_STATUS,
+														CDU_MAR_STATUS_DESC,CDU_CORRES_COUNTRY_DESC,CDU_BUS_COUNTRY_DESC,CDU_CORRES_POST_NO,
+														CDU_PHY_POST_NO,CDU_BUS_CITY_CODE,CDU_BUS_CITY_CODE_DESC,CDU_BUS_CITY_CODE_LOV,CDU_BUS_MOBILE_NO,
+														CUST_BUS_TEL_AREA_CODE2,BUS_CUST_FAX_AREA_CODE,CUST_BUS_TEL_AREA_CODE,CUST_TEL_AREA_CODE,
+														CUST_TEL_AREA_CODE2,CUST_FAX_AREA_CODE,CDU_CUST_NAME,CDU_FIRST_NAME,CDU_MIDDLE_NAME,CDU_SURNAME,
+														CDU_AGE_ADMITTED,CDU_AGE_PROOF_FLAG,CDU_AGE_PROOF_OTHERS,CDU_BUS_AGE_ADMITTED,CDU_BUS_AGE_PROOF_FLAG,
+														CDU_BUS_AGE_PROOF_OTHERS,CDU_OTH_ADDR1,CDU_OTH_ADDR2,CDU_OTH_ADDR3,CDU_OTH_CITY_CODE,CDU_OTH_CITY_DESC,
+														CDU_OTH_COUNTRY,UI_M_CDU_OTH_COUNTRY_DESC,CUST_CORR_TEL_AREA_CODE,CDU_OTH_MOBILE_NO,CDU_OTH_POST_NO,
+														CDU_EMAIL_ID_OTH,CDU_OTH_TEL_AREA_CODE2,CDU_OTH_PHONE,CDU_OTH_FAX_AREA_CODE,CDU_OTH_FAX,CDU_RESIDENCE,
+														CDU_OFFICE,CDU_CORRES,CDU_CUST_OCC_CODE,UI_M_CDU_CUST_OCC_CODE_DESC,CDU_CUST_NATIONALITY_CODE,
+														UI_M_CDU_CUST_NATIONALITY_CODE_DESC,CDU_CUST_REMARKS,CDU_CUST_OCC_CODE_SUGG,CDU_CUST_NATIONALITY_CODE_SUGG,
+														CDU_TITLE,CDU_CATG_CODE,CDU_CATG_CODE_SUGG,UI_M_CDU_CATG_CODE_DESC">
+													</a4j:commandButton> 
+													<!--button was hide by raja -->
+													<h:commandButton
+														actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.whenButtonPressedUpload}"
+														binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_BUT_UPLOAD}"
+														disabled="true" id="BUT_UPLOAD" immediate="true" 
+														rendered="false" style="width:80px;" styleClass="button"
+														title="" value="Update">
+													</h:commandButton> 
+													<!-- commented by gopi for ssp call id ZBILQC-1733435 on 03/08/17 -->
+														<!-- actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.whenButtonPressedPrint}" -->
+													<h:commandButton
+														action="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.callPrint}"
+														binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_BUT_PRINT}"
+														disabled="false" id="BUT_PRINT" 
+														rendered="true" style="width:80px;" styleClass="button"
+														title="" value="Print"/>
+													</td>
+
+											</tr>
+											<tr></tr>
+
+											<tr>
+												<td colspan="5" width="100%">
+												
+												
+												
+
+												<!-- added by raja on 31-05-2017 for ZBILQC-1724387 --> 
+
+												<table width="100%" style="border: 1px solid #bed6f8;">
+												
+												<tr><td>	<h4>Personal Details</h4>
+												</td>
+											</tr>
+												
+												<tr>
+												
+												
+												
+												
+												<!-- Commentted by saritha on 27-06-2017 for ssp call id ZBILQC-1730055 -->
+
+												<!--   <td class="oddrowright" ><h:outputLabel
+																				for="CDU_NAME" id="CDU_CUST_NAME_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_CUST_NAME$caption}" /></td>
+																		<td class="oddrow"><h:inputText id="CDU_NAME"
+																		binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CUST_NAME}"
+																				required="false" rendered="true"
+																				styleClass="input"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CUST_NAME}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_34_1" immediate="true"
+																					reRender="errorPanel" />
+
+																			</h:inputText></td>  -->
+																			
+																			<!-- End -->
+																			
+												<!-- Added by kavitha on 30.07.2018 for KICLIFEQC-1759654	 -->						
+													 <td class="oddrowright" ><h:outputLabel
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_NAME_LABEL}"
+															for="CDU_NAME" id="CDU_NAME_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP134$CUST_DETL_UPD$CDU_CUST_NAME$caption}" />
+											        </td>
+													<td class="oddrow"><h:selectOneMenu
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_TITLE}"
+															id="CDU_TITLE" rendered="true" required="false"
+															styleClass="inputsmall"
+															title="#{message.PILP134$CUST_DETL_UPD$$CDU_TITLE$tooltip}"
+															validator="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.validatorCDU_TITLE}"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_TITLE}">
+															<f:selectItems id="my_id05"
+																value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.itemListName}" />
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="SUPPORT_CUST_NAME" immediate="true"
+																oncomplete="setFocus('CUST_DETL_UPD:CUST_TITLE')"
+																reRender="errorPanel,CDU_CATG_CODE,UI_M_CDU_CATG_CODE_DESC,CDU_CATG_CODE_SUGG" />
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onchange" id="SUPPORT_CUST_NAME11"
+																immediate="true" reRender="errorPanel,CDU_CATG_CODE,UI_M_CDU_CATG_CODE_DESC,CDU_CATG_CODE_SUGG" />
+														</h:selectOneMenu>
+														</td>				
+																			
+																			
+													<!-- End		 -->				
+																			
+																			
+																			<!-- Added by saritha on 27-06-2017 for ssp call id ZBILQC-1730055 -->
+																			<td class="oddrowright" width="15%"><h:outputLabel
+																				for="CDU_FIRST_NAME" id="CDU_FIRST_NAME_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_FIRST_NAME$caption}" /></td>
+																		<td class="oddrow"><h:inputText id="CDU_FIRST_NAME"
+																		binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_FIRST_NAME}"
+																				required="false" rendered="true" maxlength="240"
+																				styleClass="input firstname"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_FIRST_NAME}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="cust_salute" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputText></td>
+
+																			<td class="oddrowright" width="15%"><h:outputLabel
+																				for="CDU_MIDDLE_NAME" id="CDU_MIDDLE_NAME_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_MIDDLE_NAME$caption}" /></td>
+																		<td class="oddrow"><h:inputText id="CDU_MIDDLE_NAME"
+																		binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_MIDDLE_NAME}"
+																				required="false" rendered="true" maxlength="240"
+																				styleClass="input middlename"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_MIDDLE_NAME}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_34_2" immediate="true"
+																					reRender="errorPanel" />
+
+																			</h:inputText></td>
+							
+																			</tr>
+																			<tr>
+																			<td class="evenrowright"  width="15%"><h:outputLabel
+																				for="CDU_SURNAME" id="CDU_SURNAME_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_SURNAME$caption}" /></td>
+																		<td class="evenrow"><h:inputText id="CDU_SURNAME"
+																		binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_SURNAME}"
+																				required="false" rendered="true" maxlength="240"
+																				styleClass="input surname"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_SURNAME}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_34_3" immediate="true"
+																					reRender="errorPanel" />
+
+																			</h:inputText></td>
+							
+																		
+															<!-- Added by kavitha on 30.07.2018 for KICLIFEQC-1759654	 -->			
+															<td class="evenrowright"  width="15%">	
+																 
+																<h:outputLabel	for="CDU_CATG_CODE" id="CDU_CATG_CODE_LABEL"
+																binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CUST_CATG_CODE_LABEL}"
+																	rendered="true" styleClass="label"
+																	value="#{message.PILP134$CUST_DETL_UPD$CDU_CATG_CODE$caption}" />
+											               </td>
+														 <td class="evenrow"><h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CATG_CODE}"
+															id="CDU_CATG_CODE" maxlength="12" rendered="true"
+															required="true" styleClass="inputsmall"
+															title="#{message.PILP134$CUST_DETL_UPD$CDU_CATG_CODE$CAT$tooltip}"
+															validator="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.validatorCDU_CATG_CODE}"	
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CATG_CODE}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_50" immediate="true"
+																reRender="errorPanel,UI_M_CDU_CATG_CODE_DESC" />
+														</h:inputText> <rich:suggestionbox for="CDU_CATG_CODE" height="200"
+															id="CDU_CATG_CODE_SUGG"
+															suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCDU_CATG_CODE}"
+															var="catgCode" width="250">
+															<h:column>
+																<h:outputLabel id="AUTOID_66CUST"
+																	value="#{catgCode.code}" />
+															</h:column>
+															<h:column>
+																<h:outputLabel id="AUTOID_67CUST"
+																	value="#{catgCode.name}" />
+															</h:column>
+														</rich:suggestionbox> <h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_UI_M_CDU_CATG_CODE_DESC}"
+															disabled="true" id="UI_M_CDU_CATG_CODE_DESC"
+															maxlength="240" rendered="true" required="false"
+															styleClass="input"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CDU_CATG_CODE_DESC}" />
+														<h:graphicImage id="AUTOID_66AA" styleClass="searchimg"
+															value="./../../resources/images/Lov.gif" />
+														</td>
+														
+														
+														</tr>					
+																			
+																			<!-- End --> 
+																			</table>
+										
+																		<!-- end -->
+													<table width="100%" style="border: 1px solid #bed6f8;">
+														<tr><td>
+														<table  width="100%"><tr>
+														<!-- Added by saritha on 31-May-2017 for ssp call id ZBILQC-1725306 -->
+															<!-- <td><p style="color: blue;">Correspondence
+																	Details</p></td> -->
+															<!-- <td width="50%"><p style="color: blue;">Postal Address</p></td> -->
+															<td width="50%"><p style="color: blue;">
+																<h:outputText
+																id="CDU_CUST_ADDRS1"
+																value="#{message.PILP134$CDU_CUST_ADDRS1$CDU_CUST_REMARKS$caption}"
+																/>
+															</p></td>
+															
+															<td width="25%" align="right"><h:outputLabel
+															id="CDU_RESIDENCE_LABEL" rendered="true" styleClass="label"
+															value="Communication Address" />
+															</td>
+															<td width="25%">
+															<h:selectBooleanCheckbox 
+																binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_RESIDENCE}"
+																id="CDU_RESIDENCE" title="Residence"
+																value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CDU_COMM_RES_ADDR_FLG}">
+																<a4j:support
+																	actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.communicationAddrRes}"
+																	event="onclick" id="autoID_A306" immediate="true"
+																	reRender="CDU_OFFICE,CDU_CORRES" />
+															</h:selectBooleanCheckbox>
+																
+															</td>
+															</tr>
+															</table>
+															</td>
+															<td>
+															<table width="100%">
+															<tr>
+															<!-- End -->
+															<!-- Added by saritha on 31-May-2017 for ssp call id ZBILQC-1725306 -->
+															<!-- <td><p style="color: blue;">Business Details</p></td>-->
+															<!-- <td><p style="color: blue;">Physical Address</p></td> -->
+															<td><p style="color: blue;">
+															<h:outputText
+																id="CDU_CUST_ADDRS2"
+																value="#{message.PILP134$CDU_CUST_ADDRS2$CDU_CUST_REMARKS$caption}"
+																/>
+															</p></td>
+															<td width="25%" align="right"><h:outputLabel
+															id="CDU_OFFICE_LABEL" rendered="true" styleClass="label"
+															value="Communication Address" />
+															</td>
+															<td width="25%">
+															<h:selectBooleanCheckbox 
+																binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OFFICE}"
+																id="CDU_OFFICE" title="Office"
+																value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CDU_COMM_OFF_ADDR_FLG}">
+																<a4j:support
+																	actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.communicationAddrOff}"
+																	event="onclick" id="style_0036" immediate="true"
+																	reRender="CDU_RESIDENCE,CDU_CORRES" />
+															</h:selectBooleanCheckbox>
+																
+															</td>
+															<!-- End -->
+															</tr></table>
+															</td>
+														</tr>
+														<tr>
+															<td width="50%">
+																<table width="100%" class="noborder" cellpadding="0"
+																	cellspacing="0">
+																	<tr>
+																		<td class="oddrowright" width="30%"><h:outputLabel
+																				for="CDU_CORRES_ADDR1" id="CDU_CORRES_ADDR1_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_CORRES_ADDR1$caption}" /></td>
+																		<td class="oddrow"><h:inputText
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CORRES_ADDR1}"
+																				id="CDU_CORRES_ADDR1" required="false"
+																				rendered="true" styleClass="input address"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CORRES_ADDR1}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_341" immediate="true"
+																					reRender="errorPanel" />
+
+																			</h:inputText></td>
+
+																	</tr>
+																	<tr>
+																		<td class="evenrowright"><h:outputLabel
+																				for="CDU_CORRES_ADDR2" id="CDU_CORRES_ADDR2_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_CORRES_ADDR2$caption}" /></td>
+																		<td class="evenrow"><h:inputText
+																				id="CDU_CORRES_ADDR2" rendered="true"
+																				required="false" styleClass="input address"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CORRES_ADDR2}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CORRES_ADDR2}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_362" immediate="true"
+																					reRender="errorPanel" />
+
+																			</h:inputText></td>
+																	</tr>
+																	<tr>
+																		<td class="oddrowright"><h:outputLabel
+																				for="CDU_CORRES_ADDR3" id="CDU_CORRES_ADDR3_LABEL1"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_CORRES_ADDR3$caption}" /></td>
+																		<td class="oddrow"><h:inputText
+																				id="CDU_CORRES_ADDR3" rendered="true"
+																				required="false" styleClass="input address"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CORRES_ADDR3}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CORRES_ADDR3}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_3831" immediate="true"
+																					reRender="errorPanel" />
+
+																			</h:inputText></td>
+
+																	</tr>
+
+																</table>
+																<table class="noborder" width="100%" cellpadding="0"
+																	cellspacing="0">
+																	<tr>
+																		<td class="evenrowright" width="30%"><h:outputLabel
+																				for="CDU_CORRES_CITY_CODE"
+																				id="CDU_CORRES_CITY_CODE_LABEL" rendered="true"
+																				styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_CORRES_CITY_CODE$caption}">
+
+																			</h:outputLabel></td>
+																		<td class="evenrow"><h:inputText
+																				id="CDU_CORRES_CITY_CODE" maxlength="60"
+																				rendered="true" styleClass="inputsmall"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CORRES_CITY_CODE}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CORRES_CITY_CODE}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_3KS84" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputText> <rich:suggestionbox for="CDU_CORRES_CITY_CODE"
+																				height="200" id="CDU_CORRES_CITY_CODE_LOV"
+																				suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCDU_CORRES_CITY_CODE}"
+																				var="panelCode" width="200">
+																				<h:column id="COLUMN_SUGG_1AQC_2">
+																					<h:outputText id="AUTOID_8WE5"
+																						value="#{panelCode.code}" />
+																				</h:column>
+																				<h:column id="COLUMN_SUGGX_Z2_3">
+																					<h:outputText id="AUTOAID_8ZA6"
+																						value="#{panelCode.name}" />
+																				</h:column>
+																				<a4j:support ajaxSingle="true" event="onselect"
+																					id="CDU_CORRES_CITY_CODE_DESC_SUGG_SUPPORT"
+																					immediate="true"
+																					reRender="errorPanel,CDU_CORRES_CITY_DESC">
+																					<f:setPropertyActionListener id="AUTOIDC_8C71"
+																						target="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CORRES_CITY_DESC}"
+																						value="#{panelCode.name}" />
+																				</a4j:support>
+																			</rich:suggestionbox> <h:inputText disabled="true"
+																				id="CDU_CORRES_CITY_DESC" maxlength="30"
+																				rendered="true" required="false" styleClass="input"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CORRES_CITY_DESC}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CORRES_CITY_DESC}" />
+																			<h:graphicImage id="IMAGE_SUGG_30ZA1"
+																				styleClass="searchimg"
+																				value="./../../images/Lov.gif" /></td>
+
+
+																	</tr>
+																	<tr>
+																		<td class="oddrowright"><h:outputLabel
+																				for="CDU_CORRES_COUNTRY"
+																				id="CDU_CORRES_COUNTRY_LABEL" rendered="true"
+																				styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_CORRES_COUNTRY$caption}" /></td>
+																		<td class="oddrow"><h:inputText
+																				id="CDU_CORRES_COUNTRY" maxlength="12"
+																				rendered="true" required="false"
+																				styleClass="inputsmall"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CORRES_COUNTRY}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CORRES_COUNTRY}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_3QW81" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputText> <rich:suggestionbox for="CDU_CORRES_COUNTRY"
+																				height="200" id="CDU_CORRES_COUNTRY_LOV"
+																				suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCDU_CORRES_COUNTRY}"
+																				var="panelCode" width="200">
+																				<h:column id="COLUMN_SUGG_1">
+																					<h:outputText id="AUTOID_851f"
+																						value="#{panelCode.code}" />
+																				</h:column>
+																				<h:column id="COLUMN_SUGG_2">
+																					<h:outputText id="AUTOID_86e"
+																						value="#{panelCode.name}" />
+																				</h:column>
+																				<a4j:support ajaxSingle="true" event="onselect"
+																					id="CDU_CORRES_COUNTRY_SUGG_SUPPORT"
+																					immediate="true"
+																					reRender="errorPanel,CDU_CORRES_COUNTRY_DESC">
+																					<f:setPropertyActionListener id="AUTOID_8XC71"
+																						target="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CORRES_COUNTRY_DESC}"
+																						value="#{panelCode.name}" />
+																				</a4j:support>
+																			</rich:suggestionbox> <h:inputText disabled="true"
+																				id="CDU_CORRES_COUNTRY_DESC" maxlength="30"
+																				rendered="true" required="false" styleClass="input"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CORRES_COUNTRY_DESC}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CORRES_COUNTRY_DESC}" />
+																			<h:graphicImage id="IMAGE_SUGG_3C01"
+																				styleClass="searchimg"
+																				value="./../../images/Lov.gif" /></td>
+																	</tr>
+																	<tr>
+																	<td class="evenrowright"><h:outputLabel
+																										binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CORRES_POST_NO_LABEL}"
+																										for="CDU_CORRES_POST_NO"
+																										id="CDU_CORRES_POST_NO_LABEL"
+																										rendered="true"
+																										styleClass="label"
+																										value="Postbox No.">
+																										
+																									</h:outputLabel></td>
+																								<td class="evenrow"><h:inputText
+																										binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CORRES_POST_NO}"
+																										id="CDU_CORRES_POST_NO" maxlength="30"
+																										rendered="true" styleClass="inputsmall"
+																										value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CORRES_POST_NO}">
+																										<a4j:support
+																											actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																											event="onblur" id="CDU_CORRES_POST_NO_style_3QS8"
+																											immediate="true"
+																											reRender="errorPanel" />
+																									</h:inputText></td>
+																	
+																	</tr>
+																	<tr>
+																		<!-- <td class="evenrowright"><h:outputLabel
+																										binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CUST_POSTAL_CODE_LABEL}"
+																										for="CUST_POSTAL_CODE"
+																										id="CUST_POSTAL_CODE_LABEL"
+																										rendered="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CUST_POSTAL_CODE.rendered}"
+																										styleClass="label"
+																										value="Postal Code">
+																										
+																									</h:outputLabel></td>
+																								<td class="evenrow"><h:inputText
+																										binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CUST_POSTAL_CODE}"
+																										id="CUST_POSTAL_CODE" maxlength="6"
+																										rendered="true" styleClass="inputsmall"
+																										title="#{message.PM006_A_APAC$PM_CUSTOMER$CUSTPOSTAL}"
+																										validator="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.validatorCUST_POSTAL_CODE}"
+																										value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CUST_POSTAL_CODE}">
+																										<a4j:support
+																											actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																											event="onblur" id="style_3QS8"
+																											immediate="true"
+																											oncomplete="setFoucs('PM_CUSTOMER:CUST_CITY_CODE','PM_CUSTOMER:CUST_POSTAL_CODE')"
+																											reRender="errorPanel,CUST_CITY_CODE_LOV,CUST_STATE_CODEE_LOV,UI_M_CUST_POSTAL_CODE_DESC" />
+																									</h:inputText> <rich:suggestionbox for="CUST_POSTAL_CODE"
+																										height="200" id="CUST_POSTAL_CODE_LOV"
+																										suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCUST_POSTAL_CODE}"
+																										var="panelCode" width="200">
+																										<h:column id="COLUMN_SUGG_1C_2">
+																											<h:outputText id="AUTOID_8WE5"
+																												value="#{panelCode.code}" />
+																										</h:column>
+																										<h:column id="COLUMN_SUGGX_2_3">
+																											<h:outputText id="AUTOID_8ZA6"
+																												value="#{panelCode.name}" />
+																										</h:column>
+																										<a4j:support ajaxSingle="true"
+																											event="onselect"
+																											id="CUST_POSTAL_CODE_DESC_SUGG_SUPPORT"
+																											immediate="true"
+																											reRender="errorPanel,UI_M_CUST_POSTAL_CODE_DESC">
+																											<f:setPropertyActionListener id="AUTOIDC_8C7"
+																												target="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CUST_POSTAL_CODE_DESC}"
+																												value="#{panelCode.name}" />
+																										</a4j:support>
+																									</rich:suggestionbox> <h:inputText
+																										binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_UI_M_CUST_POSTAL_CODE_DESC}"
+																										disabled="true"
+																										id="UI_M_CUST_POSTAL_CODE_DESC" maxlength="30"
+																										rendered="true" required="false"
+																										styleClass="input"
+																										value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CUST_POSTAL_CODE_DESC}" />
+																									<h:graphicImage id="IMAGE_SUGG_30"
+																										styleClass="searchimg"
+																										value="./../../images/Lov.gif" /></td>
+	<td class="evenrowright"></td>
+																								
+																								
+																							</tr> -->
+																		<tr>
+
+
+																			<td class="oddrowright"><h:outputLabel
+																					for="CDU_CORRES_PHONE" id="CDU_CORRES_PHONE_LABEL"
+																					rendered="true" styleClass="label"
+																					value="#{message.PILP134$CUST_DETL_UPD$CDU_CORRES_PHONE$caption}" /></td>
+																			<td class="oddrow"><h:inputText
+																			binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_TEL_AREA_CODE}"
+																					id="CUST_TEL_AREA_CODE" maxlength="12"
+																					disabled="false" rendered="true" required="false"
+																					styleClass="inputsmall"
+																					value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_TEL_AREA_CODE}">
+																					<a4j:support
+																						actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																						event="onblur" id="style_3FLSSA1" immediate="true"
+																						reRender="errorPanel" />
+																				</h:inputText> <h:inputText id="CDU_CORRES_PHONE" maxlength="15"
+																					rendered="true" required="false" styleClass="input"
+																					binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CORRES_PHONE}"
+																					value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CORRES_PHONE}">
+																					<a4j:support
+																						actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																						event="onblur" id="style_3FLS81" immediate="true"
+																						reRender="errorPanel" />
+																				</h:inputText></td>
+
+																		</tr>
+																		<tr>
+																			<td class="evenrowright"><h:outputLabel
+																					for="CDU_MOBILE_NO" id="CDU_MOBILE_NO_LABEL"
+																					rendered="true" styleClass="label"
+																					value="#{message.PILP134$CUST_DETL_UPD$CDU_MOBILE_NO$caption}" /></td>
+
+																			<td class="evenrow"><h:inputText
+																					id="CUST_TEL_AREA_CODE2" maxlength="12"
+																					disabled="false" rendered="true" required="false"
+																					styleClass="inputsmall"
+																					binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CUST_TEL_AREA_CODE2}"
+																					value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_TEL_AREA_CODE2}" />
+																				<h:inputText id="CDU_MOBILE_NO" maxlength="15"
+																					binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_MOBILE_NO}"
+																					rendered="true" required="false" styleClass="input"
+																					value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_MOBILE_NO}" />
+																			</td>
+
+																		</tr>
+																		<tr>
+
+																			<td class="oddrowright"><h:outputLabel
+																					for="CDU_CORRES_FAX" id="CUST_CDU_CORRES_FAX_LABEL"
+																					rendered="true" styleClass="label"
+																					value="#{message.PILP134$CUST_DETL_UPD$CDU_CORRES_FAX$caption}" />
+																			</td>
+																			<td class="oddrow"><h:inputText
+																					id="CUST_FAX_AREA_CODE" maxlength="12"
+																					disabled="false" rendered="true" required="false"
+																					styleClass="inputsmall"
+																					binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CUST_FAX_AREA_CODE}"
+																					value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_FAX_AREA_CODE}">
+																					<a4j:support
+																						actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																						event="onblur" id="FAX_AREA_CODE_STYLE" immediate="true"
+																						reRender="errorPanel" />
+																				</h:inputText> <h:inputText id="CDU_CORRES_FAX" maxlength="15"
+																					binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CORRES_FAX}"
+																					rendered="true" required="false" styleClass="input"
+																					value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CORRES_FAX}">
+																					<a4j:support
+																						actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																						event="onblur" id="style_3HJQS81" immediate="true"
+																						reRender="errorPanel" />
+																				</h:inputText></td>
+																		</tr>
+																		<tr>
+
+																			<td class="evenrowright"><h:outputLabel
+																					for="CUST_EMAIL_ID_PER"
+																					id="CUST_EMAIL_ID_PER_LABEL" rendered="true"
+																					styleClass="label"
+																					value="#{message.PILP134$CUST_DETL_UPD$CUST_EMAIL_ID_PER$caption}" /></td>
+																			<td class="evenrow"><h:inputText
+																					binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CUST_EMAIL_ID_PER}"
+																					id="CUST_EMAIL_ID_PER" maxlength="60"
+																					rendered="true" required="false"
+																					styleClass="input lengthfield"
+																					value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_EMAIL_ID_PER}"
+																					style=" width : 68%;">
+																					<f:validator validatorId="emailValidator" />
+																					<a4j:support
+																						actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																						event="onblur" id="style_312K111" immediate="true"
+																						reRender="errorPanel" />
+																				</h:inputText></td>
+
+
+																		</tr>
+																		<tr>
+
+																			<td class="oddrowright"><h:outputLabel
+																					for="CDU_CUST_MAR_STATUS"
+																					id="CDU_CUST_MAR_STATUS_LABEL" rendered="false"
+																					styleClass="label"
+																					value="#{message.PILP134$CUST_DETL_UPD$CDU_CUST_MAR_STATUS$caption}" /></td>
+																			<td class="oddrow"><h:inputText
+																					binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CUST_MAR_STATUS}"
+																					id="CDU_MAR_STATUS" maxlength="12" rendered="false"
+																					required="false" styleClass="inputsmall"
+																					value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_MAR_STATUS}">
+																					<a4j:support
+																						actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																						event="onblur" id="style_5ASD1" immediate="true"
+																						reRender="UI_M_CUST_MAR_STATUS_DESC,errorPanel" />
+																				</h:inputText> <rich:suggestionbox for="CDU_MAR_STATUS"
+																					height="200" id="CDU_MAR_STATUS_LIST"
+																					suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCUST_MAR_STATUS}"
+																					var="marStsCode" width="250">
+																					<h:column>
+																						<h:outputLabel value="#{marStsCode.code}" />
+																					</h:column>
+																					<h:column>
+																						<h:outputLabel value="#{marStsCode.name}" />
+																					</h:column>
+																					<a4j:support ajaxSingle="true" event="onselect"
+																						id="CDU_MAR_STATUS_DESC_SUGG_SUPPORT"
+																						immediate="true"
+																						reRender="errorPanel,CDU_MAR_STATUS_DESC">
+																						<f:setPropertyActionListener id="AUTOIDC_8C711"
+																							target="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_MAR_STATUS_DESC}"
+																							value="#{marStsCode.name}" />
+																					</a4j:support>
+																				</rich:suggestionbox> <h:inputText
+																					binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_MAR_STATUS_DESC}"
+																					disabled="true" id="CDU_MAR_STATUS_DESC"
+																					maxlength="240" rendered="false" required="false"
+																					styleClass="input"
+																					value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_MAR_STATUS_DESC}" />
+																				<h:graphicImage id="AUTOID_67"
+																					styleClass="searchimg" rendered="false"
+																					value="./../../resources/images/Lov.gif" /></td>
+
+
+																		</tr>
+																		<!-- added by gopi for ssp call id  ZBILQC-1733435 on 03/08/17-->
+																		<tr>					
+												<td class="evenrowright"><h:outputLabel
+													binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_AGE_ADMITTED_LABEL}"
+													for="CDU_AGE_ADMITTED" id="CDU_AGE_ADMITTED_LABEL"
+													rendered="false" styleClass="label"
+													value="#{message.PILP134$CUST_DETL_UPD$CDU_AGE_ADMITTED$caption}" />
+												</td>
+												<td class="evenrow"><h:selectOneMenu
+													binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_AGE_ADMITTED}"
+													id="CDU_AGE_ADMITTED" rendered="false" required="true"
+													styleClass="input"
+													
+													title="#{message.PILP134$CUST_DETL_UPD$CDU_AGE_ADMITTED$tooltip}"
+													
+													value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_AGE_ADMITTED}">
+													<f:selectItems id="SEL_ITEMS_CDU_AGE_ADMITTED"
+														value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.listCDU_AGE_ADMITTED}" />
+													<a4j:support
+														actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+														event="onblur" id="CDU_AGE_ADMITTED_a4jSupport"
+														immediate="true"
+														
+														reRender="errorPanel">
+													</a4j:support>
+												</h:selectOneMenu></td>
+										
+																		</tr>
+																		
+																		
+													<tr>				
+												<td class="oddrowright"><h:outputLabel
+													binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_AGE_PROOF_FLAG_LABEL}"
+													for="CDU_AGE_PROOF_FLAG" id="CDU_AGE_PROOF_FLAG_LABEL"
+													rendered="false" styleClass="label"
+													value="#{message.PILP134$CUST_DETL_UPD$CDU_AGE_PROOF_FLAG$caption}" />
+												</td>
+												<td class="oddrow"><h:selectOneMenu
+													binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_AGE_PROOF_FLAG}"
+													id="CDU_AGE_PROOF_FLAG" rendered="false" required="true"
+													styleClass="input"
+													
+													title="#{message.PILP134$CUST_DETL_UPD$CDU_AGE_PROOF_OTHERS$tooltip}"
+													validator="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CDU_AGE_PROOF_FLAG_WHEN_LIST_CHANGED}"
+													value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_AGE_PROOF_FLAG}">
+													<f:selectItems id="SEL_ITEMS_CDU_AGE_PROOF_FLAG"
+														value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.listCDU_AGE_PROOF_FLAG}" />
+													<a4j:support
+														actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+														event="onchange" id="CDU_AGE_PROOF_FLAG_a4jSupport"
+														immediate="true"
+												
+														reRender="errorPanel,CDU_AGE_PROOF_OTHERS,CDU_AGE_PROOF_OTHERS_MANDATORY">
+													</a4j:support>
+												</h:selectOneMenu>
+												</td>
+											
+														</tr>					
+																		
+																		<tr>
+																		
+												<td class="evenrowright"><h:outputLabel
+													binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_AGE_PROOF_OTHERS_LABEL}"
+													for="CDU_AGE_PROOF_OTHERS"
+													id="CDU_AGE_PROOF_OTHERS_LABEL" rendered="false"
+													styleClass="label"
+													value="#{message.PILP134$CUST_DETL_UPD$CDU_AGE_PROOF_OTHERS$caption}" />
+												<h:outputText id="CDU_AGE_PROOF_OTHERS_MANDATORY"
+													styleClass="searchimg" rendered="false"
+													value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_AGE_PROOF_OTHERS.required?'*':''}"
+													style="color:red;font-size:16px" /></td>
+												<td class="evenrow"><h:inputText
+													binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_AGE_PROOF_OTHERS}"
+													id="CDU_AGE_PROOF_OTHERS" maxlength="60" required="false"
+												
+													rendered="false" styleClass="input"
+													validator="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CDU_AGE_PROOF_OTHERS_VALIDATOR}"
+													title="#{message.PILP134$CUST_DETL_UPD$CDU_AGE_PROOF_OTHERS$tooltip}"
+													value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_AGE_PROOF_OTHERS}">
+													<a4j:support
+														actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+														event="onblur" id="CDU_AGE_PROOF_OTHERS_a4jSupport_1"
+							
+														immediate="true" reRender="errorPanel">
+													</a4j:support>
+												</h:inputText></td>
+											
+																		</tr>
+																		<!-- end -->
+																	</tr>
+
+																</table>
+
+															</td>
+															<td width="50%" style="float: left; width: 100%">
+																<table class="noborder" width="100%" cellpadding="0"
+																	cellspacing="0" style="float: left;">
+																	<tr>
+																	
+																	<!-- Change the required attribute on 24-03-2017 for ZBILQC-1721815 -->
+																		<td class="oddrowright" width="30%"><h:outputLabel
+																				for="CDU_BUS_ADDR1" id="CDU_BUS_ADDR1_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_BUS_ADDR1$caption}" /></td>
+																		<td class="oddrow"><h:inputText id="CUST_ADDR1"
+																				required="false" rendered="true"
+																				styleClass="input address"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_ADDR1}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_ADDR1}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_34" immediate="true"
+																					reRender="errorPanel" />
+
+																			</h:inputText></td>
+
+																	</tr>
+																	<tr>
+																		<td class="evenrowright"><h:outputLabel
+																				for="CDU_BUS_ADDR2" id="CDU_BUS_ADDR2_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_BUS_ADDR2$caption}" /></td>
+																		<td class="evenrow"><h:inputText
+																				id="CDU_BUS_ADDR2" rendered="true" required="false"
+																				styleClass="input address"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_ADDR2}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_ADDR2}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_36" immediate="true"
+																					reRender="errorPanel" />
+
+																			</h:inputText></td>
+																	</tr>
+																	<tr>
+																		<td class="oddrowright"><h:outputLabel
+																				for="CDU_BUS_ADDR3" id="CDU_BUS_ADDR3_LABEL1"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_BUS_ADDR3$caption}" /></td>
+																		<td class="oddrow"><h:inputText
+																				id="CDU_BUS_ADDR3" rendered="true" required="false"
+																				styleClass="input address"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_ADDR3}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_ADDR3}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_3832" immediate="true"
+																					reRender="errorPanel" />
+
+																			</h:inputText></td>
+
+																	</tr>
+
+																</table>
+																<table class="noborder" width="100%" cellpadding="0"
+																	cellspacing="0">
+																	<tr>
+																		<td class="evenrowright" width="30%"><h:outputLabel
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_CITY_CODE_LABEL}"
+																				for="CDU_BUS_CITY_CODE" id="CDU_BUS_CITY_CODE_LABEL"
+																				rendered="true" styleClass="label" value="City">
+
+																			</h:outputLabel></td>
+																		<td class="evenrow"><h:inputText
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_CITY_CODE}"
+																				id="CDU_BUS_CITY_CODE" maxlength="60" rendered="true"
+																				styleClass="inputsmall"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_CITY_CODE}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="CDU_BUS_CITY_CODE_style" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputText> <rich:suggestionbox for="CDU_BUS_CITY_CODE"
+																				height="200" id="CDU_BUS_CITY_CODE_LOV"
+																				suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCDU_CORRES_CITY_CODE}"
+																				var="panelCode" width="200">
+																				<h:column id="COLUMN_SUGG_1AQC_2">
+																					<h:outputText id="AUTOID_8WE5"
+																						value="#{panelCode.code}" />
+																				</h:column>
+																				<h:column id="COLUMN_SUGGX_Z2_3">
+																					<h:outputText id="AUTOAID_8ZA6"
+																						value="#{panelCode.name}" />
+																				</h:column>
+																				<a4j:support ajaxSingle="true" event="onselect"
+																					id="CDU_BUS_CITY_CODE_DESC_SUGG_SUPPORT"
+																					immediate="true" reRender="errorPanel,CDU_BUS_CITY_CODE_DESC">
+																					<f:setPropertyActionListener id="CDU_BUS_CITY_CODE_AUTOIDC_8C7"
+																						target="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_CITY_CODE_DESC}"
+																						value="#{panelCode.name}" />
+																				</a4j:support>
+																			</rich:suggestionbox> <h:inputText
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_CITY_CODE_DESC}"
+																				disabled="true" id="CDU_BUS_CITY_CODE_DESC" maxlength="30"
+																				rendered="true" required="false" styleClass="input"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_CITY_CODE_DESC}" />
+																			<h:graphicImage id="IMAGE_SUGG_CDU_BUS_CITY_CODE"
+																				styleClass="searchimg"
+																				value="./../../images/Lov.gif" /></td>
+
+																	</tr>
+
+																	<tr>
+																		<td class="oddrowright" width="30%"><h:outputLabel
+																				for="CDU_BUS_COUNTRY" id="CDU_BUS_COUNTRY_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_BUS_COUNTRY$caption}" />
+																		</td>
+																		<td class="oddrow"><h:inputText
+																				id="CDU_BUS_COUNTRY" maxlength="12" rendered="true"
+																				required="false" styleClass="inputsmall"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_COUNTRY}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_COUNTRY}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_3QW8" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputText> <rich:suggestionbox for="CDU_BUS_COUNTRY"
+																				height="200" id="CDU_BUS_COUNTRY_LOV"
+																				suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCDU_CORRES_COUNTRY}"
+																				var="panelCode" width="200">
+																				<h:column id="COLUMN_SUGG_1">
+																					<h:outputText id="AUTOID_851f"
+																						value="#{panelCode.code}" />
+																				</h:column>
+																				<h:column id="COLUMN_SUGG_2">
+																					<h:outputText id="AUTOID_86e"
+																						value="#{panelCode.name}" />
+																				</h:column>
+																				<a4j:support ajaxSingle="true" event="onselect"
+																					id="CDU_BUS_COUNTRY_SUGG_SUPPORT" immediate="true"
+																					reRender="errorPanel,CDU_BUS_COUNTRY_DESC">
+																					<f:setPropertyActionListener id="AUTOID_8XC7"
+																						target="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_COUNTRY_DESC}"
+																						value="#{panelCode.name}" />
+																				</a4j:support>
+																			</rich:suggestionbox> <h:inputText disabled="true"
+																				id="CDU_BUS_COUNTRY_DESC" maxlength="30"
+																				rendered="true" required="false" styleClass="input"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_COUNTRY_DESC}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_COUNTRY_DESC}" />
+																			<h:graphicImage id="IMAGE_SUGG_3C0"
+																				styleClass="searchimg"
+																				value="./../../images/Lov.gif" /></td>
+																	</tr>
+																	<tr>
+																								<td class="evenrowright"><h:outputLabel
+																										binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_PHY_POST_NO_LABEL}"
+																										for="CDU_PHY_POST_NO"
+																										id="CDU_PHY_POST_NO_LABEL"
+																										rendered="true"
+																										styleClass="label"
+																										value="Postbox No.">
+																										<!-- <h:outputText id="mandatory6"
+																											value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CUST_POSTAL_CODE.required ? '*':''}"
+																											styleClass="mandatory" /> -->
+																									</h:outputLabel></td>
+																								<td class="evenrow"><h:inputText
+																										binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_PHY_POST_NO}"
+																										id="CDU_PHY_POST_NO" maxlength="30"
+																										rendered="true" styleClass="inputsmall"
+																										value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_PHY_POST_NO}">
+																										<a4j:support
+																											actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																											event="onblur" id="CDU_PHY_POST_NO_style_3QS8"
+																											immediate="true"
+																											reRender="errorPanel" />
+																									</h:inputText><!--  <rich:suggestionbox for="CUST_POSTAL_CODE"
+																										height="200" id="CUST_POSTAL_CODE_LOV"
+																										suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCUST_POSTAL_CODE}"
+																										var="panelCode" width="200">
+																										<h:column id="COLUMN_SUGG_1C_2">
+																											<h:outputText id="AUTOID_8WE5"
+																												value="#{panelCode.code}" />
+																										</h:column>
+																										<h:column id="COLUMN_SUGGX_2_3">
+																											<h:outputText id="AUTOID_8ZA6"
+																												value="#{panelCode.name}" />
+																										</h:column>
+																										<a4j:support ajaxSingle="true"
+																											event="onselect"
+																											id="CUST_POSTAL_CODE_DESC_SUGG_SUPPORT"
+																											immediate="true"
+																											reRender="errorPanel,UI_M_CUST_POSTAL_CODE_DESC">
+																											<f:setPropertyActionListener id="AUTOIDC_8C7"
+																												target="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CUST_POSTAL_CODE_DESC}"
+																												value="#{panelCode.name}" />
+																										</a4j:support>
+																									</rich:suggestionbox> <h:inputText
+																										binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_UI_M_CUST_POSTAL_CODE_DESC}"
+																										disabled="true"
+																										id="UI_M_CUST_POSTAL_CODE_DESC" maxlength="30"
+																										rendered="true" required="false"
+																										styleClass="input"
+																										value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CUST_POSTAL_CODE_DESC}" />
+																									<h:graphicImage id="IMAGE_SUGG_30"
+																										styleClass="searchimg"
+																										value="./../../images/Lov.gif" /> --></td>
+	<td class="evenrowright"></td>
+																								
+																							</tr> 
+																	<tr>
+																		<td class="oddrowright"><h:outputLabel
+																				for="CDU_BUS_PHONE" id="CDU_BUS_PHONE_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_BUS_PHONE$caption}" /></td>
+																		<td class="oddrow"><h:inputText
+																				id="CUST_BUS_TEL_AREA_CODE" maxlength="12"
+																				disabled="false" rendered="true" required="false"
+																				styleClass="inputsmall"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CUST_BUS_TEL_AREA_CODE}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_TEL_AREA_CODE}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidationTextArea}"
+																					event="onblur" id="style_3FLSSA" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputText> <h:inputText id="CDU_BUS_PHONE" maxlength="15"
+																				rendered="true" required="false" styleClass="input"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_PHONE}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_PHONE}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_3FLS8" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputText></td>
+
+																	</tr>
+																	<tr>
+																		<td class="evenrowright"><h:outputLabel
+																				for="CDU_BUS_MOBILE_NO" id="CDU_BUS_MOBILE_NO_LABEL"
+																				rendered="true" styleClass="label"
+																				value="Mobile Phone" /></td>
+
+																		<td class="evenrow"><h:inputText
+																				id="CUST_BUS_TEL_AREA_CODE2" maxlength="12"
+																				disabled="false" rendered="true" required="false"
+																				styleClass="inputsmall"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CUST_BUS_TEL_AREA_CODE2}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_TEL_AREA_CODE2}"/>
+																			<h:inputText id="CDU_BUS_MOBILE_NO" maxlength="15"
+																				rendered="true" required="false" styleClass="input"
+																					binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_MOBILE_NO}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_MOBILE_NO}" />
+																		</td>
+
+																	</tr> 
+																	<tr>
+
+
+																		<td class="oddrowright"><h:outputLabel
+																				for="CDU_BUS_FAX" id="CDU_BUS_FAX_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_BUS_FAX$caption}" />
+																		</td>
+																		<td class="oddrow"><h:inputText
+																				id="BUS_CUST_FAX_AREA_CODE" maxlength="12"
+																				disabled="false" rendered="true" required="false"
+																				styleClass="inputsmall"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_BUS_CUST_FAX_AREA_CODE}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_FAX_AREA_CODE}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="CDU_BUS_FAX_style_312311" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputText> <h:inputText id="CDU_BUS_FAX" maxlength="15"
+																				rendered="true" required="false" styleClass="input"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_FAX}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_FAX}">
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_3HJQS8" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputText></td>
+																	</tr>
+																	<tr>
+																		<td class="evenrowright"><h:outputLabel
+																				for="CUST_EMAIL_ID_OFF" id="CUST_EMAIL_ID_OFF_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CUST_EMAIL_ID_OFF$caption}" /></td>
+																		<td class="evenrow"><h:inputText
+																				id="CUST_EMAIL_ID_OFF" maxlength="60"
+																				rendered="true" required="false"
+																				styleClass="input lengthfield"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CUST_EMAIL_ID_OFF}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_EMAIL_ID_OFF}"
+																				style=" width : 68%;">
+																				<f:validator validatorId="emailValidator" />
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_312K11" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputText></td>
+
+
+
+
+																	</tr>
+																	<!-- Added by Ameen on 07-05-2018 for KIC as per Sreeram sir sugg.-->
+																	<tr>
+																		<td class="oddrowright"><h:outputLabel
+																				for="CDU_CUST_OCC_CODE" id="CDU_CUST_OCC_CODE_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_CUST_OCC_CODE$caption}" /></td>
+																		<td class="oddrow"><h:inputText
+																				id="CDU_CUST_OCC_CODE" maxlength="60" rendered="true" 
+																				required="false" styleClass="inputsmall"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CUST_OCC_CODE}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CUST_OCC_CODE}">
+																				
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_11" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputText>
+																			<rich:suggestionbox for="CDU_CUST_OCC_CODE"
+																					height="200" id="CDU_CUST_OCC_CODE_SUGG"
+																					suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCUST_OCC_CODE}"
+																					var="occCode" width="250">
+																					<h:column>
+																						<h:outputLabel value="#{occCode.code}" />
+																					</h:column>
+																					<h:column>
+																						<h:outputLabel value="#{occCode.name}" />
+																					</h:column>
+																					<a4j:support ajaxSingle="true" event="onselect"
+																						id="CDU_CUST_OCC_CODE_SUPPORT" immediate="true"
+																						reRender="errorPanel,UI_M_CDU_CUST_OCC_CODE_DESC">
+																						<f:setPropertyActionListener id="AUTOID_034"
+																							target="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CDU_CUST_OCC_CODE_DESC}"
+																							value="#{occCode.name}" />
+																					</a4j:support>
+																				</rich:suggestionbox>
+																			<h:inputText
+																				id="UI_M_CDU_CUST_OCC_CODE_DESC" maxlength="60" rendered="true" 
+																				required="false" styleClass="input" disabled="true"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_UI_M_CDU_CUST_OCC_CODE_DESC}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CDU_CUST_OCC_CODE_DESC}">
+																			</h:inputText></td>
+																	</tr>
+																	<tr>
+																		<td class="evenrowright"><h:outputLabel
+																				for="CDU_CUST_NATIONALITY_CODE" id="CDU_CUST_NATIONALITY_CODE_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_CUST_NATIONALITY_CODE$caption}" /></td>
+																		<td class="evenrow"><h:inputText
+																				id="CDU_CUST_NATIONALITY_CODE" maxlength="60" rendered="true" 
+																				required="false" styleClass="inputsmall"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CUST_NATIONALITY_CODE}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CUST_NATIONALITY_CODE}">
+
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_211" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputText>
+																			<rich:suggestionbox for="CDU_CUST_NATIONALITY_CODE"
+																					height="200" id="CDU_CUST_NATIONALITY_CODE_SUGG"
+																					suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCUST_NATIONALITY_CODE}"
+																					var="natnCode" width="250">
+																					<h:column>
+																						<h:outputLabel value="#{natnCode.code}" />
+																					</h:column>
+																					<h:column>
+																						<h:outputLabel value="#{natnCode.name}" />
+																					</h:column>
+																					<a4j:support ajaxSingle="true" event="onselect"
+																						id="UI_M_CDU_CUST_NATIONALITY_CODE_DESC_SUPPORT" immediate="true"
+																						reRender="errorPanel,UI_M_CDU_CUST_NATIONALITY_CODE_DESC">
+																						<f:setPropertyActionListener id="AUTOID_034"
+																							target="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CDU_CUST_NATIONALITY_CODE_DESC}"
+																							value="#{natnCode.name}" />
+																					</a4j:support>
+																				</rich:suggestionbox>
+																			<h:inputText
+																				id="UI_M_CDU_CUST_NATIONALITY_CODE_DESC" maxlength="60" rendered="true" 
+																				required="false" styleClass="input" disabled="true"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_UI_M_CDU_CUST_NATIONALITY_CODE_DESC}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CDU_CUST_NATIONALITY_CODE_DESC}">
+
+																			</h:inputText></td>
+																	</tr>
+																	<tr>
+																		<td class="oddrowright"><h:outputLabel
+																				for="CDU_CUST_REMARKS" id="CDU_CUST_REMARKS_LABEL"
+																				rendered="true" styleClass="label"
+																				value="#{message.PILP134$CUST_DETL_UPD$CDU_CUST_REMARKS$caption}" /></td>
+																		<td class="oddrow"><h:inputTextarea
+																				id="CDU_CUST_REMARKS"
+																				rendered="true" required="false" styleClass="input"
+																				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CUST_REMARKS}"
+																				value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CUST_REMARKS}">
+
+																				<a4j:support
+																					actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																					event="onblur" id="style_011" immediate="true"
+																					reRender="errorPanel" />
+																			</h:inputTextarea></td>
+
+
+
+
+																	</tr>
+																	<!-- End -->
+																	<!-- 
+																						added by gopi for ssp call id  ZBILQC-1733435 on 03/08/17
+																		<tr>
+																		
+												<td class="oddrowright"><h:outputLabel
+													binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_AGE_ADMITTED_LABEL}"
+													for="CDU_BUS_AGE_ADMITTED" id="CDU_BUS_AGE_ADMITTED_LABEL"
+													rendered="false" styleClass="label"
+													value="#{message.PILP134$CUST_DETL_UPD$CDU_BUS_AGE_ADMITTED$caption}" />
+												</td>
+												<td class="evenrow"><h:selectOneMenu
+													binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_AGE_ADMITTED}"
+													id="CDU_BUS_AGE_ADMITTED" rendered="false" required="true"
+													styleClass="input"
+													
+													title="#{message.PILP134$CUST_DETL_UPD$CDU_BUS_AGE_ADMITTED$tooltip}"
+													
+													value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_AGE_ADMITTED}">
+													<f:selectItems id="SEL_ITEMS_CDU_BUS_AGE_ADMITTED"
+														value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.listCDU_BUS_AGE_ADMITTED}" />
+													<a4j:support
+														actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+														event="onblur" id="CDU_BUS_AGE_ADMITTED_a4jSupport"
+														immediate="true"
+														
+														reRender="errorPanel">
+													</a4j:support>
+												</h:selectOneMenu></td>
+										
+																		</tr>
+																			<tr>				
+												<td class="oddrowright"><h:outputLabel
+													binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_AGE_PROOF_FLAG_LABEL}"
+													for="CDU_BUS_AGE_PROOF_FLAG" id="CDU_BUS_AGE_PROOF_FLAG_LABEL"
+													rendered="false" styleClass="label"
+													value="#{message.PILP134$CUST_DETL_UPD$CDU_BUS_AGE_PROOF_FLAG$caption}" />
+												</td>
+												<td class="evenrow"><h:selectOneMenu
+													binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_AGE_PROOF_FLAG}"
+													id="CDU_BUS_AGE_PROOF_FLAG" rendered="false" required="true"
+													styleClass="input"
+													
+													title="#{message.PILP134$CUST_DETL_UPD$CDU_BUS_AGE_PROOF_FLAG$tooltip}"
+													validator="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CDU_BUS_AGE_PROOF_FLAG_WHEN_LIST_CHANGED}"
+													value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_AGE_PROOF_FLAG}">
+													<f:selectItems id="SEL_ITEMS_CDU_BUS_AGE_PROOF_FLAG"
+														value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.listCDU_BUS_AGE_PROOF_FLAG}" />
+													<a4j:support
+														actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+														event="onchange" id="CDU_BUS_AGE_PROOF_FLAG_a4jSupport"
+														immediate="true"
+												
+														reRender="errorPanel,CDU_BUS_AGE_PROOF_OTHERS,CDU_BUS_AGE_PROOF_OTHERS_MANDATORY">
+													</a4j:support>
+												</h:selectOneMenu>
+												</td>
+											
+														</tr>					
+																		
+																<tr>
+																		
+												<td class="oddrowright"><h:outputLabel
+													binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_AGE_PROOF_OTHERS_LABEL}"
+													for="CDU_BUS_AGE_PROOF_OTHERS"
+													id="CDU_BUS_AGE_PROOF_OTHERS_LABEL" rendered="false"
+													styleClass="label"
+													value="#{message.PILP134$CUST_DETL_UPD$CDU_BUS_AGE_PROOF_OTHERS$caption}" />
+												<h:outputText id="CDU_BUS_AGE_PROOF_OTHERS_MANDATORY"
+													styleClass="searchimg" rendered="false"
+													value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_AGE_PROOF_OTHERS.required?'*':''}"
+													style="color:red;font-size:16px" /></td>
+												<td class="evenrow"><h:inputText
+													binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_BUS_AGE_PROOF_OTHERS}"
+													id="CDU_BUS_AGE_PROOF_OTHERS" maxlength="60" required="false"
+												
+													rendered="false" styleClass="input"
+													validator="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CDU_BUS_AGE_PROOF_OTHERS_VALIDATOR}"
+													title="#{message.PILP134$CUST_DETL_UPD$CDU_BUS_AGE_PROOF_OTHERS$tooltip}"
+													value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_BUS_AGE_PROOF_OTHERS}">
+													<a4j:support
+														actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+														event="onblur" id="CDU_BUS_AGE_PROOF_OTHERS_a4jSupport_1"
+							
+														immediate="true" reRender="errorPanel">
+													</a4j:support>
+												</h:inputText></td>
+											
+																		</tr>		
+																		
+																		
+																		end
+																	
+																	
+																 -->	
+																	<!-- <tr>
+																								
+																								<td class="oddrowright"><h:outputLabel
+																										binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CUST_MAR_STATUS_LABEL}"
+																										for="CDU_CUST_MAR_STATUS"
+																										id="CDU_CUST_MAR_STATUS_LABEL" rendered="true"
+																										styleClass="label"
+																										value="Marital status" /></td>
+																								<td class="oddrow"><h:inputText
+																										binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CUST_MAR_STATUS}"
+																										id="CDU_CUST_MAR_STATUS" maxlength="60"
+																										rendered="true" required="false"
+																										styleClass="input lengthfield"
+																										value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_CUST_MAR_STATUS}">
+																									
+																										<a4j:support
+																											actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																											event="onblur" id="style_31211"
+																											immediate="true" reRender="errorPanel" />
+																									</h:inputText></td>
+													
+														<td class="evenrowright"></td>
+																							</tr> -->
+																</table>
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+											<tr>
+												<td class="evenrowright"></td>
+												<td class="evenrowright"></td>
+												<td class="evenrowright"></td>
+											</tr>
+
+										</table>
+									</td>
+								</tr>
+								<tr>
+									<td>
+									<!-- Added by Ameen on 30-04-2018 for KIC enabling 3rd address fields -->
+										<rich:simpleTogglePanel binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CDU_OTH_ADDR_TOGGLE}"
+																	id="TOG_CDU_OTH_ADDR" label="Other Address"
+																	switchType="client" opened="false">
+																	
+												<table class="noborder" width="100%">
+												<tr>
+												<td class="oddrowright" width="30%">
+												<h:outputLabel
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_ADDR1_LABEL}"
+															for="CDU_OTH_ADDR1" id="CDU_OTH_ADDR1_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP134$CUST_DETL_UPD$CDU_OTH_ADDR1$caption}"/>
+												</td>
+												<td class="oddrowright">
+														<h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_ADDR1}"
+															id="CDU_OTH_ADDR1" maxlength="200" required="false"
+															rendered="true" styleClass="input"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_ADDR1}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_01" immediate="true"
+																reRender="errorPanel" />
+														</h:inputText>
+												</td>
+												<td class="oddrowright" width="30%">
+												<h:outputLabel
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_ADDR2_LABEL}"
+															for="CDU_OTH_ADDR2" id="CDU_OTH_ADDR2_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP134$CUST_DETL_UPD$CDU_OTH_ADDR2$caption}" />
+												</td>
+												<td class="oddrowright">
+													<h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_ADDR2}"
+															id="CDU_OTH_ADDR2" maxlength="200" required="false"
+															rendered="true" styleClass="input"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_ADDR2}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_02" immediate="true"
+																reRender="errorPanel" />
+													</h:inputText>
+												</td>
+												</tr>
+												<tr>
+												<td class="evenrowright">
+												<h:outputLabel
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_ADDR3_LABEL}"
+															for="CDU_OTH_ADDR3" id="CDU_OTH_ADDR3_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP134$CUST_DETL_UPD$CDU_OTH_ADDR3$caption}" />
+												</td>
+												<td class="evenrowright">
+												 <h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_ADDR3}"
+															id="CDU_OTH_ADDR3" maxlength="200" required="false"
+															rendered="true" styleClass="input cust_address"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_ADDR3}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_0301" immediate="true"
+																reRender="errorPanel" />
+												</h:inputText>
+												</td>
+												<td class="evenrowright">
+														<h:outputLabel
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_CITY_CODE_LABEL}"
+															for="CDU_OTH_CITY_CODE" id="CDU_OTH_CITY_CODE_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILP134$CUST_DETL_UPD$CDU_OTH_CITY_CODE$caption}">
+														</h:outputLabel>
+												</td>
+												<td class="evenrowright">
+														<h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_CITY_CODE}"
+															id="CDU_OTH_CITY_CODE" maxlength="200" rendered="true"
+															styleClass="inputsmall" required="false"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_CITY_CODE}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_051" immediate="true"
+																reRender="errorPanel,CDU_OTH_CITY_CODE_LOV" />
+														</h:inputText> 
+														<rich:suggestionbox for="CDU_OTH_CITY_CODE"
+																										height="200" id="CDU_OTH_CITY_CODE_LOV"
+																										suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCDU_OTH_CITY_CODE}"
+																										var="panelCode" width="200">
+																										<h:column id="COLUMN_SUGG_CITY_C01">
+																											<h:outputText id="AUTOID_C05"
+																												value="#{panelCode.code}" />
+																										</h:column>
+																										<h:column id="COLUMN_SUGGX_CITY_C02">
+																											<h:outputText id="AUTOAID_C06"
+																												value="#{panelCode.name}" />
+																										</h:column>
+																										<a4j:support ajaxSingle="true"
+																											event="onselect"
+																											id="CDU_OTH_CITY_DESC_SUGG_SUPPORT1"
+																											immediate="true"
+																											reRender="errorPanel,CDU_OTH_CITY_DESC">
+																											<f:setPropertyActionListener
+																												id="CDU_OTH_CITY_DESC_01"
+																												target="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_CITY_DESC}"
+																												value="#{panelCode.name}" />
+																										</a4j:support>
+																									</rich:suggestionbox> <h:inputText
+																binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_CITY_DESC}"
+																disabled="true" id="CDU_OTH_CITY_DESC" maxlength="30"
+																rendered="true" required="false" styleClass="input"
+																value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_CITY_DESC}" />
+																<h:graphicImage id="IMAGE_SUGG_C01" styleClass="searchimg"
+																value="./../../resources/images/Lov.gif" />
+														</td>
+														</tr>
+														<tr>
+														<td class="oddrowright">
+															<h:outputLabel
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_COUNTRY_LABEL}"
+															for="CDU_OTH_COUNTRY" id="CDU_OTH_COUNTRY_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILP134$CUST_DETL_UPD$CDU_OTH_COUNTRY$caption}" />
+												</td>
+												<td class="oddrowright">
+														<h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_COUNTRY}"
+															id="CDU_OTH_COUNTRY" maxlength="12" rendered="true"
+															required="false" styleClass="inputsmall"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_COUNTRY}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_06" immediate="true"
+																reRender="errorPanel,CDU_OTH_COUNTRY_LOV" />
+														</h:inputText> <rich:suggestionbox for="CDU_OTH_COUNTRY"
+																										height="200" id="CDU_OTH_COUNTRY_LOV"
+																										suggestionAction="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.lovCDU_OTH_COUNTRY}"
+																										var="panelCode" width="200">
+																										<h:column id="COLUMN_SUGG_C01">
+																											<h:outputText id="AUTOID_C8"
+																												value="#{panelCode.code}" />
+																										</h:column>
+																										<h:column id="COLUMN_SUGG_C02">
+																											<h:outputText id="AUTOID_C86"
+																												value="#{panelCode.name}" />
+																										</h:column>
+																										<a4j:support ajaxSingle="true"
+																											event="onselect"
+																											id="CDU_OTH_COUNTRY_SUPPORT"
+																											immediate="true"
+																											reRender="errorPanel,UI_M_CDU_OTH_COUNTRY_DESC">
+																											<f:setPropertyActionListener id="AUTOID_C7"
+																												target="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CDU_OTH_COUNTRY_DESC}"
+																												value="#{panelCode.name}" />
+																										</a4j:support>
+																									</rich:suggestionbox> <h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_UI_M_CDU_OTH_COUNTRY_DESC}"
+															disabled="true" id="UI_M_CDU_OTH_COUNTRY_DESC" maxlength="30"
+															rendered="true" required="false" styleClass="input"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CDU_OTH_COUNTRY_DESC}" />
+														<h:graphicImage id="IMAGE_SUGG_C02" styleClass="searchimg"
+															value="./../../resources/images/Lov.gif" />
+															</td>
+												<td class="oddrowright">
+												<h:outputLabel
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_MOBILE_NO_LABEL}"
+															for="CDU_OTH_MOBILE_NO" id="CDU_OTH_MOBILE_NO_LABEL"
+															styleClass="label"
+															value="#{message.PILP134$CUST_DETL_UPD$CDU_OTH_MOBILE_NO$caption}">
+														</h:outputLabel>
+														</td>
+														<td class="oddrowright">
+														
+														<h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_TEL_AREA_CODE}"
+															id="CUST_CORR_TEL_AREA_CODE" maxlength="20" rendered="true"
+															styleClass="inputsmall" required="false"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_TEL_AREA_CODE}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_C10" immediate="true"
+																reRender="errorPanel" />
+														
+														</h:inputText>
+
+														<h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_MOBILE_NO}"
+															id="CDU_OTH_MOBILE_NO" maxlength="20" rendered="true"
+															styleClass="input" required="false"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_MOBILE_NO}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_C11" immediate="true"
+																reRender="errorPanel" />
+														
+														</h:inputText></td>
+														</tr>
+												<tr>
+												<td class="evenrowright">
+												<h:outputLabel
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_POST_NO_LABEL}"
+															for="CDU_OTH_POST_NO" id="CDU_OTH_POST_NO_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP134$CUST_DETL_UPD$CDU_OTH_POST_NO$caption}" />
+															
+												</td>
+												<td class="evenrowright">
+														<h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_POST_NO}"
+															id="CDU_OTH_POST_NO" maxlength="30" rendered="true"
+															required="false" styleClass="input"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_POST_NO}" >
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_C112" immediate="true"
+																reRender="errorPanel" />
+														</h:inputText>
+												</td>
+												<td class="evenrowright">
+
+												<h:outputLabel
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_EMAIL_ID_OTH_LABEL}"
+															for="CDU_EMAIL_ID_OTH" id="CDU_EMAIL_ID_OTH_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP134$CUST_DETL_UPD$CDU_EMAIL_ID_OTH$caption}" />
+												</td> 
+												<td class="evenrowright">
+												<h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_EMAIL_ID_OTH}"
+															id="CDU_EMAIL_ID_OTH" 
+															rendered="true" required="false" styleClass="input" style="width :210px"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_EMAIL_ID_OTH}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_C012" immediate="true"
+																reRender="errorPanel" />
+														</h:inputText> 
+												</td>
+												</tr>
+												<tr>
+												<td class="oddrowright">
+												<h:outputLabel
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_PHONE_LABEL}"
+															for="CDU_OTH_PHONE" id="CDU_OTH_PHONE_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILP134$CUST_DETL_UPD$CDU_OTH_PHONE$caption}" />
+												</td>
+												<td class="oddrowright">
+													<h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_TEL_AREA_CODE2}"
+															id="CDU_OTH_TEL_AREA_CODE2" maxlength="15" rendered="true"
+															required="false" styleClass="inputsmall"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_TEL_AREA_CODE2}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_C13" immediate="true"
+																reRender="errorPanel" />
+
+														</h:inputText>
+														<h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_PHONE}"
+															id="CDU_OTH_PHONE" maxlength="12" 
+															rendered="true" required="false" styleClass="input"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_PHONE}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_C12" immediate="true"
+																reRender="errorPanel" />
+														</h:inputText> 
+												</td>
+												<td class="oddrowright">
+
+												<h:outputLabel
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_FAX_LABEL}"
+															for="CDU_OTH_FAX" id="CDU_OTH_FAX_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.PILP134$CUST_DETL_UPD$CDU_OTH_FAX$caption}" />
+															
+												</td>
+												<td class="oddrowright">
+														<h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_FAX_AREA_CODE}"
+															id="CDU_OTH_FAX_AREA_CODE" maxlength="60" rendered="true"
+															required="false" styleClass="inputsmall"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_FAX_AREA_CODE}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_C18" immediate="true"
+																reRender="errorPanel" />
+														</h:inputText>
+														
+														<h:inputText
+															binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_OTH_FAX}"
+															id="CDU_OTH_FAX" maxlength="60" rendered="true"
+															required="false" styleClass="input"
+															value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.CDU_OTH_FAX}">
+															<a4j:support
+																actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_C14" immediate="true"
+																reRender="errorPanel" />
+														</h:inputText>
+														</td>
+														</tr>
+														
+														<tr>
+												
+															<td class="evenrowright">
+															<h:outputLabel
+															id="CDU_CORRES_LABEL" rendered="true" styleClass="label"
+															value="Communication Address" />
+															</td>
+															<td class="evenrowright">
+															<h:selectBooleanCheckbox 
+																binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CDU_CORRES}"
+																id="CDU_CORRES" title="Other"
+																value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.CUST_DTL_UPD_BEAN.UI_M_CDU_COMM_COR_ADDR_FLG}">
+																<a4j:support
+																	actionListener="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.communicationAddrOther}"
+																	event="onclick" id="style_A36" immediate="true"
+																	reRender="CDU_OFFICE,CDU_RESIDENCE" />
+															</h:selectBooleanCheckbox>
+																
+															</td>
+															
+												<td class="evenrow">&nbsp;</td>
+												<td class="evenrowright">&nbsp;</td>
+														</tr>
+														
+											</table>
+										</rich:simpleTogglePanel>
+										<!-- End -->
+									</td>
+								</tr>
+								<tr>
+
+									<td valign="top" width="100%"><h:panelGroup id="GHLH"
+											style="border:0;height:15%;">
+											<table align="left" class="noborder" id="bordertable"
+												width="100%">
+												<tr>
+													<td colspan="5"><rich:panel
+															style="width:100%;overflow:auto">
+															<rich:dataTable
+																binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.dataTable}"
+																id="PT_IL_POL_BENEFICIARY_DATA_GRID" rows="5"
+																value="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.dataList_CUST_DTL_UPD}"
+																var="tableVar" width="100%">
+																<rich:column filterBy="#{tableVar.POL_NO}"
+																	filterEvent="onkeyup" id="COLUMN_POL_NO"
+																	rendered="true" sortBy="#{tableVar.POL_NO}">
+																	<f:facet name="header">
+																		<h:outputText id="COLUMN_CAPTION_POL_NO"
+																			styleClass="forumRowHighlight"
+																			value="#{message.PILP134$CUST_DETL_UPD$COLUMN_POL_NO$caption}" />
+																	</f:facet>
+																	<h:outputText id="LINK_CAPTION_POL_NO"
+																		value="#{tableVar.POL_NO}" />
+																</rich:column>
+																<rich:column filterBy="#{tableVar.POL_STATUS}"
+																	filterEvent="onkeyup" id="COLUMN_POL_STATUS"
+																	rendered="true" sortBy="#{tableVar.POL_STATUS}">
+																	<f:facet name="header">
+																		<h:outputText id="COLUMN_CAPTION_POL_STATUS"
+																			styleClass="forumRowHighlight"
+																			value="#{message.PILP134$CUST_DETL_UPD$COLUMN_POL_STATUS$caption}" />
+																	</f:facet>
+																	<h:outputText id="LINK_CAPTION_POL_STATUS"
+																		value="#{tableVar.POL_STATUS}" />
+																</rich:column>
+																<rich:column filterBy="#{tableVar.POL_PROD_CODE}"
+																	filterEvent="onkeyup" id="COLUMN_POL_PROD_CODE"
+																	rendered="true" sortBy="#{tableVar.POL_PROD_CODE}">
+																	<f:facet name="header">
+																		<h:outputText id="COLUMN_CAPTION_POL_PROD_CODE"
+																			styleClass="forumRowHighlight"
+																			value="#{message.PILP134$CUST_DETL_UPD$COLUMN_POL_PROD_CODE$caption}" />
+																	</f:facet>
+																	<h:outputText id="LINK_CAPTION_POL_PROD_CODE"
+																		value="#{tableVar.POL_PROD_CODE}" />
+																</rich:column>
+																	<rich:column filterBy="#{tableVar.CUST_TYPE}"
+																	filterEvent="onkeyup" id="COLUMN_CUST_TYPE"
+																	rendered="true" sortBy="#{tableVar.CUST_TYPE}">
+																	<f:facet name="header">
+																		<h:outputText id="COLUMN_CAPTION_CUST_TYPE"
+																			styleClass="forumRowHighlight"
+																			value="#{message.PILP134$CUST_DETL_UPD$COLUMN_CAPTION_CUST_TYPE$caption}" />
+																	</f:facet>
+																	<h:outputText id="LINK_CAPTION_CUST_TYPE"
+																		value="#{tableVar.CUST_TYPE}" />
+																</rich:column>
+																<f:facet name="footer">
+																	<h:panelGroup id="footerpanel" style="border:0">
+																		<rich:datascroller align="right" />
+																	</h:panelGroup>
+																</f:facet>
+															</rich:dataTable>
+														</rich:panel></td>
+												</tr>
+												<tr>
+
+												</tr>
+											</table>
+										</h:panelGroup></td>
+
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+							<table class="noborder" id="toolbartable" width="100%">
+								<tr>
+									<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+											<rich:toolBarGroup location="right"
+												styleClass="toolBarGroupStyle">
+												<h:commandLink id="PRINT_TOOL_FOOTER" rendered="true"
+													action="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.printButtonAction}"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:commandButton id="NAVIGATION_TOOLPRINT_FOOTER1"
+														styleClass="toolbarButtonStyle" accesskey="p"
+														image="./../../resources/images/printer.gif" />
+													<h:outputText id="NAVIGATION_TOOL_PRINT_FOOTER"
+														styleClass="toolbaroutputTextStyle" value="Print" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_59" rendered="true"
+													action="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.saveRecord}"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_60"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/save.gif" />
+													<h:outputText id="SELF_ID_61"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_62" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_63"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/savenext.GIF" />
+													<h:outputText id="SELF_ID_64"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$savenext}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_65" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_66"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/deleteRecord.gif" />
+													<h:outputText id="SELF_ID_67"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$deleteRecord}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_68" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_69"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/firstrec.gif" />
+													<h:outputText id="SELF_ID_70"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$firstrec}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_71" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_72"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/prevpage.gif" />
+													<h:outputText id="SELF_ID_73"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$prevpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_74" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_75"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/nextpage.gif" />
+													<h:outputText id="SELF_ID_76"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$nextpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_77" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_78"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/lastRecord.gif" />
+													<h:outputText id="SELF_ID_79"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$lastRecord}" />
+												</h:commandLink>
+											</rich:toolBarGroup>
+										</rich:toolBar></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+			<!-- 	<rich:modalPanel id="REPORT_MODAL_PANEL" height="110" width="300"
+				binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_REPORT_MODAL_PANEL}">
+				<f:facet name="header">
+					<h:panelGroup>
+						<h:outputText
+							value="#{commonmsg.IP_REP_INFO$DOCUMENT_PRINT$caption}" />
+					</h:panelGroup>
+				</f:facet>
+				<f:facet name="controls">
+					<h:panelGroup>
+						<h:form id="FT_REPORT_MODAL_PANEL_1">
+							<h:commandLink immediate="true" id="CLOSE_LINK"
+								action="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.cancelModalPanel}">
+								<h:graphicImage value="./../../resources/images/close.png"
+									styleClass="toolbarImageStyle" style="cursor:pointer"
+									id="REPORT_MODAL_PANEL_hidelink" />
+							</h:commandLink>
+						</h:form>
+					</h:panelGroup>
+				</f:facet>
+				<h:form id="FT_REPORT_MODAL_PANEL_2">
+					<table width="100%">
+						<tr>
+							<td align="center"><h:outputText id="CONFIRMATION_MSG"
+								style="font-size: 14px;"
+								value="#{commonmsg.IP_REP_INFO$CONFIRMATION_MSG$caption}" /></td>
+						</tr>
+						<tr>
+							<td><rich:spacer id="SPACER_MODAL_1" width="100%;"
+								height="18px" /> <rich:separator id="SEPARATOR" width="100%"
+								height="1px" /></td>
+						</tr>
+						<tr>
+							<td align="center"><h:panelGroup>
+								<h:commandLink immediate="true" id="PRINT_LINK" target="_blank"
+									action="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.runActionAfterValidate}">
+									<a4j:commandButton reRender="REPORT_MODAL_PANEL"
+										action="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.cancelModalPanel}"
+										id="OK_BUTTON" styleClass="button" style="width:70px;"
+										value="#{commonmsg.IP_REP_INFO$OK_BUTTON$caption}" />
+
+								</h:commandLink>
+							</h:panelGroup> <rich:spacer id="SPACER_MODAL_2" width="5px;" /> <a4j:commandButton
+								binding="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.COMP_CANCEL_BUTTON}"
+								id="CANCEL_BUTTON" styleClass="button" style="width:70px;"
+								action="#{PILP134_COMPOSITE_ACTION.CUST_DETL_UPD_ACTION_BEAN.cancelModalPanel}"
+								reRender="REPORT_MODAL_PANEL"
+								value="#{commonmsg.IP_REP_INFO$CANCEL_BUTTON$caption}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</rich:modalPanel>  -->
+		</f:view>
+
+	</ui:define>
+</ui:composition>
+

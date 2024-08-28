@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:a4j="http://richfaces.org/a4j" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:rich="http://richfaces.org/rich" xmlns:ui="http://java.sun.com/jsf/facelets" template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+		<f:loadBundle basename="messageProperties_PILT007" var="message"/>
+		<f:loadBundle basename="menu" var="menumessage"/>
+
+<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 Handson  On pressing the Enter key the application is coming to main page. -->	
+<h:form id="PM_IL_BONUS_QUERY" onkeypress="return event.keyCode != 13">
+<!-- End -->
+<table class="noborder" width="100%">
+			<tr>
+				
+			</tr>
+	
+			<tr>
+				
+			</tr>
+		
+	<tr>
+				<td colspan="3" height="20" vAlign="top" width="100%">
+						<rich:simpleTogglePanel id="errorPanel" opened="false" switchType="client">			
+			<f:facet name="header">				
+				<h:outputText id="err" styleClass="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.messageStyle}" value="#{commonmsg.errorPanel$heading} #{PILM036_PM_IL_BONUS_QUERY_ACTION.errorMap['current'] !=null? PILM036_PM_IL_BONUS_QUERY_ACTION.errorMap['current']:PILM036_PM_IL_BONUS_QUERY_ACTION.warningMap['current']}"/>
+				
+			</f:facet>
+			<h:outputText escape="false" id="errorMessages" styleClass="ErrorMessages" value="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.errorMessages}"/>
+				<h:messages id="msg" rendered="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.globalMsgRender}" styleClass="ErrorMessages"/>
+				
+				<h:outputText escape="false" id="warningMessages" styleClass="WarningMessages" value="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.warningMessages}"/>		
+		
+		</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table class="noborder" id="masthead" width="100%">
+					<tr><td><h:outputText id="SELFID_1" value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td><h:outputLabel binding="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.COMP_CLAIM_NUMBER_LABEL}" for="CLAIM_NO" id="CLAIM_NO_LABEL" rendered="true" value="#{message.PILT007$PT_IL_CLAIM$CLAIM_NO$caption}"/></td>
+						<td><h:inputText binding="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.COMP_CLAIM_NUMBER}" disabled="false" id="CLAIM_NO" maxlength="40" rendered="true" style="height:23px;width:202px;" styleClass="forumRowHighlight" title="Enter value for Claim Number" value="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.PT_IL_CLAIM_QUERY_BEAN.CLAIM_NUMBER}"/></td>
+						<td><h:outputLabel binding="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.COMP_POLICY_NUMBER_LABEL}" for="CLAIM_POL_NO" id="CLAIM_POL_NO_LABEL" rendered="true" value="#{message.PILT007$PT_IL_CLAIM$CLAIM_POL_NO$caption}"/></td>
+						<td><h:inputText binding="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.COMP_POLICY_NUMBER}" disabled="false" id="CLAIM_POL_NO" maxlength="40" rendered="true" style="height:23px;width:202px;" styleClass="forumRowHighlight" title="Enter value for Claim Policy Number" value="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.PT_IL_CLAIM_QUERY_BEAN.POLICY_NUMBER}"/></td>
+						<td colspan="3"><h:commandButton action="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.fetchRecords}" binding="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.COMP_PT_IL_CLAIM_QUERY_BUTTON}" disabled="false" id="UI_M_BUT_EDIT_CLAIM_DESC" rendered="true" style="height:20px;width:95px;" styleClass="button" title="" value="#{commonmsg.searchButton$caption}"/></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<rich:dataTable border="1" cellpadding="5px" id="dataTableId" rows="10" value="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.CLAIM_QUERY_DATA_TABLE}" var="claimSettlement" width="100%">
+				<!-- Attach scroller as footer of the table-->
+				<f:facet name="footer">
+					<rich:datascroller align="right" id="dsID" pageIndexVar="index" pagesVar="pages">
+					</rich:datascroller>
+				</f:facet>
+
+				<!-- next column -->
+
+				<rich:column filterBy="#{claimSettlement.CLAIM_NO}" filterEvent="onkeyup" filterValue="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.PT_IL_CLAIM_QUERY_BEAN.CLAIM_NUMBER_FILTER}" sortBy="#{claimSettlement.CLAIM_NO}">
+					<f:facet name="header">
+						<h:outputText id="SELFID_2" value="Claim Number"/>
+					</f:facet>
+					<h:commandLink action="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.updateRecord}" id="SELFID_3">
+					
+							<h:outputText id="SELFID_4" value="#{claimSettlement.CLAIM_NO}"/>
+				
+						<f:param name="CLAIM_SYS_ID" value="#{claimSettlement.CLAIM_SYS_ID}"/>
+						<f:param name="CLAIM_POL_SYS_ID" value="#{claimSettlement.CLAIM_POL_SYS_ID}"/>
+						<f:param name="CLAIM_NO" value="#{claimSettlement.CLAIM_NO}"/>
+						<f:param name="CLAIM_POL_NO" value="#{claimSettlement.CLAIM_POL_NO}"/>
+					</h:commandLink>
+				</rich:column>
+				<rich:column filterBy="#{claimSettlement.CLAIM_POL_NO}" filterEvent="onkeyup" filterValue="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.PT_IL_CLAIM_QUERY_BEAN.POLICY_NUMBER_FILTER}" sortBy="#{claimSettlement.CLAIM_POL_NO}">
+					<f:facet name="header">
+						<h:outputText id="SELFID_5" value="Policy Number"/>
+					</f:facet>
+					<h:outputText id="SELFID_6" value="#{claimSettlement.CLAIM_POL_NO} ">
+					</h:outputText>
+				</rich:column>
+				<rich:column filterBy="#{claimSettlement.UI_M_CLAIM_ASSURED_NAME}" filterEvent="onkeyup" filterValue="#{PILT007_PT_IL_CLAIM_QUERY_ACTION.PT_IL_CLAIM_QUERY_BEAN.ASSURED_NAME_FILTER}" sortBy="#{claimSettlement.UI_M_CLAIM_ASSURED_NAME}">
+					<f:facet name="header">
+						<h:outputText id="SELFID_7" value="Assured Name"/>
+					</f:facet>
+					<h:outputText id="SELFID_8" value="#{claimSettlement.UI_M_CLAIM_ASSURED_NAME} "/>
+				</rich:column>
+			</rich:dataTable>
+			
+	</table></h:form></f:view>
+</ui:define>
+</ui:composition>

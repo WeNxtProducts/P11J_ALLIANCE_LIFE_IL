@@ -1,0 +1,152 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PLM008" var="message" />
+	<f:loadBundle basename="messageProperties" var="searchmessage" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	
+	<body>
+
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			
+		</tr>
+		<h:form id="PLM008_QueryForm">
+			<!-- Body row -->
+			<tr>
+				<td>
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PLM008_PM_CODES_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PLM008_Search.errorMap['current'] !=null? PLM008_Search.errorMap['current']:PLM008_Search.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PLM008_Search.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PLM008_Search.globalMsgRender}" />
+							
+							<h:outputText id="warningMessages"
+								value="#{PLM008_Search.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td><!-- hidden value for navigating to next screen --> <h:inputHidden
+					id="PC_TYPE"
+					value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_TYPE}" /> <!-- initial filter to search and list -->
+				<table border="0" width="100%" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+						<td><h:outputLabel
+							value="#{message.PT048_A$PM_CODES$SEARCH_TYPE$caption}" /> <h:inputText
+							value="#{PLM008_Search.type}">:&nbsp;&nbsp;</h:inputText></td>
+						<td><h:outputLabel
+							value="#{message.PT048_A$PM_CODES$SEARCH_TYPE_DESC$caption}" />
+						<h:inputText value="#{PLM008_Search.desc}" >:&nbsp;&nbsp;</h:inputText></td>
+						<td><a4j:commandButton  styleClass="button"
+							value="#{commonmsg.searchButton$caption}"
+							id="a4link">
+							<a4j:support action="#{PLM008_Search.fetchClassDetails}"
+								event="onclick" reRender="dataTableId,errorPanel"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+				<h:commandButton id="PLM008_delete" rendered="false"
+					binding="#{PLM008_Search.PLM008_delete}" value="Delete"
+					action="#{PLM008_Search.delete}" /> <!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{PLM008_Search.classMasterList}" var="assuredCode"
+					cellpadding="5px" rows="15" border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<rich:column rendered="false">
+						<f:facet name="header">
+							<h:outputText styleClass="label" />
+						</f:facet>
+						<h:selectBooleanCheckbox id="PLM008_CheckBox"
+							value="#{assuredCode.CHECK_BOX}">
+						</h:selectBooleanCheckbox>
+					</rich:column>
+
+					<rich:column filterBy="#{assuredCode.PC_TYPE}"
+						sortBy="#{assuredCode.PC_TYPE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PT048_A$PM_CODES$SEARCH_TYPE$caption}" />
+						</f:facet>
+						<h:commandLink action="#{PLM008_Search.clearList}" id="searchLink">
+							
+								<h:outputText value="#{assuredCode.PC_TYPE}" />
+							
+							<f:param name="RankCode" value="#{assuredCode.PC_TYPE}" />
+							<f:param name="ProdType" value="#{assuredCode.PC_CODE}" />
+							<f:param name="Rowid" value="#{assuredCode.ROWID}" />
+						</h:commandLink>
+					</rich:column>
+					<rich:column filterBy="#{assuredCode.PC_TYPE_DESC}"
+						sortBy="#{assuredCode.PC_TYPE_DESC}" filterEvent="onkeyup" rendered="false">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PT048_A$PM_CODES$SEARCH_TYPE_DESC$caption}" />
+						</f:facet>
+					
+							<h:outputText value="#{assuredCode.PC_TYPE_DESC}" />
+						
+						<f:param name="RankCode" value="#{assuredCode.PC_TYPE_DESC}" />
+						<f:param name="ProdType" value="#{assuredCode.PC_CODE}" />
+						<f:param name="Rowid" value="#{assuredCode.ROWID}" />
+					</rich:column>
+
+					<rich:column filterBy="#{assuredCode.PC_CODE}"
+						sortBy="#{assuredCode.PC_CODE}" filterEvent="onkeyup" rendered="false">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PT048_A$PM_CODES$PROD_TYPE$caption}" />
+						</f:facet>
+						<h:outputText value="#{assuredCode.PC_CODE}" />
+					</rich:column>
+					<rich:column filterBy="#{assuredCode.PC_DESC}"
+						sortBy="#{assuredCode.PC_DESC}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PT048_A$PM_CODES$PROD_TYPE_DESC$caption}" />
+						</f:facet>
+						<h:outputText value="#{assuredCode.PC_DESC}" />
+					</rich:column>
+				</rich:dataTable> <h:commandButton value="#{searchmessage.insertButton$caption}" styleClass="button" style="width:90px"
+					action="#{PLM008_Search.clearSession}" /></td>
+			</tr>
+		</h:form>
+		<!-- add footer to the page-->
+		<tr>
+			
+		</tr>
+	</table>
+
+	</body>
+	
+</f:view>
+
+</ui:define>
+</ui:composition>

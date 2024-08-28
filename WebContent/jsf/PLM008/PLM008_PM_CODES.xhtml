@@ -1,0 +1,591 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PLM008_PM_CODES_ACTION.beforePhase}">
+			<f:loadBundle basename="messageProperties_PLM008" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_CODES" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+
+										<h:commandLink action="#{PLM008_PM_CODES_ACTION.backToSearch}"
+											id="AUTO_ID_1" style="text-decoration:none" immediate="true"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="AUTO_ID_2"
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+
+										<h:commandLink action="#{PLM008_PM_CODES_ACTION.saveAction}"
+											id="AUTOID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="AUTOID_5"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTOID_6"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<!--<h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle"
+                         action="#{PLM008_PM_CODES_ACTION.saveAction}">
+                         <h:graphicImage style="border: thin solid white" styleClass="toolbarCommandLinkStyle"
+                         value=".\..\..\images\savenext.GIF" />
+                         <h:outputText value="#{menumessage.jsf$header$image$savenext}" />
+                         </h:commandLink> 
+                         <h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle" 
+                         rendered="false"
+                         action="#{PLM008_PM_CODES_ACTION.deleteAction}" disabled="true">
+                         <h:graphicImage style="border: thin solid white" styleClass="toolbarImageStyle"
+                         value=".\..\..\images\deleteRecord.gif" />
+                         <h:outputText
+                         value="#{menumessage.jsf$header$image$deleteRecord}" />
+                         </h:commandLink> 
+                         <h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle" rendered="false">
+                         <h:graphicImage style="border: thin solid white" styleClass="toolbarImageStyle"
+                         value=".\..\..\images\firstrec.gif" />
+                         <h:outputText value="#{menumessage.jsf$header$image$firstrec}" />
+                         </h:commandLink> 
+                         <h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle"
+                         action="#{PLM008_Utility.preBack}">
+                         <h:graphicImage style="border: thin solid white" styleClass="toolbarImageStyle"
+                         value=".\..\..\images\prevpage.gif" />
+                         <h:outputText value="#{menumessage.jsf$header$image$prevpage}" />
+                         </h:commandLink> 
+                         <h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle" rendered="false">
+                         <h:graphicImage style="border: thin solid white" styleClass="toolbarImageStyle"
+                         value=".\..\..\images\nextpage.gif" />
+                         <h:outputText value="#{menumessage.jsf$header$image$nextpage}" />
+                         </h:commandLink> 
+                         <h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle" rendered="false">
+                         <h:graphicImage style="border: thin solid white" styleClass="toolbarImageStyle"
+                         value=".\..\..\images\lastRecord.gif" />
+                         <h:outputText value="#{menumessage.jsf$header$image$lastRecord}" />
+                         </h:commandLink>
+                         <h:commandButton id="cls" type="reset" value="clear" styleClass="button" />
+                         
+                         -->
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" width="100%" cellpadding="0"
+							cellspacing="0">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PLM008_PM_CODES_ACTION.messageStyle}"
+											value="#{commonmsg.errorPanel$heading} #{PLM008_PM_CODES_ACTION.errorMap['current'] !=null? PLM008_PM_CODES_ACTION.errorMap['current']:PLM008_PM_CODES_ACTION.warningMap['current']}" />
+
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{PLM008_PM_CODES_ACTION.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{PLM008_PM_CODES_ACTION.globalMsgRender}"
+										styleClass="ErrorMessages" />
+
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{PLM008_PM_CODES_ACTION.warningMessages}" />
+
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" id="linkstable" cellpadding="0"
+							cellspacing="0" border="0">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PT048_A$PM_CODES$caption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+
+						<table class="noborder" width="100%">
+							<tr>
+								<td valign="top" width="90%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowfreeze" colspan="4"></td>
+										<td class="oddrowfreeze"><h:outputLabel
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_FRZ_FLAG_LABEL}"
+											for="PC_FRZ_FLAG" id="PC_FRZ_FLAG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PLM008$PM_CODES$PC_FRZ_FLAG$caption}" /> <h:selectBooleanCheckbox
+											onfocus="currFocus('PM_CODES:PC_FRZ_FLAG')" id="PC_FRZ_FLAG"
+											rendered="true" title="Select Freeze"
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_FRZ_FLAG_BOOLEAN}">
+											<a4j:support event="onblur" id="AUTOID_SUP" immediate="true"
+												oncomplete="setFocus('PM_CODES:PC_CODE','PM_CODES:PC_FRZ_FLAG')" />
+										</h:selectBooleanCheckbox></td>
+									</tr>
+									<tr>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_TYPE_LABEL}"
+											for="PC_TYPE" id="PC_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PLM008$PM_CODES$PC_TYPE$caption}" /> <h:graphicImage
+											id="AUTOID_7" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow" width="28%"><!--[bugid:Fix105 Aniesh 18-Dec-2008-CodesMaster -fix -->
+										<h:inputText binding="#{PLM008_PM_CODES_ACTION.COMP_PC_TYPE}"
+											onfocus="currFocus('PM_CODES:PC_TYPE')" disabled="false"
+											id="PC_TYPE" maxlength="12" rendered="true" required="true"
+											styleClass="inputsmall" title="Enter the Code Type."
+											validator="#{PLM008_PM_CODES_ACTION.whenvalidatePC_TYPE}"
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_TYPE}">
+
+											<a4j:support
+												actionListener="#{PLM008_PM_CODES_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_8" immediate="true"
+												oncomplete="setFocus('PM_CODES:PC_FRZ_FLAG','PM_CODES:PC_TYPE')"
+												reRender="PC_TYPE_DESC,errorPanel,PC_RI_APPL_YN,PC_RI_APPL_YN_LABEL" />
+										</h:inputText> <!--bugid:Fix105 Aniesh 18-Dec-2008-CodesMaster -fix]--> <rich:suggestionbox
+											for="PC_TYPE" height="200" id="AUTOID_9"
+											reRender="errorPanel"
+											suggestionAction="#{PLM008_PM_CODES_ACTION.populateType}"
+											value="#{PLM008_PM_CODES_ACTION.type}" var="suggest"
+											width="250">
+											<h:column>
+												<h:outputText id="AUTOID_10" value="#{suggest.PC_TYPE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_11" value="#{suggest.PC_TYPE_DESC}" />
+											</h:column>
+											<a4j:support
+												actionListener="#{PLM008_PM_CODES_ACTION.getTypeDesc}"
+												event="onselect" id="AUTOID_12" immediate="true"
+												reRender="PC_TYPE_DESC,errorPanel" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_TYPE_DESC}"
+											disabled="true" id="PC_TYPE_DESC" readonly="true"
+											rendered="true" required="false" styleClass="input"
+											title="Enter the Code."
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_TYPE_DESC}" />
+										<h:graphicImage id="AUTOID_13"
+											styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" width="4%"></td>
+
+										<!--  </tr>
+									<tr>-->
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_CODE_LABEL}"
+											for="PC_CODE" id="PC_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PLM008$PM_CODES$PC_CODE$caption}" /> <h:graphicImage
+											id="AUTOID_14" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											onfocus="currFocus('PM_CODES:PC_CODE')"
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_CODE}"
+											disabled="false" id="PC_CODE" maxlength="12" rendered="true"
+											required="true" styleClass="input" title="Enter the Code."
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_CODE}">
+											<a4j:support
+												oncomplete="setFocus('PM_CODES:PC_DESC','PM_CODES:PC_CODE')"
+												actionListener="#{PLM008_PM_CODES_ACTION.validatePC_CODE}"
+												event="onblur" id="AUTOID_15" immediate="true"
+												reRender="errorMessages,err" />
+
+										</h:inputText></td>
+										<td class="evenrow" colspan="3" />
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_DESC_LABEL}"
+											for="PC_DESC" id="PC_DESC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PLM008$PM_CODES$PC_DESC$caption}" /> <h:graphicImage
+											id="AUTOID_16" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											onfocus="currFocus('PM_CODES:PC_DESC')"
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_DESC}"
+											disabled="false" id="PC_DESC" maxlength="30" rendered="true"
+											required="true" styleClass="input"
+											title="Enter description for the Code."
+											validator="#{PLM008_PM_CODES_ACTION.valitaionPC_DESC}"
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_DESC}">
+											<a4j:support
+												oncomplete="setFocus('PM_CODES:PC_SHORT_DESC','PM_CODES:PC_DESC')"
+												actionListener="#{PLM008_PM_CODES_ACTION.validatePC_DESC}"
+												event="onblur" id="AUTOID_17" immediate="true"
+												reRender="PC_SHORT_DESC,PC_LONG_DESC,errorPanel" />
+										</h:inputText></td>
+										<td class="oddrowright">&nbsp;</td>
+
+										<!--  </tr>
+									<tr>-->
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_SHORT_DESC_LABEL}"
+											for="PC_SHORT_DESC" id="PC_SHORT_DESC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PLM008$PM_CODES$PC_SHORT_DESC$caption}" />
+										<h:graphicImage id="AUTOID_18" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											onfocus="currFocus('PM_CODES:PC_SHORT_DESC')"
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_SHORT_DESC}"
+											disabled="false" id="PC_SHORT_DESC" maxlength="15"
+											rendered="true" required="true" styleClass="input"
+											title="Enter short description for the Code."
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_SHORT_DESC}">
+											<a4j:support
+												oncomplete="setFocus('PM_CODES:PC_LONG_DESC','PM_CODES:PC_SHORT_DESC')"
+												actionListener="#{PLM008_PM_CODES_ACTION.validatePC_SHORT_DESC}"
+												event="onblur" id="AUTOID_19" immediate="true"
+												reRender="errorMessages,err" />
+										</h:inputText></td>
+										<td class="oddrow" colspan="3" />
+									</tr>
+
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_LONG_DESC_LABEL}"
+											for="PC_LONG_DESC" id="PC_LONG_DESC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PLM008$PM_CODES$PC_LONG_DESC$caption}" /></td>
+										<td class="evenrow"><h:inputText
+											onfocus="currFocus('PM_CODES:PC_LONG_DESC')"
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_LONG_DESC}"
+											disabled="false" id="PC_LONG_DESC" maxlength="2000"
+											rendered="true" required="false" styleClass="input"
+											title="Enter Long Description."
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_LONG_DESC}" />
+										</td>
+										<td class="evenrowright">&nbsp;</td>
+
+										<!--  </tr>
+									<tr>-->
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_CLASS_CODE_LABEL}"
+											for="PC_CLASS_CODE" id="PC_CLASS_CODE_LABEL" rendered="true"
+											styleClass="label" disabled="true"
+											value="#{message.PLM008$PM_CODES$PC_CLASS_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_CLASS_CODE}"
+											disabled="false" id="PC_CLASS_CODE" maxlength="15"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter Class Code."
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_CLASS_CODE}">
+										</h:inputText> <h:inputText
+											binding="#{PLM008_PM_CODES_ACTION.COMP_UI_M_CLASS_DESC}"
+											disabled="true" id="M_CLASS_DESC" maxlength="2000"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PLM008$PM_CODES$M_CLASS_DESC$tooltip}"
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.UI_M_CLASS_DESC}" />
+										<h:graphicImage id="AUTOID_20"
+											style="border: thin solid white" styleClass="searchimg"
+											value="./../../images/Lov.gif" /> <rich:suggestionbox
+											for="PC_CLASS_CODE" height="200" id="AUTOID_21"
+											suggestionAction="#{PLM008_PM_CODES_ACTION.suggesionClassType}"
+											var="suggest" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_22" value="#{suggest.classType}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_23" value="#{suggest.classDesc}" />
+											</h:column>
+											<a4j:support action="#{PLM008_PM_CODES_ACTION.className}"
+												event="onselect" id="AUTOID_24" immediate="true"
+												reRender="M_CLASS_DESC" />
+											<a4j:support action="#{PLM008_PM_CODES_ACTION.className}"
+												event="onblur" id="AUTOID_25" immediate="true"
+												reRender="M_CLASS_DESC" />
+										</rich:suggestionbox></td>
+										<td class="evenrow" colspan="3" />
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_VALUE_LABEL}"
+											for="PC_VALUE" id="PC_VALUE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PLM008$PM_CODES$PC_VALUE$caption}" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_VALUE}"
+											disabled="false" id="PC_VALUE" rendered="true"
+											styleClass="inputNumeric" maxlength="18" required="false"
+											title="Enter value"
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_VALUE}">
+											<f:converter converterId="PELNumberFormatter" />
+											<f:validateDoubleRange minimum="0"
+												maximum="99999999999999.999" />
+											<a4j:support
+												actionListener="#{PLM008_PM_CODES_ACTION.fireFieldValidation}"
+												event="onblur" id="style_VALUE" immediate="true"
+												reRender="errorPanel">
+											</a4j:support>
+										</h:inputText></td>
+
+										<td class="oddrowright">&nbsp;</td>
+
+										<!--  </tr>
+									<tr>-->
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_RI_APPL_YN_LABEL}"
+											for="PC_RI_APPL_YN" id="PC_RI_APPL_YN_LABEL"
+											styleClass="label"
+											value="#{message.PLM008$PM_CODES$PC_RI_APPL_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_RI_APPL_YN}"
+											id="PC_RI_APPL_YN" required="true" styleClass="input"
+											title="#{message.PLM008$PM_CODES$PC_RI_APPL_YN$tooltip}"
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_RI_APPL_YN}">
+											<f:selectItems id="SEL_ITEMS_PC_RI_APPL_YN"
+												value="#{PLM008_PM_CODES_ACTION.listPC_RI_APPL_YN}" />
+										</h:selectOneMenu></td>
+										<td class="oddrow" colspan="3" />
+									</tr>
+									
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_EVENT_FM_DT_LABEL}"
+											for="PC_EVENT_FM_DT" id="PC_EVENT_FM_DT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PT048_A$PM_CODES$PC_EVENT_FM_DT$caption}" /></td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_EVENT_FM_DT}"
+											disabled="false" id="PC_EVENT_FM_DT" rendered="true"
+											required="false" style="height:23px;width:76px;"
+											styleClass="forumRowHighlight"
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_EVENT_FM_DT}" /></td>
+										<td class="evenrow"/>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_EVENT_TO_DT_LABEL}"
+											for="PC_EVENT_TO_DT" id="PC_EVENT_TO_DT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PT048_A$PM_CODES$PC_EVENT_TO_DT$caption}" /></td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PLM008_PM_CODES_ACTION.COMP_PC_EVENT_TO_DT}"
+											disabled="false" id="PC_EVENT_TO_DT" rendered="true"
+											required="false" style="height:23px;width:76px;"
+											styleClass="forumRowHighlight"
+											value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_EVENT_TO_DT}" /></td>
+									</tr>
+									
+									
+									<tr>
+										<td colspan="5" width="100%"><rich:simpleTogglePanel
+											id="bilingualPanel"
+											label="#{message.PT048_A$BILINGUAL$label}"
+											switchType="client" value="BilswitchType=" height="100">
+
+											<table id="Bil" align="left" width="100%" class="noborder"
+												cellpadding="0" cellspacing="0" border="0">
+
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PLM008_PM_CODES_ACTION.COMP_PC_BL_DESC_LABEL}"
+														for="PC_BL_DESC" id="COMP_PC_BL_DESC_LABEL"
+														rendered="true" styleClass="label"
+														value="Bilingual Description" /></td>
+													<td class="oddrow"><h:inputText
+														binding="#{PLM008_PM_CODES_ACTION.COMP_PC_BL_DESC}"
+														disabled="false" id="PC_BL_DESC" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="Enter Bilingual Description"
+														validator="#{PLM008_PM_CODES_ACTION.validatorPC_BL_DESC}"
+														value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_BL_DESC}">
+														<a4j:support event="onblur" immediate="true" id="self_1"
+															actionListener="#{PLM008_PM_CODES_ACTION.fireFieldValidation}"
+															oncomplete="setFocus('PM_CODES:PC_BL_SHORT_DESC','PM_CODES:PC_BL_DESC')"
+															reRender="errorPanel,PC_BL_SHORT_DESC" />
+													</h:inputText></td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PLM008_PM_CODES_ACTION.COMP_PC_BL_SHORT_DESC_LABEL}"
+														for="PC_BL_SHORT_DESC" id="COMP_PC_BL_SHORT_DESC_LABEL"
+														rendered="true" styleClass="label"
+														value="Bilingual Short Desc" /></td>
+													<td class="oddrow"><h:inputText
+														binding="#{PLM008_PM_CODES_ACTION.COMP_PC_BL_SHORT_DESC}"
+														disabled="false" id="PC_BL_SHORT_DESC" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="Enter Billingual Short Description"
+														validator="#{PLM008_PM_CODES_ACTION.validatorPC_BL_SHORT_DESC}"
+														value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_BL_SHORT_DESC}">
+														<a4j:support event="onblur" immediate="true" id="self_2"
+															actionListener="#{PLM008_PM_CODES_ACTION.fireFieldValidation}"
+															oncomplete="setFocus('PM_CODES:PC_BL_LONG_DESC','PM_CODES:PC_BL_SHORT_DESC')"
+															reRender="errorPanel" />
+													</h:inputText></td>
+													<td class="oddrowright">&nbsp;</td>
+													<!-- </tr>
+										<tr> -->
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PLM008_PM_CODES_ACTION.COMP_PC_BL_LONG_DESC_LABEL}"
+														for="PC_BL_LONG_DESC" id="COMP_PC_BL_LONG_DESC_LABEL"
+														rendered="true" styleClass="label"
+														value="Bilingual Long Description" /></td>
+													<td class="oddrow"><h:inputText
+														binding="#{PLM008_PM_CODES_ACTION.COMP_PC_BL_LONG_DESC}"
+														disabled="false" id="PC_BL_LONG_DESC" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="Enter Billingual Long Description"
+														value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_BL_LONG_DESC}">
+														<a4j:support event="onblur" immediate="true"
+															id="SU_LONG_DESC" reRender="PC_BL_LONG_DESC" />
+													</h:inputText></td>
+													<td class="oddrowright">&nbsp;</td>
+
+												</tr>
+												
+									
+
+											</table>
+										</rich:simpleTogglePanel></td>
+									</tr>
+									<!--  	 <tr>
+                         <td id="td-background" align="left"><h:outputLabel
+                         binding="#{PLM008_PM_CODES_ACTION.COMP_PC_RI_APPL_YN_LABEL}"
+                         for="PC_RI_APPL_YN" id="PC_RI_APPL_YN_LABEL" rendered="true"
+                         styleClass="label"
+                         value="#{message.PT048_A$PM_CODES$PC_RI_APPL_YN$caption}" /> <h:graphicImage
+                         style="" value=".\..\..\images\mandatory.jpg" /></td>
+                         <td align="left"><h:selectBooleanCheckbox id="PC_RI_APPL_YN"
+                         binding="#{PLM008_PM_CODES_ACTION.COMP_PC_RI_APPL_YN}" rendered="true"	value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_RI_APPL_YN_BOOLEAN}">
+                         </h:selectBooleanCheckbox></td>								
+                         <td id="td-background" align="left"><h:outputLabel
+                         binding="#{PLM008_PM_CODES_ACTION.COMP_PC_REMARKS_LABEL}"
+                         for="PC_REMARKS" id="PC_REMARKS_LABEL" rendered="true"
+                         styleClass="label"
+                         value="#{message.PT048_A$PM_CODES$PC_REMARKS$caption}" /></td>
+                         <td align="left"><h:inputText
+                         binding="#{PLM008_PM_CODES_ACTION.COMP_PC_REMARKS}"
+                         disabled="false" id="PC_REMARKS" maxlength="12"
+                         rendered="true" required="false"
+                         style="height:23px;width:90px;" styleClass="forumRowHighlight"
+                         title="Enter the Class Code."
+                         value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_REMARKS}" /></td>
+                         </tr>
+                         <tr>
+                         <td id="td-background" align="right"><h:outputLabel
+                         binding="#{PLM008_PM_CODES_ACTION.COMP_PC_EVENT_FM_DT_LABEL}"
+                         for="PC_EVENT_FM_DT" id="PC_EVENT_FM_DT_LABEL" rendered="true"
+                         styleClass="label"
+                         value="#{message.PT048_A$PM_CODES$PC_EVENT_FM_DT$caption}"/></td>
+                         <td align="left"><rich:calendar
+                         binding="#{PLM008_PM_CODES_ACTION.COMP_PC_EVENT_FM_DT}"
+                         disabled="false" id="PC_EVENT_FM_DT" 
+                         rendered="true" required="false"
+                         style="height:23px;width:76px;" styleClass="forumRowHighlight"
+                         value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_EVENT_FM_DT}"/></td>								
+                         <td id="td-background" align="left"><h:outputLabel
+                         binding="#{PLM008_PM_CODES_ACTION.COMP_PC_EVENT_TO_DT_LABEL}"
+                         for="PC_EVENT_TO_DT" id="PC_EVENT_TO_DT_LABEL" rendered="true"
+                         styleClass="label"
+                         value="#{message.PT048_A$PM_CODES$PC_EVENT_TO_DT$caption}"/></td>
+                         <td align="left"><rich:calendar
+                         binding="#{PLM008_PM_CODES_ACTION.COMP_PC_EVENT_TO_DT}"
+                         disabled="false" id="PC_EVENT_TO_DT"
+                         rendered="true" required="false"
+                         style="height:23px;width:76px;" styleClass="forumRowHighlight"
+                         value="#{PLM008_PM_CODES_ACTION.PM_CODES_BEAN.PC_EVENT_TO_DT}"/></td>
+                         </tr>-->
+								</table>
+								</td>
+							</tr>
+						</table>
+
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="5" id="toolbartable" width="100%">
+						<rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink action="#{PLM008_PM_CODES_ACTION.back}"
+									id="AUTOID_26" immediate="true" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_27" styleClass="searchimg"
+										value="./../../images/back.png" />
+									<h:outputText id="AUTOID_28"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$back}" />
+								</h:commandLink>
+								<h:commandLink action="#{PLM008_PM_CODES_ACTION.saveAction}"
+									id="AUTOID_29" rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_30" 
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="AUTOID_31"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<!--<h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle"
+                   action="#{PLM008_PM_CODES_ACTION.saveAction}">
+                   <h:graphicImage style="border: thin solid white" styleClass="toolbarCommandLinkStyle"
+                   value=".\..\..\images\savenext.GIF" />
+                   <h:outputText value="#{menumessage.jsf$header$image$savenext}" />
+                   </h:commandLink> 
+                   <h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle" 
+                   rendered="false"
+                   action="#{PLM008_PM_CODES_ACTION.deleteAction}" disabled="true">
+                   <h:graphicImage style="border: thin solid white" styleClass="toolbarImageStyle"
+                   value=".\..\..\images\deleteRecord.gif" />
+                   <h:outputText
+                   value="#{menumessage.jsf$header$image$deleteRecord}" />
+                   </h:commandLink> 
+                   <h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle" rendered="false">
+                   <h:graphicImage style="border: thin solid white" styleClass="toolbarImageStyle"
+                   value=".\..\..\images\firstrec.gif" />
+                   <h:outputText value="#{menumessage.jsf$header$image$firstrec}" />
+                   </h:commandLink> 
+                   <h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle"
+                   action="#{PLM008_Utility.preBack}">
+                   <h:graphicImage style="border: thin solid white" styleClass="toolbarImageStyle"
+                   value=".\..\..\images\prevpage.gif" />
+                   <h:outputText value="#{menumessage.jsf$header$image$prevpage}" />
+                   </h:commandLink> 
+                   <h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle" rendered="false">
+                   <h:graphicImage style="border: thin solid white" styleClass="toolbarImageStyle"
+                   value=".\..\..\images\nextpage.gif" />
+                   <h:outputText value="#{menumessage.jsf$header$image$nextpage}" />
+                   </h:commandLink> 
+                   <h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle" rendered="false">
+                   <h:graphicImage style="border: thin solid white" styleClass="toolbarImageStyle"
+                   value=".\..\..\images\lastRecord.gif" />
+                   <h:outputText value="#{menumessage.jsf$header$image$lastRecord}" />
+                   </h:commandLink>
+                   -->
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

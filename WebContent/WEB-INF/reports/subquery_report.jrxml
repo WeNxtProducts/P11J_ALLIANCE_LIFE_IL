@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="845" columnWidth="595" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="219f5385-86d6-44ef-b2d5-c54b52198d7e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Q2" uuid="25439335-ff4e-43f1-93e1-f612da7eaaa8">
+		<parameter name="P_ITEM" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select pben_bnf_name q1_pben_bnf_name,pben_age q1_pben_age
+from pt_il_pol_beneficiary
+where pben_pol_sys_id = $P{P_ITEM}]]>
+		</queryString>
+		<field name="q1_pben_bnf_name" class="java.lang.String"/>
+		<field name="q1_pben_age" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="Q1" uuid="ed919f63-8aaa-4a71-9f02-a668776beb7b">
+		<parameter name="P_q1ITEM" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select pben_bnf_name q1_pben_bnf_name,pben_age q1_pben_age
+from pt_il_pol_beneficiary where pben_pol_sys_id = $P{P_q1ITEM}]]>
+		</queryString>
+		<field name="Q1_PBEN_BNF_NAME" class="java.lang.String"/>
+		<field name="Q1_PBEN_AGE" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset1" uuid="90ceb0f7-9b68-4d9d-b04d-267f44eea833"/>
+	<queryString>
+		<![CDATA[SELECT  POL_PLAN_CODE POL_PLAN_CODE,
+       POL_SYS_ID POL_SYS_ID
+  FROM PT_IL_POLICY,
+       PM_CUSTOMER,
+       PT_IL_POL_ASSURED_DTLS,
+       PM_IL_PRODUCT,
+       PM_IL_COVER
+ WHERE POL_CUST_CODE = CUST_CODE
+   AND POL_PROD_CODE = PROD_CODE
+   AND POL_PLAN_CODE = COVER_CODE
+   AND COVER_CODE = PROD_PLAN_CODE
+   AND POL_SYS_ID = POAD_POL_SYS_ID
+   AND POAD_SERIAL_NO = 1
+   AND POL_SYS_ID = 111730]]>
+	</queryString>
+	<field name="POL_PLAN_CODE" class="java.lang.String"/>
+	<field name="POL_SYS_ID" class="java.math.BigDecimal"/>
+	<detail>
+		<band height="13" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="90" height="13" uuid="2df6c800-8dce-4ab0-8612-71fc346375ea"/>
+				<textFieldExpression><![CDATA[$F{POL_PLAN_CODE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="100" y="0" width="90" height="13" uuid="069624e8-4625-4509-abe0-26339bef98f5"/>
+				<textFieldExpression><![CDATA[$F{POL_SYS_ID}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="36">
+			<componentElement>
+				<reportElement x="190" y="0" width="323" height="36" uuid="d3492b13-1f2d-4c5a-b1db-41d4818185b8"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Q2" uuid="309cc610-30d0-4325-8b10-0906e6d86f1d">
+						<datasetParameter name="P_ITEM">
+							<datasetParameterExpression><![CDATA[$F{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="36" width="323">
+						<textField>
+							<reportElement x="0" y="0" width="80" height="20" uuid="993be4db-ef05-45a6-994a-d33fd0bf27c7"/>
+							<textFieldExpression><![CDATA[$F{q1_pben_bnf_name}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="80" y="0" width="100" height="20" uuid="1e4f7b5f-8509-494d-943a-172c4bdb46a3"/>
+							<textFieldExpression><![CDATA[$F{q1_pben_age}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="50">
+			<componentElement>
+				<reportElement x="113" y="0" width="400" height="50" uuid="195016e9-94c9-4d4d-bdd0-a06034ce04f6"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Q1" uuid="9ce99e10-e71c-4c90-aca1-740e4bacc4fa">
+						<datasetParameter name="P_q1ITEM">
+							<datasetParameterExpression><![CDATA[$F{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="50" width="323">
+						<textField>
+							<reportElement x="0" y="0" width="80" height="20" uuid="993be4db-ef05-45a6-994a-d33fd0bf27c7"/>
+							<textFieldExpression><![CDATA[$F{Q1_PBEN_BNF_NAME}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

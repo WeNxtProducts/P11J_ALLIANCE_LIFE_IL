@@ -1,0 +1,401 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM029" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_MED_EXAM_DTL" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.saveData}"
+											id="AUTO_ID_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTO_ID_2"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink rendered="false"
+											action="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.navigationEnabled}"
+											id="AUTOID_1011" immediate="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_1112" styleClass="searchimg"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="AUTOID_1213"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.errorMap['current'] !=null? PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.errorMap['current']:PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><h:outputText id="AUTO_ID_4"
+									value="#{message.PILM029$PM_IL_MED_EXAM_DTL$MED_EXAM_CODE$caption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+					<td colspan="3" align="right" width="100%">
+					<h:commandButton  
+					binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_UI_M_MAIN}"
+					immediate="true" id="Back1" value="Main" style="width :80px;"
+					styleClass="button" 
+					action="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.main}"></h:commandButton>
+					</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table class="noborder" width="100%">
+							<tr>
+								<td vAlign="top" width="100%"><h:panelGroup
+									id="sectionDtls" style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+
+										<tr>
+											<td colspan="5"><rich:dataTable
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.dataTable}"
+												border="0" cellpadding="0" id="PM_IL_MED_EXAM_HDR_TABLE"
+												rows="5"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.medicalExamList}"
+												var="table" width="100%">
+
+												<rich:column filterBy="#{table.MED_EXAM_CODE}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.filterByMED_EXAM_CODE}"
+													sortBy="#{table.MED_EXAM_CODE}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_5"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM029$PM_IL_MED_EXAM_DTL$MED_EXAM_CODE$caption}" />
+													</f:facet>
+
+													<a4j:commandLink
+														action="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.getDetails}"
+														immediate="true" reRender="sectionDtls,errorPanel">
+														<h:outputText id="AUTO_ID_6"
+															value="#{table.MED_EXAM_CODE} " />
+													</a4j:commandLink>
+
+												</rich:column>
+
+												<rich:column filterBy="#{table.UI_M_MED_EXAM_CODE_DESC}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.filterByMED_EXAM_CODE_DESC}"
+													sortBy="#{table.UI_M_MED_EXAM_CODE_DESC}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_7"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM029$PM_IL_MED_EXAM_DTL$UI_M_MED_EXAM_CODE_DESC$caption}" />
+													</f:facet>
+
+													<h:outputText id="MED_EXAM_CODE_DESC" rendered="true"
+														style="width:100px;"
+														value="#{table.UI_M_MED_EXAM_CODE_DESC}">
+													</h:outputText>
+												</rich:column>
+									<!-- added by R. Raja on 15-12-2016 for RM018T - FSD_IL_ZB Life_017-Medical Report Validity Period -->					
+												<rich:column filterBy="#{table.MED_NO_OF_VALID_DAYS}"
+													filterEvent="onkeyup"
+													
+													sortBy="#{table.MED_NO_OF_VALID_DAYS}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_81"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM029$PM_IL_MED_EXAM_DTL$MED_VAL_PERD$caption}" />
+													</f:facet>
+
+													<h:outputText id="MED_NO_OF_VALID_DAYS" rendered="true"
+														style="width:100px;"
+														value="#{table.MED_NO_OF_VALID_DAYS}">
+													</h:outputText>
+												</rich:column>
+												
+												<rich:column filterBy="#{table.MED_SA_CONS_MONTHS}"
+													filterEvent="onkeyup"
+													
+													sortBy="#{table.MED_SA_CONS_MONTHS}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_91"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM029$PM_IL_MED_EXAM_DTL$MED_CON_MTH$caption}" />
+													</f:facet>
+
+													<h:outputText id="MED_SA_CONS_MONTHS" rendered="true"
+														style="width:100px;"
+														value="#{table.MED_SA_CONS_MONTHS}">
+													</h:outputText>
+												</rich:column>
+									<!-- end -->		
+												<!-- Attach scroller as footer of the table-->
+												<f:facet name="footer">
+													<h:panelGroup id="footerpanel" style="border:0">
+														<rich:datascroller align="right" />
+														<a4j:commandButton
+															actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.addRow}"
+															id="AUTO_ID_8" immediate="true"
+															reRender="errorPanel,sectionDtls" rendered="true"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.addNewButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.deleteRow}"
+															id="AUTO_ID_9" immediate="true"
+															reRender="errorPanel,sectionDtls" rendered="true"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.deleteButtonCaption}" />
+														<a4j:commandButton
+															action="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.post}"
+															id="AUTO_ID_10" immediate="false"
+															reRender="errorPanel,sectionDtls" rendered="true"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.postButtonCaption}" />
+
+													</h:panelGroup>
+												</f:facet>
+
+											</rich:dataTable></td>
+										</tr>
+
+										<tr>
+											<!--Sub Assured From-->
+											<td class="oddrowright" width="17%"><h:outputLabel
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_MED_EXAM_CODE_LABEL}"
+												for="MED_EXAM_CODE" id="MED_EXAM_CODE_LABEL"
+												styleClass="label"
+												value="#{message.PILM029$PM_IL_MED_EXAM_DTL$MED_EXAM_CODE$caption}" />
+													<h:graphicImage id="AUTOID_113" style=""
+												styleClass="searchimg"
+												value="./../../resources/images/mandatory.jpg" />
+											</td>
+											<td class="oddrow" width="28%"><h:inputText
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_MED_EXAM_CODE}"
+												id="MED_EXAM_CODE" rendered="true" 
+												styleClass="inputsmall" required="true"
+												title="#{message.PILM029$PM_IL_MED_EXAM_DTL$MED_EXAM_CODE$tooltip}"
+												validator="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.codeValidations}"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.PM_IL_MED_EXAM_DTL_BEAN.MED_EXAM_CODE}">
+												<a4j:support
+													actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.fireFieldValidation}"
+													event="onblur" id="a4j_MED_EXAM_CODE" immediate="true"
+													reRender="errorPanel,UI_M_MED_EXAM_CODE_DESC" />
+											</h:inputText> <h:inputText
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_UI_M_MED_EXAM_CODE_DESC}"
+												disabled="true" id="UI_M_MED_EXAM_CODE_DESC" rendered="true"
+												required="true" styleClass="input"
+												title="#{message.PILM029$PM_IL_MED_EXAM_DTL$UI_M_MED_EXAM_CODE_DESC$caption}"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.PM_IL_MED_EXAM_DTL_BEAN.UI_M_MED_EXAM_CODE_DESC}">
+											</h:inputText> <rich:suggestionbox for="MED_EXAM_CODE" height="250"
+												id="AUTO_ID_11"
+												suggestionAction="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.suggestionActionForMedDtl}"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.codeList}"
+												var="code" width="250">
+												<h:column>
+													<h:outputText id="AUTO_ID_12" value="#{code.MED_EXAM_CODE}" />
+												</h:column>
+												<h:column>
+													<h:outputText id="AUTO_ID_13"
+														value="#{code.UI_M_MED_EXAM_CODE_DESC}" />
+												</h:column>
+												<a4j:support ajaxSingle="true" event="onselect"
+													id="code_a4j" immediate="true"
+													reRender="errorPanel,UI_M_MED_EXAM_CODE_DESC">
+													<f:setPropertyActionListener id="AUTO_ID_14"
+														target="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.PM_IL_MED_EXAM_DTL_BEAN.UI_M_MED_EXAM_CODE_DESC}"
+														value="#{code.UI_M_MED_EXAM_CODE_DESC}" />
+												</a4j:support>
+											</rich:suggestionbox>
+											<h:graphicImage id="MED_EXAM_CODE_graphicImage_Lovgif"
+														styleClass="searchimg" value=".\..\..\images\Lov.gif" /></td>
+														<td class="oddrowright"></td>
+														
+							<!-- added by R. Raja on 15-12-2016 for RM018T - FSD_IL_ZB Life_017-Medical Report Validity Period -->							
+														
+														<td class="oddrowright"><h:outputLabel
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_MED_VAL_PERD_LABEL}"
+												for="MED_VAL_PERD" id="COMP_MED_VAL_PERD_LABEL"
+												styleClass="label"
+												value="#{message.PILM029$PM_IL_MED_EXAM_DTL$MED_VAL_PERD$caption}" />
+													<h:graphicImage id="AUTOID_114" style=""
+												styleClass="searchimg"
+												value="./../../resources/images/mandatory.jpg" />
+														</td>
+														<td class="oddrow">
+														<h:inputText
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_MED_VAL_PERD}"
+												id="MED_VAL_PERD" rendered="true" 
+												styleClass="inputsmall" required="true"
+												title="#{message.PILM029$PM_IL_MED_EXAM_DTL$MED_VAL_PERD$tooltip}"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.PM_IL_MED_EXAM_DTL_BEAN.MED_NO_OF_VALID_DAYS}">
+												<a4j:support
+													actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.fireFieldValidation}"
+													event="onblur" id="a4j_MED_VAL_PERD" immediate="true"
+													reRender="errorPanel" />
+											</h:inputText> 
+														</td>
+														
+										</tr>
+										
+										<tr>
+										<td class="evenrowright">
+										<h:outputLabel
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_MED_CON_MTH_LABEL}"
+												for="MED_CON_MTH" id="COMP_MED_CON_MTH_LABEL"
+												styleClass="label"
+												value="#{message.PILM029$PM_IL_MED_EXAM_DTL$MED_CON_MTH$caption}" />
+													<h:graphicImage id="AUTOID_115" style=""
+												styleClass="searchimg"
+												value="./../../resources/images/mandatory.jpg" />
+												</td>
+										<td class="evenrow">
+										<!-- validator="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.MED_CON_MTH_Validations}" -->
+										<h:inputText
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_MED_CON_MTH}"
+												id="MED_CON_MTH" rendered="true" 
+												styleClass="inputsmall" required="true"
+												
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.PM_IL_MED_EXAM_DTL_BEAN.MED_SA_CONS_MONTHS}">
+												<a4j:support
+													actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.fireFieldValidation}"
+													event="onblur" id="a4j_MED_CON_MTH" immediate="true"
+													reRender="errorPanel" />
+											</h:inputText>
+										</td>
+										<td class="evenrowright"></td>
+										<!--Added by ganesh on 20-06-2017,ZBILQC-1719236  -->
+										<h:panelGroup binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_MEDL_SUM_ASSURED_FM_PANELGRP}"><td class="oddrowright"><h:outputLabel												
+												for="MEDL_SUM_ASSURED_FM" id="COMP_MED_SA_FROM_LABEL"
+												styleClass="label"
+												value="#{message.PILM029$PM_IL_MED_EXAM_DTL$MEDL_SUM_ASSURED_FM$caption}" />
+													<h:graphicImage id="AUTOID_114_FM" style=""
+												styleClass="searchimg"
+												value="./../../resources/images/mandatory.jpg" />
+														</td>
+														<td class="oddrow">
+														<h:inputText
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_MEDL_SUM_ASSURED_FM}"
+												id="MEDL_SUM_ASSURED_FM" rendered="true" 
+												styleClass="inputsmall" required="true"
+												title="#{message.PILM029$PM_IL_MED_EXAM_DTL$MEDL_SUM_ASSURED_FM$tooltip}"
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.PM_IL_MED_EXAM_DTL_BEAN.MEDL_SUM_ASSURED_FM}">
+												<a4j:support
+													actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.fireFieldValidation}"
+													event="onblur" id="a4j_MEDL_SUM_ASSURED_FM" immediate="true"
+													reRender="errorPanel" />
+											</h:inputText> 
+														</td></h:panelGroup>
+									
+			
+										</tr>
+										<!-- end -->
+										<tr>
+										<h:panelGroup binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_MEDL_SUM_ASSURED_TO_PANELGRP}">
+										<td class="evenrowright">
+										<h:outputLabel
+												for="MEDL_SUM_ASSURED_TO" id="COMP_MEDL_SUM_ASSURED_TO_LABEL"
+												styleClass="label"
+												value="#{message.PILM029$PM_IL_MED_EXAM_DTL$MEDL_SUM_ASSURED_TO$caption}" />
+													<h:graphicImage id="AUTOID_115_TO" style=""
+												styleClass="searchimg"
+												value="./../../resources/images/mandatory.jpg" />
+												</td>
+										<td class="evenrow">
+										<!-- validator="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.MED_CON_MTH_Validations}" -->
+										<h:inputText
+												binding="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_MEDL_SUM_ASSURED_TO}"
+												id="MEDL_SUM_ASSURED_TO" rendered="true" 
+												styleClass="inputsmall" required="true"
+												
+												value="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.PM_IL_MED_EXAM_DTL_BEAN.MEDL_SUM_ASSURED_TO}">
+												<a4j:support
+													actionListener="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.fireFieldValidation}"
+													event="onblur" id="a4j_MEDL_SUM_ASSURED_TO" immediate="true"
+													reRender="errorPanel" />
+											</h:inputText>
+										</td></h:panelGroup>
+										<td class="evenrowright"></td>
+										
+			
+										</tr>
+										<!--end-->
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="5" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									action="#{PM_IL_MED_EXAM_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.saveData}"
+									id="AUTO_ID_15" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_16"
+										 styleClass="searchimg"
+										value="./../../images/save.gif" />
+									<h:outputText id="AUTO_ID_17"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

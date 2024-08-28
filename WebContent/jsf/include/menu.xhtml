@@ -1,0 +1,74 @@
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:p="http://3i-infotech.com/premia">
+   <f:subview id="menu_body">
+   
+   
+   <!-- Added by Janani on 28.06.2017 for ZBILQC-1730077  -->
+   <style>
+#nav {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    height: 35px;
+    background: #fff url(../../images/pmenu/three_0.gif) repeat-x;
+    position: relative;
+    z-index: 1;
+    font-family: arial, verdana, sans-serif;
+    font-size: 11px;
+    /* z-index: 9999 !important; */
+    z-index: 99 !important; 
+}
+/* Newly added by Ranjith 31-10-2020 as suggested by Pidugu Raj and Abhilash for alliance il*/
+#nav li:hover ul.sub li {
+Height:auto !important;
+
+}
+#nav li:hover ul.sub li a{
+white-space: pre-line;
+text-indent:0 !important;
+Height:auto !important;
+}
+/* End Newly added by Ranjith 31-10-2020 as suggested by Pidugu Raj and Abhilash for alliance il*/
+</style>
+   
+   <!-- End -->   
+   
+   	<h:form id="PEL_MENU">
+   		<ui:include src="/jsf/include/header.xhtml" />
+		<p:pmenu id="PMENU"
+   			topLevelMenuLimitTo="6" 
+   			action="#{PremiaMenuToolbar.menuAction}" 
+   			value="#{PremiaMenuToolbar.menuList}">
+				<h:inputText id="MENU_SEARCH_TEXT" 
+					value="#{PremiaMenuToolbar.searchMenuItem.menuOptionDesc}" 
+					onclick="clearSearchInput(this)" 
+					onblur="setSearchInput(this)" 
+					onfocus="clearSearchInput(this)" 
+					accesskey="m"
+					style="color:GRAY; width:200px"/>
+				<h:commandButton id="MENEU_SEARCH_GO_BUTTON" 
+					value="GO"  
+					styleClass="gobutton"
+					action="#{PremiaMenuToolbar.menuSearchGoAction}"/>
+				
+				<rich:suggestionbox id="MENU_SEARCH_SB" 
+						height="200" width="228" 
+						suggestionAction="#{PremiaMenuToolbar.menuSuggestions}" 
+						for="MENU_SEARCH_TEXT" var="menuitem" immediate="true">
+					<h:column>
+						<h:outputText id="ser_16" value="#{menuitem.menuOptionDesc}"/>
+					</h:column>
+					<a4j:support immediate="true" id="SEARCH_SUGGESTION_SUPPORT"
+								actionListener="#{PremiaMenuToolbar.menuSearchSelectionListener}"
+								event="onselect" ajaxSingle="true">
+					</a4j:support>
+				</rich:suggestionbox>
+   		</p:pmenu>   	
+  	</h:form>
+   </f:subview>
+</ui:composition>

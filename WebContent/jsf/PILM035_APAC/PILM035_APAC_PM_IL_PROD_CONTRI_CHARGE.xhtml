@@ -1,0 +1,931 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml"
+	xmlns:w="http://3i-infotech.com/premia">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM035_APAC"
+				var="message_PILM035_APAC" />
+			
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_PROD_CONTRI_CHARGE" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellspacing="0" cellpadding="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" width="100%">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILM035_APAC_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="toolbarButtonStyle" accesskey="u"
+												image="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD"
+										location="right">
+										<w:treeWizard
+											binding="#{PILM035_APAC_COMPOSITE_ACTION.wizard}" />
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.errorMap['current'] !=null? PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.errorMap['current']: PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td class="oddrowright"><h:outputLabel id="FORM_CAPTION"
+									value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div id="tablecontainer">
+						<div id="sidebar" style="width: 21%; vertical-align: top">
+						<div align="center" id="handle" style="width: 5%;"><a4j:commandLink
+							actionListener="#{PILM035_APAC_COMPOSITE_ACTION.wizard.toggle}"
+							id="BACK_TOOL_FOOTER1" immediate="true" rendered="true"
+							style="text-decoration:none;align:left"
+							styleClass="toolbarCommandLinkStyle">
+							<img align="left" alt="Click to toggle the sidebar" height="123"
+								onclick="toggleSideBar();"
+								src="./../../resources/images/toggle.jpg" style="border: 0;"
+								width="14" />
+						</a4j:commandLink></div>
+
+						<div id="sbText" style="display: compact;">
+						<div id="linkstable1" style="display: compact; width: 95%">
+						<w:treeWizardPanel
+							binding="#{PILM035_APAC_COMPOSITE_ACTION.wizard.wizardPanel}"
+							id="wizardPanel" /></div>
+						</div>
+						</div>
+						<div id="content" style="width: 79%;">
+
+						<table width="100%">
+							<tr>
+								<td valign="top" width="100%"><h:panelGroup
+									id="PM_IL_PROD_CONTRI_CHARGE_PANEL"
+									style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+
+										<tr>
+											<td colspan="5"><rich:dataTable
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.dataTable}"
+												border="0" id="PM_IL_PROD_CONTRI_CHARGE_DATA_GRID" rows="5"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.dataList_PM_IL_PROD_CONTRI_CHARGE}"
+												var="tableVar" width="100%">
+
+												<!-- next column -->
+												<rich:column filterBy="#{tableVar.PCC_CHRG_CODE}"
+													filterEvent="onkeyup" id="COLUMN_PCC_CHRG_CODE"
+													rendered="true" sortBy="#{tableVar.PCC_CHRG_CODE}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+
+														<h:outputText id="COLUMN_CAPTION_PCC_CHRG_CODE"
+															styleClass="forumRowHighlight"
+															value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_CHRG_CODE$caption}" />
+
+													</f:facet>
+													<a4j:commandLink
+														action="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.displayRecords}"
+														id="GOTO_LINK_PAB_BONUS_CODE" immediate="true"
+														reRender="errorPanel,PM_IL_PROD_CONTRI_CHARGE_PANEL">
+														<h:outputText id="LINK_CAPTION_PCC_CHRG_CODE"
+															value="#{tableVar.PCC_CHRG_CODE}" />
+													</a4j:commandLink>
+												</rich:column>
+												
+												<!-- added by raja on 19-04-2017 -->
+												<rich:column filterBy="#{tableVar.UI_M_PCC_CHRG_CODE_DESC}"
+													filterEvent="onkeyup" id="COLUMN_UI_M_PCC_CHRG_CODE_DESC"
+													rendered="true" sortBy="#{tableVar.UI_M_PCC_CHRG_CODE_DESC}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_UI_M_PCC_CHRG_CODE_DESC"
+															styleClass="forumRowHighlight"
+															value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$UI_M_PCC_CHRG_CODE_DESC$caption}" />
+													</f:facet>
+													<h:outputText id="LINK_CAPTION_UI_M_PCC_CHRG_CODE_DESC"
+														value="#{tableVar.UI_M_PCC_CHRG_CODE_DESC}" />
+												</rich:column>
+												<!-- end -->
+												
+												<!-- /*changed by raja on 30-05-2017 for ZBILQC-1726955 */ -->
+												<!-- <rich:column filterBy="#{tableVar.PCC_CHRG_TYPE}"
+													filterEvent="onkeyup" id="COLUMN_PCC_CHRG_TYPE"
+													rendered="true" sortBy="#{tableVar.PCC_CHRG_TYPE}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PCC_CHRG_TYPE"
+															styleClass="forumRowHighlight"
+															value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_CHRG_TYPE$caption}" />
+													</f:facet>
+													<h:outputText id="LINK_CAPTION_PCC_CHRG_TYPE"
+														value="#{tableVar.PCC_CHRG_TYPE}" />
+												</rich:column> -->
+												
+												<rich:column filterBy="#{tableVar.PCC_PREM_TOPUP_FLAG}"
+													filterEvent="onkeyup" id="COLUMN_PCC_PREM_TOPUP_FLAG"
+													rendered="true" sortBy="#{tableVar.PCC_PREM_TOPUP_FLAG}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PCC_PREM_TOPUP_FLAG"
+															styleClass="forumRowHighlight"
+															value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_PREM_TOPUP_FLAG$caption}" />
+													</f:facet>
+													<h:outputText id="LINK_CAPTION_PCC_PREM_TOPUP_FLAG"
+														value="#{tableVar.PCC_PREM_TOPUP_FLAG}" />
+												</rich:column>
+												<!-- end -->
+
+
+												<rich:column filterBy="#{tableVar.PCC_RATE}"
+													filterEvent="onkeyup" id="COLUMN_PCC_RATE" rendered="true"
+													sortBy="#{tableVar.PCC_RATE}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PCC_RATE"
+															styleClass="forumRowHighlight"
+															value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_RATE$caption}" />
+													</f:facet>
+													<h:outputText id="LINK_CAPTION_PCC_RATE"
+														value="#{tableVar.PCC_RATE}" />
+												</rich:column>
+												<!-- /*added by raja on 30-05-2017 for ZBILQC-1726955 */ -->
+												<rich:column filterBy="#{tableVar.PCC_MODE_OF_PYMT}"
+													filterEvent="onkeyup" id="COLUMN_PCC_MODE_OF_PYMT" rendered="true"
+													sortBy="#{tableVar.PCC_MODE_OF_PYMT}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PCC_MODE_OF_PYMT"
+															styleClass="forumRowHighlight"
+															value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_MODE_OF_PYMT_LABEL$caption}" />
+													</f:facet>
+													
+													<!-- Added by Janani on 06.06.2017 for Fund allocation issue(204) as per Siva's suggestion -->
+													<!-- <h:outputText id="LINK_CAPTION_PCC_MODE_OF_PYMT"
+														value="#{tableVar.PCC_MODE_OF_PYMT}" /> -->
+														
+														<h:selectOneMenu
+														id="SEL_PCC_MODE_OF_PYMT" rendered="true" disabled="#{tableVar.rowSelected == 'dataTableSelectedRow' ? false : true}"
+														required="true" styleClass="input"
+														title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_MODE_OF_PYMT$tooltip}"
+														value="#{tableVar.PCC_MODE_OF_PYMT}">
+														<f:selectItems id="SEL_ITEMS_PCC_MODE_OF_PYMT"
+															value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.listPCC_MODE_OF_PYMT}" />
+														<a4j:support reRender="errorPanel,PCC_MODE_OF_PYMT"
+															actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.setPCC_MODE_OF_PYMT_UPDATE}"
+															event="onblur" id="AUTOID_4_DG" immediate="true" />
+													</h:selectOneMenu>
+														
+														<!-- End -->
+														
+														
+														
+												</rich:column>
+												<!-- end -->
+												<!-- Attach scroller as footer of the table-->
+												<f:facet name="footer">
+													<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+														<rich:datascroller align="right"
+															id="PM_IL_PROD_CONTRI_CHARGE_SCROLL" page="1" />
+														<a4j:commandButton
+															actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.addRow}"
+															id="addRow" immediate="true" accesskey="c"
+															reRender="PM_IL_PROD_CONTRI_CHARGE_PANEL,errorPanel"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.addNewButtonCaption}" />
+														<a4j:commandButton
+															action="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.deleteRow}"
+															id="deleteRow" immediate="true" accesskey="r"
+															reRender="PM_IL_PROD_CONTRI_CHARGE_PANEL,errorPanel"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.deleteButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.postRecord}"
+															id="postRecord" accesskey="p"
+															reRender="PM_IL_PROD_CONTRI_CHARGE_PANEL,errorPanel"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.postButtonCaption}" />
+													</h:panelGroup>
+												</f:facet>
+
+											</rich:dataTable></td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_SR_NO_LABEL}"
+												for="PCC_SR_NO" id="PCC_SR_NO_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_SR_NO$caption}" />
+											<h:graphicImage id="AUTOID_3" style="" styleClass="searchimg"
+												value="./../../images/mandatory.gif" /></td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_SR_NO}"
+												disabled="false" id="PCC_SR_NO" maxlength="12"
+												rendered="true" required="true" styleClass="inputNumeric"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$SR_NO$tooltip}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_SR_NO}">
+											</h:inputText> <!-- <rich:suggestionbox for="PAB_BONUS_CODE" height="200"
+												id="COMP_1_INPUT_LOV"
+												suggestionAction="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.lovPAB_BONUS_CODE}"
+												var="panelCode" width="250">
+												<h:column id="COLUMN_SUGG_1">
+													<h:outputText id="AUTOID_2" value="#{panelCode.code}" />
+												</h:column>
+												<h:column id="COLUMN_SUGG_2">
+													<h:outputText id="AUTOID_3" value="#{panelCode.name}" />
+												</h:column>
+												<a4j:support ajaxSingle="true" event="onselect"
+													id="COMP_1_INPUT_SUGG_SUPPORT" immediate="true"
+													reRender="errorPanel,UI_M_PAB_BONUS_CODE_DESC">
+													<f:setPropertyActionListener id="AUTOID_4"
+														target="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PAB_BONUS_CODE_DESC}"
+														value="#{panelCode.name}" />
+												</a4j:support>
+											</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_1" styleClass="searchimg"
+												value="./../../images/Lov.gif" /> --></td>
+											<td class="oddrow">&nbsp;</td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_CHRG_CODE_LABEL}"
+												for="PCC_CHRG_CODE" id="PCC_CHRG_CODE_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_CHRG_CODE$caption}" />
+											<h:graphicImage id="AUTOID_30_INT" style=""
+												styleClass="searchimg" value="./../../images/mandatory.gif" /></td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_CHRG_CODE}"
+												disabled="false" id="PCC_CHRG_CODE" maxlength="12"
+												rendered="true" required="true" styleClass="inputsmall"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_CHRG_CODE$tooltip}"
+												validator="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.validatePCC_CHRG_CODE}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_CHRG_CODE}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="SUPPORT_PCC_CHRG_CODE" immediate="true"
+													reRender="errorPanel,UI_M_PCC_CHRG_CODE_DESC" />
+											</h:inputText><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_UI_M_PCC_CHRG_CODE_DESC}"
+												disabled="true" id="UI_M_PCC_CHRG_CODE_DESC" maxlength="60"
+												rendered="true" required="false" styleClass="input"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.UI_M_PCC_CHRG_CODE_DESC}" />
+											<rich:suggestionbox for="PCC_CHRG_CODE" height="300"
+												id="PCC_CHRG_CODE_LOV"
+												suggestionAction="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.lovUI_M_CHARGE_CODE}"
+												var="panelCode" width="250">
+												<h:column id="COLUMN_SUGG_11">
+													<h:outputText id="AUTOID_52" value="#{panelCode.lovCode}" />
+												</h:column>
+												<h:column id="COLUMN_SUGG_21">
+													<h:outputText id="AUTOID_53" value="#{panelCode.lovName}" />
+												</h:column>
+											</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_14A" styleClass="searchimg"
+												value="./../../images/Lov.gif" /></td>
+										</tr>
+
+
+
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_PREM_TOPUP_FLAG_LABEL}"
+												for="PCC_PREM_TOPUP_FLAG" id="PCC_PREM_TOPUP_FLAG_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_PREM_TOPUP_FLAG$caption}" />
+											</td>
+											<td class="evenrow"><h:selectOneMenu
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_PREM_TOPUP_FLAG}"
+												disabled="false" id="PCC_PREM_TOPUP_FLAG" rendered="true"
+												styleClass="input"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_PREM_TOPUP_FLAG$tooltip}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_PREM_TOPUP_FLAG}">
+												<f:selectItems id="SEL_ITEMS_PROD_AGE_CALC_FLAG12"
+													value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.listPCC_PREM_TOPUP_FLAG}" />
+											</h:selectOneMenu></td>
+
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_MODE_OF_PYMT_LABEL}"
+												for="PCC_MODE_OF_PYMT" id="PCC_MODE_OF_PYMT_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_MODE_OF_PYMT_LABEL$caption}" />
+											</td>
+											<td class="evenrow"><h:selectOneMenu
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_MODE_OF_PYMT}"
+												disabled="false" id="PCC_MODE_OF_PYMT" rendered="true"
+												styleClass="input"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_MODE_OF_PYMT$tooltip}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_MODE_OF_PYMT}">
+												<f:selectItems id="SEL_ITEMS_PROD_AGE_CALC_FLAG1"
+													value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.listPCC_MODE_OF_PYMT}" />
+											</h:selectOneMenu></td>
+
+										</tr>
+
+
+
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_CON_LMT_FM_LABEL}"
+												for="PCC_CON_LMT_FM" id="PCC_CON_LMT_FM_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_CON_LMT_FM$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_CON_LMT_FM}"
+												disabled="false" id="PCC_CON_LMT_FM" maxlength="12"
+												rendered="true" styleClass="inputNumeric"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_CON_LMT_FM$tooltip}"
+												validator="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.validatePCC_CON_LMT_FM}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_CON_LMT_FM}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="SUPPORT_PCC_CHRG_CODE1" immediate="true"
+													reRender="errorPanel" />
+											</h:inputText></td>
+											<td class="oddrow">&nbsp;</td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_CON_LMT_TO_LABEL}"
+												for="PCC_CON_LMT_TO" id="PCC_CON_LMT_TO_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_CON_LMT_TO$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_CON_LMT_TO}"
+												disabled="false" id="PCC_CON_LMT_TO" maxlength="12"
+												rendered="true" styleClass="inputNumeric"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_CON_LMT_TO$tooltip}"
+												validator="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.validatePCC_CON_LMT_TO}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_CON_LMT_TO}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="SUPPORT_PCC_CHRG_CODE2" immediate="true"
+													reRender="errorPanel" />
+											</h:inputText></td>
+										</tr>
+
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_APPLIED_ON_LABEL}"
+												for="PCC_APPLIED_ON" id="PCC_APPLIED_ON_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_APPLIED_ON$caption}" />
+											</td>
+											<td class="evenrow"><h:selectOneMenu
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_APPLIED_ON}"
+												disabled="false" id="PCC_APPLIED_ON" rendered="true"
+												styleClass="input"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_APPLIED_ON$tooltip}"
+												validator="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.validateAPPLIED_ON}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_APPLIED_ON}">
+												<f:selectItems id="SEL_ITEMS_PROD_AGE_CALC"
+													value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.listPCC_APPLIED_ON}" />
+
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onchange" id="SUPPORT_1" immediate="true"
+													reRender="errorPanel,FLEX_01,FORMULA_CODE_LOV,PCC_FIXED_AMT,PCC_RATE,PCC_RATE_PER" />
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="SUPPORT_136" immediate="true"
+													reRender="errorPanel,FLEX_01,FORMULA_CODE_LOV,PCC_FIXED_AMT,PCC_RATE,PCC_RATE_PER" />
+											</h:selectOneMenu></td>
+
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_UI_M_FLEX1_LABEL}"
+												for="FLEX_01" id="UI_M_FLEX1_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$FLEX_01$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_FLEX_01}"
+												disabled="false" id="FLEX_01" maxlength="12" rendered="true"
+												styleClass="inputsmall"
+												validator="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.validateFormulaCode}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_FLEX_01}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="FORMULA_1" immediate="true"
+													reRender="errorPanel,UI_M_FORMULA_CODE_DESC,FORMULA_CODE_LOV" />
+											</h:inputText> <h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_UI_M_FORMULA_CODE_DESC}"
+												disabled="true" id="UI_M_FORMULA_CODE_DESC" maxlength="240"
+												rendered="true" required="false" styleClass="input"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.UI_M_FORMULA_CODE_DESC}" />
+											<rich:suggestionbox for="FLEX_01" height="300"
+												id="FORMULA_CODE_LOV"
+												suggestionAction="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.lovUI_M_FORMULA_CODE}"
+												var="panelCode" width="250">
+												<h:column id="COLUMN_SUGG_1">
+													<h:outputText id="AUTOID_52" value="#{panelCode.lovCode}" />
+												</h:column>
+												<h:column id="COLUMN_SUGG_2">
+													<h:outputText id="AUTOID_53" value="#{panelCode.lovName}" />
+												</h:column>
+												<a4j:support ajaxSingle="true" event="onselect"
+													id="FORMULA_CODE_SUGG_SUPPORT" immediate="true"
+													reRender="errorPanel,UI_M_FORMULA_CODE_DESC">
+													<f:setPropertyActionListener id="AUTOID_50"
+														target="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.UI_M_FORMULA_CODE_DESC}"
+														value="#{panelCode.lovName}" />
+												</a4j:support>
+											</rich:suggestionbox><h:graphicImage id="IMAGE_SUGG_45A" styleClass="searchimg"
+												value="./../../images/Lov.gif" /></td>
+
+										</tr>
+
+
+
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_RATE_LABEL}"
+												for="PCC_RATE" id="PCC_RATE_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_RATE$caption}" />
+											<h:graphicImage id="AUTOID_75" style=""
+												styleClass="searchimg" value="./../../images/mandatory.gif" /></td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_RATE}"
+												disabled="false" id="PCC_RATE" maxlength="12"
+												rendered="true" required="true" styleClass="inputNumeric"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_RATE$tooltip}"
+												validator="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.validatePCC_RATE}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_RATE}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="SUPPORT_PCC_CHRG_CODE36"
+													immediate="true" reRender="errorPanel" />
+											</h:inputText></td>
+											<td class="oddrow">&nbsp;</td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_RATE_PER_LABEL}"
+												for="PCC_RATE_PER" id="PCC_RATE_PER_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_RATE_PER$caption}" />
+											<h:graphicImage id="AUTOID_48_INT" style=""
+												styleClass="searchimg" value="./../../images/mandatory.gif" /></td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_RATE_PER}"
+												 disabled="false" id="PCC_RATE_PER" maxlength="12"
+												rendered="true" required="true" styleClass="inputNumeric"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_RATE_PER$tooltip}"
+												validator="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.validatePCC_RATE_PER}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_RATE_PER}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="SUPPORT_PCC_CHRG_CODE56"
+													immediate="true" reRender="errorPanel" />
+											</h:inputText></td>
+										</tr>
+
+<h:panelGroup rendered="false">
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_CHRG_TYPE_LABEL}"
+												for="PCC_CHRG_TYPE" id="PCC_CHRG_TYPE_LABEL" rendered="false"
+												styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_CHRG_TYPE$caption}" />
+											</td>
+											<td class="evenrow"><h:selectOneMenu
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_CHRG_TYPE}"
+												disabled="false" id="PCC_CHRG_TYPE" rendered="false"
+												styleClass="input"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_CHRG_TYPE$tooltip}"
+												validator="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.validatePCC_CHRG_TYPE}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_CHRG_TYPE}">
+												<f:selectItems id="SEL_ITEMS_PROD_AGE_CALC_FLAG15"
+													value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.listPCC_CHRG_TYPE}" />
+													<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="oninputblur" id="SUPPORT_PCC_CHRG_CODE6"
+													immediate="true" reRender="errorPanel,PCC_RATE_PER" />
+													<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="oninputchanged" id="SUPPORT_PCC_CHRG_CODE612"
+													immediate="true" reRender="errorPanel,PCC_RATE_PER" />
+											</h:selectOneMenu></td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_SRC_OF_BUS_LABEL}"
+												for="PCC_SRC_OF_BUS" id="PCC_SRC_OF_BUS_LABEL"
+												rendered="false" styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_SRC_OF_BUS$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_SRC_OF_BUS}"
+												disabled="false" id="PCC_SRC_OF_BUS" maxlength="12"
+												rendered="false" styleClass="inputsmall"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_SRC_OF_BUS$tooltip}"
+												validator="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.validatePCC_SRC_OF_BUS}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_SRC_OF_BUS}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="SUPPORT_PCC_CHRG_CODE93"
+													immediate="true"
+													reRender="errorPanel,UI_M_PROD_SRC_OF_BUS_DESC1" />
+											</h:inputText> <h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_UI_M_PROD_SRC_OF_BUS_DESC}"
+												disabled="true" id="UI_M_PROD_SRC_OF_BUS_DESC1"
+												maxlength="240" rendered="false" required="false"
+												styleClass="input"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.UI_M_PROD_SRC_OF_BUS_DESC}" />
+											<rich:suggestionbox for="PCC_SRC_OF_BUS" height="300"
+												id="PCC_SRC_OF_BUS_LOV"
+												suggestionAction="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.lovUI_M_SRC_BUS}"
+												var="panelCode" width="250">
+												<h:column id="COLUMN_SUGG_1">
+													<h:outputText id="AUTOID_52" value="#{panelCode.lovCode}" />
+												</h:column>
+												<h:column id="COLUMN_SUGG_2">
+													<h:outputText id="AUTOID_53" value="#{panelCode.lovName}" />
+												</h:column>
+											</rich:suggestionbox> </td>
+										</tr></h:panelGroup>
+
+
+
+
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_POL_YR_FM_LABEL}"
+												for="PCC_POL_YR_FM" id="PCC_POL_YR_FM_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_POL_YR_FM_LABEL$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_POL_YR_FM}"
+												disabled="false" id="PCC_POL_YR_FM" maxlength="12"
+												rendered="true" styleClass="inputNumeric"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_POL_YR_FM$tooltip}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_POL_YR_FM}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="SUPPORT_PCC_CHRG_CODE96"
+													immediate="true" reRender="errorPanel" />
+											</h:inputText></td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_POL_YR_TO_LABEL}"
+												for="PCC_POL_YR_TO" id="PCC_POL_YR_TO_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_POL_YR_TO_LABEL$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_POL_YR_TO}"
+												disabled="false" id="PCC_POL_YR_TO" maxlength="12"
+												rendered="true" styleClass="inputNumeric"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_POL_YR_TO$tooltip}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_POL_YR_TO}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="SUPPORT_PCC_CHRG_CODE124"
+													immediate="true" reRender="errorPanel" />
+											</h:inputText></td>
+										</tr>
+
+
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_EFF_FM_DT_LABEL}"
+												for="PCC_EFF_FM_DT" id="COMP_PCC_EFF_FM_DT" rendered="true"
+												styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_EFF_FM_DT$caption}" />
+											</td>
+											<td class="oddrow"><rich:calendar
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_EFF_FM_DT}"
+												datePattern="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.datePattern}"
+												enableManualInput="true" id="PCC_EFF_FM_DT"
+												inputClass="calendarinput" inputSize="40" disabled="false"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_EFF_FM_DT$tooltip}"
+												rendered="true"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_EFF_FM_DT}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="oninputblur" id="POL_FIRST_INST_DT_AJAX_SUPPORT"
+													immediate="true" reRender="errorPanel" />
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="oninputchanged" id="POL_FIRST_INST_DT_AJAX_SUPPORT1"
+													immediate="true" reRender="errorPanel" />
+											</rich:calendar></td>
+											<td class="oddrow">&nbsp;</td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_EFF_TO_DT_LABEL}"
+												for="PCC_EFF_TO_DT" id="PCC_EFF_TO_DT_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_EFF_TO_DT$caption}" />
+											</td>
+											<td class="oddrow"><rich:calendar
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_EFF_TO_DT}"
+												datePattern="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.datePattern}"
+												enableManualInput="true" id="PCC_EFF_TO_DT" disabled="false"
+												inputClass="calendarinput" inputSize="40"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_EFF_TO_DT$tooltip}"
+												rendered="true"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_EFF_TO_DT}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="oninputblur" id="POL_LAST_INST_DT_AJAX_SUPPORT34"
+													immediate="true" reRender="errorPanel" />
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="oninputchanged"
+													id="POL_LAST_INST_DT_AJAX_SUPPORT145" immediate="true"
+													reRender="errorPanel" />
+											</rich:calendar></td>
+										</tr>
+
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_FIXED_AMT_LABEL}"
+												for="PCC_FIXED_AMT" id="PCC_FIXED_AMT_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_FIXED_AMT_LABEL$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_FIXED_AMT}"
+												 id="PCC_FIXED_AMT" maxlength="12"
+												rendered="true" styleClass="inputNumeric"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_FIXED_AMT$tooltip}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_FIXED_AMT}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="SUPPORT_PCC_CHRG_CODE94"
+													immediate="true" reRender="errorPanel" />
+											</h:inputText></td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_COV_CHARGE_LABEL}"
+												for="PCC_COV_CHARGE" id="PCC_COV_CHARGE_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_COV_CHARGE_LABEL$caption}" />
+											</td>
+											<td class="evenrow"><h:selectOneMenu
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_COV_CHARGE}"
+												disabled="false" id="PCC_COV_CHARGE" rendered="true"
+												styleClass="input"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_COV_CHARGE$tooltip}"
+												validator="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.validateCOVER_CHARGE}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_TYPE}">
+												<f:selectItems id="SEL_ITEMS_COVER_CHARGE1"
+													value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.listPCC_COVER_CHARGE}" />
+											</h:selectOneMenu></td>
+
+										</tr>
+
+
+<!-- Added by Janani on 06.06.2017 for Fund allocation issue(204) as per Siva's suggestion-->
+
+<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_CUST_SHARE_PERC_LABEL}"
+												for="PCC_CUST_SHARE_PERC" id="PCC_CUST_SHARE_PERC_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_CUST_SHARE_PERC$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_CUST_SHARE_PERC}"
+												 id="PCC_CUST_SHARE_PERC" maxlength="12"
+												rendered="true" styleClass="inputNumeric"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_CUST_SHARE_PERC$tooltip}"
+												validator="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.validationPCC_CUST_SHARE_PERC}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_CUST_SHARE_PERC}">
+												<a4j:support
+													actionListener="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="SUPPORT_PCC_CUST_SHARE_PERC"
+													immediate="true" reRender="errorPanel" />
+											</h:inputText></td>
+											
+											<!-- Added by saritha on 17-04-2018 for KIC Need to introduce policy fee for GOLDA. 0.2% of initial face amount with max cap of KD 200 -->
+											
+											<td class="evenrowright"></td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_APPLY_PERIOD_LABEL}"
+												for="PCC_APPLY_PERIOD" id="PCC_APPLY_PERIOD_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_APPLY_PERIOD$caption}" />
+											</td>
+											<td class="evenrow"><h:selectOneMenu
+												binding="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.COMP_PCC_APPLY_PERIOD}"
+												disabled="false" id="PCC_APPLY_PERIOD" rendered="true"
+												styleClass="input"
+												title="#{message_PILM035_APAC.PILM035_APAC$PM_IL_PROD_CONTRI_CHARGE$PCC_APPLY_PERIOD$tooltip}"
+												validator="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.validatePCC_APPLY_PERIOD}"
+												value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.PM_IL_PROD_CONTRI_CHARGE_BEAN.PCC_APPLY_PERIOD}">
+												<f:selectItems id="SEL_ITEMS_PCC_APPLY_PERIOD"
+													value="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.listPCC_APPLY_PERIOD}" />
+											</h:selectOneMenu></td>
+											</tr>
+
+                                           <!-- End -->
+
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</div>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+									action="#{PILM035_APAC_COMPOSITE_ACTION.PM_IL_PROD_CONTRI_CHARGE_ACTION_BEAN.saveRecord}"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:commandButton id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarButtonStyle" accesskey="s"
+										image="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+							<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM"
+								location="right">
+								<w:wizardPanelFooter
+									binding="#{PILM035_APAC_COMPOSITE_ACTION.wizard.wizardPanelFooter}" />
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,324 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:loadBundle basename="messageProperties" var="searchmessage" />
+		<f:view locale="#{sessionScope['pageLocale']}" beforePhase="#{searchActionBean.beforePhase}">
+			<!-- onkeypress Added by saritha on 24-Feb-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="coverSearchPage" onkeypress="return event.keyCode != 13">
+			<table width="100%" border="0"  cellpadding="0" cellspacing="0">
+				<a4j:region rendered="#{searchActionBean.renderInsertButton}">
+					<tr>
+						<td colspan="3" width="100%">
+							<rich:toolBar id="COMP_85" styleClass="toolBarStyle" width="100%">
+								<rich:toolBarGroup id="COMP_86" styleClass="toolBarGroupStyle">
+									<h:commandLink
+										action="#{searchActionBean.insertButtonAction}"
+										rendered="#{searchActionBean.renderInsertButton}"
+										id="CREATE_TOOL_HEADER" 
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:commandButton id="CREATE_TOOL_IMAGE_HEADER"
+											styleClass="toolbarButtonStyle" accesskey="c"
+											image="./../../resources/images/newrecord.gif" />
+										<h:outputText id="CREATE_TOOL_CAPTION_HEADER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{searchmessage.insertButton$caption}" />
+									</h:commandLink>
+								</rich:toolBarGroup>
+							</rich:toolBar>
+						</td>
+					</tr>
+				</a4j:region>
+				<style>@media (min-width: 960px) and (max-width: 1266px) {
+input[type="image"], input[type="submit"]{
+    width: auto !important;
+}
+input {
+    width: 95px !important;
+}
+}</style>
+				<tr>
+					<td colspan="3" valign="top" height="20">
+						<rich:simpleTogglePanel id="errorPanel" switchType="client"
+							opened="false">			
+							<f:facet name="header">				
+								<h:outputText id="err"  styleClass="#{searchActionBean.messageStyle}" 
+								value=" #{commonmsg.errorPanel$heading} #{searchActionBean.errorMap['current'] !=null? searchActionBean.errorMap['current']:searchActionBean.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" value="#{searchActionBean.errorMessages}"
+										  styleClass="ErrorMessages" escape="false" />
+							<h:messages  styleClass="ErrorMessages" id="msg" rendered="#{searchActionBean.globalMsgRender}"/>
+				
+							<h:outputText id="warningMessages" value="#{searchActionBean.warningMessages}"
+										  styleClass="WarningMessages" escape="false" />		
+						</rich:simpleTogglePanel>
+					</td>
+				</tr>
+				<!-- Body row -->
+				<tr>
+					<td>
+						<!-- initial filter to search and list -->
+						<table border="0" width="100%" cellpadding="0" cellspacing="0" class="rich-mpnl-text rich-mpnl-header">
+							<tr>
+								<!-- <td><h:outputText value="#{searchmessage.intialSearchCriteria$Caption}" />
+								</td>-->
+								<td>
+									<!--  <h:graphicImage id="INTIAL_IMG" width="30" height="30"  
+									value="./../../resources/images/img_intialsearch.gif"/>-->
+								</td>
+								<td>
+									<h:outputText value="#{searchActionBean.column1.columnCaption}" rendered="#{searchActionBean.column1.useForInitialSearch}"/> 
+									<br/>
+											<rich:calendar
+												id="CALENDAR_1"
+												datePattern="#{searchActionBean.datePattern}"
+												disabled="false" rendered="#{searchActionBean.column1.useForInitialSearch &amp;&amp; searchActionBean.column1.typeDate}"
+												enableManualInput="true" 
+												inputSize="11" required="false"
+												value="#{searchActionBean.column1.dateColumnSearchValue}">
+												<a4j:support
+													ajaxSingle="true"
+													event="oninputblur" id="SUPPORT_CALENDAR_1"
+													onsubmit="formatDate('coverSearchPage:CALENDAR_1')"
+													immediate="true" reRender="errorPanel,CALENDAR_1"/>
+											</rich:calendar>
+											<h:inputText value="#{searchActionBean.column1.columnSearchValue}" rendered="#{searchActionBean.column1.useForInitialSearch &amp;&amp; !searchActionBean.column1.typeDate}"/>
+								</td>
+								<td>
+									<h:outputText value="#{searchActionBean.column2.columnCaption}" rendered="#{searchActionBean.column2.useForInitialSearch}"/>
+									<br/>
+											<rich:calendar
+												id="CALENDAR_2"
+												datePattern="#{searchActionBean.datePattern}"
+												disabled="false" rendered="#{searchActionBean.column2.useForInitialSearch &amp;&amp; searchActionBean.column2.typeDate}"
+												enableManualInput="true" 
+												inputSize="11" required="false"
+												value="#{searchActionBean.column2.dateColumnSearchValue}">
+												<a4j:support
+													ajaxSingle="true"
+													event="oninputblur" id="SUPPORT_CALENDAR_2"
+													onsubmit="formatDate('coverSearchPage:CALENDAR_2')"
+													immediate="true" reRender="errorPanel,CALENDAR_2"/>
+											</rich:calendar>
+											<h:inputText value="#{searchActionBean.column2.columnSearchValue}" rendered="#{searchActionBean.column2.useForInitialSearch &amp;&amp; !searchActionBean.column2.typeDate}"/>
+								</td>
+								<td>
+									<h:outputText value="#{searchActionBean.column3.columnCaption}" rendered="#{searchActionBean.column3.useForInitialSearch}"/>
+									<br/>
+											<rich:calendar
+												id="CALENDAR_3"
+												datePattern="#{searchActionBean.datePattern}"
+												disabled="false" rendered="#{searchActionBean.column3.useForInitialSearch &amp;&amp; searchActionBean.column3.typeDate}"
+												enableManualInput="true" 
+												inputSize="11" required="false"
+												value="#{searchActionBean.column3.dateColumnSearchValue}">
+												<a4j:support
+													ajaxSingle="true"
+													event="oninputblur" id="SUPPORT_CALENDAR_3"
+													onsubmit="formatDate('coverSearchPage:CALENDAR_3')"
+													immediate="true" reRender="errorPanel,CALENDAR_3"/>
+											</rich:calendar>
+											<h:inputText value="#{searchActionBean.column3.columnSearchValue}" rendered="#{searchActionBean.column3.useForInitialSearch &amp;&amp; !searchActionBean.column3.typeDate}"/>
+								</td>
+								<td>
+									<h:outputText value="#{searchActionBean.column4.columnCaption}" rendered="#{searchActionBean.column4.useForInitialSearch }"/>
+									<br/>
+											<rich:calendar
+												id="CALENDAR_4"
+												datePattern="#{searchActionBean.datePattern}"
+												disabled="false" rendered="#{searchActionBean.column4.useForInitialSearch &amp;&amp; searchActionBean.column4.typeDate}"
+												enableManualInput="true" 
+												inputSize="11"  required="false"
+												value="#{searchActionBean.column4.dateColumnSearchValue}">
+												<a4j:support
+													ajaxSingle="true"
+													event="oninputblur" id="SUPPORT_CALENDAR_4"
+													onsubmit="formatDate('coverSearchPage:CALENDAR_4')"
+													immediate="true" reRender="errorPanel,CALENDAR_4"/>
+											</rich:calendar>
+											<h:inputText value="#{searchActionBean.column4.columnSearchValue}" rendered="#{searchActionBean.column4.useForInitialSearch &amp;&amp; !searchActionBean.column4.typeDate}"/>
+								</td>
+								<td>
+									<h:outputText value="#{searchActionBean.column5.columnCaption}" rendered="#{searchActionBean.column5.useForInitialSearch }"/>
+									<br/>
+											<rich:calendar
+												id="CALENDAR_5"
+												datePattern="#{searchActionBean.datePattern}"
+												disabled="false" rendered="#{searchActionBean.column5.useForInitialSearch &amp;&amp; searchActionBean.column5.typeDate}"
+												enableManualInput="true" 
+												inputSize="11"  required="false"
+												value="#{searchActionBean.column5.dateColumnSearchValue}">
+												<a4j:support
+													ajaxSingle="true"
+													event="oninputblur" id="SUPPORT_CALENDAR_5"
+													onsubmit="formatDate('coverSearchPage:CALENDAR_5')"
+													immediate="true" reRender="errorPanel,CALENDAR_5"/>
+											</rich:calendar>
+											<h:inputText value="#{searchActionBean.column5.columnSearchValue}" rendered="#{searchActionBean.column5.useForInitialSearch &amp;&amp; !searchActionBean.column5.typeDate}"/>
+								</td>
+								<td>
+									<h:outputText value="#{searchActionBean.column6.columnCaption}" rendered="#{searchActionBean.column6.useForInitialSearch }"/>
+									<br/>
+											<rich:calendar
+												id="CALENDAR_6"
+												datePattern="#{searchActionBean.datePattern}"
+												disabled="false" rendered="#{searchActionBean.column6.useForInitialSearch &amp;&amp; searchActionBean.column6.typeDate}"
+												enableManualInput="true" 
+												inputSize="11"  required="false"
+												value="#{searchActionBean.column6.dateColumnSearchValue}">
+												<a4j:support
+													ajaxSingle="true"
+													event="oninputblur" id="SUPPORT_CALENDAR_6"
+													onsubmit="formatDate('coverSearchPage:CALENDAR_6')"
+													immediate="true" reRender="errorPanel,CALENDAR_6"/>
+											</rich:calendar>
+											<h:inputText value="#{searchActionBean.column6.columnSearchValue}" rendered="#{searchActionBean.column6.useForInitialSearch &amp;&amp; !searchActionBean.column6.typeDate}"/>
+								</td>
+								<td>
+									<h:outputText value="#{searchActionBean.column7.columnCaption}" rendered="#{searchActionBean.column7.useForInitialSearch }"/>
+									<br/>
+											<rich:calendar
+												id="CALENDAR_7"
+												datePattern="#{searchActionBean.datePattern}"
+												disabled="false" rendered="#{searchActionBean.column7.useForInitialSearch &amp;&amp; searchActionBean.column7.typeDate}"
+												enableManualInput="true" 
+												inputSize="11"  required="false"
+												value="#{searchActionBean.column7.dateColumnSearchValue}">
+												<a4j:support
+													ajaxSingle="true"
+													event="oninputblur" id="SUPPORT_CALENDAR_7"
+													onsubmit="formatDate('coverSearchPage:CALENDAR_7')"
+													immediate="true" reRender="errorPanel,CALENDAR_7"/>
+											</rich:calendar>
+											<h:inputText value="#{searchActionBean.column7.columnSearchValue}" rendered="#{searchActionBean.column7.useForInitialSearch &amp;&amp; !searchActionBean.column7.typeDate}"/>
+								</td>
+								<!-- Added by ganesh on 10-03-2018 for 8th column-->
+								<td>
+									<h:outputText value="#{searchActionBean.column8.columnCaption}" rendered="#{searchActionBean.column8.useForInitialSearch }"/>
+									<br/>
+											<rich:calendar
+												id="CALENDAR_8"
+												datePattern="#{searchActionBean.datePattern}"
+												disabled="false" rendered="#{searchActionBean.column8.useForInitialSearch &amp;&amp; searchActionBean.column8.typeDate}"
+												enableManualInput="true" 
+												inputSize="11"  required="false"
+												value="#{searchActionBean.column8.dateColumnSearchValue}">
+												<a4j:support
+													ajaxSingle="true"
+													event="oninputblur" id="SUPPORT_CALENDAR_8"
+													onsubmit="formatDate('coverSearchPage:CALENDAR_8')"
+													immediate="true" reRender="errorPanel,CALENDAR_8"/>
+											</rich:calendar>
+											<h:inputText value="#{searchActionBean.column8.columnSearchValue}" rendered="#{searchActionBean.column8.useForInitialSearch &amp;&amp; !searchActionBean.column8.typeDate}"/>
+								</td>
+								
+								<td>
+									<h:commandButton value="#{searchmessage.searchButton$caption}" id="a4link"
+											 styleClass="button"
+											 accesskey="f"
+										     action="#{searchActionBean.fetchButtonAction}" 
+										     reRender="searchTable,errorPanel">
+									</h:commandButton>
+								</td>
+							</tr>
+						</table>
+						
+						<!-- using rich data table -->
+						<rich:dataTable id="searchTable" value="#{searchActionBean.searchTableList}"
+							onRowMouseOver="this.style.backgroundColor='#E8F2FE'"
+							onRowMouseOut="this.style.backgroundColor='#{a4jSkin.tableBackgroundColor}'"
+							binding="#{searchActionBean.dataTable}"
+							var="searchBeanVar" cellpadding="5px" rows="18" border="1" width="100%">
+							<!-- Attach scroller as footer of the table-->
+							<f:facet name="footer">
+								<rich:datascroller id="dsID" page="#{searchActionBean.pageNumber}" pagesVar="pages" pageIndexVar="index" align="right">
+								</rich:datascroller>
+							</f:facet>
+							<!-- next column -->
+							<rich:column 
+								filterValue="#{searchActionBean.column1.columnFilterValue}" 
+								filterBy="#{searchBeanVar.columnValue1}" rendered="#{searchActionBean.column1.renderColumn}"
+								sortBy="#{searchBeanVar.columnValue1}" filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText value="#{searchActionBean.column1.columnCaption}" />
+								</f:facet> 
+							 <h:commandLink action="#{searchActionBean.updateButtonAction}" > 
+								 	<h:outputText value="#{searchBeanVar.columnValue1}" />
+								 	<f:param name="CURRENT_ROWID" value="#{searchBeanVar.ROWID}" />
+							 </h:commandLink>
+							</rich:column>
+							
+							<rich:column filterValue="#{searchActionBean.column2.columnFilterValue}" 
+										 filterBy="#{searchBeanVar.columnValue2}" rendered="#{searchActionBean.column2.renderColumn}"
+										 sortBy="#{searchBeanVar.columnValue2}" filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText value="#{searchActionBean.column2.columnCaption}" />
+								</f:facet>
+								<h:outputText value="#{searchBeanVar.columnValue2} " />
+							</rich:column>
+							
+							<rich:column filterValue="#{searchActionBean.column3.columnFilterValue}" 
+										 filterBy="#{searchBeanVar.columnValue3}" rendered="#{searchActionBean.column3.renderColumn}"
+										 sortBy="#{searchBeanVar.columnValue3}" filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText value="#{searchActionBean.column3.columnCaption}" />
+								</f:facet>
+								<h:outputText value="#{searchBeanVar.columnValue3} " />
+							</rich:column>
+							
+							<rich:column filterValue="#{searchActionBean.column4.columnFilterValue}" 
+										 filterBy="#{searchBeanVar.columnValue4}"  rendered="#{searchActionBean.column4.renderColumn}"
+										 sortBy="#{searchBeanVar.columnValue4}" filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText value="#{searchActionBean.column4.columnCaption}" />
+								</f:facet>
+								<h:outputText value="#{searchBeanVar.columnValue4} " />
+							</rich:column>
+							<rich:column filterValue="#{searchActionBean.column5.columnFilterValue}" 
+										 filterBy="#{searchBeanVar.columnValue5}"  rendered="#{searchActionBean.column5.renderColumn}"
+										 sortBy="#{searchBeanVar.columnValue5}" filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText value="#{searchActionBean.column5.columnCaption}" />
+								</f:facet>
+								<h:outputText value="#{searchBeanVar.columnValue5} " />
+							</rich:column>
+							<rich:column filterValue="#{searchActionBean.column6.columnFilterValue}" 
+										 filterBy="#{searchBeanVar.columnValue6}"  rendered="#{searchActionBean.column6.renderColumn}"
+										 sortBy="#{searchBeanVar.columnValue6}" filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText value="#{searchActionBean.column6.columnCaption}" />
+								</f:facet>
+								<h:outputText value="#{searchBeanVar.columnValue6} " />
+							</rich:column>
+							<rich:column filterValue="#{searchActionBean.column7.columnFilterValue}" 
+										 filterBy="#{searchBeanVar.columnValue7}"  rendered="#{searchActionBean.column7.renderColumn}"
+										 sortBy="#{searchBeanVar.columnValue7}" filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText value="#{searchActionBean.column7.columnCaption}" />
+								</f:facet>
+								<h:outputText value="#{searchBeanVar.columnValue7} " />
+							</rich:column>
+							<rich:column filterValue="#{searchActionBean.column8.columnFilterValue}" 
+										 filterBy="#{searchBeanVar.columnValue8}"  rendered="#{searchActionBean.column8.renderColumn}"
+										 sortBy="#{searchBeanVar.columnValue8}" filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText value="#{searchActionBean.column8.columnCaption}" />
+								</f:facet>
+								<h:outputText value="#{searchBeanVar.columnValue8} " />
+							</rich:column>
+						</rich:dataTable>
+				</td>
+				</tr>
+			</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

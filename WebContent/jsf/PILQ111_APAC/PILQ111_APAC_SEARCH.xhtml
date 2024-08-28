@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILQ111_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<table width="100%" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+
+				</tr>
+				<h:form id="PILQ111_APAC_SEARCH">
+					<tr>
+						<td  colspan ="3" width="100%" vAlign="top" height="20"><rich:simpleTogglePanel
+							id="errorPanel" switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.errorMap['current'] !=null? PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.errorMap['current']:PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.warningMap['current']}" />
+
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.globalMsgRender}" />
+
+							<h:outputText id="warningMessages"
+								value="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td>
+						<table width="100%" border="0" cellpadding="0" cellspacing="0" 
+							id="masthead">
+							<tr>
+								<td><h:outputText
+									value="#{message.PILQ111_APAC$RI_SEARCH$$SEARCH_PROD_CODE$caption}" />
+								&nbsp; <h:inputText
+									value="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.PROD_CODE}" /></td>
+								<td><h:outputText
+									value="#{message.PILQ111_APAC$RI_SEARCH$$SEARCH_COVER_CODE$caption}" />
+								&nbsp; <h:inputText
+									value="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.COVER_CODE}" /></td>
+								<td><h:outputText
+									value="#{message.PILQ111_APAC$RI_SEARCH$$SEARCH_TTY_TYPE$caption}" />
+								&nbsp; <h:inputText
+									value="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.TTY_TYPE}" /></td>
+								<td><h:outputText
+									value="#{message.PILQ111_APAC$RI_SEARCH$$SEARCH_DIVN_CODE$caption}" />
+								&nbsp; <h:inputText
+									value="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.DIVN_CODE}" /></td>
+								<td><h:outputText
+									value="#{message.PILQ111_APAC$RI_SEARCH$$SEARCH_DEPT_CODE$caption}" />
+								&nbsp; <h:inputText
+									value="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.DEPT_CODE}" /></td>
+								<td><h:outputText
+									value="#{message.PILQ111_APAC$RI_SEARCH$$SEARCH_FM_DT$caption}" />
+								&nbsp; <h:inputText
+									value="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.FM_DT}" /></td>
+								<td><h:outputText
+									value="#{message.PILQ111_APAC$RI_SEARCH$$SEARCH_TO_DT$caption}" />
+								&nbsp; <h:inputText
+									value="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.TO_DT}" /></td>
+								<td><a4j:commandButton styleClass="button"
+									value="#{commonmsg.searchButton$caption}" id="a4link">
+									<a4j:support
+										action="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.fetchRiAllocList}"
+										event="onclick" reRender="dataTableId,errorPanel"></a4j:support>
+								</a4j:commandButton></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<rich:dataTable id="dataTableId"
+						value="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.QUERY_DATA_LIST}"
+						var="riAlloc" cellpadding="5px" rows="10" border="1" width="100%">
+						<!-- Attach scroller as footer of the table-->
+						<f:facet name="footer">
+							<rich:datascroller id="dsID" pagesVar="pages"
+								pageIndexVar="index" align="right">
+							</rich:datascroller>
+						</f:facet>
+
+						<!-- next column -->
+
+						<rich:column
+							filterValue="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.PROD_CODE_FILTER}"
+							filterBy="#{riAlloc.RIA_PROD_CODE}"
+							sortBy="#{riAlloc.RIA_PROD_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Product Code " />
+							</f:facet>
+							<h:commandLink
+								action="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.redirect}">
+
+								<h:outputText value="#{riAlloc.RIA_PROD_CODE}" />
+
+								<f:param name="rowId" value="#{riAlloc.ROWID}" />
+							</h:commandLink>
+						</rich:column>
+
+						<rich:column
+							filterValue="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.COVER_CODE_FILTER}"
+							filterBy="#{riAlloc.RIA_COVER_CODE}"
+							sortBy="#{riAlloc.RIA_COVER_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Cover Code " />
+							</f:facet>
+								<h:outputText value="#{riAlloc.RIA_COVER_CODE}" />
+								<f:param name="rowId" value="#{riAlloc.ROWID}" />
+						</rich:column>
+
+						<rich:column
+							filterValue="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.TTY_TYPE_FILTER}"
+							filterBy="#{riAlloc.RIA_TTY_TYPE}"
+							sortBy="#{riAlloc.RIA_TTY_TYPE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Treaty Type " />
+							</f:facet>
+								<h:outputText value="#{riAlloc.RIA_TTY_TYPE}" />
+								<f:param name="rowId" value="#{riAlloc.ROWID}" />
+						</rich:column>
+						
+						<rich:column
+							filterValue="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.DIVN_CODE_FILTER}"
+							filterBy="#{riAlloc.RIA_DIVN_CODE}"
+							sortBy="#{riAlloc.RIA_DIVN_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Divn Code" />
+							</f:facet>
+								<h:outputText value="#{riAlloc.RIA_DIVN_CODE}" />
+								<f:param name="rowId" value="#{riAlloc.ROWID}" />
+						</rich:column>
+						
+						<rich:column
+							filterValue="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.DEPT_CODE_FILTER}"
+							filterBy="#{riAlloc.RIA_DEPT_CODE}"
+							sortBy="#{riAlloc.RIA_DEPT_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Dept Code" />
+							</f:facet>
+								<h:outputText value="#{riAlloc.RIA_DEPT_CODE}" />
+								<f:param name="rowId" value="#{riAlloc.ROWID}" />
+						</rich:column>
+						
+						<rich:column
+							filterValue="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.FM_DT_FILTER}"
+							filterBy="#{riAlloc.UI_FM_DT}"
+							sortBy="#{riAlloc.UI_FM_DT}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="From Dt" />
+							</f:facet>
+								<h:outputText value="#{riAlloc.UI_FM_DT}" />
+								<f:param name="rowId" value="#{riAlloc.ROWID}" />
+						</rich:column>
+						
+						<rich:column
+							filterValue="#{PILQ111_APAC_COMPOSITE_ACTION.PILQ111_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.TO_DT_FILTER}"
+							filterBy="#{riAlloc.UI_TO_DT}"
+							sortBy="#{riAlloc.UI_TO_DT}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="To Dt" />
+							</f:facet>
+								<h:outputText value="#{riAlloc.UI_TO_DT}" />
+								<f:param name="rowId" value="#{riAlloc.ROWID}" />
+						</rich:column>
+
+					</rich:dataTable>
+				</h:form>
+
+				<tr>
+
+				</tr>
+			</table>
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,195 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:loadBundle basename="messageProperties_SSO" var="message" />
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<table width="100%" border="0"  cellpadding="0" cellspacing="0">
+				<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%"  cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" switchType="client"
+									opened="false">			
+									<f:facet name="header">				
+										<h:outputText id="err"  styleClass="#{SSO_MANAGER_SEARCH_ACTION.messageStyle}" 
+										value=" #{commonmsg.errorPanel$heading} #{SSO_MANAGER_SEARCH_ACTION.errorMap['current'] !=null? SSO_MANAGER_SEARCH_ACTION.errorMap['current']:SSO_MANAGER_SEARCH_ACTION.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages" value="#{SSO_MANAGER_SEARCH_ACTION.errorMessages}"
+												  styleClass="ErrorMessages" escape="false" />
+									<h:messages  styleClass="ErrorMessages" id="msg" rendered="#{SSO_MANAGER_SEARCH_ACTION.globalMsgRender}"/>
+						
+									<h:outputText id="warningMessages" value="#{SSO_MANAGER_SEARCH_ACTION.warningMessages}"
+												  styleClass="WarningMessages" escape="false" />		
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+				<!-- Body row -->
+				<tr>
+				<td>
+					<h:form id="SSO_MANAGER_SEARCH_PAGE">
+		
+						<!-- initial filter to search and list -->
+						<table border="0" width="100%" cellpadding="0" cellspacing="0" id="masthead">
+							<tr>
+								<td>
+									<h:outputText id="INITIAL_SEARCH_CRITERIA_CAPTION" 
+										value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$INITIAL_SEARCH_CRITERIA_CAPTION}" />
+								</td>
+								<td>
+									<h:outputText id="FM_APPLICATION_LABEL"
+										for="FM_APPLICATION" 
+										value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$FM_APPLICATION$caption}"/> 
+									<br/>
+									<h:inputText id="FM_APPLICATION" 
+										title="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$FM_APPLICATION$tooltip}"
+										value="#{SSO_MANAGER_SEARCH_ACTION.ssoInitialSearchCriteria.PLS_FM_APPLICATION}"/>
+								</td>
+								<td>
+									<h:outputText id="USER_ID_LABEL"
+										for="USER_ID" 
+										value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$USER_ID$caption}"/> 
+									<br/>
+									<h:inputText
+										id="USER_ID" 
+										title="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$USER_ID$tooltip}"
+										value="#{SSO_MANAGER_SEARCH_ACTION.ssoInitialSearchCriteria.PLS_FM_USER_ID}"/>
+								</td>
+								<td>
+									<h:outputText id="COMPANY_LABEL"
+										for="COMPANY"
+										value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$COMPANY$caption}"/> 
+									<br/>
+									<h:inputText 
+										id="COMPANY"
+										title="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$COMPANY$tooltip}"
+										value="#{SSO_MANAGER_SEARCH_ACTION.ssoInitialSearchCriteria.PLS_FM_COMPANY}"/>
+								</td>
+								<td>
+									<h:outputText id="DIVISION_LABEL"
+										for="DIVISION"
+										value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$DIVISION$caption}"/> 
+									<br/>
+									<h:inputText
+										id="DIVISION" 
+										title="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$DIVISION$tooltip}"
+										value="#{SSO_MANAGER_SEARCH_ACTION.ssoInitialSearchCriteria.PLS_FM_DIVISION}"/>
+								</td>
+								<td>
+									<h:outputText id="DEPARTMENT_LABEL"
+										for="DEPARTMENT" 
+										value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$DEPARTMENT$caption}"/> 
+									<br/>
+									<h:inputText
+										id="DEPARTMENT" 
+										title="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$DEPARTMENT$tooltip}"
+										value="#{SSO_MANAGER_SEARCH_ACTION.ssoInitialSearchCriteria.PLS_FM_DEPARTMENT}"/>
+								</td>
+								<td>
+									<a4j:commandButton id="BUT_SEARCH"
+										value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$BUT_SEARCH$caption}" 
+										title="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$BUT_SEARCH$tooltip}"
+										styleClass="button"
+										actionListener="#{SSO_MANAGER_SEARCH_ACTION.searchButtonAction}" 
+										reRender="searchTable,errorPanel">
+									</a4j:commandButton>
+								</td>
+							</tr>
+						</table>
+						
+						<!-- using rich data table -->
+						<rich:dataTable id="searchTable" value="#{SSO_MANAGER_SEARCH_ACTION.ssoAppMappingList}"
+							binding="#{SSO_MANAGER_SEARCH_ACTION.searchDataTable}"
+							var="ssoAppMapping" cellpadding="5px" rows="10" border="1" width="100%">
+							<!-- Attach scroller as footer of the table-->
+							<f:facet name="footer">
+								<rich:datascroller id="dsID" align="right">
+								</rich:datascroller>
+							</f:facet>
+							<!-- next column -->
+							<rich:column
+								filterBy="#{ssoAppMapping.PLS_FM_APPLICATION}"
+								sortBy="#{ssoAppMapping.PLS_FM_APPLICATION}"
+								filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$FM_APPLICATION$caption}" />
+								</f:facet> 
+							 	<h:commandLink action="#{SSO_MANAGER_SEARCH_ACTION.updateButtonAction}" > 
+								 	<h:outputText value="#{ssoAppMapping.PLS_FM_APPLICATION}" />
+								 	<f:setPropertyActionListener value="#{ssoAppMapping.PLS_FM_APPLICATION}" target="#{SSO_MANAGER_SEARCH_ACTION.ssoAppMapping.PLS_FM_APPLICATION}" />
+								 	<f:setPropertyActionListener value="#{ssoAppMapping.PLS_FM_USER_ID}" target="#{SSO_MANAGER_SEARCH_ACTION.ssoAppMapping.PLS_FM_USER_ID}" />
+								 	<f:setPropertyActionListener value="#{ssoAppMapping.PLS_FM_USER_PWD}" target="#{SSO_MANAGER_SEARCH_ACTION.ssoAppMapping.PLS_FM_USER_PWD}" />
+								 	<f:setPropertyActionListener value="#{ssoAppMapping.PLS_FM_COMPANY}" target="#{SSO_MANAGER_SEARCH_ACTION.ssoAppMapping.PLS_FM_COMPANY}" />
+								 	<f:setPropertyActionListener value="#{ssoAppMapping.PLS_FM_DIVISION}" target="#{SSO_MANAGER_SEARCH_ACTION.ssoAppMapping.PLS_FM_DIVISION}" />
+								 	<f:setPropertyActionListener value="#{ssoAppMapping.PLS_FM_DEPARTMENT}" target="#{SSO_MANAGER_SEARCH_ACTION.ssoAppMapping.PLS_FM_DEPARTMENT}" />
+								</h:commandLink>
+							</rich:column>
+							<rich:column
+								filterBy="#{ssoAppMapping.PLS_FM_USER_ID}"
+								sortBy="#{ssoAppMapping.PLS_FM_USER_ID}"
+								filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText id="USER_ID_COL" 
+										value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$USER_ID$caption}" />
+								</f:facet> 
+							 	<h:outputText value="#{ssoAppMapping.PLS_FM_USER_ID}" />
+							</rich:column>
+							<rich:column
+								filterBy="#{ssoAppMapping.PLS_FM_COMPANY}"
+								sortBy="#{ssoAppMapping.PLS_FM_COMPANY}"
+								filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText id="FM_COMPANY_COL" 
+										value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$COMPANY$caption}" />
+								</f:facet> 
+							 	<h:outputText value="#{ssoAppMapping.PLS_FM_COMPANY}" />
+							</rich:column>
+							<rich:column
+								filterBy="#{ssoAppMapping.PLS_FM_DIVISION}"
+								sortBy="#{ssoAppMapping.PLS_FM_DIVISION}"
+								filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText id="FM_DIVISION_COL" 
+										value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$DIVISION$caption}" />
+								</f:facet> 
+							 	<h:outputText value="#{ssoAppMapping.PLS_FM_DIVISION}" />
+							</rich:column>
+							<rich:column
+								filterBy="#{ssoAppMapping.PLS_FM_DEPARTMENT}"
+								sortBy="#{ssoAppMapping.PLS_FM_DEPARTMENT}"
+								filterEvent="onkeyup">
+								<f:facet name="header">
+									<h:outputText id="FM_DEPARTMENT_COL" 
+										value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$DEPARTMENT$caption}" />
+								</f:facet> 
+							 	<h:outputText value="#{ssoAppMapping.PLS_FM_DEPARTMENT}" />
+							</rich:column>
+						</rich:dataTable>
+						<table width="100%">
+							<tr>
+								<td align="left">
+									<h:commandButton id="BUT_INSERT" 
+										value = "#{message.SSO$SSO_MANAGER_SEARCH_PAGE$BUT_INSERT$caption}" 
+										title="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$BUT_INSERT$tooltip}"
+										action="#{SSO_MANAGER_SEARCH_ACTION.insertButtonAction}"
+										styleClass="button" style="width:80px">
+									</h:commandButton>
+								</td>
+							</tr>
+						</table>
+					</h:form>
+				</td>
+				</tr>
+			</table>
+		</f:view>
+	</ui:define>
+</ui:composition>

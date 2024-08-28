@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+	<f:view locale="#{sessionScope['pageLocale']}">
+	
+			<table width="100%" border="0">
+				<!-- add header row -->
+				<h:form id="Search">
+			
+				<!-- Body row -->
+				<tr>
+					<td><!-- initial filter to search and list -->
+					<table border="0" width="100%" cellpadding="0"
+						cellspacing="0" id="masthead">
+						<tr>
+							<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+							<td>Plan Code <h:inputText
+								binding="#{PILM037_COMPOSITE_ACTION.searchActionBean.COMP_UI_M_BSET_PLAN_CODE}"
+								title="Enter the Plan Code"
+								value="#{PILM037_COMPOSITE_ACTION.searchActionBean.planCode}" />
+							</td>
+	
+	
+							<td><a4j:commandButton value="#{commonmsg.searchButton$caption}" id="a4link"
+								styleClass="button"							
+									action="#{PILM037_COMPOSITE_ACTION.searchActionBean.fetchPlanCodeDetails}"
+									 reRender="dataTableId">
+							</a4j:commandButton><h:commandButton value = "Delete" id = "deleteRec" rendered="false"
+							actionListener="#{PILM037_COMPOSITE_ACTION.searchActionBean.DeleteRow}"></h:commandButton></td>
+						</tr>
+					</table>
+	
+					<!-- using rich data table -->
+					 <rich:dataTable
+						binding="#{PILM037_COMPOSITE_ACTION.searchActionBean.dataTable}"
+						id="dataTableId"
+						value="#{PILM037_COMPOSITE_ACTION.searchActionBean.planCodeList}"
+						var="codeDetails" cellpadding="5px" rows="10" border="0"
+						width="100%">
+						<!-- Attach scroller as footer of the table-->
+						<f:facet name="footer">
+							<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+								align="right">
+							</rich:datascroller>
+						</f:facet>
+	
+						<!-- next column 
+	
+						<rich:column width="5">
+							<f:facet name="header">
+							</f:facet>
+						<h:selectBooleanCheckbox id = "checkBox" value="#{codeDetails.selected}"
+						 rendered="false">
+						</h:selectBooleanCheckbox>
+						</rich:column> -->
+						<rich:column filterBy="#{codeDetails.BSET_PLAN_CODE}"
+							sortBy="#{codeDetails.BSET_PLAN_CODE}" filterEvent="onkeyup" >
+	
+							<f:facet name="header">
+								<h:outputText value="Plan Code" title="Enter the Plan Code" />
+							</f:facet>
+							<h:commandLink action="#{PILM037_COMPOSITE_ACTION.searchActionBean.clearList}">
+									<h:outputText value="#{codeDetails.BSET_PLAN_CODE}" />
+								<f:param name="plCode" value="#{codeDetails.BSET_PLAN_CODE}" />
+								<f:param name="plCodeDesc" value="#{codeDetails.UI_M_PLAN_CODE_DESC}"/>
+							</h:commandLink>
+	
+						</rich:column>
+						<rich:column filterBy="#{codeDetails.UI_M_PLAN_CODE_DESC}"
+							
+							sortBy="#{codeDetails.UI_M_PLAN_CODE_DESC}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Plan Code Description" title="Plan Code Desc"/>
+							</f:facet>
+							<h:outputText value="#{codeDetails.UI_M_PLAN_CODE_DESC} " />
+						</rich:column>
+					</rich:dataTable></td>
+	
+	
+				</tr>
+				<!-- add footer to the page-->
+		</h:form>
+	</table>
+	</f:view>
+</ui:define>
+</ui:composition>

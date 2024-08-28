@@ -1,0 +1,362 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM200" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PM_IL_PROD_GROUP_DTL">
+				<tr>
+					<td colspan="3" vAlign="top" width="100%">
+					<table class="noborder" id="toolbartable" width="100%">
+						<tr>
+							<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+								<rich:toolBarGroup styleClass="toolBarGroupStyle">
+									<h:commandLink id="AUTOID_1" style="text-decoration:none" rendered="false"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="AUTOID_2" style="border: thin solid white"
+											styleClass="searchimg" value="./../../images/back.png" />
+										<h:outputText id="AUTOID_3"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$back}" />
+									</h:commandLink>
+									<h:commandLink
+										action="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.save}"
+										id="AUTOID_4" style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:commandButton  id="style_1" 
+											styleClass="toolbarButtonStyle" accesskey="s"
+											 image="./../../images/save.gif" />
+										<h:outputText id="AUTOID_5"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$save}" />
+									</h:commandLink>
+									<h:commandLink id="AUTOID_6" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="AUTOID_7" style="border: thin solid white"
+											styleClass="searchimg" value="./../../images/savenext.GIF" />
+										<h:outputText id="AUTOID_8"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$savenext}" />
+									</h:commandLink>
+									<h:commandLink id="AUTOID_9" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="AUTOID_10"
+											style="border: thin solid white" styleClass="searchimg"
+											value="./../../images/deleteRecord.gif" />
+										<h:outputText id="AUTOID_11"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$deleteRecord}" />
+									</h:commandLink>
+									<h:commandLink id="AUTOID_12" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="AUTOID_13"
+											style="border: thin solid white" styleClass="searchimg"
+											value="./../../images/firstrec.gif" />
+										<h:outputText id="AUTOID_14"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$firstrec}" />
+									</h:commandLink>
+
+									<h:commandLink id="AUTOID_15" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="AUTOID_16"
+											style="border: thin solid white" styleClass="searchimg"
+											value="./../../images/nextpage.gif" />
+										<h:outputText id="AUTOID_17"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$nextpage}" />
+									</h:commandLink>
+									<h:commandLink id="AUTOID_18" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="AUTOID_19"
+											style="border: thin solid white" styleClass="searchimg"
+											value="./../../images/lastRecord.gif" />
+										<h:outputText id="AUTOID_20"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$lastRecord}" />
+									</h:commandLink>
+									<h:commandLink
+											action="#{PILM200_COMPOSITE_ACTION.navigationEnabled}"
+											id="AUTOID_101" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_111" 
+											styleClass="toolbarButtonStyle" accesskey="u"
+												image="./../../resources/images/navigation.gif" />
+											<h:outputText id="AUTOID_121"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+								</rich:toolBarGroup>
+							</rich:toolBar></td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+						id="errorPanel" opened="false" switchType="client">
+						<f:facet name="header">
+							<h:outputText id="err"
+								styleClass="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.messageStyle}"
+								value="#{commonmsg.errorPanel$heading} #{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.errorMap['current'] !=null? PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.errorMap['current']: PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.warningMap['current']}" />
+						</f:facet>
+						<h:outputText escape="false" id="errorMessages"
+							styleClass="ErrorMessages"
+							value="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.errorMessages}" />
+						<h:messages id="msg"
+							rendered="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.globalMsgRender}"
+							styleClass="ErrorMessages" />
+						<h:outputText escape="false" id="warningMessages"
+							styleClass="WarningMessages"
+							value="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.warningMessages}" />
+					</rich:simpleTogglePanel></td>
+				</tr>
+				<tr>
+					<td colspan="3" width="100%">
+					<table class="noborder" id="globalLink" width="100%">
+						<tr>
+							<td><!-- Tab implementation --> <h:inputHidden id="myhidden"
+								value="#{PILM200_COMPOSITE_ACTION.tabbedBar.tabClicked}" /><h:panelGroup
+								id="mypanel">
+								<table class="noborder" width="100%">
+									<tr>
+										<td width="90%"><a4j:repeat
+											value="#{PILM200_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+											var="currtab">
+											<h:commandLink
+												action="#{PILM200_COMPOSITE_ACTION.tabbedBar.tabAction}"
+												disabled="#{currtab.disabled}" id="AUTOID_21"
+												onclick="document.getElementById('PM_IL_PROD_GROUP_DTL:myhidden').value='#{currtab.id}'"
+												styleClass="#{currtab.styleString}" value="#{currtab.value}" />
+										</a4j:repeat></td>
+									</tr>
+								</table>
+							</h:panelGroup></td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="3">
+					<rich:panel id="ProductGroupDtl"
+						style="width:100%;">
+						<table align="center" class="noborder" width="100%">
+							<tr>
+								<td valign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+
+									<tr>
+										<td colspan="5"><rich:dataTable
+											binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.dataGrid}"
+											id="PM_IL_PROD_GROUP_DTL_DT" rows="5"
+											value="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.dataList}"
+											var="data" width="100%">
+
+
+											<rich:column filterBy="#{data.PGD_PROD_CODE}"
+												filterEvent="onkeyup"
+												filterValue="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.filterByPGD_PROD_CODE}"
+												rendered="true" sortBy="#{data.PGD_PROD_CODE}"
+												styleClass="#{data.rowSelected}">
+												<f:facet name="header">
+													<h:outputText id="AUTOID_26" styleClass="forumRowHighlight"
+														value="#{message.PILM200$PM_IL_PROD_GROUP_DTL$PGD_PROD_CODE$caption}" />
+												</f:facet>
+												<a4j:commandLink
+													action="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.getDetails}"
+													immediate="true" reRender="ProductGroupDtl">
+													<h:outputText id="AUTOID_27" value="#{data.PGD_PROD_CODE}" />
+												</a4j:commandLink>
+											</rich:column>
+											<!-- next column -->
+											<rich:column filterBy="#{data.UI_M_PROD_DESC}"
+												filterEvent="onkeyup"
+												filterValue="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.filterByUI_M_PROD_DESC}"
+												rendered="true" sortBy="#{data.UI_M_PROD_DESC}"
+												styleClass="#{data.rowSelected}">
+												<f:facet name="header">
+													<h:outputText id="AUTOID_28" styleClass="forumRowHighlight"
+														value="#{message.PILM200$PM_IL_PROD_GROUP_DTL$UI_M_PROD_DESC$caption}" />
+												</f:facet>
+												<h:outputText id="AUTOID_29" value="#{data.UI_M_PROD_DESC}" />
+											</rich:column>
+											<!-- Attach scroller as footer of the table-->
+											<f:facet name="footer">
+												<h:panelGroup id="footerpanel" style="border:0">
+													<rich:datascroller align="right" id="myscr" />
+
+													<a4j:commandButton
+														actionListener="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.addNew}"
+														binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.UI_M_BUT_ADD}"
+														id="AUTOID_30" immediate="true"
+														reRender="errorPanel,ProductGroupDtl" rendered="true"
+														style="width:90px" styleClass="button"
+														value="#{commonmsg.addNewButtonCaption}" />
+													<a4j:commandButton
+														actionListener="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.deleteRow}"
+														binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.UI_M_BUT_DELETE}"
+														id="AUTOID_31" immediate="true"
+														reRender="errorPanel,ProductGroupDtl" rendered="true"
+														style="width:90px" styleClass="button"
+														value="#{commonmsg.deleteButtonCaption}" />
+													<a4j:commandButton
+														actionListener="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.postRecord}"
+														binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.UI_M_BUT_POST}"
+														id="AUTOID_32" reRender="errorPanel,ProductGroupDtl"
+														style="width:90px" styleClass="button"
+														value="#{commonmsg.postButtonCaption}" />
+
+												</h:panelGroup>
+											</f:facet>
+										</rich:dataTable></td>
+									</tr>
+										<tr>
+										<td class="oddrowfreeze" colspan="5"><h:outputLabel for="PGD_FRZ_FLAG"
+											id="PGD_FRZ_FLAG_LABEL" 
+											styleClass="label"
+											title="#{message.PILM200$PM_IL_PROD_GROUP_DTL$PGD_FRZ_FLAG$tooltip}"
+											value="#{message.PILM200$PM_IL_PROD_GROUP_DTL$PGD_FRZ_FLAG$caption}" />
+										<h:selectBooleanCheckbox
+											binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.COMP_PGD_FRZ_FLAG}"
+											id="PGD_FRZ_FLAG" rendered="true"
+											title="#{message.PILM200$PM_IL_PROD_GROUP_DTL$PGD_FRZ_FLAG$tooltip}"
+											value="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PM_IL_PROD_GROUP_DTL_BEAN.freezSelect}">
+											<a4j:support
+												actionListener="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.FRZ_FLAG_CLICK}"
+												event="onblur" id="style_8" immediate="true"
+												reRender="errorPanel" />
+
+										</h:selectBooleanCheckbox></td>
+									</tr>
+									<tr>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.COMP_PGD_PROD_CODE_LABEL}"
+											for="PGD_PROD_CODE" styleClass="label" 
+											value="#{message.PILM200$PM_IL_PROD_GROUP_DTL$PGD_PROD_CODE$caption}">
+										</h:outputLabel>
+										<h:graphicImage id="PGD_PROD_CODE_MANDATORY" style=""
+													styleClass="searchimg" value="./../../images/mandatory.gif" /></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.COMP_PGD_PROD_CODE}"
+											id="PGD_PROD_CODE" styleClass="inputsmall" required="true" 
+											onfocus="currFocus('PM_IL_PROD_GROUP_DTL:PGD_PROD_CODE')"
+											validator="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PGD_PROD_CODE_WHEN_VALIDATE_ITEM}"
+											value="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PM_IL_PROD_GROUP_DTL_BEAN.PGD_PROD_CODE}">
+											<a4j:support
+												actionListener="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="AUTOID_33" immediate="true"
+												oncomplete="setFocus('PM_IL_PROD_GROUP_DTL:PGD_MAIN_PROD_YN','PM_IL_PROD_GROUP_DTL:PGD_PROD_CODE')"
+												reRender="ProductGroupDtl,errorPanel,UI_M_PROD_DESC" />
+										</h:inputText> <h:inputText
+											binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.COMP_UI_M_PROD_DESC}"
+											disabled="true" id="UI_M_PROD_DESC" styleClass="input"
+											value="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PM_IL_PROD_GROUP_DTL_BEAN.UI_M_PROD_DESC}">
+
+										</h:inputText> <rich:suggestionbox for="PGD_PROD_CODE" height="300"
+											id="AUTOID_34"
+											suggestionAction="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.prepareSuggestionList_PGH_APPL_PLAN_CODE}"
+											var="suggest" width="250">
+											<h:column>
+												<h:outputText id="AUTOID_35" value="#{suggest.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_36" value="#{suggest.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,UI_M_PROD_DESC">
+												<f:setPropertyActionListener id="AUTOID_37"
+													target="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PM_IL_PROD_GROUP_DTL_BEAN.UI_M_PROD_DESC}"
+													value="#{panelCode.lovName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_1" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow"  width="4%">&nbsp;</td>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.COMP_PGD_MAIN_PROD_YN_LABEL}"
+											for="PGD_MAIN_PROD_YN" styleClass="label"
+											value="#{message.PILM200$PM_IL_PROD_GROUP_DTL$PGD_MAIN_PROD_YN$caption}">
+										</h:outputLabel></td>
+										<td class="evenrow" width="28%"><h:selectOneMenu
+											binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.COMP_PGD_MAIN_PROD_YN}"
+											id="PGD_MAIN_PROD_YN" styleClass="input"
+											validator="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PGD_MAIN_PROD_YN_WHEN_VALIDATE_ITEM}"
+											value="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PM_IL_PROD_GROUP_DTL_BEAN.PGD_MAIN_PROD_YN}">
+
+											<f:selectItems id="style_9"
+												value="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.mainYN}" />
+											<a4j:support
+												actionListener="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="style_10" immediate="true"
+												reRender="ProductGroupDtl,PM_IL_PROD_GROUP_DTL_DT,errorPanel,PGD_MANDATORY_YN,PGD_DEFAULT_YN" />
+										</h:selectOneMenu></td>
+									</tr>
+									<tr>
+
+										<td class="oddrowright" width="20%" ><h:outputLabel
+											binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.COMP_PGD_MANDATORY_YN_LABEL}"
+											for="PGD_MANDATORY_YN" styleClass="label"
+											value="#{message.PILM200$PM_IL_PROD_GROUP_DTL$PGD_MANDATORY_YN$caption}">
+										</h:outputLabel></td>
+										<td class="oddrow" width="28%"><h:selectOneMenu
+											binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.COMP_PGD_MANDATORY_YN}"
+											disabled="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PM_IL_PROD_GROUP_DTL_BEAN.mandYN}"
+											id="PGD_MANDATORY_YN" styleClass="input"
+											onfocus="currFocus('PM_IL_PROD_GROUP_DTL:PGD_MANDATORY_YN')"
+											validator="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PGD_MANDATORY_YN_WHEN_VALIDATE_ITEM}"
+											value="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PM_IL_PROD_GROUP_DTL_BEAN.PGD_MANDATORY_YN}">
+											<f:selectItems id="style_4"
+												value="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.mandYN}" />
+											<a4j:support
+												actionListener="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="style_5" immediate="true"
+												oncomplete="('PM_IL_PROD_GROUP_DTL:PGD_DEFAULT_YN','PM_IL_PROD_GROUP_DTL:PGD_MANDATORY_YN')"
+												reRender="ProductGroupDtl,PM_IL_PROD_GROUP_DTL_DT,errorPanel,PGD_DEFAULT_YN" />
+										</h:selectOneMenu></td>
+										<td class="oddrow" width="4%">&nbsp;</td>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.COMP_PGD_DEFAULT_YN_LABEL}"
+											for="PGD_DEFAULT_YN" styleClass="label"
+											value="#{message.PILM200$PM_IL_PROD_GROUP_DTL$PGD_DEFAULT_YN$caption}" />
+
+										</td>
+										<td class="oddrow" width="28%"><h:selectOneMenu
+											binding="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.COMP_PGD_DEFAULT_YN}"
+											disabled="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PM_IL_PROD_GROUP_DTL_BEAN.defaultYN}"
+											id="PGD_DEFAULT_YN" styleClass="input"
+											validator="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PGD_DEFAULT_YN_WHEN_VALIDATE_ITEM}"
+											value="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.PM_IL_PROD_GROUP_DTL_BEAN.PGD_DEFAULT_YN}">
+											<f:selectItems
+												value="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.defaultYN}" />
+											<a4j:support
+												actionListener="#{PILM200_COMPOSITE_ACTION.PM_IL_PROD_GROUP_DTL_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="style_6" immediate="true"
+												reRender="PM_IL_PROD_GROUP_DTL_DT,ProductGroupDtl,errorPanel,PGD_DEFAULT_YN" />
+										</h:selectOneMenu></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+					</rich:panel></td>
+				</tr>
+
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

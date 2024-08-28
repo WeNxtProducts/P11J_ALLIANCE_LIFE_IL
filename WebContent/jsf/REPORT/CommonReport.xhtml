@@ -1,0 +1,267 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"  beforePhase="#{CommonReport.beforePhase}">
+		<script type="text/javascript">
+function setDefaultValues(valu,id,type,fromto)
+{
+	var today = new Date();
+	var vv=valu.value;
+			if((vv=="" || vv==null )|| vv=="undefined")
+				{
+			if(type==1)
+				{
+				if(fromto==1)
+					{
+					return "0";
+					}
+				if(fromto==2)
+					{
+					return "ZZZZZ";
+					}
+				if(fromto==3)
+				{
+				return "999999";
+				}
+				if(fromto==0)
+				{
+				return "";
+				}
+				}
+			if(type==2)
+			{
+				if(fromto==1)
+					{
+					return "0";
+					}
+				if(fromto==2)
+					{
+					return "ZZZZZ";
+					}
+				
+				if(fromto==3)
+				{
+					/* Changed by Ramkumar on 16-08-2016 for SSP call id FALCONQC-1714610 */
+					return "999999";
+					/* End */
+				}
+				if(fromto==0)
+				{
+				return "";
+				}
+			}
+			if(type==3)
+			{
+				var date = new Date();
+			    date.setDate(date.getDate());
+				if(fromto==1)
+					{
+					return date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
+					}
+				if(fromto==2)
+					{
+					return date.getDate() + '/' + (date.getMonth()+1) + '/' + date.getFullYear();
+					}
+				if(fromto==0)
+					{
+					return "";
+					}
+			}
+	}
+	return vv;
+	}
+		</script>
+		<h:form id="COMMONREPORT" partialSubmit="true">
+			<table cellpadding="0" cellspacing="5" width="100%" border="0">
+				
+				<tr>
+						<td width="100%" vAlign="top" height="20">
+							<rich:simpleTogglePanel id="errorPanel"
+								switchType="client" opened="false">
+								<f:facet name="header">
+									<h:outputText id="err"
+										styleClass="#{CommonReport.messageStyle}"
+										value="#{commonmsg.errorPanel$heading} #{CommonReport.errorMap['current'] !=null? CommonReport.errorMap['current']:CommonReport.warningMap['current']}" />
+								</f:facet>
+								<h:outputText id="errorMessages"
+									value="#{CommonReport.errorMessages}"
+									styleClass="ErrorMessages" escape="false" />
+								<h:messages styleClass="ErrorMessages" id="msg"
+									rendered="#{PILR_REP229_IP_REP_INFO_ACTION.globalMsgRender}" />
+
+								<h:outputText id="warningMessages"
+									value="#{CommonReport.warningMessages}"
+									styleClass="WarningMessages" escape="false" />
+							</rich:simpleTogglePanel>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" id="linkstable">
+							<tr>
+								<td><h:outputText styleClass="forumRowHighlight"
+									value="#{CommonReport.caption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<h:panelGrid id="mainGrid" binding="#{CommonReport.panel}"
+						columns="4" />
+					
+						<tr>
+										<td colspan="5">
+										<hr color="black" />
+										</td>
+									</tr>
+									<tr>
+										<td width="70%">
+										<table width="100%" border="0" height="100%"
+											bordercolor="blue">
+											
+											<tr>
+												<td><h:selectOneRadio id="SELECT_FILE_TYPE" rendered="false"
+													 style="text:bold;color:BLACK;"
+													binding="#{CommonReport.COMP_SELECT_FILE_TYPE}"
+													value="#{CommonReport.IP_REP_INFO_BEAN.selectedFileType}"
+													layout="pageDirection">
+
+													<f:selectItem 
+														itemValue="#{CommonReport.reportPDFFormat}"
+														itemLabel="PDF" />
+													<f:selectItem  
+														itemValue="#{CommonReport.reportExcelFormat}"
+														itemLabel="EXCEL" />
+
+													<a4j:support event="onclick" immediate="true"
+														reRender="errorPanel"
+														actionListener="#{CommonReport.getSelectedFileType}" />
+												</h:selectOneRadio></td>
+												<!-- aDDED BY SANKARANARAYANAN FOR HIDE PDF/eXCEL oPTION FOR zb -->
+												<td>&nbb;</td>
+												<td>&nbb;</td>
+												<td>&nbb;</td>
+												<td>&nbb;</td>
+												<td>&nbb;</td>
+												<td>&nbb;</td>
+												<td>&nbb;</td>
+												<td>&nbb;</td>
+												<td>&nbb;</td>
+												<td>&nbb;</td>
+												<td>&nbb;</td>
+												<td>&nbb;</td>
+												<td>&nbb;</td>
+												<!-- END -->
+												<td><h:commandButton
+											style="height=80%;" id="UI_M_BUT_PRINT" rendered="true"
+											image="./../../images/RUN.gif"
+											title="#{commonmsg.IP_REP_INFO$STD_PRINT_BUTTON$tooltip}"
+											value="#{commonmsg.IP_REP_INFO$STD_PRINT_BUTTON$caption}"
+											action="#{CommonReport.callReportModalPanel}" /></td>
+
+											</tr>
+										</table>
+										</td>
+										<td >&nbsp;</td>
+										<td >&nbsp;</td>
+										<td >&nbsp;</td>
+
+									</tr>
+									<tr>
+										<td colspan="5" align="right"></td>
+									</tr>
+					
+				
+				</table>
+				</h:form>
+			<rich:modalPanel id="REPORT_MODAL_PANEL" height="110" width="300"
+				binding="#{CommonReport.COMP_REPORT_MODAL_PANEL}">
+				<f:facet name="header">
+					<h:panelGroup>
+						<h:outputText
+							value="#{commonmsg.IP_REP_INFO$DOCUMENT_PRINT$caption}" />
+					</h:panelGroup>
+				</f:facet>
+				<f:facet name="controls">
+					<h:panelGroup>
+						<h:form id="FT_REPORT_MODAL_PANEL_1">
+							<h:commandLink immediate="true" id="CLOSE_LINK"
+								action="#{CommonReport.cancelModalPanel}">
+								<h:graphicImage value="./../../resources/images/close.png"
+									styleClass="toolbarImageStyle" style="cursor:pointer"
+									id="REPORT_MODAL_PANEL_hidelink" />
+							</h:commandLink>
+						</h:form>
+					</h:panelGroup>
+				</f:facet>
+				<h:form id="FT_REPORT_MODAL_PANEL_2">
+					<table width="100%">
+						<tr>
+							<td align="center"><h:outputText id="CONFIRMATION_MSG"
+								style="font-size: 14px;"
+								value="#{commonmsg.IP_REP_INFO$CONFIRMATION_MSG$caption}" /></td>
+						</tr>
+						<tr>
+							<td><rich:spacer id="SPACER_MODAL_1" width="100%;"
+								height="18px" /> <rich:separator id="SEPARATOR" width="100%"
+								height="1px" /></td>
+						</tr>
+						<tr>
+							<td align="center"><h:panelGroup>
+								<h:commandLink immediate="true" id="PRINT_LINK" target="_blank"
+									action="#{CommonReport.runActionAfterValidate}">
+									<a4j:commandButton reRender="REPORT_MODAL_PANEL"
+										action="#{CommonReport.cancelModalPanel}"
+										id="OK_BUTTON" styleClass="button" style="width:70px;"
+										value="#{commonmsg.IP_REP_INFO$OK_BUTTON$caption}" />
+
+								</h:commandLink>
+							</h:panelGroup> <rich:spacer id="SPACER_MODAL_2" width="5px;" /> <a4j:commandButton
+								binding="#{CommonReport.COMP_CANCEL_BUTTON}"
+								id="CANCEL_BUTTON" styleClass="button" style="width:70px;"
+								action="#{CommonReport.cancelModalPanel}"
+								reRender="REPORT_MODAL_PANEL"
+								value="#{commonmsg.IP_REP_INFO$CANCEL_BUTTON$caption}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</rich:modalPanel>
+			
+				<table cellspacing="0" height="25%" width="100%" id="Note">
+					<rich:separator lineType="solid" height="5" width="100%"
+						align="center" />
+				<tr>
+					<td colspan="5"><h:graphicImage id="AUTO_ID_41"
+						style="color:red" styleClass="searchimg"
+						value="./../../images/mandatory.gif" /> <h:outputText id="otpt04"
+						style="color:red" value="Enter the Date Format as dd/mm/yyyy" />
+					</td>
+				</tr>
+				<tr>
+					<td><h:graphicImage id="AUTO_ID_42" style="color:red"
+						styleClass="searchimg" value="./../../images/mandatory.gif" /> <h:outputText
+						id="otpt05" style="color:red" value="Please Enter valid data" />
+					</td>
+				</tr>
+				<tr>
+					<td colspan="5"><h:graphicImage id="AUTO_ID_44"
+						style="color:red" styleClass="searchimg"
+						value="./../../images/mandatory.gif" /> <h:outputText id="otpt07"
+						style="color:red" value="Type * to invoke LOV" />
+					</td>
+				</tr>
+			</table>
+			<h:outputLabel rendered="#{CommonReport.messagePanel}"><h:graphicImage id="AUTO_ID_46"
+						style="color:red" styleClass="searchimg"
+						value="./../../images/mandatory.gif" /> <h:outputText id="otpt09"
+						style="color:red" value="Year and Month from should not be greater than Year and Month To" /></h:outputLabel>
+			
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,12 @@
+package com.iii.pel.forms.PM092_A;
+
+public interface PM_AGENT_CONTEST_CONSTANTS {
+
+	final String PM_AGENT_CONTEST_APPL_RANK_RANK_CODE_TYPE="AGNRANK";
+	
+	final String PM_AGENT_CONTEST_NAME_FLAG_N="N";
+	
+	final String PM_AGENT_CONTEST_ERR_FLAG_N="N";
+	
+	final String PM_AGENT_CONTEST_AWARD_AWARD_CODE_TYPE="AGT_AWARDS";
+}

@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="menu" var="menumessage" />
+	<f:loadBundle basename="messageProperties_notes" var="notesmessage" />
+	<h:form id="NOTES">
+		<table cellpadding="0" cellspacing="0" width="100%" border="0">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">
+				<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+					<tr>
+						<td>
+						<rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup styleClass="toolBarGroupStyle">
+								<h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle"
+									action="#{NotesActionBean.goBack}" immediate="true">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../resources/images/back.png" />
+									<h:outputText value="#{menumessage.jsf$header$image$back}" styleClass="toolbaroutputTextStyle"/>
+								</h:commandLink> 
+								<h:commandLink style="text-decoration:none" styleClass="toolbarCommandLinkStyle"
+									 rendered="false" action="#{NotesActionBean.saveCurrentRecord}">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../resources/images/save.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$save}" styleClass="toolbaroutputTextStyle" />
+								</h:commandLink> 
+								
+								<!-- [ Delete confirmation implementation -->
+								<!-- Delete Link -->
+								<a4j:commandLink id="DELETERECORD_TOOL_HEADER"
+									styleClass="toolbarCommandLinkStyle" rendered="false"
+									style="text-decoration:none">
+									<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+										styleClass="toolbarImageStyle"
+										value="./../../resources/images/deleteRecord.gif" />
+									<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+									<rich:componentControl id="DELETE_COMP_CONTROL" for="DELETE_PANEL" 
+										attachTo="DELETERECORD_TOOL_HEADER" 
+										operation="show" event="onclick"/>
+								</a4j:commandLink>
+								<!-- Delete confirmation Confirmation popup -->
+								<rich:modalPanel id="DELETE_PANEL" width="300" height="110">
+									<f:facet name="header">
+										<h:panelGroup>
+											<h:outputText value="#{commonmsg.premia$broker$delete$confirmation$caption}" style="color: #FFFFFF; font-size: 14px;font-weight: bold;"></h:outputText>
+										</h:panelGroup>
+									</f:facet>
+									<f:facet name="controls">
+									      <h:panelGroup>
+									        	<h:graphicImage value="./../../resources/images/close.png" 
+									           		style="cursor:pointer" id="DELETE_PANEL_hidelink"/>
+											<rich:componentControl for="DELETE_PANEL" 
+											     	attachTo="DELETE_PANEL_hidelink" 
+											     	operation="hide" event="onclick"/>
+										</h:panelGroup>
+									</f:facet>
+									<table align="center">
+										<tr align="center">
+											<td>
+												<h:outputText value="#{commonmsg.premia$broker$delete$confirmation$message}"/>
+											</td>
+										</tr>
+										<tr align="center">
+											<td>
+												<h:commandButton value="#{commonmsg.premia$broker$delete$confirmation$ok}" id="DELETE_PANEL_continuebutton" 
+													styleClass="button" style="width:65px;height:20px;"
+													action="#{NotesActionBean.deleteButtonAction}">
+													<rich:componentControl for="DELETE_PANEL" 
+														attachTo="DELETE_PANEL_continuebutton" 
+													      operation="hide" event="onclick"/>
+												</h:commandButton>
+												<rich:spacer width="10" height="25"></rich:spacer>
+												<a4j:commandButton value="#{commonmsg.premia$broker$delete$confirmation$cancel}"
+													styleClass="button" style="width:65px;height:20px;"
+													id="DELETE_PANEL_cancelbutton" immediate="true">
+													<rich:componentControl for="DELETE_PANEL" 
+														attachTo="DELETE_PANEL_cancelbutton" 
+													      operation="hide" event="onclick"/>
+												</a4j:commandButton>
+												<br/>
+											</td>
+										</tr>
+									</table>
+								</rich:modalPanel>
+								<!-- Delete confirmation implementation ] -->
+
+							</rich:toolBarGroup>
+						</rich:toolBar>
+						</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<table width="100%" id="errormsgtable" cellspacing="0">
+					<tr>
+						<td>
+							<rich:simpleTogglePanel id="errorPanel"
+								switchType="client" opened="false">
+								<f:facet name="header">
+									<h:outputText id="err"
+										styleClass="#{NotesActionBean.messageStyle}"
+										value="#{commonmsg.errorPanel$heading} #{NotesActionBean.errorMap['current'] !=null? NotesActionBean.errorMap['current']:NotesActionBean.warningMap['current']}" />
+								</f:facet>
+								<h:outputText id="errorMessages"
+									value="#{NotesActionBean.errorMessages}"
+									styleClass="ErrorMessages" escape="false" />
+								<h:messages styleClass="ErrorMessages" id="msg"
+									rendered="#{NotesActionBean.globalMsgRender}" />
+								<h:outputText id="warningMessages"
+									value="#{NotesActionBean.warningMessages}"
+									styleClass="WarningMessages" escape="false" />
+							</rich:simpleTogglePanel>
+						</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<table width="100%" id="linkstable" cellpadding="0" cellspacing="0"	border="0">
+					<tr>
+						<td><h:outputLabel id="pagecaption" value="#{notesmessage.notes$pagetitle$displayCaption}"></h:outputLabel> </td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" align="center">
+					<table width="100%" align="center">
+						<tr>
+							<td width="70%" valign="top">
+								<rich:editor id="test_editor" width="690" required="true"
+									 value="#{NotesActionBean.notes.PNM_NOTES_CONTENT}">
+								</rich:editor>
+							</td>
+							<td width="30%" valign="middle">
+								<rich:panel id="TAGGED_USERS_AREA" style="height: 102px; width: 295px; overflow:auto;" >
+									<f:facet name="header">
+										<h:outputText id="USER_TAG_TITLE" value="Tagged Users"/>
+									</f:facet>
+									<a4j:repeat id="TAG_LIST" 
+										value="#{NotesActionBean.notes.taggedUsersList}"
+										var="currTag"
+										binding="#{NotesActionBean.ajaxRepeat}">
+										<h:panelGroup id="TAG_PG" >
+											<h:outputLabel id="USER_TAG" value="#{currTag.PNTU_TAGGED_USER}"></h:outputLabel>	
+											<a4j:commandButton id="DELETE_TAG" immediate="true"
+												title="Click to delete this tag" 
+												styleClass="toolbarImageStyle" reRender="TAGGED_USERS_AREA"
+												image="./../../resources/images/notes/delete-icon-small.gif"
+												actionListener="#{NotesActionBean.onDelete}" 
+												oncomplete="document.getElementById('NOTES:TAG_TEXT').focus();" >
+											</a4j:commandButton>	
+											<rich:spacer id="Spacer" width="5px"></rich:spacer>
+										</h:panelGroup>	
+									</a4j:repeat>
+								</rich:panel>
+								<h:inputText id="TAG_TEXT" style="width: 295px" ></h:inputText>
+								<rich:suggestionbox height="200" width="200" 
+								 id="USER_SUGGESTION" suggestionAction="#{NotesActionBean.lovUser_List}"
+								 for="TAG_TEXT" var="USER_SUGG_LIST_LOV" nothingLabel="#{commonmsg.lov$nothing}" >
+								 <h:column id="USER_ID_COLUMN">
+									<h:outputText id="USER_ID_COLUMN_TEXT1"
+										value="#{USER_SUGG_LIST_LOV.lovCode}" />
+								 </h:column>
+								 <h:column>
+									<h:outputText id="USER_ID_COLUMN_TEXT2"
+										value="#{USER_SUGG_LIST_LOV.lovName}" />
+								 </h:column>
+								 	<a4j:support event="onselect" id="USER_SUPPORT" oncomplete="document.getElementById('NOTES:TAG_TEXT').focus();"
+										reRender="errorPanel, TAGGED_USERS_AREA, TAG_TEXT, USER_SUGGESTION"
+										actionListener="#{NotesActionBean.userList_ActionListener}"
+									immediate="true" />
+								</rich:suggestionbox>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="right">
+								<rich:separator height="1px" width="100%"></rich:separator>
+								<a4j:commandButton title="Click to save this remark"  styleClass="button" id="POST" value="Post" style="width:80px;"
+									action ="#{NotesActionBean.saveCurrentRecord}" reRender="errorPanel,NOTES_TABLE,test_editor,TAGGED_USERS_AREA" />
+							</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+								
+			<tr>
+				<td colspan="3" width="100%" align="center">
+					<rich:panel id="NOTES_TABLE_AREA" style="height: 300px; width: 100%; overflow:auto;" >
+					<rich:dataTable
+						id="NOTES_TABLE" 
+						value="#{NotesActionBean.dataTableList}"
+						var="currNotes"
+						binding="#{NotesActionBean.dataTableComponent}"
+						width="100%">
+						<rich:column id="COLUMN1">
+							<h:panelGroup>
+								<table width="100%">
+									<tr>
+										<td width="100%">
+											<h:outputText id="remarks"
+												value="#{currNotes.PNM_NOTES_CONTENT}" 
+												title="Notes" 
+												escape="false" styleClass="label">
+											</h:outputText>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputLabel id="TAGGED_USERS" value="Tagged Users: " styleClass="label" style="color: blue"></h:outputLabel>
+											<a4j:repeat id="TAGGED_LIST" 
+												value="#{currNotes.taggedUsersList}"
+												var="currentTag"
+												rowKeyVar="rownum">
+												<h:outputLabel id="CURR_TAG_ID" value="#{currentTag.PNTU_TAGGED_USER}" styleClass="label"></h:outputLabel>
+												<h:outputLabel id="CURR_TAG_SEPARATOR" value="," styleClass="label" rendered="#{!((currNotes.tagListSize-1) == rownum)}"></h:outputLabel>
+											</a4j:repeat>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputLabel id="CR_UID_LABEL" value="Posted By:" styleClass="label" style="color: blue"></h:outputLabel>
+											<h:outputLabel id="CR_UID" value="#{currNotes.PNM_CR_UID}" styleClass="label"></h:outputLabel>
+											<rich:spacer width="25px"></rich:spacer>
+											<h:outputLabel id="CR_DATE_LABEL" value="Date:" styleClass="label" style="color: blue"></h:outputLabel>
+											<h:outputLabel id="CR_DATE" value="#{currNotes.UI_PNM_CR_TIMESTAMP}" styleClass="label"></h:outputLabel>
+										</td>
+									</tr>
+								</table>
+							</h:panelGroup>
+						</rich:column>
+					</rich:dataTable>
+					</rich:panel>
+				</td>
+			</tr>
+		</table>
+	</h:form>
+</f:view>
+</ui:define>
+</ui:composition>

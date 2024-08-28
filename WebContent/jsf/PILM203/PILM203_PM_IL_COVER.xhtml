@@ -1,0 +1,420 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+		<f:view beforePhase="#{PILM203_PM_IL_COVER_ACTION.preForm}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM203" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			<h:form id="PM_IL_COVER">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM203_PM_IL_COVER_ACTION.backToSearch}"
+											id="AUTO_ID_1" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="AUTO_ID_2"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.save}"
+											id="AUTO_ID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTO_ID_5"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.saveNext}"
+											id="AUTO_ID_7" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.delete}"
+											id="AUTO_ID_10" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTO_ID_11"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="r"
+												image="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.first}"
+											id="AUTO_ID_13" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_15"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.nextPage}"
+											id="AUTO_ID_16" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.last}"
+											id="AUTO_ID_19" rendered="false" style="text-decoration:none">
+											<h:graphicImage id="AUTO_ID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM203_PM_IL_COVER_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM203_PM_IL_COVER_ACTION.errorMap['current'] !=null? PILM203_PM_IL_COVER_ACTION.errorMap['current']:PILM203_PM_IL_COVER_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM203_PM_IL_COVER_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM203_PM_IL_COVER_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM203_PM_IL_COVER_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+					<tr>
+						<td colspan="3" height="15%" valign="top" width="100%">
+						<table class="noborder" id="globalLink" width="100%">
+							<tr>
+								<td><!-- Tab implementation --> <h:inputHidden
+									id="myhidden"
+									value="#{PILM203_PM_IL_COVER_ACTION.tabbedBar.tabClicked}" />
+								<h:panelGroup id="mypanel" style="border:0;height:15%;">
+									<table class="noborder" width="100%">
+										<tr>
+											<td width="90%"><a4j:repeat
+												value="#{PILM203_PM_IL_COVER_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													action="#{PILM203_PM_IL_COVER_ACTION.tabbedBar.tabAction}"
+													disabled="#{currtab.disabled}" id="AUTO_ID_22"
+													onclick="document.getElementById('PM_IL_COVER:myhidden').value='#{currtab.id}'"
+													styleClass="#{currtab.styleString}"
+													value="#{currtab.value}" />
+											</a4j:repeat></td>
+											<!-- <td width="*"><a4j:commandButton
+												action="#{PILM203_PM_IL_COVER_ACTION.tabbedBar.gotoFirstTab}"
+												alt="first"
+												disabled="#{PILM203_PM_IL_COVER_ACTION.tabbedBar.navigable}"
+												id="AUTO_ID_23" image="./../../images/firstrec.gif"
+												immediate="true" reRender="mypanel" /> <a4j:commandButton
+												action="#{PILM203_PM_IL_COVER_ACTION.tabbedBar.gotoPrevTab}"
+												alt="previous"
+												disabled="#{PILM203_PM_IL_COVER_ACTION.tabbedBar.navigable}"
+												id="AUTO_ID_24" image="./../../images/prevpage.gif"
+												immediate="true" reRender="mypanel" /> <a4j:commandButton
+												action="#{PILM203_PM_IL_COVER_ACTION.tabbedBar.gotoNextTab}"
+												alt="next"
+												disabled="#{PILM203_PM_IL_COVER_ACTION.tabbedBar.navigable}"
+												id="AUTO_ID_25" image="./../../images/nextpage.gif"
+												immediate="true" reRender="mypanel" /> <a4j:commandButton
+												action="#{PILM203_PM_IL_COVER_ACTION.tabbedBar.gotoLastTab}"
+												alt="last"
+												disabled="#{PILM203_PM_IL_COVER_ACTION.tabbedBar.navigable}"
+												id="AUTO_ID_26" image="./../../images/lastRecord.gif"
+												immediate="true" reRender="mypanel" /></td>-->
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table align="center" class="noborder" width="100%">
+							<tr>
+								<td />
+								<td valign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_CODE_LABEL}"
+											for="COVER_CODE" id="COVER_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM203$PM_IL_COVER$COVER_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_27" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_CODE}"
+											 id="COVER_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="Cover code"
+											onfocus="currFocus('PM_IL_COVER:COVER_CODE')"
+											validator="#{PILM203_PM_IL_COVER_ACTION.validate_COVER_CODE}"
+											value="#{PILM203_PM_IL_COVER_ACTION.PM_IL_COVER_BEAN.COVER_CODE}">
+											<a4j:support
+												actionListener="#{PILM203_PM_IL_COVER_ACTION.populateCoverDesc}"
+												event="onblur" id="coverCodeSupport" immediate="true"
+												oncomplete="setFocus('PM_IL_COVER:COVER_LIMIT_TYPE','PM_IL_COVER:COVER_CODE')"
+												reRender="errorPanel,COVER_DESC"/>
+										</h:inputText> <h:inputText
+											binding="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_DESC}"
+											disabled="true" id="COVER_DESC" maxlength="30"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM203_PM_IL_COVER_ACTION.PM_IL_COVER_BEAN.COVER_DESC}" />
+										<h:graphicImage id="AUTO_ID_28" styleClass="searchimg"
+											value="./../../images/Lov.gif" /> <rich:suggestionbox
+											for="COVER_CODE" height="200" id="AUTO_ID_29"
+											suggestionAction="#{PILM203_PM_IL_COVER_ACTION.popLovForCoverCode}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_30" value="#{lov.COVER_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_31" value="#{lov.COVER_DESC}" />
+											</h:column>
+											<a4j:support
+												actionListener="#{PILM203_PM_IL_COVER_ACTION.getCoverCodeDesc}"
+												event="onselect" id="style_5" immediate="true"
+												reRender="COVER_DESC" />
+										</rich:suggestionbox></td>
+										<td class="oddrowright" width="4%" />
+										<td class="oddrowright" width="20%" />
+										<td class="oddrowright" width="28%" />
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_LIMIT_TYPE_LABEL}"
+											for="COVER_LIMIT_TYPE" id="COVER_LIMIT_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM203$PM_IL_COVER$COVER_LIMIT_TYPE$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_LIMIT_TYPE}"
+											disabled="false" id="COVER_LIMIT_TYPE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILM203$PM_IL_COVER$COVER_LIMIT_TYPE$tooltip}"
+											onfocus="currFocus('PM_IL_COVER:COVER_LIMIT_TYPE')"
+											validator="#{PILM203_PM_IL_COVER_ACTION.valueChange_LIMIT_TYPE}"
+											value="#{PILM203_PM_IL_COVER_ACTION.PM_IL_COVER_BEAN.COVER_LIMIT_TYPE}">
+											<f:selectItems id="style_1"
+												value="#{PILM203_PM_IL_COVER_ACTION.LIST_COVER_LIMIT_TYPE}" />
+											<a4j:support
+												actionListener="#{PILM203_PM_IL_COVER_ACTION.fireFieldValidation}"
+												event="onblur" id="style_3" immediate="true"
+												oncomplete="setFocusforDisable('PM_IL_COVER:COVER_LC_LIMIT','PM_IL_COVER:COVER_LIMIT_TYPE','PM_IL_COVER:COVER_PER_DAY_LC_AMT')"
+												reRender="COVER_PER_DAY_LC_AMT,COVER_LIMIT_DAYS,COVER_LC_LIMIT,mandatory1,mandatory2,mandatory3" />
+												<a4j:support
+												actionListener="#{PILM203_PM_IL_COVER_ACTION.valueChange_LIMIT_TYPE}"
+												event="onchange" id="style_a3" immediate="true"
+												oncomplete="setFocusforDisable('PM_IL_COVER:COVER_LC_LIMIT','PM_IL_COVER:COVER_LIMIT_TYPE','PM_IL_COVER:COVER_PER_DAY_LC_AMT')"
+												reRender="COVER_PER_DAY_LC_AMT,COVER_LIMIT_DAYS,COVER_LC_LIMIT,mandatory1,mandatory2,mandatory3" />
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_PER_DAY_LC_AMT_LABEL}"
+											for="COVER_PER_DAY_LC_AMT" id="COVER_PER_DAY_LC_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM203$PM_IL_COVER$COVER_PER_DAY_LC_AMT$caption}" />
+										<h:outputText id="mandatory1" 
+											 value="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_PER_DAY_LC_AMT.required ? '*':''}"
+											styleClass="mandatory"/>
+											</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_PER_DAY_LC_AMT}"
+											 id="COVER_PER_DAY_LC_AMT" maxlength="16"
+											rendered="true" styleClass="inputNumeric" 
+											validator="#{PILM203_PM_IL_COVER_ACTION.validate_PER_DAY_LC_AMT}"
+											title="#{message.PILM203$PM_IL_COVER$COVER_PER_DAY_LC_AMT$tooltip}"
+											onfocus="currFocus('PM_IL_COVER:COVER_PER_DAY_LC_AMT')"
+											value="#{PILM203_PM_IL_COVER_ACTION.PM_IL_COVER_BEAN.COVER_PER_DAY_LC_AMT}">
+											<a4j:support
+												actionListener="#{PILM203_PM_IL_COVER_ACTION.whenvalidate_PER_DAY_LC_AMT}"
+												event="onblur" id="style_4" immediate="true"
+												reRender="COVER_LC_LIMIT,errorPanel" />
+												<f:validateDoubleRange  minimum="0.0"/>
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_LIMIT_DAYS_LABEL}"
+											for="COVER_LIMIT_DAYS" id="COVER_LIMIT_DAYS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM203$PM_IL_COVER$COVER_LIMIT_DAYS$caption}" />
+										<h:outputText id="mandatory2" 
+											 value="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_LIMIT_DAYS.required ? '*':''}"
+											styleClass="mandatory"/></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_LIMIT_DAYS}"
+											 id="COVER_LIMIT_DAYS" maxlength="4"
+											rendered="true" styleClass="inputNumeric" 
+											onfocus="currFocus('PM_IL_COVER:COVER_LIMIT_DAYS')"
+											validator="#{PILM203_PM_IL_COVER_ACTION.validate_LIMIT_DAYS}"
+											title="#{message.PILM203$PM_IL_COVER$COVER_LIMIT_DAYS$tooltip}"
+											value="#{PILM203_PM_IL_COVER_ACTION.PM_IL_COVER_BEAN.COVER_LIMIT_DAYS}">
+											<a4j:support
+												actionListener="#{PILM203_PM_IL_COVER_ACTION.whenvalidate_LIMIT_DAYS}"
+												event="onblur" id="AUTO_ID_34" immediate="true"
+												reRender="COVER_LC_LIMIT,errorPanel" />
+												<f:validateDoubleRange  minimum="0.0"/>
+										</h:inputText></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_LC_LIMIT_LABEL}"
+											for="COVER_LC_LIMIT" id="COVER_LC_LIMIT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM203$PM_IL_COVER$COVER_LC_LIMIT$caption}" />
+											<h:outputText id="mandatory3" 
+											 value="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_LC_LIMIT.required ? '*':''}"
+											styleClass="mandatory"/>
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM203_PM_IL_COVER_ACTION.COMP_COVER_LC_LIMIT}"
+											id="COVER_LC_LIMIT" maxlength="14" styleClass="inputNumeric"
+											title="#{message.PILM203$PM_IL_COVER$COVER_LC_LIMIT$tooltip}"
+											onfocus="currFocus('PM_IL_COVER:COVER_LC_LIMIT')"
+											validator="#{PILM203_PM_IL_COVER_ACTION.validate_LC_LIMIT}"
+											value="#{PILM203_PM_IL_COVER_ACTION.PM_IL_COVER_BEAN.COVER_LC_LIMIT}" >
+											<a4j:support
+												actionListener="#{PILM203_PM_IL_COVER_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_324" immediate="true"
+												reRender="errorPanel" />
+												<f:validateDoubleRange  minimum="0.0"/>											
+											</h:inputText>
+										</td>
+									</tr>
+								</table>
+								</td>
+								<td />
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.save}"
+											id="AUTO_ID_36" rendered="true" style="text-decoration:none"
+											onfocus="currFocus('PM_IL_COVER:AUTO_ID_36')"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_37"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_38"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.saveNext}"
+											id="AUTO_ID_39" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_40"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_41"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.delete}"
+											id="AUTO_ID_42" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_43"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_44"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.first}"
+											id="AUTO_ID_45" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_46"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_47"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.prevPage}"
+											id="AUTO_ID_48" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_49"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_50"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.nextPage}"
+											id="AUTO_ID_51" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_52"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_53"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM203_PM_IL_COVER_ACTION.last}"
+											id="AUTO_ID_54" rendered="false" style="text-decoration:none">
+											<h:graphicImage id="AUTO_ID_55"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_56"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

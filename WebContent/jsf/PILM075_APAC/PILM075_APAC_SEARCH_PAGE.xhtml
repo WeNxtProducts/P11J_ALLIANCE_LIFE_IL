@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM075_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="EndorsementApprovalSetup" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%">
+					<!-- add header row -->
+					<tr>
+					</tr>
+
+					<!-- add footer to the page-->
+					<tr>
+					</tr>
+
+					<!-- Body row -->
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM075_APAC_SEARCH_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM075_APAC_SEARCH_ACTION.errorMap['current'] !=null? PILM075_APAC_SEARCH_ACTION.errorMap['current']:PILM075_APAC_SEARCH_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								style="color: red; font-style: italic;font-weight:bold;"
+								styleClass="ErrorMessages"
+								value="#{PILM075_APAC_SEARCH_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM075_APAC_SEARCH_ACTION.globalMsgRender}"
+								style="color: red;font-style: italic;font-weight:bold;" />
+							<h:outputText escape="false" id="warningMessages"
+								style="color: green; font-style: italic;font-weight:bold;"
+								styleClass="WarningMessages"
+								value="#{PILM075_APAC_SEARCH_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td><!-- initial filter to search and list -->
+						<table class="noborder" id="masthead" width="100%">
+							<tr>
+								<td><h:outputText id="AUTOID_1"
+									value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+								<td><h:outputLabel
+									value="#{message.PILM075_APAC$PM_IL_END_APPR_SETUP$EAS_AS_USER_ID$caption}" />
+								<h:inputText value="#{PILM075_APAC_SEARCH_ACTION.userCode}" /></td>
+								<td><h:outputLabel
+									value="#{message.PILM075_APAC$PM_IL_END_APPR_SETUP$EAS_FM_END_CODE$caption}" />
+								<h:inputText value="#{PILM075_APAC_SEARCH_ACTION.fromEndtCode}" />
+								</td>
+								<td><h:outputLabel
+									value="#{message.PILM075_APAC$PM_IL_END_APPR_SETUP$EAS_TO_END_CODE$caption}" />
+								<h:inputText value="#{PILM075_APAC_SEARCH_ACTION.toEndtCode}" /></td>
+								<td><a4j:commandButton id="a4link" styleClass="button"
+									value="#{commonmsg.searchButton$caption}">
+									<a4j:support
+										action="#{PILM075_APAC_SEARCH_ACTION.fetchRecords}"
+										event="onclick" id="AUTOID_2" reRender="dataTableId">
+									</a4j:support>
+								</a4j:commandButton></td>
+							</tr>
+						</table>
+
+						<!-- using rich data table --> <rich:dataTable border="1"
+							cellpadding="5px" id="dataTableId" rows="15"
+							value="#{PILM075_APAC_SEARCH_ACTION.searchResultsList}"
+							var="list" width="100%">
+							<!-- Attach scroller as footer of the table-->
+							<f:facet name="footer">
+								<rich:datascroller align="right" id="dsID" pageIndexVar="index"
+									pagesVar="pages">
+								</rich:datascroller>
+							</f:facet>
+
+							<!-- next column -->
+
+							<rich:column filterBy="#{list.EAS_AS_USER_ID}"
+								filterEvent="onkeyup"
+								filterValue="#{PILM075_APAC_SEARCH_ACTION.storedUserCode}"
+								sortBy="#{list.EAS_AS_USER_ID}">
+								<f:facet name="header">
+									<h:outputLabel
+										value="#{message.PILM075_APAC$PM_IL_END_APPR_SETUP$EAS_AS_USER_ID$caption}" />
+								</f:facet>
+								<h:commandLink
+									action="#{PILM075_APAC_SEARCH_ACTION.navigationToMainPage}"
+									id="AUTOID_3">
+									<h:outputText id="AUTOID_4" value="#{list.EAS_AS_USER_ID}" />
+									<f:param name="rowid" value="#{list.ROWID}" />
+								</h:commandLink>
+							</rich:column>
+							<rich:column filterBy="#{list.EAS_FM_END_CODE}"
+								filterEvent="onkeyup"
+								filterValue="#{PILM075_APAC_SEARCH_ACTION.storedFromEndtCode}"
+								sortBy="#{list.EAS_FM_END_CODE}">
+								<f:facet name="header">
+									<h:outputLabel
+										value="#{message.PILM075_APAC$PM_IL_END_APPR_SETUP$EAS_FM_END_CODE$caption}" />
+								</f:facet>
+								<h:outputText id="AUTOID_5" value="#{list.EAS_FM_END_CODE}" />
+							</rich:column>
+							<rich:column filterBy="#{list.EAS_TO_END_CODE}"
+								filterEvent="onkeyup"
+								filterValue="#{PILM075_APAC_SEARCH_ACTION.storedToEndtCode}"
+								sortBy="#{list.EAS_TO_END_CODE}">
+								<f:facet name="header">
+									<h:outputLabel
+										value="#{message.PILM075_APAC$PM_IL_END_APPR_SETUP$EAS_TO_END_CODE$caption}" />
+								</f:facet>
+								<h:outputText id="AUTOID_6" value="#{list.EAS_TO_END_CODE}" />
+							</rich:column>
+						</rich:dataTable>
+
+						<table class="noborder" width="100%">
+							<tr>
+								<td align="left"><h:commandButton
+									action="#{PILM075_APAC_SEARCH_ACTION.goToEndtAppSetup}"
+									styleClass="button" value="#{commonmsg.insertButton$caption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

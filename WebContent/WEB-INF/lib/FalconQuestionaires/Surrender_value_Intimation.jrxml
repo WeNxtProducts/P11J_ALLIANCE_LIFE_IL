@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Surrender_value_Intimation" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="60" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4fe6e1ec-5806-47d7-94e6-a8d86d4c2063">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="dataset1" uuid="b54f0c6b-9a82-4ec0-9df7-a8e12cfa22fc"/>
+	<parameter name="POL_SYS_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT (SELECT LIV_CODE_DESC
+          FROM PP_LIST_ITEM_VALUES
+         WHERE LIV_SYS_PARAM = 'TITLE'
+           AND LIV_CODE = CUST_TITLE) TITLE,
+       POL_SYS_ID,
+       POL_PROP_NO,
+       POL_NO,
+       POL_ASSURED_NAME,
+       POL_SYS_ID,
+       (POL_RES_ADDRESS_1 || POL_RES_ADDRESS_2 || POL_RES_ADDRESS_3) ADDRESS,
+       POL_PERIOD,
+       POL_PREM_PAY_YRS,
+       POL_START_DT,
+       POL_LC_SUM_ASSURED,
+       POL_MODE_OF_PYMT,
+       (SELECT PROD_DESC FROM PM_IL_PRODUCT WHERE PROD_CODE = POL_PROD_CODE) PROD_NAME,
+       POL_LAST_INST_DT,
+       (POL_EXPIRY_DT + 1) MATU_DT,
+       POL_LC_FIRST_PREM TOT_PREM,
+       POAD_DOB,
+       POAD_AGE
+  FROM PT_IL_POLICY, PT_IL_POL_ASSURED_DTLS, PM_CUSTOMER
+ WHERE POL_SYS_ID = $P{POL_SYS_ID}
+   AND POL_SYS_ID = POAD_POL_SYS_ID
+   AND CUST_CODE = POL_CUST_CODE
+]]>
+	</queryString>
+	<field name="TITLE" class="java.lang.String"/>
+	<field name="POL_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="POL_PROP_NO" class="java.lang.String"/>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POL_ASSURED_NAME" class="java.lang.String"/>
+	<field name="ADDRESS" class="java.lang.String"/>
+	<field name="POL_PERIOD" class="java.math.BigDecimal"/>
+	<field name="POL_PREM_PAY_YRS" class="java.math.BigDecimal"/>
+	<field name="POL_START_DT" class="java.sql.Timestamp"/>
+	<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<field name="POL_MODE_OF_PYMT" class="java.lang.String"/>
+	<field name="PROD_NAME" class="java.lang.String"/>
+	<field name="POL_LAST_INST_DT" class="java.sql.Timestamp"/>
+	<field name="MATU_DT" class="java.sql.Timestamp"/>
+	<field name="TOT_PREM" class="java.math.BigDecimal"/>
+	<field name="POAD_DOB" class="java.sql.Timestamp"/>
+	<field name="POAD_AGE" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="111" splitType="Stretch">
+			<staticText>
+				<reportElement x="25" y="0" width="468" height="24" uuid="968bd6bc-4655-4d4a-bdb9-75bc24de8644"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="18" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SURRENDER VALUE INTIMATION LETTER]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="29" width="57" height="20" uuid="d9d00001-4111-4504-93d4-272233dad957"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[To,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="82" width="57" height="20" uuid="7369e013-fb76-4389-a2e6-fab5b201ecbf"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[Policy No:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="31" y="56" width="211" height="20" uuid="cc9572b3-93d4-4a62-8dac-7da0a3371908"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_ASSURED_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="67" y="82" width="283" height="20" uuid="8bc2d498-a8c6-44ea-948a-13f097277244"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd MMMMM yyyy">
+				<reportElement x="395" y="29" width="100" height="20" uuid="a7ba2df0-5edc-4267-9e2c-a1e0beacab68"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="11" y="56" width="26" height="20" uuid="332cabb8-0122-486b-adb3-da3065d5f0b5"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TITLE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="97">
+			<staticText>
+				<reportElement x="11" y="4" width="197" height="20" uuid="f210ef8c-d30a-47a9-af1f-3796a892bb79"/>
+				<box rightPadding="0"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Re: Surrender Value for Policy No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="38" width="340" height="20" uuid="f8b383eb-c253-48a9-b23c-6d802623edcd"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[This refers to your request for a surrender value quotation.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="77" width="426" height="20" uuid="6a61392c-3bcf-4621-8caf-41366bead5f5"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[We give below the Surrender value payable for the above policy.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="208" y="4" width="263" height="20" uuid="585b21a7-a658-4a9e-9703-d925ef0fe961"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="494" splitType="Stretch">
+			<staticText>
+				<reportElement x="45" y="22" width="260" height="30" uuid="06f1de10-c44c-46f2-8727-35bc079d01d0"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[    Policy No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="52" width="260" height="30" uuid="5d21abe1-01a9-4a36-b85f-fc82277e519c"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[    Name of the Policy Owner/Assignee
+
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="142" width="260" height="30" uuid="65cde138-177d-46cd-9c62-8cf64d8692b4"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[    Less Loan o/s]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="112" width="260" height="30" uuid="e4574877-d47f-4d8e-8c78-0df52830e3fd"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[    Surrender Value OMR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="82" width="260" height="30" uuid="ccbaf655-bc10-45a8-b477-9a5cfc5a427c"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[    Date of Surrender]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="172" width="260" height="30" uuid="012debee-7f13-43bf-bc12-192366739951"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[    Less Loan Interest o/s]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="202" width="260" height="29" uuid="f5cc4873-1b7a-4fcc-b155-c2d878bb66c3"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[    Balance Payable as surrender value.  OMR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="305" y="22" width="190" height="30" uuid="fc74d407-d561-4f5f-b820-8f5202cc27f3"/>
+				<box topPadding="1" leftPadding="6" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="305" y="52" width="190" height="30" uuid="f79df378-8d83-4743-b1e4-f0830c779fb3"/>
+				<box topPadding="1" leftPadding="6" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_ASSURED_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="305" y="82" width="190" height="30" uuid="1ca82722-6931-47c1-9fa1-4ed6879190f5"/>
+				<box topPadding="1" leftPadding="6" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_START_DT}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="305" y="112" width="190" height="30" uuid="e9f458e1-f7bf-461a-8924-046c566776ab"/>
+				<box topPadding="1" leftPadding="6" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="305" y="142" width="190" height="30" uuid="1077e74b-7e5e-446a-9eeb-50e85b7a58ee"/>
+				<box topPadding="1" leftPadding="6" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_PREM_PAY_YRS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="305" y="172" width="190" height="30" uuid="e5f1a39f-e692-42db-b8a4-d3fd8c88eb32"/>
+				<box topPadding="1" leftPadding="6" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROD_NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="305" y="202" width="190" height="29" uuid="2f2afa43-ddd1-4a37-bbe6-325811f6c235"/>
+				<box topPadding="1" leftPadding="6" bottomPadding="1" rightPadding="1">
+					<pen lineWidth="0.5"/>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TOT_PREM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="254" width="504" height="20" uuid="c563c70b-2142-43ff-8be2-c72966ac0651"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[Please submit the following documents for payment of the Surrender value.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="281" width="207" height="20" uuid="889096a5-3a9d-4b87-b04a-f7a281b6c317"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[1) Original Policy Document]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="306" width="207" height="20" uuid="354e0d2f-ec4f-47aa-8c79-32e7e1e7b0ed"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[2) Copy of ID card]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="331" width="207" height="20" uuid="1e6c9e49-d515-45b4-be60-fe8d1d16059b"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[3) Surrender Discharge Form]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="474" width="41" height="20" uuid="7381e4dc-a79e-464f-91a0-a011a0217567"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="50" y="474" width="83" height="20" uuid="ddee8fc7-ef95-48e7-a08a-695f9e22458c"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="11" y="450" width="140" height="20" uuid="1f854493-48a9-41b5-b61f-ea0877da711e"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[Authorised Signatory]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="424" width="170" height="20" uuid="8cc63bb4-9f8c-428d-9743-fb9e8ac2adab"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[Yours Sincerely,]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

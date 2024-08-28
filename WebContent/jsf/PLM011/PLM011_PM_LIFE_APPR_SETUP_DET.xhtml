@@ -1,0 +1,301 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PLM011" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table cellpadding="0" cellspacing="0" width="100%" border="0">
+		<tr>
+			
+		</tr>
+		<h:form id="PM_LIFE_APPR_SETUP_DET">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup styleClass="toolBarGroupStyle">
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle"
+									action="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.saveButtonClickAction}">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/save.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/savenext.GIF" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/deleteRecord.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/firstrec.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/prevpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/nextpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.errorMap['current'] !=null? PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.errorMap['current']: PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="15%">
+				<table width="100%" cellspacing="0" cellpadding="0" id="globalLink">
+					<tr>
+						<td><!-- Tab implementation --> <h:inputHidden
+							value="#{PLM011_COMPOSITE_ACTION.tabbedBar.tabClicked}"
+							id="myhidden" /> <h:panelGroup id="mypanel"
+							style="border:0;height:15%;">
+							<table width="100%">
+								<tr>
+									<td width="100%"><a4j:repeat
+										value="#{PLM011_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+										var="currtab">
+										<h:commandLink
+											onclick="document.getElementById('PM_LIFE_APPR_SETUP_DET:myhidden').value='#{currtab.id}'"
+											value="#{currtab.value}" disabled="#{currtab.disabled}"
+											action="#{PLM011_COMPOSITE_ACTION.tabbedBar.tabAction}"
+											styleClass="#{currtab.styleString}" />
+
+									</a4j:repeat></td>
+									<td width="*"><a4j:commandButton immediate="true"
+										disabled="#{PLM011_COMPOSITE_ACTION.tabbedBar.navigable}"
+										alt="first" image="./../../images/firstrec.gif"
+										action="#{PLM011_COMPOSITE_ACTION.tabbedBar.gotoFirstTab}"
+										reRender="mypanel" /> <a4j:commandButton immediate="true"
+										disabled="#{PLM011_COMPOSITE_ACTION.tabbedBar.navigable}"
+										alt="previous" image="./../../images/prevpage.gif"
+										action="#{PLM011_COMPOSITE_ACTION.tabbedBar.gotoPrevTab}"
+										reRender="mypanel" /> <a4j:commandButton immediate="true"
+										disabled="#{PLM011_COMPOSITE_ACTION.tabbedBar.navigable}"
+										alt="next" image="./../../images/nextpage.gif"
+										action="#{PLM011_COMPOSITE_ACTION.tabbedBar.gotoNextTab}"
+										reRender="mypanel" /> <a4j:commandButton immediate="true"
+										disabled="#{PLM011_COMPOSITE_ACTION.tabbedBar.navigable}"
+										alt="last" image="./../../images/lastRecord.gif"
+										action="#{PLM011_COMPOSITE_ACTION.tabbedBar.gotoLastTab}"
+										reRender="mypanel" /></td>
+								</tr>
+							</table>
+						</h:panelGroup></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<table width="100%" cellpadding="0" cellspacing="0" id="linkstable">
+					<tr>
+						<td><h:outputLabel
+							value="#{message.PLM011$PM_LIFE_APPR_SETUP_DET$displayCaption}" />
+						</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+				<div style="height: 470px; overflow: auto;">
+				<table cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td>&nbsp;</td>
+						<td width="100%" vAlign="top">
+						<table id="bordertable" align="left" width="100%">
+							<tr>
+								<td><rich:panel style="width:995px;overflow:auto" 
+												id="PM_LIFE_APPR_SETUP_DET_PANEL">
+									<rich:dataTable id="PM_LIFE_APPR_SETUP_DET_TABLE" 
+										rows="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.recordsPerPage}"
+										value="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.dataList_PM_LIFE_APPR_SETUP_DET}"
+										binding="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.dataTable}"
+										var="tableVar">
+									<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="label" value="" />
+											</f:facet>
+											<h:selectBooleanCheckbox id="checkBox" />
+										</rich:column>--%>
+										<rich:column rendered="true" width="355px">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PLM011$PM_LIFE_APPR_SETUP_DET$ASD_CODE$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.COMP_ASD_CODE}"
+												id="ASD_CODE" style="width:350px;" disabled="true"
+												title="#{message.PLM011$PM_LIFE_APPR_SETUP_DET$ASD_CODE$tooltip}"
+												value="#{tableVar.ASD_CODE}" />
+										</rich:column>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PLM011$PM_LIFE_APPR_SETUP_DET$UI_M_ASD_CODE_DESC$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.COMP_UI_M_ASD_CODE_DESC}"
+												id="UI_M_ASD_CODE_DESC" style="width:350px;" disabled="true"
+												title="#{message.PLM011$PM_LIFE_APPR_SETUP_DET$UI_M_ASD_CODE_DESC$tooltip}"
+												value="#{tableVar.UI_M_ASD_CODE_DESC}" />
+										</rich:column>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PLM011$PM_LIFE_APPR_SETUP_DET$ASD_NUM_VALUE$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.COMP_ASD_NUM_VALUE}"
+												id="ASD_NUM_VALUE" style="width:88px;"
+												title="#{message.PLM011$PM_LIFE_APPR_SETUP_DET$ASD_NUM_VALUE$tooltip}"
+												value="#{tableVar.ASD_NUM_VALUE}" >
+												<a4j:support event="onblur" 
+															actionListener="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.onBlurSetASD_NUM_VALUE}"
+															immediate="true"  reRender="errorPanel">
+												</a4j:support>
+											</h:inputText>
+										</rich:column>
+										<f:facet name="footer">
+											<rich:datascroller align="left"
+												id="PM_LIFE_APPR_SETUP_DET_SCROLL" page="1" />
+										</f:facet>
+									</rich:dataTable>
+								</rich:panel></td>
+							</tr>
+						</table>
+						</td>
+						<td></td>
+					</tr>
+				</table>
+				</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%"><rich:toolBar
+					styleClass="toolBarStyle" width="100%">
+					<rich:toolBarGroup location="right" styleClass="toolBarGroupStyle">
+						<h:commandLink style="text-decoration:none"
+							styleClass="toolbarCommandLinkStyle"
+							action="#{PLM011_COMPOSITE_ACTION.PM_LIFE_APPR_SETUP_DET_ACTION_BEAN.saveButtonClickAction}">
+							<h:graphicImage styleClass="toolbarImageStyle"
+								value="./../../images/save.gif" />
+							<h:outputText styleClass="toolbaroutputTextStyle"
+								value="#{menumessage.jsf$header$image$save}" />
+						</h:commandLink>
+
+						<h:commandLink style="text-decoration:none"
+							styleClass="toolbarCommandLinkStyle">
+							<h:graphicImage styleClass="toolbarImageStyle"
+								value="./../../images/savenext.GIF" />
+							<h:outputText styleClass="toolbaroutputTextStyle"
+								value="#{menumessage.jsf$header$image$savenext}" />
+						</h:commandLink>
+
+						<h:commandLink style="text-decoration:none"
+							styleClass="toolbarCommandLinkStyle">
+							<h:graphicImage styleClass="toolbarImageStyle"
+								value="./../../images/firstrec.gif" />
+							<h:outputText styleClass="toolbaroutputTextStyle"
+								value="#{menumessage.jsf$header$image$firstrec}" />
+						</h:commandLink>
+
+						<h:commandLink style="text-decoration:none"
+							styleClass="toolbarCommandLinkStyle">
+							<h:graphicImage styleClass="toolbarImageStyle"
+								value="./../../images/prevpage.gif" />
+							<h:outputText styleClass="toolbaroutputTextStyle"
+								value="#{menumessage.jsf$header$image$prevpage}" />
+						</h:commandLink>
+
+						<h:commandLink style="text-decoration:none"
+							styleClass="toolbarCommandLinkStyle">
+							<h:graphicImage styleClass="toolbarImageStyle"
+								value="./../../images/nextpage.gif" />
+							<h:outputText styleClass="toolbaroutputTextStyle"
+								value="#{menumessage.jsf$header$image$nextpage}" />
+						</h:commandLink>
+
+						<h:commandLink style="text-decoration:none"
+							styleClass="toolbarCommandLinkStyle">
+							<h:graphicImage styleClass="toolbarImageStyle"
+								value="./../../images/lastRecord.gif" />
+							<h:outputText styleClass="toolbaroutputTextStyle"
+								value="#{menumessage.jsf$header$image$lastRecord}" />
+						</h:commandLink>
+					</rich:toolBarGroup>
+				</rich:toolBar></td>
+			</tr>
+		</h:form>
+	</table>
+	<table cellpadding="0" cellspacing="0" width="100%">
+		<tr>
+			
+					</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

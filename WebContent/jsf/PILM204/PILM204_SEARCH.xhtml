@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILM204" var="message" />
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<!-- add header row -->
+		<tr>
+		</tr>
+		<!-- Body row -->
+		<h:form id="FormulaMaster">
+		<tr>
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err" value="#{commonmsg.errorPanel$heading}"/>
+							</f:facet>
+							<h:outputText id="errorMessages"
+								
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg" />
+
+							<h:outputText id="warningMessages"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+			</tr>
+		
+		<tr>
+			<td>
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td>Code : <h:inputText
+							value="#{formulaSearchBean.formulaCode}" /></td>
+						<td>Formula : <h:inputText
+							value="#{formulaSearchBean.formula}" /></td>
+						<td><a4j:commandButton value="#{commonmsg.searchButton$caption}" id="a4link" styleClass="button">
+							<a4j:support
+								action="#{formulaSearchBean.fetchFormulaMasterDetails}"
+								event="onclick" reRender="dataTableId"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{formulaSearchBean.formulaList}" var="formulamaster"
+					cellpadding="5px" rows="10" border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+
+					<rich:column filterBy="#{formulamaster.FRM_CODE}"
+						sortBy="#{formulamaster.FRM_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILM204formCodeLabel}" />
+						</f:facet>
+						<h:commandLink action="#{formulaSearchBean.clearSearchPage}"
+							immediate="true">
+								<h:outputText value="#{formulamaster.FRM_CODE}" />
+							<f:param name="Code" value="#{formulamaster.FRM_CODE}" />
+						</h:commandLink>
+					</rich:column>
+					<rich:column filterBy="#{formulamaster.FRM_FORMULA}"
+						sortBy="#{formulamaster.FRM_FORMULA}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILM204formula}" />
+						</f:facet>
+							<h:outputText value="#{formulamaster.FRM_FORMULA}" />
+						<f:param name="formula" value="#{formulamaster.FRM_FORMULA}" />
+					</rich:column>
+				</rich:dataTable>
+			</td>
+		</tr>
+		<tr>
+			<td><h:commandButton 
+						value="#{commonmsg.insertButton$caption}"
+						styleClass="button"
+						action="#{formulaSearchBean.goToEmptyFormulaMaster}">
+						</h:commandButton>
+			</td>
+		</tr>
+		</h:form>
+		<!-- add footer to the page-->
+		<tr>
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

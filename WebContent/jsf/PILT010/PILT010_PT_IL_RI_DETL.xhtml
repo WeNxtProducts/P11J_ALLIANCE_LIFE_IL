@@ -1,0 +1,398 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILT010" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 Handson  On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PT_IL_RI_DETL" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td><rich:toolBar>
+							<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD"
+								location="right">
+								<w:treeWizard binding="#{PILT010_COMPOSITE_ACTION.wizard}" />
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									value="#{commonmsg.errorPanel$heading} #{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.errorMap['current'] !=null? PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.errorMap['current']:PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages"/>
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+					<tr>
+
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%"
+							cellpadding="0" cellspacing="0">
+							<tr>
+								<td><font color="White" size="2px"><b>Reinsurance Details</b></font></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="6">
+						<div id="tablecontainer">
+						<div id="sidebar" style="width: 21%; vertical-align: top">
+						<div align="center" id="handle" style="width: 5%;"><a4j:commandLink
+							actionListener="#{PILT010_COMPOSITE_ACTION.wizard.toggle}"
+							id="BACK_TOOL_FOOTER1" immediate="true" rendered="true"
+							style="text-decoration:none;align:left"
+							styleClass="toolbarCommandLinkStyle">
+							<img align="left" alt="Click to toggle the sidebar" height="123"
+								onclick="toggleSideBar();"
+								src="./../../resources/images/toggle.jpg" style="border: 0;"
+								width="14" />
+						</a4j:commandLink></div>
+
+						<div id="sbText" style="display: compact;">
+						<div id="linkstable1" style="vertical-align: top; width: 95%">
+						<w:treeWizardPanel
+							binding="#{PILT010_COMPOSITE_ACTION.wizard.wizardPanel}"
+							id="wizardPanel" /></div>
+						</div>
+						</div>
+
+						<div id="content" style="width: 79%;">
+						<table class="noborder" width="100%">
+							
+							<tr>
+								<td valign="top" width="100%"><h:panelGroup
+									id="sectionDtls" style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+
+										<tr>
+											<td colspan="5"><rich:dataTable
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.dataTable}"
+												border="0" cellpadding="0" id="PT_IL_RI_DETL" rows="5"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.dataList_PT_IL_RI_DETL}"
+												var="table" width="100%">
+
+												<f:facet name="header">
+													<h:outputText id="serial_1" style="text-align:left;"
+														value="#{message.PILT010$PT_IL_RI_DETL$displayCaption}" />
+												</f:facet>
+
+												<rich:column filterBy="#{table.RD_COVER_CODE}"
+													filterEvent="onkeyup"
+													filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.filterByRD_COVER_CODE}"
+													id="serial_2" sortBy="#{table.RD_COVER_CODE}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="serial_3" styleClass="forumRowHighlight"
+															value="#{message.PILT010$PT_IL_RI_DETL$RD_COVER_CODE$caption}" />
+													</f:facet>
+
+													<a4j:commandLink
+														action="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.getDetails}"
+														id="serial_17" immediate="true" reRender="sectionDtls,PT_IL_RI_DETL">
+
+														<h:outputText id="serial_4"
+															value="#{table.RD_COVER_CODE} " />
+
+													</a4j:commandLink>
+
+												</rich:column>
+
+												<rich:column filterBy="#{table.RD_ASSR_CODE}"
+													filterEvent="onkeyup"
+													filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.filterByRD_ASSR_CODE}"
+													id="serial_5" sortBy="#{table.RD_ASSR_CODE}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="serial_6" styleClass="forumRowHighlight"
+															value="#{message.PILT010$PT_IL_RI_DETL$RD_ASSR_CODE$caption}" />
+													</f:facet>
+
+													<h:outputText id="serial_7" value="#{table.RD_ASSR_CODE} " />
+
+												</rich:column>
+												<rich:column filterBy="#{table.RD_TAR_RATE_PER}"
+													filterEvent="onkeyup"
+													filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.filterByRD_TAR_RATE_PER}"
+													id="serial_8" sortBy="#{table.RD_TAR_RATE_PER}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="serial_9" styleClass="forumRowHighlight"
+															value="#{message.PILT010$PT_IL_RI_DETL$RD_TAR_RATE_PER$caption}" />
+													</f:facet>
+
+													<h:outputText id="serial_10"
+														value="#{table.RD_TAR_RATE_PER} " />
+
+												</rich:column>
+
+												<rich:column filterBy="#{table.RD_TAR_RATE}"
+													filterEvent="onkeyup"
+													filterValue="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.filterByRD_TAR_RATE}"
+													id="serial_11" sortBy="#{table.RD_TAR_RATE}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="serial_12"
+															styleClass="forumRowHighlight"
+															value="#{message.PILT010$PT_IL_RI_DETL$RD_TAR_RATE$caption}" />
+													</f:facet>
+
+													<h:outputText id="serial_13" value="#{table.RD_TAR_RATE} " />
+
+												</rich:column>
+												<f:facet name="footer">
+													<h:panelGroup id="footerpanel" style="border:0">
+														<rich:datascroller align="right" id="serial_14" />
+
+													</h:panelGroup>
+												</f:facet>
+											</rich:dataTable></td>
+										</tr>
+
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_COVER_CODE_LABEL}"
+												for="RD_COVER_CODE" id="RD_COVER_CODE_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_COVER_CODE$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_COVER_CODE}"
+												id="RD_COVER_CODE" maxlength="12" readonly="true"
+												rendered="true" required="true" styleClass="input"
+												title="Enter the Plan Code"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_COVER_CODE}" />
+											</td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_SCHD_DT_LABEL}"
+												for="RD_SCHD_DT" id="RD_SCHD_DT_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_SCHD_DT$caption}" /></td>
+											<td class="oddrow"><span
+												title="message.PILT010$PT_IL_RI_DETL$RD_SCHD_DT$caption}">
+											<rich:calendar
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_SCHD_DT}"
+												datePattern="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.datePattern}"
+												disabled="true" id="RD_SCHD_DT" inputClass="calendarinput"
+												inputSize="9"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_SCHD_DT}">
+												<a4j:support event="oninputblur" id="date_1"
+													onsubmit="formatDate('PT_IL_RI_DETL:RD_SCHD_DT')" />
+											</rich:calendar></span></td>
+										</tr>
+
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_TREATY_CODE_LABEL}"
+												for="RD_TREATY_CODE" id="RD_TREATY_CODE_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_TREATY_CODE$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_TREATY_CODE}"
+												id="RD_TREATY_CODE" maxlength="12" readonly="true"
+												rendered="true" required="true" styleClass="inputsmall"
+												title="Enter the Tretty Code"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_TREATY_CODE}" />
+											<h:inputText
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_UI_M_TTY_CODE_DESC}"
+												id="UI_M_TTY_CODE_DESC" maxlength="12" readonly="true"
+												rendered="true" required="true" styleClass="input"
+												title="Enter the Tretty Code Desc"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.UI_M_TTY_CODE_DESC}" />
+											<h:graphicImage id="serial_15" style=""
+												styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_FC_SA_LABEL}"
+												for="RD_FC_SA" id="RD_FC_SA_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_FC_SA$caption}" /></td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_FC_SA}"
+												id="RD_FC_SA" maxlength="12" readonly="true" rendered="true"
+												required="true" styleClass="inputNumeric" title="Enter the SA"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_FC_SA}">
+												<f:converter converterId="PELNumberFormatter" />
+											</h:inputText></td>
+
+										</tr>
+
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_FC_PREM_LABEL}"
+												for="RD_FC_PREM" id="RD_FC_PREM_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_FC_PREM$caption}" /></td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_FC_PREM}"
+												id="RD_FC_PREM" maxlength="12" readonly="true"
+												rendered="true" required="true" styleClass="inputNumeric"
+												title="Enter the FC Premium"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_FC_PREM}" />
+											</td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_LC_PRD_PREM_LABEL}"
+												for="RD_LC_PRD_PREM" id="RD_LC_PRD_PREM_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_LC_PRD_PREM$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_LC_PRD_PREM}"
+												id="RD_LC_PRD_PREM" maxlength="12" readonly="true"
+												rendered="true" required="true" styleClass="inputNumeric"
+												title="Enter the SA"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_LC_PRD_PREM}" />
+											</td>
+
+										</tr>
+
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_PRD_FM_DT_LABEL}"
+												for="RD_PRD_FM_DT" id="RD_PRD_FM_DT_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_PRD_FM_DT$caption}" /></td>
+											<td class="evenrow"><span
+												title="message.PILT010$PT_IL_RI_DETL$RD_PRD_FM_DT$caption}">
+											<rich:calendar
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_PRD_FM_DT}"
+												datePattern="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.datePattern}"
+												disabled="true" id="RD_PRD_FM_DT" inputClass="calendarinput"
+												inputSize="9"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_PRD_FM_DT}">
+												<a4j:support event="oninputblur" id="date_2"
+													onsubmit="formatDate('PT_IL_RI_DETL:RD_PRD_FM_DT')" />
+											</rich:calendar></span></td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_PRD_TO_DT_LABEL}"
+												for="RD_PRD_TO_DT" id="RD_PRD_TO_DT_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_PRD_TO_DT$caption}" /></td>
+											<td class="evenrow"><span
+												title="message.PILT010$PT_IL_RI_DETL$RD_PRD_TO_DT$caption}">
+											<rich:calendar
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_PRD_TO_DT}"
+												datePattern="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.datePattern}"
+												disabled="true" id="RD_PRD_TO_DT" inputClass="calendarinput"
+												inputSize="9"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_PRD_TO_DT}">
+												<a4j:support event="oninputblur" id="date_3"
+													onsubmit="formatDate('PT_IL_RI_DETL:RD_PRD_TO_DT')" />
+											</rich:calendar> </span></td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_FRZ_FLAG_LABEL}"
+												for="RD_FRZ_FLAG" id="RD_FRZ_FLAG_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_FRZ_FLAG$caption}" /></td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_FRZ_FLAG}"
+												id="RD_FRZ_FLAG" styleClass="input" disabled="false"
+												readonly="true"
+												title="#{message.PILT010$PT_IL_RI_DETL$RD_FRZ_FLAG$caption}"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_FRZ_FLAG}">
+											</h:inputText></td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_REMARKS_LABEL}"
+												for="RD_REMARKS" id="RD_REMARKS_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_REMARKS$caption}" /></td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_REMARKS}"
+												id="RD_REMARKS" styleClass="input"
+												title="#{message.PILT010$PT_IL_RI_DETL$RD_REMARKS$caption}"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_REMARKS}" />
+											</td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_ASSR_CODE_LABEL}"
+												for="RD_ASSD_CODE" id="RD_ASSD_CODE_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_ASSD_CODE_LABEL$caption}" /></td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_ASSR_CODE}"
+												id="RD_ASSD_CODE" styleClass="input" disabled="false"
+												readonly="true"
+												title="#{message.PILT010$PT_IL_RI_DETL$RD_ASSD_CODE$tooltip}"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_ASSR_CODE}">
+											</h:inputText></td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_TAR_RATE_LABEL}"
+												for="RD_TAR_RATE" id="RD_TAR_RATE_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_TAR_RATE_LABEL$caption}" /></td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_TAR_RATE}"
+												id="RD_RATE" styleClass="inputNumeric" disabled="false"
+												readonly="true"
+												title="#{message.PILT010$PT_IL_RI_DETL$RD_TAR_RATE$tooltip}"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_TAR_RATE}">
+											</h:inputText></td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_TAR_RATE_PER_LABEL}"
+												for="RD_TAR_RATE_PER" id="RD_TAR_RATE_PER_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message.PILT010$PT_IL_RI_DETL$RD_TAR_RATE_PER_LABEL$caption}" /></td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.COMP_RD_TAR_RATE_PER}"
+												id="RD_RATE_PER" styleClass="inputNumeric" disabled="false"
+												readonly="true"
+												title="#{message.PILT010$PT_IL_RI_DETL$RD_TAR_RATE_PER$tooltip}"
+												value="#{PILT010_COMPOSITE_ACTION.PILT010_PT_IL_RI_DETL_ACTION.PT_IL_RI_DETL_BEAN.RD_TAR_RATE_PER}">
+											</h:inputText></td>
+											<td class="oddrowright"></td>
+											<td class="oddrow"></td>
+
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</div>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td><rich:toolBar>
+							<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM"
+								location="right">
+								<w:wizardPanelFooter
+									binding="#{PILT010_COMPOSITE_ACTION.wizard.wizardPanelFooter}" />
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

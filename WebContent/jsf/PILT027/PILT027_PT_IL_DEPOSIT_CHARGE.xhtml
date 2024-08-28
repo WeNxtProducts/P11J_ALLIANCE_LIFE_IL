@@ -1,0 +1,375 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILT027" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 Handson  On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PT_IL_DEPOSIT_CHARGE" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%">
+					<tr>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+
+										<h:commandLink
+											action="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.previousPageButtonClickAction}"
+											id="AUTOID_1back" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_4"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="serial_5"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_2save" style="text-decoration:none"
+											binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.COMP_UI_M_BUT_SAVE}"
+											action="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.saveButtonClickAction}"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_666666666"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="serial_777777777"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.errorMap['current'] !=null? PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.errorMap['current']: PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td>Charges</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" align="right"   width="100%">
+							<a4j:commandButton  
+								id="CALC_AMT"
+							 	styleClass="button" 
+							 	rendered="true" 
+							 	
+							 	action="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.calcHeaderNetAmount}"
+							 	value="Calc Charge"
+							 	reRender="sectionDtls"/>
+						 </td>
+					</tr>
+					
+					<tr>
+						<td colspan="3"><!-- DIVISION CHANGED FROM HERE By HANEEF-->
+						<div style="height: 500px; overflow: auto;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td vAlign="top" width="100%"><h:panelGroup
+									id="sectionDtls" style="border:0;height:15%;">
+									
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+
+										<tr>
+											<td colspan="5"><rich:dataTable
+												binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.chargeTable}"
+												id="PT_IL_DEPOSIT_CHARGE"
+												value="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.fetchList}"
+												var="datatable" width="100%">
+
+
+												<rich:column filterBy="#{datatable.DCHRG_CODE}"
+													filterEvent="onkeyup" id="DCHRG_CODE"
+													sortBy="#{datatable.DCHRG_CODE}"
+													styleClass="#{datatable.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_22" styleClass="forumRowHighlight"
+															value="#{message.PILT027$PT_IL_TOP_UP$DCHRG_CODE$caption}" />
+													</f:facet>
+													<a4j:commandLink
+														actionListener="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.getDetails}"
+														immediate="true" reRender="errorPanel,sectionDtls,PT_IL_DEPOSIT_CHARGE">
+														<h:outputText id="AUTOID_23"
+															value="#{datatable.DCHRG_CODE}" />
+													</a4j:commandLink>
+												</rich:column>
+
+
+												<rich:column filterBy="#{datatable.UI_M_CHARGE_DESC}"
+													filterEvent="onkeyup" id="M_CHARGE_DESC"
+													sortBy="#{datatable.UI_M_CHARGE_DESC}"
+													styleClass="#{datatable.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_41" styleClass="forumRowHighlight"
+															value="#{message.PILT027$PT_IL_TOP_UP$DCHRG_CODE_DESC$caption}" />
+													</f:facet>
+													<h:outputText id="AUTOID_24"
+														value="#{datatable.UI_M_CHARGE_DESC}">
+													</h:outputText>
+												</rich:column>
+
+
+												<rich:column filterBy="#{datatable.DCHRG_RATE}"
+													filterEvent="onkeyup" id="DCHRG_RATE"
+													sortBy="#{datatable.DCHRG_RATE}"
+													styleClass="#{datatable.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_42" styleClass="forumRowHighlight"
+															value="#{message.PILT027$PT_IL_TOP_UP$DCHRG_RATE$caption}" />
+													</f:facet>
+													<h:outputText id="AUTOID_25"
+														value="#{datatable.DCHRG_RATE}">
+													</h:outputText>
+												</rich:column>
+												
+												<rich:column filterBy="#{datatable.DCHRG_RATE_PER}"
+													filterEvent="onkeyup" id="DCHRG_RATE_PER"
+													sortBy="#{datatable.DCHRG_RATE_PER}"
+													styleClass="#{datatable.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_42_1" styleClass="forumRowHighlight"
+															value="#{message.PILT027$PT_IL_TOP_UP$DCHRG_RATE_PER$caption}" />
+													</f:facet>
+													<h:outputText id="AUTOID_25_1"
+														value="#{datatable.DCHRG_RATE_PER}">
+													</h:outputText>
+												</rich:column>
+
+												<!-- Attach scroller as footer of the table-->
+												<f:facet name="footer">
+													<h:panelGroup id="footerpanel" style="border:0">
+														<rich:datascroller align="right" />
+														<a4j:commandButton
+															actionListener="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.AddRow}"
+															binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.UI_M_BUT_ADD}"
+															id="AUTOID_26" immediate="true"
+															reRender="errorPanel,sectionDtls" rendered="false"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.addNewButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.deleteRow}"
+															binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.UI_M_BUT_DELETE}"
+															id="AUTOID_27" immediate="true"
+															reRender="errorPanel,sectionDtls" rendered="false"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.deleteButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.post}"
+															binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.UI_M_BUT_POST}"
+															id="AUTOID_28" reRender="errorPanel,sectionDtls"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.postButtonCaption}" />
+
+													</h:panelGroup>
+												</f:facet>
+											</rich:dataTable></td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.COMP_DCHRG_CODE_LABEL}"
+												for="DCHRG_CODE" id="DCHRG_CODE_LABEL" styleClass="label"
+												value="#{message.PILT027$PT_IL_TOP_UP$DCHRG_CODE$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.COMP_DCHRG_CODE}"
+												id="DCHRG_CODE" rendered="true" styleClass="input"
+												title="#{message.PILT027$PT_IL_TOP_UP$DCHRG_CODE$tooltip}"
+												validator="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.validateDCHRG_CODE}"
+												value="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.PT_IL_DEPOSIT_CHARGE_BEAN.DCHRG_CODE}">
+												<a4j:support
+													actionListener="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.setErrorMessagesInMap}"
+													event="onblur" id="aj12cccc" immediate="true"
+													reRender="errorPanel,DCHRG_CODE_DESC">
+												</a4j:support>
+
+											</h:inputText> 
+											<h:inputText disabled="true"
+												binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.COMP_UI_M_CHARGE_DESC}"
+												id="DCHRG_CODE_DESC" rendered="true" styleClass="input"
+												title="#{message.PILT027$PT_IL_TOP_UP$DCHRG_CODE_DESC$tooltip}"
+												value="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.PT_IL_DEPOSIT_CHARGE_BEAN.UI_M_CHARGE_DESC}">
+											</h:inputText><rich:suggestionbox for="DCHRG_CODE" height="100"
+												id="DCHRG_CODE_LOV1" immediate="true"
+												suggestionAction="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.lovDCHRG_CODE}"
+												var="DCHRG_CODE" width="200">
+												<h:column>
+													<h:outputText id="AUTOID_DCHRG_CODE"
+														value="#{DCHRG_CODE.code}" />
+												</h:column>
+
+												<h:column>
+													<h:outputText id="AUTOID_DCHRG_CODE1"
+														value="#{DCHRG_CODE.name}" />
+												</h:column>
+												<a4j:support ajaxSingle="true" event="onselect"
+													id="COMP_1_INPUT_SUGG_DCHRG_CODE" immediate="true"
+													reRender="errorPanel,DCHRG_CODE_DESC">
+													<f:setPropertyActionListener id="AUTOID_7asasqwqqqwq"
+														target="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.PT_IL_DEPOSIT_CHARGE_BEAN.UI_M_CHARGE_DESC}"
+														value="#{DCHRG_CODE.name}" />
+												</a4j:support>
+											</rich:suggestionbox> <h:graphicImage id="AUTOID_29"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/Lov.gif" /></td>
+												
+											<td class="oddrow">
+												<h:outputLabel
+													binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.COMP_DCHRG_FLEX_01_LABEL}"
+													for="DCHRG_FLEX_01" id="DCHRG_FLEX_01_LABEL" styleClass="label"
+													value="#{message.PILT027$PT_IL_TOP_UP$DCHRG_FLEX_01$caption}" />
+											</td>
+											<td class="oddrow">
+												<h:selectOneMenu 
+													 binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.COMP_DCHRG_FLEX_01}"
+													 id="DCHRG_FLEX_01" rendered="true"	
+													 styleClass="input" 
+													 validator="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.validateCalcType}"
+													 title="#{message.PILT027$PT_IL_TOP_UP$DCHRG_FLEX_01$tooltip}"
+													 value="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.PT_IL_DEPOSIT_CHARGE_BEAN.DCHRG_FLEX_01}">
+													 <f:selectItems  id="DCHRG_FLEX_01_SEL"
+													   value="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.listSelect}"/>
+													   <a4j:support
+															actionListener="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.setErrorMessagesInMap}"
+															event="onblur" id="DCHRG_FLEXT_SUPPORT" immediate="true"
+															reRender="errorPanel,DCHRG_RATE,DCHRG_RATE_PER">
+														</a4j:support>
+														<a4j:support
+															actionListener="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.setErrorMessagesInMap}"
+															event="onblur" id="DCHRG_FLEXT_SUPPORT_1" immediate="true"
+															reRender="errorPanel,DCHRG_RATE,DCHRG_RATE_PER">
+														</a4j:support>
+												</h:selectOneMenu>
+											</td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.COMP_DCHRG_RATE_LABEL}"
+												for="DCHRG_RATE" id="DCHRG_RATE_LABEL" styleClass="label"
+												value="#{message.PILT027$PT_IL_TOP_UP$DCHRG_RATE$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.COMP_DCHRG_RATE}"
+												 id="DCHRG_RATE" maxlength="15"
+												rendered="true" styleClass="inputNumeric"
+												title="#{message.PILT027$PT_IL_TOP_UP$DCHRG_RATE$tooltip}"
+												validator="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.validateDCHRG_RATE}"
+												value="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.PT_IL_DEPOSIT_CHARGE_BEAN.DCHRG_RATE}">
+												<f:validateDoubleRange minimum=".000"/>
+												<a4j:support
+													actionListener="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.setErrorMessagesInMap}"
+													event="onblur" id="DCHRG_RATE_SUPPORT" immediate="true"
+													reRender="errorPanel,UI_M_DCHRG_TOTAL_LC_AMT">
+												</a4j:support>
+											</h:inputText></td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.COMP_DCHRG_RATE_PER_LABEL}"
+												for="DCHRG_RATE_PER" id="DCHRG_RATE_PER_LABEL" styleClass="label"
+												value="#{message.PILT027$PT_IL_TOP_UP$DCHRG_RATE_PER$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.COMP_DCHRG_RATE_PER}"
+												  id="DCHRG_RATE_PER" maxlength="15"
+												rendered="true" styleClass="inputNumeric"
+												title="#{message.PILT027$PT_IL_TOP_UP$DCHRG_RATE_PER$tooltip}"
+												validator="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.validateDCHRG_RATE_PER}"
+												value="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.PT_IL_DEPOSIT_CHARGE_BEAN.DCHRG_RATE_PER}">
+												<f:validateDoubleRange minimum=".000"/>
+												<a4j:support
+													actionListener="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.setErrorMessagesInMap}"
+													event="onblur" id="DCHRG_RATE_PER_SUPPORT" immediate="true"
+													reRender="errorPanel,UI_M_DCHRG_TOTAL_LC_AMT">
+												</a4j:support>
+											</h:inputText></td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.COMP_UI_M_DCHRG_TOTAL_LC_AMT_LABEL}"
+												for="UI_M_DCHRG_TOTAL_LC_AMT"
+												id="UI_M_DCHRG_TOTAL_LC_AMT_LABEL" styleClass="label"
+												value="#{message.PILT027$PT_IL_TOP_UP$TOTAL_LC_AMOUNT$caption}" />
+											</td>
+
+											<td class="evenrow"><h:inputText
+												binding="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.COMP_UI_M_DCHRG_TOTAL_LC_AMT}"
+											 	 id="UI_M_DCHRG_TOTAL_LC_AMT" maxlength="15"
+												rendered="true" styleClass="inputNumeric"
+												title="#{message.PILT027$PT_IL_TOP_UP$TOTAL_LC_AMOUNT$tooltip}"
+												value="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.PT_IL_DEPOSIT_CHARGE_BEAN.UI_M_DCHRG_TOTAL_LC_AMT}">
+												<f:validateDoubleRange minimum=".000"/>
+												<a4j:support
+													actionListener="#{PILT027_COMPOSITE_ACTION.PT_IL_DEPOSIT_CHARGE_ACTION_BEAN.setErrorMessagesInMap}"
+													event="onblur" id="UI_M_DCHRG_TOTAL_LC_AMT_SUPPORT" immediate="true"
+													reRender="errorPanel,UI_M_DCHRG_TOTAL_LC_AMT">
+												</a4j:support>
+											</h:inputText></td>
+
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="AUTOID_2savehjhjh"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_6dfgfdgf"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/save.gif" />
+									<h:outputText id="serial_7fdgfdgf"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+
+	</ui:define>
+</ui:composition>

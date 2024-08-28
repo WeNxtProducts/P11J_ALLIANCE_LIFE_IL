@@ -1,0 +1,130 @@
+ package com.iii.pel.forms.PILT009;
+
+import com.iii.premia.common.utils.CommonUtils;
+
+public class PILT009_COMPOSITE_ACTION {
+
+	private PT_IL_FAC_CUST_RETRO_ACTION PILT009_PT_IL_FAC_CUST_RETRO_ACTION;
+	private PT_IL_FAC_CUST_RETRO_DETL_ACTION PILT009_PT_IL_FAC_CUST_RETRO_DETL_ACTION;
+	private PT_IL_FAC_DETL_ACTION PILT009_PT_IL_FAC_DETL_ACTION;
+	private PT_IL_FAC_DISC_LOAD_ACTION PILT009_PT_IL_FAC_DISC_LOAD_ACTION;
+	private PT_IL_FAC_OUT_ACTION PILT009_PT_IL_FAC_OUT_ACTION;
+	private PT_IL_FAC_PART_CHRG_ACTION PILT009_PT_IL_FAC_PART_CHRG_ACTION;
+	private PT_IL_FAC_PART_CUST_ACTION PILT009_PT_IL_FAC_PART_CUST_ACTION;
+	private PT_IL_FAC_PART_CUST_DETL_ACTION PILT009_PT_IL_FAC_PART_CUST_DETL_ACTION;
+
+	private String CALLING_FORM;
+
+	public String getCALLING_FORM() {
+		return CALLING_FORM;
+	}
+
+	public void setCALLING_FORM(String calling_form) {
+		CALLING_FORM = calling_form;
+	}
+
+	public PILT009_COMPOSITE_ACTION() {
+		PILT009_PT_IL_FAC_CUST_RETRO_ACTION = new PT_IL_FAC_CUST_RETRO_ACTION();
+		PILT009_PT_IL_FAC_CUST_RETRO_DETL_ACTION = new PT_IL_FAC_CUST_RETRO_DETL_ACTION();
+		PILT009_PT_IL_FAC_DETL_ACTION = new PT_IL_FAC_DETL_ACTION();
+		PILT009_PT_IL_FAC_DISC_LOAD_ACTION = new PT_IL_FAC_DISC_LOAD_ACTION();
+		PILT009_PT_IL_FAC_OUT_ACTION = new PT_IL_FAC_OUT_ACTION();
+		PILT009_PT_IL_FAC_PART_CHRG_ACTION = new PT_IL_FAC_PART_CHRG_ACTION();
+		PILT009_PT_IL_FAC_PART_CUST_ACTION = new PT_IL_FAC_PART_CUST_ACTION();
+		PILT009_PT_IL_FAC_PART_CUST_DETL_ACTION = new PT_IL_FAC_PART_CUST_DETL_ACTION();
+		
+		PILT009_PT_IL_FAC_CUST_RETRO_ACTION.compositeAction = this;
+		PILT009_PT_IL_FAC_CUST_RETRO_DETL_ACTION.compositeAction = this;
+		PILT009_PT_IL_FAC_DETL_ACTION.compositeAction = this;
+		PILT009_PT_IL_FAC_DISC_LOAD_ACTION.compositeAction = this;
+		PILT009_PT_IL_FAC_OUT_ACTION.compositeAction = this;
+		PILT009_PT_IL_FAC_PART_CHRG_ACTION.compositeAction = this;
+		PILT009_PT_IL_FAC_PART_CUST_ACTION.compositeAction = this;
+		PILT009_PT_IL_FAC_PART_CUST_DETL_ACTION.compositeAction = this;
+
+		/*setCALLING_FORM(CommonUtils.getGlobalVariable("CALLING_FORM"));
+		CommonUtils.setGlobalVariable("CALLING_FORM", null);*/
+		
+	}
+
+	public PT_IL_FAC_CUST_RETRO_ACTION getPILT009_PT_IL_FAC_CUST_RETRO_ACTION() {
+		return PILT009_PT_IL_FAC_CUST_RETRO_ACTION;
+	}
+
+	public void setPILT009_PT_IL_FAC_CUST_RETRO_ACTION(
+			PT_IL_FAC_CUST_RETRO_ACTION pilt009_pt_il_fac_cust_retro_action) {
+		PILT009_PT_IL_FAC_CUST_RETRO_ACTION = pilt009_pt_il_fac_cust_retro_action;
+	}
+
+	public PT_IL_FAC_CUST_RETRO_DETL_ACTION getPILT009_PT_IL_FAC_CUST_RETRO_DETL_ACTION() {
+		return PILT009_PT_IL_FAC_CUST_RETRO_DETL_ACTION;
+	}
+
+	public void setPILT009_PT_IL_FAC_CUST_RETRO_DETL_ACTION(
+			PT_IL_FAC_CUST_RETRO_DETL_ACTION pilt009_pt_il_fac_cust_retro_detl_action) {
+		PILT009_PT_IL_FAC_CUST_RETRO_DETL_ACTION = pilt009_pt_il_fac_cust_retro_detl_action;
+	}
+
+	public PT_IL_FAC_DETL_ACTION getPILT009_PT_IL_FAC_DETL_ACTION() {
+		return PILT009_PT_IL_FAC_DETL_ACTION;
+	}
+
+	public void setPILT009_PT_IL_FAC_DETL_ACTION(
+			PT_IL_FAC_DETL_ACTION pilt009_pt_il_fac_detl_action) {
+		PILT009_PT_IL_FAC_DETL_ACTION = pilt009_pt_il_fac_detl_action;
+	}
+
+	public PT_IL_FAC_DISC_LOAD_ACTION getPILT009_PT_IL_FAC_DISC_LOAD_ACTION() {
+		return PILT009_PT_IL_FAC_DISC_LOAD_ACTION;
+	}
+
+	public void setPILT009_PT_IL_FAC_DISC_LOAD_ACTION(
+			PT_IL_FAC_DISC_LOAD_ACTION pilt009_pt_il_fac_disc_load_action) {
+		PILT009_PT_IL_FAC_DISC_LOAD_ACTION = pilt009_pt_il_fac_disc_load_action;
+	}
+
+	public PT_IL_FAC_OUT_ACTION getPILT009_PT_IL_FAC_OUT_ACTION() {
+		return PILT009_PT_IL_FAC_OUT_ACTION;
+	}
+
+	public void setPILT009_PT_IL_FAC_OUT_ACTION(
+			PT_IL_FAC_OUT_ACTION pilt009_pt_il_fac_out_action) {
+		PILT009_PT_IL_FAC_OUT_ACTION = pilt009_pt_il_fac_out_action;
+	}
+
+	public PT_IL_FAC_PART_CHRG_ACTION getPILT009_PT_IL_FAC_PART_CHRG_ACTION() {
+		return PILT009_PT_IL_FAC_PART_CHRG_ACTION;
+	}
+
+	public void setPILT009_PT_IL_FAC_PART_CHRG_ACTION(
+			PT_IL_FAC_PART_CHRG_ACTION pilt009_pt_il_fac_part_chrg_action) {
+		PILT009_PT_IL_FAC_PART_CHRG_ACTION = pilt009_pt_il_fac_part_chrg_action;
+	}
+
+	public PT_IL_FAC_PART_CUST_ACTION getPILT009_PT_IL_FAC_PART_CUST_ACTION() {
+		return PILT009_PT_IL_FAC_PART_CUST_ACTION;
+	}
+
+	public void setPILT009_PT_IL_FAC_PART_CUST_ACTION(
+			PT_IL_FAC_PART_CUST_ACTION pilt009_pt_il_fac_part_cust_action) {
+		PILT009_PT_IL_FAC_PART_CUST_ACTION = pilt009_pt_il_fac_part_cust_action;
+	}
+
+	public PT_IL_FAC_PART_CUST_DETL_ACTION getPILT009_PT_IL_FAC_PART_CUST_DETL_ACTION() {
+		return PILT009_PT_IL_FAC_PART_CUST_DETL_ACTION;
+	}
+
+	public void setPILT009_PT_IL_FAC_PART_CUST_DETL_ACTION(
+			PT_IL_FAC_PART_CUST_DETL_ACTION pilt009_pt_il_fac_part_cust_detl_action) {
+		PILT009_PT_IL_FAC_PART_CUST_DETL_ACTION = pilt009_pt_il_fac_part_cust_detl_action;
+	}
+
+	public String callFacOut() {
+
+		String returnValue = null;
+		returnValue = "gotoFacOut";
+
+		return returnValue;
+	}
+
+}

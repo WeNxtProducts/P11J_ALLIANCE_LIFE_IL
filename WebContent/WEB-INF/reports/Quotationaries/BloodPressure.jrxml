@@ -1,0 +1,602 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Blood_Pressure" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="60" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7a8269c2-28a7-4a04-965c-2637b00c7dc3">
+	<property name="ireport.zoom" value="1.2396694214876032"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="POL_SYS_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[
+ SELECT CUST_FIRST_NAME,
+       CUST_SURNAME,
+       CUST_DOB,
+       CUST_NAME,
+       POL_DS_TYPE,
+       POL_NO,
+       POAD_AGE,
+       (SELECT PC_DESC
+          FROM PM_CODES
+         WHERE PC_TYPE = 'IL_OCCU'
+           AND PC_CODE = POAD_OCC_CODE) OCCUPATION,
+       CUST_ADDR1,
+       CUST_ADDR2,
+       CUST_ADDR3,
+       CUST_REF_ID1,
+       (SELECT PC_DESC
+          FROM PM_CODES
+         WHERE PC_TYPE = 'NATLITY'
+           AND PC_CODE = POAD_NATIONALITY) NATIONALITY,
+       (SELECT PS_CODE_DESC
+          FROM PP_SYSTEM
+         WHERE PS_TYPE = 'CATG'
+           AND PS_CODE = POAD_CATG_CODE) GENDER,
+           CUST_PHONE, CUST_POST_BOX_NO, CUST_PIN_NUMBER, POL_LC_SUM_ASSURED
+  FROM PT_IL_POLICY, PM_CUSTOMER, PT_IL_POL_ASSURED_DTLS
+ WHERE POL_CUST_CODE = CUST_CODE
+   AND POAD_POL_SYS_ID = POL_SYS_ID
+   AND POL_SYS_ID =$P{POL_SYS_ID}
+]]>
+	</queryString>
+	<field name="CUST_FIRST_NAME" class="java.lang.String"/>
+	<field name="CUST_SURNAME" class="java.lang.String"/>
+	<field name="CUST_DOB" class="java.sql.Timestamp"/>
+	<field name="CUST_NAME" class="java.lang.String"/>
+	<field name="POL_DS_TYPE" class="java.lang.String"/>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POAD_AGE" class="java.math.BigDecimal"/>
+	<field name="OCCUPATION" class="java.lang.String"/>
+	<field name="CUST_ADDR1" class="java.lang.String"/>
+	<field name="CUST_ADDR2" class="java.lang.String"/>
+	<field name="CUST_ADDR3" class="java.lang.String"/>
+	<field name="CUST_REF_ID1" class="java.lang.String"/>
+	<field name="NATIONALITY" class="java.lang.String"/>
+	<field name="GENDER" class="java.lang.String"/>
+	<field name="CUST_PHONE" class="java.lang.String"/>
+	<field name="CUST_POST_BOX_NO" class="java.lang.String"/>
+	<field name="CUST_PIN_NUMBER" class="java.lang.String"/>
+	<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="111" splitType="Stretch">
+			<line>
+				<reportElement x="18" y="31" width="332" height="1" uuid="c3d3d67c-7c24-46f2-8a5e-4e54d51caf7f"/>
+			</line>
+			<staticText>
+				<reportElement x="17" y="11" width="390" height="20" uuid="5e0e09ec-333b-40fb-8c24-d3a7b45f5c1a"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Blood Pressure  Questionnaire (To be answered by the life assured)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="79" width="71" height="19" uuid="c2849859-bf12-4a80-bb9a-1c0c44814103">
+					<printWhenExpression><![CDATA[$F{POL_DS_TYPE}.equals("1")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Proposal No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="54" width="31" height="15" uuid="c86da9e5-79d2-4c3e-8b24-1e944e0b64c8"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Name: ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="48" y="68" width="194" height="1" uuid="7af6f1b2-4c0a-42d1-8720-0cfa88b9db3d"/>
+			</line>
+			<line>
+				<reportElement x="41" y="98" width="93" height="1" uuid="1ab3b6d0-ca1c-463d-a662-c964c1c0de3b"/>
+			</line>
+			<line>
+				<reportElement x="356" y="97" width="98" height="1" uuid="f0eae408-1889-434a-b81c-d172de7d1a6b"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="48" y="54" width="291" height="14" uuid="38816611-e3ab-402d-b3a5-d420bcec887f"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="40" y="79" width="100" height="19" uuid="99f012a1-150c-4a5c-8657-8532bf8d5cf1"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POAD_AGE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="354" y="79" width="159" height="18" uuid="fd1238d3-358e-47b3-9aff-f271d260be71"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="18" y="79" width="21" height="20" uuid="9e93b051-16b9-4b4c-aca7-82ea80555fc0"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Age:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="86" width="100" height="20" uuid="b6d557cc-edf4-42cb-9f22-622acef7bd6a">
+					<printWhenExpression><![CDATA[$F{POL_DS_TYPE}.equals("2")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Policy No:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="555" splitType="Stretch">
+			<rectangle>
+				<reportElement x="10" y="18" width="491" height="473" uuid="875973b8-023a-44a8-8293-75af931e281c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="21" y="22" width="465" height="52" uuid="15932c77-8708-4934-96b8-7c52a8fcc031"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   How long you have been suffering from hypertension?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="411" width="465" height="61" uuid="48aafe03-4742-4d1e-b771-e14eb3e7d7e8"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Any other information relevant to the life insurance proposal?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="74" width="465" height="51" uuid="c2135ff4-c045-4814-9f47-8a4b572c3c74"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Is there any other related diseases or symptoms?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="356" width="465" height="55" uuid="fc3fa239-2901-498c-bf8e-8409333235e0"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Give details of ECG / X ray examinations, if any?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="230" width="465" height="60" uuid="5cdcad43-6ace-46df-bf49-d8e310c47a12"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   What was the initial readings?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="290" width="465" height="66" uuid="d6ce2305-b812-4f19-ba60-30945df68b24"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   What was the most recent reading?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="125" width="465" height="52" uuid="20443ffe-cb6c-475e-9f02-bb276c15d941"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Give details and name of medicines being used.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="177" width="465" height="53" uuid="d12a9c4a-a40e-4f9f-b436-549482ce5bf0"/>
+				<box>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Is the medication and treatment regular?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="517" width="100" height="20" uuid="ac303be7-ab2e-437d-8662-49d1900bb933"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="259" y="517" width="110" height="20" uuid="683621b6-7973-4837-bb89-67a5124c3b0a"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Signature of Life Assured]]></text>
+			</staticText>
+			<line>
+				<reportElement x="369" y="537" width="117" height="1" uuid="9202e70d-7b23-4532-abd5-7dd3426a83d5"/>
+			</line>
+			<rectangle>
+				<reportElement mode="Transparent" x="10" y="491" width="491" height="57" uuid="4765b4b7-84d6-435e-9c80-ddb1a2b7ef1e"/>
+			</rectangle>
+			<textField>
+				<reportElement x="610" y="252" width="100" height="20" uuid="74d7600e-15e4-4a7b-9558-92dc6d0cfa7e"/>
+				<textFieldExpression><![CDATA[$F{CUST_NAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="40" y="517" width="100" height="20" uuid="17490249-0969-40cd-95be-39b1955e1094"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="723">
+			<staticText>
+				<reportElement x="36" y="158" width="467" height="46" uuid="52685000-b368-4471-80cc-38d87c4f347a"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[                       BLOOD PRESSURE QUESTIONNAIRE
+                    To be completed by the medical attendant]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="217" width="141" height="20" uuid="21a1a85e-4761-4f86-884c-605d7dfc1614"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Full name of life proposed]]></text>
+			</staticText>
+			<line>
+				<reportElement x="130" y="236" width="353" height="1" uuid="1ad7d8e4-6e4e-4043-be37-90628b0d0bcc"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="10" y="237" width="62" height="20" uuid="7f3a0c6f-e7a1-4380-ae9b-979efa9523d9"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Date of Birth]]></text>
+			</staticText>
+			<line>
+				<reportElement x="67" y="257" width="194" height="1" uuid="83ffac96-6e27-4d46-9e4e-08b4d0b31526"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="16" y="290" width="20" height="20" uuid="9ad39fd1-3e70-430a-9307-2d8e665e3047"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="290" width="416" height="20" uuid="40123f0d-5c1f-48fc-8665-9c994666238a"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[When was your patient first noted to be hypertensive?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="310" width="416" height="20" uuid="5ca16f48-f9ce-4859-bfe5-e3ca15a5e0dc"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[What was the blood pressure at that time?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="337" width="20" height="20" uuid="a6b9daf8-c532-4b9f-8016-093fe760081d"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="337" width="273" height="20" uuid="801e43e4-f6f0-4011-9555-086b51f73890"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Have investigations been made to determine the cause?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="337" width="25" height="20" uuid="c8bd2d01-0cda-479f-b54e-d82f60b5aff8"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="354" y="337" width="21" height="20" uuid="79ccf52d-3c99-474a-b4bf-b4f2576179ef"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="384" y="337" width="21" height="20" uuid="bfc063f7-2614-4518-b955-a463fb6105cc"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="420" y="337" width="21" height="20" uuid="a4e5a9b0-aa75-4e5b-86bc-67eaa7405f6e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="38" y="357" width="273" height="20" uuid="7c528f00-a60b-451d-9a46-56f9ffc6578b"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If yes, what were the results and final diagnosis?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="384" width="20" height="20" uuid="8661fb19-7086-4628-94b1-aa9cb45d4030"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="384" width="315" height="20" uuid="f82d6292-f0fe-4395-831a-e795cf79482b"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Has treatment with antihypertensive or other  drugs been given?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="404" width="100" height="20" uuid="5f3a88ac-878d-4437-9e01-51eff0664e45"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If yes,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="404" width="25" height="20" uuid="57059f71-e29e-4c48-ac80-b29c62a2bc39"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="354" y="404" width="21" height="18" uuid="4ead4107-a8e7-4f79-8b4c-e7763fe54c6f"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="384" y="402" width="21" height="20" uuid="66ad68ad-6a9b-4ad1-b718-cf45e3a89fad"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="424" width="23" height="20" uuid="028befbd-102e-463d-ac72-27f50839276f"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[a) ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="424" width="233" height="20" uuid="7c4e4f14-c3ce-41da-9062-76b133656a8e"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[When  did treatment commence?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="444" width="22" height="20" uuid="6e57e321-c029-4c31-9d48-c9d268bc733d"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[b)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="444" width="302" height="20" uuid="3ec50628-c7ea-4bee-b2e4-610a93640b84"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[What was the average BP immediately prior to treatment?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="464" width="22" height="20" uuid="5ac0a866-5fac-43a7-9282-60cbf354354b"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[c)	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="464" width="394" height="20" uuid="f562be41-8f63-4c17-86db-1b06c0534c1e"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Please give a sample of the subsequent and current BP levels including dates.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="484" width="22" height="20" uuid="9a2188fb-547f-45fb-b054-227e43fb64e4"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[d)	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="484" width="394" height="20" uuid="7690f42e-ccea-4923-8cee-5a1cba1affe9"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[What drugs are being taken?  (Please state dosage)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="504" width="394" height="20" uuid="dc59399c-8af2-4cac-87e7-d2227aec0bfe"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Does your patient adhere strictly to the prescribed treatment?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="504" width="22" height="20" uuid="635df3d2-ad72-40ec-abcf-f2db2ca5edac"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[e)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="524" width="24" height="20" uuid="26f4b0f3-05ce-4063-9154-4fb76904152d"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[f)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="524" width="394" height="20" uuid="962a0647-4861-49aa-9e45-a479dc91c827"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Is the condition considered to be satisfactorily  controlled?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="59" y="544" width="396" height="20" uuid="3ab23be6-197e-416f-b814-0eb6e29a1225"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If treatment has been discontinued, please give date of cessation.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="572" width="20" height="20" uuid="0a17ce98-e80a-4833-b74d-67c4e816a94f"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[4.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="572" width="260" height="20" uuid="fcddf713-a7bd-4775-b48e-715734ccd80a"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Have any complications of hypertension ever been noted?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="315" y="572" width="25" height="20" uuid="20983de3-f500-4deb-b7d8-a768b5583449"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="353" y="572" width="21" height="20" uuid="6194eb44-97ff-4b4d-ae2e-b839692276c7"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="384" y="572" width="21" height="20" uuid="ca70f693-13e8-4b05-9a5b-7c9a40bb1df5"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="420" y="572" width="21" height="20" uuid="0bb0fc75-778f-4003-953c-a7ba0f823f1e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="38" y="592" width="406" height="20" uuid="1596fa5d-a0db-431b-9a5f-cc63dd75331c"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If yes, please give details including the dates and duration of any time off work.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="38" y="619" width="406" height="31" uuid="d51db22a-2970-4326-a030-73b82fbe576a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Please give the dates and results of any chest X-ray, ECG or other tests that have been performed since treatment was started.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="33" y="663" width="82" height="20" uuid="6aee5f0b-8292-4bda-a7fe-57888f858ae8"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Sign of the Doctor]]></text>
+			</staticText>
+			<line>
+				<reportElement x="115" y="682" width="215" height="1" uuid="704607ce-bc6a-42ca-8ee2-ce3aac6d2f0e"/>
+				<graphicElement>
+					<pen lineStyle="Dotted"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="353" y="664" width="100" height="20" uuid="44a550c4-5fe6-47ca-8645-c03506c8f3ad"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement x="420" y="404" width="21" height="18" uuid="560a636a-079e-40b5-81b1-f9d5302dc4f0"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="16" y="619" width="20" height="14" uuid="5a2710e1-a1c9-4c91-b672-1eb4cad776aa"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Times New Roman"/>
+				</textElement>
+				<text><![CDATA[5.]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="0" y="217" width="501" height="480" uuid="4e5446f7-39a3-49b1-93a7-2fba1ca32e62"/>
+			</rectangle>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="66" y="236" width="128" height="22" uuid="089174e3-fa67-4468-925b-d24cf0f0dfa5"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_DOB}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="127" y="218" width="100" height="19" uuid="82097bef-ab7f-4dae-b8ed-01762caee98d"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_NAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="378" y="667" width="100" height="17" uuid="95e91526-2148-48fb-bf0b-812ca515b942"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

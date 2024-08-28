@@ -1,0 +1,723 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.onload}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM106" var="message_PILM106" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<script> 
+			function findCursorPosition()
+			{
+				//alert("hi");
+			     var ctl = document.getElementById('PILM106_EMAIL:msgbody');
+			    var startPos = ctl.selectionStart;
+			    var endPos = ctl.selectionEnd;
+			   // alert(startPos+","+endPos);
+			    var formulaValue = (document.getElementById("PILM106_EMAIL:msgbody").value);
+				   if(formulaValue.length > 0)
+					   {
+			var FirstsplitValue = formulaValue.substring(0,startPos);
+			var SecondsplitValue = formulaValue.substring((startPos),formulaValue.length);
+		//	alert("["+FirstsplitValue+"]");
+			//alert("["+SecondsplitValue+"]");
+			document.getElementById("PILM106_EMAIL:FRM_HIDE").value = (FirstsplitValue)
+			document.getElementById("PILM106_EMAIL:FRM_HIDE_TO").value=(SecondsplitValue)
+			
+					   }
+			}
+				   function joinValues()
+				   {
+					   //alert("inside join");
+					   var ctl;
+					   var sym=" ~";
+					   ctl = document.getElementById('PILM106_EMAIL:SELECT_TYPE');
+						document.getElementById("PILM106_EMAIL:msgbody").value =document.getElementById("PILM106_EMAIL:FRM_HIDE").value+sym + ctl.value + document.getElementById("PILM106_EMAIL:FRM_HIDE_TO").value ;
+						document.getElementById("PILM106_EMAIL:FRM_HIDE").value=document.getElementById("PILM106_EMAIL:FRM_HIDE").value+ctl.value;
+
+					   }
+
+				 
+			  </script>
+			<h:form id="PILM106_EMAIL" >
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" width="100%">
+							<table class="noborder" width="100%" cellpadding="0"
+								cellspacing="0">
+								<tr>
+									<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+											<rich:toolBarGroup styleClass="toolBarGroupStyle">
+												<h:commandLink
+													action="#{PM021_A_PP_SYSTEM_ACTION.backToSearch}"
+													id="AUTOID_81" immediate="true" rendered="true"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="AUTOID_GI" styleClass="searchimg"
+														value="./../../resources/images/back.png" />
+													<h:outputText styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$back}" />
+												</h:commandLink>
+
+												<h:commandLink
+													action="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.saveAction}"
+													id="AUTOID_3" style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="AUTOID_12_5"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/save.gif" />
+													<h:outputText id="AUTOID_4"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+
+												<a4j:commandLink style="text-decoration:none"
+													action="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.delAction}"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="AUTOID_6"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/deleteRecord.gif" />
+													<h:outputText id="AUTOID_7"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$deleteRecord}" />
+													<rich:componentControl attachTo="AUTOID_7" event="onclick"
+														for="DELETE_PANEL" id="DELETE_COMP_CONTROL"
+														operation="show" />
+												</a4j:commandLink>
+
+												<rich:modalPanel height="110" id="DELETE_PANEL" width="300">
+													<f:facet name="header">
+														<h:panelGroup>
+															<h:outputText id="AUTOID_R_1"
+																style="color: #FFFFFF; font-size: 14px;font-weight: bold;"
+																value="#{commonmsg.premia$broker$delete$confirmation$caption}" />
+														</h:panelGroup>
+													</f:facet>
+													<f:facet name="controls">
+														<h:panelGroup>
+															<h:graphicImage id="DELETE_PANEL_hidelink"
+																style="cursor:pointer" styleClass="searchimg"
+																value="./../../resources/images/close.png" />
+															<rich:componentControl attachTo="DELETE_PANEL_hidelink"
+																event="onclick" for="DELETE_PANEL" operation="hide" />
+														</h:panelGroup>
+													</f:facet>
+													<table align="center" class="noborder">
+														<tr align="center">
+															<td><h:outputText id="AUTOID_R_2"
+																	value="#{commonmsg.premia$broker$delete$confirmation$message}" />
+															</td>
+														</tr>
+														<tr align="center">
+															<td><h:commandButton
+																	action="#{PILM075_APAC_PM_IL_END_APPR_SETUP_ACTION.deleteRow}"
+																	id="DELETE_PANEL_continuebutton"
+																	style="width:65px;height:20px;" styleClass="button"
+																	value="#{commonmsg.premia$broker$delete$confirmation$ok}">
+																	<rich:componentControl
+																		attachTo="DELETE_PANEL_continuebutton" event="onclick"
+																		for="DELETE_PANEL" operation="hide" />
+																</h:commandButton> <rich:spacer height="25" id="AUTOID_R-3" width="10" />
+																<a4j:commandButton id="DELETE_PANEL_cancelbutton"
+																	immediate="true" style="width:65px;height:20px;"
+																	styleClass="button"
+																	value="#{commonmsg.premia$broker$delete$confirmation$cancel}">
+																	<rich:componentControl
+																		attachTo="DELETE_PANEL_cancelbutton" event="onclick"
+																		for="DELETE_PANEL" operation="hide" />
+																</a4j:commandButton> <br /></td>
+														</tr>
+													</table>
+												</rich:modalPanel>
+
+											</rich:toolBarGroup>
+										</rich:toolBar></td>
+								</tr>
+
+							</table>
+						</td>
+					</tr>
+				</table>
+				<tr>
+					<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.errorMap['current'] !=null? PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.errorMap['current']: PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+				</tr>
+
+
+				<!-- <table align="center" class="noborder" id="bordertable" width="100%"> -->
+
+
+
+				<table align="left" class="noborder" id="bordertable" width="100%">
+				
+				<!-- Added by janani on 23.02.2018 for SMS as discussed with Girirsh-->
+				<tr>
+				
+				<td class="evenrowright" width="20% "><h:outputLabel
+								rendered="true" id="PMT_TYPE_LABEL" for="PMT_TYPE"
+								styleClass="label"
+								value="#{message_PILM106.PILM106$PILM106_EMAIL$PMT_TYPE$caption}" />
+							<h:graphicImage value="./../../images/mandatory.jpg" /></td>
+				<td class="evenrow" width="25%">
+				<h:selectOneMenu
+								id="PMT_TYPE"
+								binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_NOTF_TYPE}"
+								disabled="false" rendered="true" required="true"
+								styleClass="input"
+								value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PMT_TYPE}">
+								<f:selectItems id="Notification_Type"
+									value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.notf_type_list}" />
+ 
+								<a4j:support id="AE_3"
+									actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.notfTypeListener}"
+									event="onblur" immediate="true"
+									reRender="datatable,PMT_PROD_CODE,POL_PROD_CODE_LOV,PMT_MAIL_TYPE,PMT_KEY_MAIL_TO_LABEL,PMT_KEY_MAIL_CC_LABEL,PMT_KEY_MAIL_CC,errorPanel,PMT_MAIL_SUB_required,PMT_MAIL_SUB" />
+							</h:selectOneMenu>
+				</td>
+				
+				</tr>
+				<!-- End -->
+				
+					<tr>
+
+						<td class="oddrowright" width="20% "><h:outputLabel
+								rendered="true" id="PMT_MAIL_TYPE_LABEL" for="PMT_MAIL_TYPE"
+								styleClass="label"
+								value="#{message_PILM106.PILM106$PILM106_EMAIL$PMT_MAIL_TYPE$caption}" />
+							<h:graphicImage value="./../../images/mandatory.jpg" /></td>
+
+						<td class="oddrow" width="25%"><h:selectOneMenu
+								id="PMT_MAIL_TYPE"
+								binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_EMAIL_PRODUCT}"
+								disabled="false" rendered="true" required="true"
+								styleClass="input"
+								onfocus="currFocus('PM_LIFE_WAKALAH_SETUP:WAKS_CHARGE_MODE')"
+								value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PMT_MAIL_TYPE}">
+								<f:selectItems id="Product_Type"
+									value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.select_Menu_list}" />
+
+								<a4j:support id="AE_3_1"
+									actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.productAction}"
+									event="onblur" immediate="true"
+									reRender="datatable,PMT_PROD_CODE,POL_PROD_CODE_LOV,errorPanel" />
+							</h:selectOneMenu></td>
+
+
+
+						<td class="oddrow" />
+						<td class="oddrow" />
+						<td class="oddrow" />
+						<td class="oddrow" />
+						<td class="oddrow" />
+						<td class="oddrow" />
+						<td class="oddrow"></td>
+						<td class="oddrow"></td>
+						<td class="oddrow"></td>
+						<td class="oddrowright"><h:outputLabel width="20% "
+								value="FREEZE?" id="COMP_FRZ_FLAG_LABEL" rendered="false"
+								styleClass="label" /></td>
+						<td class="oddrow" width="25%"><h:selectBooleanCheckbox
+								id="COMP_FREEZE_CHK" disabled="false" rendered="false"
+								styleClass="checkstyleclass"
+								binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_FRZ_YN}"
+								value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.FRZ_FLAG}">
+								<a4j:support
+									actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.fireFieldValidation}"
+									event="onload" id="SUPPORT_FRZ_FLAG" immediate="true"
+									reRender="COMP_FREEZE_CHK" />
+							</h:selectBooleanCheckbox></td>
+					</tr>
+
+
+
+					<tr>
+						<!-- Commented by janani on 23.02.2018 for SMS as discussed with Girirsh
+						
+						 <td class="evenrowright" width="20px"><h:outputLabel
+								rendered="true" id="PMT_MAIL_FM_LABEL" for="PMT_MAIL_FM"
+								value="#{message_PILM106.PILM106$PILM106_EMAIL$PMT_MAIL_FM$caption}"
+								styleClass="label" /> <h:graphicImage
+								value="./../../images/mandatory.jpg" /></td>
+
+						<td class="evenrow" width="25px"><h:inputText
+								id="PMT_MAIL_FM"
+								binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_EMAIL_FROM}"
+								disabled="false" maxlength="60" rendered="true" required="true"
+								styleClass="input" style="width:380px;"
+								validator="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.validatorFromID}"
+								value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PMT_MAIL_FM}">
+								<a4j:support
+									actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.fireFieldValidation}"
+									event="onblur" id="ON_BLUR_DUDH_EFF_FM_DT"
+									immediate="true" reRender="errorPanel" />
+							</h:inputText></td>
+						<td class="evenrow"></td>
+						<td class="evenrow"></td>
+						<td class="evenrow"></td> 
+						
+						
+						End	-->
+						
+						
+						<td class="evenrow" width="20px"><h:outputLabel
+								rendered="true" styleClass="label" id="PMT_PROD_CODE_LABEL"
+								for="PMT_PROD_CODE"
+								value="#{message_PILM106.PILM106$PILM106_EMAIL$PMT_PROD_CODE$caption}" />
+							<h:graphicImage id="AUTOID_35" style="" styleClass="searchimg"
+								value="./../../images/mandatory.gif" /></td>
+
+						<td class="evenrow" width="25px">
+						
+						
+						<!-- Added by Janani on 20.06.2017 for ZBILQC-1721257 -->
+						
+						<!-- 					
+						
+						 <h:inputText
+								binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_PROD_CODE}"
+								id="PMT_PROD_CODE" maxlength="12" rendered="true" disabled="false"
+								required="true" styleClass="inputsmall"
+								validator="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.validatorProductcode}"
+								value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PMT_PROD_CODE}">
+								<a4j:support
+									actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.fireFieldValidation}"
+									event="onblur" id="POL_PROD_CODE_AJAX_SUPPORT" immediate="true"
+									reRender="errorPanel" />
+							</h:inputText> End <rich:suggestionbox for="PMT_PROD_CODE"
+								height="200" id="POL_PROD_CODE_LOV"
+								suggestionAction="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.lovPOL_PROD_CODE}"
+								var="panelCode" width="250">
+								<h:column id="COLUMN_SUGG_1">
+									<h:outputText id="AUTOID_36" value="#{panelCode.code}" />
+								</h:column>
+								<h:column id="COLUMN_SUGG_2">
+									<h:outputText id="AUTOID_37" value="#{panelCode.name}" />
+								</h:column>
+								<a4j:support ajaxSingle="true" event="onselect" immediate="true"
+									id="POL_PROD_CODE_SUGG_SUPPORT"
+									reRender="errorPanel,UI_M_PROD_DESC">
+									<f:setPropertyActionListener id="AUTOID_38"
+										target="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.UI_M_PROD_DESC}"
+										value="#{panelCode.name}" />
+								</a4j:support>
+							</rich:suggestionbox> -->
+							
+							<!-- <h:inputText
+														binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_PROD_CODE}"
+														 id="COMP_PROD_CODE" maxlength="12"
+														rendered="true" required="false" styleClass="inputsmall"
+														validator="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.validatorProductcode}"
+														value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PMT_PROD_CODE}">
+														<a4j:support
+														actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.fireFieldValidation}"
+														event="onblur" id="POL_PROD_CODE_AJAX_SUPPORT" immediate="true"
+														reRender="errorPanel" />													
+
+													</h:inputText> 
+													
+												<h:inputText
+												binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_PROD_CODE_DESC}"
+												disabled="true" id="PROD_CODE_DESC"
+												maxlength="240" rendered="true" required="false"
+												styleClass="input"
+												value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PROD_CODE_DESC}" />
+														<rich:suggestionbox for="COMP_PROD_CODE" height="200"
+														id="UI_M_BCD_CLASS_CODE_FM_DESC_LOV"
+														suggestionAction="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.lovPOL_PROD_CODE}"
+														var="panelCode" width="250">
+														<h:column id="COLUMN_SUGG_1">
+															<h:outputText id="AUTOID_32" 
+															value="#{panelCode.code}" />
+														</h:column>
+														<h:column id="COLUMN_SUGG_2">
+															<h:outputText id="AUTOID_33" 
+															value="#{panelCode.name}" />
+														</h:column>
+														<a4j:support ajaxSingle="true" event="onselect"
+														
+															id="COMP_PROD_CODE_DESC_SUGG_SUPPORT" immediate="true"
+															reRender="errorPanel,PROD_CODE_DESC">
+															<f:setPropertyActionListener id="AUTOID_3422"
+																target="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PROD_CODE_DESC}"
+																value="#{panelCode.name}" />
+														</a4j:support>
+													</rich:suggestionbox>  -->
+													
+													
+													<h:inputText
+														binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_PROD_CODE}"
+														 id="COMP_PROD_CODE" maxlength="12"
+														rendered="true" required="false" styleClass="inputsmall"
+														validator="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.validatorProductcode}"
+														value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PMT_PROD_CODE}">
+														<a4j:support
+														actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.fireFieldValidation}"
+														event="onblur" id="POL_PROD_CODE_AJAX_SUPPORT" immediate="true"
+														reRender="errorPanel,PROD_CODE_DESC" />													
+
+													</h:inputText> 
+													
+												<h:inputText
+												binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_PROD_CODE_DESC}"
+												disabled="true" id="PROD_CODE_DESC"
+												maxlength="240" rendered="true" required="false"
+												styleClass="input"
+												value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PROD_CODE_DESC}" />
+														<rich:suggestionbox for="COMP_PROD_CODE" height="200"
+														id="UI_M_BCD_CLASS_CODE_FM_DESC_LOV"
+														suggestionAction="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.lovPOL_PROD_CODE}"
+														var="panelCode" width="250">
+														<h:column id="COLUMN_SUGG_1">
+															<h:outputText id="AUTOID_32" 
+															value="#{panelCode.code}" />
+														</h:column>
+														<h:column id="COLUMN_SUGG_2">
+															<h:outputText id="AUTOID_33" 
+															value="#{panelCode.name}" />
+														</h:column>
+														<a4j:support ajaxSingle="true" event="onselect"
+														action="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.setPROD_CODE_DESC_VALUE}"
+															id="COMP_PROD_CODE_DESC_SUGG_SUPPORT" immediate="true"
+															reRender="errorPanel,PROD_CODE_DESC">
+															<f:setPropertyActionListener id="AUTOID_3422"
+																target="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PROD_CODE_DESC}"
+																value="#{panelCode.name}" />
+														</a4j:support>
+													</rich:suggestionbox> 
+							
+							<!-- End -->
+							
+							<h:graphicImage id="IMAGE_SLOV1" styleClass="searchimg"
+								value="./../../resources/images/Lov.gif" /></td>
+						<td class="evenrow">&nbsp;</td>
+					</tr>
+					<tr>
+						<td class="oddrowright" width="20px"><h:outputLabel
+								rendered="true" styleClass="label" id="PMT_MAIL_SUB_LABEL"
+								for="PMT_MAIL_SUB"
+								value="#{message_PILM106.PILM106$PILM106_EMAIL$PMT_MAIL_SUB$caption}" />
+							<!-- <h:graphicImage value="./../../images/mandatory.jpg" /> -->
+							<h:outputText id="PMT_MAIL_SUB_required"
+											styleClass="mandatory"
+											value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_EMAIL_SUBJECT.required?'*':'' }" />
+							
+							</td>
+							<!--Added disabled based on the email or sms by ganesh on 04-05-2018 -->
+						<td class="oddrow" width="25px"><h:inputText
+								id="PMT_MAIL_SUB" disabled="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PMT_TYPE=='S'?true:false}"
+								binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_EMAIL_SUBJECT}"
+								maxlength="60" rendered="true" required="true"
+								styleClass="input" style="width:380px;"
+								validator="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.validatorSubject}"
+								value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PMT_MAIL_SUB}">
+								<a4j:support id="AE_5"
+									actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.fireFieldValidation}"
+									event="onblur" immediate="true" reRender="errorpanel" />
+							</h:inputText></td>
+						<td class="oddrow"></td>
+						<td class="oddrow"></td>
+						<td class="oddrow"></td>
+						<td class="oddrow" width="20%"><h:outputLabel
+								value="Attachement" id="COMP_ATTACHMENT_FLAG_LABEL"
+								rendered="false" styleClass="label" /></td>
+						<td class="oddrow" width="25px"><h:selectBooleanCheckbox
+								id="COMP_ATTACHMENT_CHK" disabled="false" rendered="false"
+								styleClass="checkstyleclass"
+								binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_ATTACHMENT_YN}"
+								value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.ATTACHMENT_FLAG}">
+								<a4j:support
+									actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.fireFieldValidation}"
+									event="onload" id="SUPPORT_ATTACHMENT_FLAG" immediate="true"
+									reRender="COMP_ATTACHMENT_CHK" />
+
+							</h:selectBooleanCheckbox></td>
+
+						<td class="oddrow">&nbsp;</td>
+						<td class="oddrow">&nbsp;</td>
+						<td class="oddrow">&nbsp;</td>
+						<td class="oddrow">&nbsp;</td>
+						<td class="oddrow">&nbsp;</td>
+						<td class="oddrow">&nbsp;</td>
+
+					</tr>
+
+					<tr>
+
+						<td class="evenrowright" width="20%"><h:outputLabel
+								for="PMT_EFF_FM_DT" id="PMT_EFF_FM_DT_LABEL" 
+								styleClass="label"
+								value="#{message_PILM106.PILM106$PILM106_EMAIL$PMT_EFF_FM_DT$caption}" />
+							<h:graphicImage value="./../../images/mandatory.jpg" rendered="false" /></td>
+
+						<td class="evenrow" width="25%">
+							<rich:calendar
+											binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_MAIL_EFF_FM__DT}"
+											datePattern="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true" id="PMT_EFF_FM_DT"
+											inputClass="calendarinput" inputSize="11" style="height:23px;width:76px;"											
+											oninputfocus="currFocus('PILM106_EMAIL:PMT_EFF_FM_DTInputDate')"
+											 required="true"
+											validator="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.validatorEffectivDateFrom}"
+											value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PMT_EFF_FM_DT}">
+											<a4j:support
+												actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.fireFieldValidation}"
+												event="oninputblur" id="ON_BLUR_MAIL_FM"
+												immediate="true"
+												oncomplete="setFocus('PILM106_EMAIL:PMT_EFF_TO_DT','PILM106_EMAIL:PMT_EFF_FM_DTInputDate')"
+												onsubmit="formatDate('PILM106_EMAIL:PMT_EFF_FM_DT')"
+												reRender="errorPanel" />
+											<a4j:support
+												actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="ON_BLUR_MAIL_FM1"
+												onsubmit="formatDate('PILM106_EMAIL:PMT_EFF_FM_DT')"
+												immediate="true" reRender="errorPanel" />
+
+										</rich:calendar></td>
+							
+							
+							
+							
+							
+							
+						<td class="evenrow"></td>
+						<td class="evenrow"></td>
+						<td class="evenrow"></td>
+						<td class="evenrow" width="20px"><h:outputLabel
+								for="PMT_EFF_TO_DT" id="PMT_EFF_TO_DT_LABEL" 
+								styleClass="label"
+								value="#{message_PILM106.PILM106$PILM106_EMAIL$PMT_EFF_TO_DT$caption}" />
+							<h:graphicImage value="./../../images/mandatory.jpg" rendered="false" /></td>
+						<td class="evenrow" width="25%">							
+							<!-- LALDLD -->
+							<rich:calendar
+											binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_MAIL_EFF_TO__DT}"
+											datePattern="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true" id="PMT_EFF_TO_DT"
+											inputClass="calendarinput" inputSize="11" style="height:23px;width:76px;"											
+											oninputfocus="currFocus('PILM106_EMAIL:PMT_EFF_TO_DTInputDate')"
+											 required="true"
+											validator="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.validatorEffectivDateTo}"
+											value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PMT_EFF_TO_DT}">
+											<a4j:support
+												actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.fireFieldValidation}"
+												event="oninputblur" id="ON_BLUR_DUDH_EFF_TO_DT"
+												immediate="true"
+												oncomplete="setFocus('PILM106_EMAIL:msgbody','PILM106_EMAIL:PMT_EFF_TO_DTInputDate')"
+												onsubmit="formatDate('PILM106_EMAIL:PMT_EFF_TO_DT')"
+												reRender="errorPanel" />
+											<a4j:support
+												actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="ON_BLUR_DUDH_EFF_TO_DT1"
+												onsubmit="formatDate('PILM106_EMAIL:PMT_EFF_TO_DT')"
+												immediate="true" reRender="errorPanel" />
+
+										</rich:calendar>
+							
+							</td>
+						<td class="evenrowright">&nbsp;</td>
+						<td class="evenrowright">&nbsp;</td>
+						<td class="evenrowright">&nbsp;</td>
+						<td class="oddrow">&nbsp;</td>
+
+					</tr>
+					
+					<!-- Added by Ganesh on 28.06.2017 for ZBILQC-1725181 -->
+					
+			<tr>
+
+						<td class="evenrowright" width="20%">
+						
+						<!-- Value binding is defined by janani on 23.02.2018 for SMS as discussed with Girirsh
+						value="#{message_PILM106.PILM106$PILM106_EMAIL$PMT_KEY_MAIL_TO$caption}"  -->
+						<h:outputLabel
+								for="PMT_KEY_MAIL_TO" id="PMT_KEY_MAIL_TO_LABEL" 
+								styleClass="label"
+								binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.MAIL_SMS_TO_LABEL}"
+								value="#{message_PILM106.PILM106$PILM106_EMAIL$PMT_KEY_MAIL_TO$caption}"/>
+								
+								<!-- End -->
+							<h:graphicImage value="./../../images/mandatory.jpg" rendered="true" /></td>
+
+						<td class="evenrow" width="25%">
+							<h:selectManyListbox
+											disabled="false" id="PMT_KEY_MAIL_TO" rendered="true"
+											required="true" styleClass="input" size="5"											
+											title="#{message_PILM106.PILM106$PILM106_EMAIL$PMT_KEY_MAIL_TO$tooltip}"											
+											value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.UI_KEY_MAIL_TO}">
+											<f:selectItems id="SEL_ITEMS_PMT_KEY_MAIL_TO"
+												value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.listUserType}" />
+											</h:selectManyListbox></td>
+						<td class="evenrow"></td>
+						<td class="evenrow"></td>
+						<td class="evenrow"></td>
+						<td class="evenrow" width="20px">
+						
+						<!-- binding is defined by janani on 23.02.2018 for SMS as discussed with Girirsh -->
+						<h:outputLabel
+								for="PMT_KEY_MAIL_CC" id="PMT_KEY_MAIL_CC_LABEL" 
+								styleClass="label"
+								rendered="true"
+								binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_MAIL_CC_LABEL}"
+								value="#{message_PILM106.PILM106$PILM106_EMAIL$PMT_KEY_MAIL_CC$caption}" />
+							<h:graphicImage value="./../../images/mandatory.jpg" rendered="false" /></td>
+						<td class="evenrow" width="25%">							
+							<!--Added disabled based on the email or sms by ganesh on 04-05-2018 -->
+							<h:selectManyListbox											
+											id="PMT_KEY_MAIL_CC" rendered="true" disabled="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PMT_TYPE=='S'?true:false}"
+											required="false" styleClass="input" size="5"											
+											title="#{message_PILM106.PILM106$PILM106_EMAIL$PMT_KEY_MAIL_CC$tooltip}"		
+											binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_MAIL_CC}"									
+											value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.UI_KEY_MAIL_CC}">
+											<f:selectItems id="SEL_ITEMS_PMT_KEY_MAIL_CC"
+												value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.listUserType}" />
+											</h:selectManyListbox>
+											
+											<!-- End -->
+							</td> 
+						<td class="evenrowright">&nbsp;</td>
+						<td class="evenrowright">&nbsp;</td>
+						<td class="evenrowright">&nbsp;</td>
+						<td class="oddrow">&nbsp;</td>
+
+					</tr>		
+					
+					
+<!-- ENd -->
+				</table>
+				<tr></tr>
+				<tr></tr>
+				<table>
+					<tr>
+						<td class="oddrow"><!-- <rich:panel
+								style="width:100%;overflow:auto">
+
+
+								<rich:dataTable
+									binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.dataTable}"
+									id="datatable" rows="10" 
+									value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.flist_list}"
+									var="mailbody" width="100%">
+									<rich:column filterBy="#{mailbody.EMAIL_LABEL}"
+										filterEvent="onkeyup" id="EMAIL_KEY" rendered="true"
+										sortBy="#{mailbody.EMAIL_LABEL}"
+										styleClass="#{mailbody.rowSelected}">
+										<f:facet name="header">
+
+											<h:outputText id="COLUMN_CAPTION_PMED_EXAM_CODE"
+												styleClass="forumRowHighlight" value="Actions" />
+										</f:facet>
+										<a4j:commandLink
+											action="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.setenable}"
+											id="LINK_Body" immediate="true"
+											reRender="errorPanel,datatable">
+											<h:outputText id="LINK_CAPTION_PMED_EXAM_CODE"
+												value="#{mailbody.EMAIL_LABEL}" />
+										</a4j:commandLink>
+									</rich:column>
+
+
+								</rich:dataTable>
+
+
+							</rich:panel></td> -->
+						
+								<h:selectOneListbox id="SELECT_TYPE" size="5" 
+									value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.listvalue}">
+												  <f:selectItems id="FRM_6"
+												  	value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.listSelectkey}"></f:selectItems>
+											<a4j:support
+											actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.fireFieldValidation}"
+											event="onchange"
+											id="LINK_Body1" immediate="true"
+											reRender="errorPanel"></a4j:support>
+										</h:selectOneListbox> 
+										</td>
+										
+<!-- action="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.addAction}" -->
+						<td class="oddrow">&nbsp;</td>
+						<td class="oddrow"><h:commandLink
+								
+								id="ADD" style="text-decoration:none"  onclick="joinValues()"
+								reRender="msgbody,datatable,LINK_CAPTION_PBEN_SR_NO"
+								styleClass="toolbarCommandLinkStyle">
+								<h:graphicImage id="AUTOID_12_5_1"
+									style="border: thin solid white; width : 30px;"
+									styleClass="searchimg"
+									value="./../../resources/images/pilm160add.png" />
+							</h:commandLink></td>
+						<td class="oddrow">&nbsp;</td>
+						<td class="oddrow"><h:inputText value="MESSAGE BODY" id="pass2"
+								styleClass="input"
+								style=" border:2px outset white; height : 31px; width:580px;font-weight:bold;"
+								disabled="true" required="false">
+							</h:inputText>
+
+
+							<table id="Bil" align="left" width="100%" class="noborder"
+								cellpadding="0" cellspacing="0" border="0">
+
+								<tr>
+									<td class="oddrow" width="25%" style="width: 678px;"><h:inputTextarea
+											id="msgbody"
+											reRender="msgbody,datatable,LINK_CAPTION_PBEN_SR_NO" onclick="findCursorPosition()" onkeyup="findCursorPosition()"
+											binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_EMAIL_BODY}"
+											cols="80" rows="10"
+											value="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.emailBean.PMT_MAIL_TEXT}">
+											<a4j:support
+												actionListener="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.addcontent}"
+												event="onblur" id="PBEN_CATG_CODE_a4jSupport_CPY"
+												immediate="true"
+												reRender="errorPanel,msgbody,LINK_CAPTION_PBEN_SR_NO,FRM_HIDE">
+											</a4j:support>
+										</h:inputTextarea>
+										</td>
+										<h:inputTextarea 
+											binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_FRM_HIDE}"
+									disabled="false" id="FRM_HIDE"  rendered="true"  style="display:none;"
+								 	styleClass="input" onkeyup="findCursorPosition()"
+									value="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_ACTION.PM_IL_FORMULA_BEAN.FRM_HIDE}">
+								</h:inputTextarea>
+									<h:inputTextarea
+										binding="#{PILM106_EMAIL_COMPOSITE_ACTION.EMAIL_ACTION_BEAN.COMP_FRM_HIDE_TO}"
+									disabled="false" id="FRM_HIDE_TO" rendered="true" style="display:none;"
+								 	styleClass="input" onclick="findCursorPosition()" onkeyup="findCursorPosition()"
+									value="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_ACTION.PM_IL_FORMULA_BEAN.FRM_HIDE_TO}">
+								</h:inputTextarea>
+									<td class="oddrow" width="4%">&nbsp;</td>
+									<td class="oddrow" width="20%">&nbsp;</td>
+									<td class="oddrow" width="20%">&nbsp;</td>
+									<td class="oddrow" width="28%">&nbsp;</td>
+
+
+								</tr>
+
+							</table></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

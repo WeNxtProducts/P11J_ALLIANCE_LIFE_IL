@@ -1,0 +1,361 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM043" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_RI_POOL_SETUP" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM043_SEARCH_ACTION.backToSearch}"
+											id="AUTOID_1" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="serial_4" 
+											styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="serial_5"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>		
+										<h:commandLink
+											action="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.saveRecord}"
+											id="AUTOID_2" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_3"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTOID_4"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.DELETE}"
+											id="AUTOID_8" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_9"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="r"
+												image="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_10"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.errorMap['current'] !=null? PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.errorMap['current']:PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="globalLink" width="100%">
+							<tr>
+								<td><!-- Tab implementation --> <h:inputHidden
+									id="myhidden"
+									value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.tabbedBar.tabClicked}" />
+								<h:panelGroup id="mypanel" style="border:0">
+									<table class="noborder" width="90%">
+										<tr>
+											<td width="90%"><a4j:repeat
+												value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+
+												<h:commandLink
+													action="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.tabbedBar.tabAction}"
+													disabled="#{currtab.disabled}" id="AUTOID_23"
+													onclick="document.getElementById('PM_IL_RI_POOL_SETUP:myhidden').value='#{currtab.id}'"
+													styleClass="#{currtab.styleString}"
+													value="#{currtab.value}" />
+
+											</a4j:repeat></td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%">
+
+						<table class="noborder" width="100%">
+							<tr>
+								<td valign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_CODE_LABEL}"
+											for="RPS_CODE" id="RPS_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_CODE$caption}" />
+										<h:graphicImage id="AUTOID_24" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_CODE}"
+											disabled="false" id="RPS_CODE" maxlength="12" rendered="true"
+											required="true" styleClass="input"
+											title="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_CODE$prompt}"
+											validator="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.validateRPS_CODE}"
+											value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.PM_IL_RI_POOL_SETUP_BEAN.RPS_CODE}">
+											<a4j:support
+												actionListener="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.setErrorMessagesInMap}"
+												event="onblur" id="AUTOID_25" immediate="true"
+												reRender="err, errorMessages">
+											</a4j:support>
+										</h:inputText></td>
+										<td class="oddrowright" width="4%"></td>
+										<td class="oddrowright" width="20%">
+										<h:outputLabel
+											binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_DESC_LABEL}"
+											for="RPS_DESC" id="RPS_DESC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_DESC$caption}" />
+										<h:graphicImage id="AUTOID_26" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>	
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_DESC}"
+											disabled="false" id="RPS_DESC" maxlength="28" rendered="true"
+											required="true" styleClass="input"
+											title="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_DESC$prompt}"
+											validator="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.validateRPS_DESC}"
+											value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.PM_IL_RI_POOL_SETUP_BEAN.RPS_DESC}">
+											<a4j:support
+												actionListener="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.setErrorMessagesInMap}"
+												event="onblur" id="AUTOID_27" immediate="true"
+												oncomplete="setFocus('PM_IL_RI_POOL_SETUP:RPS_SHORT_DESC','PM_IL_RI_POOL_SETUP:RPS_DESC')"
+												reRender="errorPanel,RPS_SHORT_DESC" >
+											</a4j:support>
+										</h:inputText>
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_SHORT_DESC_LABEL}"
+											for="RPS_SHORT_DESC" id="RPS_SHORT_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_SHORT_DESC$caption}" />
+										</td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_SHORT_DESC}"
+											rendered="true" required="false" styleClass="input"
+											maxlength="30" id="RPS_SHORT_DESC"
+											onfocus="currFocus('PM_IL_RI_POOL_SETUP:RPS_SHORT_DESC')" 
+											title="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_SHORT_DESC$tooltip}"
+											value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.PM_IL_RI_POOL_SETUP_BEAN.RPS_SHORT_DESC}">
+										</h:inputText></td>
+										<td class="evenrow" width="4%">&nbsp;</td>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_LONG_DESC_LABEL}"
+											for="RPS_LONG_DESC" id="RPS_LONG_DESC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_LONG_DESC$caption}" />
+										</td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_LONG_DESC}"
+											disabled="false" id="RPS_LONG_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_LONG_DESC$prompt}"
+											value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.PM_IL_RI_POOL_SETUP_BEAN.RPS_LONG_DESC}" />
+										</td>	
+									</tr>
+									<tr>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_EFF_FM_DT_LABEL}"
+											for="RPS_EFF_FM_DT" id="RPS_EFF_FM_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_EFF_FM_DT$caption}" />
+										</td>
+										<td class="oddrow" width="28%"><rich:calendar
+											binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_EFF_FM_DT}"
+											datePattern="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.datePattern}"
+											disabled="false" enableManualInput="true" id="RPS_EFF_FM_DT"
+											inputSize="11" rendered="true" required="false"
+											inputClass="calendarinput"
+											validator="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.validateRPS_EFF_FM_DT}"
+											title="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_EFF_FM_DT$tooltip}"
+											value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.PM_IL_RI_POOL_SETUP_BEAN.RPS_EFF_FM_DT}">
+											<a4j:support
+												actionListener="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.setErrorMessagesInMap}"
+												event="oninputblur" id="date_1" immediate="true"
+												onsubmit="formatDate('PM_IL_RI_POOL_SETUP:RPS_EFF_FM_DT')"
+												reRender="err, errorMessages">
+											</a4j:support>
+										</rich:calendar></td>
+										<td class="oddrowright" width="4%"></td>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_EFF_TO_DT_LABEL}"
+											for="RPS_EFF_TO_DT" id="RPS_EFF_TO_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_EFF_TO_DT$caption}" />
+										</td>
+										<td class="oddrow" width="28%"><rich:calendar
+											binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_EFF_TO_DT}"
+											datePattern="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.datePattern}"
+											disabled="false" enableManualInput="true" id="RPS_EFF_TO_DT"
+											inputSize="11" rendered="true" required="false"
+											inputClass="calendarinput"
+											validator="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.validateRPS_EFF_TO_DT}"
+											title="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_EFF_TO_DT$tooltip}"
+											value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.PM_IL_RI_POOL_SETUP_BEAN.RPS_EFF_TO_DT}">
+											<a4j:support
+												actionListener="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.setErrorMessagesInMap}"
+												event="oninputblur" id="date_2" immediate="true"
+												onsubmit="formatDate('PM_IL_RI_POOL_SETUP:RPS_EFF_TO_DT')"
+												reRender="errorPanel,err,errorMessages">
+											</a4j:support>
+										</rich:calendar></td>
+									</tr>
+									<tr>
+										<td colspan="5" width="100%"><rich:simpleTogglePanel
+											id="Bilingual_Panel" opened="true" switchType="client">
+											<f:facet name="header">
+												<h:outputText id="Bilingual_Header"
+													value="Bilingual Details" />
+											</f:facet>
+											<table class="noborder" id="bilingualTable" width="100%" cellpadding="0" cellspacing="0">
+												<tr>
+													<td class="oddrowright" width="20%"><h:outputLabel
+														binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_BL_DESC_LABEL}"
+														for="RPS_BL_DESC" id="RPS_BL_DESC_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_BL_DESC$caption}" />
+													</td>
+													<td class="oddrow" width="28%"><h:inputText
+														binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_BL_DESC}"
+														disabled="false" id="RPS_BL_DESC" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_BL_DESC$tooltip}"
+														validator="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.RPS_BL_DESC_validator}"
+														value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.PM_IL_RI_POOL_SETUP_BEAN.RPS_BL_DESC}" >
+														<a4j:support
+														actionListener="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.setErrorMessagesInMap}"
+														event="onblur" id="date_22" immediate="true"
+														oncomplete="setFocus('PM_IL_RI_POOL_SETUP:RPS_BL_SHORT_DESC','PM_IL_RI_POOL_SETUP:RPS_BL_DESC')"
+														reRender="errorPanel,RPS_BL_SHORT_DESC">
+														</a4j:support>
+														</h:inputText>
+													</td>
+														<td class="oddrow" width="4%"></td>
+													<td class="oddrowright" width="20%"><h:outputLabel
+														binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_BL_SHORT_DESC_LABEL}"
+														for="RPS_BL_SHORT_DESC" id="RPS_BL_SHORT_DESC_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_BL_SHORT_DESC$caption}" />
+													</td>
+													<td class="oddrow" width="28%"><h:inputText
+														binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_BL_SHORT_DESC}"
+														disabled="false" id="RPS_BL_SHORT_DESC" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														onfocus="currFocus('PM_IL_RI_POOL_SETUP:RPS_BL_SHORT_DESC')"
+														title="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_BL_SHORT_DESC$tooltip}" 
+														validator="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.RPS_BL_SHORT_DESC_validator}"
+														value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.PM_IL_RI_POOL_SETUP_BEAN.RPS_BL_SHORT_DESC}" >
+														<a4j:support
+														actionListener="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.setErrorMessagesInMap}"
+														event="onblur" id="date_22SD" immediate="true"
+														reRender="errorPanel">
+														</a4j:support>
+														</h:inputText>
+													</td>
+												</tr>
+
+												<tr>
+													<td class="evenrowright" width="20%"><h:outputLabel
+														binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_BL_LONG_DESC_LABEL}"
+														for="RPS_BL_LONG_DESC" id="RPS_BL_LONG_DESC_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_BL_LONG_DESC$caption}" />
+													</td>
+													<td class="evenrow" width="28%"><h:inputText
+														binding="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.COMP_RPS_BL_LONG_DESC}"
+														disabled="false" id="RPS_BL_LONG_DESC" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message.PILM043$PM_IL_RI_POOL_SETUP$RPS_BL_LONG_DESC$tooltip}"
+														value="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.PM_IL_RI_POOL_SETUP_BEAN.RPS_BL_LONG_DESC}" />
+													</td>
+													<td class="evenrowright" width="4%">&nbsp;</td>
+													<td class="evenrowright" width="20%">&nbsp;</td>
+													<td class="evenrowright" width="28%">&nbsp;</td>
+												</tr>
+											</table>
+										</rich:simpleTogglePanel></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+
+										<h:commandLink
+											action="#{PILM043_PM_IL_RI_POOL_SETUP_COMPOSITE_ACTION.PM_IL_RI_POOL_SETUP_ACTION.saveRecord}"
+											id="AUTOID_29" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_30"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTOID_31"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

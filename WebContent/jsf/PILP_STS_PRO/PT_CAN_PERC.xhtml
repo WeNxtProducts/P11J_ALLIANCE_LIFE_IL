@@ -1,0 +1,490 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}" >
+			<f:loadBundle basename="messageProperties_PILP_PRO"
+				var="message_PILP_STS_PRO" />
+			<h:form id="PT_CAN_PERC">
+				<table cellpadding="0" cellspacing="0" width="100%" border="0" class="noborder">
+					<tr>
+						<td colspan="3" width="100%" vAlign="top">
+						<table width="100%" cellpadding="0" cellspacing="0" class="noborder">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PT_CAN_PERC_ACTION.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table cellspacing="0" width="100%" id="errormsgtable" class="noborder">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PT_CAN_PERC_ACTION.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PT_CAN_PERC_ACTION.errorMap['current'] !=null? PT_CAN_PERC_ACTION.errorMap['current']: PT_CAN_PERC_ACTION.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{PT_CAN_PERC_ACTION.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{PT_CAN_PERC_ACTION.globalMsgRender}" />
+									<h:outputText id="warningMessages"
+										value="#{PT_CAN_PERC_ACTION.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0" class="noborder"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel id="FORM_CAPTION"
+									value="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="3" vAlign="top" width="100%">
+						<h:commandButton
+							disabled="false"
+							id="UI_M_BUT_BL_FETCH" rendered="true"
+							style="width:96px;" styleClass="button"
+							value="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$UI_M_BUT_BL_FETCH$caption}" 
+							action="#{PT_CAN_PERC_ACTION.fetchButton}"/>
+							
+						<rich:spacer width="5px;"></rich:spacer>
+						
+						<h:commandButton
+							disabled="false"
+							id="UI_M_BUT_BL_PROCESS" rendered="true"
+							style="width:96px;" styleClass="button"
+							value="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$UI_M_BUT_BL_PROCESS$caption}" 
+							action="#{PT_CAN_PERC_ACTION.processButton}"/>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="5">
+						<table cellpadding="0" cellspacing="0" width="100%" class="noborder">
+							<tr>
+									<td class="oddrow">
+												<h:outputLabel
+													binding="#{PT_CAN_PERC_ACTION.COMP_UI_M_POL_NO_FM_LABEL}"
+													for="UI_M_POL_NO_FM" 
+													rendered="true" styleClass="label"
+													value="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$UI_M_POL_NO_FM$caption}" >
+													</h:outputLabel>
+											</td>
+											<td class="oddrowright">
+												<h:inputText
+														binding="#{PT_CAN_PERC_ACTION.COMP_UI_M_POL_NO_FM}"
+														disabled="false" id="UI_M_POL_NO_FM" maxlength="40"
+														rendered="true" 
+														styleClass="input"
+														title="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$UI_M_POL_NO_FM$tooltip}"
+														value="#{PT_CAN_PERC_ACTION.PT_CAN_PERC_BEAN.UI_M_POL_NO_FM}" >
+														<a4j:support
+															actionListener="#{PT_CAN_PERC_ACTION.fireFiledUI_M_POL_NO_FM}"
+															event="onblur" id="UI_CUST_CODE_FM_SUPPORT"
+															immediate="true"
+															reRender="errorPanel,UI_M_POL_NO_FM,UI_M_POL_NO_FM_SUGGEST,UI_M_POL_NO_TO_SUGGEST">
+													</a4j:support>
+														</h:inputText>
+												<h:graphicImage id="UI_M_POL_NO_FM__LOV" styleClass="searchimg"
+													value=".\..\..\images\Lov.gif" /> <rich:suggestionbox
+													for="UI_M_POL_NO_FM" height="200"
+													id="UI_M_POL_NO_FM_SUGGEST" immediate="true"
+													suggestionAction="#{PT_CAN_PERC_ACTION.lovUI_M_POL_NO_FM}"
+													var="lov" width="350">
+													<h:column>
+														<h:outputText id="SUGG_1" value="#{lov.code}" />
+													</h:column>
+													<h:column>
+														<h:outputText id="SUGG_2" value="#{lov.name}" />
+													</h:column>
+												</rich:suggestionbox>
+											</td>
+											<td class="oddrow">&nbsp;</td>
+											<td class="oddrow">
+												<h:outputLabel
+													binding="#{PT_CAN_PERC_ACTION.COMP_UI_M_POL_NO_TO_LABEL}"
+													for="UI_M_POL_NO_TO" id="UI_M_POL_NO_TO_LABEL"
+													rendered="true" styleClass="label"
+													value="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$UI_M_POL_NO_TO$caption}" >
+													</h:outputLabel>
+												
+											</td>
+											<td class="oddrowright">
+												<h:inputText
+														binding="#{PT_CAN_PERC_ACTION.COMP_UI_M_POL_NO_TO}"
+														disabled="false" id="UI_M_POL_NO_TO" maxlength="40"
+														rendered="true" 
+														styleClass="input"
+														title="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$UI_M_POL_NO_TO$tooltip}"
+														value="#{PT_CAN_PERC_ACTION.PT_CAN_PERC_BEAN.UI_M_POL_NO_TO}" >
+														<a4j:support
+															actionListener="#{PT_CAN_PERC_ACTION.fireFiledUI_M_POL_NO_TO}"
+															event="onblur" id="UI_CUST_CODE_TO_SUPPORT"
+															immediate="true"
+															reRender="errorPanel,UI_M_POL_NO_TO,UI_M_POL_NO_TO_SUGGEST">
+													</a4j:support>
+														</h:inputText>
+											<h:graphicImage id="UI_M_POL_NO_TO_LOV" styleClass="searchimg"
+													value=".\..\..\images\Lov.gif" /> <rich:suggestionbox
+													for="UI_M_POL_NO_TO" height="200"
+													id="UI_M_POL_NO_TO_SUGGEST" immediate="true"
+													suggestionAction="#{PT_CAN_PERC_ACTION.lovUI_M_POL_NO_FM}"
+													var="lov" width="350">
+													<h:column>
+														<h:outputText id="SUGG_3" value="#{lov.code}" />
+													</h:column>
+													<h:column>
+														<h:outputText id="SUGG_4" value="#{lov.name}" />
+													</h:column>
+												</rich:suggestionbox>
+											</td>
+										</tr>
+										
+										<tr>
+											<td class="evenrow">
+												<h:outputLabel
+													binding="#{PT_CAN_PERC_ACTION.COMP_UI_M_PROCESS_DT_LABEL}"
+													for="UI_M_PROCESS_DT" id="UI_M_PROCESS_DT_LABEL"
+													rendered="true" styleClass="label"
+													value="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$UI_M_PROCESS_DT$caption}" />
+											</td>
+											<td class="evenrowright">
+												<rich:calendar
+													binding="#{PT_CAN_PERC_ACTION.COMP_UI_M_PROCESS_DT}"
+													datePattern="#{PT_CAN_PERC_ACTION.datePattern}"
+													disabled="false" enableManualInput="true"
+													id="UI_M_PROCESS_DT" inputClass="calendarinput"
+													inputSize="12" rendered="true" required="false"
+													title="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$UI_M_PROCESS_DT$tooltip}"
+													value="#{PT_CAN_PERC_ACTION.PT_CAN_PERC_BEAN.UI_M_PROCESS_DT}">
+													<a4j:support
+														actionListener="#{PT_CAN_PERC_ACTION.fireFiledValidation}"
+														event="onchanged" id="UI_M_PROCESS_DT_SUPPORT1"
+														immediate="true" reRender="errorPanel">
+													</a4j:support>
+													<a4j:support
+														actionListener="#{PT_CAN_PERC_ACTION.fireFiledValidation}"
+														event="oninputblur" id="UI_M_PROCESS_DT_SUPPORT2"
+														immediate="true"
+														onsubmit="formatDate('PT_CAN_PERC:UI_M_PROCESS_DT')"
+														reRender="errorPanel">
+													</a4j:support>
+												</rich:calendar>
+											</td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrow">
+												<h:outputLabel
+													binding="#{PT_CAN_PERC_ACTION.COMP_UI_YES_ALL_LABEL}"
+													for="UI_YES_ALL" id="UI_YES_ALL_LABEL" rendered="true"
+													styleClass="label"
+													value="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$UI_YES_ALL$caption}" />
+												<h:selectBooleanCheckbox
+													binding="#{PT_CAN_PERC_ACTION.COMP_UI_YES_ALL}"
+													disabled="false" id="UI_YES_ALL" rendered="true"
+													styleClass="checkstyleclass"
+													title="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$UI_YES_ALL$tooltip}"
+													value="#{PT_CAN_PERC_ACTION.PT_CAN_PERC_BEAN.UI_YES_ALL}">
+													<a4j:support
+														actionListener="#{PT_CAN_PERC_ACTION.fireField_SEL}"
+														event="onclick" id="SUPPORT_UI_YES_ALL" immediate="true"
+														reRender="errorPanel,PT_CAN_PERC_DATA_GRID" />
+												</h:selectBooleanCheckbox>
+											</td>
+											
+										</tr>
+							<tr>
+								<td width="100%" valign="top" colspan="5"><h:panelGroup
+									id="PT_CAN_PERC_PANEL" style="border:0;height:15%;">
+									<table id="bordertable" align="left" width="100%" class="noborder">
+										<tr>
+											<td>
+												<rich:dataTable
+													binding="#{PT_CAN_PERC_ACTION.dataTable}"
+													id="PT_CAN_PERC_DATA_GRID" rows="5"
+													value="#{PT_CAN_PERC_ACTION.dataList_PT_CAN_PERC}"
+													var="tableVar" width="100%">
+													<rich:column filterBy="#{tableVar.CP_POL_NO}"
+														filterEvent="onkeyup" id="COLUMN_REN_CP_POL_NO"
+														rendered="true" sortBy="#{tableVar.CP_POL_NO}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CP_POL_NO"
+																styleClass="forumRowHighlight"
+																value="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$CP_POL_NO$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CP_POL_NO"
+															value="#{tableVar.CP_POL_NO}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CP_STATUS_DT}"
+														filterEvent="onkeyup" id="COLUMN_CP_STATUS_DT"
+														rendered="true" sortBy="#{tableVar.CP_STATUS_DT}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CP_STATUS_DT"
+																styleClass="forumRowHighlight"
+																value="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$CP_STATUS_DT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CP_STATUS_DT"
+															value="#{tableVar.CP_STATUS_DT}" />
+													</rich:column>
+													
+													<rich:column filterBy="#{tableVar.CP_NO_OF_DAYS}"
+														filterEvent="onkeyup" id="COLUMN_CP_NO_OF_DAYS"
+														rendered="true" sortBy="#{tableVar.CP_NO_OF_DAYS}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CP_NO_OF_DAYS"
+																styleClass="forumRowHighlight"
+																value="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$CP_NO_OF_DAYS$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CP_NO_OF_DAYS"
+															value="#{tableVar.CP_NO_OF_DAYS}" />
+													</rich:column>
+													
+													<rich:column filterBy="#{tableVar.CP_FLEX_03}"
+														filterEvent="onkeyup" id="COLUMN_CP_FLEX_03"
+														rendered="true" sortBy="#{tableVar.CP_FLEX_03}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CP_FLEX_03"
+																styleClass="forumRowHighlight"
+																value="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$UI_PERC_YES$caption}" />
+														</f:facet>
+														<h:selectOneMenu
+															disabled="false" id="CP_FLEX_03" rendered="true"
+															required="false" 
+															styleClass="combostyleclass"
+															title="#{message_PILP_STS_PRO.PILP_STS_PRO$PT_CAN_PERC$UI_PERC_YES$tooltip}"
+															value="#{tableVar.CP_FLEX_03}">
+														<f:selectItems id="SEL_ITEMS_CP_FLEX_03"
+															value="#{PT_CAN_PERC_ACTION.listCP_FLEX_03}" />
+															<a4j:support
+																actionListener="#{PT_CAN_PERC_ACTION.onBlurSelectYN}"
+																event="onchange" id="ST_2" immediate="true"
+																reRender="errorPanel">
+															</a4j:support>
+														</h:selectOneMenu>
+													</rich:column>
+													
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PT_CAN_PERC_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PT_CAN_PERC_ACTION.addRow}"
+																id="addRow" reRender="PT_CAN_PERC_PANEL,errorPanel" rendered="false"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PT_CAN_PERC_ACTION.deleteRow}"
+																id="deleteRow" reRender="PT_CAN_PERC_PANEL,errorPanel"
+																style="width:80px;" styleClass="button" rendered="false"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PT_CAN_PERC_ACTION.postRecord}"
+																id="postRecord" rendered="false"
+																reRender="PT_CAN_PERC_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+								<td></td>
+							</tr>
+						</table>
+						</td>
+						</tr>						
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+								action="#{PT_CAN_PERC_ACTION.saveRecord}"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle" value="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

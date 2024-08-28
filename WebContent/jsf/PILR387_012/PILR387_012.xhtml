@@ -1,0 +1,806 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PILR387_012_IP_REP_INFO_ACTION.onLoad}">
+			<f:loadBundle basename="messageProperties_PILR387_012" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<table cellpadding="0" cellspacing="0" width="100%" border="0">
+				<h:form id="IP_REP_INFO">
+					<tr>
+						<td width="100%" vAlign="top" height="20">
+							<rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PILR387_012_IP_REP_INFO_ACTION.messageStyle}"
+											value="#{commonmsg.errorPanel$heading} #{PILR387_012_IP_REP_INFO_ACTION.errorMap['current'] !=null? PILR387_012_IP_REP_INFO_ACTION.errorMap['current']:PILR387_012_IP_REP_INFO_ACTION.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{PILR387_012_IP_REP_INFO_ACTION.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{PILR387_012_IP_REP_INFO_ACTION.globalMsgRender}" />
+
+									<h:outputText id="warningMessages"
+										value="#{PILR387_012_IP_REP_INFO_ACTION.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" id="linkstable">
+							<tr>
+								<td><h:outputText styleClass="forumRowHighlight"
+									value="#{message.PILR387_012$IP_REP_INFO$IP_REP_INFO$pagetitle}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 500px; overflow: auto;">
+						<table align="center" class="noborder" width="100%">
+							<tr>
+
+								<td>&nbsp;</td>
+								<td align="left" vAlign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									border="0" width="100%">
+									<tr>
+
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_1_LABEL}"
+											for="COMP_1_INPUT_TEXT" id="COMP_1_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_1_INPUT$caption}" />
+										<h:graphicImage id="AUTO_ID_3" style="" styleClass="searchimg"
+											value="./../../images/mandatory.gif" /></td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_1_INPUT_TEXT}"
+											disabled="false" id="COMP_1_INPUT_TEXT" maxlength="100"
+											required="true" styleClass="inputsmall"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_1_INPUT$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_AGENT_CODE}">
+											<a4j:support
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.whenValidateUI_M_FM_AGENT_CODE}"
+												event="onblur" id="COMP_1_INPUT_AJAX_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,COMP_1_INPUT_TEXT,COMP_1_INPUT_TEXT_LOV,COMP_1_INPUT_DESC" />
+										</h:inputText> <h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_1_INPUT_TEXT_DESC}"
+											disabled="true" id="COMP_1_INPUT_DESC" maxlength="12"
+											styleClass="input"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_1_INPUT_TEXT_DESC$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_AGENT_NAME}" />
+
+										<rich:suggestionbox for="COMP_1_INPUT_TEXT" height="200"
+											id="COMP_1_INPUT_TEXT_LOV"
+											suggestionAction="#{PILR387_012_IP_REP_INFO_ACTION.lovAgentCode}"
+											var="panelCode" width="250">
+											<h:column id="COLUMN_SUGG_1">
+												<h:outputText id="AUTO_ID_4" value="#{panelCode.lovCode}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_2">
+												<h:outputText id="AUTO_ID_5" value="#{panelCode.lovName}" />
+											</h:column>
+
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,COMP_1_INPUT_DESC">
+												<f:setPropertyActionListener id="AUTO_ID_6"
+													target="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_AGENT_NAME}"
+													value="#{panelCode.lovName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_1" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow" width="4%">&nbsp;</td>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_2_LABEL}"
+											for="COMP_2_INPUT_TEXT" id="COMP_2_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_2_INPUT$caption}" />
+										<h:graphicImage id="AUTO_ID_7" style="" styleClass="searchimg"
+											value="./../../images/mandatory.gif" /></td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_2_INPUT_TEXT}"
+											disabled="false" id="COMP_2_INPUT_TEXT" maxlength="100"
+											rendered="#{PILR387_012_IP_REP_INFO_ACTION.COMP_2_INPUT_TEXT_RENDERED}"
+											required="true" styleClass="inputsmall"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_2_INPUT$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_TO_AGENT_CODE}">
+
+											<a4j:support
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.whenValidateUI_M_TO_AGENT_CODE}"
+												event="onblur" id="COMP_2_INPUT_TEXT_AJAX_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,COMP_2_INPUT,COMP_2_INPUT_LOV,COMP_2_INPUT_DESC" />
+										</h:inputText> <h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_2_INPUT_TEXT_DESC}"
+											disabled="true" id="COMP_2_INPUT_DESC" maxlength="12"
+											styleClass="input"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_2_INPUT_TEXT_DESC$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_TO_AGENT_NAME}" />
+
+										<rich:suggestionbox for="COMP_2_INPUT_TEXT" height="200"
+											id="COMP_2_INPUT_LOV"
+											suggestionAction="#{PILR387_012_IP_REP_INFO_ACTION.lovAgentCode}"
+											var="panelCode" width="250">
+											<h:column id="COLUMN_SUGG_11">
+												<h:outputText id="AUTO_ID_8" value="#{panelCode.lovCode}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_21">
+												<h:outputText id="AUTO_ID_9" value="#{panelCode.lovName}" />
+											</h:column>
+
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_2_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,COMP_2_INPUT_DESC">
+												<f:setPropertyActionListener id="AUTO_ID_10"
+													target="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_TO_AGENT_NAME}"
+													value="#{panelCode.lovName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_2" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_5_LABEL}"
+											for="COMP_5_INPUT_TEXT" id="COMP_5_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_5_INPUT$caption}" />
+										<h:graphicImage id="AUTO_ID_151" rendered="true" style=""
+											styleClass="searchimg" value="./../../images/mandatory.gif" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_5_INPUT_TEXT}"
+											disabled="false" id="COMP_5_INPUT_TEXT" maxlength="12"
+											rendered="#{PILR387_012_IP_REP_INFO_ACTION.COMP_5_INPUT_TEXT_RENDERED}"
+											styleClass="inputsmall"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_5_INPUT$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_CUST_AGENCY_CODE}">
+
+											<a4j:support
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.whenValidateUI_M_FM_CUST_AGENCY_CODE}"
+												event="onblur" id="COMP_5_INPUT_AJAX_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,COMP_5_INPUT,COMP_5_INPUT_LOV,COMP_5_INPUT_DESC" />
+
+										</h:inputText> <h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_5_INPUT_TEXT_DESC}"
+											disabled="true" id="COMP_5_INPUT_DESC" maxlength="12"
+											styleClass="input"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_5_INPUT_TEXT_DESC$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_CUST_AGENCY_NAME}" />
+
+										<rich:suggestionbox for="COMP_5_INPUT_TEXT" height="200"
+											id="COMP_5_INPUT_LOV"
+											suggestionAction="#{PILR387_012_IP_REP_INFO_ACTION.lovAgentCode}"
+											var="panelCode2" width="250">
+											<h:column id="COLUMN_SUGG_152">
+												<h:outputText id="AUTO_ID_152" value="#{panelCode2.lovCode}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_252">
+												<h:outputText id="AUTO_ID_153" value="#{panelCode2.lovName}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_5_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,COMP_5_INPUT_DESC">
+												<f:setPropertyActionListener id="AUTO_ID_154"
+													target="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_CUST_AGENCY_NAME}"
+													value="#{panelCode2.lovName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_53" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_6_LABEL}"
+											for="COMP_6_INPUT_TEXT" id="COMP_6_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_6_INPUT$caption}" />
+										<h:graphicImage id="AUTO_ID_156" style=""
+											styleClass="searchimg" value="./../../images/mandatory.gif" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_6_INPUT_TEXT}"
+											disabled="false" id="COMP_6_INPUT_TEXT" maxlength="12"
+											rendered="#{PILR387_012_IP_REP_INFO_ACTION.COMP_6_INPUT_TEXT_RENDERED}"
+											styleClass="inputsmall"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_6_INPUT$caption}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_TO_CUST_AGENCY_CODE}">
+
+											<a4j:support
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.whenValidateUI_M_TO_CUST_AGENCY_CODE}"
+												event="onblur" id="COMP_6_INPUT_AJAX_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,COMP_6_INPUT_TEXT,COMP_6_INPUT_LOV,COMP_6_INPUT_DESC" />
+										</h:inputText> <h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_6_INPUT_TEXT_DESC}"
+											disabled="true" id="COMP_6_INPUT_DESC" maxlength="12"
+											styleClass="input"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_6_INPUT_DESC$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_TO_CUST_AGENCY_NAME}" />
+
+										<rich:suggestionbox for="COMP_6_INPUT_TEXT" height="200"
+											id="COMP_6_INPUT_LOV"
+											suggestionAction="#{PILR387_012_IP_REP_INFO_ACTION.lovAgentCode}"
+											var="panelCode1" width="250">
+											<h:column id="COLUMN_SUGG_163">
+												<h:outputText id="AUTO_ID_166" value="#{panelCode1.lovCode}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_263">
+												<h:outputText id="AUTO_ID_167" value="#{panelCode1.lovName}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_6_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,COMP_6_INPUT_DESC">
+												<f:setPropertyActionListener id="AUTO_ID_168"
+													target="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_TO_CUST_AGENCY_NAME}"
+													value="#{panelCode1.lovName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_64" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_7_LABEL}"
+											for="COMP_7_INPUT_TEXT" id="COMP_7_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_7_INPUT$caption}" />
+										<h:graphicImage id="AUTO_ID_171" rendered="true" style=""
+											styleClass="searchimg" value="./../../images/mandatory.gif" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_7_INPUT_TEXT}"
+											disabled="false" id="COMP_7_INPUT_TEXT" maxlength="12"
+											rendered="#{PILR387_012_IP_REP_INFO_ACTION.COMP_7_INPUT_TEXT_RENDERED}"
+											styleClass="inputsmall"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_7_INPUT$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_UNIT_CODE}">
+
+											<a4j:support
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.whenValidateUI_M_FM_UNIT_CODE}"
+												event="onblur" id="COMP_7_INPUT_AJAX_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,COMP_7_INPUT_TEXT,COMP_7_INPUT_LOV,COMP_7_INPUT_DESC" />
+
+										</h:inputText> <h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_7_INPUT_TEXT_DESC}"
+											disabled="true" id="COMP_7_INPUT_DESC" maxlength="12"
+											styleClass="input"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_7_INPUT_TEXT_DESC$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_UNIT_NAME}" />
+
+										<rich:suggestionbox for="COMP_7_INPUT_TEXT" height="200"
+											id="COMP_7_INPUT_LOV"
+											suggestionAction="#{PILR387_012_IP_REP_INFO_ACTION.lovUnitCode}"
+											var="panelCode2" width="250">
+											<h:column id="COLUMN_SUGG_172">
+												<h:outputText id="AUTO_ID_172" value="#{panelCode2.lovCode}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_272">
+												<h:outputText id="AUTO_ID_173" value="#{panelCode2.lovName}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_7_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,COMP_7_INPUT_DESC">
+												<f:setPropertyActionListener id="AUTO_ID_174"
+													target="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_UNIT_NAME}"
+													value="#{panelCode2.lovName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_73" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_8_LABEL}"
+											for="COMP_8_INPUT_TEXT" id="COMP_8_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_8_INPUT$caption}" />
+										<h:graphicImage id="AUTO_ID_186" style=""
+											styleClass="searchimg" value="./../../images/mandatory.gif" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_8_INPUT_TEXT}"
+											disabled="false" id="COMP_8_INPUT_TEXT" maxlength="12"
+											rendered="#{PILR387_012_IP_REP_INFO_ACTION.COMP_8_INPUT_TEXT_RENDERED}"
+											styleClass="inputsmall"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_8_INPUT$caption}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_TO_UNIT_CODE}">
+
+											<a4j:support
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.whenValidateUI_M_TO_UNIT_CODE}"
+												event="onblur" id="COMP_8_INPUT_AJAX_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,COMP_8_INPUT_TEXT,COMP_8_INPUT_LOV,COMP_8_INPUT_DESC" />
+										</h:inputText> <h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_8_INPUT_TEXT_DESC}"
+											disabled="true" id="COMP_8_INPUT_DESC" maxlength="12"
+											styleClass="input"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_8_INPUT_DESC$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_TO_UNIT_NAME}" />
+
+										<rich:suggestionbox for="COMP_8_INPUT_TEXT" height="200"
+											id="COMP_8_INPUT_LOV"
+											suggestionAction="#{PILR387_012_IP_REP_INFO_ACTION.lovUnitCode}"
+											var="panelCode1" width="250">
+											<h:column id="COLUMN_SUGG_183">
+												<h:outputText id="AUTO_ID_186" value="#{panelCode1.lovCode}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_283">
+												<h:outputText id="AUTO_ID_187" value="#{panelCode1.lovName}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_8_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,COMP_8_INPUT_DESC">
+												<f:setPropertyActionListener id="AUTO_ID_188"
+													target="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_TO_UNIT_NAME}"
+													value="#{panelCode1.lovName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_84" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									
+									<tr>
+
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_12_LABEL}"
+											for="COMP_12_INPUT_TEXT" id="COMP_12_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_12_INPUT$caption}" />
+										<h:graphicImage id="AUTO_ID_12" style="" styleClass="searchimg"
+											value="./../../images/mandatory.gif" /></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_12_INPUT_TEXT}"
+											disabled="false" id="COMP_12_INPUT_TEXT" maxlength="100"
+											rendered="#{PILR387_012_IP_REP_INFO_ACTION.COMP_12_INPUT_TEXT_RENDERED}"
+											required="true" styleClass="inputsmall"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_1_INPUT$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_PR_DIVN_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.whenValidateUI_FM_DIVN_CODE}"
+												event="onblur" id="COMP_12_INPUT_AJAX_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,COMP_12_INPUT_TEXT,COMP_12_INPUT_LOV,COMP_12_INPUT_DESC" />
+										</h:inputText> <h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_12_INPUT_TEXT_DESC}"
+											disabled="true" id="COMP_12_INPUT_DESC" maxlength="12"
+											styleClass="input"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_12_INPUT_TEXT_DESC$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_DIVN_NAME}" />
+
+										<rich:suggestionbox for="COMP_12_INPUT_TEXT" height="200"
+											id="COMP_12_INPUT_LOV"
+											suggestionAction="#{PILR387_012_IP_REP_INFO_ACTION.lovDivnCode}"
+											var="panelCode" width="250">
+											<h:column id="COLUMN_SUGG_1">
+												<h:outputText id="AUTO_ID_4" value="#{panelCode.code}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_2">
+												<h:outputText id="AUTO_ID_5" value="#{panelCode.name}" />
+											</h:column>
+
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_12_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,COMP_12_INPUT_DESC">
+												<f:setPropertyActionListener id="AUTO_ID_6"
+													target="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_DIVN_NAME}"
+													value="#{panelCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_12" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" width="4%">&nbsp;</td>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_13_LABEL}"
+											for="COMP_13_INPUT_TEXT" id="COMP_13_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_13_INPUT$caption}" />
+										<h:graphicImage id="AUTO_ID_13" style="" styleClass="searchimg"
+											value="./../../images/mandatory.gif" /></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_13_INPUT_TEXT}"
+											disabled="false" id="COMP_13_INPUT_TEXT" maxlength="100"
+											
+											required="true" styleClass="inputsmall"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_13_INPUT$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_PR_DIVN_TO_CODE}">
+											<a4j:support
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.whenValidateUI_TO_DIVN_CODE}"
+												event="onblur" id="COMP_13_INPUT_AJAX_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,COMP_13_INPUT_TEXT,COMP_13_INPUT_LOV,COMP_13_INPUT_DESC" />
+										</h:inputText> <h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_13_INPUT_TEXT_DESC}"
+											disabled="true" id="COMP_13_INPUT_DESC" maxlength="12"
+											styleClass="input"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_13_INPUT_TEXT_DESC$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_TO_DIVN_NAME}" />
+
+									 <rich:suggestionbox for="COMP_13_INPUT_TEXT" height="200"
+											id="COMP_13_INPUT_LOV"
+											suggestionAction="#{PILR387_012_IP_REP_INFO_ACTION.lovDivnCode}"
+											var="panelCode" width="250">
+											<h:column id="COLUMN_SUGG_13">
+												<h:outputText id="AUTO_ID_8" value="#{panelCode.code}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_21">
+												<h:outputText id="AUTO_ID_9" value="#{panelCode.name}" />
+											</h:column>
+
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_13_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,COMP_13_INPUT_DESC">
+												<f:setPropertyActionListener id="AUTO_ID_7"
+													target="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_DIVN_NAME}"
+													value="#{panelCode.name}" />
+												
+											</a4j:support>
+										</rich:suggestionbox><h:graphicImage id="IMAGE_SUGG_13" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									
+								 <!--  	
+								 	<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_14_LABEL}"
+											for="COMP_14_INPUT_TEXT" id="COMP_14_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_14_INPUT$caption}" />
+										<h:graphicImage id="AUTO_ID_171" rendered="true" style=""
+											styleClass="searchimg" value="./../../images/mandatory.gif" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_14_INPUT_TEXT}"
+											disabled="false" id="COMP_14_INPUT_TEXT" 
+											rendered="true"
+											styleClass="inputsmall"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_14_INPUT$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_SRC_BUS_FM}">
+											<a4j:support
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.whenValidateUI_M_SRC_BUS_FM}"
+												event="onblur" id="COMP_14_INPUT_AJAX_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,COMP_14_INPUT_TEXT,COMP_14_INPUT_LOV,COMP_14_INPUT_DESC" />
+										</h:inputText> <h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_14_INPUT_TEXT_DESC}"
+											disabled="true" id="COMP_14_INPUT_DESC" 
+											styleClass="input"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_SRC_BUS_FM_DESC}" />
+										<rich:suggestionbox for="COMP_14_INPUT_TEXT" height="200"
+											id="COMP_14_INPUT_LOV"
+											suggestionAction="#{PILR387_012_IP_REP_INFO_ACTION.lovStatusCode}"
+											var="panelCode2" width="250">
+											<h:column id="COLUMN_SUGG_1211">
+												<h:outputText id="AUTO_ID_181" value="#{panelCode2.code}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_2221">
+												<h:outputText id="AUTO_ID_119" value="#{panelCode2.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_7_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,COMP_14_INPUT_DESC">
+												<f:setPropertyActionListener id="AUTO_ID_210"
+													target="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_SRC_BUS_FM}"
+													value="#{panelCode2.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_71" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_15_LABEL}"
+											for="COMP_15_INPUT_TEXT" id="COMP_15_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_15_INPUT$caption}" />
+										<h:graphicImage id="AUTO_ID_211" style=""
+											styleClass="searchimg" value="./../../images/mandatory.gif" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_15_INPUT_TEXT}"
+											disabled="false" id="COMP_15_INPUT_TEXT" 
+											rendered="true"
+											styleClass="inputsmall"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_15_INPUT$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_SRC_BUS_TO}">
+											<a4j:support
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.whenValidateUI_M_SRC_BUS_TO}"
+												event="onblur" id="COMP_15_INPUT_AJAX_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,COMP_15_INPUT_TEXT,COMP_15_INPUT_LOV,COMP_15_INPUT_DESC" />
+										</h:inputText> <h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_15_INPUT_TEXT_DESC}"
+											disabled="true" id="COMP_15_INPUT_DESC" 
+											styleClass="input"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_15_INPUT_DESC$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_SRC_BUS_TO_DESC}" />
+										<rich:suggestionbox for="COMP_15_INPUT_TEXT" height="200"
+											id="COMP_15_INPUT_LOV"
+											suggestionAction="#{PILR387_012_IP_REP_INFO_ACTION.lovStatusCode}"
+											var="panelCode1" width="250">
+											<h:column id="COLUMN_SUGG_1311">
+												<h:outputText id="AUTO_ID_212" value="#{panelCode1.code}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_2321">
+												<h:outputText id="AUTO_ID_123" value="#{panelCode1.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_15_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,COMP_15_INPUT_DESC">
+												<f:setPropertyActionListener id="AUTO_ID_241"
+													target="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_SRC_BUS_TO}"
+													value="#{panelCode1.name}" />
+											</a4j:support>
+										</rich:suggestionbox> 
+										<h:graphicImage id="IMAGE_SUGG_411" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>-->
+									
+									
+								 	<tr>
+
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_14_LABEL}"
+											for="COMP_14_INPUT_TEXT" id="COMP_14_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_14_INPUT$caption}" />
+										<h:graphicImage id="AUTO_ID_14" style="" styleClass="searchimg"
+											value="./../../images/mandatory.gif" /></td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_14_INPUT_TEXT}"
+											disabled="false" id="COMP_14_INPUT_TEXT" maxlength="100"
+											
+											required="true" styleClass="inputsmall"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_1_INPUT$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_PR_DIVN_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.whenValidateUI_FM_DIVN_CODE}"
+												event="onblur" id="COMP_14_INPUT_AJAX_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,COMP_14_INPUT_TEXT,COMP_14_INPUT_LOV,COMP_14_INPUT_DESC" />
+										</h:inputText> <h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_14_INPUT_TEXT_DESC}"
+											disabled="true" id="COMP_14_INPUT_DESC" maxlength="12"
+											styleClass="input"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_14_INPUT_TEXT_DESC$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_DIVN_NAME}" />
+
+										<rich:suggestionbox for="COMP_14_INPUT_TEXT" height="200"
+											id="COMP_14_INPUT_LOV"
+											suggestionAction="#{PILR387_012_IP_REP_INFO_ACTION.lovDivnCode}"
+											var="panelCode" width="250">
+											<h:column id="COLUMN_SUGG_14">
+												<h:outputText id="AUTO_ID_14" value="#{panelCode.code}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_2">
+												<h:outputText id="AUTO_ID_5" value="#{panelCode.name}" />
+											</h:column>
+
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_14_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,COMP_14_INPUT_DESC">
+												<f:setPropertyActionListener id="AUTO_ID_6"
+													target="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_FM_DIVN_NAME}"
+													value="#{panelCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_14" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow" width="4%">&nbsp;</td>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_15_LABEL}"
+											for="COMP_15_INPUT_TEXT" id="COMP_15_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_15_INPUT$caption}" />
+										<h:graphicImage id="AUTO_ID_15" style="" styleClass="searchimg"
+											value="./../../images/mandatory.gif" /></td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_15_INPUT_TEXT}"
+											disabled="false" id="COMP_15_INPUT_TEXT" maxlength="100"
+											
+											required="true" styleClass="inputsmall"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_15_INPUT$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_PR_DIVN_TO_CODE}">
+											<a4j:support
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.whenValidateUI_TO_DIVN_CODE}"
+												event="onblur" id="COMP_15_INPUT_AJAX_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,COMP_15_INPUT_TEXT,COMP_15_INPUT_LOV,COMP_15_INPUT_DESC" />
+										</h:inputText> <h:inputText
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_15_INPUT_TEXT_DESC}"
+											disabled="true" id="COMP_15_INPUT_DESC" maxlength="12"
+											styleClass="input"
+											title="#{message.PILR387_012$IP_REP_INFO$COMP_15_INPUT_TEXT_DESC$tooltip}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_TO_DIVN_NAME}" />
+
+										<rich:suggestionbox for="COMP_15_INPUT_TEXT" height="200"
+											id="COMP_15_INPUT_LOV"
+											suggestionAction="#{PILR387_012_IP_REP_INFO_ACTION.lovDivnCode}"
+											var="panelCode" width="250">
+											<h:column id="COLUMN_SUGG_13">
+												<h:outputText id="AUTO_ID_8" value="#{panelCode.code}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_21">
+												<h:outputText id="AUTO_ID_9" value="#{panelCode.name}" />
+											</h:column>
+
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_15_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,COMP_15_INPUT_DESC">
+												
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_15" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+																
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_11_LABEL}"
+											for="" id="COMP_11_LABEL" rendered="true" styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_11_CAL$caption}" />
+										<h:graphicImage id="AUTO_ID_23" style=""
+											styleClass="searchimg" value="./../../images/mandatory.gif" />
+										</td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_11_CALENDER}"
+											datePattern="#{PILR387_012_IP_REP_INFO_ACTION.datePattern}"
+											disabled="false" enableManualInput="true" id="COMP_11_CAL"
+											inputClass="calendarinput" inputSize="11" required="true"
+											rendered="#{PILR387_012_IP_REP_INFO_ACTION.COMP_11_CALENDER_RENDERED}"
+											validator="#{PILR387_012_IP_REP_INFO_ACTION.validateUI_M_DATE_FM}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_DATE_FM}">
+
+											<a4j:support
+												onsubmit="formatDate('IP_REP_INFO:COMP_11_CAL')"
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.fireFieldValidation}"
+												event="onchanged" id="COMP_21_INPUT_AJAX_SUPPORT"
+												immediate="true" reRender="errorPanel,COMP_16_CAL" />
+											<a4j:support
+												onsubmit="formatDate('IP_REP_INFO:COMP_11_CAL')"
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.fireFieldValidation}"
+												event="oninputblur" id="COMP_22_INPUT_AJAX_SUPPORT"
+												immediate="true" reRender="errorPanel,COMP_16_CAL" />
+
+										</rich:calendar></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_16_LABEL}"
+											for="" id="COMP_16_LABEL" rendered="true" styleClass="label"
+											value="#{message.PILR387_012$IP_REP_INFO$COMP_16_CAL$caption}" />
+										<h:graphicImage id="AUTO_ID_24" style=""
+											styleClass="searchimg" value="./../../images/mandatory.gif" />
+										</td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_16_CALENDER}"
+											datePattern="#{PILR387_012_IP_REP_INFO_ACTION.datePattern}"
+											disabled="false" enableManualInput="true" id="COMP_16_CAL"
+											inputClass="calendarinput" inputSize="11" rendered="true"
+											required="true"
+											validator="#{PILR387_012_IP_REP_INFO_ACTION.validateUI_M_DATE_TO}"
+											value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.UI_M_DATE_TO}">
+
+											<a4j:support
+												onsubmit="formatDate('IP_REP_INFO:COMP_16_CAL')"
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.fireFieldValidation}"
+												event="onchanged" id="COMP_23_INPUT_AJAX_SUPPORT"
+												immediate="true" reRender="errorPanel" />
+											<a4j:support
+												onsubmit="formatDate('IP_REP_INFO:COMP_16_CAL')"
+												actionListener="#{PILR387_012_IP_REP_INFO_ACTION.fireFieldValidation}"
+												event="oninputblur" id="COMP_24_INPUT_AJAX_SUPPORT"
+												immediate="true" reRender="errorPanel" />
+
+										</rich:calendar></td>
+									</tr>
+									
+									<tr>
+										<td colspan="5">
+										<hr color="black" />
+										</td>
+									</tr>
+									<tr>
+										<td width="20%">
+										<table width="100%" border="0" height="100%"
+											bordercolor="blue">
+											<tr>
+												<td><h:selectOneRadio id="SELECT_FILE_TYPE"
+													rendered="true" style="text:bold;color:BLACK;"
+													binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_SELECT_FILE_TYPE}"
+													value="#{PILR387_012_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.selectedFileType}"
+													layout="pageDirection">
+
+													<f:selectItem
+														itemValue="#{PILR387_012_IP_REP_INFO_ACTION.reportPDFFormat}"
+														itemLabel="PDF" />
+													<f:selectItem
+														itemValue="#{PILR387_012_IP_REP_INFO_ACTION.reportExcelFormat}"
+														itemLabel="EXCEL" />
+
+													<a4j:support event="onclick" immediate="true"
+														reRender="errorPanel"
+														actionListener="#{PILR387_012_IP_REP_INFO_ACTION.getSelectedFileType}" />
+												</h:selectOneRadio></td>
+
+											</tr>
+										</table>
+										</td>
+										<td >&nbsp;</td>
+										<td >&nbsp;</td>
+										<td >&nbsp;</td>
+
+										<td height="100%"><h:commandButton
+											style="height=80%;" id="UI_M_BUT_PRINT" rendered="true"
+											image="./../../images/RUN.gif"
+											title="#{commonmsg.IP_REP_INFO$STD_PRINT_BUTTON$tooltip}"
+											value="#{commonmsg.IP_REP_INFO$STD_PRINT_BUTTON$caption}"
+											action="#{PILR387_012_IP_REP_INFO_ACTION.callReportModalPanel}" />
+										</td>
+									</tr>
+									<tr>
+										<td colspan="5" align="right"></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+					</div>
+					</td>
+					</tr>
+				</h:form>
+			</table>
+			<rich:modalPanel id="REPORT_MODAL_PANEL" height="110" width="300"
+				binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_REPORT_MODAL_PANEL}">
+				<f:facet name="header">
+					<h:panelGroup>
+						<h:outputText
+							value="#{commonmsg.IP_REP_INFO$DOCUMENT_PRINT$caption}" />
+					</h:panelGroup>
+				</f:facet>
+				<f:facet name="controls">
+					<h:panelGroup>
+						<h:form id="FT_REPORT_MODAL_PANEL_1">
+							<h:commandLink immediate="true" id="CLOSE_LINK"
+								action="#{PILR387_012_IP_REP_INFO_ACTION.cancelModalPanel}">
+								<h:graphicImage value="./../../resources/images/close.png"
+									styleClass="toolbarImageStyle" style="cursor:pointer"
+									id="REPORT_MODAL_PANEL_hidelink" />
+							</h:commandLink>
+						</h:form>
+					</h:panelGroup>
+				</f:facet>
+				<h:form id="FT_REPORT_MODAL_PANEL_2">
+					<table width="100%">
+						<tr>
+							<td align="center"><h:outputText id="CONFIRMATION_MSG"
+								style="font-size: 14px;"
+								value="#{commonmsg.IP_REP_INFO$CONFIRMATION_MSG$caption}" /></td>
+						</tr>
+						<tr>
+							<td><rich:spacer id="SPACER_MODAL_1" width="100%;"
+								height="18px" /> <rich:separator id="SEPARATOR" width="100%"
+								height="1px" /></td>
+						</tr>
+						<tr>
+							<td align="center"><h:panelGroup>
+								<h:commandLink immediate="true" id="PRINT_LINK" target="_blank"
+									action="#{PILR387_012_IP_REP_INFO_ACTION.runActionAfterValidate}">
+									<a4j:commandButton reRender="REPORT_MODAL_PANEL"
+										action="#{PILR387_012_IP_REP_INFO_ACTION.cancelModalPanel}"
+										id="OK_BUTTON" styleClass="button" style="width:70px;"
+										value="#{commonmsg.IP_REP_INFO$OK_BUTTON$caption}" />
+
+								</h:commandLink>
+							</h:panelGroup> <rich:spacer id="SPACER_MODAL_2" width="5px;" /> <a4j:commandButton
+								binding="#{PILR387_012_IP_REP_INFO_ACTION.COMP_CANCEL_BUTTON}"
+								id="CANCEL_BUTTON" styleClass="button" style="width:70px;"
+								action="#{PILR387_012_IP_REP_INFO_ACTION.cancelModalPanel}"
+								reRender="REPORT_MODAL_PANEL"
+								value="#{commonmsg.IP_REP_INFO$CANCEL_BUTTON$caption}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</rich:modalPanel>
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties" var="searchmessage" />
+	<f:loadBundle basename="messageProperties_PLM011" var="message" />
+	<table width="100%" border="0">
+		<!-- add header row -->
+		<tr>
+			
+		</tr>
+		<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel" switchType="client"
+							opened="false">			
+							<f:facet name="header">				
+								<h:outputText id="err"  styleClass="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.messageStyle}" 
+								value=" #{commonmsg.errorPanel$heading} #{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.errorMap['current'] !=null? PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.errorMap['current']:PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" value="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.errorMessages}"
+										  styleClass="ErrorMessages" escape="false" />
+							<h:messages  styleClass="ErrorMessages" id="msg" rendered="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.globalMsgRender}"/>
+				
+							<h:outputText id="warningMessages" value="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.warningMessages}"
+										  styleClass="WarningMessages" escape="false" />		
+						</rich:simpleTogglePanel>
+			</td>
+		</tr>
+		<!-- Body row -->
+		<tr>
+		<td>
+			<h:form id="userSearchPage">
+
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%"  cellpadding="0" cellspacing="0" id="masthead">
+					<tr>
+						<td>Initial Search Criteria
+						</td>
+						<td>
+							<h:outputText value="#{message.PLM011$PM_LIFE_APPR_SETUP_SEARCH_PAGE$AS_USER_ID$caption}" />: 
+							<h:inputText value="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.PM_LIFE_APPR_SETUP_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE1}"/>
+						</td>
+						
+						<td>
+							<h:outputText value="#{message.PLM011$PM_LIFE_APPR_SETUP_SEARCH_PAGE$AS_FM_PROD_CODE$caption}" />: 
+							<h:inputText value="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.PM_LIFE_APPR_SETUP_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE3}"/>
+						</td>
+						
+						<td>
+							<h:outputText value="#{message.PLM011$PM_LIFE_APPR_SETUP_SEARCH_PAGE$AS_TO_PROD_CODE$caption}" />: 
+							<h:inputText value="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.PM_LIFE_APPR_SETUP_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE4}"/>
+						</td>
+						
+						<td>
+							<h:outputText value="#{message.PLM011$PM_LIFE_APPR_SETUP_SEARCH_PAGE$AS_MODULE_ID$caption}" />: 
+							<h:inputText value="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.PM_LIFE_APPR_SETUP_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE2}"/>
+						</td>
+						<td>
+							<a4j:commandButton value="#{searchmessage.searchButton$caption}" id="a4link"
+									 styleClass="button"
+								     actionListener="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.fetchButtonClickAction}" 
+								     
+								     reRender="searchTable,errorPanel">
+								
+							</a4j:commandButton>
+						</td>
+					</tr>
+				</table>
+				
+				<!-- using rich data table -->
+				<rich:dataTable id="searchTable" value="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.recordList}"
+					var="PM_LIFE_APPR_SETUP" cellpadding="5px" rows="10" border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index" align="right">
+						</rich:datascroller>
+					</f:facet>
+			
+					<!-- next column -->
+					<rich:column 
+						filterValue="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.PM_LIFE_APPR_SETUP_SEARCH_PAGE_BEAN.FILTER_BY_VALUE1}" 
+						filterBy="#{PM_LIFE_APPR_SETUP.AS_USER_ID}" 
+						sortBy="#{PM_LIFE_APPR_SETUP.AS_USER_ID}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PLM011$PM_LIFE_APPR_SETUP_SEARCH_PAGE$AS_USER_ID$caption}" />
+						</f:facet> 
+					 <h:commandLink action="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.updateRecordClickAction}" > 
+						 <h:outputText value="#{PM_LIFE_APPR_SETUP.AS_USER_ID}" />
+						 	<f:param name="CURRENT_ROWID" value="#{PM_LIFE_APPR_SETUP.ROWID}" />
+					 </h:commandLink>
+					</rich:column>
+					
+							<rich:column filterValue="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.PM_LIFE_APPR_SETUP_SEARCH_PAGE_BEAN.FILTER_BY_VALUE4}" 
+								 filterBy="#{PM_LIFE_APPR_SETUP.AS_FM_PROD_CODE}" 
+								 sortBy="#{PM_LIFE_APPR_SETUP.AS_FM_PROD_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PLM011$PM_LIFE_APPR_SETUP_SEARCH_PAGE$AS_FM_PROD_CODE$caption}" />
+						</f:facet>
+						<h:outputText value="#{PM_LIFE_APPR_SETUP.AS_FM_PROD_CODE} " />
+					</rich:column>
+					
+					<rich:column filterValue="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.PM_LIFE_APPR_SETUP_SEARCH_PAGE_BEAN.FILTER_BY_VALUE5}" 
+								 filterBy="#{PM_LIFE_APPR_SETUP.AS_TO_PROD_CODE}" 
+								 sortBy="#{PM_LIFE_APPR_SETUP.AS_TO_PROD_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PLM011$PM_LIFE_APPR_SETUP_SEARCH_PAGE$AS_TO_PROD_CODE$caption}" />
+						</f:facet>
+						<h:outputText value="#{PM_LIFE_APPR_SETUP.AS_TO_PROD_CODE} " />
+					</rich:column>
+					
+					<rich:column filterValue="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.PM_LIFE_APPR_SETUP_SEARCH_PAGE_BEAN.FILTER_BY_VALUE2}" 
+								 filterBy="#{PM_LIFE_APPR_SETUP.AS_MODULE_ID}" 
+								 sortBy="#{PM_LIFE_APPR_SETUP.AS_MODULE_ID}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PLM011$PM_LIFE_APPR_SETUP_SEARCH_PAGE$AS_MODULE_ID$caption}" />
+						</f:facet>
+						<h:outputText value="#{PM_LIFE_APPR_SETUP.AS_MODULE_ID} " />
+					</rich:column>
+					
+					<rich:column 
+						filterValue="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.PM_LIFE_APPR_SETUP_SEARCH_PAGE_BEAN.FILTER_BY_VALUE3}" 
+						filterBy="#{PM_LIFE_APPR_SETUP.UI_M_AS_MODULE_ID_DESC}" 
+						sortBy="#{PM_LIFE_APPR_SETUP.UI_M_AS_MODULE_ID_DESC}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PLM011$PM_LIFE_APPR_SETUP_SEARCH_PAGE$UI_M_AS_MODULE_ID_DESC$caption}" />
+						</f:facet>
+						<h:outputText value="#{PM_LIFE_APPR_SETUP.UI_M_AS_MODULE_ID_DESC} " />
+					</rich:column>
+				</rich:dataTable>
+				<table width="100%">
+					<tr>
+						<td align="left">
+							<h:commandButton value = "#{searchmessage.insertButton$caption}" 
+											 action="#{PLM011_PM_LIFE_APPR_SETUP_SEARCH_PAGE_ACTION.insertRecordClickAction}"
+											 styleClass="button">
+							</h:commandButton>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</td>
+		</tr>
+
+		<!-- add footer to the page-->
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

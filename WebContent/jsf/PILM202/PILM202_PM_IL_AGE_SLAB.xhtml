@@ -1,0 +1,519 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+						beforePhase="#{PILM202_PM_IL_AGE_SLAB_ACTION.onLoad}">
+			<f:loadBundle basename="messageProperties_PILM202" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			<h:form id="PM_IL_AGE_SLAB">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.backToSearch}"
+											id="AUTOID_1" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_2"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM202_PM_IL_AGE_SLAB_ACTION.save}"
+											id="AUTOID_4" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_5"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										
+										<!-- Delete Link -->
+										<a4j:commandLink id="DELETERECORD_TOOL_HEADER1"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="DELETERECORD_TOOL_IMAGE_HEADER1"
+												styleClass="searchimg" accesskey="r"
+												image="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER1"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+											<rich:componentControl attachTo="DELETERECORD_TOOL_HEADER1"
+												event="onclick" for="DELETE_PANEL" id="DELETE_COMP_CONTROL"
+												operation="show" />
+										</a4j:commandLink>
+										<!-- Delete confirmation Confirmation popup -->
+										<rich:modalPanel height="110" id="DELETE_PANEL" width="300">
+											<f:facet name="header">
+												<h:panelGroup>
+													<h:outputText id="AUTOID_R_1"
+														style="color: #FFFFFF; font-size: 14px;font-weight: bold;"
+														value="#{commonmsg.premia$broker$delete$confirmation$caption}" />
+												</h:panelGroup>
+											</f:facet>
+											<f:facet name="controls">
+												<h:panelGroup>
+													<h:graphicImage id="DELETE_PANEL_hidelink"
+														style="cursor:pointer" styleClass="searchimg"
+														value="./../../resources/images/close.png" />
+													<rich:componentControl attachTo="DELETE_PANEL_hidelink"
+														event="onclick" for="DELETE_PANEL" operation="hide" />
+												</h:panelGroup>
+											</f:facet>
+											<table align="center" class="noborder">
+												<tr align="center">
+													<td><h:outputText id="AUTOID_R_2"
+														value="#{commonmsg.premia$broker$delete$confirmation$message}" />
+													</td>
+												</tr>
+												<tr align="center">
+													<td><h:commandButton
+														action="#{PILM202_PM_IL_AGE_SLAB_ACTION.deleteRow}"
+														id="DELETE_PANEL_continuebutton" immediate="true"
+														style="width:65px;height:20px;" styleClass="button"
+														value="#{commonmsg.premia$broker$delete$confirmation$ok}">
+														<rich:componentControl
+															attachTo="DELETE_PANEL_continuebutton" event="onclick"
+															for="DELETE_PANEL" operation="hide" />
+													</h:commandButton> <rich:spacer height="25" id="AUTOID_R-3" width="10" /> <a4j:commandButton
+														id="DELETE_PANEL_cancelbutton" immediate="true"
+														style="width:65px;height:20px;" styleClass="button"
+														value="#{commonmsg.premia$broker$delete$confirmation$cancel}">
+														<rich:componentControl
+															attachTo="DELETE_PANEL_cancelbutton" event="onclick"
+															for="DELETE_PANEL" operation="hide" />
+													</a4j:commandButton> <br />
+													</td>
+												</tr>
+											</table>
+										</rich:modalPanel>
+										
+										
+										
+										
+										
+										<h:commandLink rendered="false"
+											action="#{PILM202_PM_IL_AGE_SLAB_ACTION.delete}"
+											id="AUTOID_10" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM202_PM_IL_AGE_SLAB_ACTION.showPrevious}"
+											id="AUTOID_13" immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="AUTOID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM202_PM_IL_AGE_SLAB_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM202_PM_IL_AGE_SLAB_ACTION.errorMap['current'] !=null? PILM202_PM_IL_AGE_SLAB_ACTION.errorMap['current']: PILM202_PM_IL_AGE_SLAB_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM202_PM_IL_AGE_SLAB_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM202_PM_IL_AGE_SLAB_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM202_PM_IL_AGE_SLAB_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td ><h:outputLabel
+									value="#{message.PILM202$PM_IL_AGE_SLAB$DISPLAY$caption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table class="noborder" width="100%">
+							<tr>
+								<td />
+								<td vAlign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<h:commandButton
+											actionListener="#{PILM202_PM_IL_AGE_SLAB_ACTION.executePreform}"
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.dum}" id="dum"
+											immediate="true" style="display: none" />
+									</tr>
+									<tr>
+										<td class="oddrow"><h:outputLabel
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_CODE_LABEL}"
+											for="AS_CODE" id="AS_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM202$PM_IL_AGE_SLAB$AS_CODE$caption}" />
+										<h:graphicImage id="AUTOID_22" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrowright"><h:inputText
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_CODE}"
+											disabled="false" id="AS_CODE" maxlength="12" rendered="true"
+											required="true" 
+											styleClass="input" 
+											title="Enter Age Slab Code"
+											validator="#{PILM202_PM_IL_AGE_SLAB_ACTION.validatorAS_CODE}"
+											value="#{PILM202_PM_IL_AGE_SLAB_ACTION.PM_IL_AGE_SLAB_BEAN.AS_CODE}">
+											<a4j:support
+												focus="AS_DESC"
+												actionListener="#{PILM202_PM_IL_AGE_SLAB_ACTION.WHEN_VALIDATE_AS_CODE}"
+												event="onblur" id="AUTOID_23" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowfreeze"><h:outputLabel
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_FRZ_FLAG_LABEL}"
+											for="AS_FRZ_FLAG" id="AS_FRZ_FLAG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM202$PM_IL_AGE_SLAB$AS_FRZ_FLAG$caption}" />
+										
+										<h:selectBooleanCheckbox
+											id="AS_FRZ_FLAG" rendered="true"
+											title="Select Freeze"
+											value="#{PILM202_PM_IL_AGE_SLAB_ACTION.PM_IL_AGE_SLAB_BEAN.CHECK_BOX}">
+											<a4j:support
+												actionListener="#{PILM202_PM_IL_AGE_SLAB_ACTION.FRZ_FLAG_CLICK}"
+												event="onblur" id="AUTOID_25" immediate="true"
+												reRender="errorPanel" />
+										</h:selectBooleanCheckbox></td>
+									</tr>
+									<tr>
+										<td class="evenrow"><h:outputLabel
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_DESC_LABEL}"
+											for="AS_DESC" id="AS_DESC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM202$PM_IL_AGE_SLAB$AS_DESC$caption}" /></td>
+										<td class="evenrowright"><h:inputText
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_DESC}"
+											disabled="false" id="AS_DESC" maxlength="60" rendered="true"
+											required="false" 
+											styleClass="input" 
+											title="Enter  Description"
+											value="#{PILM202_PM_IL_AGE_SLAB_ACTION.PM_IL_AGE_SLAB_BEAN.AS_DESC}">
+											<a4j:support
+											oncomplete="setFocus('PM_IL_AGE_SLAB:AS_SHORT_DESC','PM_IL_AGE_SLAB:AS_DESC')"  
+												action="#{PILM202_PM_IL_AGE_SLAB_ACTION.WHEN_VALIDATE_AS_DESC}"
+												event="onblur" id="AUTOID_26" immediate="true"
+												reRender="errorPanel,AS_SHORT_DESC" />
+										</h:inputText></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow"><h:outputLabel
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_SHORT_DESC_LABEL}"
+											for="AS_SHORT_DESC" id="AS_SHORT_DESC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM202$PM_IL_AGE_SLAB$AS_SHORT_DESC$caption}" />
+										</td>
+										<td class="evenrowright"><h:inputText
+										 oninputfocus="currFocus('PM_IL_AGE_SLAB:AS_SHORT_DESC')"
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_SHORT_DESC}"
+											disabled="false" id="AS_SHORT_DESC" maxlength="30"
+											rendered="true" required="false"
+											styleClass="input"
+											 title="Enter Short Description"
+											value="#{PILM202_PM_IL_AGE_SLAB_ACTION.PM_IL_AGE_SLAB_BEAN.AS_SHORT_DESC}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrow"><h:outputLabel
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_LONG_DESC_LABEL}"
+											for="AS_LONG_DESC" id="AS_LONG_DESC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM202$PM_IL_AGE_SLAB$AS_LONG_DESC$caption}" />
+										</td>
+										<td class="oddrowright"><h:inputText
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_LONG_DESC}"
+											disabled="false" id="AS_LONG_DESC" maxlength="240"
+											rendered="true" required="false"
+											styleClass="input" 
+											title="Enter Long Description"
+											value="#{PILM202_PM_IL_AGE_SLAB_ACTION.PM_IL_AGE_SLAB_BEAN.AS_LONG_DESC}" />
+										</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										
+									</tr>
+									<tr>
+										<td class="evenrow"><h:outputLabel
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_MIN_AGE_LABEL}"
+											for="AS_MIN_AGE" id="AS_MIN_AGE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM202$PM_IL_AGE_SLAB$AS_MIN_AGE$caption}" />
+										</td>
+										<td class="evenrowright"><h:inputText
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_MIN_AGE}"
+											disabled="false" id="AS_MIN_AGE" maxlength="2"
+											rendered="true" required="false"
+											styleClass="inputNumeric" 
+											title="Enter Minimum Age"
+											validator="#{PILM202_PM_IL_AGE_SLAB_ACTION.validatorAS_MIN_AGE}"
+											value="#{PILM202_PM_IL_AGE_SLAB_ACTION.PM_IL_AGE_SLAB_BEAN.AS_MIN_AGE}">
+											<a4j:support
+												actionListener="#{PILM202_PM_IL_AGE_SLAB_ACTION.WHEN_VALIDATE_AS_MIN_AGE}"
+												event="onblur" id="AUTOID_28" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow"><h:outputLabel
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_MAX_AGE_LABEL}"
+											for="AS_MAX_AGE" id="AS_MAX_AGE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM202$PM_IL_AGE_SLAB$AS_MAX_AGE$caption}" />
+										</td>
+										<td class="evenrowright"><h:inputText
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_MAX_AGE}"
+											disabled="false" id="AS_MAX_AGE" maxlength="2"
+											rendered="true" required="false"
+											styleClass="inputNumeric" 
+											title="Enter Maximum Age"
+											validator="#{PILM202_PM_IL_AGE_SLAB_ACTION.validatorAS_MAX_AGE}"
+											value="#{PILM202_PM_IL_AGE_SLAB_ACTION.PM_IL_AGE_SLAB_BEAN.AS_MAX_AGE}">
+											<a4j:support
+												actionListener="#{PILM202_PM_IL_AGE_SLAB_ACTION.WHEN_VALIDATE_AS_MAX_AGE}"
+												event="onblur" id="AUTOID_29" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td colspan="5" width="100%">
+											<rich:simpleTogglePanel 
+													id="togelBLPanel" opened="false" switchType="client">
+											<f:facet name="header">
+												<h:outputText id="Bilingual_Header" value="Bilingual Details" />
+											</f:facet>
+										<table class="noborder" id="bilingualTable" width="100%">
+									<tr>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_BL_DESC_LABEL}"
+											for="AS_BL_DESC" id="AS_BL_DESC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM202$PM_IL_AGE_SLAB$AS_BL_DESC$caption}" />
+										</td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_BL_DESC}"
+											disabled="false" id="AS_BL_DESC" maxlength="60"
+											rendered="true" required="false"
+											styleClass="input" 
+											title="Enter Bilingual Description"
+											value="#{PILM202_PM_IL_AGE_SLAB_ACTION.PM_IL_AGE_SLAB_BEAN.AS_BL_DESC}">
+											<a4j:support
+												action="#{PILM202_PM_IL_AGE_SLAB_ACTION.WHEN_VALIDATE_AS_BL_DESC}"
+												event="onblur" id="AUTOID_27" immediate="true"
+												oncomplete="setFocus('PM_IL_AGE_SLAB:AS_BL_SHORT_DESC','PM_IL_AGE_SLAB:AS_BL_DESC')"
+												reRender="errorPanel,AS_BL_SHORT_DESC" />
+										</h:inputText></td>
+										<td class="oddrow" width="4%"/>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_BL_SHORT_DESC_LABEL}"
+											for="AS_BL_SHORT_DESC" id="AS_BL_SHORT_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM202$PM_IL_AGE_SLAB$AS_BL_SHORT_DESC$caption}" />
+										</td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_BL_SHORT_DESC}"
+											disabled="false" id="AS_BL_SHORT_DESC" maxlength="30"
+											rendered="true" required="false"
+											styleClass="input" 
+											title="Enter Bilingual Short Description"
+											value="#{PILM202_PM_IL_AGE_SLAB_ACTION.PM_IL_AGE_SLAB_BEAN.AS_BL_SHORT_DESC}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_BL_LONG_DESC_LABEL}"
+											for="AS_BL_LONG_DESC" id="AS_BL_LONG_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM202$PM_IL_AGE_SLAB$AS_BL_LONG_DESC$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM202_PM_IL_AGE_SLAB_ACTION.COMP_AS_BL_LONG_DESC}"
+											disabled="false" id="AS_BL_LONG_DESC" maxlength="240"
+											rendered="true" required="false"
+											styleClass="input" 
+											title="Enter Bilingual Long Description"
+											value="#{PILM202_PM_IL_AGE_SLAB_ACTION.PM_IL_AGE_SLAB_BEAN.AS_BL_LONG_DESC}" />
+										</td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrowright">&nbsp;</td>
+									</tr>
+									</table>
+									</rich:simpleTogglePanel>
+									</td>
+									</tr>
+							    </table>
+								</td>
+							</tr>
+						</table>
+						
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink action="#{PILM202_PM_IL_AGE_SLAB_ACTION.save}"
+											id="AUTOID_30" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_31"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTOID_32"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_33" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_34"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_35"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink rendered="false"
+											action="#{PILM202_PM_IL_AGE_SLAB_ACTION.delete}"
+											id="AUTOID_36"  style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_37"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_38"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM202_PM_IL_AGE_SLAB_ACTION.showPrevious}"
+											id="AUTOID_39" immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_40"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTOID_41"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM202_PM_IL_AGE_SLAB_ACTION.showPrevious}"
+											id="AUTOID_42" immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_43"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTOID_44"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_45" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_46"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_47"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_48" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_49"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_50"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

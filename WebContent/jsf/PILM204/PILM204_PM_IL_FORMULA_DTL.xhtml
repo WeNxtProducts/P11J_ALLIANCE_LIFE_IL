@@ -1,0 +1,365 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+
+
+		<f:view locale="#{sessionScope['pageLocale']}"
+		beforePhase="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.onLoad}">
+			<f:loadBundle basename="messageProperties_PILM204" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<table width="100%" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+				</tr>
+				<h:form id="PM_IL_FORMULA_DTL">
+					<tr>
+						<td colspan="3" width="100%" valign="top">
+						<table width="100%" cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+
+										<h:commandLink style="text-decoration:none" rendered="true"
+											styleClass="toolbarCommandLinkStyle"
+											action="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.backToHeader}"
+											immediate="true" id="commandLink_backToSearch">
+											<h:graphicImage style="border: thin solid white"
+												id="BACKBTN_TOOL_IMAGE_HEADER"
+												value="./../../images/back.png" />
+											<h:outputText value="#{menumessage.jsf$header$image$back}"
+												styleClass="toolbarCommandLinkStyle"
+												id="BACKBTN_TOOL_CAPTION_HEADER" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											action="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.saveRecord}"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/save.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/savenext.GIF" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/firstrec.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/prevpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/nextpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20"><rich:simpleTogglePanel
+							id="errorPanel" switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM204_PM_IL_FORMULA_DTL_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.errorMap['current'] !=null? PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.errorMap['current']: PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" id="linkstable" cellpadding="0"
+							cellspacing="0" border="0">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PILM204$PM_IL_FORMULA_DTL$displayCaption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="width: 100%; height: 420px; overflow: auto;">
+						<table width="100%" cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td width="100%" valign="top"><rich:panel id="formulaSetup"
+									style="overflow:auto">
+									<table id="bordertable" align="left" width="100%" border="0">
+										<tr>
+											<td colspan="5"><rich:dataTable id="PM_IL_FORMULA_DTL"
+												width="100%"
+												binding="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.datatable}"
+												value="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.dataList_PM_IL_FORMULA_DTL}"
+												rows="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.recordsperPage}"
+												var="data">
+
+												<!-- [ Converted into Panel group done by Kavitha 28 June 2011 ] -->
+												<!--		Next Col		-->
+												<rich:column rendered="true" filterBy="#{data.FMD_SR_NO}"
+													styleClass="#{data.rowSelected}" sortBy="#{data.FMD_SR_NO}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.filterByFMD_SR_NO}">
+													<f:facet name="header">
+														<h:outputText styleClass="forumRowHighlight"
+															value="#{message.PILM204$PM_IL_FORMULA_DTL$FMD_SR_NO$caption}" />
+													</f:facet>
+													<a4j:commandLink reRender="formulaSetup" immediate="true"
+														action="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.getDetails}">
+														<h:outputText value="#{data.FMD_SR_NO}" />
+													</a4j:commandLink>
+												</rich:column>
+												<!-- next column -->
+												<rich:column rendered="true"
+													filterBy="#{data.FMD_COMPONENT}"
+													styleClass="#{data.rowSelected}"
+													sortBy="#{data.FMD_COMPONENT}" filterEvent="onkeyup"
+													filterValue="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.filterByFMD_COMPONENT}">
+													<f:facet name="header">
+														<h:outputText styleClass="forumRowHighlight"
+															value="#{message.PILM204$PM_IL_FORMULA_DTL$FMD_COMPONENT$caption}" />
+													</f:facet>
+													<h:outputText value="#{data.FMD_COMPONENT}" />
+												</rich:column>
+												<!-- Attach scroller as footer of the table-->
+												<f:facet name="footer">
+													<h:panelGroup id="footerpanel" style="border:0">
+														<rich:datascroller id="myscr"
+															page="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.currentpage}"
+															align="right"></rich:datascroller>
+
+														<a4j:commandButton
+															binding="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.UI_M_BUT_ADD}"
+															rendered="true" styleClass="button"
+															reRender="errorPanel,formulaSetup" immediate="true"
+															value="#{commonmsg.addNewButtonCaption}"
+															style="width:81px"
+															actionListener="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.addNew}" />
+														<a4j:commandButton
+															binding="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.UI_M_BUT_DELETE}"
+															styleClass="button" reRender="errorPanel,formulaSetup"
+															immediate="true" rendered="true"
+															value="#{commonmsg.deleteButtonCaption}"
+															style="width:81px"
+															actionListener="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.deleteRow}" />
+														<a4j:commandButton
+															binding="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.UI_M_BUT_POST}"
+															styleClass="button" style="width:81px"
+															reRender="errorPanel,formulaSetup"
+															value="#{commonmsg.postButtonCaption}"
+															actionListener="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.post}" />
+
+													</h:panelGroup>
+												</f:facet>
+											</rich:dataTable></td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.COMP_FMD_SR_NO_LABEL}"
+												styleClass="label" for="FMD_SR_NO"
+												value="#{message.PILM204$PM_IL_FORMULA_DTL$FMD_SR_NO$caption}">
+											</h:outputLabel></td>
+											<td class="oddrow"><h:inputText
+												binding="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.COMP_FMD_SR_NO}"
+												id="FMD_SR_NO" style="width:93px;"  
+												styleClass="forumRowHighlightNumeric"
+												title="#{message.PILM204$PM_IL_FORMULA_DTL$FMD_SR_NO$tooltip}"
+												value="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.PM_IL_FORMULA_DTL_BEAN.FMD_SR_NO}" />
+											</td>
+											<td class="oddrow">&nbsp;</td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.COMP_FMD_COMP_TYPE_LABEL}"
+												styleClass="label" for="FMD_COMP_TYPE"
+												value="#{message.PILM204$PM_IL_FORMULA_DTL$FMD_COMP_TYPE$caption}">
+											</h:outputLabel></td>
+											<td class="oddrowright"><h:selectOneMenu
+												binding="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.COMP_FMD_COMP_TYPE}"
+												id="FMD_COMP_TYPE" style="width:60;"
+												title="#{message.PILM204$PM_IL_FORMULA_DTL$FMD_COMP_TYPE$tooltip}"
+												value="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.PM_IL_FORMULA_DTL_BEAN.FMD_COMP_TYPE}">
+												<a4j:support event="onblur" immediate="true" id="style_4"
+													actionListener="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.fireFieldValidation}"
+													reRender="errorMessages,err,warningMessages" />
+													<f:selectItems
+													value="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.componentTypeList}" />
+											</h:selectOneMenu></td>
+										</tr>
+
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.COMP_FMD_COMPONENT_LABEL}"
+												styleClass="label" for="FMD_COMPONENT"
+												value="#{message.PILM204$PM_IL_FORMULA_DTL$FMD_COMPONENT$caption}">
+											</h:outputLabel></td>
+											<td class="evenrow"><h:inputText
+												binding="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.COMP_FMD_COMPONENT}"
+												id="FMD_COMPONENT" style="width:60px;"
+												title="#{message.PILM204$PM_IL_FORMULA_DTL$FMD_COMPONENT$tooltip}"
+												validator="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.formulaComponentWhenValidate}"
+												value="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.PM_IL_FORMULA_DTL_BEAN.FMD_COMPONENT}">
+											</h:inputText> <h:inputText
+												binding="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.COMP_UI_M_FORMULA_DESC}"
+												id="UI_M_FORMULA_DESC" style="width:136px;" disabled="true"
+												title="#{message.PILM204$PM_IL_FORMULA_DTL$UI_M_FORMULA_DESC$tooltip}"
+												value="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.PM_IL_FORMULA_DTL_BEAN.UI_M_FORMULA_DESC}">
+												<a4j:support event="onblur" immediate="true" id="style_1"
+													actionListener="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.fireFieldValidation}"
+													reRender="FMD_COMPONENT_lov,errorPanel" />
+											</h:inputText> <rich:suggestionbox height="250" width="250" id="FMD_COMPONENT_lov"
+												value="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.componentList}"
+												suggestionAction="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.suggestionActionComponent}"
+												for="FMD_COMPONENT" var="code">
+												<h:column>
+													<h:outputText value="#{code.FMD_COMPONENT}" />
+												</h:column>
+												<h:column>
+													<h:outputText value="#{code.UI_M_FORMULA_DESC}" />
+												</h:column>
+												<a4j:support event="onselect" immediate="true" id="style_2"
+													ajaxSingle="true" reRender="UI_M_FORMULA_DESC">
+													<f:setPropertyActionListener
+														value="#{code.UI_M_FORMULA_DESC}" id="style_3"
+														target="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.PM_IL_FORMULA_DTL_BEAN.UI_M_FORMULA_DESC}" />
+												</a4j:support>
+											</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+											<td class="evenrow"></td>
+											<td class="evenrowright"></td>
+											<td class="evenrow"></td>
+										</tr>
+									</table>
+								</rich:panel></td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3" width="100%" valign="top">
+						<table width="100%" cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink style="text-decoration:none" rendered="true"
+											action="#{PM_IL_FORMULA_COMPOSITEBEAN.PM_IL_FORMULA_DTL_ACTION.saveRecord}"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/save.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/savenext.GIF" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/firstrec.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/prevpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/nextpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</h:form>
+			</table>
+			<table width="100%" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+				</tr>
+			</table>
+		</f:view>
+	</ui:define>
+</ui:composition>

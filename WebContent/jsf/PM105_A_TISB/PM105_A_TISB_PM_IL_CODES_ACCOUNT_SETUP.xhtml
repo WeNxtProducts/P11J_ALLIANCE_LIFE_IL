@@ -1,0 +1,927 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PM105_A_TISB" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			
+			<h:form id="PM_IL_CODES_ACCOUNT_SETUP">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+
+										<h:commandLink
+											action="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.backToSearch}"
+											id="AUTO_ID_1" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_2"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.createRecord}"
+											id="AUTO_ID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.createRecord}"
+											id="AUTO_ID_7" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_10" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.goSearch}"
+											id="AUTO_ID_16" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_22" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_23"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_24"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.errorMap['current'] !=null? PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.errorMap['current']:PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.warningMap['current']}" />
+
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								style="color: red; font-style: italic;font-weight:bold;"
+								styleClass="ErrorMessages"
+								value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								style="color: green; font-style: italic;font-weight:bold;"
+								styleClass="WarningMessages"
+								value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.warningMessages}" />
+
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td ><h:outputLabel id="FORM_CAPTION"
+									value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$$displayCaption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="width: 100%; height: 430px; overflow: auto;">
+						<table align="center" class="noborder" width="100%">
+							<tr>
+
+								<td valign="top" width="90%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowfreeze">&nbsp;</td>
+										<td class="oddrowfreeze">&nbsp;</td>
+										<td class="oddrowfreeze">&nbsp;</td>
+										<td class="oddrowfreeze">&nbsp;</td>
+										<td class="oddrowfreeze"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_FRZ_FLAG_LABEL}"
+											for="CACS_FRZ_FLAG" id="CACS_FRZ_FLAG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_FRZ_FLAG$caption}" />
+										<h:selectBooleanCheckbox
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_FRZ_FLAG$tooltip}"
+											id="CACS_FRZ_FLAG" rendered="true"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_FRZ_FLAG_UI}" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_SRC_BUS_FM_LABEL}"
+											for="CACS_SRC_BUS_FM" id="CACS_SRC_BUS_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_SRC_BUS_FM$caption}" />
+										<h:graphicImage id="AUTO_ID_26" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_SRC_BUS_FM}"
+											disabled="false" id="CACS_SRC_BUS_FM" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_SRC_BUS_FM$tooltip}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_SRC_BUS_FM}">
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_SRC_BUS_FM_WhenValidateItem}"
+												event="onblur" id="AUTO_ID_27" immediate="true"
+												reRender="errorPanel,CACS_SRC_BUS_FM,CACS_SRC_BUS_FM_SUG" />
+										</h:inputText> <rich:suggestionbox for="CACS_SRC_BUS_FM" height="200"
+											id="CACS_SRC_BUS_FM_SUG"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_SRC_BUS_FM_lovAction}"
+											var="srcFm" width="250">
+											<h:column>
+												<h:outputText id="AUTO_ID_28" value="#{srcFm.PC_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_29" value="#{srcFm.PC_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_30" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+
+										<td class="evenrow" width="4%" />
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_SRC_BUS_TO_LABEL}"
+											for="CACS_SRC_BUS_TO" id="CACS_SRC_BUS_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_SRC_BUS_TO$caption}" />
+										<h:graphicImage id="AUTO_ID_31" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_SRC_BUS_TO}"
+											disabled="false" id="CACS_SRC_BUS_TO" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_SRC_BUS_TO$tooltip}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_SRC_BUS_TO}">
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_SRC_BUS_TO_WhenValidateItem}"
+												event="onblur" id="AUTO_ID_32" immediate="true"
+												reRender="errorPanel,CACS_SRC_BUS_TO,CACS_SRC_BUS_TO_SUG" />
+										</h:inputText> <rich:suggestionbox for="CACS_SRC_BUS_TO" height="200"
+											id="CACS_SRC_BUS_TO_SUG"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_SRC_BUS_FM_lovAction}"
+											var="srcFm" width="250">
+											<h:column>
+												<h:outputText id="AUTO_ID_33" value="#{srcFm.PC_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_34" value="#{srcFm.PC_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_35" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_BUS_FM_CODE_LABEL}"
+											for="CACS_BUS_FM_CODE" id="CACS_BUS_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_BUS_FM_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_36" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_BUS_FM_CODE}"
+											disabled="false" id="CACS_BUS_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_BUS_FM_CODE$tooltip}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_BUS_FM_CODE}">
+
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_BUS_FM_CODE_WhenValidateItem}"
+												event="onblur" id="AUTO_ID_37" immediate="true"
+												reRender="errorPanel,CACS_BUS_FM_CODE,CACS_BUS_FM_CODE_SUG" />
+										</h:inputText> <rich:suggestionbox for="CACS_BUS_FM_CODE" height="200"
+											id="CACS_BUS_FM_CODE_SUG"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_BUS_FM_lovAction}"
+											var="busCode" width="250">
+											<h:column>
+												<h:outputText id="AUTO_ID_38" value="#{busCode.PC_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_39" value="#{busCode.PC_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_40" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_BUS_TO_CODE_LABEL}"
+											for="CACS_BUS_TO_CODE" id="CACS_BUS_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_BUS_TO_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_41" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_BUS_TO_CODE}"
+											disabled="false" id="CACS_BUS_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_BUS_TO_CODE$tooltip}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_BUS_TO_CODE}">
+
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_BUS_TO_CODE_WhenValidateItem}"
+												event="onblur" id="AUTO_ID_42" immediate="true"
+												reRender="errorPanel,CACS_BUS_TO_CODE,CACS_BUS_TO_CODE_SUG" />
+										</h:inputText> <rich:suggestionbox for="CACS_BUS_TO_CODE" height="200"
+											id="CACS_BUS_TO_CODE_SUG"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_BUS_FM_lovAction}"
+											var="busCode" width="250">
+											<h:column>
+												<h:outputText id="AUTO_ID_43" value="#{busCode.PC_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_44" value="#{busCode.PC_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_45" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DIVN_FM_CODE_LABEL}"
+											for="CACS_DIVN_FM_CODE" id="CACS_DIVN_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_DIVN_FM_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_46" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DIVN_FM_CODE}"
+											disabled="false" id="CACS_DIVN_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_DIVN_FM_CODE$tooltip}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_DIVN_FM_CODE}">
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_DIVN_FM_CODE_WhenValidateItem}"
+												event="onblur" id="AUTO_ID_47" immediate="true"
+												reRender="errorPanel,CACS_DIVN_FM_CODE,CACS_DIVN_FM_CODE_SUG" />
+										</h:inputText> <rich:suggestionbox for="CACS_DIVN_FM_CODE" height="200"
+											id="CACS_DIVN_FM_CODE_SUG"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_DIVN_FM_CODE_lovAction}"
+											var="divCode" width="250">
+											<h:column>
+												<h:outputText id="AUTO_ID_48" value="#{divCode.DIVN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_49" value="#{divCode.DIVN_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_50" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DIVN_TO_CODE_LABEL}"
+											for="CACS_DIVN_TO_CODE" id="CACS_DIVN_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_DIVN_TO_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_51" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DIVN_TO_CODE}"
+											disabled="false" id="CACS_DIVN_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_DIVN_TO_CODE$tooltip}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_DIVN_TO_CODE}">
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_DIVN_TO_CODE_WhenValidateItem}"
+												event="onblur" id="AUTO_ID_52" immediate="true"
+												reRender="errorPanel,CACS_DIVN_TO_CODE,CACS_DIVN_TO_CODE_SUG" />
+										</h:inputText> <rich:suggestionbox for="CACS_DIVN_TO_CODE" height="200"
+											id="CACS_DIVN_TO_CODE_SUG"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_DIVN_FM_CODE_lovAction}"
+											var="divCode" width="250">
+											<h:column>
+												<h:outputText id="AUTO_ID_53" value="#{divCode.DIVN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_54" value="#{divCode.DIVN_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_55" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DEPT_FM_CODE_LABEL}"
+											for="CACS_DEPT_FM_CODE" id="CACS_DEPT_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_DEPT_FM_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_56" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DEPT_FM_CODE}"
+											disabled="false" id="CACS_DEPT_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_DEPT_FM_CODE$tooltip}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_DEPT_FM_CODE}">
+
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_DEPT_FM_CODE_WhenValidateItem}"
+												event="onblur" id="AUTO_ID_57" immediate="true"
+												reRender="errorPanel,CACS_DEPT_FM_CODE,CACS_DEPT_FM_CODE_SUG" />
+										</h:inputText><rich:suggestionbox for="CACS_DEPT_FM_CODE" height="200"
+											id="CACS_DEPT_FM_CODE_SUG"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_DEPT_FM_CODE_lovAction}"
+											var="depCode" width="250">
+
+											<h:column>
+												<h:outputText id="AUTO_ID_58" value="#{depCode.DEPT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_59" value="#{depCode.DEPT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_60" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DEPT_TO_CODE_LABEL}"
+											for="CACS_DEPT_TO_CODE" id="CACS_DEPT_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_DEPT_TO_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_61" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DEPT_TO_CODE}"
+											disabled="false" id="CACS_DEPT_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_DEPT_TO_CODE$tooltip}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_DEPT_TO_CODE}">
+
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_DEPT_TO_CODE_WhenValidateItem}"
+												event="onblur" id="AUTO_ID_62" immediate="true"
+												reRender="errorPanel,CACS_DEPT_TO_CODE,CACS_DEPT_TO_CODE_SUG" />
+										</h:inputText> <rich:suggestionbox for="CACS_DEPT_TO_CODE" height="200"
+											id="CACS_DEPT_TO_CODE_SUG"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_DEPT_FM_CODE_lovAction}"
+											var="depCode" width="250">
+											<h:column>
+												<h:outputText id="AUTO_ID_63" value="#{depCode.DEPT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_64" value="#{depCode.DEPT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_65" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_SETUP_TYPE_LABEL}"
+											for="CACS_SETUP_TYPE" id="CACS_SETUP_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_SETUP_TYPE$caption}" />
+										<h:graphicImage id="AUTO_ID_66" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_SETUP_TYPE}"
+											disabled="false" id="CACS_SETUP_TYPE" rendered="true"
+											styleClass="input"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_SETUP_TYPE$tooltip}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_SETUP_TYPE}">
+
+											<f:selectItems id="AUTO_ID_67"
+												value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.setupTypeList}" />
+										</h:selectOneMenu></td>
+										<td class="evenrowright"></td>
+										<td class="evenrowright"></td>
+										<td class="evenrowright"></td>
+									</tr>
+
+
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_FORCE_DIVN_YN_LABEL}"
+											for="CACS_FORCE_DIVN_YN" id="CACS_FORCE_DIVN_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_FORCE_DIVN_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_FORCE_DIVN_YN}"
+											disabled="false" id="CACS_FORCE_DIVN_YN" rendered="true"
+											required="true" styleClass="forumRowHighlight"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_FORCE_DIVN_YN$tooltip}"
+											validator="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_FORCE_DIVN_YN_WhenValidateItem}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_FORCE_DIVN_YN}">
+												 <f:selectItems id="AUTO_ID_6X7"
+												value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.divisionTypeList}" /> 
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_69A" immediate="true"
+												reRender="errorPanel,CACS_FORCE_DEPT_YN,CACS_DIVN_CODE,CACS_DEPT_CODE,mandatory2,mandatory3" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_FORCE_DEPT_YN_LABEL}"
+											for="CACS_FORCE_DEPT_YN" id="CACS_FORCE_DEPT_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_FORCE_DEPT_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_FORCE_DEPT_YN}"
+											disabled="false" id="CACS_FORCE_DEPT_YN" rendered="true"
+											required="true" styleClass="forumRowHighlight"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_FORCE_DEPT_YN$tooltip}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_FORCE_DEPT_YN}">
+											 	<f:selectItems id="AUTO_ID_6A7"
+												value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.departmentTypeList}" /> 
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_FORCE_DEPT_YN_WhenValidateItem}"
+												event="onblur" id="AUTO_ID_71" immediate="true"
+												reRender="errorPanel,CACS_DEPT_CODE" />
+										</h:selectOneMenu></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_MAIN_ACNT_CODE_LABEL}"
+											for="CACS_MAIN_ACNT_CODE" id="CACS_MAIN_ACNT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_MAIN_ACNT_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_72" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_MAIN_ACNT_CODE}"
+											disabled="false" id="CACS_MAIN_ACNT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_MAIN_ACNT_CODE$tooltip}"
+											validator="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_MAIN_ACNT_CODE_WhenValidateItem}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_MAIN_ACNT_CODE}">
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_73" immediate="true"
+												reRender="errorPanel,UI_M_MAIN_ACNT_NAME,CACS_MAIN_ACNT_CODE_LOV,
+												CACS_SUB_ACNT_CODE_LOV,CACS_ACTY_CODE_1_LOV,
+												CACS_ACTY_CODE_2_LOV,UI_M_ACTY_NAME_1" />
+
+										</h:inputText> <rich:suggestionbox for="CACS_MAIN_ACNT_CODE" height="200"
+											id="CACS_MAIN_ACNT_CODE_LOV" immediate="true"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_MAIN_ACNT_CODE_lovAction}"
+											var="mainCode" width="300">
+											<h:column>
+												<h:outputText id="AUTO_ID_75"
+													value="#{mainCode.MAIN_ACNT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_76"
+													value="#{mainCode.MAIN_ACNT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_UI_M_MAIN_ACNT_NAME}"
+											disabled="true" id="UI_M_MAIN_ACNT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="Main account name" 
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.UI_M_MAIN_ACNT_NAME}" />
+										<h:graphicImage id="AUTO_ID_77" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright"></td>
+										<td class="evenrowright"></td>
+										<td class="evenrowright"></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_SUB_ACNT_CODE_LABEL}"
+											for="CACS_SUB_ACNT_CODE" id="CACS_SUB_ACNT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_SUB_ACNT_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_78" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_SUB_ACNT_CODE}"
+											disabled="false" id="CACS_SUB_ACNT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_SUB_ACNT_CODE$tooltip}"
+											validator="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_SUB_ACNT_CODE_WhenValidateItem}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_SUB_ACNT_CODE}">
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_79" immediate="true"
+												reRender="errorPanel,CACS_SUB_ACNT_CODE_LOV,UI_M_SUB_ACNT_NAME" />
+										</h:inputText>
+										<h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_UI_M_SUB_ACNT_NAME}"
+											disabled="true" id="UI_M_SUB_ACNT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" 
+											title="Sub account name"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.UI_M_SUB_ACNT_NAME}"/>
+										<h:graphicImage id="AUTO_ID_83" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" />
+										<rich:suggestionbox for="CACS_SUB_ACNT_CODE" height="200"
+											id="CACS_SUB_ACNT_CODE_LOV"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_SUB_ACNT_CODE_lovAction}"
+											var="subCode" width="300">
+											<h:column>
+												<h:outputText id="AUTO_ID_81"
+													value="#{subCode.SUB_ACNT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_82"
+													value="#{subCode.SUB_ACNT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> </td>
+										<td class="oddrow"></td>
+										<td class="oddrow"></td>
+										<td class="oddrow"></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DIVN_CODE_LABEL}"
+											for="CACS_DIVN_CODE" id="CACS_DIVN_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_DIVN_CODE$caption}" />
+										<h:outputText id="mandatory2" 
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DIVN_CODE.required ? '*':''}"
+											styleClass="mandatory"/></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DIVN_CODE}"
+											 id="CACS_DIVN_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_DIVN_CODE$tooltip}"
+											validator="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_DIVN_CODE_WhenValidateItem}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_DIVN_CODE}">
+
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_85" immediate="true"
+												reRender="UI_M_DIVN_NAME,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="CACS_DIVN_CODE" height="200"
+											id="AUTO_ID_86"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_DIV_CODE_lovAction}"
+											var="divCode" width="300">
+											<h:column>
+												<h:outputText id="AUTO_ID_87" value="#{divCode.DIVN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_88" value="#{divCode.DIVN_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_UI_M_DIVN_NAME}"
+											disabled="true" id="UI_M_DIVN_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" 
+											title="Branch name"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.UI_M_DIVN_NAME}" />
+										<h:graphicImage id="AUTO_ID_89" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+											<td class="evenrowright"></td>
+											<td class="evenrowright"></td>
+											<td class="evenrowright"></td>
+
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DEPT_CODE_LABEL}"
+											for="CACS_DEPT_CODE" id="CACS_DEPT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_DEPT_CODE$caption}" />
+										<h:outputText id="mandatory3" 
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DEPT_CODE.required ? '*':''}"
+											styleClass="mandatory"/></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_DEPT_CODE}"
+											disabled="false" id="CACS_DEPT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_DEPT_CODE$tooltip}"
+											validator="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_DEPT_CODE_WhenValidateItem}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_DEPT_CODE}">
+
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_91" immediate="true"
+												reRender="UI_M_DEPT_NAME,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="CACS_DEPT_CODE" height="200"
+											id="AUTO_ID_92"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_DEPT_CODE_lovAction}"
+											var="depCode" width="300">
+											<h:column>
+												<h:outputText id="AUTO_ID_93" value="#{depCode.DEPT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_94" value="#{depCode.DEPT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_UI_M_DEPT_NAME}"
+											disabled="true" id="UI_M_DEPT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" 
+											title="Department name"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.UI_M_DEPT_NAME}" />
+										<h:graphicImage id="AUTO_ID_95" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+											<td class="oddrow"></td>
+										<td class="oddrow"></td>
+										<td class="oddrow"></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_ANLY_CODE_1_LABEL}"
+											for="CACS_ANLY_CODE_1" id="CACS_ANLY_CODE_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_ANLY_CODE_1$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_ANLY_CODE_1}"
+											disabled="false" id="CACS_ANLY_CODE_1" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_ANLY_CODE_1$tooltip}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_ANLY_CODE_1}">
+
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_ANLY_CODE_1_WhenValidateItem}"
+												event="onblur" id="AUTO_ID_96" immediate="true"
+												reRender="UI_M_ANLY_NAME,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="CACS_ANLY_CODE_1" height="200"
+											id="AUTO_ID_97"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_ANLY_CODE_1_lovAction}"
+											var="anl1Code" width="300">
+											<h:column>
+												<h:outputText id="AUTO_ID_98" value="#{anl1Code.ANLY_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_99" value="#{anl1Code.ANLY_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_UI_M_ANLY_NAME}"
+											disabled="true" id="UI_M_ANLY_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" 
+											title="Analysis name"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME}" />
+										<h:graphicImage id="AUTO_ID_100" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright"></td>
+										<td class="evenrowright"></td>
+										<td class="evenrowright"></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_ANLY_CODE_2_LABEL}"
+											for="CACS_ANLY_CODE_2" id="CACS_ANLY_CODE_2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_ANLY_CODE_2$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_ANLY_CODE_2}"
+											disabled="false" id="CACS_ANLY_CODE_2" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_ANLY_CODE_2$tooltip}"
+											validator="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_ANLY_CODE_2_WhenValidateItem}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_ANLY_CODE_2}">
+
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_101" immediate="true"
+												reRender="UI_M_ANLY_NAME_1,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="CACS_ANLY_CODE_2" height="200"
+											id="AUTO_ID_102"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_ANLY_CODE_2_lovAction}"
+											var="anl2Code" width="300">
+											<h:column>
+												<h:outputText id="AUTO_ID_103" value="#{anl2Code.ANLY_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_104" value="#{anl2Code.ANLY_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_UI_M_ANLY_NAME_1}"
+											disabled="true" id="UI_M_ANLY_NAME_1" maxlength="240"
+											rendered="true" required="false" styleClass="input" 
+											title="Analysis 1 name"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME_1}" />
+										<h:graphicImage id="AUTO_ID_105" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+											<td class="oddrow"></td>
+										<td class="oddrow"></td>
+										<td class="oddrow"></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_ACTY_CODE_1_LABEL}"
+											for="CACS_ACTY_CODE_1" id="CACS_ACTY_CODE_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_ACTY_CODE_1$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_ACTY_CODE_1}"
+											disabled="false" id="CACS_ACTY_CODE_1" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_ACTY_CODE_1$tooltip}"
+											validator="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_ACTY_CODE_1_WhenValidateItem}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_ACTY_CODE_1}">
+
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_106" immediate="true"
+												reRender="UI_M_ACTY_NAME,errorPanel" />
+										</h:inputText> <rich:suggestionbox fetchValue="#{act1Code.AVAL_CODE}"
+											for="CACS_ACTY_CODE_1" height="200" id="CACS_ACTY_CODE_1_LOV"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_ACTY_CODE_1_lovAction}"
+											var="act1Code" width="300">
+											<h:column>
+												<h:outputText id="AUTO_ID_108" value="#{act1Code.AVAL_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_109"
+													value="#{act1Code.AVAL_VALUE_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_UI_M_ACTY_NAME}"
+											disabled="true" id="UI_M_ACTY_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" 
+											title="Activity name"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME}" />
+										<h:graphicImage id="AUTO_ID_110" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright"></td>
+										<td class="evenrowright"></td>
+										<td class="evenrowright"></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_ACTY_CODE_2_LABEL}"
+											for="CACS_ACTY_CODE_2" id="CACS_ACTY_CODE_2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_ACTY_CODE_2$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_CACS_ACTY_CODE_2}"
+											disabled="false" id="CACS_ACTY_CODE_2" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PM105_A_TISB$PM_IL_CODES_ACCOUNT_SETUP$CACS_ACTY_CODE_2$tooltip}"
+											validator="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_ACTY_CODE_2_WhenValidateItem}"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.CACS_ACTY_CODE_2}">
+
+											<a4j:support
+												actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTO_ID_111" immediate="true"
+												reRender="UI_M_ACTY_NAME_1,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="CACS_ACTY_CODE_2" height="200"
+											id="CACS_ACTY_CODE_2_LOV"
+											suggestionAction="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.CACS_ACTY_CODE_2_lovAction}"
+											var="act2Code" width="300">
+											<h:column>
+												<h:outputText id="AUTO_ID_113" value="#{act2Code.AVAL_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_114"
+													value="#{act2Code.AVAL_VALUE_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.COMP_UI_M_ACTY_NAME_1}"
+											disabled="true" id="UI_M_ACTY_NAME_1" maxlength="240"
+											rendered="true" required="false" styleClass="input" 
+											title="Activity code 2"
+											value="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.PM_IL_CODES_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME_1}" />
+										<h:graphicImage id="AUTO_ID_115" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="oddrow"></td>
+										<td class="oddrow"></td>
+										<td class="oddrow"></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									action="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.createRecord}"
+									id="AUTO_ID_116" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_117"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/save.gif" />
+									<h:outputText id="AUTO_ID_118"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink
+									actionListener="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.createRecord}"
+									id="AUTO_ID_119" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_120"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/savenext.GIF" />
+									<h:outputText id="AUTO_ID_121"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_122" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_123"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/deleteRecord.gif" />
+									<h:outputText id="AUTO_ID_124"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_125" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_126"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/firstrec.gif" />
+									<h:outputText id="AUTO_ID_127"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM105_A_TISB_PM_IL_CODES_ACCOUNT_SETUP_ACTION.goSearch}"
+									id="AUTO_ID_128" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_129"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/prevpage.gif" />
+									<h:outputText id="AUTO_ID_130"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_131" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_132"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/nextpage.gif" />
+									<h:outputText id="AUTO_ID_133"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_134" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_135"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText id="AUTO_ID_136"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,391 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PM094_A" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<table cellpadding="0" cellspacing="0" width="100%" border="0">
+				<h:form id="PM_AGENT_BONUS_APPL_PROD">
+					<tr>
+						<td colspan="3" width="100%" vAlign="top">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/back.png" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle"
+											action="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.saveData}">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../images/save.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<!--  	<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/savenext.GIF" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/deleteRecord.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/firstrec.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/nextpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink> -->
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20"><rich:simpleTogglePanel
+							id="errorPanel" switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.errorMap['current'] !=null? PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.errorMap['current']: PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" id="globalLink">
+							<tr>
+								<td><!-- Tab implementation --> <h:inputHidden
+									value="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.tabbedBar.tabClicked}"
+									id="myhidden" /> <h:panelGroup id="mypanel" style="border:0">
+									<table width="90%">
+										<tr>
+											<td width="90%"><a4j:repeat
+												value="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													onclick="document.getElementById('PM_AGENT_BONUS_APPL_PROD:myhidden').value='#{currtab.id}'"
+													value="#{currtab.value}" disabled="#{currtab.disabled}"
+													action="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.tabbedBar.tabAction}"
+													styleClass="#{currtab.styleString}" />
+
+											</a4j:repeat></td>
+											<!--  	<td width="*"><a4j:commandButton immediate="true"
+										disabled="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.tabbedBar.navigable}"
+										alt="first" image="./../../images/firstrec.gif"
+										action="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.tabbedBar.gotoFirstTab}"
+										reRender="mypanel" /> <a4j:commandButton immediate="true"
+										disabled="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.tabbedBar.navigable}"
+										alt="previous" image="./../../images/prevpage.gif"
+										action="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.tabbedBar.gotoPrevTab}"
+										reRender="mypanel" /> <a4j:commandButton immediate="true"
+										disabled="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.tabbedBar.navigable}"
+										alt="next" image="./../../images/nextpage.gif"
+										action="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.tabbedBar.gotoNextTab}"
+										reRender="mypanel" /> <a4j:commandButton immediate="true"
+										disabled="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.tabbedBar.navigable}"
+										alt="last" image="./../../images/lastRecord.gif"
+										action="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.tabbedBar.gotoLastTab}"
+										reRender="mypanel" /></td> -->
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PM094_A$PM_AGENT_BONUS_APPL_PROD$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td valign="top" width="100%"><h:panelGroup
+									id="PM_AGENT_BONUS_APPL_PROD_PANEL"
+									style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td><rich:dataTable
+												binding="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.dataTable}"
+												id="PM_AGENT_BONUS_APPL_PROD_DATATABLE" rows="5"
+												value="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.dataList_PM_AGENT_BONUS_APPL_PROD}"
+												var="tableVar" width="100%">
+
+												<rich:column filterBy="#{tableVar.ABAP_PROD_CODE}"
+													filterEvent="onkeyup" id="COLUMN_ABAP_PROD_CODE"
+													rendered="true" sortBy="#{tableVar.ABAP_PROD_CODE}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_ABAP_PROD_CODE"
+															styleClass="forumRowHighlight"
+															value="#{message.PM094_A$PM_AGENT_BONUS_APPL_PROD$ABAP_PROD_CODE$caption}" />
+
+													</f:facet>
+
+													<a4j:commandLink
+														action="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.displayRecords}"
+														id="GOTO_LINK_ABAP_PROD_CODE" immediate="true"
+														reRender="errorPanel,PM_AGENT_BONUS_APPL_PROD_PANEL">
+														<h:outputText id="LINK_CAPTION_ABAP_PROD_CODE"
+															value="#{tableVar.ABAP_PROD_CODE}" />
+													</a4j:commandLink>
+
+												</rich:column>
+
+
+												<rich:column filterBy="#{tableVar.UI_M_ABAP_PROD_CODE_DESC}"
+													filterEvent="onkeyup" id="COLUMN_UI_M_ABAP_PROD_CODE_DESC"
+													rendered="true" sortBy="#{tableVar.UI_M_ABAP_PROD_CODE_DESC}"
+													styleClass="#{tableVar.rowSelected}">
+													<f:facet name="header">
+
+														<h:outputText id="COLUMN_CAPTION_UI_M_ABAP_PROD_CODE_DESC"
+															styleClass="forumRowHighlight"
+															value="#{message.PM094_A$PM_AGENT_BONUS_APPL_PROD$UI_M_ABAP_PROD_CODE_DESC$caption}" />
+
+													</f:facet>
+													<h:outputText id="LINK_CAPTION_UI_M_ABAP_PROD_CODE_DESC"
+														value="#{tableVar.UI_M_ABAP_PROD_CODE_DESC}" />
+												</rich:column>
+
+
+												<f:facet name="footer">
+													<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+														<rich:datascroller align="right"
+															id="PM_AGENT_BONUS_APPL_PROD_SCROLL" page="1" />
+														<h:commandButton
+															actionListener="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.addRow}"
+															id="addRow" immediate="true"
+															reRender="PM_AGENT_BONUS_APPL_PROD_PANEL,errorPanel"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.addNewButtonCaption}" />
+														<h:commandButton
+															actionListener="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.deleteRow}"
+															id="deleteRow" immediate="true"
+															reRender="PM_AGENT_BONUS_APPL_PROD_PANEL,errorPanel"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.deleteButtonCaption}" />
+														<h:commandButton
+															actionListener="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.postRecord}"
+															id="postRecord"
+															reRender="PM_AGENT_BONUS_APPL_PROD_PANEL,errorPanel"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.postButtonCaption}" />
+													</h:panelGroup>
+												</f:facet>
+											</rich:dataTable></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table class="noborder" width="100%">
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.COMP_ABAP_MODULE_ID_LABEL}"
+														for="ABAP_MODULE_ID" id="ABAP_MODULE_ID_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM094_A$PM_AGENT_BONUS_APPL_PROD$ABAP_MODULE_ID$caption}" />
+														<h:graphicImage id="SELF_ID_35SX" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+													</td>
+													<td class="oddrow"><h:selectOneMenu
+														binding="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.COMP_ABAP_MODULE_ID}"
+														id="ABAP_MODULE_ID" style="width:120;"
+														validator="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.validateModuleId}"
+														title="#{message.PM094_A$PM_AGENT_BONUS_APPL_PROD$ABAP_MODULE_ID$tooltip}"
+														value="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.PM_AGENT_BONUS_APPL_PROD_BEAN.ABAP_MODULE_ID}">
+
+														<f:selectItems
+															value="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.moduleIdList}" />
+														<a4j:support event="onchange" id="style_3"
+															actionListener="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.fireFieldValidation}"
+															immediate="true"
+															reRender="errorPanel,UI_M_ABAP_PROD_CODE_DESC" />
+													</h:selectOneMenu></td>
+													<td class="oddrow"></td>
+													<td class="oddrow"></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.COMP_ABAP_PROD_CODE_LABEL}"
+														for="ABAP_PROD_CODE" id="ABAP_PROD_CODE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM094_A$PM_AGENT_BONUS_APPL_PROD$ABAP_PROD_CODE$caption}" />
+														<h:graphicImage id="SELF_ID_3A5X" style=""
+													styleClass="searchimg" value="./../../images/mandatory.jpg" />
+													</td>
+													<td><h:inputText
+														binding="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.COMP_ABAP_PROD_CODE}"
+														id="ABAP_PROD_CODE" style="width:120px;"
+														validator="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.validateAbapProdCode}"
+														title="#{message.PM094_A$PM_AGENT_BONUS_APPL_PROD$ABAP_PROD_CODE$tooltip}"
+														value="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.PM_AGENT_BONUS_APPL_PROD_BEAN.ABAP_PROD_CODE}">
+
+														<a4j:support event="onblur" id="style_4"
+															actionListener="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.fireFieldValidation}"
+															immediate="true"
+															reRender="errorPanel,UI_M_ABAP_PROD_CODE_DESC" />
+
+														<rich:suggestionbox height="200" width="250"
+															id="ABAP_PROD_CODE_SUGG"
+															value="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.prodcodeList}"
+															suggestionAction="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.suggestionActionProdCode}"
+															for="ABAP_PROD_CODE" var="prodcode">
+															<h:column>
+																<h:outputText value="#{prodcode.ABAP_PROD_CODE}" />
+															</h:column>
+															<h:column>
+																<h:outputText
+																	value="#{prodcode.UI_M_ABAP_PROD_CODE_DESC}" />
+															</h:column>
+															<a4j:support event="onselect" immediate="true"
+																id="style_5"
+																actionListener="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.getProdCodeDesc}"
+																reRender="UI_M_ABAP_PROD_CODE_DESC" />
+														</rich:suggestionbox>
+													</h:inputText> <h:inputText
+														binding="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.COMP_UI_M_ABAP_PROD_CODE_DESC}"
+														disabled="true" id="UI_M_ABAP_PROD_CODE_DESC"
+														style="width:215px;"
+														title="#{message.PM094_A$PM_AGENT_BONUS_APPL_PROD$UI_M_ABAP_PROD_CODE_DESC$tooltip}"
+														value="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.PM_AGENT_BONUS_APPL_PROD_BEAN.UI_M_ABAP_PROD_CODE_DESC}" />
+													<h:graphicImage id="AUTOID_6" styleClass="searchimg"
+														value="./../../resources/images/Lov.gif" /></td>
+													<td class="evenrowright"></td>
+													<td class="evenrowright"></td>
+												</tr>
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink style="text-decoration:none" rendered="true"
+									styleClass="toolbarCommandLinkStyle"
+									action="#{PM094_A_PM_AGENT_BONUS_COMPOSITE_ACTION.PM_AGENT_BONUS_APPL_PROD_ACTION_BEAN.saveData}">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/save.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none" rendered="false"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/savenext.GIF" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none" rendered="false"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/firstrec.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none" rendered="false"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/prevpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none" rendered="false"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/nextpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink style="text-decoration:none" rendered="false"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</h:form>
+			</table>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

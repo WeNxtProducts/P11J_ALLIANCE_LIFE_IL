@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILM054_APAC" var="message" />
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<!-- add header row -->
+		<tr>
+		</tr>
+		<h:form id="SearchAccountCode">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20"></td>
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM054_APAC_COMPOSITE_ACTION.searchBean.errorMap['current'] !=null? PILM054_APAC_COMPOSITE_ACTION.searchBean.errorMap['current']:PILM054_APAC_COMPOSITE_ACTION.searchBean.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" styleClass="ErrorMessages"
+								value="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.errorMessages}"
+								escape="false" />
+							<h:messages id="msg" styleClass="ErrorMessages"
+								rendered="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.globalMsgRender}" />
+
+							<h:outputText id="warningMessages" styleClass="WarningMessages"
+								value="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.warningMessages}"
+								escape="false" />
+						</rich:simpleTogglePanel>
+			</tr>
+			<!-- Body row -->
+			<tr>
+				<td><!-- initial filter to search and list -->
+				<table width="100%" border="0" cellpadding="0" cellspacing="0"
+					id="masthead">
+					<tr style="width: 908px;">
+						<td><h:outputText
+							value="#{message.PILM054_APAC$PM_IL_RI_ACCOUNT_SETUP_SEARCH$INITIAL_SEARCH$caption}" /></td>
+						<td><h:outputText
+							value="#{message.PILM054_APAC$PM_IL_RI_ACCOUNT_SETUP_SEARCH$MAIN_ACCOUNT_NO$caption}" /><h:inputText
+							binding="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.COMP_RAS_MAIN_ACNT_CODE}"
+							value="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.mainAcctCode}" /></td>
+						<td><h:outputText
+							value="#{message.PILM054_APAC$PM_IL_RI_ACCOUNT_SETUP_SEARCH$SUB_ACCOUNT_NO$caption}" /><h:inputText
+							binding="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.COMP_RAS_SUB_ACNT_CODE}"
+							value="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.subAcctCode}" /></td>
+						<td><h:outputText
+							value="#{message.PILM054_APAC$PM_IL_RI_ACCOUNT_SETUP_SEARCH$DIVISION$caption}" /><h:inputText
+							binding="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.COMP_RAS_DIVN_CODE}"
+							value="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.divisionCode}" /></td>
+
+						<td><a4j:commandButton styleClass="button"
+							value="#{commonmsg.searchButton$caption}"
+							id="a4link">
+							<a4j:support immediate="true"
+								action="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.fetchAcctCodeDetails}"
+								event="onclick" reRender="dataTableId,errorPanel"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table --> <rich:dataTable
+					binding="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.dataTable}"
+					id="dataTableId"
+					value="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.acctCodeList}"
+					var="codeDetails" cellpadding="5px" rows="10" border="0"
+					width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+
+					<rich:column filterBy="#{codeDetails.RAS_MAIN_ACNT_CODE}"
+						sortBy="#{codeDetails.RAS_MAIN_ACNT_CODE}" filterEvent="onkeyup">
+
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM054_APAC$PM_IL_RI_ACCOUNT_SETUP_SEARCH$MAIN_ACC$caption}" />
+						</f:facet>
+						<h:commandLink
+							action="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.clearList}">
+								<h:outputText value="#{codeDetails.RAS_MAIN_ACNT_CODE}" />
+							<f:param name="rowid" value="#{codeDetails.ROWID}" />
+						</h:commandLink>
+
+					</rich:column>
+
+					<rich:column filterBy="#{codeDetails.RAS_SUB_ACNT_CODE}"
+						sortBy="#{codeDetails.RAS_SUB_ACNT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM054_APAC$PM_IL_RI_ACCOUNT_SETUP_SEARCH$SUB_ACC$caption}" />
+						</f:facet>
+						<h:outputText value="#{codeDetails.RAS_SUB_ACNT_CODE} " />
+					</rich:column>
+
+					<rich:column filterBy="#{codeDetails.RAS_DIVN_CODE}"
+						sortBy="#{codeDetails.RAS_DIVN_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM054_APAC$PM_IL_RI_ACCOUNT_SETUP_SEARCH$DIVISION_CODE$caption}" />
+						</f:facet>
+						<h:outputText value="#{codeDetails.RAS_DIVN_CODE} " />
+					</rich:column>
+
+				</rich:dataTable></td>
+				<td><h:commandButton disabled="false"
+					id="UI_M_BUT_TREATY_INSERT" rendered="true"
+					style="height:20px;width:95px;" styleClass="button" title=""
+					value="Insert"
+					action="#{PILM054_APAC_COMPOSITE_ACTION.searchBean.insertData}" />
+				</td>
+			</tr>
+			<!-- add footer to the page-->
+		</h:form>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

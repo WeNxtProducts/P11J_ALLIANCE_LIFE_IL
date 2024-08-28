@@ -1,0 +1,887 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.onLoad}">
+			<f:loadBundle basename="messageProperties_PILT024" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<table cellpadding="0" cellspacing="0" width="100%" border="0">
+				<h:form id="PT_IL_PREM_COLL_CVR_DTL">
+					<tr>
+						<td colspan="3" width="100%" vAlign="top">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILT024_COMPOSITE_ACTION.navigationEnabled}"
+											rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table cellspacing="0" width="100%" id="errormsgtable">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.errorMap['current'] !=null? PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.errorMap['current']: PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.globalMsgRender}" />
+									<h:outputText id="warningMessages"
+										value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel
+									value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td width="100%" vAlign="top"><h:panelGroup
+									id="PT_IL_PREM_COLL_CVR_DTL_PANEL" style="border:0;height:15%;">
+									<table id="bordertable" align="left" width="100%">
+										<tr>
+											<td><rich:panel style="width:960px;overflow:auto">
+												<rich:dataTable
+													binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.dataTable}"
+													id="PT_IL_PREM_COLL_CVR_DTL_DATA_GRID" rows="5"
+													value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.dataList_PT_IL_PREM_COLL_CVR_DTL}"
+													var="tableVar">
+													
+													<rich:column filterBy="#{tableVar.B_PCCD_PREMIUM}"
+														filterEvent="onkeyup" id="COLUMN_B_PCCD_PREMIUM"
+														rendered="true" sortBy="#{tableVar.B_PCCD_PREMIUM}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_B_PCCD_PREMIUM"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$B_PCCD_PREMIUM$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_B_PCCD_PREMIUM"
+															value="#{tableVar.B_PCCD_PREMIUM}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.B_PCCD_DISCOUNT}"
+														filterEvent="onkeyup" id="COLUMN_B_PCCD_DISCOUNT"
+														rendered="true" sortBy="#{tableVar.B_PCCD_DISCOUNT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_B_PCCD_DISCOUNT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$B_PCCD_DISCOUNT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_B_PCCD_DISCOUNT"
+															value="#{tableVar.B_PCCD_DISCOUNT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.B_PCCD_LOADING}"
+														filterEvent="onkeyup" id="COLUMN_B_PCCD_LOADING"
+														rendered="true" sortBy="#{tableVar.B_PCCD_LOADING}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_B_PCCD_LOADING"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$B_PCCD_LOADING$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_B_PCCD_LOADING"
+															value="#{tableVar.B_PCCD_LOADING}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.B_M_PCCD_TOTAL_CVR_PREM}"
+														filterEvent="onkeyup" id="COLUMN_B_M_PCCD_TOTAL_CVR_PREM"
+														rendered="true"
+														sortBy="#{tableVar.B_M_PCCD_TOTAL_CVR_PREM}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_B_M_PCCD_TOTAL_CVR_PREM"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$B_M_PCCD_TOTAL_CVR_PREM$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_B_M_PCCD_TOTAL_CVR_PREM"
+															value="#{tableVar.B_M_PCCD_TOTAL_CVR_PREM}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_COVER_CODE}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_COVER_CODE"
+														rendered="true" sortBy="#{tableVar.PCCD_COVER_CODE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_PCCD_COVER_CODE"
+																value=".\..\..\images\mandatory.jpg">
+																<h:outputText id="COLUMN_CAPTION_PCCD_COVER_CODE"
+																	styleClass="forumRowHighlight"
+																	value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_COVER_CODE$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_COVER_CODE"
+															value="#{tableVar.PCCD_COVER_CODE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_FC_RISK_PREM_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_FC_RISK_PREM_AMT"
+														rendered="true" sortBy="#{tableVar.PCCD_FC_RISK_PREM_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PCCD_FC_RISK_PREM_AMT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_RISK_PREM_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_FC_RISK_PREM_AMT"
+															value="#{tableVar.PCCD_FC_RISK_PREM_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_FC_INV_PREM_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_FC_INV_PREM_AMT"
+														rendered="true" sortBy="#{tableVar.PCCD_FC_INV_PREM_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PCCD_FC_INV_PREM_AMT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_INV_PREM_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_FC_INV_PREM_AMT"
+															value="#{tableVar.PCCD_FC_INV_PREM_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_FC_RISK_DISC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_FC_RISK_DISC_AMT"
+														rendered="true" sortBy="#{tableVar.PCCD_FC_RISK_DISC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PCCD_FC_RISK_DISC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_RISK_DISC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_FC_RISK_DISC_AMT"
+															value="#{tableVar.PCCD_FC_RISK_DISC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_FC_INV_DISC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_FC_INV_DISC_AMT"
+														rendered="true" sortBy="#{tableVar.PCCD_FC_INV_DISC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PCCD_FC_INV_DISC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_INV_DISC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_FC_INV_DISC_AMT"
+															value="#{tableVar.PCCD_FC_INV_DISC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_FC_RISK_LOAD_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_FC_RISK_LOAD_AMT"
+														rendered="true" sortBy="#{tableVar.PCCD_FC_RISK_LOAD_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PCCD_FC_RISK_LOAD_AMT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_RISK_LOAD_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_FC_RISK_LOAD_AMT"
+															value="#{tableVar.PCCD_FC_RISK_LOAD_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_FC_INV_LOAD_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_FC_INV_LOAD_AMT"
+														rendered="true" sortBy="#{tableVar.PCCD_FC_INV_LOAD_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PCCD_FC_INV_LOAD_AMT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_INV_LOAD_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_FC_INV_LOAD_AMT"
+															value="#{tableVar.PCCD_FC_INV_LOAD_AMT}" />
+													</rich:column>
+													<rich:column
+														filterBy="#{tableVar.UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC}"
+														filterEvent="onkeyup"
+														id="COLUMN_UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC"
+														rendered="true"
+														sortBy="#{tableVar.UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText
+																id="COLUMN_CAPTION_UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC$caption}" />
+														</f:facet>
+														<h:outputText
+															id="LINK_CAPTION_UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC"
+															value="#{tableVar.UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC}" />
+													</rich:column>
+													<rich:column
+														filterBy="#{tableVar.UI_M_PCCD_TOTAL_CVR_PREM_INV_FC}"
+														filterEvent="onkeyup"
+														id="COLUMN_UI_M_PCCD_TOTAL_CVR_PREM_INV_FC"
+														rendered="true"
+														sortBy="#{tableVar.UI_M_PCCD_TOTAL_CVR_PREM_INV_FC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText
+																id="COLUMN_CAPTION_UI_M_PCCD_TOTAL_CVR_PREM_INV_FC"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$UI_M_PCCD_TOTAL_CVR_PREM_INV_FC$caption}" />
+														</f:facet>
+														<h:outputText
+															id="LINK_CAPTION_UI_M_PCCD_TOTAL_CVR_PREM_INV_FC"
+															value="#{tableVar.UI_M_PCCD_TOTAL_CVR_PREM_INV_FC}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_LC_RISK_PREM_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_LC_RISK_PREM_AMT"
+														rendered="true" sortBy="#{tableVar.PCCD_LC_RISK_PREM_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PCCD_LC_RISK_PREM_AMT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_RISK_PREM_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_LC_RISK_PREM_AMT"
+															value="#{tableVar.PCCD_LC_RISK_PREM_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_LC_INV_PREM_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_LC_INV_PREM_AMT"
+														rendered="true" sortBy="#{tableVar.PCCD_LC_INV_PREM_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PCCD_LC_INV_PREM_AMT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_INV_PREM_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_LC_INV_PREM_AMT"
+															value="#{tableVar.PCCD_LC_INV_PREM_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_LC_RISK_DISC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_LC_RISK_DISC_AMT"
+														rendered="true" sortBy="#{tableVar.PCCD_LC_RISK_DISC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PCCD_LC_RISK_DISC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_RISK_DISC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_LC_RISK_DISC_AMT"
+															value="#{tableVar.PCCD_LC_RISK_DISC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_LC_INV_DISC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_LC_INV_DISC_AMT"
+														rendered="true" sortBy="#{tableVar.PCCD_LC_INV_DISC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PCCD_LC_INV_DISC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_INV_DISC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_LC_INV_DISC_AMT"
+															value="#{tableVar.PCCD_LC_INV_DISC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_LC_RISK_LOAD_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_LC_RISK_LOAD_AMT"
+														rendered="true" sortBy="#{tableVar.PCCD_LC_RISK_LOAD_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PCCD_LC_RISK_LOAD_AMT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_RISK_LOAD_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_LC_RISK_LOAD_AMT"
+															value="#{tableVar.PCCD_LC_RISK_LOAD_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PCCD_LC_INV_LOAD_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PCCD_LC_INV_LOAD_AMT"
+														rendered="true" sortBy="#{tableVar.PCCD_LC_INV_LOAD_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PCCD_LC_INV_LOAD_AMT"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_INV_LOAD_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PCCD_LC_INV_LOAD_AMT"
+															value="#{tableVar.PCCD_LC_INV_LOAD_AMT}" />
+													</rich:column>
+													<rich:column
+														filterBy="#{tableVar.UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC}"
+														filterEvent="onkeyup"
+														id="COLUMN_UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC"
+														rendered="true"
+														sortBy="#{tableVar.UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText
+																id="COLUMN_CAPTION_UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC$caption}" />
+														</f:facet>
+														<h:outputText
+															id="LINK_CAPTION_UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC"
+															value="#{tableVar.UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC}" />
+													</rich:column>
+													<rich:column
+														filterBy="#{tableVar.UI_M_PCCD_TOTAL_CVR_PREM_INV_LC}"
+														filterEvent="onkeyup"
+														id="COLUMN_UI_M_PCCD_TOTAL_CVR_PREM_INV_LC"
+														rendered="true"
+														sortBy="#{tableVar.UI_M_PCCD_TOTAL_CVR_PREM_INV_LC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText
+																id="COLUMN_CAPTION_UI_M_PCCD_TOTAL_CVR_PREM_INV_LC"
+																styleClass="forumRowHighlight"
+																value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$UI_M_PCCD_TOTAL_CVR_PREM_INV_LC$caption}" />
+														</f:facet>
+														<h:outputText
+															id="LINK_CAPTION_UI_M_PCCD_TOTAL_CVR_PREM_INV_LC"
+															value="#{tableVar.UI_M_PCCD_TOTAL_CVR_PREM_INV_LC}" />
+													</rich:column>
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PT_IL_PREM_COLL_CVR_DTL_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.addRow}"
+																id="addRow"
+																reRender="PT_IL_PREM_COLL_CVR_DTL_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.deleteRow}"
+																id="deleteRow"
+																reRender="PT_IL_PREM_COLL_CVR_DTL_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.postRecord}"
+																id="postRecord"
+																reRender="PT_IL_PREM_COLL_CVR_DTL_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</rich:panel></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table width="100%">
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_B_PCCD_PREMIUM_LABEL}"
+														for="B_PCCD_PREMIUM" id="B_PCCD_PREMIUM_LABEL"
+														rendered="true" styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$B_PCCD_PREMIUM$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_B_PCCD_PREMIUM}"
+														disabled="false" id="B_PCCD_PREMIUM" maxlength="30"
+														rendered="true" required="false"
+														styleClass="input"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$B_PCCD_PREMIUM$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.B_PCCD_PREMIUM}" />
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_B_PCCD_DISCOUNT_LABEL}"
+														for="B_PCCD_DISCOUNT" id="B_PCCD_DISCOUNT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$B_PCCD_DISCOUNT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_B_PCCD_DISCOUNT}"
+														disabled="false" id="B_PCCD_DISCOUNT" maxlength="30"
+														rendered="true" required="false"
+														styleClass="input"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$B_PCCD_DISCOUNT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.B_PCCD_DISCOUNT}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_B_PCCD_LOADING_LABEL}"
+														for="B_PCCD_LOADING" id="B_PCCD_LOADING_LABEL"
+														rendered="true" styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$B_PCCD_LOADING$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_B_PCCD_LOADING}"
+														disabled="false" id="B_PCCD_LOADING" maxlength="30"
+														rendered="true" required="false"
+														styleClass="input"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$B_PCCD_LOADING$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.B_PCCD_LOADING}" />
+													</td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_B_M_PCCD_TOTAL_CVR_PREM_LABEL}"
+														for="B_M_PCCD_TOTAL_CVR_PREM"
+														id="B_M_PCCD_TOTAL_CVR_PREM_LABEL" rendered="true"
+														styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$B_M_PCCD_TOTAL_CVR_PREM$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_B_M_PCCD_TOTAL_CVR_PREM}"
+														disabled="false" id="B_M_PCCD_TOTAL_CVR_PREM"
+														maxlength="30" rendered="true" required="false"
+														styleClass="input"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$B_M_PCCD_TOTAL_CVR_PREM$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.B_M_PCCD_TOTAL_CVR_PREM}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_COVER_CODE_LABEL}"
+														for="PCCD_COVER_CODE" id="PCCD_COVER_CODE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_COVER_CODE$caption}" />
+													<h:graphicImage style=""
+														value=".\..\..\images\mandatory.jpg" /></td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_COVER_CODE}"
+														disabled="false" id="PCCD_COVER_CODE" maxlength="12"
+														rendered="true" required="true"
+														styleClass="input"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_COVER_CODE$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_COVER_CODE}" />
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_FC_RISK_PREM_AMT_LABEL}"
+														for="PCCD_FC_RISK_PREM_AMT"
+														id="PCCD_FC_RISK_PREM_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_RISK_PREM_AMT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_FC_RISK_PREM_AMT}"
+														disabled="false" id="PCCD_FC_RISK_PREM_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_RISK_PREM_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_FC_RISK_PREM_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_FC_INV_PREM_AMT_LABEL}"
+														for="PCCD_FC_INV_PREM_AMT" id="PCCD_FC_INV_PREM_AMT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_INV_PREM_AMT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_FC_INV_PREM_AMT}"
+														disabled="false" id="PCCD_FC_INV_PREM_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_INV_PREM_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_FC_INV_PREM_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_FC_RISK_DISC_AMT_LABEL}"
+														for="PCCD_FC_RISK_DISC_AMT"
+														id="PCCD_FC_RISK_DISC_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_RISK_DISC_AMT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_FC_RISK_DISC_AMT}"
+														disabled="false" id="PCCD_FC_RISK_DISC_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_RISK_DISC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_FC_RISK_DISC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_FC_INV_DISC_AMT_LABEL}"
+														for="PCCD_FC_INV_DISC_AMT" id="PCCD_FC_INV_DISC_AMT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_INV_DISC_AMT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_FC_INV_DISC_AMT}"
+														disabled="false" id="PCCD_FC_INV_DISC_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_INV_DISC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_FC_INV_DISC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_FC_RISK_LOAD_AMT_LABEL}"
+														for="PCCD_FC_RISK_LOAD_AMT"
+														id="PCCD_FC_RISK_LOAD_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_RISK_LOAD_AMT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_FC_RISK_LOAD_AMT}"
+														disabled="false" id="PCCD_FC_RISK_LOAD_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_RISK_LOAD_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_FC_RISK_LOAD_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_FC_INV_LOAD_AMT_LABEL}"
+														for="PCCD_FC_INV_LOAD_AMT" id="PCCD_FC_INV_LOAD_AMT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_INV_LOAD_AMT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_FC_INV_LOAD_AMT}"
+														disabled="false" id="PCCD_FC_INV_LOAD_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_FC_INV_LOAD_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_FC_INV_LOAD_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC_LABEL}"
+														for="UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC"
+														id="UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC_LABEL"
+														rendered="true" styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC}"
+														disabled="false" id="UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC"
+														maxlength="30" rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.UI_M_PCCD_TOTAL_CVR_PREM_RISK_FC}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_UI_M_PCCD_TOTAL_CVR_PREM_INV_FC_LABEL}"
+														for="UI_M_PCCD_TOTAL_CVR_PREM_INV_FC"
+														id="UI_M_PCCD_TOTAL_CVR_PREM_INV_FC_LABEL" rendered="true"
+														styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$UI_M_PCCD_TOTAL_CVR_PREM_INV_FC$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_UI_M_PCCD_TOTAL_CVR_PREM_INV_FC}"
+														disabled="false" id="UI_M_PCCD_TOTAL_CVR_PREM_INV_FC"
+														maxlength="30" rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$UI_M_PCCD_TOTAL_CVR_PREM_INV_FC$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.UI_M_PCCD_TOTAL_CVR_PREM_INV_FC}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_LC_RISK_PREM_AMT_LABEL}"
+														for="PCCD_LC_RISK_PREM_AMT"
+														id="PCCD_LC_RISK_PREM_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_RISK_PREM_AMT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_LC_RISK_PREM_AMT}"
+														disabled="false" id="PCCD_LC_RISK_PREM_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_RISK_PREM_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_LC_RISK_PREM_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_LC_INV_PREM_AMT_LABEL}"
+														for="PCCD_LC_INV_PREM_AMT" id="PCCD_LC_INV_PREM_AMT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_INV_PREM_AMT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_LC_INV_PREM_AMT}"
+														disabled="false" id="PCCD_LC_INV_PREM_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_INV_PREM_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_LC_INV_PREM_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_LC_RISK_DISC_AMT_LABEL}"
+														for="PCCD_LC_RISK_DISC_AMT"
+														id="PCCD_LC_RISK_DISC_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_RISK_DISC_AMT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_LC_RISK_DISC_AMT}"
+														disabled="false" id="PCCD_LC_RISK_DISC_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_RISK_DISC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_LC_RISK_DISC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_LC_INV_DISC_AMT_LABEL}"
+														for="PCCD_LC_INV_DISC_AMT" id="PCCD_LC_INV_DISC_AMT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_INV_DISC_AMT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_LC_INV_DISC_AMT}"
+														disabled="false" id="PCCD_LC_INV_DISC_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_INV_DISC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_LC_INV_DISC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_LC_RISK_LOAD_AMT_LABEL}"
+														for="PCCD_LC_RISK_LOAD_AMT"
+														id="PCCD_LC_RISK_LOAD_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_RISK_LOAD_AMT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_LC_RISK_LOAD_AMT}"
+														disabled="false" id="PCCD_LC_RISK_LOAD_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_RISK_LOAD_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_LC_RISK_LOAD_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_LC_INV_LOAD_AMT_LABEL}"
+														for="PCCD_LC_INV_LOAD_AMT" id="PCCD_LC_INV_LOAD_AMT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_INV_LOAD_AMT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_PCCD_LC_INV_LOAD_AMT}"
+														disabled="false" id="PCCD_LC_INV_LOAD_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$PCCD_LC_INV_LOAD_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.PCCD_LC_INV_LOAD_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC_LABEL}"
+														for="UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC"
+														id="UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC_LABEL"
+														rendered="true" styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC}"
+														disabled="false" id="UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC"
+														maxlength="30" rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.UI_M_PCCD_TOTAL_CVR_PREM_RISK_LC}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_UI_M_PCCD_TOTAL_CVR_PREM_INV_LC_LABEL}"
+														for="UI_M_PCCD_TOTAL_CVR_PREM_INV_LC"
+														id="UI_M_PCCD_TOTAL_CVR_PREM_INV_LC_LABEL" rendered="true"
+														styleClass="label"
+														value="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$UI_M_PCCD_TOTAL_CVR_PREM_INV_LC$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.COMP_UI_M_PCCD_TOTAL_CVR_PREM_INV_LC}"
+														disabled="false" id="UI_M_PCCD_TOTAL_CVR_PREM_INV_LC"
+														maxlength="30" rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{messageProperties_PILT024.PILT024$PT_IL_PREM_COLL_CVR_DTL$UI_M_PCCD_TOTAL_CVR_PREM_INV_LC$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_CVR_DTL_ACTION_BEAN.PT_IL_PREM_COLL_CVR_DTL_BEAN.UI_M_PCCD_TOTAL_CVR_PREM_INV_LC}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrow">&nbsp;</td>
+												</tr>
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+								<td></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\save.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\savenext.GIF" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\firstrec.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\prevpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\nextpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\lastRecord.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\navigation.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</h:form>
+			</table>
+		</f:view>
+	</ui:define>
+</ui:composition>

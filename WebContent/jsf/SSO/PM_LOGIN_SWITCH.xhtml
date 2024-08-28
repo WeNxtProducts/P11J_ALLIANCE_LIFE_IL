@@ -1,0 +1,922 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.beforePhaseListener}">
+			<f:loadBundle basename="messageProperties_SSO" var="message" />
+			<h:form id="PM_LOGIN_SWITCH">
+				<table cellpadding="0" cellspacing="0" width="100%" border="0">
+					<tr>
+						<td colspan="3" width="100%" valign="top">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar id="COMP_85" styleClass="toolBarStyle"
+									width="100%">
+									<rich:toolBarGroup id="COMP_86" styleClass="toolBarGroupStyle">
+										<h:commandLink id="COMP_87" action="SSO_MANAGER_SEARCH"
+											rendered="true" style="text-decoration:none" immediate="true"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_88" styleClass="toolbarImageStyle"
+												value="./../../resources/images/back.png" />
+											<h:outputText id="COMP_89"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_90"
+											action="#{SSO_MANAGER_SEARCH_ACTION.insertButtonAction}"
+											rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_91" styleClass="toolbarImageStyle" width="20" height="20"
+												value="./../../resources/images/newrecord.gif" />
+											<h:outputText id="COMP_92"
+												styleClass="toolbaroutputTextStyle"
+												value="#{message.SSO$PM_LOGIN_SWITCH$TOOL$NEW}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_901"
+											action="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.saveRecord}"
+											rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_911" styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="COMP_921"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_93" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_94" styleClass="toolbarImageStyle"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="COMP_95"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_96" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_97" styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="COMP_98"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<!-- Delete Link -->
+										<a4j:commandLink id="DELETERECORD_TOOL_HEADER1"
+													styleClass="toolbarCommandLinkStyle"
+													style="text-decoration:none">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER1"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER1"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+											<rich:componentControl
+												id="DELETE_COMP_CONTROL"
+												for="DELETE_PANEL" 
+												attachTo="DELETERECORD_TOOL_HEADER1" 
+												operation="show" 
+												event="onclick"/>
+										</a4j:commandLink>
+										<!-- Delete confirmation Confirmation popup -->
+										<rich:modalPanel id="DELETE_PANEL" width="300" height="110">
+										     <f:facet name="header">
+										         <h:panelGroup>
+										              <h:outputText value="#{commonmsg.premia$broker$delete$confirmation$caption}" style="color: #FFFFFF; font-size: 14px;font-weight: bold;"></h:outputText>
+										         </h:panelGroup>
+										     </f:facet>
+										     <f:facet name="controls">
+										         <h:panelGroup>
+										              <h:graphicImage value="./../../resources/images/close.png" 
+										              		style="cursor:pointer" id="DELETE_PANEL_hidelink"/>
+										              <rich:componentControl for="DELETE_PANEL" 
+											              	attachTo="DELETE_PANEL_hidelink" 
+											              	operation="hide" event="onclick"/>
+										         </h:panelGroup>
+										     </f:facet>
+											<table align="center">
+												<tr align="center">
+													<td>
+														<h:outputText value="#{commonmsg.premia$broker$delete$confirmation$message}"/>
+													</td>
+												</tr>
+												<tr align="center">
+												<td>
+											    	<h:commandButton value="#{commonmsg.premia$broker$delete$confirmation$ok}" 
+											        	id="DELETE_PANEL_continuebutton" 
+											        	immediate="true"
+											          	styleClass="button"
+											          	style="width:65px;height:20px;"
+											            action="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.deleteMapping}">
+											            <rich:componentControl for="DELETE_PANEL" 
+											            	attachTo="DELETE_PANEL_continuebutton" 
+											                operation="hide" event="onclick"/>
+											        </h:commandButton>
+											       	<rich:spacer width="10" height="25"></rich:spacer>
+											        <a4j:commandButton value="#{commonmsg.premia$broker$delete$confirmation$cancel}"
+										          		styleClass="button" 
+											          	style="width:65px;height:20px;"
+											          	id="DELETE_PANEL_cancelbutton" immediate="true">
+											            <rich:componentControl for="DELETE_PANEL" 
+											            	attachTo="DELETE_PANEL_cancelbutton" 
+											               	operation="hide" event="onclick"/>
+											    	</a4j:commandButton>
+											        <br/>
+												</td>
+												</tr>
+											</table>
+										</rich:modalPanel>
+
+										<h:commandLink id="COMP_99" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_100" styleClass="toolbarImageStyle"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="COMP_101"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_102" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_103" styleClass="toolbarImageStyle"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="COMP_104"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_105" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_106" styleClass="toolbarImageStyle"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="COMP_107"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_108" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_109" styleClass="toolbarImageStyle"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="COMP_110"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_111"
+											action="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.navigationEnabled}"
+											immediate="true" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_112" styleClass="toolbarImageStyle"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="COMP_113"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.errorMap['current'] !=null? SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.errorMap['current']: SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.globalMsgRender}" />
+									<h:outputText id="warningMessages"
+										value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel id="COMP_114"
+									value="#{message.SSO$PM_LOGIN_SWITCH$PAGE$CAPTION}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td width="100%" vAlign="top">
+									<h:panelGroup
+									id="PM_POL_SUB_CLASS_SETUP_PANEL" style="border:0;height:15%;">
+									<table id="bordertable" align="left" width="100%">
+										<!-- [ From Application Area -->
+										<tr>
+											<td>
+												<fieldset>
+													<legend>
+														<h:outputLabel styleClass="label" 
+															value="#{message.SSO$PM_LOGIN_SWITCH$FM_APPLICATION_LABEL$caption}"
+															id="FM_APPLICATION_LABEL"/>
+													</legend>
+													<table width="100%">
+														<tr>
+															<td id="td-background">
+																<h:outputLabel styleClass="label" 
+																	value="#{message.SSO$PM_LOGIN_SWITCH$PLS_FM_APPLICATION$caption}"
+																	id="PLS_FM_APPLICATION_LABEL"
+																	for="PLS_FM_APPLICATION"/>
+																<h:graphicImage id="COMP_125151"
+																		value="./../../resources/images/mandatory.gif" />														
+															</td>
+															<td>
+																<h:inputText 
+																	id="PLS_FM_APPLICATION"
+																	style="width:250"
+																	binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_PLS_FM_APPLICATION}"
+																	rendered="true" required="true"
+																	title="#{message.SSO$PM_LOGIN_SWITCH$PLS_FM_APPLICATION$tooltip}"
+																	value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.PLS_FM_APPLICATION}">
+																</h:inputText>
+																<h:graphicImage id="PLS_FM_APPLICATION_LOV" style=""
+																	value="./../../resources/images/Lov.gif" />
+																<rich:suggestionbox height="300" width="250" 
+																	id="SUGGESTION_PLS_FM_APPLICATION"
+																	for="PLS_FM_APPLICATION"
+																	suggestionAction="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.fromApplicationSuggestions}"
+																	var="CURR_SUGGESTION"
+																	reRender="errorPanel">
+																	<h:column id="CURR_SUGGESTION_COL1">
+																		<h:outputText id="CURR_SUGGESTION_VAL1" value="#{CURR_SUGGESTION.lovCode}"/>
+																	</h:column>
+																	<h:column id="CURR_SUGGESTION_COL2">
+																		<h:outputText id="CURR_SUGGESTION_VAL2" value="#{CURR_SUGGESTION.lovName}"/>
+																	</h:column>
+																	<a4j:support id="CURR_SUGGESTION_SUPPORT" ajaxSingle="true" event="onselect">
+																		<f:setPropertyActionListener value="#{CURR_SUGGESTION.lovCode}" 
+																			target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.PLS_FM_APPLICATION}" />
+																		<f:setPropertyActionListener value="#{CURR_SUGGESTION.lovName1}" 
+																			target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.UI_FROM_DB_SCHEMA}" />
+																	</a4j:support>
+																</rich:suggestionbox>
+															</td>
+															<td>&nbsp;</td>
+															<td id="td-background">
+																<h:outputLabel styleClass="label" 
+																	value="#{message.SSO$PM_LOGIN_SWITCH$PLS_FM_USER_ID$caption}"
+																	id="PLS_FM_USER_ID_LABEL"
+																	for="PLS_FM_USER_ID"/>
+																<h:graphicImage id="COMP_125152"
+																		value="./../../resources/images/mandatory.gif" />
+															</td>
+															<td>
+																<h:inputText 
+																	id="PLS_FM_USER_ID"
+																	style="width:250"
+																	binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_PLS_FM_USER_ID}"
+																	rendered="true" required="true"
+																	title="#{message.SSO$PM_LOGIN_SWITCH$PLS_FM_USER_ID$tooltip}"
+																	value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.PLS_FM_USER_ID}"/>
+																<h:graphicImage id="PLS_FM_USER_ID_LOV" style=""
+																	value="./../../resources/images/Lov.gif" />
+																<rich:suggestionbox height="300" width="250" 
+																	id="SUGGESTION_PLS_FM_USER_ID"
+																	for="PLS_FM_USER_ID"
+																	suggestionAction="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.fromUserIDSuggestions}"
+																	var="CURR_UID_SUGGESTION"
+																	reRender="errorPanel">
+																	<h:column id="CURR_UID_SUGGESTION_COL1">
+																		<h:outputText id="CURR_UID_SUGGESTION_VAL1" value="#{CURR_UID_SUGGESTION.lovCode}"/>
+																	</h:column>
+																	<h:column id="CURR_UID_SUGGESTION_COL2">
+																		<h:outputText id="CURR_UID_SUGGESTION_VAL2" value="#{CURR_UID_SUGGESTION.lovName}"/>
+																	</h:column>
+																	<a4j:support id="CURR_UID_SUGGESTION_SUPPORT" ajaxSingle="true" 
+																		event="onselect" 
+																		reRender="PLS_FM_USER_PWD">
+																		<f:setPropertyActionListener value="#{CURR_UID_SUGGESTION.lovCode}" 
+																			target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.PLS_FM_USER_ID}" />
+																		<f:setPropertyActionListener value="#{CURR_UID_SUGGESTION.lovName1}" 
+																			target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.PLS_FM_USER_PWD}" />
+																	</a4j:support>
+																</rich:suggestionbox>
+															</td>
+														</tr>
+														<tr>
+															<td id="td-background">
+																<h:outputLabel styleClass="label" 
+																	value="#{message.SSO$PM_LOGIN_SWITCH$PLS_FM_USER_PWD$caption}"
+																	id="PLS_FM_USER_PWD_LABEL"
+																	for="PLS_FM_USER_PWD"/>
+																<h:graphicImage id="COMP_125153"
+																		value="./../../resources/images/mandatory.gif" />
+															</td>
+															<td>
+																<h:inputText 
+																	id="PLS_FM_USER_PWD"
+																	style="width:250"
+																	binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_PLS_FM_USER_PWD}"
+																	rendered="true" required="true"
+																	title="#{message.SSO$PM_LOGIN_SWITCH$PLS_FM_USER_PWD$tooltip}"
+																	value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.PLS_FM_USER_PWD}"/>
+															</td>
+															<td>&nbsp;</td>
+															<td id="td-background">
+																<h:outputLabel styleClass="label" 
+																	value="#{message.SSO$PM_LOGIN_SWITCH$PLS_FM_COMPANY$caption}"
+																	id="PLS_FM_COMPANY_LABEL"
+																	for="PLS_FM_COMPANY"/>
+																<h:graphicImage id="COMP_125154"
+																		value="./../../resources/images/mandatory.gif" />
+															</td>
+															<td>
+																<h:inputText  
+																	id="PLS_FM_COMPANY"
+																	style="width:250"
+																	binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_PLS_FM_COMPANY}"
+																	rendered="true" required="true"
+																	title="#{message.SSO$PM_LOGIN_SWITCH$PLS_FM_COMPANY$tooltip}"
+																	value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.PLS_FM_COMPANY}"/>
+																<h:graphicImage id="PLS_FM_COMPANY_LOV" style=""
+																	value="./../../resources/images/Lov.gif" />
+																<rich:suggestionbox height="300" width="250" 
+																	id="SUGGESTION_PLS_FM_COMPANY"
+																	for="PLS_FM_COMPANY"
+																	suggestionAction="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.fromCompanySuggestions}"
+																	var="CURR_SUGGESTION"
+																	reRender="errorPanel">
+																	<h:column id="CURR_COMP_SUGGESTION_COL1">
+																		<h:outputText id="CURR_COMP_SUGGESTION_VAL1" value="#{CURR_SUGGESTION.lovCode}"/>
+																	</h:column>
+																	<h:column id="CURR_COMP_SUGGESTION_COL2">
+																		<h:outputText id="CURR_COMP_SUGGESTION_VAL2" value="#{CURR_SUGGESTION.lovName}"/>
+																	</h:column>
+																	<a4j:support id="CURR_COMP_SUGGESTION_SUPPORT" ajaxSingle="true" 
+																		event="onselect">
+																		<f:setPropertyActionListener value="#{CURR_SUGGESTION.lovCode}" 
+																			target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.PLS_FM_COMPANY}" />
+																	</a4j:support>
+																</rich:suggestionbox>
+															</td>
+														</tr>
+														<tr>
+															<td id="td-background">
+																<h:outputLabel styleClass="label" 
+																	value="#{message.SSO$PM_LOGIN_SWITCH$PLS_FM_DIVISION$caption}"
+																	id="PLS_FM_DIVISION_LABEL"
+																	for="PLS_FM_DIVISION"/>
+																<h:graphicImage id="COMP_125155"
+																		value="./../../resources/images/mandatory.gif" />
+															</td>
+															<td>
+																<h:inputText  
+																	id="PLS_FM_DIVISION"
+																	style="width:250"
+																	binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_PLS_FM_DIVISION}"
+																	rendered="true" required="true"
+																	title="#{message.SSO$PM_LOGIN_SWITCH$PLS_FM_DIVISION$tooltip}"
+																	value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.PLS_FM_DIVISION}"/>
+																<h:graphicImage id="PLS_FM_DIVISION_LOV" style=""
+																	value="./../../resources/images/Lov.gif" />
+																<rich:suggestionbox height="300" width="250" 
+																	id="SUGGESTION_PLS_FM_DIVISION"
+																	for="PLS_FM_DIVISION"
+																	suggestionAction="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.fromDivisionSuggestions}"
+																	var="CURR_SUGGESTION"
+																	reRender="errorPanel">
+																	<h:column id="PLS_FM_DIVISION_COL1">
+																		<h:outputText id="PLS_FM_DIVISION_VAL1" value="#{CURR_SUGGESTION.lovCode}"/>
+																	</h:column>
+																	<h:column id="PLS_FM_DIVISION_COL2">
+																		<h:outputText id="PLS_FM_DIVISION_VAL2" value="#{CURR_SUGGESTION.lovName}"/>
+																	</h:column>
+																	<a4j:support id="PLS_FM_DIVISION_SUGGESTION_SUPPORT" ajaxSingle="true" 
+																		event="onselect">
+																		<f:setPropertyActionListener value="#{CURR_SUGGESTION.lovCode}" 
+																			target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.PLS_FM_DIVISION}" />
+																	</a4j:support>
+																</rich:suggestionbox>
+															</td>
+															<td>&nbsp;</td>
+															<td id="td-background">
+																<h:outputLabel styleClass="label" 
+																	value="#{message.SSO$PM_LOGIN_SWITCH$PLS_FM_DEPARTMENT$caption}"
+																	id="PLS_FM_DEPARTMENT_LABEL"
+																	for="PLS_FM_DEPARTMENT"/>
+																<h:graphicImage id="COMP_125156"
+																		value="./../../resources/images/mandatory.gif" />
+															</td>
+															<td>
+																<h:inputText  
+																	id="PLS_FM_DEPARTMENT"
+																	style="width:250"
+																	binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_PLS_FM_DEPARTMENT}"
+																	rendered="true" required="true"
+																	title="#{message.SSO$PM_LOGIN_SWITCH$PLS_FM_DEPARTMENT$tooltip}"
+																	value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.PLS_FM_DEPARTMENT}"/>
+																<h:graphicImage id="PLS_FM_DEPARTMENT_LOV" style=""
+																	value="./../../resources/images/Lov.gif" />
+																<rich:suggestionbox height="300" width="250" 
+																	id="SUGGESTION_PLS_FM_DEPARTMENT"
+																	for="PLS_FM_DEPARTMENT"
+																	suggestionAction="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.fromDepartmentSuggestions}"
+																	var="CURR_SUGGESTION"
+																	reRender="errorPanel">
+																	<h:column id="PLS_FM_DEPARTMENT_COL1">
+																		<h:outputText id="PLS_FM_DEPARTMENT_VAL1" value="#{CURR_SUGGESTION.lovCode}"/>
+																	</h:column>
+																	<h:column id="PLS_FM_DEPARTMENT_COL2">
+																		<h:outputText id="PLS_FM_DEPARTMENT_VAL2" value="#{CURR_SUGGESTION.lovName}"/>
+																	</h:column>
+																	<a4j:support id="PLS_FM_DEPARTMENT_SUGGESTION_SUPPORT" ajaxSingle="true" 
+																		event="onselect">
+																		<f:setPropertyActionListener value="#{CURR_SUGGESTION.lovCode}" 
+																			target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_FROM_BEAN.PLS_FM_DEPARTMENT}" />
+																	</a4j:support>
+																</rich:suggestionbox>
+															</td>
+														</tr>
+														<tr>
+															<td colspan="5">
+																<rich:separator width="100%" height="1"></rich:separator>
+																<a4j:commandButton id="FETCH_IF_EXISTS"
+																	binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_FETCH_IF_EXISTS}"
+																	value="#{message.SSO$PM_LOGIN_SWITCH$FETCH_IF_EXISTS$caption}"
+																	title="#{message.SSO$PM_LOGIN_SWITCH$FETCH_IF_EXISTS$tooltip}"
+																	immediate="true" styleClass="button"
+																	actionListener="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.populateDetails}"
+																	reRender="errorPanel,PM_LOGIN_SWITCH_DATA_GRID,TO_APP_MAPPING_PANEL"/>
+																<h:commandButton id="UI_M_BUT_APP_DTLS"
+																	immediate="true"
+																	rendered="true" styleClass="button"
+																	action="PM_APPLICATION_DTLS"
+																	title="#{message.SSO$PM_LOGIN_SWITCH$UI_M_BUT_APP_DTLS$tooltip}"
+																	value="#{message.SSO$PM_LOGIN_SWITCH$UI_M_BUT_APP_DTLS$caption}" />																	
+															</td>
+														</tr>
+													</table>
+												</fieldset>
+											</td>
+										</tr>
+										<!-- From Application Area ] -->
+										<tr>
+											<td>
+												<rich:dataTable
+													binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.dataTable}"
+													id="PM_LOGIN_SWITCH_DATA_GRID" rows="5" width="100%"
+													value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_BEAN_TO_LIST}"
+													var="toMappingDetails">
+													<f:facet name="header">
+														<h:outputText id="COMP_1181"
+															styleClass="forumRowHighlight"
+															value="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_APPLICATION$caption}" />
+													</f:facet>
+													<rich:column styleClass="#{toMappingDetails.rowSelected}"
+														filterEvent="onkeyup" rendered="true" id="COMP_116"
+														filterBy="#{toMappingDetails.PLS_TO_APPLICATION}"
+														sortBy="#{toMappingDetails.PLS_TO_APPLICATION}">
+														<f:facet name="header">
+															<h:outputText id="COMP_118"
+																styleClass="forumRowHighlight"
+																value="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_APPLICATION$caption}" />
+														</f:facet>
+														<a4j:commandLink
+															actionListener="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.displayRecord}"
+															immediate="true" id="COMP_117"
+															reRender="errorPanel,PM_LOGIN_SWITCH_DATA_GRID,TO_APP_MAPPING_PANEL">
+															<h:outputText id="COMP_119"
+																value="#{toMappingDetails.PLS_TO_APPLICATION}" />
+														</a4j:commandLink>
+													</rich:column>
+													<rich:column styleClass="#{toMappingDetails.rowSelected}"
+														filterEvent="onkeyup" rendered="true" id="COMP_120"
+														filterBy="#{toMappingDetails.PLS_TO_USER_ID}" 
+														sortBy="#{toMappingDetails.PLS_TO_USER_ID}">
+														<f:facet name="header">
+															<h:outputText id="COMP_121"
+																styleClass="forumRowHighlight"
+																value="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_USER_ID$caption}" />
+														</f:facet>
+														<h:outputText id="COMP_122"
+															value="#{toMappingDetails.PLS_TO_USER_ID}" />
+													</rich:column>
+													<rich:column styleClass="#{toMappingDetails.rowSelected}"
+														filterEvent="onkeyup" rendered="true" id="COMP_1211"
+														filterBy="#{toMappingDetails.PLS_TO_COMPANY}" 
+														sortBy="#{toMappingDetails.PLS_TO_COMPANY}">
+														<f:facet name="header">
+															<h:outputText id="COMP_1212"
+																styleClass="forumRowHighlight"
+																value="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_COMPANY$caption}" />
+														</f:facet>
+														<h:outputText id="COMP_1221"
+															value="#{toMappingDetails.PLS_TO_COMPANY}" />
+													</rich:column>
+													<rich:column styleClass="#{toMappingDetails.rowSelected}"
+														filterEvent="onkeyup" rendered="true" id="COMP_1220"
+														filterBy="#{toMappingDetails.PLS_TO_DIVISION}" 
+														sortBy="#{toMappingDetails.PLS_TO_DIVISION}">
+														<f:facet name="header">
+															<h:outputText id="COMP_1213"
+																styleClass="forumRowHighlight"
+																value="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_DIVISION$caption}" />
+														</f:facet>
+														<h:outputText id="COMP_1222"
+															value="#{toMappingDetails.PLS_TO_DIVISION}" />
+													</rich:column>
+													<rich:column styleClass="#{toMappingDetails.rowSelected}"
+														filterEvent="onkeyup" rendered="true" id="COMP_123"
+														filterBy="#{toMappingDetails.PLS_TO_DEPARTMENT}" 
+														sortBy="#{toMappingDetails.PLS_TO_DEPARTMENT}">
+														<f:facet name="header">
+															<h:outputText id="COMP_1214"
+																styleClass="forumRowHighlight"
+																value="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_DEPARTMENT$caption}" />
+														</f:facet>
+														<h:outputText id="COMP_1223"
+															value="#{toMappingDetails.PLS_TO_DEPARTMENT}" />
+													</rich:column>
+													<f:facet name="footer">
+														<h:panelGroup id="COMP_124">
+															<rich:datascroller align="right"
+																id="PM_POL_SUB_CLASS_SETUP_SCROLL"/>
+															<a4j:commandButton
+																actionListener="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.createRecord}"
+																id="addRow" immediate="true"
+																reRender="errorPanel,TO_APP_MAPPING_PANEL"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.deleteRecord}"
+																id="deleteRow" immediate="true"
+																reRender="errorPanel,PM_LOGIN_SWITCH_DATA_GRID,TO_APP_MAPPING_PANEL"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.postRecord}"
+																id="postRecord" immediate="false"
+																reRender="errorPanel,PM_LOGIN_SWITCH_DATA_GRID,TO_APP_MAPPING_PANEL"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</td>
+										</tr>
+										<tr>
+											<td>
+												<fieldset>
+													<legend>
+														<h:outputLabel
+															id="TO_APPLICATION_LABEL" 
+															styleClass="label"
+															value="#{message.SSO$PM_LOGIN_SWITCH$TO_APPLICATION_LABEL$caption}" />
+													</legend>
+													<rich:panel id="TO_APP_MAPPING_PANEL">
+														<table width="100%">
+															<tr>
+																<td id="td-background">
+																	<h:outputLabel
+																		id="PLS_TO_APPLICATION_LABEL" 
+																		for="PLS_TO_APPLICATION" 
+																		rendered="true" styleClass="label"
+																		value="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_APPLICATION$caption}" />
+																	<h:graphicImage id="COMP_125"
+																		value="./../../resources/images/mandatory.gif" />
+																</td>
+																<td align="left">
+																	<h:inputText
+																		binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_PLS_TO_APPLICATION}"
+																		disabled="false" id="PLS_TO_APPLICATION" maxlength="6"
+																		rendered="true" required="true"
+																		style="width:250px;"
+																		styleClass="forumRowHighlight"
+																		title="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_APPLICATION$tooltip}"
+																		value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.PLS_TO_APPLICATION}">
+																	</h:inputText> 
+																	<h:graphicImage style=""
+																		value="./../../resources/images/Lov.gif" />
+																	<rich:suggestionbox height="300" width="250" 
+																		id="SUGGESTION_PLS_TO_APPLICATION"
+																		for="PLS_TO_APPLICATION"
+																		suggestionAction="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.toApplicationSuggestions}"
+																		var="CURR_SUGGESTION"
+																		reRender="errorPanel">
+																		<h:column id="CURR_SUGGESTION_COL11">
+																			<h:outputText id="CURR_SUGGESTION_VAL11" value="#{CURR_SUGGESTION.lovCode}"/>
+																		</h:column>
+																		<h:column id="CURR_SUGGESTION_COL21">
+																			<h:outputText id="CURR_SUGGESTION_VAL21" value="#{CURR_SUGGESTION.lovName}"/>
+																		</h:column>
+																		<a4j:support id="CURR_SUGGESTION_SUPPORT1" ajaxSingle="true" event="onselect">
+																			<f:setPropertyActionListener value="#{CURR_SUGGESTION.lovCode}" 
+																				target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.PLS_TO_APPLICATION}" />
+																			<f:setPropertyActionListener value="#{CURR_SUGGESTION.lovName1}" 
+																				target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.UI_TO_DB_SCHEMA}" />
+																		</a4j:support>
+																	</rich:suggestionbox>
+																</td>
+																<td>&nbsp;</td>
+																<td id="td-background">
+																	<h:outputLabel
+																		for="PLS_TO_USER_ID" id="PLS_TO_USER_ID_LABEL" rendered="true"
+																		styleClass="label"
+																		value="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_USER_ID$caption}" />
+																	<h:graphicImage id="COMP_1251"
+																		value="./../../resources/images/mandatory.gif" />
+																</td>
+																<td align="left">
+																	<h:inputText
+																		binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_PLS_TO_USER_ID}"
+																		disabled="false" id="PLS_TO_USER_ID" maxlength="6"
+																		rendered="true" required="true"
+																		style="width:250px;"
+																		styleClass="forumRowHighlight"
+																		title="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_USER_ID$tooltip}"
+																		value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.PLS_TO_USER_ID}">
+																	</h:inputText> 
+																	<h:graphicImage style=""
+																		value="./../../resources/images/Lov.gif" />
+																	<rich:suggestionbox height="300" width="250" 
+																		id="SUGGESTION_PLS_TO_USER_ID"
+																		for="PLS_TO_USER_ID"
+																		suggestionAction="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.toUserIDSuggestions}"
+																		var="CURR_UID_SUGGESTION"
+																		reRender="errorPanel">
+																		<h:column id="CURR_UID_SUGGESTION_COL11">
+																			<h:outputText id="CURR_UID_SUGGESTION_VAL11" value="#{CURR_UID_SUGGESTION.lovCode}"/>
+																		</h:column>
+																		<h:column id="CURR_UID_SUGGESTION_COL21">
+																			<h:outputText id="CURR_UID_SUGGESTION_VAL21" value="#{CURR_UID_SUGGESTION.lovName}"/>
+																		</h:column>
+																		<a4j:support id="CURR_UID_SUGGESTION_SUPPORT1" ajaxSingle="true" 
+																			event="onselect" 
+																			reRender="PLS_TO_USER_PWD">
+																			<f:setPropertyActionListener value="#{CURR_UID_SUGGESTION.lovCode}" 
+																				target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.PLS_TO_USER_ID}" />
+																			<f:setPropertyActionListener value="#{CURR_UID_SUGGESTION.lovName1}" 
+																				target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.PLS_TO_USER_PWD}" />
+																		</a4j:support>
+																	</rich:suggestionbox>
+																</td>
+															</tr>
+															<tr>
+																<td id="td-background">
+																	<h:outputLabel
+																		for="PLS_TO_USER_PWD" id="PLS_TO_USER_PWD_LABEL" rendered="true"
+																		styleClass="label"
+																		value="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_USER_PWD$caption}" />
+																	<h:graphicImage id="COMP_1252"
+																		value="./../../resources/images/mandatory.gif" />
+																</td>
+																<td align="left">
+																	<h:inputText
+																		binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_PLS_TO_USER_PWD}"
+																		disabled="false" id="PLS_TO_USER_PWD"
+																		rendered="true" required="true"
+																		style="width:250px;"
+																		styleClass="forumRowHighlight"
+																		title="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_USER_PWD$tooltip}"
+																		value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.PLS_TO_USER_PWD}">
+																	</h:inputText> 
+																</td>
+																<td>&nbsp;</td>
+																<td id="td-background">
+																	<h:outputLabel
+																		for="PLS_TO_COMPANY" id="PLS_TO_COMPANY_LABEL" rendered="true"
+																		styleClass="label"
+																		value="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_COMPANY$caption}" />
+																	<h:graphicImage id="COMP_12513"
+																		value="./../../resources/images/mandatory.gif" />
+																</td>
+																<td align="left">
+																	<h:inputText
+																		binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_PLS_TO_COMPANY}"
+																		disabled="false" id="PLS_TO_COMPANY" maxlength="6"
+																		rendered="true" required="true"
+																		style="width:250px;"
+																		styleClass="forumRowHighlight"
+																		title="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_COMPANY$tooltip}"
+																		value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.PLS_TO_COMPANY}">
+																	</h:inputText> 
+																	<h:graphicImage id="PLS_TO_COMPANY_LOV" style=""
+																		value="./../../resources/images/Lov.gif" />
+																	<rich:suggestionbox height="300" width="250" 
+																		id="SUGGESTION_PLS_TO_COMPANY"
+																		for="PLS_TO_COMPANY"
+																		suggestionAction="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.toCompanySuggestions}"
+																		var="CURR_SUGGESTION"
+																		reRender="errorPanel">
+																		<h:column id="PLS_TO_COMPANY_COL1">
+																			<h:outputText id="PLS_TO_COMPANY_VAL1" value="#{CURR_SUGGESTION.lovCode}"/>
+																		</h:column>
+																		<h:column id="PLS_TO_COMPANY_COL2">
+																			<h:outputText id="PLS_TO_COMPANY_VAL2" value="#{CURR_SUGGESTION.lovName}"/>
+																		</h:column>
+																		<a4j:support id="PLS_TO_COMPANY_SUGGESTION_SUPPORT" ajaxSingle="true" 
+																			event="onselect">
+																			<f:setPropertyActionListener value="#{CURR_SUGGESTION.lovCode}" 
+																				target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.PLS_TO_COMPANY}" />
+																		</a4j:support>
+																	</rich:suggestionbox>
+																</td>
+															</tr>
+															<tr>
+																<td id="td-background">
+																	<h:outputLabel
+																		for="PLS_TO_DIVISION" id="PLS_TO_DIVISION_LABEL" rendered="true"
+																		styleClass="label"
+																		value="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_DIVISION$caption}" />
+																	<h:graphicImage id="COMP_1254"
+																		value="./../../resources/images/mandatory.gif" />
+																</td>
+																<td align="left">
+																	<h:inputText
+																		binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_PLS_TO_DIVISION}"
+																		disabled="false" id="PLS_TO_DIVISION" maxlength="6"
+																		rendered="true" required="true"
+																		style="width:250px;"
+																		styleClass="forumRowHighlight"
+																		title="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_DIVISION$tooltip}"
+																		value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.PLS_TO_DIVISION}">
+																	</h:inputText> 
+																	<h:graphicImage id="PLS_TO_DIVISION_LOV" style=""
+																		value="./../../resources/images/Lov.gif" />
+																	<rich:suggestionbox height="300" width="250" 
+																		id="SUGGESTION_PLS_TO_DIVISION"
+																		for="PLS_TO_DIVISION"
+																		suggestionAction="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.toDivisionSuggestions}"
+																		var="CURR_SUGGESTION"
+																		reRender="errorPanel">
+																		<h:column id="PLS_TO_DIVISION_COL1">
+																			<h:outputText id="PLS_TO_DIVISION_VAL1" value="#{CURR_SUGGESTION.lovCode}"/>
+																		</h:column>
+																		<h:column id="PLS_TO_DIVISION_COL2">
+																			<h:outputText id="PLS_TO_DIVISION_VAL2" value="#{CURR_SUGGESTION.lovName}"/>
+																		</h:column>
+																		<a4j:support id="PLS_TO_DIVISION_SUGGESTION_SUPPORT" ajaxSingle="true" 
+																			event="onselect">
+																			<f:setPropertyActionListener value="#{CURR_SUGGESTION.lovCode}" 
+																				target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.PLS_TO_DIVISION}" />
+																		</a4j:support>
+																	</rich:suggestionbox>
+																</td>
+																<td>&nbsp;</td>
+																<td id="td-background">
+																	<h:outputLabel
+																		for="PLS_TO_DEPARTMENT" id="PLS_TO_DEPARTMENT_LABEL" rendered="true"
+																		styleClass="label"
+																		value="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_DEPARTMENT$caption}" />
+																	<h:graphicImage id="COMP_12515"
+																		value="./../../resources/images/mandatory.gif" />
+																</td>
+																<td align="left">
+																	<h:inputText
+																		binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.COMP_PLS_TO_DEPARTMENT}"
+																		disabled="false" id="PLS_TO_DEPARTMENT" maxlength="6"
+																		rendered="true" required="true"
+																		style="width:250px;"
+																		styleClass="forumRowHighlight"
+																		title="#{message.SSO$PM_LOGIN_SWITCH$PLS_TO_DEPARTMENT$tooltip}"
+																		value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.PLS_TO_DEPARTMENT}">
+																	</h:inputText> 
+																	<h:graphicImage id="PLS_TO_DEPARTMENT_LOV" style=""
+																		value="./../../resources/images/Lov.gif" />
+																	<rich:suggestionbox height="300" width="250" 
+																		id="SUGGESTION_PLS_TO_DEPARTMENT"
+																		for="PLS_TO_DEPARTMENT"
+																		suggestionAction="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.toDepartmentSuggestions}"
+																		var="CURR_SUGGESTION"
+																		reRender="errorPanel">
+																		<h:column id="PLS_TO_DEPARTMENT_COL1">
+																			<h:outputText id="PLS_TO_DEPARTMENT_VAL1" value="#{CURR_SUGGESTION.lovCode}"/>
+																		</h:column>
+																		<h:column id="PLS_TO_DEPARTMENT_COL2">
+																			<h:outputText id="PLS_TO_DEPARTMENT_VAL2" value="#{CURR_SUGGESTION.lovName}"/>
+																		</h:column>
+																		<a4j:support id="PLS_TO_DEPARTMENT_SUGGESTION_SUPPORT" ajaxSingle="true" 
+																			event="onselect">
+																			<f:setPropertyActionListener value="#{CURR_SUGGESTION.lovCode}" 
+																				target="#{SSO_MANAGER_COMPOSITE_ACTION.PM_LOGIN_SWITCH_ACTION_BEAN.PM_LOGIN_SWITCH_TO_BEAN.PLS_TO_DEPARTMENT}" />
+																		</a4j:support>
+																	</rich:suggestionbox>
+																</td>
+															</tr>
+														</table>
+													</rich:panel>
+												</fieldset>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup>
+								</td>
+								<!-- <td width="10%" vAlign="top">
+								<table>
+									<tr>
+										<td>
+										</td>
+									</tr>
+								</table>
+								</td> -->
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar id="COMP_132"
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="COMP_133" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="COMP_134" rendered="true"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_135" styleClass="toolbarImageStyle"
+										value="./../../resources/images/save.gif" />
+									<h:outputText id="COMP_136" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="COMP_137" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_138" styleClass="toolbarImageStyle"
+										value="./../../resources/images/savenext.GIF" />
+									<h:outputText id="COMP_139" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="COMP_140" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_141" styleClass="toolbarImageStyle"
+										value="./../../resources/images/firstrec.gif" />
+									<h:outputText id="COMP_142" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="COMP_143" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_144" styleClass="toolbarImageStyle"
+										value="./../../resources/images/prevpage.gif" />
+									<h:outputText id="COMP_145" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="COMP_146" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_147" styleClass="toolbarImageStyle"
+										value="./../../resources/images/nextpage.gif" />
+									<h:outputText id="COMP_148" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="COMP_149" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_150" styleClass="toolbarImageStyle"
+										value="./../../resources/images/lastRecord.gif" />
+									<h:outputText id="COMP_151" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="COMP_152" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_153" styleClass="toolbarImageStyle"
+										value="./../../resources/images/navigation.gif" />
+									<h:outputText id="COMP_154" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

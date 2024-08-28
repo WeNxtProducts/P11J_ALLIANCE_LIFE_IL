@@ -1,0 +1,1121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PolicySchedule" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d0dc53a6-95fc-478c-b226-fcb02ed8f443">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="195"/>
+	<subDataset name="dataset1" uuid="f37f46b4-0f90-4603-8bce-3706dea8e7da"/>
+	<subDataset name="Nominee_DataSet" uuid="deda4f6b-7716-489b-984a-8577f2279f5e">
+		<parameter name="POL_SYS_ID" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[select pben_bnf_name q1_pben_bnf_name,pben_age q1_pben_age,
+pben_address_1||','||
+pben_address_2||','||
+pben_address_3||','||
+pben_address_4||','||
+pben_address_5 Address
+from pt_il_pol_beneficiary where pben_pol_sys_id='111730']]>
+		</queryString>
+		<field name="Q1_PBEN_BNF_NAME" class="java.lang.String"/>
+		<field name="Q1_PBEN_AGE" class="java.math.BigDecimal"/>
+		<field name="ADDRESS" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataset2" uuid="25c16bf7-ec75-454c-bd94-1ff64a6c209e"/>
+	<parameter name="POL_SYS_ID_PARAM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT  POL_PLAN_CODE           Q1_PLAN_CODE,
+POL_NO                  Q1_POL_NO,
+POL_SYS_ID              Q1_POL_SYS_ID,
+PROD_DESC               Q1_PROD_NAME,
+CUST_NAME               Q1_CUST_NAME,
+CUST_ADDR1||', '||CUST_ADDR2 ||', '|| CUST_ADDR3 Q1_ADDR1,
+CUST_AREA ||', '||   CUST_REGION ||', '||   CUST_CITY ||'   '||NVL2(CUST_POSTAL_CODE ,'POSTAL CODE -'||CUST_POSTAL_CODE, CUST_POSTAL_CODE) Q1_ADDR2,
+CUST_COUNTRY ||'     '||NVL2(CUST_PHONE2,'Mobile No  -'||CUST_PHONE2,CUST_PHONE2)    Q1_CUST_COUNTRY ,
+CUST_STATE             Q1_CUST_STATE,POL_PROD_CODE Q1_POL_PROD_CODE_DESC,'  ' Q1_NULL,
+POL_ASSURED_NAME        Q1_ASSURED_NAME,
+POL_FC_SUM_ASSURED      Q1_SA,
+(POL_FC_SUM_ASSURED * (1.5 / 100)) Q1_COVER_PAYOUT,
+POL_FC_BASIC_PREM      Q1_POL_FC_BASIC_PREM,
+POAD_DOB Q1_DOB,
+POAD_AGE                Q1_AGE,
+POL_ISSUE_DT            Q1_COMMENCE_DT,
+COVER_DESC                Q1_COVER_DESC,
+to_date(POL_EXPIRY_DT,'DD/MM/RRRR') Q1_EXPIRY_DT,
+POL_PERIOD              Q1_TERM,
+pol_prem_pay_yrs Q1_PAYING_PERIOD,
+DECODE(POL_MODE_OF_PYMT,'M','Monthly','Q','Quarterly','Y','Yearly','S','Single','H','Half Yearly') Q1_MOP,
+DECODE(POAD_CATG_CODE,'1','Male','2','Female','3','Others') Q1_GENDER,
+DECODE (POAD_AGE_PROOF_FLAG,'Y','Yes','N','No')             Q1_AGE_PROOF ,
+'Product Code: '             Q1_PLA_CODE,
+'Product Name: '             Q1_PLAN_NAME,
+'Policy Number: '             Q1_POLICY_NUMBER,
+'Policyholder: '             Q1_POLICY_HOLDER,
+'(Name and Address of the Policyholder shall be printed here)'   Q1_NAME_ADDRESS,
+'Life Insured:'     Q1_LIFE_INSURED,
+'Gender:'          Q1_GEN,
+'Date of Birth:'  Q1_BIRTH,
+'Policy Installment Premium:'     Q1_INS_PREM,
+'Policy Commencement Date:'   Q1_COM_DATE,
+'Premium Frequency:'                 Q1_FREQUENCY,
+'Currency of the Policy:'              Q1_CURRENCY,
+'Age:'         Q1_AGE_TEXT,
+'Age Admitted(Yes/No):'              Q1_AGE_ADMIT,
+'Policy Term:'                               Q1_POLICY_TERM,
+'Premium Paying Period:'              Q1_PERIOD,
+'Policy Expiry Date:'                        Q1_EXP_DATE,
+'Saudi Riyal'                       Q1_RUPEE,
+pol_lc_first_prem               Q1_INST_PREM,
+prod_code Q1_prod_code,
+poad_age_admitted Q1_poad_age_admitted,
+15785 POL_SYS_ID,
+        pol_period coverage_term,POL_LAST_INST_DT Premium_Due,
+       pol_lc_sum_assured Coverage_Sum_Assured,
+pol_start_dt coverage_commnc_dt,
+       POAD_AGE_ADMITTED Q1_POAD_AGE_ADMITTED
+ FROM PT_IL_POLICY,PM_CUSTOMER, PT_IL_POL_ASSURED_DTLS,PM_IL_PRODUCT,PM_IL_COVER
+ WHERE POL_CUST_CODE =CUST_CODE
+ AND   POL_PROD_CODE =PROD_CODE
+ AND    POL_PLAN_CODE = COVER_CODE
+AND    COVER_CODE =PROD_PLAN_CODE
+ AND   POL_SYS_ID    =POAD_POL_SYS_ID
+ AND   POAD_SERIAL_NO =1
+ AND   POL_SYS_ID    = $P{POL_SYS_ID_PARAM}]]>
+	</queryString>
+	<field name="Q1_PLAN_CODE" class="java.lang.String"/>
+	<field name="Q1_POL_NO" class="java.lang.String"/>
+	<field name="Q1_POL_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="Q1_PROD_NAME" class="java.lang.String"/>
+	<field name="Q1_CUST_NAME" class="java.lang.String"/>
+	<field name="Q1_ADDR1" class="java.lang.String"/>
+	<field name="Q1_ADDR2" class="java.lang.String"/>
+	<field name="Q1_CUST_COUNTRY" class="java.lang.String"/>
+	<field name="Q1_CUST_STATE" class="java.lang.String"/>
+	<field name="Q1_POL_PROD_CODE_DESC" class="java.lang.String"/>
+	<field name="Q1_NULL" class="java.lang.String"/>
+	<field name="Q1_ASSURED_NAME" class="java.lang.String"/>
+	<field name="Q1_SA" class="java.math.BigDecimal"/>
+	<field name="Q1_COVER_PAYOUT" class="java.math.BigDecimal"/>
+	<field name="Q1_POL_FC_BASIC_PREM" class="java.math.BigDecimal"/>
+	<field name="Q1_DOB" class="java.sql.Timestamp"/>
+	<field name="Q1_AGE" class="java.math.BigDecimal"/>
+	<field name="Q1_COMMENCE_DT" class="java.sql.Timestamp"/>
+	<field name="Q1_COVER_DESC" class="java.lang.String"/>
+	<field name="Q1_EXPIRY_DT" class="java.sql.Timestamp"/>
+	<field name="Q1_TERM" class="java.math.BigDecimal"/>
+	<field name="Q1_PAYING_PERIOD" class="java.math.BigDecimal"/>
+	<field name="Q1_MOP" class="java.lang.String"/>
+	<field name="Q1_GENDER" class="java.lang.String"/>
+	<field name="Q1_AGE_PROOF" class="java.lang.String"/>
+	<field name="Q1_PLA_CODE" class="java.lang.String"/>
+	<field name="Q1_PLAN_NAME" class="java.lang.String"/>
+	<field name="Q1_POLICY_NUMBER" class="java.lang.String"/>
+	<field name="Q1_POLICY_HOLDER" class="java.lang.String"/>
+	<field name="Q1_NAME_ADDRESS" class="java.lang.String"/>
+	<field name="Q1_LIFE_INSURED" class="java.lang.String"/>
+	<field name="Q1_GEN" class="java.lang.String"/>
+	<field name="Q1_BIRTH" class="java.lang.String"/>
+	<field name="Q1_INS_PREM" class="java.lang.String"/>
+	<field name="Q1_COM_DATE" class="java.lang.String"/>
+	<field name="Q1_FREQUENCY" class="java.lang.String"/>
+	<field name="Q1_CURRENCY" class="java.lang.String"/>
+	<field name="Q1_AGE_TEXT" class="java.lang.String"/>
+	<field name="Q1_AGE_ADMIT" class="java.lang.String"/>
+	<field name="Q1_POLICY_TERM" class="java.lang.String"/>
+	<field name="Q1_PERIOD" class="java.lang.String"/>
+	<field name="Q1_EXP_DATE" class="java.lang.String"/>
+	<field name="Q1_RUPEE" class="java.lang.String"/>
+	<field name="Q1_INST_PREM" class="java.math.BigDecimal"/>
+	<field name="Q1_PROD_CODE" class="java.lang.String"/>
+	<field name="Q1_POAD_AGE_ADMITTED" class="java.lang.String"/>
+	<field name="POL_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="COVERAGE_TERM" class="java.math.BigDecimal"/>
+	<field name="PREMIUM_DUE" class="java.sql.Timestamp"/>
+	<field name="COVERAGE_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<field name="COVERAGE_COMMNC_DT" class="java.sql.Timestamp"/>
+	<variable name="Effective_Date" class="java.lang.String">
+		<variableExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{PREMIUM_DUE})]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="85">
+			<staticText>
+				<reportElement x="369" y="0" width="165" height="20" uuid="e8284b94-4a0d-4a38-acd2-db790ed15835"/>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[CORPORATE OFFICE ADDRESS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="20" width="165" height="20" uuid="08264a79-c975-4757-881f-3c11f76b2d36"/>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Life Insurance Company Limited,]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="53" width="555" height="1" uuid="5a603aa0-8063-449e-a225-c694453e6802"/>
+				<graphicElement>
+					<pen lineWidth="2.0"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="1" y="64" width="555" height="20" uuid="5dadf8c7-64c0-469a-82da-59844b8f40dc">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 ? true: false]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial MT Bold" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SCHEDULE]]></text>
+			</staticText>
+			<line>
+				<reportElement x="1" y="63" width="555" height="1" uuid="1346bf9b-62ba-4b29-a6b9-3f5042fb3ef7">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 ? true: false]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="1" y="84" width="555" height="1" uuid="19a0650f-9fc2-4f68-b5bc-cf1067f8e82c">
+					<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 ? true: false]]></printWhenExpression>
+				</reportElement>
+				<graphicElement>
+					<pen lineWidth="0.75"/>
+				</graphicElement>
+			</line>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="252" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="7" width="100" height="20" uuid="3044b088-a24c-4ed5-a1a7-c46f1c090dd3"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9" isBold="false" isUnderline="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[A. POLICY DETAILS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="27" width="125" height="15" uuid="e70b6099-35c3-4adf-b9d5-dd5745eca3ed"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Product Name:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="125" y="27" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="2afb596b-ef33-4d7c-805c-87c0eeb96135"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_PROD_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="27" width="125" height="15" uuid="983f481a-2f73-4333-85e7-046e156d0459"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Product Code:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="27" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="f8a97623-5007-41db-a5bb-e4e7f98b5221"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_POL_PROD_CODE_DESC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="42" width="125" height="15" uuid="44aac636-b803-4c76-92f5-1b69080cd4db"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Policy Number:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="125" y="42" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="397147d2-0a6a-46f2-b84b-bd38e1a19bbc"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_POL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="57" width="125" height="15" uuid="a1038e7f-1294-4442-b584-61b5d4486325"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Policyholder:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="125" y="57" width="431" height="15" isPrintWhenDetailOverflows="true" uuid="8206e6d5-d061-4b1a-b50c-75dc7d4ecee4"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_POLICY_HOLDER}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="72" width="556" height="48" isPrintWhenDetailOverflows="true" uuid="c03ab374-866d-4ed6-9f2e-d3ff2fefbbb6"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_ADDR1}+"\n"+$F{Q1_ADDR2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="128" width="125" height="15" uuid="99dc6a4e-58b3-439e-8f78-86c87c79fdde"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Life Insured:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="125" y="128" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="38d081fd-cb12-4830-9b7d-d7ae5201d53b"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_CUST_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="128" width="125" height="15" uuid="18ab0368-df4b-4582-8b44-8cab6be91ba0"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Gender:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="128" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="ae56762a-cdd7-4baa-bc89-145fc31f6013"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_GENDER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="143" width="125" height="15" uuid="62130ab5-cda3-4e02-93a6-d8a926f2691f"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Date of Birth:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="125" y="143" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="dccd0138-f9c2-4b5a-9199-8f6aea6e1bc5"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{Q1_DOB})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="143" width="125" height="15" uuid="ef8229ae-5dc8-4014-956f-32126e7809b4"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Age:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="143" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="bda83a4c-26b2-47af-b186-dc6fca6a6877"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_AGE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="158" width="125" height="15" uuid="2e2f5c59-3a1a-4dd8-b034-4960bc74280b"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Policy Installment Premium:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="125" y="158" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="3339540e-1b22-4c76-94a3-40aa930641ec"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_INS_PREM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="158" width="125" height="15" uuid="ff4b6756-e822-4c83-b06c-d1961b6121ba"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Age Admitted(Yes/No):]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="158" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="0a4d27fd-3c61-411d-9e76-523e579b889b"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_POAD_AGE_ADMITTED}.equals("Y")?"Yes":"No"]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="173" width="125" height="15" uuid="f447cac8-36fa-4bfe-a6c6-1213aa0b4af5"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Policy Commencement Date:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="125" y="173" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="1236d82a-34b7-4a8a-9dc7-e51d7a64a010"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{Q1_COMMENCE_DT})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="173" width="125" height="15" uuid="d169faa3-8f34-4ab9-a6bf-a1dd3be50e05"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Policy Term:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="173" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="7350c920-2c90-41fb-b98a-504e29202090"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_TERM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="188" width="125" height="15" uuid="49368efb-fa59-463c-9f5d-c401dfd7ad77"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Premium Frequency:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="125" y="188" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="b7abe60a-4a47-4b03-801e-34c8f0bff545"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_MOP}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="188" width="125" height="15" uuid="073d89e0-3b10-4825-ab4d-e4dadde02b22"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Premium Paying Period:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="188" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="d84b060c-5983-4db5-b79b-f62f77ff2c30"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_PAYING_PERIOD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="203" width="125" height="15" uuid="edbcb9cf-8696-4df2-b101-135ada47531f"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Currency of the Policy:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="125" y="203" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="20e4745b-12ef-409b-b481-f15e3ada39a6"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_CURRENCY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="203" width="125" height="15" uuid="30210671-2c3f-46d8-bf98-f77b18e37c07"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Policy Expiry Date:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="203" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="72a0672b-d954-40f6-9016-949741cfa04b"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{Q1_EXPIRY_DT})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="228" width="555" height="24" uuid="63647516-be9f-4ff3-8e40-23b79b4ff51c"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Arial MT" size="8"/>
+				</textElement>
+				<text><![CDATA[The Policy Installment Premium specified above is the premium amount payable per installment from the Policy Commencement Date,including any underwritingextra, during the Policy Term,under this Policy.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="42" width="125" height="15" uuid="51f90294-cc59-44e5-82aa-3c0e7f1475eb"/>
+				<box leftPadding="1">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="42" width="153" height="15" uuid="dba52bde-4298-45ca-8ba5-07ff46a4e6d5"/>
+				<box leftPadding="1">
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+		<band height="127">
+			<staticText>
+				<reportElement x="0" y="0" width="125" height="20" uuid="e66934da-7f11-4288-9600-8dc440031afd"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9" isBold="false" isUnderline="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[B. BENEFIT DETAILS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="26" width="128" height="15" isPrintWhenDetailOverflows="true" uuid="a1b345a6-4249-42ff-8393-4f42e4b152d8"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Base Policy]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="128" y="26" width="150" height="15" isPrintWhenDetailOverflows="true" uuid="5538c8b1-a85e-463c-b8d1-7c0727b77ecd"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Tahoma" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_POLICY_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="278" y="41" width="125" height="15" isPrintWhenDetailOverflows="true" uuid="7bc08578-20eb-419f-8198-acb44085ea26"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[UIN:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="41" width="128" height="15" isPrintWhenDetailOverflows="true" uuid="611fc946-aab9-4527-a2cc-b63c245b4c4f"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Coverage Type:]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="128" y="41" width="150" height="15" isPrintWhenDetailOverflows="true" uuid="05574ea8-abe6-4511-9c34-02e22f1dfe26"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_COVER_DESC}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="41" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="373711fc-a421-47b5-bfc6-abb2a54700cd"/>
+				<box leftPadding="2">
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_POL_PROD_CODE_DESC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="56" width="128" height="15" isPrintWhenDetailOverflows="true" uuid="8ddd6102-7dfe-4bde-ba71-f0e04b6b448e"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Coverage Sum Assured:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="278" y="56" width="125" height="15" isPrintWhenDetailOverflows="true" uuid="940e1c62-7f14-45cd-b50c-d408f47cc371"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Coverage Term:]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="56" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="86900479-b30b-4f5d-bd58-306f697d4a44"/>
+				<box leftPadding="2">
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COVERAGE_TERM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="128" y="56" width="150" height="15" isPrintWhenDetailOverflows="true" uuid="c3be0255-fd59-44fb-af80-0ca95e4a9642"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COVERAGE_SUM_ASSURED}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="278" y="71" width="125" height="15" isPrintWhenDetailOverflows="true" uuid="c30e9f94-b74b-43ce-b89b-ae177955ad52"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Date when last Premium Due:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="71" width="128" height="15" isPrintWhenDetailOverflows="true" uuid="30837fb0-d4e4-4c87-bda1-0fc2e4a2c4e5"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Coverage Commencement Date:]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="71" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="bbb1a71d-3922-43c8-9f36-9f002d8b2f8b"/>
+				<box leftPadding="2">
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{PREMIUM_DUE})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="128" y="71" width="150" height="15" isPrintWhenDetailOverflows="true" uuid="15636cbc-20e3-467d-80f5-1c82860f1c41"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{COVERAGE_COMMNC_DT})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="95" width="555" height="32" uuid="555fbe8b-6715-496a-ac8b-f9543771534a"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Arial MT" size="8"/>
+				</textElement>
+				<text><![CDATA[The Installment Premium(s)specified above is(are) the premium amount(s) payable per installment from the Coverage Commencement Date, including anyunderwriting extra, during the Coverage Term, for the Rider(s) chosen.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="278" y="26" width="125" height="15" isPrintWhenDetailOverflows="true" uuid="4ffa1a14-47b2-4156-92a1-b8d8a97c4c5c"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="26" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="3109f145-091f-4f14-86ab-884629c7e3f6"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+		<band height="87">
+			<staticText>
+				<reportElement x="0" y="0" width="241" height="20" uuid="43df323e-9e9b-4b3c-85c0-e67eb72b8b22"/>
+				<box leftPadding="2"/>
+				<textElement>
+					<font fontName="Tahoma" size="9" isBold="false" isUnderline="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[C. DETAILS OF NOMINEE AND APPOINTEE]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="0" y="27" width="278" height="60" uuid="8fe381fb-f2a6-44e7-83df-1a4a1274534c"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Nominee_DataSet" uuid="56080862-3cde-4b42-95d0-afa7c99e585b">
+						<datasetParameter name="POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="60" width="278">
+						<staticText>
+							<reportElement x="0" y="0" width="125" height="15" uuid="075ad7dc-934c-4c1d-bf50-e31a1ae7c046"/>
+							<box leftPadding="2">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+							</textElement>
+							<text><![CDATA[Details of Nominee]]></text>
+						</staticText>
+						<textField>
+							<reportElement stretchType="RelativeToTallestObject" x="125" y="0" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="4b4cc36e-8ecb-42ac-9c6b-cefbbba9cc55"/>
+							<box leftPadding="2">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Tahoma" size="8" isBold="false" pdfFontName="Helvetica"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{Q1_PBEN_BNF_NAME}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement stretchType="RelativeToTallestObject" x="125" y="15" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="d7aaf968-b115-4843-aae0-f69b5222db28"/>
+							<box leftPadding="2">
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{Q1_PBEN_BNF_NAME}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="0" y="15" width="125" height="15" uuid="910b3660-47e1-43f1-a890-7cfc9b56904a"/>
+							<box leftPadding="2">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+							</textElement>
+							<text><![CDATA[Name:]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="0" y="30" width="125" height="15" uuid="3fbc4a90-e526-4202-ba99-2c661b4d1230"/>
+							<box leftPadding="2">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+							</textElement>
+							<text><![CDATA[Age:]]></text>
+						</staticText>
+						<textField>
+							<reportElement stretchType="RelativeToTallestObject" x="125" y="30" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="3541e640-d820-44f6-bd08-2ac582770561"/>
+							<box leftPadding="2">
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{Q1_PBEN_AGE}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="0" y="45" width="125" height="15" uuid="086d9528-a942-4e27-bad8-bd59c8d614ec"/>
+							<box leftPadding="2">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+							</textElement>
+							<text><![CDATA[Address:]]></text>
+						</staticText>
+						<textField>
+							<reportElement stretchType="RelativeToTallestObject" x="125" y="45" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="486ec24a-dce0-4754-bd56-5d29bec486b6"/>
+							<box leftPadding="2">
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Arial MT" size="8" isBold="false" pdfFontName="Helvetica"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="278" y="27" width="125" height="15" isPrintWhenDetailOverflows="true" uuid="cde2b7f4-5b44-462e-8e7b-2e1d74540cd3"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="8" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Effective Date:]]></text>
+			</staticText>
+			<textField>
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="27" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="0641e36a-6468-47b2-b1ca-c2e1d2c47b50"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yy").format($F{PREMIUM_DUE})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="278" y="42" width="125" height="15" isPrintWhenDetailOverflows="true" uuid="afcbc5c9-373e-49b4-855e-961092574530"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="42" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="b3a1bec5-b0b0-4e1f-ab03-cd840336fa51"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="278" y="57" width="125" height="15" isPrintWhenDetailOverflows="true" uuid="1a6daa29-62cd-45ff-8d82-e8d899e4399e"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="57" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="1bee39c3-71ac-4687-8687-7fa39ffa3cfb"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="403" y="72" width="153" height="15" isPrintWhenDetailOverflows="true" uuid="4eaf33e1-91bc-44be-b385-4402c04160f0"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="true" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="278" y="72" width="125" height="15" isPrintWhenDetailOverflows="true" uuid="6eccb08a-4210-459e-b33e-959259462889"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font size="8" isBold="false" pdfFontName="Helvetica-Bold"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+		<band height="219">
+			<staticText>
+				<reportElement x="12" y="0" width="100" height="20" uuid="d23e7081-162a-4033-9104-d31a2bccb04c"/>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9" isBold="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Notes :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="32" y="28" width="524" height="15" uuid="3446fa61-44d6-412f-b7f7-66ba2fccba27"/>
+				<textElement>
+					<font fontName="Arial MT" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[1.  Where the first premium is paid by cheque, the assumption of risk by the company under this policy is subject to encashment of the cheque]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="32" y="44" width="524" height="15" uuid="40bfc013-68b4-4b5a-8862-57e36d0b53b9"/>
+				<textElement>
+					<font fontName="Arial MT" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[2.  Please inform the Company promptly of any change in the address of the Policyholder and Nominee/Appointee.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="32" y="60" width="523" height="15" uuid="5e26def4-04e9-496f-b5e1-fb0b54aa097c"/>
+				<textElement>
+					<font fontName="Arial MT" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[3.  Please read the Policy details carefully to verify that the terms match those applied for.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="32" y="76" width="524" height="15" uuid="8de857dc-9d0a-4751-b417-18f432d1f067"/>
+				<textElement>
+					<font fontName="Arial MT" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[4.  To claim a benefit or to request a change in your Policy details, please contact your representative or call the Company on 1800-120-7070.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="114" width="225" height="15" uuid="31d87f58-5d18-4722-a7ff-01e7888d1f67"/>
+				<textElement>
+					<font fontName="Arial MT" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Signed for and on behalf of Life Insurance Comapny Limited, at]]></text>
+			</staticText>
+			<line>
+				<reportElement x="260" y="121" width="113" height="1" uuid="e0acd2a9-46bb-40e7-b9c5-7f37645a7735"/>
+			</line>
+			<staticText>
+				<reportElement x="375" y="114" width="102" height="15" uuid="ec1c996e-51a7-4dee-98b8-4905894d4474"/>
+				<textElement>
+					<font fontName="Arial MT" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[on day/month/year.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="30" y="160" width="240" height="20" uuid="28b9c6eb-8575-48d5-af44-c6d50aa2d883"/>
+				<textElement>
+					<font fontName="Arial MT" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Senior Vice President - Operations]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="403" y="137" width="100" height="82" uuid="5d69db84-f300-4ba7-b30c-33df88e6b50b"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial MT" size="8" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Stamp Value
+Rs.]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

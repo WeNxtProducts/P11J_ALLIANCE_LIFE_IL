@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="60" rightMargin="20" topMargin="20" bottomMargin="20" uuid="324cedb4-ccbd-4f6a-8d71-02b08182cc75">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="138"/>
+	<parameter name="P_POL_NO_FM" class="java.lang.String"/>
+	<parameter name="P_POL_NO_TO" class="java.lang.String"/>
+	<parameter name="P_PROD_CODE_FM" class="java.lang.String"/>
+	<parameter name="P_PROD_CODE_TO" class="java.lang.String"/>
+	<parameter name="P_DATE_FM" class="java.lang.String"/>
+	<parameter name="P_DATE_TO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT POL_NO, CUST_TITLE, cust_name, cust_addr1, cust_addr2, cust_addr3, cust_phone
+FROM PM_CUSTOMER, PT_IL_POLICY
+WHERE CUST_CODE = POL_CUST_CODE
+AND POL_NO BETWEEN $P{P_POL_NO_FM} AND $P{P_POL_NO_TO}
+AND POL_PROD_CODE BETWEEN $P{P_PROD_CODE_FM} AND $P{P_PROD_CODE_TO}
+AND (POL_EXPIRY_DT+1) BETWEEN TO_DATE($P{P_DATE_FM},'DD/MM/RRRR') AND TO_DATE($P{P_DATE_TO},'DD/MM/RRRR')]]>
+	</queryString>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="CUST_TITLE" class="java.lang.String"/>
+	<field name="CUST_NAME" class="java.lang.String"/>
+	<field name="CUST_ADDR1" class="java.lang.String"/>
+	<field name="CUST_ADDR2" class="java.lang.String"/>
+	<field name="CUST_ADDR3" class="java.lang.String"/>
+	<field name="CUST_PHONE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="198" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="74" width="100" height="20" uuid="d3bd64ed-a726-4c4e-8897-06103d73c4f4"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[To    ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="415" y="20" width="100" height="20" uuid="231686c6-45b3-4d84-8d69-a82fb3fd4f2f"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM,yyyy").format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="114" width="218" height="20" uuid="6683b0fd-f706-4552-882d-345a7c3e7455"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_ADDR1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="134" width="218" height="20" uuid="b6c9ee2a-c64a-46ee-a159-f2615de84da5"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_ADDR2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="154" width="218" height="20" uuid="2b5de4f8-fd81-4df1-b59c-34c14783646d"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_ADDR3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="0" y="174" width="218" height="20" uuid="c4e3c911-cf1b-4a0f-a3f9-1468cf3169c8"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_PHONE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="94" width="218" height="20" uuid="3ea50342-96b6-4a5e-bd22-c2affe792eca"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="229" y="0" width="71" height="20" uuid="d5097763-af66-48ff-b4b0-fe0dc2e15c39"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="16" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Reminder]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="326" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="283" height="20" uuid="da00c978-9fa2-4f2c-b5a6-a63f014db477"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="16" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Reg : Maturity Claim payable on Policy.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="32" width="100" height="20" uuid="86a55439-b82a-4cf9-8824-75098d75fa11"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dear Sir,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="68" width="229" height="20" uuid="b00afac9-ab1b-4b6c-b7eb-cd148a82407b"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[This refers to our notice for the maturity claim on]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="92" width="555" height="20" uuid="48af7666-97fb-42d3-aee2-82d3ab2691db"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Please arrange to submit the requirements to consider the claim, within 15days from the date of this]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="108" width="100" height="20" uuid="a8100b0f-321e-486d-90cc-de5ba9290dd6"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[letter.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="138" width="148" height="20" uuid="c77ce6f7-755c-43ec-af2c-56bf2f3a53c1"/>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Documents Required:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="158" width="170" height="20" uuid="8f465f43-9785-4180-86a1-5854a6acbc0e"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[1. Original Policy Document]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="178" width="170" height="20" uuid="9ad44faf-f2c3-41e4-b463-2346a9f03e8d"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[2. Maturity Discharge Form]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="198" width="170" height="20" uuid="6816a94f-f12f-4c37-aaf2-7a166adaabbb"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[3. ID Card Copy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="218" width="170" height="20" uuid="9918f293-175a-48f2-9c67-d36c8a56afb7"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[4. Details of assignment/ loan if any.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="238" width="218" height="20" uuid="39b08a81-1f84-4a40-8c4e-50fd0ba16bd3"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[For Falcon Insurance Company S.A.O.C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="306" width="218" height="20" uuid="dbfe683a-9815-4fc9-8c49-50c5dad74297"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[Authorised Signatory]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="229" y="68" width="48" height="21" uuid="6ebde5d5-838d-48b4-b606-431d441ed061"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[ policy No]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="274" y="62" width="146" height="21" uuid="3b4233d6-e0a8-4ad1-a432-a587f5997c18"/>
+				<box>
+					<bottomPen lineWidth="1.0" lineStyle="Dotted"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

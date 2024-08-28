@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<f:loadBundle basename="messageProperties_PILM065_APAC"
+		var="componentMessage" />
+
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+		<tr>
+		</tr>
+		<h:form id="PILM065_SearchPage">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err" escape="true"
+									styleClass="#{PILM065_SEARCH_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM065_SEARCH_ACTION.errorMap['current'] !=null? PILM065_SEARCH_ACTION.errorMap['current']: PILM065_SEARCH_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" styleClass="ErrorMessages"
+								value="#{PILM065_SEARCH_ACTION.errorMessages}" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PILM065_SEARCH_ACTION.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PILM065_SEARCH_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table width="100%" border="0" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputText
+							value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><h:outputLabel
+							value="#{componentMessage.PILM065_APAC$PM_IL_ACCRUAL_SETUP$ACC_MAIN_ACNT_CODE$caption}" />
+						<h:inputText id="ACC_MAIN_ACNT_CODE" value=""
+							binding="#{PILM065_SEARCH_ACTION.ACC_MAIN_ACNT_CODE}" /></td>
+						<td><h:outputLabel
+							value="#{componentMessage.PILM065_APAC$PM_IL_ACCRUAL_SETUP$ACC_SUB_ACNT_CODE$caption}" />
+						<h:inputText id="ACC_SUB_ACNT_CODE" value=""
+							binding="#{PILM065_SEARCH_ACTION.ACC_SUB_ACNT_CODE}" /></td>
+						<td><h:outputLabel
+							value="#{componentMessage.PILM065_APAC$PM_IL_ACCRUAL_SETUP$ACC_DIVN_CODE$caption}" />
+						<h:inputText id="ACC_DIVN_CODE" value=""
+							binding="#{PILM065_SEARCH_ACTION.ACC_DIVN_CODE}" /> &nbsp;&nbsp;
+						</td>
+						<td><a4j:commandButton styleClass="button"
+							value="#{commonmsg.searchButton$caption}"
+							immediate="true"
+							actionListener="#{PILM065_SEARCH_ACTION.fetchData}"
+							reRender="fetchList,errorPanel" /></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<rich:dataTable id="fetchList"
+				value="#{PILM065_SEARCH_ACTION.searchList}"
+				binding="#{PILM065_SEARCH_ACTION.searchDataTable}" width="100%"
+				var="colData" cellpadding="5px" rows="10" border="1">
+
+				<rich:column filterBy="#{colData.ACC_MAIN_ACNT_CODE}"
+					filterValue="#{PILM065_SEARCH_ACTION.searchBean.filterText}"
+					sortBy="#{colData.ACC_MAIN_ACNT_CODE}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Main/Control A/C" />
+					</f:facet>
+					<h:commandLink action="#{PILM065_SEARCH_ACTION.executeQuery}"
+						id="ACC_MAIN_ACNT_CODE">
+							<h:outputText value="#{colData.ACC_MAIN_ACNT_CODE}" />
+						<f:param name="ROWID" value="#{colData.ROWID}" />
+					</h:commandLink>
+				</rich:column>
+				<rich:column filterBy="#{colData.ACC_SUB_ACNT_CODE}"
+					sortBy="#{colData.ACC_SUB_ACNT_CODE}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Sub A/C" />
+					</f:facet>
+						<h:outputText value="#{colData.ACC_SUB_ACNT_CODE}" />
+					<f:param name="ACC_SUB_ACNT_CODE"
+						value="#{colData.ACC_SUB_ACNT_CODE}" />
+				</rich:column>
+				<rich:column filterBy="#{colData.ACC_DIVN_CODE}"
+					sortBy="#{colData.ACC_DIVN_CODE}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Branch" />
+					</f:facet>
+						<h:outputText value="#{colData.ACC_DIVN_CODE}" />
+					<f:param name="ACC_DIVN_CODE" value="#{colData.ACC_DIVN_CODE}" />
+				</rich:column>
+			</rich:dataTable>
+			<h:commandButton
+					value="Insert"
+					styleClass="button"
+					action="#{PILM065_SEARCH_ACTION.newRecordAction}" />
+		</h:form>
+		<tr>
+		</tr>
+	</table>
+</f:view>
+
+</ui:define>
+</ui:composition>
+

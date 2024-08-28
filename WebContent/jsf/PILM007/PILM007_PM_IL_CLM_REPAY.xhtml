@@ -1,0 +1,1432 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM007"
+				var="message_PILM007" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 Handson  On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_CLM_REPAY" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+			
+			
+			
+			<!-- added by raja on 11-05-2017 for hospital cash fsd -->
+			<style>
+			.smallBox {
+    width: 38px;
+}
+</style>
+			<!-- end -->
+			
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM007_COMPOSITE_ACTION.backButtonAction}"
+											id="commandLink_backButtonAction" immediate="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="PM_SUB_CMD_GRPIS_BACKBTN"
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="PM_SUB_CMD_OUTXT_BACKBTN"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										
+										
+										<a4j:commandLink id="DELETERECORD_TOOL_HEADER1"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="DELETERECORD_TOOL_IMAGE_HEADER1"
+												styleClass="searchimg" accesskey="r"
+												image="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER1"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+											<rich:componentControl attachTo="DELETERECORD_TOOL_HEADER1"
+												event="onclick" for="DELETE_PANEL" id="DELETE_COMP_CONTROL"
+												operation="show" />
+										</a4j:commandLink>
+										<!-- Delete confirmation Confirmation popup -->
+										<rich:modalPanel height="110" id="DELETE_PANEL" width="300">
+											<f:facet name="header">
+												<h:panelGroup>
+													<h:outputText id="AUTOID_R_1"
+														style="color: #FFFFFF; font-size: 14px;font-weight: bold;"
+														value="#{commonmsg.premia$broker$delete$confirmation$caption}" />
+												</h:panelGroup>
+											</f:facet>
+											<f:facet name="controls">
+												<h:panelGroup>
+													<h:graphicImage id="DELETE_PANEL_hidelink"
+														style="cursor:pointer" styleClass="searchimg"
+														value="./../../resources/images/close.png" />
+													<rich:componentControl attachTo="DELETE_PANEL_hidelink"
+														event="onclick" for="DELETE_PANEL" operation="hide" />
+												</h:panelGroup>
+											</f:facet>
+											<table align="center" class="noborder">
+												<tr align="center">
+													<td><h:outputText id="AUTOID_R_2"
+														value="#{commonmsg.premia$broker$delete$confirmation$message}" />
+													</td>
+												</tr>
+												<tr align="center">
+													<td><h:commandButton
+														action="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.deleteRecords}"
+														id="DELETE_PANEL_continuebutton"
+														style="width:65px;height:20px;" styleClass="button"
+														value="#{commonmsg.premia$broker$delete$confirmation$ok}">
+														<rich:componentControl
+															attachTo="DELETE_PANEL_continuebutton" event="onclick"
+															for="DELETE_PANEL" operation="hide" />
+													</h:commandButton> <rich:spacer height="25" id="AUTOID_R-3" width="10" /> <a4j:commandButton
+														id="DELETE_PANEL_cancelbutton" immediate="true"
+														style="width:65px;height:20px;" styleClass="button"
+														value="#{commonmsg.premia$broker$delete$confirmation$cancel}">
+														<rich:componentControl
+															attachTo="DELETE_PANEL_cancelbutton" event="onclick"
+															for="DELETE_PANEL" operation="hide" />
+													</a4j:commandButton> <br />
+													</td>
+												</tr>
+											</table>
+										</rich:modalPanel>
+										
+
+									<!--  	<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>  -->
+
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILM007_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.errorMap['current'] !=null? PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.errorMap['current']: PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="15%" valign="top" >
+						<table class="noborder" id="globalLink" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><h:inputHidden id="myhidden"
+									value="#{PILM007_COMPOSITE_ACTION.tabbedBar.tabClicked}" /> <h:panelGroup
+									id="TABBEDBAR_PANEL" style="border:0;height:15%;">
+									<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+										<tr>
+											<td><a4j:repeat id="TAB_LIST"
+												value="#{PILM007_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													action="#{PILM007_COMPOSITE_ACTION.tabbedBar.tabAction}"
+													disabled="#{currtab.disabled}" id="TAB_PM_IL_CLM_REPAY"
+													immediate="#{currtab.immediate}"
+													onclick="document.getElementById('PM_IL_CLM_REPAY:myhidden').value='#{currtab.id}'"
+													styleClass="#{currtab.styleString}"
+													value="#{currtab.value}">
+													<f:param id="TAB_PARAM_PM_IL_CLM_REPAY" name="tabid"
+														value="#{currtab.id}" />
+												</h:commandLink>
+											</a4j:repeat></td>
+											<!--  <td width="*"><a4j:commandButton
+												action="#{PILM007_COMPOSITE_ACTION.tabbedBar.gotoFirstTab}"
+												alt="first"
+												disabled="#{PILM007_COMPOSITE_ACTION.tabbedBar.navigable}"
+												id="TAB_NAV_FIRST" image="./../../images/firstrec.gif"
+												immediate="true" reRender="TABBEDBAR_PANEL" /> <a4j:commandButton
+												action="#{PILM007_COMPOSITE_ACTION.tabbedBar.gotoPrevTab}"
+												alt="previous"
+												disabled="#{PILM007_COMPOSITE_ACTION.tabbedBar.navigable}"
+												id="TAB_NAV_PREVIOUS" image="./../../images/prevpage.gif"
+												immediate="true" reRender="TABBEDBAR_PANEL" /> <a4j:commandButton
+												action="#{PILM007_COMPOSITE_ACTION.tabbedBar.gotoNextTab}"
+												alt="next"
+												disabled="#{PILM007_COMPOSITE_ACTION.tabbedBar.navigable}"
+												id="TAB_NAV_NEXT" image="./../../images/nextpage.gif"
+												immediate="true" reRender="TABBEDBAR_PANEL" /> <a4j:commandButton
+												action="#{PILM007_COMPOSITE_ACTION.tabbedBar.gotoLastTab}"
+												alt="last"
+												disabled="#{PILM007_COMPOSITE_ACTION.tabbedBar.navigable}"
+												id="TAB_NAV_LAST" image="./../../images/lastRecord.gif"
+												immediate="true" reRender="TABBEDBAR_PANEL" /></td> -->
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="3" valign="top" width="10%"><h:commandButton
+							binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_UI_M_LOV_PAY_COVER_CODE}"
+							disabled="false" id="UI_M_LOV_PAY_COVER_CODE" rendered="false"
+							styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOV_PAY_COVER_CODE$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOV_PAY_COVER_CODE$caption}" />
+						<rich:spacer id="AUTOID_1" width="5" /> <h:commandButton
+							binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_UI_M_LOV_PAY_LOSS_CODE}"
+							disabled="false" id="UI_M_LOV_PAY_LOSS_CODE" rendered="false"
+							styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOV_PAY_LOSS_CODE$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOV_PAY_LOSS_CODE$caption}" />
+						<rich:spacer id="AUTOID_2" width="5" /> <h:commandButton
+							binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_UI_M_LOV_PAY_DISABLE_CODE}"
+							disabled="false" id="UI_M_LOV_PAY_DISABLE_CODE" rendered="false"
+							styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOV_PAY_DISABLE_CODE$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOV_PAY_DISABLE_CODE$caption}" />
+						<rich:spacer id="AUTOID_3" width="5" /> <h:commandButton
+							binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_UI_M_COVER_DESC_EDITOR}"
+							disabled="false" id="UI_M_COVER_DESC_EDITOR" rendered="false"
+							styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_COVER_DESC_EDITOR$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_COVER_DESC_EDITOR$caption}" />
+						<rich:spacer id="AUTOID_4" width="5" /> <h:commandButton
+							binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_UI_M_LOV_COVER_CODE}"
+							disabled="false" id="UI_M_LOV_COVER_CODE" rendered="false"
+							styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOV_COVER_CODE$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOV_COVER_CODE$caption}" />
+						<rich:spacer id="AUTOID_5" width="5" /> <h:commandButton
+							binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_UI_M_LOV_LOSS_CODE}"
+							disabled="false" id="UI_M_LOV_LOSS_CODE" rendered="false"
+							styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOV_LOSS_CODE$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOV_LOSS_CODE$caption}" />
+						<rich:spacer id="AUTOID_6" width="5" /> <h:commandButton
+							binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_UI_M_LOSS_EDITOR}"
+							disabled="false" id="UI_M_LOSS_EDITOR" rendered="false"
+							styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOSS_EDITOR$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOSS_EDITOR$caption}" />
+						<rich:spacer id="AUTOID_7" width="5" /> <h:commandButton
+							binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_UI_M_DISABLE_EDITOR}"
+							disabled="false" id="UI_M_DISABLE_EDITOR" rendered="false"
+							styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_DISABLE_EDITOR$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_DISABLE_EDITOR$caption}" />
+						<rich:spacer id="AUTOID_8" width="5" /> <h:commandButton
+							binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_UI_M_LOV_DISABLE_CODE}"
+							disabled="false" id="UI_M_LOV_DISABLE_CODE" rendered="false"
+							styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOV_DISABLE_CODE$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOV_DISABLE_CODE$caption}" />
+						<rich:spacer id="AUTOID_9" width="5" /> <h:commandButton
+							action="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.actionM_BUT_LATE_FEE_DTLS}"
+							binding="#{PILM007_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.COMP_UI_M_BUT_LATE_FEE_DTLS}"
+							disabled="false" id="UI_M_BUT_LATE_FEE_DTLS" style="width:96px"
+							styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_BUT_LATE_FEE_DTLS$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_BUT_LATE_FEE_DTLS$caption}" />
+						<rich:spacer id="AUTOID_10" width="5" /> 
+						
+						<!-- changed to rendered false by Saritha on 25.05.2017 for ZBILQC-1720199 -->
+						
+						<h:commandButton
+							action="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.actionM_BUT_CR_LIEN_YN}"
+							binding="#{PILM007_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.COMP_UI_M_BUT_CR_LIEN_YN}"
+							disabled="false" id="UI_M_BUT_CR_LIEN_YN" rendered="false"
+							style="width:96px" styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_BUT_CR_LIEN_YN$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_BUT_CR_LIEN_YN$caption}" />
+							
+							<!-- End -->
+						<rich:spacer id="AUTOID_11" width="5" /> <h:commandButton
+							action="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.actionM_BUT_WAIT_PERIOD}"
+							binding="#{PILM007_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.COMP_UI_M_BUT_WAIT_PERIOD}"
+							disabled="false" id="UI_M_BUT_WAIT_PERIOD" rendered="true"
+							style="width:96px" styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_BUT_WAIT_PERIOD$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_BUT_WAIT_PERIOD$caption}" />
+						<rich:spacer id="AUTOID_12" width="5" /> 
+						
+						<!-- changed to rendered false by Saritha on 25.05.2017 for ZBILQC-1720199 -->
+						<h:commandButton
+							action="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.actionM_BUT_CR_HIBA_YN}"
+							binding="#{PILM007_COMPOSITE_ACTION.DUMMY_ACTION_BEAN.COMP_UI_M_BUT_CR_HIBA_YN}"
+							disabled="false" id="UI_M_BUT_CR_HIBA_YN" rendered="false"
+							style="width:96px" styleClass="button"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_BUT_CR_HIBA_YN$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_BUT_CR_HIBA_YN$caption}" />
+							
+							<!-- eND -->
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td>&nbsp;</td>
+								<td valign="top" width="100%">
+								
+								<table align="left" width="100%" class="noborder">
+									<tr>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_COVER_CODE_LABEL}"
+											for="CR_COVER_CODE" id="CR_COVER_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_COVER_CODE$caption}" />
+										<h:graphicImage id="AUTOID_13" style="" styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_COVER_CODE}"
+											disabled="false" id="CR_COVER_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_COVER_CODE$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_COVER_CODE_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_COVER_CODE}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CR_COVER_CODE" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText> <h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_UI_M_COVER_DESC}"
+											disabled="true" id="UI_M_COVER_DESC" maxlength="30"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_COVER_DESC$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.UI_M_COVER_DESC}" />
+										<rich:suggestionbox for="CR_COVER_CODE" height="200"
+											id="PM_IL_CLM_REPAY_LOV" immediate="true"
+											suggestionAction="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.lovCOVER_CODE}"
+											var="lov" width="250">
+											<h:column id="PM_IL_CLM_REPAY_LOV_column">
+												<h:outputText id="PM_IL_CLM_REPAY_LOVoutputtxt_lovcode"
+													value="#{lov.lovCode}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="PM_IL_CLM_REPAY_LOV_lovName"
+													value="#{lov.lovName}" />
+											</h:column>
+
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="PM_IL_CLM_REPAY_LOV_name_a4j" immediate="true"
+												reRender="errorPanel,UI_M_COVER_DESC">
+												<f:setPropertyActionListener id="AUTOID_14"
+													target="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.UI_M_COVER_DESC}"
+													value="#{lov.lovName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="PM_IL_CLM_REPAY_LOV_graphicImage_Lovgif"
+											style="" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td class="oddrow" width="4%">&nbsp;</td>
+											<td class="oddrow" width="20%">&nbsp;</td>
+											<td class="oddrow" width="28%">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_LOSS_TYPE_LABEL}"
+											for="CR_LOSS_TYPE" id="CR_LOSS_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_LOSS_TYPE$caption}" />
+										<h:graphicImage id="AUTOID_15" style="" styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_LOSS_TYPE}"
+											disabled="false" id="CR_LOSS_TYPE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_LOSS_TYPE$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_LOSS_TYPE_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_LOSS_TYPE}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CR_LOSS_TYPE" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText> <h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_UI_M_LOSS_DESC}"
+											disabled="true" id="UI_M_LOSS_DESC" maxlength="30"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_LOSS_DESC$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.UI_M_LOSS_DESC}" />
+										<rich:suggestionbox for="CR_LOSS_TYPE" height="200"
+											id="PM_IL_CLM_REPAY_LOV_LOSS" immediate="true"
+											suggestionAction="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.lovLOSS_TYPE}"
+											var="lov" width="250">
+											<h:column id="PM_IL_CLM_REPAY_LOSS_TYPE_LOV_column">
+												<h:outputText
+													id="PM_IL_CLM_REPAY_LOSS_TYPE_LOVoutputtxt_lovcode"
+													value="#{lov.lovCode}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="PM_IL_CLM_REPAY_LOSS_TYPE_LOV_lovName"
+													value="#{lov.lovName}" />
+											</h:column>
+
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="PM_IL_CLM_REPAY_LOSS_TYPE_LOV_name_a4j" immediate="true"
+												reRender="errorPanel,UI_M_LOSS_DESC">
+												<f:setPropertyActionListener id="AUTOID_16"
+													target="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.UI_M_LOSS_DESC}"
+													value="#{lov.lovName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage
+											id="PM_IL_CLM_REPAY_LOSS_TYPE_LOV_graphicImage_Lovgif"
+											style="" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrow">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_DISABLE_TYPE_LABEL}"
+											for="CR_DISABLE_TYPE" id="CR_DISABLE_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_DISABLE_TYPE$caption}" />
+										<h:graphicImage id="AUTOID_17" style="" styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_DISABLE_TYPE}"
+											disabled="false" id="CR_DISABLE_TYPE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_DISABLE_TYPE$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_DISABLE_TYPE_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_DISABLE_TYPE}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CR_DISABLE_TYPE" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText> <h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_UI_M_DISABLE_DESC}"
+											disabled="true" id="UI_M_DISABLE_DESC" maxlength="30"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$UI_M_DISABLE_DESC$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.UI_M_DISABLE_DESC}" />
+
+										<rich:suggestionbox for="CR_DISABLE_TYPE" height="200"
+											id="PM_IL_CLM_REPAY_LOV_DISABLE" immediate="true"
+											suggestionAction="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.lovDISABLE_TYPE}"
+											var="lov" width="250">
+											<h:column id="PM_IL_CLM_REPAY_DISABLE_TYPE_LOV_column">
+												<h:outputText
+													id="PM_IL_CLM_REPAY_DISABLE_TYPE_LOVoutputtxt_lovcode"
+													value="#{lov.lovCode}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="PM_IL_CLM_REPAY_DISABLE_TYPE_LOV_lovName"
+													value="#{lov.lovName}" />
+											</h:column>
+
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="PM_IL_CLM_REPAY_DISABLE_TYPE_LOV_name_a4j"
+												immediate="true" reRender="errorPanel,UI_M_DISABLE_DESC">
+												<f:setPropertyActionListener id="AUTOID_18"
+													target="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.UI_M_DISABLE_DESC}"
+													value="#{lov.lovName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage
+											id="PM_IL_CLM_REPAY_DISABLE_TYPE_LOV_graphicImage_Lovgif"
+											style="" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td class="oddrow" colspan="3">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_RESERVE_TYPE_LABEL}"
+											for="CR_RESERVE_TYPE" id="CR_RESERVE_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_RESERVE_TYPE$caption}" />
+										</td>
+										<td class="evenrow">
+										
+										<!-- Changed disabled proerty value by Saranya on 17/04/2017 -->
+										<!-- Modified by ganesh on 17-08-2017 as suggested by gaurav -->
+										<h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_RESERVE_TYPE}"
+											disabled="false" id="CR_RESERVE_TYPE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_RESERVE_TYPE$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_RESERVE_TYPE}" 
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_RESERVE_TYPE_Validator}">
+											<f:selectItems id="SEL_ITEMS_CR_RESERVE_TYPE"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_RESERVE_TYPE}" />
+												<!-- Added by Saranya on 17/04/2017 -->
+												<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CR_RESERVE_TYPE" immediate="true"
+												reRender="errorPanel,CR_RESERVE_OPTIONS" />
+												
+												
+										</h:selectOneMenu>
+										<!-- End -->
+										
+										</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">
+										<!-- Enabled by Saranya on 17/04/2017 -->
+										<h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_RESERVE_OPTIONS_LABEL}"
+											for="CR_RESERVE_OPTIONS" id="CR_RESERVE_OPTIONS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_RESERVE_OPTIONS$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_RESERVE_OPTIONS}"
+											disabled="false" id="CR_RESERVE_OPTIONS" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_RESERVE_OPTIONS$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_RESERVE_OPTIONS}">
+											<f:selectItems id="SEL_ITEMS_CR_RESERVE_OPTIONS"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_RESERVE_OPTIONS}" />
+										</h:selectOneMenu></td>
+									</tr>
+									 <!-- Enabled by Saranya on 17/04/2017 -->
+
+<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_NO_OF_YEARS_LABEL}"
+											for="CR_NO_OF_YEARS" id="CR_NO_OF_YEARS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_NO_OF_YEARS$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_NO_OF_YEARS}"
+											disabled="false" id="CR_NO_OF_YEARS" maxlength="4"
+											rendered="true" required="false" styleClass="inputNumeric smallBox"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_NO_OF_YEARS$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_NO_OF_YEARS}" />
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_RESERVE_CR_BASIS_LABEL}"
+											for="CR_RESERVE_CR_BASIS" id="CR_RESERVE_CR_BASIS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_RESERVE_CR_BASIS$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_RESERVE_CR_BASIS}"
+											disabled="false" id="CR_RESERVE_CR_BASIS" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_RESERVE_CR_BASIS$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_RESERVE_CR_BASIS}">
+											<f:selectItems id="SEL_ITEMS_CR_RESERVE_CR_BASIS"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_RESERVE_CR_BASIS}" />
+										</h:selectOneMenu></td>
+									</tr>  
+									<!-- End -->
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_RATE_LABEL}"
+											for="CR_RATE" id="CR_RATE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_RATE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_RATE}"
+											disabled="false" id="CR_RATE" maxlength="16" rendered="true"
+											required="false" styleClass="inputNumeric"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_RATE$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_RATE}" />
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_RATE_PER_LABEL}"
+											for="CR_RATE_PER" id="CR_RATE_PER_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_RATE_PER$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_RATE_PER}"
+											disabled="false" id="CR_RATE_PER" maxlength="11"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_RATE_PER$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_RATE_PER}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_APPLIED_ON_LABEL}"
+											for="CR_APPLIED_ON" id="CR_APPLIED_ON_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_APPLIED_ON$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_APPLIED_ON}"
+											disabled="false" id="CR_APPLIED_ON" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_APPLIED_ON$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_APPLIED_ON_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_APPLIED_ON}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CR_APPLIED_ON" immediate="true"
+												reRender="errorPanel,CR_FORMULA,UI_CR_FORMULA_DESC,PM_IL_CLM_CR_FORMULA" />
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_CR_APPLIED_ON1" immediate="true"
+												reRender="errorPanel,CR_FORMULA,UI_CR_FORMULA_DESC,PM_IL_CLM_CR_FORMULA" />
+											<f:selectItems id="SEL_ITEMS_CR_APPLIED_ON"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_APPLIED_ON}" />
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_UNIT_PRICE_LABEL}"
+											for="CR_UNIT_PRICE" id="CR_UNIT_PRICE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_UNIT_PRICE$caption}" />
+										<h:graphicImage id="AUTOID_19" rendered="false" style=""
+											styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_UNIT_PRICE}"
+											disabled="true" id="CR_UNIT_PRICE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_UNIT_PRICE$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_UNIT_PRICE}">
+											<f:selectItems id="SEL_ITEMS_CR_UNIT_PRICE"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_UNIT_PRICE}" />
+										</h:selectOneMenu></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PREM_DED_LABEL}"
+											for="CR_PREM_DED" id="CR_PREM_DED_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PREM_DED$caption}" />
+										<h:graphicImage id="AUTOID_20" style="" styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PREM_DED}"
+											disabled="false" id="CR_PREM_DED" rendered="true"
+											required="true" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PREM_DED$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_PREM_DED}">
+											<f:selectItems id="SEL_ITEMS_CR_PREM_DED"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_PREM_DED}" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+											<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PAY_MODE_LABEL}"
+											for="CR_PAY_MODE" id="CR_PAY_MODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PAY_MODE$caption}" />
+										<h:graphicImage id="AUTOID_23" style="" styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PAY_MODE}"
+											disabled="false" id="CR_PAY_MODE" rendered="true"
+											required="true" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PAY_MODE$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_PAY_MODE_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_PAY_MODE}">
+												<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CR_PAY_MODE" immediate="true"
+												reRender="errorPanel,CR_PERIOD_FROM" />
+											<f:selectItems id="SEL_ITEMS_CR_PAY_MODE"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_PAY_MODE}" />
+										</h:selectOneMenu>
+									</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PERIOD_FROM_LABEL}"
+											for="CR_PERIOD_FROM" id="CR_PERIOD_FROM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PERIOD_FROM$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PERIOD_FROM}"
+											disabled="false" id="CR_PERIOD_FROM" maxlength="3"
+											rendered="true" required="false" styleClass="inputNumeric"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PERIOD_FROM_Validator}"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PERIOD_FROM$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_PERIOD_FROM}" >
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CR_PERIOD_FROM" immediate="true"
+												reRender="errorPanel" /></h:inputText>
+										</td>
+										<td class="evenrow">&nbsp;</td>
+												<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PAY_TO_LABEL}"
+											for="CR_PAY_TO" id="CR_PAY_TO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PAY_TO$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PAY_TO}"
+											disabled="false" id="CR_PAY_TO" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PAY_TO$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_PAY_TO}">
+											<f:selectItems id="SEL_ITEMS_CR_PAY_TO"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_PAY_TO}" />
+										</h:selectOneMenu></td>
+										<!-- <td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PERIOD_TO_LABEL}"
+											for="CR_PERIOD_TO" id="CR_PERIOD_TO_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PERIOD_TO$caption}" />
+											
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PERIOD_TO}"
+											disabled="false" id="CR_PERIOD_TO" maxlength="3"
+											rendered="false" required="false" styleClass="inputNumeric"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PERIOD_TO$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PERIOD_TO_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_PERIOD_TO}" >
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CR_PERIOD_TO" immediate="true"
+												reRender="errorPanel" />
+												</h:inputText>
+										</td> -->
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_MIN_TYPE_LABEL}"
+											for="CR_MIN_TYPE" id="CR_MIN_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_MIN_TYPE$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_MIN_TYPE}"
+											disabled="false" id="CR_MIN_TYPE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_MIN_TYPE$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_MIN_TYPE_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_MIN_TYPE}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_CR_MIN_TYPE" immediate="true"
+												reRender="errorPanel,CR_MIN_VALUE" />
+											<f:selectItems id="SEL_ITEMS_CR_MIN_TYPE"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_MIN_TYPE}" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_MIN_VALUE_LABEL}"
+											for="CR_MIN_VALUE" id="CR_MIN_VALUE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_MIN_VALUE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_MIN_VALUE}"
+											disabled="false" id="CR_MIN_VALUE" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_MIN_VALUE$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_MIN_VALUE_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_MIN_VALUE}" >
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CR_MIN_VALUE" immediate="true"
+												reRender="errorPanel" />
+											</h:inputText>
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_MAX_TYPE_LABEL}"
+											for="CR_MAX_TYPE" id="CR_MAX_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_MAX_TYPE$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_MAX_TYPE}"
+											disabled="false" id="CR_MAX_TYPE" rendered="true"
+											required="false" styleClass="inputNumeric"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_MAX_TYPE$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_MAX_TYPE_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_MAX_TYPE}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_CR_MAX_TYPE" immediate="true"
+												reRender="errorPanel,CR_MAX_VALUE" />
+											<f:selectItems id="SEL_ITEMS_CR_MAX_TYPE"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_MAX_TYPE}" />
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_MAX_VALUE_LABEL}"
+											for="CR_MAX_VALUE" id="CR_MAX_VALUE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_MAX_VALUE$caption}" />
+										<h:graphicImage id="AUTOID_22" style="" styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_MAX_VALUE}"
+											disabled="false" id="CR_MAX_VALUE" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_MAX_VALUE$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_MAX_VALUE_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_MAX_VALUE}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CR_MAX_VALUE" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+									</tr>
+									<!-- <tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PAY_TO_LABEL}"
+											for="CR_PAY_TO" id="CR_PAY_TO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PAY_TO$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PAY_TO}"
+											disabled="false" id="CR_PAY_TO" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PAY_TO$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_PAY_TO}">
+											<f:selectItems id="SEL_ITEMS_CR_PAY_TO"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_PAY_TO}" />
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+									<td class="evenrow">&nbsp;</td>
+									<td class="evenrow">&nbsp;</td>
+									</tr> -->
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_POLICY_VALID_YN_LABEL}"
+											for="CR_POLICY_VALID_YN" id="CR_POLICY_VALID_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_POLICY_VALID_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_POLICY_VALID_YN}"
+											disabled="false" id="CR_POLICY_VALID_YN" rendered="true"
+											required="false" styleClass="input"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_POLICY_VALID_YN_Validator}"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_POLICY_VALID_YN$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_POLICY_VALID_YN}">
+											<f:selectItems id="SEL_ITEMS_CR_POLICY_VALID_YN"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_POLICY_VALID_YN}" />
+												<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="CR_POLICY_VALID_YN_SUPPORT"
+												immediate="true"
+												reRender="errorPanel" />
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="CR_POLICY_VALID_YN_SUPPORT1"
+												immediate="true"
+												reRender="errorPanel" />
+										</h:selectOneMenu></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_FORMULA_LABEL}"
+											for="CR_FORMULA" id="CR_FORMULA_LABEL"
+											styleClass="label"
+											value="Formula" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_FORMULA}"
+											disabled="false" id="CR_FORMULA" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="" immediate="true"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.validateCR_FORMULA}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="CLM_MEDICINE_85" immediate="true"
+												reRender="errorPanel,PM_IL_CLM_CR_FORMULA" />
+											</h:inputText> 
+										<rich:suggestionbox for="CR_FORMULA" height="200"
+											id="PM_IL_CLM_CR_FORMULA" immediate="true"
+											suggestionAction="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.lovFORMULA_LIST}"
+											var="lov" width="250">
+											<h:column id="PM_IL_CLMCR_FORMULA_LOV_column">
+												<h:outputText
+													id="PM_IL_CLM_REPACR_FORMULAoutputtxt_lovcode"
+													value="#{lov.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="PM_IL_CLCR_FORMULATYPE_LOV_lovName"
+													value="#{lov.name}" />
+											</h:column>
+
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="PM_IL_CLM_REPAYCR_FORMULAname_a4j" immediate="true"
+												reRender="errorPanel,UI_CR_FORMULA_DESC">
+												<f:setPropertyActionListener id="AUTOID_UI_CR_FORMULA_DESC"
+													target="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_FORMULA_DESC}"
+													value="#{lov.name}" />
+											</a4j:support>
+										</rich:suggestionbox> 
+										<h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_FORMULA_DESC}"
+											disabled="true" id="UI_CR_FORMULA_DESC" maxlength="30"
+											rendered="true" required="false" styleClass="input"
+											title=""
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_FORMULA_DESC}" />
+										<h:graphicImage
+											id="PM_IL_CLM_REPAY_FORMULA_LOV_graphicImage_Lovgif"
+											style="" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_LATE_FEE_YN_LABEL}"
+											for="CR_LATE_FEE_YN" id="CR_LATE_FEE_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_LATE_FEE_YN$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_LATE_FEE_YN}"
+											disabled="false" id="CR_LATE_FEE_YN" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_LATE_FEE_YN$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_LATE_FEE_YN_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_LATE_FEE_YN}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_CR_LATE_FEE_YN"
+												immediate="true"
+												reRender="errorPanel,CR_LATE_FEE_TYPE,UI_M_BUT_LATE_FEE_DTLS" />
+											<f:selectItems id="SEL_ITEMS_CR_LATE_FEE_YN"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_LATE_FEE_YN}" />
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_LATE_FEE_TYPE_LABEL}"
+											for="CR_LATE_FEE_TYPE" id="CR_LATE_FEE_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_LATE_FEE_TYPE$caption}" />
+										</td>
+									<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_LATE_FEE_TYPE}"
+											disabled="false" id="CR_LATE_FEE_TYPE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_LATE_FEE_TYPE$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_LATE_FEE_TYPE}">
+											<f:selectItems id="SEL_ITEMS_CR_LATE_FEE_TYPE"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_LATE_FEE_TYPE}" />
+										</h:selectOneMenu></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_EFF_FM_DT_LABEL}"
+											for="CR_EFF_FM_DT" id="CR_EFF_FM_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_EFF_FM_DT$caption}" />
+										</td>
+										<td class="oddrow"><rich:calendar
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_EFF_FM_DT}"
+											datePattern="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true" id="CR_EFF_FM_DT"
+											inputClass="calendarinput" inputSize="12" rendered="true"
+											required="false"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_EFF_FM_DT$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_EFF_FM_DT_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_EFF_FM_DT}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="oninputblur" id="SUPPORT_CR_EFF_FM_DT"
+												immediate="true"
+												onsubmit="formatDate('PM_IL_CLM_REPAY:CR_EFF_FM_DT')"
+												reRender="errorPanel" />
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="SUPPORT_CR_EFF_FM_DT1"
+												immediate="true" reRender="errorPanel" />
+										</rich:calendar></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_EFF_TO_DT_LABEL}"
+											for="CR_EFF_TO_DT" id="CR_EFF_TO_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_EFF_TO_DT$caption}" />
+										</td>
+										<td class="oddrow"><rich:calendar
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_EFF_TO_DT}"
+											datePattern="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true" id="CR_EFF_TO_DT"
+											inputClass="calendarinput" inputSize="12" rendered="true"
+											required="false"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_EFF_TO_DT$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_EFF_TO_DT_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_EFF_TO_DT}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="oninputblur" id="SUPPORT_CR_EFF_TO_DT"
+												immediate="true"
+												onsubmit="formatDate('PM_IL_CLM_REPAY:CR_EFF_TO_DT')"
+												reRender="errorPanel" />
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="SUPPORT_CR_EFF_TO_DT1"
+												immediate="true" reRender="errorPanel" />
+										</rich:calendar></td>
+									</tr>
+									<tr>
+										<td class="evenrowright">
+										
+										<!-- changed to rendered false by Saritha on 25.05.2017 for ZBILQC-1720199 -->
+										<!-- Commentted by saritha on 05-Jun-2017 for ssp call id ZBILQC-1724684  -->
+										<!-- <h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_LIEN_YN_LABEL}"
+											for="CR_LIEN_YN" id="CR_LIEN_YN_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_LIEN_YN$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_LIEN_YN}"
+											disabled="false" id="CR_LIEN_YN" rendered="false"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_LIEN_YN$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_LIEN_YN_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_LIEN_YN}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_CR_LIEN_YN" immediate="true"
+												reRender="errorPanel,UI_M_BUT_CR_LIEN_YN" />
+											<f:selectItems id="SEL_ITEMS_CR_LIEN_YN"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_LIEN_YN}" />
+										</h:selectOneMenu>
+										
+										</td>  -->
+										 <!-- End -->
+										<!-- Commentted by saritha on 05-Jun-2017 for ssp call id ZBILQC-1724684  -->
+										<!--  <td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"> -->
+										<!-- End -->
+										<h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_WAITING_YN_LABEL}"
+											for="CR_WAITING_YN" id="CR_WAITING_YN_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_WAITING_YN$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_WAITING_YN}"
+											disabled="false" id="CR_WAITING_YN" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_WAITING_YN$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_WAITING_YN_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_WAITING_YN}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_CR_WAIT_YN" immediate="true"
+												reRender="errorPanel,UI_M_BUT_WAIT_PERIOD" />
+											<f:selectItems id="SEL_ITEMS_CR_WAITING_YN"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_WAITING_YN}" />
+										</h:selectOneMenu></td>
+										<!-- Premium payable Y/N Field enable by saritha on 21-12-2017 for Delting premium collection records happeing with 210 claims as per siva sir sugg. -->
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PREM_PAYABLE_YN_LABEL}"
+											for="CR_PREM_PAYABLE_YN" id="CR_PREM_PAYABLE_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PREM_PAYABLE_YN$caption}" />
+										</td>
+									     <td class="oddrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PREM_PAYABLE_YN}"
+											disabled="false" id="CR_PREM_PAYABLE_YN" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PREM_PAYABLE_YN$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_PREM_PAYABLE_YN_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_PREM_PAYABLE_YN}">
+											<f:selectItems id="SEL_ITEMS_CR_PREM_PAYABLE_YN"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_PREM_PAYABLE_YN}" />
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="CR_PREM_PAYABLE_YN_SUPPORT"
+												immediate="true"
+												reRender="errorPanel,CR_POLICY_VALID_YN" />
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="CR_PREM_PAYABLE_YN_SUPPORT1"
+												immediate="true"
+												reRender="errorPanel,CR_POLICY_VALID_YN" />
+										</h:selectOneMenu></td> 
+										<!-- End -->
+									</tr> 
+									<!-- style added by saritha on 05-Jun-2017 for ssp call id ZBILQC-1724684  -->
+									<tr style="display: none!important;">
+									<!-- End -->
+									<!-- changed to rendered false by Saritha on 25.05.2017 for ZBILQC-1720199 -->
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_HIBAH_YN_LABEL}"
+											for="CR_HIBAH_YN" id="CR_HIBAH_YN_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_HIBAH_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_HIBAH_YN}"
+											disabled="false" id="CR_HIBAH_YN" rendered="false"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_HIBAH_YN$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_HIBAH_YN_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_HIBAH_YN}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_CR_HIBAH_YN" immediate="true"
+												reRender="errorPanel,UI_M_BUT_CR_HIBA_YN,CR_HIBAH_FEE_AMT" />
+											<f:selectItems id="SEL_ITEMS_CR_HIBAH_YN"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_HIBAH_YN}" />
+										</h:selectOneMenu>
+										
+										<!-- End --></td>
+
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_HIBAH_FEE_AMT_LABEL}"
+											for="CR_HIBAH_FEE_AMT" id="CR_HIBAH_FEE_AMT_LABEL"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_HIBAH_FEE_AMT$caption}" />
+										<h:graphicImage id="AUTOID_24" rendered="false" style=""
+											styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_HIBAH_FEE_AMT}"
+											disabled="false" id="CR_HIBAH_FEE_AMT" maxlength="16"
+											required="true" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_HIBAH_FEE_AMT$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_HIBAH_FEE_AMT_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_HIBAH_FEE_AMT}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_CR_HIBAH_FEE_AMT"
+												immediate="true" reRender="errorPanel" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CLM_MEDICINE_LABEL}"
+											for="CLM_MEDICINE" id="CLM_MEDICINE_LABEL" rendered="true"
+											styleClass="label"
+											value="Allowance" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CLM_MEDICINE_DROP}"
+											disabled="false" id="CLM_MEDICINE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_HIBAH_YN$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_CLM_MEDICINE_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_ALLOWANCE}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="CLM_MEDICINE_1" immediate="true"
+												reRender="errorPanel,CLM_DAY" />
+											<f:selectItems id="SEL_ITEMS_CR_PER_DAY"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCLM_PER_DAY}" />
+										</h:selectOneMenu></td>
+										
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CLM_DAY_LABEL}"
+											for="CLM_DAY" id="CLM_DAY_LABEL"
+											styleClass="label"
+											value="No Of Days" />
+										<h:graphicImage id="AUTOCLM_DAY" rendered="false" style=""
+											styleClass="searchimg"
+											value="./../../resources/images/mandatory.gif" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CLM_DAY}"
+											disabled="false" id="CLM_DAY" maxlength="6"
+											required="true" styleClass="inputNumeric smallBox"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.validateAllowPerDay}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_ALLOWANCE_PER_DAY}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="CLM_MEDICINE_45" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+									</tr>
+									<!-- Added by sankara narayanan for Hospital Cash plan on 26/04/2017 -->
+									<tr>
+									
+										
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PRE_CLM_YN_LABEL}"
+											for="CR_PRE_CLM_YN" id="CR_PRE_CLM_YN_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PRE_CLM_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PRE_CLM_YN}"
+											disabled="false" id="CR_PRE_CLM_YN" rendered="true"
+											required="false" styleClass="input"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PRE_CLM_YN$tooltip}"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.CR_PRE_CLM_YN_Validator}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_PRE_CLM_YN}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onchange" id="SUPPORT_CR_PRE_CLM_YN" immediate="true"
+												reRender="errorPanel,CR_PRE_WAIT_MNTHS" />
+											<f:selectItems id="SEL_ITEMS_CR_PRE_CLM_YN"
+												value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.listCR_PRE_CLM_YN}" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PRE_WAIT_MNTHS_LABEL}"
+											for="CR_PRE_WAIT_MNTHS" id="CR_PRE_WAIT_MNTHS_LABEL"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_PRE_WAIT_MNTHS$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_PRE_WAIT_MNTHS}"
+											disabled="true" id="CR_PRE_WAIT_MNTHS" maxlength="6"
+											required="true" styleClass="inputNumeric smallBox"
+											validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.validate_CR_PRE_WAIT_MNTHS}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_PRE_WAIT_MNTHS}">
+											<a4j:support
+												actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="CR_PRE_WAIT_MNTHS_45" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText>
+										<h:outputLabel
+											id="CR_PRE_WAIT_LABEL"
+											styleClass="label"
+											value="In Months" />
+										</td>
+									
+										
+									
+									
+									</tr>
+									
+									<!-- added by raja on 28-04-2017 to refer gorav -->
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_MAX_VISITS_LABEL}"
+											for="CR_MAX_VISITS" id="CR_MAX_VISITS_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_MAX_VISITS$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_MAX_VISITS}"
+											disabled="false" id="CR_MAX_VISITS" maxlength="16" rendered="true"
+											required="false" styleClass="inputNumeric smallBox"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_MAX_VISITS$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_MAX_VISITS}" />
+										<h:outputLabel
+											id="CR_PRE_WAIT_LABEL1"
+											styleClass="label"
+											value="Per Year" />
+										
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										
+										<!-- added by raja on 05-05-2017 to refer gorav -->
+										
+										
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_WAIT_HRS_LABEL}"
+											for="CR_WAIT_HRS" id="CR_WAIT_HRS_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_WAIT_HRS$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.COMP_CR_WAIT_HRS}"
+											disabled="false" id="CR_WAIT_HRS" maxlength="16" rendered="true"
+											required="false" styleClass="inputNumeric smallBox"
+											title="#{message_PILM007.PILM007$PM_IL_CLM_REPAY$CR_WAIT_HRS$tooltip}"
+											value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.PM_IL_CLM_REPAY_BEAN.CR_WAIT_HRS}" />
+											<h:outputLabel
+											id="CR_WAIT_HRS_LABEL1"
+											styleClass="label"
+											value="In Hours" />
+										</td>
+									</tr>
+									<!-- end -->
+								</table>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+									action="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_REPAY_ACTION_BEAN.saveRecord}"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

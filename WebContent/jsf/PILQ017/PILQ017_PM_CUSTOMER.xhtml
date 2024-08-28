@@ -1,0 +1,347 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view >
+			<f:loadBundle basename="messageProperties_PILQ017" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PM_CUSTOMER">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILQ017_PM_CUSTOMER_ACTION.messageStyle}"
+									value=" #{commonmsg.errorPanel$heading} #{PILQ017_PM_CUSTOMER_ACTION.errorMap['current'] !=null? PILQ017_PM_CUSTOMER_ACTION.errorMap['current']:PILQ017_PM_CUSTOMER_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILQ017_PM_CUSTOMER_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILQ017_PM_CUSTOMER_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILQ017_PM_CUSTOMER_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><h:outputText id="AUTOID_22"
+									value="#{message.PILQ017$PM_CUSTOMER$PM_CUSTOMER$caption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td><h:panelGroup id="PolicyListForAgent">
+							<table align="center" class="noborder" width="100%">
+								<tr>
+									<td valign="top" width="100%">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%" >
+										<tr>
+											<td class="oddrow" width="10%" ><h:outputLabel
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_CUST_CODE_LABEL}"
+												for="CUST_CODE" id="CUST_CODE_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILQ017$PM_CUSTOMER$CUST_CODE$caption}" /></td>
+											<td width="25%" class="oddrow"><h:inputText
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_CUST_CODE}"
+												disabled="false" id="CUST_CODE"
+												maxlength="12" rendered="true" required="false"
+												styleClass="inputsmall"
+												title="#{message.PILQ017$PM_CUSTOMER$CUST_CODE$tooltip}"
+												value="#{PILQ017_PM_CUSTOMER_ACTION.PM_CUSTOMER_BEAN.CUST_CODE}">
+												
+												<rich:suggestionbox for="CUST_CODE" height="200"
+													id="AUTOID_23"
+													suggestionAction="#{PILQ017_PM_CUSTOMER_ACTION.CUST_CODE_LOV}"
+													var="pmCustomer" width="550">
+													<h:column>
+														<h:outputText id="AUTOID_24"
+															value="#{pmCustomer.CUST_CODE}" />
+													</h:column>
+													<h:column>
+														<h:outputText id="AUTOID_25"
+															value="#{pmCustomer.CUST_NAME}" />
+													</h:column>
+													<h:column>
+														<h:outputText id="AUTOID_26"
+															value="#{pmCustomer.CUST_SHORT_NAME}" />
+													</h:column>
+													
+												</rich:suggestionbox>
+												<a4j:support
+													actionListener="#{PILQ017_PM_CUSTOMER_ACTION.description}"
+													event="onblur" id="AUTOID_29" immediate="true"
+													reRender="errorPanel,CUST_SHORT_NAME,POLICY_DETAILS">
+												</a4j:support>
+											 </h:inputText><h:inputText
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_CUST_SHORT_NAME}"
+												disabled="true" id="CUST_SHORT_NAME" maxlength="200"
+												rendered="true" required="false"
+												
+												styleClass="input" title="#{message.PILQ017$PM_CUSTOMER$CUST_SHORT_NAME$tooltip}"
+												value="#{PILQ017_PM_CUSTOMER_ACTION.PM_CUSTOMER_BEAN.CUST_SHORT_NAME}" />
+											<h:graphicImage id="IMAGE_SUGG_3" styleClass="searchimg"
+												value="./../../images/Lov.gif" /></td>
+											<td class="oddrow" colspan="3"></td>
+										</tr>
+									</table>
+
+									</td>
+								</tr>
+								<tr>
+									<td>&nbsp;</td>
+								</tr>
+								<tr>
+									<td colspan="3">
+
+									<rich:panel id="POLICY_DETAILS">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td colspan="5"><rich:dataTable
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.dataTable}"
+												id="PT_IL_POLICY"
+												rows="#{PILQ017_PM_CUSTOMER_ACTION.recordsPerPage}"
+												value="#{PILQ017_PM_CUSTOMER_ACTION.gridList}"
+												var="dataTable" width="100%">
+												<rich:column filterBy="#{dataTable.POL_NO}"
+													filterValue="#{PILQ017_PM_CUSTOMER_ACTION.filterByPOL_NO}"
+													rendered="true" sortBy="#{dataTable.POL_NO}"
+													styleClass="#{dataTable.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_31"
+															styleClass="forumRowHighlight"
+															value="#{message.PILQ017$PT_IL_POLICY$POL_NO$caption}" />
+													</f:facet>
+													<a4j:commandLink
+														action="#{PILQ017_PM_CUSTOMER_ACTION.getDetails}"
+														immediate="true" reRender="PolicyListForAgent">
+													
+															<h:outputText id="AUTOID_32" value="#{dataTable.POL_NO}" />
+														
+													</a4j:commandLink>
+
+												</rich:column>
+												<rich:column filterBy="#{dataTable.POL_PROD_CODE}"
+													filterValue="#{PILQ017_PM_CUSTOMER_ACTION.filterByPOL_PROD_CODE}"
+													rendered="true" sortBy="#{dataTable.POL_PROD_CODE}"
+													styleClass="#{dataTable.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_33"
+															styleClass="forumRowHighlight"
+															value="#{message.PILQ017$PT_IL_POLICY$POL_PROD_CODE$caption}" />
+													</f:facet>
+													<h:outputText id="AUTOID_34"
+														value="#{dataTable.POL_PROD_CODE}" />
+
+												</rich:column>
+												<rich:column filterBy="#{dataTable.UI_M_PROD_DESC}"
+													filterValue="#{PILQ017_PM_CUSTOMER_ACTION.filterByUI_M_PROD_DESC}"
+													rendered="true" sortBy="#{dataTable.UI_M_PROD_DESC}"
+													styleClass="#{dataTable.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_35"
+															styleClass="forumRowHighlight"
+															value="#{message.PILQ017$PT_IL_POLICY$UI_M_PROD_DESC$caption}" />
+													</f:facet>
+													<h:outputText id="AUTOID_36"
+														value="#{dataTable.UI_M_PROD_DESC}" />
+
+												</rich:column>
+												<f:facet name="footer">
+													<rich:datascroller align="right"
+														page="#{PILQ017_PM_CUSTOMER_ACTION.currPage}">
+													</rich:datascroller>
+												</f:facet>
+
+											</rich:dataTable></td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_POL_NO_LABEL}"
+												for="POL_NO" id="POL_NO_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILQ017$PT_IL_POLICY$POL_NO$caption}" /></td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_POL_NO}"
+												id="POL_NO" disabled="true" rendered="true"
+												styleClass="input"
+												title="#{message.PILQ017$PT_IL_POLICY$POL_NO$tooltip}"
+												value="#{PILQ017_PM_CUSTOMER_ACTION.PT_IL_POLICY_BEAN.POL_NO}" />
+											</td>
+											<td class="oddrowright"></td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_POL_PROD_CODE_LABEL}"
+												for="POL_PROD_CODE" id="POL_PROD_CODE_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILQ017$PT_IL_POLICY$POL_PROD_CODE$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_POL_PROD_CODE}"
+												id="POL_PROD_CODE" disabled="true" rendered="true"
+												styleClass="inputsmall"
+												title="#{message.PILQ017$PT_IL_POLICY$POL_PROD_CODE$tooltip}"
+												value="#{PILQ017_PM_CUSTOMER_ACTION.PT_IL_POLICY_BEAN.POL_PROD_CODE}" />
+											<h:inputText
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_UI_M_PROD_DESC}"
+												id="UI_M_PROD_DESC" disabled="true" rendered="true"
+												styleClass="input"
+												title="#{message.PILQ017$PT_IL_POLICY$UI_M_PROD_DESC$tooltip}"
+												value="#{PILQ017_PM_CUSTOMER_ACTION.PT_IL_POLICY_BEAN.UI_M_PROD_DESC}" />
+											<h:graphicImage id="AUTOID_37" styleClass="searchimg"
+												value="./../../images/Lov16x16.gif" /></td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_POL_TRAN_DT_LABEL}"
+												for="POL_TRAN_DT" id="POL_TRAN_DT_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILQ017$PT_IL_POLICY$POL_TRAN_DT$caption}" />
+											</td>
+											<td class="evenrow"><rich:calendar
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_POL_TRAN_DT}"
+												datePattern="#{PILQ017_PM_CUSTOMER_ACTION.datePattern}"
+												disabled="true" id="POL_TRAN_DT" inputClass="calendarinput"
+												inputSize="11"
+												title="#{message.PILQ017$PT_IL_POLICY$POL_TRAN_DT$tooltip}"
+												value="#{PILQ017_PM_CUSTOMER_ACTION.PT_IL_POLICY_BEAN.POL_ISSUE_DT}">
+												<a4j:support event="oninputblur" id="date_1"
+													onsubmit="formatDate('PM_CUSTOMER:POL_TRAN_DT')" />
+											</rich:calendar></td>
+											<td class="evenrowright"></td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_UI_M_POL_PROP_LABEL}"
+												for="UI_M_POL_PROP" id="UI_M_POL_PROP_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILQ017$PT_IL_POLICY$UI_M_POL_PROP$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_UI_M_POL_PROP}"
+												id="UI_M_POL_PROP" disabled="true" rendered="true"
+												styleClass="input"
+												title="#{message.PILQ017$PT_IL_POLICY$UI_M_POL_PROP$tooltip}"
+												value="#{PILQ017_PM_CUSTOMER_ACTION.PT_IL_POLICY_BEAN.UI_M_POL_PROP}" />
+											</td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_POL_ADDL_STATUS_LABEL}"
+												for="POL_ADDL_STATUS" id="POL_ADDL_STATUS_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message.PILQ017$PT_IL_POLICY$POL_ADDL_STATUS$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_POL_ADDL_STATUS}"
+												id="POL_ADDL_STATUS" disabled="true" rendered="true" 
+												styleClass="inputsmall"
+												title="#{message.PILQ017$PT_IL_POLICY$POL_ADDL_STATUS$tooltip}"
+												value="#{PILQ017_PM_CUSTOMER_ACTION.PT_IL_POLICY_BEAN.POL_ADDL_STATUS}" />
+											<h:inputText
+												binding="#{PILQ017_PM_CUSTOMER_ACTION.COMP_UI_M_STATUS_DESC}"
+												id="UI_M_STATUS_DESC" disabled="true" rendered="true"
+												styleClass="input"
+												title="#{message.PILQ017$PT_IL_POLICY$UI_M_STATUS_DESC$tooltip}"
+												value="#{PILQ017_PM_CUSTOMER_ACTION.PT_IL_POLICY_BEAN.UI_M_STATUS_DESC}">
+											</h:inputText> <h:graphicImage id="AUTOID_38" styleClass="searchimg"
+												value="./../../images/Lov16x16.gif" /></td>
+												<td class="oddrowright">&nbsp;</td>
+												<td class="oddrowright">&nbsp;</td>
+												<td class="oddrowright">&nbsp;</td>
+										</tr>
+									</table>
+							</rich:panel>
+									
+									</td>
+								</tr>
+							</table>
+						</h:panelGroup></td>
+					</tr>
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink disabled="true" id="AUTOID_39" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_40" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="AUTOID_41"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink disabled="true" id="AUTOID_42" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_43" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="AUTOID_44"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink action="#{PILQ017_PM_CUSTOMER_ACTION.DELETE}"
+									id="AUTOID_45" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_46" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/deleteRecord.gif" />
+									<h:outputText id="AUTOID_47"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+								</h:commandLink>
+								<h:commandLink disabled="true" id="AUTOID_48" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_49" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="AUTOID_50"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink disabled="true" id="AUTOID_51" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_52" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="AUTOID_53"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink disabled="true" id="AUTOID_54" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_55" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="AUTOID_56"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink disabled="true" id="AUTOID_57" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_58" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="AUTOID_59"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

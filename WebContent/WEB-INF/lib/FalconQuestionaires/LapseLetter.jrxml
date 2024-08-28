@@ -1,0 +1,379 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="lapse_1" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="60" rightMargin="20" topMargin="20" bottomMargin="20" uuid="55af7cf2-f960-4589-b477-1514e5adf509">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="LastPremiumDateDS" uuid="52d51b7c-c9e3-43f0-8427-9208b7679761">
+		<parameter name="SUB_POL_SYS_ID" class="java.lang.String"/>
+		<parameter name="POL_SYS_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT MAX(PC_SCHD_PYMT_DT) LAST_PAID_DT_DS
+FROM PT_IL_PREM_COLL
+WHERE PC_POL_SYS_ID = $P{SUB_POL_SYS_ID}
+AND PC_PAID_DT IS NOT NULL
+AND NVL(PC_PAID_FLAG,'N') = 'A']]>
+		</queryString>
+		<field name="LAST_PAID_DT_DS" class="java.sql.Timestamp"/>
+	</subDataset>
+	<subDataset name="PREMIUM_DS" uuid="6dc62ce3-7e2a-4c54-96b9-d4d505a3e56e">
+		<parameter name="SUB_POL_SYS_ID_PREM" class="java.lang.String"/>
+		<parameter name="POL_SYS_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT MIN(PC_SCHD_PYMT_DT) DUE_DT, min(PC_LC_GROSS_PREM + PC_LC_CHARGE) PREMIUM
+FROM PT_IL_PREM_COLL
+WHERE PC_POL_SYS_ID = $P{SUB_POL_SYS_ID_PREM}
+AND PC_PAID_DT IS NULL
+AND NVL(PC_PAID_FLAG,'N') = 'N']]>
+		</queryString>
+		<field name="DUE_DT" class="java.sql.Timestamp"/>
+		<field name="PREMIUM" class="java.math.BigDecimal"/>
+	</subDataset>
+	<parameter name="P_POL_NO_FM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_POL_NO_TO" class="java.lang.String"/>
+	<parameter name="P_PROD_CODE_FM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_PROD_CODE_TO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_DATE_FM" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="P_DATE_TO" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT (SELECT LIV_CODE_DESC FROM PP_LIST_ITEM_VALUES WHERE LIV_SYS_PARAM = 'TITLE' AND LIV_CODE = CUST_TITLE)CUST_TITLE,
+       cust_name,
+       cust_addr1,
+       cust_addr2,
+       cust_addr3,
+       cust_phone,
+       POL_NO,
+       POL_LC_SUM_ASSURED,
+       DECODE(POL_MODE_OF_PYMT,
+              'M',
+              'MONTHLY',
+              'Q',
+              'QUARTERLY',
+              'H',
+              'HALF-YEARLY',
+              'YEARLY'),
+       POL_SYS_ID
+  FROM PM_CUSTOMER, PT_IL_POLICY
+ WHERE CUST_CODE = POL_CUST_CODE
+   AND POL_NO BETWEEN $P{P_POL_NO_FM} AND $P{P_POL_NO_TO}
+   AND POL_PROD_CODE BETWEEN $P{P_PROD_CODE_FM} AND $P{P_PROD_CODE_TO}
+   AND POL_DS_TYPE = '2'
+   AND POL_STATUS = 'L'
+   AND TO_DATE((SELECT MAX(PS_STATUS_DT)
+                 FROM PT_IL_POL_STATUS
+                WHERE PS_POL_SYS_ID = POL_SYS_ID
+                  AND PS_STATUS = 'I05'),
+              'DD/MM/RRRR') BETWEEN to_dATE($P{P_DATE_FM},'DD/MM/RRRR')  and to_dATE($P{P_DATE_TO},'DD/MM/RRRR')]]>
+	</queryString>
+	<field name="CUST_TITLE" class="java.lang.String"/>
+	<field name="CUST_NAME" class="java.lang.String"/>
+	<field name="CUST_ADDR1" class="java.lang.String"/>
+	<field name="CUST_ADDR2" class="java.lang.String"/>
+	<field name="CUST_ADDR3" class="java.lang.String"/>
+	<field name="CUST_PHONE" class="java.lang.String"/>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<field name="DECODE(POL_MODE_OF_PYMT,&apos;M&apos;,&apos;MONTHLY&apos;,&apos;Q&apos;,&apos;QUARTERLY&apos;,&apos;H&apos;,&apos;HALF-YEARLY&apos;,&apos;YEARLY&apos;)" class="java.lang.String"/>
+	<field name="POL_SYS_ID" class="java.math.BigDecimal"/>
+	<pageHeader>
+		<band height="136">
+			<staticText>
+				<reportElement x="28" y="49" width="100" height="20" uuid="3b67108b-7d08-40c6-9fe9-759787d579f1"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[TO,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="28" y="10" width="100" height="23" uuid="33a23b9d-451e-42ea-bd98-e2ddff018bf6"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="83" y="69" width="310" height="20" isPrintWhenDetailOverflows="true" uuid="97fdb951-4dcc-4c00-b877-036f2d5b3532"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_NAME}+","]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="52" y="89" width="310" height="20" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="3630819c-3148-4357-8e1d-38e06affbe89"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_ADDR1}+"\n"+$F{CUST_ADDR2}+"\n"+$F{CUST_ADDR3}+","]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" isPrintRepeatedValues="false" x="52" y="109" width="310" height="20" isPrintInFirstWholeBand="true" isPrintWhenDetailOverflows="true" uuid="ee9ccd33-0ce6-4500-b0d4-bd6bc5c3cd4e"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_PHONE}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="71" y="10" width="100" height="21" uuid="a527116b-260e-4e1e-b3ec-289bfb59d204"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="52" y="69" width="31" height="20" uuid="f978cb0f-7e91-4c15-88e6-eec7b28f70bc"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_TITLE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="496" splitType="Stretch">
+			<staticText>
+				<reportElement x="28" y="15" width="100" height="20" uuid="bda5f394-3e39-44ed-9fe5-eb2ac025c544"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[Dear Sir,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="35" width="397" height="20" uuid="c1d9c232-25a4-4485-8533-30a8dd3d4a61"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[	Sub : Lapse Notice- Life Insurance Policy]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="67" width="476" height="38" uuid="049893ad-cb8f-4941-b21a-ee144710a621"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[The following Life Insurance Policy has lapsed as per details given below, since the premium has not been paid on the due date.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="189" width="158" height="20" uuid="39ec077c-eab1-4b15-a53d-1cfcadb3a162"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  Policy no ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="209" width="158" height="19" uuid="0fb5a98e-6934-4e9c-91a8-427b2a18b50e"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  Basic SA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="228" width="158" height="20" uuid="cb137086-d6a9-414f-8a3d-14cc0f7f8f43"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  Frequency of Payment ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="248" width="158" height="20" uuid="826d149b-5527-4a73-bce4-63156e13ead3"/>
+				<box topPadding="0" leftPadding="0" bottomPadding="0" rightPadding="0">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  Last premium paid date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="268" width="158" height="20" uuid="003ec51b-03e3-479b-b804-2049d7f99a40"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  Premium due dates]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="288" width="158" height="19" uuid="73342f14-0612-4f41-b2da-f855ba0ed534"/>
+				<box topPadding="1" leftPadding="1" bottomPadding="1" rightPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  Premium Rate OMR]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="189" y="189" width="198" height="20" uuid="de7fefb8-75bc-409b-bd56-b85f9cd90abd"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="189" y="209" width="198" height="19" uuid="d1a9d2d9-833e-4259-bc19-4e64e742ec41"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_LC_SUM_ASSURED}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="189" y="228" width="198" height="20" uuid="6f1a7c78-477c-4eb5-be12-d53489092933"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="31" y="318" width="308" height="20" uuid="c2fd61b9-de9a-44c6-8c97-9981c87ce921"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[Reinstatement charges @ 9% p.a shall be applicable.  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="357" width="476" height="38" uuid="52ea6a24-686c-41e5-ba39-1cfb78a7189d"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[Please arrange to submit the attached Health Declaration / Medical reports to consider revival so that we can quote the terms of revival.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="410" width="255" height="20" uuid="418ac8a2-f1af-4169-8ce5-d7c797ce9a0c"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[For Falcon Insurance Company S.A.O.C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="31" y="458" width="217" height="20" uuid="c357c9bc-2c2c-4110-b07c-40d7d04b1658"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[Authorised Signatory]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="189" y="248" width="254" height="40" uuid="4b71914a-4b34-4967-b157-ca49ec14afcc"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="LastPremiumDateDS" uuid="a74b8833-e6c6-419f-be49-7095ff251fbd">
+						<datasetParameter name="SUB_POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="40" width="254">
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="198" height="20" uuid="6c9fc563-3497-4049-b4a3-d12484714d43"/>
+							<box leftPadding="5">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="14"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{LAST_PAID_DT_DS}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="189" y="268" width="254" height="50" uuid="4b71914a-4b34-4967-b157-ca49ec14afcc"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="PREMIUM_DS" uuid="a74b8833-e6c6-419f-be49-7095ff251fbd">
+						<datasetParameter name="SUB_POL_SYS_ID_PREM">
+							<datasetParameterExpression><![CDATA[$F{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="50" width="254">
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="198" height="20" uuid="6c9fc563-3497-4049-b4a3-d12484714d43"/>
+							<box leftPadding="5">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="14"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{DUE_DT}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="20" width="198" height="19" uuid="6c9fc563-3497-4049-b4a3-d12484714d43"/>
+							<box leftPadding="5">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="14"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PREMIUM}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="31" y="116" width="476" height="54" uuid="50f4c6d7-0f7e-4890-bf82-c2332d4bb316"/>
+				<textElement>
+					<font fontName="Calibri" size="14"/>
+				</textElement>
+				<text><![CDATA[This notice is being sent to request you to contact us incase you wish to renew the policy on fresh terms. Please note that renewal shall be subject to medical underwriting.]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

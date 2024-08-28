@@ -1,0 +1,1359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view beforePhase="#{PILT004_PT_IL_LOAN_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILT004" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			<h:form id="PT_IL_LOAN" onkeypress="return event.keyCode != 13">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%"
+							cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar id="serial_2" styleClass="toolBarStyle"
+									width="100%">
+									<rich:toolBarGroup id="serial_3" styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILT004_PT_IL_LOAN_ACTION.backToSearch}"
+											id="serial_15" immediate="true"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_16"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="serial_17"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILT004_PT_IL_LOAN_ACTION.saveFormDetails}"
+											id="serial_4" styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="serial_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<!--Added by Gopi -->
+										<h:commandLink id="PRINT_TOOL_FOOTER" rendered="true"
+												      action="#{PILT004_PRINT_ACTION.printButtonAction}"
+												      style="text-decoration:none"
+												      styleClass="toolbarCommandLinkStyle">
+												      <h:commandButton id="NAVIGATION_TOOLPRINT_FOOTER1"
+												      styleClass="toolbarButtonStyle" accesskey="p"
+												      image="./../../resources/images/printer.gif" />
+												      <h:outputText id="NAVIGATION_TOOL_PRINT_FOOTER"
+												      styleClass="toolbaroutputTextStyle" value="Print" />
+										</h:commandLink>
+										<!-- End -->
+										
+										<!-- [ Added for DMS Integration, Added By: Janani, Added Date: 17.01.2017] -->
+										<h:commandLink id="DMS_TOOL_HEADER" rendered="true"
+											actionListener="#{PILT004_PT_IL_LOAN_ACTION.callReportModalPanel}"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="CMD_BTN_DMS_TOOL_HEADER"
+												styleClass="toolbarButtonStyle" accesskey="u"
+												image="./../../resources/images/fileupload.gif" />
+											<h:outputText id="TEXT_DMS_TOOL_HEADER"
+												styleClass="toolbaroutputTextStyle" value="DMS" />
+										</h:commandLink>
+										<!-- [ End] -->
+										
+										
+										<h:commandLink id="serial_7" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_1"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILT004_PT_IL_LOAN_ACTION.deleteFormDetails}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.LOANSTATUS}"
+											rendered="false" id="serial_9"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_10"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="serial_11"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="serial_12" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_13"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="serial_14"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="serial_18" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_19"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="serial_20"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="serial_21" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_22"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="serial_23"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="errormsgtable" width="100%"
+							cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PILT004_PT_IL_LOAN_ACTION.messageStyle}"
+											value="#{commonmsg.errorPanel$heading} #{PILT004_PT_IL_LOAN_ACTION.errorMap['current'] !=null? PILT004_PT_IL_LOAN_ACTION.errorMap['current']: PILT004_PT_IL_LOAN_ACTION.warningMap['current']}" />
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{PILT004_PT_IL_LOAN_ACTION.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{PILT004_PT_IL_LOAN_ACTION.globalMsgRender}"
+										styleClass="ErrorMessages" />
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{PILT004_PT_IL_LOAN_ACTION.warningMessages}" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%"
+							cellpadding="0" cellspacing="0">
+							<tr>
+								<td>Loan Disbursement</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top" width="100%"><h:commandButton
+							binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_BUT_RECAL}"
+							disabled="#{PILT004_PT_IL_LOAN_ACTION.compUiMButRecalDisabled}"
+							id="UI_M_BUT_RECAL" rendered="true" style="width:80px"
+							styleClass="button" title=""
+							value="#{message.PILT004$PT_IL_LOAN$UI_M_BUT_RECAL$caption}" />
+						<rich:spacer height="2" id="AUTO_ID_2" /> <h:commandButton
+							action="#{PILT004_PT_IL_LOAN_ACTION.chargeBtnAction}"
+							binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_BUT_CHARGE}"
+							disabled="false" id="UI_M_BUT_CHARGE" rendered="true"
+							style="width:80px" styleClass="button" title=""
+							value="#{message.PILT004$PT_IL_LOAN$UI_M_BUT_CHARGE$caption}" />
+						<rich:spacer height="2" id="AUTO_ID_3" /> <h:commandButton
+							action="#{PILT004_PT_IL_LOAN_ACTION.repayBtnAction}"
+							binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_BUT_REPAYMENT}"
+							id="UI_M_BUT_REPAYMENT" rendered="true" style="width:80px"
+							styleClass="button" title=""
+							value="#{message.PILT004$PT_IL_LOAN$UI_M_BUT_REPAYMENT$caption}" />
+						<rich:spacer height="2" id="AUTO_ID_4" /> <h:commandButton
+							action="#{PILT004_PT_IL_LOAN_ACTION.apporveBtnAction}"
+							binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_BUT_APPRV}"
+							disabled="#{PILT004_PT_IL_LOAN_ACTION.compUiMButApprvDisabled}"
+							id="UI_M_BUT_APPRV" rendered="true" style="width:80px"
+							styleClass="button" title=""
+							reRender="errorPanel"
+							value="#{message.PILT004$PT_IL_LOAN$UI_M_BUT_APPRV$caption}" />
+						<rich:spacer height="2" id="AUTO_ID_5" /> <h:commandButton
+							action="#{PILT004_PT_IL_LOAN_ACTION.detailBtnAction}"
+							disabled="false" id="UI_M_BUT_DETAIL" rendered="false"
+							style="width:80px" styleClass="button" title=""
+							value="#{message.PILT004$PT_IL_LOAN$UI_M_BUT_DETAIL$caption}" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="width: 100%; height: 600px; overflow: auto;">
+						<table align="left" class="noborder" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+								<td valign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable" width="100%">
+									<tr>
+										<td><h:outputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_STATUS}"
+											id="UI_M_APPRV_STATUS"
+											style="color: blue; font-style: italic;font-weight:bold;"
+											styleClass="label"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.UI_M_APPRV_STATUS}" />
+
+										</td>
+										<td><h:outputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_STATUS}"
+											id="UI_M_LOAN_STATUS"
+											style="color: blue; font-style: italic;font-weight:bold;"
+											styleClass="label"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.UI_M_LOAN_STATUS}" />
+
+										</td>
+										<td>&nbsp;</td>
+										<td>&nbsp;</td>
+										<td>&nbsp;</td>
+									</tr>
+									<!-- <tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_CODE_LABEL}"
+											for="LOAN_CODE" id="LOAN_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_CODE$caption}" /> <h:graphicImage
+											id="serial_ag" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											onfocus="currFocus('PT_IL_LOAN:LOAN_CODE')"
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_CODE}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanCodeDisabled}"
+											id="LOAN_CODE" maxlength="12" rendered="true" required="true"
+											styleClass="input" title="Enter the loan code"
+											validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_CODE_Validator}"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_CODE}">
+											<a4j:support
+												oncomplete="setFocus('PT_IL_LOAN:LOAN_POL_NO','PT_IL_LOAN:LOAN_CODE')"
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_aj" immediate="true"
+												reRender="errorPanel,UI_M_LOAN_CODE_DESC">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="LOAN_CODE" height="200"
+											id="AUTO_ID_6"
+											suggestionAction="#{PILT004_PT_IL_LOAN_ACTION.lovLOAN_CODE}"
+											var="suggest" width="250">
+											<h:column id="COLUMN_SUGG_1">
+												<h:outputText id="serial_24" value="#{suggest.code}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_2">
+												<h:outputText id="serial_25" value="#{suggest.name}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_LOAN_CODE_DESC}"
+											disabled="true" id="UI_M_LOAN_CODE_DESC" maxlength="30"
+											rendered="true" required="false" styleClass="input"
+											title="LOAN CODE DESCRIPTION"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.UI_M_LOAN_CODE_DESC}" />
+										<h:graphicImage id="serial_26" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_TERM_LABEL}"
+											for="LOAN_CODE" id="LOAN_TERM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_TERM$caption}" /> </td>
+											<td class="oddrow"><h:inputText
+											onfocus="currFocus('PT_IL_LOAN:LOAN_TERM')"
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_TERM}"
+											id="LOAN_TERM" maxlength="2" rendered="true" required="false"
+											styleClass="inputNumeric" title="Enter the loan Term"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_TERM}"/>
+											</td>
+										<td>&nbsp;</td>
+									</tr> --><tr>
+	<td class="oddrowright"><h:outputLabel
+			binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_CODE_LABEL}"
+			for="LOAN_CODE" id="LOAN_CODE_LABEL" rendered="true"
+			styleClass="label"
+			value="#{message.PILT004$PT_IL_LOAN$LOAN_CODE$caption}" />
+		<h:graphicImage id="serial_ag" style=""
+			styleClass="searchimg"
+			value="./../../images/mandatory.jpg" /></td>
+	<td class="oddrow"><h:inputText
+			onfocus="currFocus('PT_IL_LOAN:LOAN_CODE')"
+			binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_CODE}"
+			disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanCodeDisabled}"
+			id="LOAN_CODE" maxlength="12" rendered="true"
+			required="true" styleClass="input"
+			title="Enter the loan code"
+			validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_CODE_Validator}"
+			value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_CODE}">
+			<a4j:support
+				oncomplete="setFocus('PT_IL_LOAN:LOAN_POL_NO','PT_IL_LOAN:LOAN_CODE')"
+				actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+				event="onblur" id="serial_aj" immediate="true"
+				reRender="errorPanel,UI_M_LOAN_CODE_DESC">
+			</a4j:support>
+		</h:inputText> <rich:suggestionbox for="LOAN_CODE" height="200"
+			id="AUTO_ID_6"
+			suggestionAction="#{PILT004_PT_IL_LOAN_ACTION.lovLOAN_CODE}"
+			var="suggest" width="250">
+			<h:column id="COLUMN_SUGG_1">
+				<h:outputText id="serial_24" value="#{suggest.code}" />
+			</h:column>
+			<h:column id="COLUMN_SUGG_2">
+				<h:outputText id="serial_25" value="#{suggest.name}" />
+			</h:column>
+		</rich:suggestionbox> <h:inputText
+			binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_LOAN_CODE_DESC}"
+			disabled="true" id="UI_M_LOAN_CODE_DESC" maxlength="30"
+			rendered="true" required="false" styleClass="input"
+			title="LOAN CODE DESCRIPTION"
+			value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.UI_M_LOAN_CODE_DESC}" />
+		<h:graphicImage id="serial_26" styleClass="searchimg"
+			value="./../../images/Lov16x16.gif" /></td>
+	<td class="oddrow">&nbsp;</td>
+	<td class="oddrowright"><h:outputLabel rendered="true"
+			binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FLEX_17_LABEL}"
+			styleClass="label"
+			value="#{message.PILT004$PT_IL_LOAN$LOAN_FLEX_17$caption}" />
+	</td>
+	<td class="addrow"><h:selectOneMenu
+			binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FLEX_17}"
+			id="LOAN_FLEX_17" rendered="true" required="false"
+			title="#{message.PILT004$PT_IL_LOAN$LOAN_FLEX_17$tooltip}"
+			styleClass="input" disabled="false" style="width:140px;"
+			validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_FLEX_17_Validation}"
+			value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FLEX_17}">
+			<a4j:support
+				actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+				event="onchange" id="serial_143" immediate="true"
+				reRender="errorPanel,LOAN_TERM" />
+			<a4j:support
+				actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+				event="onblur" id="serial_144" immediate="true"
+				reRender="errorPanel,LOAN_TERM" />
+			<f:selectItems id="serial_145"
+				value="#{PILT004_PT_IL_LOAN_ACTION.LOAN_FLEX_17ComboList}" />
+
+		</h:selectOneMenu></td>
+	<td>&nbsp;</td>
+</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_POL_NO_LABEL}"
+											for="LOAN_POL_NO" id="LOAN_POL_NO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_POL_NO$caption}" />
+										<h:graphicImage id="AUTO_ID_7" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_POL_NO}"
+											onfocus="currFocus('PT_IL_LOAN:LOAN_POL_NO')"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanPolNoDisabled}"
+											id="LOAN_POL_NO" maxlength="40" rendered="true"
+											required="true" styleClass="input"
+											validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_POLNO_Validator}"
+											title="Enter value for the loan Policy Number"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_POL_NO}">
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_27" immediate="true"
+												oncomplete="setFocus('PT_IL_LOAN:LOAN_DTInputDate','PT_IL_LOAN:LOAN_POL_NO')"
+												reRender="errorPanel,LOAN_DT,LOAN_SURR_PERC,LOAN_CURR_CODE,LOAN_EXCH_RATE,LOAN_FC_UNPAID_PREM,LOAN_LC_UNPAID_PREM,LOAN_FC_PERM_AMT,LOAN_LC_PERM_AMT,LOAN_FC_OS_AMOUNT,LOAN_LC_OS_AMOUNT,LOAN_INT_RATE,LOAN_DUE_DT ">
+											</a4j:support>
+
+										</h:inputText> <rich:suggestionbox for="LOAN_POL_NO" height="200"
+											id="AUTO_ID_8"
+											suggestionAction="#{PILT004_PT_IL_LOAN_ACTION.lovPOL_NO}"
+											var="suggest" width="250">
+											<h:column id="COLUMN_SUGG_3">
+												<h:outputText id="serial_28" value="#{suggest.code}" />
+											</h:column>
+											<h:column id="COLUMN_SUGG_4">
+												<h:outputText id="serial_29" value="#{suggest.name}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="serial_30" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_DT_LABEL}"
+											for="LOAN_DT" id="LOAN_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_DT$caption}" /> <h:graphicImage
+											id="serial_31" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_DT}"
+											datePattern="#{PILT004_PT_IL_LOAN_ACTION.datePattern}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanDateDisabled}"
+											enableManualInput="true" id="LOAN_DT" rendered="true"
+											onfocus="currFocus('PT_IL_LOAN:LOAN_DTInputDate')" required="true"
+											inputClass="calendarinput"
+											title="#{message.PILT004$PT_IL_LOAN$LOAN_DT$tooltip}"
+											validator="#{PILT004_PT_IL_LOAN_ACTION.LoanDtWhenValidate}"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_DT}">
+											<!-- <a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="oninputchanged" id="serial_32" immediate="true"
+												oncomplete="setFocus('PT_IL_LOAN:LOAN_SURR_PERC','PT_IL_LOAN:LOAN_DTInputDate')"
+												reRender="errorPanel,LOAN_DT,LOAN_SURR_PERC,LOAN_CURR_CODE,LOAN_EXCH_RATE,LOAN_FC_UNPAID_PREM,LOAN_LC_UNPAID_PREM,LOAN_FC_PERM_AMT,LOAN_LC_PERM_AMT,LOAN_FC_OS_AMOUNT,LOAN_LC_OS_AMOUNT,LOAN_FC_OS_LOAN_INT,LOAN_LC_OS_LOAN_INT,LOAN_INT_RATE,LOAN_DUE_DT,LOAN_FC_UNPAID_PREM_INT,LOAN_LC_UNPAID_PREM_INT" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="oninputblur" id="serial_33" immediate="true"
+												onsubmit="formatDate('PT_IL_LOAN:LOAN_DT')"
+												oncomplete="setFocus('PT_IL_LOAN:LOAN_SURR_PERC','PT_IL_LOAN:LOAN_DTInputDate')"
+												reRender="errorPanel,LOAN_DT,LOAN_SURR_PERC,LOAN_CURR_CODE,LOAN_EXCH_RATE,LOAN_FC_UNPAID_PREM,LOAN_LC_UNPAID_PREM,LOAN_FC_PERM_AMT,LOAN_LC_PERM_AMT,LOAN_FC_OS_AMOUNT,LOAN_LC_OS_AMOUNT,LOAN_INT_RATE,LOAN_DUE_DT,LOAN_FC_OS_LOAN_INT,LOAN_LC_OS_LOAN_INT,LOAN_FC_UNPAID_PREM_INT,LOAN_LC_UNPAID_PREM_INT" />
+												 --> 
+												<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="oninputchanged" id="serial_32" immediate="true"
+												oncomplete="setFocus('PT_IL_LOAN:LOAN_SURR_PERC','PT_IL_LOAN:LOAN_DT')"
+												reRender="errorPanel,LOAN_FC_PERM_AMT,LOAN_LC_PERM_AMT" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="oninputblur" id="serial_33" immediate="true"
+												onsubmit="formatDate('PT_IL_LOAN:LOAN_DT')"
+												oncomplete="setFocus('PT_IL_LOAN:LOAN_SURR_PERC','PT_IL_LOAN:LOAN_DTInputDate')"
+												reRender="errorPanel,LOAN_FC_PERM_AMT,LOAN_LC_PERM_AMT" />
+												
+										</rich:calendar></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_CURR_CODE_LABEL}"
+											for="LOAN_CURR_CODE" id="LOAN_CURR_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_CURR_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_CURR_CODE}"
+											disabled="true" id="LOAN_CURR_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="Enter value for Loan currency code"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_CURR_CODE}" />
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_EXCH_RATE_LABEL}"
+											for="LOAN_EXCH_RATE" id="LOAN_EXCH_RATE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_EXCH_RATE$caption}" />
+										<h:graphicImage id="serial_34" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_EXCH_RATE}"
+											disabled="true" id="LOAN_EXCH_RATE" maxlength="14"
+											rendered="true" required="true" styleClass="inputNumeric"
+											title="Enter value for Loan exchange rate"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_EXCH_RATE}">
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_35" immediate="true"
+												reRender="errorPanel">
+											</a4j:support>
+										</h:inputText></td>
+
+									</tr>
+
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_SURR_PERC_LABEL}"
+											for="LOAN_SURR_PERC" id="LOAN_SURR_PERC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_SURR_PERC$caption}" />
+										<h:graphicImage id="serial_36" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											onfocus="currFocus('PT_IL_LOAN:LOAN_SURR_PERC')"
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_SURR_PERC}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanSurrPercDisabled}"
+											id="LOAN_SURR_PERC" maxlength="7" rendered="true"
+											required="true" styleClass="inputNumeric"
+											title="Enter the loan surrender percentage"
+											validator="#{PILT004_PT_IL_LOAN_ACTION.LoanSurcPercWhenValidate}"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_SURR_PERC}">
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_37" immediate="true"
+												oncomplete="setFocus('PT_IL_LOAN:LOAN_REF_NO','PT_IL_LOAN:LOAN_SURR_PERC')"
+												reRender="errorPanel,LOAN_FC_PERM_AMT,LOAN_LC_PERM_AMT">
+											</a4j:support>
+										</h:inputText></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_REF_NO_LABEL}"
+											for="LOAN_REF_NO" id="LOAN_REF_NO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_REF_NO$caption}" />
+										
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_REF_NO}"
+											disabled="true"
+											id="LOAN_REF_NO" maxlength="30" rendered="true"
+											required="false" title="Enter value for Loan Reference Number"
+											styleClass="input"
+											validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_REF_NO_Validator}"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_REF_NO}">
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_39" immediate="true"
+												reRender="errorPanel">
+											</a4j:support>
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_PERM_AMT_LABEL}"
+											for="LOAN_FC_PERM_AMT" id="LOAN_FC_PERM_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_FC_PERM_AMT$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_PERM_AMT}"
+											 id="LOAN_FC_PERM_AMT" maxlength="16" disabled="true"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for Loan FC Amount"
+											validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_FC_PERM_AMT_Validator}"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FC_PERM_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_40" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_PERM_AMT_LABEL}"
+											for="LOAN_LC_PERM_AMT" id="LOAN_LC_PERM_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_LC_PERM_AMT$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_PERM_AMT}"
+											  id="LOAN_LC_PERM_AMT" maxlength="16"  disabled="true"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for Loan FC Amount"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_LC_PERM_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support event="onblur" id="serial_a1" immediate="true"
+												reRender="LOAN_LC_PERM_AMT" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_REPAY_FREQ_LABEL}"
+											for="LOAN_REPAY_FREQ" id="LOAN_REPAY_FREQ_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_REPAY_FREQ$caption}" />
+
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_REPAY_FREQ}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanRepayFreqDisabled}"
+											id="LOAN_REPAY_FREQ" rendered="true" required="false"
+											styleClass="input" title="Loan repayment frequency"
+											validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_REPAY_FREQ_Validation}"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_REPAY_FREQ}">
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onchange" id="serial_43" immediate="true"
+												reRender="LOAN_DUE_DT,UI_M_LOAN_GR_FC_AMT,UI_M_LOAN_GR_LC_AMT,LOAN_FC_INTEREST,LOAN_LC_INTEREST,LOAN_LC_NET_AMOUNT,LOAN_FC_NET_AMOUNT" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_44" immediate="true"
+												reRender="LOAN_DUE_DT,UI_M_LOAN_GR_FC_AMT,UI_M_LOAN_GR_LC_AMT,LOAN_FC_INTEREST,LOAN_LC_INTEREST,LOAN_LC_NET_AMOUNT,LOAN_FC_NET_AMOUNT" />
+											<f:selectItems id="serial_45"
+												value="#{PILT004_PT_IL_LOAN_ACTION.repaymentComboList}" />
+
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+															binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FREQ_TYPE_LABEL}"
+															for="LOAN_FREQ_TYPE" id="LOAN_FREQ_TYPE_LABEL"
+															rendered="true" styleClass="label" value="Frequency" />
+													</td>
+													<td class="evenrow"><h:selectOneMenu
+															binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FREQ_TYPE}"
+															id="LOAN_FREQ_TYPE" rendered="true" required="false"
+															styleClass="input" title="Loan repayment frequency"
+															validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_FREQ_TYPE_Validation}"
+															value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FREQ_TYPE}">
+															<a4j:support
+																actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+																event="onchange" id="serial_64" immediate="true" />
+															<a4j:support
+																actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+																event="onblur" id="serial_65" immediate="true" />
+															<f:selectItems id="serial_66_1"
+																value="#{PILT004_PT_IL_LOAN_ACTION.frequencyComboList}" />
+														</h:selectOneMenu></td>
+
+												</tr>
+									<!-- <tr>
+									<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_DUE_DT_LABEL}"
+											for="LOAN_DUE_DT" id="LOAN_DUE_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_DUE_DT$caption}" /></td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_DUE_DT}"
+											datePattern="#{ PILT004_PT_IL_LOAN_ACTION.datePattern}"
+											disabled="true" enableManualInput="false" id="LOAN_DUE_DT"
+											rendered="true" required="false"
+											title="#{message.PILT004$PT_IL_LOAN_CHARGE$LOAN_DUE_DT$tooltip}"
+											styleClass="calendarstyleclass" inputClass="calendarinput"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_DUE_DT}">
+										</rich:calendar></td>
+									</tr> --><tr>
+	<td class="evenrowright"><h:outputLabel
+			binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_DUE_DT_LABEL}"
+			for="LOAN_DUE_DT" id="LOAN_DUE_DT_LABEL" rendered="true"
+			styleClass="label"
+			value="#{message.PILT004$PT_IL_LOAN$LOAN_DUE_DT$caption}" /></td>
+	<td class="evenrow"><rich:calendar
+			binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_DUE_DT}"
+			datePattern="#{ PILT004_PT_IL_LOAN_ACTION.datePattern}"
+			disabled="true" enableManualInput="false"
+			id="LOAN_DUE_DT" rendered="true" required="false"
+			title="#{message.PILT004$PT_IL_LOAN_CHARGE$LOAN_DUE_DT$tooltip}"
+			styleClass="calendarstyleclass"
+			inputClass="calendarinput"
+			value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_DUE_DT}">
+		</rich:calendar></td>
+
+	<td class="evenrow">&nbsp;</td>
+	<td class="evenrowright"><h:outputLabel
+			binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_TERM_LABEL}"
+			for="LOAN_CODE" id="LOAN_TERM_LABEL" rendered="true"
+			styleClass="label"
+			value="#{message.PILT004$PT_IL_LOAN$LOAN_TERM$caption}" />
+	</td>
+		<!-- Added and modified by Saritha on 11.01.2019 -->
+	<td class="evenrow"><h:inputText
+			onfocus="currFocus('PT_IL_LOAN:LOAN_TERM')"
+			binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_TERM}"
+			id="LOAN_TERM" maxlength="2" rendered="true"
+			required="false" styleClass="inputNumeric"
+			disabled="true" title="Enter the loan Term"
+			validator="#{PILT004_PT_IL_LOAN_ACTION.validate_LOAN_TERM}"
+			value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_TERM}">
+			<a4j:support
+				actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+				event="onblur" id="serial_aj1" immediate="true"
+				reRender="errorPanel">
+			</a4j:support>
+			
+		</h:inputText></td>
+		<!-- Ended by Saritha on 11.01.2019 -->
+
+</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_AMOUNT_LABEL}"
+											for="LOAN_FC_AMOUNT" id="LOAN_FC_AMOUNT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_FC_AMOUNT$caption}" />
+										<h:graphicImage id="serial_41" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_AMOUNT}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanFcAmountDisabled}"
+											id="LOAN_FC_AMOUNT" maxlength="16" rendered="true"
+											required="true" styleClass="inputNumeric"
+											title="Enter value for Loan FC Amount"
+											validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_FC_AMOUNT_Validator}"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FC_AMOUNT}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_42" immediate="true"
+												oncomplete="setFocus('PT_IL_LOAN:LOAN_INT_RATE')"
+												reRender="errorPanel,LOAN_LC_AMOUNT,LOAN_INT_RATE,LOAN_INT_RATE_PER,
+													LOAN_FC_NET_AMOUNT,LOAN_LC_NET_AMOUNT,UI_M_LOAN_GR_FC_AMT,
+													UI_M_LOAN_GR_LC_AMT,LOAN_FC_INTEREST,LOAN_LC_INTEREST,
+													LOAN_LC_NET_AMOUNT,LOAN_FC_NET_AMOUNT,LOAN_FC_INTEREST,LOAN_FC_UNPAID_PREM_INT,LOAN_LC_UNPAID_PREM_INT,
+													LOAN_LC_INTEREST,LOAN_FC_UNPAID_PREM,LOAN_LC_UNPAID_PREM,LOAN_LC_REPAY_AMT">
+											</a4j:support>
+										</h:inputText></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_AMOUNT_LABEL}"
+											for="LOAN_LC_AMOUNT" id="LOAN_LC_AMOUNT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_LC_AMOUNT$caption}" />
+										</td>
+										<td class="oddrow"><!-- [ BugId:PREMIAGDC-0155 disabled the field Added by: S.Mallika, Dated: 17-Mar-2009-->
+										<h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_AMOUNT}"
+											disabled="true" id="LOAN_LC_AMOUNT" maxlength="16"
+											rendered="true" required="true" styleClass="inputNumeric"
+											title="Enter value for Loan LC Amount"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_LC_AMOUNT}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support event="onblur" id="a_2" immediate="true"
+												reRender="LOAN_LC_AMOUNT">
+											</a4j:support>
+
+										</h:inputText> <!-- [ BugId:PREMIAGDC-0155 Added by: S.Mallika, Dated: 17-Mar-2009 --></td>
+									</tr>
+																		<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_INT_RATE_LABEL}"
+											for="LOAN_INT_RATE" id="LOAN_INT_RATE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_INT_RATE$caption}" />
+										<h:graphicImage id="serial_47" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_INT_RATE}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanIntRateDisabled}"
+											id="LOAN_INT_RATE" maxlength="10" rendered="true"
+											required="true"
+											validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_INT_RATE_Validator}"
+											styleClass="inputNumeric"
+											title="Enter value for Loan Interest Rate"
+											onfocus="currFocus('PT_IL_LOAN:LOAN_INT_RATE')"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_INT_RATE}">
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onchange" id="serial_48" immediate="true"
+												reRender="errorPanel,LOAN_LC_NET_AMOUNT,LOAN_FC_NET_AMOUNT">
+											</a4j:support>
+										</h:inputText></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_INT_RATE_PER_LABEL}"
+											for="LOAN_INT_RATE_PER" id="LOAN_INT_RATE_PER_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_INT_RATE_PER$caption}" />
+										<h:graphicImage id="serial_49" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_INT_RATE_PER}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanIntRatePerDisabled}"
+											id="LOAN_INT_RATE_PER" maxlength="10" rendered="true"
+											required="true" styleClass="inputNumeric"
+											title="Enter the loan interest rate per"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_INT_RATE_PER}">
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_INTEREST_LABEL}"
+											for="LOAN_FC_INTEREST" id="LOAN_FC_INTEREST_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_FC_INTEREST$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_INTEREST}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanFcInterestDisabled}"
+											id="LOAN_FC_INTEREST" maxlength="16" rendered="true"
+											required="false" styleClass="inputNumeric"
+											title="Enter value for Loan FC Interest"
+											validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_FC_INTEREST_Validator}"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FC_INTEREST}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_50" immediate="true"
+												reRender="errorPanel,LOAN_FC_INTEREST,LOAN_LC_INTEREST,UI_M_LOAN_GR_LC_AMT">
+											</a4j:support>
+										</h:inputText></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_INTEREST_LABEL}"
+											for="LOAN_LC_INTEREST" id="LOAN_LC_INTEREST_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_LC_INTEREST$caption}" />
+										</td>
+										<td class="oddrow"><!-- [ BugId:PREMIAGDC-0155 disabled the field Added by: S.Mallika, Dated: 17-Mar-2009-->
+										<h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_INTEREST}"
+											disabled="true" id="LOAN_LC_INTEREST" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for Loan LC Interest"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_LC_INTEREST}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="s_1" immediate="true"
+												reRender="errorPanel,LOAN_LC_INTEREST">
+											</a4j:support>
+										</h:inputText> <!-- [ BugId:PREMIAGDC-0155 Added by: S.Mallika, Dated: 17-Mar-2009 --></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_LOAN_GR_FC_AMT_LABEL}"
+											for="UI_M_LOAN_GR_FC_AMT" id="UI_M_LOAN_GR_FC_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$UI_M_LOAN_GR_FC_AMT$caption}" />
+										</td>
+										<td class="evenrow"><!-- [ BugId:PREMIAGDC-0155 On tab out from all FC amounts, LC amount should be defaulted Added by: S.Mallika, Dated: 17-Mar-2009-->
+										<h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_LOAN_GR_FC_AMT}"
+											disabled="true" id="UI_M_LOAN_GR_FC_AMT" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for : gross FC amount"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.UI_M_LOAN_GR_FC_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_52" immediate="true"
+												reRender="errorPanel,UI_M_LOAN_GR_FC_AMT,UI_M_LOAN_GR_LC_AMT">
+											</a4j:support>
+										</h:inputText> <!-- [ BugId:PREMIAGDC-0155 Added by: S.Mallika, Dated: 17-Mar-2009 -->
+										</td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_LOAN_GR_LC_AMT_LABEL}"
+											for="UI_M_LOAN_GR_LC_AMT" id="UI_M_LOAN_GR_LC_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$UI_M_LOAN_GR_LC_AMT$caption}" />
+										</td>
+										<!-- [ BugId:PREMIAGDC-0155 disabled the field Added by: S.Mallika, Dated: 17-Mar-2009-->
+										<td class="evenrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_LOAN_GR_LC_AMT}"
+											disabled="true" id="UI_M_LOAN_GR_LC_AMT" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for : gross LC amount"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.UI_M_LOAN_GR_LC_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support event="onblur" id="s_3" immediate="true"
+												reRender="UI_M_LOAN_GR_LC_AMT">
+											</a4j:support>
+										</h:inputText></td>
+										<!-- [ BugId:PREMIAGDC-0155 Added by: S.Mallika, Dated: 17-Mar-2009 -->
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputText id="Caption"
+											style="color: blue; font-style: italic;font-weight:bold;"
+											styleClass="label" value="Deductions" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_LOAN_FC_CHARGE_LABEL}"
+											for="UI_M_LOAN_FC_CHARGE" id="UI_M_LOAN_FC_CHARGE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$UI_M_LOAN_FC_CHARGE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_LOAN_FC_CHARGE}"
+											disabled="true" id="UI_M_LOAN_FC_CHARGE" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for : loan FC charge"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.UI_M_LOAN_FC_CHARGE}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support event="onblur" id="s_2" immediate="true"
+												reRender="errorPanel,UI_M_LOAN_FC_CHARGE">
+											</a4j:support>
+										</h:inputText></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_LOAN_LC_CHARGE_LABEL}"
+											for="UI_M_LOAN_LC_CHARGE" id="UI_M_LOAN_LC_CHARGE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$UI_M_LOAN_LC_CHARGE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_UI_M_LOAN_LC_CHARGE}"
+											disabled="true" id="UI_M_LOAN_LC_CHARGE" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for : loan LC charge"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.UI_M_LOAN_LC_CHARGE}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support event="onblur" id="s21" immediate="true"
+												reRender="errorPanel,UI_M_LOAN_LC_CHARGE">
+											</a4j:support>
+										</h:inputText></td>
+									</tr>
+
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_UNPAID_PREM_LABEL}"
+											for="LOAN_FC_UNPAID_PREM" id="LOAN_FC_UNPAID_PREM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_FC_UNPAID_PREM$caption}">
+										</h:outputLabel></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_UNPAID_PREM}"
+											disabled="true" id="LOAN_FC_UNPAID_PREM" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for Loan FC Unpaid Premium"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FC_UNPAID_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_53" immediate="true"
+												reRender="errorPanel,LOAN_FC_NET_AMOUNT,LOAN_LC_NET_AMOUNT">
+											</a4j:support>
+										</h:inputText></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_UNPAID_PREM_LABEL}"
+											for="LOAN_LC_UNPAID_PREM" id="LOAN_LC_UNPAID_PREM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_LC_UNPAID_PREM$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_UNPAID_PREM}"
+											disabled="true" id="LOAN_LC_UNPAID_PREM" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for Loan LC Unpaid Premium"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_LC_UNPAID_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_54" immediate="true"
+												reRender="errorPanel,LOAN_LC_UNPAID_PREM">
+											</a4j:support>
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_UNPAID_PREM_INT_CODE_LABEL}"
+											for="LOAN_UNPAID_PREM_INT_CODE"
+											id="LOAN_UNPAID_PREM_INT_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_UNPAID_PREM_INT_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_UNPAID_PREM_INT_CODE}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanUnpaidPremIntCodeDisabled}"
+											id="LOAN_UNPAID_PREM_INT_CODE" maxlength="16" rendered="true"
+											required="false" styleClass="inputNumeric"
+											title="Enter value for Loan Unpaid Premium int Code"
+											validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_UNPAID_PREM_INT_CODE_Validator}"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_UNPAID_PREM_INT_CODE}">
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_55" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText> <rich:suggestionbox for="LOAN_UNPAID_PREM_INT_CODE"
+											height="160" id="AUTO_ID_9"
+											suggestionAction="#{PILT004_PT_IL_LOAN_ACTION.LovAction_UNPAID_PREM_INT}"
+											var="suggest" width="200">
+											<h:column>
+												<h:outputText id="serial_56" value="#{suggest.PC_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_57" value="#{suggest.PC_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="serial_58" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" /></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrowright" />
+										<td class="evenrow" />
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_UNPAID_PREM_INT_LABEL}"
+											for="LOAN_FC_UNPAID_PREM_INT"
+											id="LOAN_FC_UNPAID_PREM_INT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_FC_UNPAID_PREM_INT$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_UNPAID_PREM_INT}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanFcUnpaidPremIntDisabled}"
+											id="LOAN_FC_UNPAID_PREM_INT" maxlength="16" rendered="true"
+											required="false" styleClass="inputNumeric"
+											title="Enter value for Loan FC Unpaid Premium int"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FC_UNPAID_PREM_INT}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_59" immediate="true"
+												reRender="errorPanel,LOAN_LC_NET_AMOUNT,LOAN_FC_NET_AMOUNT" />
+
+										</h:inputText></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_UNPAID_PREM_INT_LABEL}"
+											for="LOAN_LC_UNPAID_PREM_INT"
+											id="LOAN_LC_UNPAID_PREM_INT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_LC_UNPAID_PREM_INT$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_UNPAID_PREM_INT}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.compLoanLcUnpaidPremIntDisabled}"
+											id="LOAN_LC_UNPAID_PREM_INT" maxlength="16" rendered="true"
+											required="false" styleClass="inputNumeric"
+											title="Enter value for Loan LC Unpaid Premium int"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_LC_UNPAID_PREM_INT}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_60" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_OS_AMOUNT_LABEL}"
+											for="LOAN_FC_OS_AMOUNT" id="LOAN_FC_OS_AMOUNT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_FC_OS_AMOUNT$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_OS_AMOUNT}"
+											disabled="true" id="LOAN_FC_OS_AMOUNT" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for Loan FC Outstanding Amount"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FC_OS_AMOUNT}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_61" immediate="true"
+												reRender="errorPanel,LOAN_LC_OS_AMOUNT" />
+										</h:inputText></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_OS_AMOUNT_LABEL}"
+											for="LOAN_LC_OS_AMOUNT" id="LOAN_LC_OS_AMOUNT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_LC_OS_AMOUNT$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_OS_AMOUNT}"
+											disabled="true" id="LOAN_LC_OS_AMOUNT" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for Loan LC Outstanding Amount"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_LC_OS_AMOUNT}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_62" immediate="true"
+												reRender="errorPanel,LOAN_LC_OS_AMOUNT" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_OS_LOAN_INT_LABEL}"
+											for="LOAN_FC_OS_LOAN_INT" id="LOAN_FC_OS_LOAN_INT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_FC_OS_LOAN_INT$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_OS_LOAN_INT}"
+											disabled="true" id="LOAN_FC_OS_LOAN_INT" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="FC Outstanding loan interest amount"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FC_OS_LOAN_INT}">
+
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support event="onblur" id="OP_BASIS_1" immediate="true"
+												reRender="LOAN_FC_OS_LOAN_INT" />
+										</h:inputText></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_OS_LOAN_INT_LABEL}"
+											for="LOAN_LC_OS_LOAN_INT" id="LOAN_LC_OS_LOAN_INT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_LC_OS_LOAN_INT$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_OS_LOAN_INT}"
+											disabled="true" id="LOAN_LC_OS_LOAN_INT" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="LC outstanding loan interest"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_LC_OS_LOAN_INT}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support event="onblur" id="OP_BASIS_2" immediate="true"
+												reRender="LOAN_LC_OS_LOAN_INT" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_NET_AMOUNT_LABEL}"
+											for="LOAN_FC_NET_AMOUNT" id="LOAN_FC_NET_AMOUNT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_FC_NET_AMOUNT$caption}" />
+										</td>
+										<td class="evenrow"><!-- [ BugId:PREMIAGDC-0155 On tab out from all FC amounts, LC amount should be defaulted Added by: S.Mallika, Dated: 17-Mar-2009-->
+										<h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_FC_NET_AMOUNT}"
+											disabled="true" id="LOAN_FC_NET_AMOUNT" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for Loan FC Net Amount"
+											validator="#{PILT004_PT_IL_LOAN_ACTION.LOAN_FC_NET_AMOUNT_Validator}"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FC_NET_AMOUNT}">
+
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support
+												actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+												event="onblur" id="serial_63" immediate="true"
+												reRender="errorPanel,LOAN_FC_NET_AMOUNT,LOAN_LC_NET_AMOUNT">
+											</a4j:support>
+										</h:inputText> <!-- [ BugId:PREMIAGDC-0155 Added by: S.Mallika, Dated: 17-Mar-2009 -->
+										</td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_NET_AMOUNT_LABEL}"
+											for="LOAN_LC_NET_AMOUNT" id="LOAN_LC_NET_AMOUNT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT004$PT_IL_LOAN$LOAN_LC_NET_AMOUNT$caption}" />
+										</td>
+										<td class="evenrow"><!-- [ BugId:PREMIAGDC-0155 disabled the field Added by: S.Mallika, Dated: 17-Mar-2009-->
+										<h:inputText
+											binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_LOAN_LC_NET_AMOUNT}"
+											disabled="true" id="LOAN_LC_NET_AMOUNT" maxlength="16"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="Enter value for Loan LC Net Amount"
+											value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_LC_NET_AMOUNT}">
+											<f:converter converterId="PELNumberFormatter" />
+											<a4j:support event="onblur" id="OP_BASIS_3" immediate="true"
+												reRender="LOAN_LC_NET_AMOUNT" />
+										</h:inputText> <!-- [ BugId:PREMIAGDC-0155 Added by: S.Mallika, Dated: 17-Mar-2009 -->
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputText id="Caption1"
+											style="color: blue; font-style: italic;font-weight:bold;"
+											styleClass="label" value="EFT Details" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+									</tr>
+									<tr>
+									<td class="evenrowright"><h:outputLabel
+										binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_TYPE_LABEL}"
+										for="TYPE" id="TYPE_LABEL" rendered="true" styleClass="label"
+										value="#{message.PILT004$PT_IL_LOAN$TYPE$caption}" /> <h:graphicImage
+										id="serial_631" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" /></td>
+
+									<td class="evenrow"><h:selectOneMenu
+										binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_TYPE}" id="TYPE"
+										rendered="true" styleClass="input"  immediate="true"
+										title="#{message.PILT004$PT_IL_LOAN$TYPE$tooltip}"
+										validator="#{PILT004_PT_IL_LOAN_ACTION.validateLOAN_FLEX_04}"
+										value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FLEX_04}">
+										<f:selectItems id="listLOAN_FLEX_04"
+											value="#{PILT004_PT_IL_LOAN_ACTION.listLOAN_FLEX_04}" />
+										<a4j:support
+											actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+											event="onblur" id="LOAN_FLEX_04_SUPPORT" immediate="true"
+											reRender="errorPanel,MICR_CODE,ACC_NO" />
+									   <a4j:support
+											actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+											event="onchange" id="LOAN_FLEX_04A_SUPPORT" immediate="true"
+											reRender="errorPanel,MICR_CODE,ACC_NO,mandatory1111,mandatory111" />
+										
+									</h:selectOneMenu></td>
+									<td class="evenrowright">&nbsp;</td>
+									<td class="evenrowright"><h:outputLabel
+										binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_MICR_CODE_LABEL}"
+										for="MICR_CODE" id="MICR_CODE_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILT004$PT_IL_LOAN$MICR_CODE$caption}" /><h:outputText id="mandatory1111" styleClass="mandatory"
+																	value="#{PILT004_PT_IL_LOAN_ACTION.COMP_MICR_CODE.required ? '*':''}" /></td>
+
+									<td class="evenrow"><h:inputText
+										binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_MICR_CODE}"
+										disabled="false" id="MICR_CODE" maxlength="12" rendered="true"
+										required="false" styleClass="input" immediate="true"
+										title="#{message.PILT004$PT_IL_LOAN$MICR_CODE$tooltip}"
+										validator="#{PILT004_PT_IL_LOAN_ACTION.validateLOAN_FLEX_05}"
+										value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FLEX_05}" >
+										<a4j:support
+											actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+											event="onblur" id="LOAN_FLEX_05A_SUPPORT" immediate="true" 
+											oncomplete="setFocus('PT_IL_LOAN:ACC_NO','PT_IL_LOAN:MICR_CODE')"
+											reRender="errorPanel" /></h:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_ACC_NO_LABEL}"
+										for="ACC_NO" id="ACC_NO_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILT004$PT_IL_LOAN$ACC_NO$caption}" /> <h:outputText id="mandatory111" styleClass="mandatory"
+																	value="#{PILT004_PT_IL_LOAN_ACTION.COMP_ACC_NO.required ? '*':''}" /></td>
+
+									<td class="oddrow"><h:inputText
+										binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_ACC_NO}"
+										disabled="false" id="ACC_NO" maxlength="12" rendered="true"
+										required="false" styleClass="input" immediate="true"
+										title="#{message.PILT004$PT_IL_LOAN$ACC_NO$tooltip}"
+										validator="#{PILT004_PT_IL_LOAN_ACTION.validateLOAN_FLEX_06}"
+										value="#{PILT004_PT_IL_LOAN_ACTION.PT_IL_LOAN_BEAN.LOAN_FLEX_06}" >
+										<a4j:support
+											actionListener="#{PILT004_PT_IL_LOAN_ACTION.fireFieldValidation}"
+											event="onblur" id="LOAN_FLEX_06A_SUPPORT" immediate="true" 
+											
+											reRender="errorPanel" /></h:inputText>
+									</td>
+									<td class="oddrowright">&nbsp;</td>
+									<td class="oddrowright">&nbsp;</td>
+									<td class="oddrowright">&nbsp;</td>
+								</tr>
+
+								</table>
+
+								</td>
+								<!-- [ BugId:PREMIAGDC-0155 Added by: S.Mallika, Dated: 17-Mar-2009 -->
+
+
+							</tr>
+							<tr>
+								<td align="right" colspan="3" width="100%"><rich:toolBar
+									id="serial_66" styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="serial_67" location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILT004_PT_IL_LOAN_ACTION.saveFormDetails}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.LOANSTATUS}"
+											id="serial_68" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_69"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="serial_70"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="serial_71" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_72"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="serial_73"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILT004_PT_IL_LOAN_ACTION.deleteFormDetails}"
+											disabled="#{PILT004_PT_IL_LOAN_ACTION.LOANSTATUS}"
+											id="serial_74" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_75"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="serial_76"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="serial_77" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_78"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="serial_79"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILT004_PT_IL_LOAN_ACTION.prevFormDetails}"
+											id="serial_80" immediate="true" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_81"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="serial_82"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="serial_83" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_84"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="serial_85"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="serial_86" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_87"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="serial_88"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+
+						</table>
+						</div>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+			
+			<!-- Added by Janani for DMS -->
+			
+			<rich:modalPanel id="REPORT_MODAL_PANEL" height="110" width="300"
+				binding="#{PILT004_PT_IL_LOAN_ACTION.COMP_REPORT_MODAL_PANEL}">
+				<f:facet name="header">
+					<h:panelGroup>
+						<h:outputText
+							value="#{commonmsg.IP_REP_INFO$DOCUMENT_PRINT$caption}" />
+					</h:panelGroup>
+				</f:facet>
+				<f:facet name="controls">
+					<h:panelGroup>
+						<h:form id="FT_REPORT_MODAL_PANEL_1">
+							<a4j:commandLink immediate="true" id="CLOSE_LINK"
+								action="#{PILT004_PT_IL_LOAN_ACTION.cancelModalPanel}">
+								<h:graphicImage value="./../../resources/images/close.png"
+									styleClass="toolbarImageStyle" style="cursor:pointer"
+									id="REPORT_MODAL_PANEL_hidelink" />
+							</a4j:commandLink>
+						</h:form>
+					</h:panelGroup>
+				</f:facet>
+				<h:form id="FT_REPORT_MODAL_PANEL_2">
+					<table width="100%">
+						<tr>
+							<td align="center"><h:outputText id="CONFIRMATION_MSG"
+								style="font-size: 14px;"
+								value="#{commonmsg.IP_REP_INFO$CONFIRMATION_MSG$caption}" /></td>
+						</tr>
+						<tr>
+							<td><rich:spacer id="SPACER_MODAL_1" width="100%;"
+								height="18px" /> <rich:separator id="SEPARATOR" width="100%"
+								height="1px" /></td>
+						</tr>
+						<tr>
+							<td align="center"><h:panelGroup>
+								<h:commandLink immediate="true" id="PRINT_LINK" target="_blank"
+									action="#{PILT004_PT_IL_LOAN_ACTION.runActionAfterValidate}">
+									<a4j:commandButton reRender="REPORT_MODAL_PANEL"
+										action="#{PILT004_PT_IL_LOAN_ACTION.cancelModalPanel}"
+										id="OK_BUTTON" styleClass="button" style="width:70px;"
+										value="#{commonmsg.IP_REP_INFO$OK_BUTTON$caption}" />
+
+								</h:commandLink>
+							</h:panelGroup> <rich:spacer id="SPACER_MODAL_2" width="5px;" /> <a4j:commandButton
+								id="CANCEL_BUTTON" styleClass="button" style="width:70px;"
+								action="#{PILT004_PT_IL_LOAN_ACTION.cancelModalPanel}"
+								reRender="REPORT_MODAL_PANEL"
+								value="#{commonmsg.IP_REP_INFO$CANCEL_BUTTON$caption}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</rich:modalPanel>
+			
+			<!-- end -->
+		</f:view>
+	</ui:define>
+</ui:composition>

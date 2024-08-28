@@ -1,0 +1,332 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILR_REP008" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<title>
+		<h:outputText value="#{message.PILR_REP008$INT_REP_INFO$IP_REP_INFO$pagetitle}" />
+	</title>
+	<table width="100%" border="0">
+		<tr>
+			
+		</tr>
+		<h:form id="IP_REP_INFO" >
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">&nbsp;&nbsp;
+				<table width="100%" id="toolbartable">
+					<tr>
+						<td>
+						</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err" value="#{commonmsg.errorPanel$heading} #{PILR_REP008_IP_REP_INFO_ACTION.errorMap['current'] !=null? PILR_REP008_IP_REP_INFO_ACTION.errorMap['current']:PILR_REP008_IP_REP_INFO_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" value="#{PILR_REP008_IP_REP_INFO_ACTION.errorMessages}"
+								style="color: red; font-style: italic;font-weight:bold;"
+								escape="false" />
+							<h:outputText id="warningMessages" 
+								value="#{PILR_REP008_IP_REP_INFO_ACTION.warningMessages}"
+								style="color: green; font-style: italic;font-weight:bold;" 
+								escape="false" />		
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<table width="100%" id="linkstable">
+					<tr>
+						<td><h:outputText styleClass="forumRowHighlight"
+							value="#{message.PILR_REP008$INT_REP_INFO$IP_REP_INFO$pagetitle}" /></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+				<div style="height: 500px; overflow: auto;">
+				<table width="70%" align="center">
+					<tr>
+						
+						<td width="90%" vAlign="top">
+						<table id="bordertable" align="left" width="100%">
+					  <tr>
+								<td width="20%" align="left" id="td-background"><h:outputLabel
+									binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_FROM_DT_LABEL}"
+									for="FROM_DT" id="FROM_DT_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILR_REP008$INT_REP_INFO$FROM_DATE$caption}" />
+						<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+								<td width="20%" align="left">
+									<rich:calendar
+										binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_FROM_DT}"
+										datePattern="#{PILR_REP008_IP_REP_INFO_ACTION.datePattern}"
+										disabled="false" enableManualInput="true" id="FROM_DT"
+										inputSize="11" rendered="true" required="true" 
+										style="height:px;width:100px;" styleClass="calendarstyleclass"
+										value="#{PILR_REP008_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.FROM_DATE}">
+										
+										<a4j:support event="oninputchanged" immediate="true" id="date_1"
+												actionListener="#{PILR_REP008_IP_REP_INFO_ACTION.submitFromDate}"
+												reRender="errorPanel"/>
+										<a4j:support event="oninputblur" onsubmit="formatDate('IP_REP_INFO:FROM_DT')"
+										immediate="true" id="date_2" 
+												actionListener="#{PILR_REP008_IP_REP_INFO_ACTION.submitFromDate}"
+												reRender="errorPanel"/>		
+								  </rich:calendar>	
+												
+						</td>
+							  <td width="20%">&nbsp;</td>
+								
+							  <td width="20%" id="td-background" ><h:outputLabel
+									binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_TO_DT_LABEL}"
+									for="TO_DATE" id="TO_DT_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILR_REP008$INT_REP_INFO$TO_DATE$caption}" />
+						<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+						<td width="20%">
+									<rich:calendar
+										binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_TO_DT}"
+										disabled="false" enableManualInput="true" id="TO_DATE"
+										datePattern="#{PILR_REP008_IP_REP_INFO_ACTION.datePattern}"
+										inputSize="11" rendered="true" required="true" requiredMessage="End Date is Mandatory.Enter End Date!!!"
+										style="height:px;width:px;" styleClass="calendarstyleclass"
+										validator="#{PILR_REP008_IP_REP_INFO_ACTION.validateToAndFromDate}"
+										value="#{PILR_REP008_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.TO_DATE}">
+										<a4j:support event="oninputchanged" immediate="true" id="date_3"
+												actionListener="#{PILR_REP008_IP_REP_INFO_ACTION.submitToDate}"
+												reRender="errorPanel"/>
+										<a4j:support event="oninputblur"  onsubmit="formatDate('IP_REP_INFO:TO_DATE')"
+										immediate="true" id="date_4"
+												actionListener="#{PILR_REP008_IP_REP_INFO_ACTION.submitToDate}"
+												reRender="errorPanel"/>		
+									</rich:calendar>						
+															
+						</td>
+						  </tr>	
+						  <tr>
+								<td width="20%" id="td-background" >
+									<h:outputLabel
+										binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_FROM_POLICY_NO_LABEL}"
+										for="FROM_POLICY_NO" id="FROM_POLICY_NO_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PILR_REP008$INT_REP_INFO$FROM_POLICY_NO$caption}" />
+									<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+							  </td>
+								<td width="20%" >
+									<h:inputText
+										binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_FROM_POLICY_NO}"
+										disabled="false" id="FROM_POLICY_NO" maxlength="12"
+										rendered="true" required="true"
+										style="height:23px;width:111px;" styleClass="forumRowHighlight"
+										title="Enter the Starting Code for the Branch Range"
+										value="#{PILR_REP008_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.REP_VALUE_3}" >
+										<a4j:support event="onblur" immediate="true"
+											actionListener="#{PILR_REP008_IP_REP_INFO_ACTION.submitFromPolicy}" 
+											reRender="FROM_POLICY_NO,errorPanel,FROM_POLICY_SUGG"/>
+									</h:inputText>
+									<rich:suggestionbox height="200" width="250"
+											id="FROM_POLICY_SUGG"
+											value="#{PILR_REP008_IP_REP_INFO_ACTION.fromPolicyList}"
+											suggestionAction="#{PILR_REP008_IP_REP_INFO_ACTION.suggestionActionFromPolicy}"
+											for="FROM_POLICY_NO" var="fromPolicy">
+											<h:column>
+												<h:outputText value="#{fromPolicy.REP_VALUE_3}" />
+											</h:column>
+											<h:column>  
+												<h:outputText value="#{fromPolicy.UI_M_FROM_POLICY_NO_DESC}" />
+											</h:column>
+										</rich:suggestionbox>
+									
+									<h:graphicImage value="./../../images/Lov.gif" />
+							  </td>
+								<td width="20%">&nbsp;</td>
+								<td width="20%" id="td-background">
+									<h:outputLabel
+										binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_TO_POLICY_NO_LABEL}"
+										for="TO_POLICY_NO" id="TO_POLICY_NO_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PILR_REP008$INT_REP_INFO$FROM_POLICY_NO$caption}" />
+									<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+							  </td>
+								<td width="20%" >
+									<h:inputText
+										binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_TO_POLICY_NO}"
+										disabled="false" id="TO_POLICY_NO" maxlength="12"
+										rendered="true" required="true"
+										style="height:23px;width:111px;" styleClass="forumRowHighlight"
+										title="Enter the Starting Code for the Branch Range"
+										value="#{PILR_REP008_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.REP_VALUE_4}" >
+										<a4j:support event="onblur" immediate="true"
+											actionListener="#{PILR_REP008_IP_REP_INFO_ACTION.submitToPolicy}"
+											reRender="TO_POLICY_NO,errorPanel,TO_POLICY_SUGG" />
+									</h:inputText>
+									<rich:suggestionbox height="200" width="250"
+											id="TO_POLICY_SUGG"
+											value="#{PILR_REP008_IP_REP_INFO_ACTION.toPolicyList}"
+											suggestionAction="#{PILR_REP008_IP_REP_INFO_ACTION.suggestionActionToPolicy}"
+											for="TO_POLICY_NO" var="toPolicy">
+											<h:column>
+												<h:outputText value="#{toPolicy.REP_VALUE_4}" />
+											</h:column>
+											<h:column>  
+												<h:outputText value="#{toPolicy.UI_M_TO_POLICY_NO_DESC}" />
+											</h:column>
+										</rich:suggestionbox>
+									
+									<h:graphicImage value="./../../images/Lov.gif" />
+							  </td>
+							</tr>
+						  
+							<tr>
+								<td width="20%" id="td-background">  
+									<h:outputLabel
+										binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_FROM_BRANCH_LABEL}"
+										for="FROM_BRANCH" id="FROM_BRANCH_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PILR_REP008$INT_REP_INFO$FROM_BRANCH$caption}" />
+									<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+							  </td>
+								<td width="20%">
+									<h:inputText
+										binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_FROM_BRANCH}"
+										disabled="false" id="FROM_BRANCH" maxlength="12"
+										rendered="true" required="true"
+										style="height:23px;width:111px;" styleClass="forumRowHighlight"
+										title="Enter the Starting Code for the Business Range"
+										value="#{PILR_REP008_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.REP_VALUE_5}" >
+										<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILR_REP008_IP_REP_INFO_ACTION.submitFromBranch}"
+												 reRender="FROM_BRANCH,errorPanel,FROM_BRANCH_SUGG"/>
+									</h:inputText>
+									<rich:suggestionbox height="200" width="250"
+											id="FROM_BRANCH_SUGG"
+											value="#{PILR_REP008_IP_REP_INFO_ACTION.fromBranchList}"
+											suggestionAction="#{PILR_REP008_IP_REP_INFO_ACTION.suggestionActionFromBranch}"
+											for="FROM_BRANCH" var="fromBranch">
+											<h:column>
+												<h:outputText value="#{fromBranch.REP_VALUE_5}" />
+											</h:column>
+											<h:column>  
+												<h:outputText value="#{fromBranch.UI_M_FROM_BRANCH_DESC}" />
+											</h:column>
+										</rich:suggestionbox>
+										<h:graphicImage value="./../../images/Lov.gif" />
+							  </td>
+								<td width="20%">&nbsp;</td>
+								<td width="20%" id="td-background">
+									<h:outputLabel
+										binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_TO_BRANCH_LABEL}"
+										for="TO_BRANCH" id="TO_BRANCH_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PILR_REP008$INT_REP_INFO$TO_BRANCH$caption}" />
+									<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+							  </td>
+								<td width="20%" >
+									<h:inputText
+										binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_TO_BRANCH}"
+										disabled="false" id="TO_BRANCH" maxlength="12"
+										rendered="true" required="true"
+										style="height:23px;width:110px;" styleClass="forumRowHighlight"
+										title="Enter the Ending Code for the Business Range"
+										value="#{PILR_REP008_IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.REP_VALUE_6}" >
+										<a4j:support event="onblur" immediate="true"
+											actionListener="#{PILR_REP008_IP_REP_INFO_ACTION.submitToBranch}"
+											reRender="TO_BRANCH,errorPanel,TO_BRANCH_SUGG" />										
+									</h:inputText>
+									<rich:suggestionbox height="200" width="250"
+											id="TO_BRANCH_SUGG"
+											value="#{PILR_REP008_IP_REP_INFO_ACTION.toBranchList}"
+											suggestionAction="#{PILR_REP008_IP_REP_INFO_ACTION.suggestionActionToBranch}"
+											for="TO_BRANCH" var="toBranch">
+											<h:column>
+												<h:outputText value="#{toBranch.REP_VALUE_6}" />
+											</h:column>
+											<h:column>  
+												<h:outputText value="#{toBranch.UI_M_TO_BRANCH_DESC}" />
+											</h:column>
+									</rich:suggestionbox>
+									<h:graphicImage value="./../../images/Lov.gif" />
+							  </td>
+							</tr>
+							
+							
+							<tr>
+								<td colspan="5">
+								<hr color="black" />
+								</td>
+						  </tr>
+							 <tr>
+						    	<td width="20%"><table width="100%" border="0" height="100%" bordercolor="blue">
+							      <tr>
+							        <td>
+							       	
+							        	<h:selectOneRadio
+										 	id="SELECT_FILE_TYPE"
+											rendered="true" 
+											binding="#{PILR_REP008_IP_REP_INFO_ACTION.COMP_SELECT_FILE_TYPE}"
+											value=""
+											layout="pageDirection">
+											
+												<f:selectItem itemValue="pdf" itemLabel="#{message.PILR_REP008$INT_REP_INFO$SELECT_PDF$caption}" />
+												<f:selectItem itemValue="excel" itemLabel="#{message.PILR_REP008$INT_REP_INFO$SELECT_EXCEL$caption}" />	
+												<f:selectItem itemValue="html" itemLabel="#{message.PILR_REP008$INT_REP_INFO$SELECT_HTML$caption}" />	
+												<f:selectItem itemValue="csv" itemLabel="#{message.PILR_REP008$INT_REP_INFO$SELECT_CVS$caption}" />
+												<a4j:support event="onclick" immediate="true"
+														actionListener="#{PILR_REP008_IP_REP_INFO_ACTION.submitFileType}"/>	
+												
+											</h:selectOneRadio>
+										
+									</td>
+									
+							      </tr>
+						       </table></td>
+						       <td width="20%">&nbsp;</td>
+							    <td width="20%">&nbsp;</td>
+							     <td width="20%">&nbsp;</td>
+							    						    
+						    	<td width="20%">
+						    	<h:commandLink action="#{PILR_REP008_IP_REP_INFO_ACTION.runAction}" target="_blank">
+						    	<h:graphicImage value="./../../images/RUN.gif"/>
+						    	  </h:commandLink>
+						    	 
+					    	   </td>
+						  </tr>		
+							<tr>
+								<td colspan="5" align="right"></td>
+						  </tr>
+						</table>
+					  </td>
+						
+					</tr>
+					
+				</table>
+				</div>
+				</td>
+			</tr>
+			
+		</h:form>
+	</table>
+	<table width="100%">
+		<tr>
+			
+		</tr>
+		
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

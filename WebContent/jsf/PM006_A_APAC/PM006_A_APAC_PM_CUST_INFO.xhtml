@@ -1,0 +1,549 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PM006_A_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PM_CUST_INFO">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.updateCustInfo}"
+											id="AUTOID_1_CL" rendered="true" style="text-decoration:none" 
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_2_CL" accesskey="s"
+												styleClass="toolbarButtonStyle"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="AUTOID_3_CL"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.saveAndNext}"
+											id="AUTOID_4" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_5_CL"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="AUTOID_6_CL"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.deleteCustInfo}"
+											id="AUTOID_7_CL" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_8_CL" accesskey="r"
+												styleClass="toolbarButtonStyle"
+												image="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_9_CL"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_10_CL" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_11_CL"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="AUTOID_12_CL"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_13_CL" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_14_CL"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="AUTOID_15_CL"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_16_CL" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_17_CL"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="AUTOID_18_CL"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_19_CL" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_20_CL"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="AUTOID_21_CL"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD" location="right">
+										<w:treeWizard binding="#{PM006_A_APAC_COMPOSITE_ACTION.wizard}"/>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.errorMap['current'] !=null? PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.errorMap['current']:PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					
+					<tr>
+						<td colspan="3">
+						<div id="tablecontainer">
+						<div id="sidebar" style="width: 21%; vertical-align: top">
+						<div id="handle" style="width: 5%"><a4j:commandLink
+							actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.wizard.toggle}"
+							id="BACK_TOOL_FOOTER1" immediate="true" rendered="true"
+							style="text-decoration:none;align:left"
+							styleClass="toolbarCommandLinkStyle">
+							<img align="left" alt="Click to toggle the sidebar" height="123"
+								onclick="toggleSideBar();"
+								src="./../../resources/images/toggle.jpg" style="border: 0;"
+								width="14" />
+						</a4j:commandLink></div>
+
+						<div id="sbText" style="display: compact;">
+						<div id="linkstable1" style="display: compact; width: 95%">
+						 	<w:treeWizardPanel binding="#{PM006_A_APAC_COMPOSITE_ACTION.wizard.wizardPanel}" id="wizardPanel"/>
+						 </div>
+						</div>
+						</div>
+						<div id="content" style="width: 79%;">
+						<table align="center" width="100%">
+							<tr>
+								<td vAlign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_REF_DTLS_LABEL}"
+											for="INF_REF_DTLS" id="INF_REF_DTLS_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_REF_DTLS$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_REF_DTLS}"
+											disabled="false" id="INF_REF_DTLS" maxlength="4000"
+											rendered="true" required="false" styleClass="input" 
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_REF_DTLS$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_REF_DTLS}" />
+										</td>
+										<td class="oddrowfreeze"></td>
+										<td class="oddrowfreeze"></td>
+										<td class="oddrowfreeze"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_FRZ_FLAG_LABEL}"
+											for="INF_FRZ_FLAG" id="INF_FRZ_FLAG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_FRZ_FLAG$caption}" />
+										<h:selectBooleanCheckbox
+											id="INF_FRZ_FLAG" rendered="true"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_FRZ_FLAG$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_FRZ_FLAG_UI}" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_PREV_EXP_LABEL}"
+											for="INF_PREV_EXP" id="INF_PREV_EXP_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_PREV_EXP$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_PREV_EXP}"
+											disabled="false" id="INF_PREV_EXP" maxlength="4000"
+											rendered="true" required="false" styleClass="input" 
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_PREV_EXP$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_PREV_EXP}" />
+										</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_CREDIT_COMPLIANCES_LABEL}"
+											for="INF_CREDIT_COMPLIANCES"
+											id="INF_CREDIT_COMPLIANCES_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_CREDIT_COMPLIANCES$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_CREDIT_COMPLIANCES}"
+											disabled="false" id="INF_CREDIT_COMPLIANCES" maxlength="4000"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_CREDIT_COMPLIANCES$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_CREDIT_COMPLIANCES}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_CREDIT_RATING_LABEL}"
+											for="INF_CREDIT_RATING" id="INF_CREDIT_RATING_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_CREDIT_RATING$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_CREDIT_RATING}"
+											disabled="false" id="INF_CREDIT_RATING" maxlength="4000"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_CREDIT_RATING$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_CREDIT_RATING}" />
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_CREDIT_WORHINESS_LABEL}"
+											for="INF_CREDIT_WORHINESS" id="INF_CREDIT_WORHINESS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_CREDIT_WORHINESS$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_CREDIT_WORHINESS}"
+											disabled="false" id="INF_CREDIT_WORHINESS" maxlength="4000"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_CREDIT_WORHINESS$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_CREDIT_WORHINESS}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_INFORMATION_RECD_LABEL}"
+											for="INF_INFORMATION_RECD" id="INF_INFORMATION_RECD_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_INFORMATION_RECD$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_INFORMATION_RECD}"
+											disabled="false" id="INF_INFORMATION_RECD" maxlength="4000"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_INFORMATION_RECD$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_INFORMATION_RECD}" />
+										</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_INTEREST_RATE_LABEL}"
+											for="INF_INTEREST_RATE" id="INF_INTEREST_RATE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_INTEREST_RATE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_INTEREST_RATE}"
+											disabled="false" id="INF_INTEREST_RATE" maxlength="40"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_INTEREST_RATE$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_INTEREST_RATE}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_COMP_RATING_LABEL}"
+											for="INF_COMP_RATING" id="INF_COMP_RATING_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_COMP_RATING$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_COMP_RATING}"
+											disabled="false" id="INF_COMP_RATING" maxlength="4000"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_COMP_RATING$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_COMP_RATING}" />
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_DISCOUNT_AMT_LABEL}"
+											for="INF_DISCOUNT_AMT" id="INF_DISCOUNT_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_DISCOUNT_AMT$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_DISCOUNT_AMT}"
+											disabled="false" id="INF_DISCOUNT_AMT" maxlength="40"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_DISCOUNT_AMT$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_DISCOUNT_AMT}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_DUR_PERIOD_FM_LABEL}"
+											for="INF_DUR_PERIOD_FM" id="INF_DUR_PERIOD_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_DUR_PERIOD_FM$caption}" />
+										</td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_DUR_PERIOD_FM}"
+											datePattern="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true"
+											id="INF_DUR_PERIOD_FM" inputClass="calendarinput"
+											inputSize="11" rendered="true" required="false"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_DUR_PERIOD_FM}" />
+										</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_DISCOUNT_PRCT_LABEL}"
+											for="INF_DISCOUNT_PRCT" id="INF_DISCOUNT_PRCT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_DISCOUNT_PRCT$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_DISCOUNT_PRCT}"
+											disabled="false" id="INF_DISCOUNT_PRCT" maxlength="9"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_DISCOUNT_PRCT$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_DISCOUNT_PRCT}" >
+											<f:validateDoubleRange minimum="0" maximum="100.00000"/>
+											</h:inputText>
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_OTHER_REF_LABEL}"
+											for="INF_OTHER_REF" id="INF_OTHER_REF_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_OTHER_REF$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_OTHER_REF}"
+											disabled="false" id="INF_OTHER_REF" maxlength="4000"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_OTHER_REF$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_OTHER_REF}" />
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_OPERATION_DTLS_LABEL}"
+											for="INF_OPERATION_DTLS" id="INF_OPERATION_DTLS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_OPERATION_DTLS$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_OPERATION_DTLS}"
+											disabled="false" id="INF_OPERATION_DTLS" maxlength="4000"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_OPERATION_DTLS$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_OPERATION_DTLS}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_DUR_PERIOD_TO_LABEL}"
+											for="INF_DUR_PERIOD_TO" id="INF_DUR_PERIOD_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_DUR_PERIOD_TO$caption}" />
+										</td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_DUR_PERIOD_TO}"
+											datePattern="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true"
+											id="INF_DUR_PERIOD_TO" inputClass="calendarinput"
+											inputSize="11" rendered="true" required="false"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_DUR_PERIOD_TO}" />
+										</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_PARTNER_DTLS_LABEL}"
+											for="INF_PARTNER_DTLS" id="INF_PARTNER_DTLS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_PARTNER_DTLS$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_PARTNER_DTLS}"
+											disabled="false" id="INF_PARTNER_DTLS" maxlength="4000"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_PARTNER_DTLS$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_PARTNER_DTLS}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_GROUP_COMP_DTLS_LABEL}"
+											for="INF_GROUP_COMP_DTLS" id="INF_GROUP_COMP_DTLS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_GROUP_COMP_DTLS$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_GROUP_COMP_DTLS}"
+											disabled="false" id="INF_GROUP_COMP_DTLS" maxlength="4000"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_GROUP_COMP_DTLS$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_GROUP_COMP_DTLS}" />
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_PROPRIETOR_OR_PARTNERSHIP_LABEL}"
+											for="INF_PROPRIETOR_OR_PARTNERSHIP"
+											id="INF_PROPRIETOR_OR_PARTNERSHIP_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_PROPRIETOR_OR_PARTNERSHIP$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_PROPRIETOR_OR_PARTNERSHIP}"
+											disabled="false" id="INF_PROPRIETOR_OR_PARTNERSHIP"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_PROPRIETOR_OR_PARTNERSHIP$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_PROPRIETOR_OR_PARTNERSHIP}">
+											<f:selectItems
+												value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.INF_PROPRIETOR_OR_PARTNERSHIP_ITEMS}" />
+										</h:selectOneMenu></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_GUARANTEE_DTLS_LABEL}"
+											for="INF_GUARANTEE_DTLS" id="INF_GUARANTEE_DTLS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_GUARANTEE_DTLS$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_GUARANTEE_DTLS}"
+											disabled="false" id="INF_GUARANTEE_DTLS" maxlength="4000"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_GUARANTEE_DTLS$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_GUARANTEE_DTLS}" />
+										</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_GRACE_PERIOD_DAYS_LABEL}"
+											for="INF_GRACE_PERIOD_DAYS" id="INF_GRACE_PERIOD_DAYS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM006_A_APAC$PM_CUST_INFO$INF_GRACE_PERIOD_DAYS$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.COMP_INF_GRACE_PERIOD_DAYS}"
+											disabled="false" id="INF_GRACE_PERIOD_DAYS" maxlength="40"
+											rendered="true" required="false" styleClass="inputNumeric"
+											title="#{message.PM006_A_APAC$PM_CUST_INFO$INF_GRACE_PERIOD_DAYS$tooltip}"
+											value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.PM_CUST_INFO_BEAN.INF_GRACE_PERIOD_DAYS}" />
+										</td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.updateCustInfo}"
+											id="AUTOID_28" rendered="true" style="text-decoration:none" 
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_29"  accesskey="s"
+												styleClass="toolbarButtonStyle"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="AUTOID_30"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.saveAndNext}"
+											id="AUTOID_31" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_32"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="AUTOID_33"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_INFO_ACTION_BEAN.deleteCustInfo}"
+											id="AUTOID_34" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_35" accesskey="r"
+												styleClass="toolbarButtonStyle"
+												image="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_36"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_37" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_38"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="AUTOID_39"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_40" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_41"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="AUTOID_42"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_43" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_44"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="AUTOID_45"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_46" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_47"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="AUTOID_48"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM" 
+										location="right">
+										<w:wizardPanelFooter binding="#{PM006_A_APAC_COMPOSITE_ACTION.wizard.wizardPanelFooter}"/>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

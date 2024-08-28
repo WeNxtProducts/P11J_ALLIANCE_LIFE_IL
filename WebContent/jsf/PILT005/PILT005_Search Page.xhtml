@@ -1,0 +1,122 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+
+	<f:loadBundle basename="messageProperties_PILT005" var="message" />
+
+	<table width="100%" border="0">
+		<tr>
+			
+		</tr>
+		<h:form id="LoanRepaymentSearchPage">
+			
+			<tr>
+				<td colspan="3" width="100%" valign="top" height="20">
+					<rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err" escape="true"
+											styleClass="#{PILT005_LOAN_REPAYMENT_SEARCH.messageStyle}"
+											value="#{commonmsg.errorPanel$heading} #{PILT005_LOAN_REPAYMENT_SEARCH.errorMap['current'] !=null? PILT005_LOAN_REPAYMENT_SEARCH.errorMap['current']: PILT005_LOAN_REPAYMENT_SEARCH.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages" styleClass="ErrorMessages"
+										value="#{PILT005_LOAN_REPAYMENT_SEARCH.errorMessages}"
+										escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{PILT005_LOAN_REPAYMENT_SEARCH.globalMsgRender}" />
+									<h:outputText id="warningMessages"
+										value="#{PILT005_LOAN_REPAYMENT_SEARCH.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			
+			<tr>
+				<td>
+				<table border="0" width="100%" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr><td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td><h:outputLabel value="Loan Ref No." /> <h:inputText
+							id="LOAN_REF_NO"
+							title="#{message.PILT005$PT_IL_LOAN_REPAYMENT$LOAN_REF_NO$tooltip}"
+							value="#{PILT005_LOAN_REPAYMENT_SEARCH.searchBean.LOAN_REF_NO}"
+							binding="#{PILT005_LOAN_REPAYMENT_SEARCH.LOAN_REF_NO}" /></td>
+
+						<td><h:outputLabel value="Loan Date" /> <rich:calendar
+							id="LOAN_DT"
+							value="#{PILT005_LOAN_REPAYMENT_SEARCH.searchBean.LOAN_DT}"
+							binding="#{PILT005_LOAN_REPAYMENT_SEARCH.LOAN_DT}"
+							datePattern="yyyy/MM/dd" >
+							<a4j:support event="oninputblur" id="LOAN_DT1" onsubmit="formatDate('LoanRepaymentSearchPage:LOAN_DT')"/>
+							</rich:calendar>
+							</td>
+						<td><a4j:commandButton value="#{commonmsg.searchButton$caption}" styleClass="button" id="PILT005fetch"
+							actionListener="#{PILT005_LOAN_REPAYMENT_SEARCH.fetchData}"
+							reRender="LoanRepaymentGrid,errorPanel">
+						</a4j:commandButton></td>
+					</tr>
+
+				</table>
+				</td>
+			</tr>
+			<rich:dataTable id="LoanRepaymentGrid"
+				value="#{PILT005_LOAN_REPAYMENT_SEARCH.searchList}"
+				binding="#{PILT005_LOAN_REPAYMENT_SEARCH.searchDataTable}"
+				width="100%" var="colData" cellpadding="5px" rows="15" border="1">
+
+				<rich:column filterBy="#{colData.LOAN_REF_NO}"
+					filterValue="#{PILT005_LOAN_REPAYMENT_SEARCH.searchBean.filterText}"
+					sortBy="#{colData.LOAN_REF_NO}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Loan Ref No." />
+					</f:facet>
+					<h:commandLink
+						action="#{PILT005_LOAN_REPAYMENT_SEARCH.executeQuery}"
+						id="LOAN_REF_NO">
+						
+							<h:outputText value="#{colData.LOAN_REF_NO}" />
+					
+						<f:param name="rowID" value="#{colData.rowId}" />
+						<f:param name="LOAN_REF_NO" value="#{colData.LOAN_REF_NO}" />
+					</h:commandLink>
+				</rich:column>
+
+
+				<rich:column filterBy="#{colData.LOAN_DT}"
+					sortBy="#{colData.LOAN_DT}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Loan Date" />
+					</f:facet>
+				
+						<h:outputText value="#{colData.LOAN_DT}" />
+				
+					<f:param name="LOAN_DT" value="#{colData.LOAN_DT}" />
+				</rich:column>
+				<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+				</f:facet>
+			</rich:dataTable>
+			<h:commandButton value="Insert" rendered="false"
+					styleClass="button" action="#{PILT005_LOAN_REPAYMENT_SEARCH.insertButtonAction}" />
+			<!--<rich:datascroller for="LoanRepaymentGrid" align="right"></rich:datascroller>
+		--></h:form>
+		<tr>
+			
+		</tr>
+	</table>
+
+</f:view>
+</ui:define>
+</ui:composition>

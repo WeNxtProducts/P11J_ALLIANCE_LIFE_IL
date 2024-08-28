@@ -1,0 +1,440 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.onLoad}">
+			<f:loadBundle basename="messageProperties_PM104_A_TISB" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<h:form id="PM_AGENT_WITH_DRAWL_SETUP">
+					<tr>
+						<td colspan="3" width="100%" valign="top">&nbsp;&nbsp;
+						<table width="100%" id="toolbartable" border="0" cellpadding="0"
+							cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle"
+											action="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.backToSearch}">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/back.png" />
+											<h:outputText value="#{menumessage.jsf$header$image$back}"
+												styleClass="toolbaroutputTextStyle" />
+
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle"
+											action="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.Save}">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/save.gif" />
+											<h:outputText value="#{menumessage.jsf$header$image$save}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/savenext.GIF" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$savenext}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle"
+											action="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.Delete}">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$deleteRecord}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/firstrec.gif" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$firstrec}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/prevpage.gif" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/nextpage.gif" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$nextpage}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$lastRecord}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20"><rich:simpleTogglePanel
+							id="errorPanel" switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.messageStyle}"
+									value="Notification:#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.errorMap['current'] !=null? PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.errorMap['current']:PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.warningMap['current']}" />
+
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.globalMsgRender}" />
+
+							<h:outputText id="warningMessages"
+								value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" id="linkstable" border="0" cellpadding="0"
+							cellspacing="0">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$WNDOW_PROPERTY}"></h:outputLabel>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table class="noborder" width="100%">
+							<tr>
+								<td width="100%" valign="top">
+								<table id="bordertable" align="left" width="100%" border="0">
+									<tr>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_TYPE_LABEL}"
+											for="AWDS_TYPE" id="AWDS_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_TYPE$caption}" />
+										</td>
+										<td class="oddrow" width="28%"><h:selectOneMenu
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_TYPE}"
+											disabled="false" id="AWDS_TYPE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_TYPE$tooltip}"
+											value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.PM_AGENT_WITH_DRAWL_SETUP_BEAN.AWDS_TYPE}">
+											<f:selectItems
+												value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.listAWDS_TYPE}" />
+										</h:selectOneMenu></td>
+										<td class="oddrowright" width="4%">&nbsp;</td>
+										<td class="oddrowright" width="20%">&nbsp;</td>
+										<td class="oddrowright" width="28%">&nbsp;</td>
+									</tr>
+
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_JOIN_AGE_FM_LABEL}"
+											for="AWDS_JOIN_AGE_FM" id="AWDS_JOIN_AGE_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_JOIN_AGE_FM$caption}" />
+										<h:graphicImage id="MANDATORY_IMG_1" style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_JOIN_AGE_FM}"
+											disabled="false" id="AWDS_JOIN_AGE_FM" maxlength="3"
+											rendered="true" required="true" styleClass="inputNumeric"
+											validator="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.JOIN_AGE_FM_WHEN_VALIDATE_ITEM}"
+											title="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$Agent_Join_Age_From$tooltip}"
+											value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.PM_AGENT_WITH_DRAWL_SETUP_BEAN.AWDS_JOIN_AGE_FM}">
+											<a4j:support event="onblur" id="SUPPORT_AWDS_JOIN_AGE_FM"
+												actionListener="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.fireFieldValidation}"
+												immediate="true" reRender="errorPanel"></a4j:support>
+										</h:inputText></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_JOIN_AGE_TO_LABEL}"
+											for="AWDS_JOIN_AGE_TO" id="AWDS_JOIN_AGE_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_JOIN_AGE_TO$caption}" />
+										<h:graphicImage id="MANDATORY_IMG_2" style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_JOIN_AGE_TO}"
+											disabled="false" id="AWDS_JOIN_AGE_TO" maxlength="3"
+											rendered="true" required="true"
+											validator="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.JOIN_AGE_TO_WHEN_VALIDATE_ITEM}"
+											styleClass="inputNumeric"
+											title="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$Agent_Join_Age_to$tooltip}"
+											value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.PM_AGENT_WITH_DRAWL_SETUP_BEAN.AWDS_JOIN_AGE_TO}">
+											<a4j:support event="onblur" id="SUPPORT_AWDS_JOIN_AGE_TO"
+												actionListener="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.fireFieldValidation}"
+												immediate="true" reRender="errorPanel"></a4j:support>
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_CURR_AGE_FM_LABEL}"
+											for="AWDS_CURR_AGE_FM" id="AWDS_CURR_AGE_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_CURR_AGE_FM$caption}" />
+										<h:graphicImage id="MANDATORY_IMG_3" style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_CURR_AGE_FM}"
+											disabled="false" id="AWDS_CURR_AGE_FM" maxlength="3"
+											validator="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.CURR_AGE_FM_WHEN_VALIDATE_ITEM}"
+											rendered="true" required="true" styleClass="inputNumeric"
+											title="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$Agent_Current_Age_From$tooltip}"
+											value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.PM_AGENT_WITH_DRAWL_SETUP_BEAN.AWDS_CURR_AGE_FM}">
+											<a4j:support event="onblur" id="SUPPORT_AWDS_CURR_AGE_FMHJKH"
+												actionListener="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.fireFieldValidation}"
+												immediate="true" reRender="errorPanel"></a4j:support>
+										</h:inputText></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_CURR_AGE_TO_LABEL}"
+											for="AWDS_CURR_AGE_TO" id="AWDS_CURR_AGE_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_CURR_AGE_TO$caption}" />
+										<h:graphicImage id="MANDATORY_IMG_4" style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_CURR_AGE_TO}"
+											disabled="false" id="AWDS_CURR_AGE_TO" maxlength="3"
+											rendered="true" required="true"
+											validator="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.CURR_AGE_TO_WHEN_VALIDATE_ITEM}"
+											styleClass="inputNumeric"
+											title="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$Agent_Current_Age_To$tooltip}"
+											value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.PM_AGENT_WITH_DRAWL_SETUP_BEAN.AWDS_CURR_AGE_TO}">
+											<a4j:support event="onblur"  id="SUPPORT_AWDS_CURR_AGE_TO"
+												actionListener="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.fireFieldValidation}"
+												immediate="true" reRender="errorPanel"></a4j:support>
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_NO_YRS_EXP_FM_LABEL}"
+											for="AWDS_NO_YRS_EXP_FM" id="AWDS_NO_YRS_EXP_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_NO_YRS_EXP_FM$caption}" />
+										<h:graphicImage id="MANDATORY_IMG_5" style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_NO_YRS_EXP_FM}"
+											disabled="false" id="AWDS_NO_YRS_EXP_FM" maxlength="3"
+											rendered="true" required="true"
+											validator="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.NO_YRS_EXP_FM_WHEN_VALIDATE_ITEM}"
+											styleClass="inputNumeric"
+											title="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$Agent_Experience_In_Years_From$tooltip}"
+											value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.PM_AGENT_WITH_DRAWL_SETUP_BEAN.AWDS_NO_YRS_EXP_FM}">
+											<a4j:support event="onblur" id="SUPPORT_AWDS_NO_YRS_EXP_FM"
+												actionListener="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.fireFieldValidation}"
+												immediate="true" reRender="errorPanel"></a4j:support>
+										</h:inputText></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_NO_YRS_EXP_TO_LABEL}"
+											for="AWDS_NO_YRS_EXP_TO" id="AWDS_NO_YRS_EXP_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_NO_YRS_EXP_TO$caption}" />
+										<h:graphicImage id="MANDATORY_IMG_6" style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_NO_YRS_EXP_TO}"
+											disabled="false" id="AWDS_NO_YRS_EXP_TO" maxlength="3"
+											rendered="true" required="true"
+											validator="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.NO_YRS_EXP_TO_WHEN_VALIDATE_ITEM}"
+											styleClass="inputNumeric"
+											title="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$Agent_Experience_To_Years_From$tooltip}"
+											value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.PM_AGENT_WITH_DRAWL_SETUP_BEAN.AWDS_NO_YRS_EXP_TO}">
+											<a4j:support event="onblur" id="SUPPORT_AWDS_NO_YRS_EXP_TO"
+												actionListener="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.fireFieldValidation}"
+												immediate="true" reRender="errorPanel"></a4j:support>
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_PAY_RATE_LABEL}"
+											for="AWDS_PAY_RATE" id="AWDS_PAY_RATE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_PAY_RATE$caption}" />
+										<h:graphicImage id="MANDATORY_IMG_7" style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_PAY_RATE}"
+											disabled="false" id="AWDS_PAY_RATE" maxlength="14"
+											rendered="true" required="true" styleClass="inputNumeric" 
+											validator="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.validateAWDS_PAY_RATE}"
+											title="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$Agent_Enter_the_Pay_Rate$tooltip}"
+											value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.PM_AGENT_WITH_DRAWL_SETUP_BEAN.AWDS_PAY_RATE}">
+											<a4j:support event="onblur" id="SUPPORT_AWDS_PAY_RATE"
+												actionListener="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.fireFieldValidation}"
+												immediate="true" reRender="errorPanel"></a4j:support>
+										</h:inputText></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_PAY_RATE_PER_LABEL}"
+											for="AWDS_PAY_RATE_PER" id="AWDS_PAY_RATE_PER_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_PAY_RATE_PER$caption}" />
+										<h:graphicImage id="MANDATORY_IMG_8" style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_PAY_RATE_PER}"
+											disabled="false" id="AWDS_PAY_RATE_PER" maxlength="10"
+											validator="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.validateAWDS_PAY_RATE_PER}"
+											rendered="true" required="true" styleClass="inputNumeric"
+											title="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$Agent_Enter_the_Pay_Rate_Per$tooltip}"
+											value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.PM_AGENT_WITH_DRAWL_SETUP_BEAN.AWDS_PAY_RATE_PER}">
+											<a4j:support event="onblur" id="SUPPORT_AWDS_PAY_RATE_PER"
+												actionListener="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.fireFieldValidation}"
+												immediate="true" reRender="errorPanel"></a4j:support>
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_PAY_SHARE_TYPE_LABEL}"
+											for="AWDS_PAY_SHARE_TYPE" id="AWDS_PAY_SHARE_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_PAY_SHARE_TYPE$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_PAY_SHARE_TYPE}"
+											disabled="false" id="AWDS_PAY_SHARE_TYPE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_PAY_SHARE_TYPE$tooltip}"
+											value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.PM_AGENT_WITH_DRAWL_SETUP_BEAN.AWDS_PAY_SHARE_TYPE}">
+											<f:selectItems
+												value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.listAWDS_PAY_SHARE_TYPE}" />
+										</h:selectOneMenu></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_LC_FUND_BAL_LABEL}"
+											for="AWDS_LC_FUND_BAL" id="AWDS_LC_FUND_BAL_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$AWDS_LC_FUND_BAL$caption}" />
+										<h:graphicImage id="MANDATORY_IMG_9" style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.COMP_AWDS_LC_FUND_BAL}"
+											disabled="false" id="AWDS_LC_FUND_BAL" maxlength="11"
+											rendered="true" required="true" styleClass="inputNumeric"
+											validator="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.validateAWDS_LC_FUND_BAL}"
+											title="#{message.PM104_A_TISB$PM_AGENT_WITH_DRAWL_SETUP$Agent_Enter_Minimum_Fund_Balance$tooltip}"
+											value="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.PM_AGENT_WITH_DRAWL_SETUP_BEAN.AWDS_LC_FUND_BAL}">
+											<a4j:support event="onblur" id="SUPPORT_AWDS_LC_FUND_BAL"
+												actionListener="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.fireFieldValidation}"
+												immediate="true" reRender="errorPanel"></a4j:support>
+												<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink immediate="true" style="text-decoration:none"
+									rendered="false" styleClass="toolbarCommandLinkStyle"
+									action="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.go_Back}">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle" value="./../../images/back.png" />
+									<h:outputText value="#{menumessage.jsf$header$image$back}"
+										styleClass="toolbaroutputTextStyle" />
+
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle"
+									action="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.Save}">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle" value="./../../images/save.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$save}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/savenext.GIF" />
+									<h:outputText value="#{menumessage.jsf$header$image$savenext}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle"
+									action="#{PM104_A_TISB_PM_AGENT_WITH_DRAWL_SETUP_ACTION.Delete}">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/deleteRecord.gif" />
+									<h:outputText
+										value="#{menumessage.jsf$header$image$deleteRecord}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/firstrec.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$firstrec}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/prevpage.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/nextpage.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$nextpage}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText
+										value="#{menumessage.jsf$header$image$lastRecord}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</h:form>
+			</table>
+			<table width="100%" border="0" cellpadding="0" cellspacing="0">
+				<tr>
+
+				</tr>
+			</table>
+		</f:view>
+	</ui:define>
+</ui:composition>

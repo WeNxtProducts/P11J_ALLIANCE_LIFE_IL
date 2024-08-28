@@ -1,0 +1,435 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view beforePhase="#{PM_AGENT_PF_SETUP_ACTION.onLoad}"  
+		    locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PM100_A_TISB" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PM_AGENT_PF_SETUP">
+				<table class="noborder" width="100%">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar id="serial_1" styleClass="toolBarStyle"
+									width="100%">
+									<rich:toolBarGroup id="serial_2" styleClass="toolBarGroupStyle">
+										<h:commandLink action="#{PM100_A_TISB_SEARCH_ACTION.backToSearch}"
+											id="clink_1" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_3"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="serial_4"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink action="#{PM_AGENT_PF_SETUP_ACTION.save}"
+											id="clink_2" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="serial_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="clink_3" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_7"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="serial_8"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM_AGENT_PF_SETUP_ACTION.deleteRecord}"
+											id="clink_4" style="text-decoration:none" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_9"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="serial_10"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink id="clink_5" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="serial_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink action="#{PM100_A_TISB_utility.preBack}"
+											id="clink_6" immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_13"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="serial_14"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="clink_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_15"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="serial_16"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="clink_8" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="serial_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM_AGENT_PF_SETUP_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM_AGENT_PF_SETUP_ACTION.errorMap['current'] !=null?             PM_AGENT_PF_SETUP_ACTION.errorMap['current']:             PM_AGENT_PF_SETUP_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PM_AGENT_PF_SETUP_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PM_AGENT_PF_SETUP_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PM_AGENT_PF_SETUP_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><h:outputText id="serial_19"
+									value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$title$caption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+
+						<div style="width: 100%; height: 420px; overflow: auto;">
+						<table align="center" class="noborder" width="100%">
+							<tr>
+								<td vAlign="top" width="90%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_MKT_CODE_LABEL}"
+											for="APS_MKT_CODE" id="APS_MKT_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_MKT_CODE$caption}" />
+										<h:graphicImage id="serial_20" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_MKT_CODE}"
+											disabled="false" id="APS_MKT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											validator="#{PM_AGENT_PF_SETUP_ACTION.validateAPS_MKT_CODE}"
+											title="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_MKT_CODE$tooltip}"
+											value="#{PM_AGENT_PF_SETUP_ACTION.PM_AGENT_PF_SETUP_BEAN.APS_MKT_CODE}">
+											<a4j:support
+												actionListener="#{PM_AGENT_PF_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_1" immediate="true"
+												reRender="errorPanel,UI_M_APS_MKT_CODE_DESC,APS_MKT_CODE_LOV" />
+										</h:inputText> <rich:suggestionbox for="APS_MKT_CODE" height="200"
+											id="APS_MKT_CODE_LOV"
+											suggestionAction="#{PM_AGENT_PF_SETUP_ACTION.lovAPS_MKT_CODE}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="serial_21" value="#{lov.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_22"
+													value="#{lov.name}" />
+											</h:column>
+											<a4j:support 
+												event="onselect" id="aj_1" immediate="true"
+												reRender="UI_M_APS_MKT_CODE_DESC,errorPanel">
+												<f:setPropertyActionListener  value="#{lov.name}" target="#{PM_AGENT_PF_SETUP_ACTION.PM_AGENT_PF_SETUP_BEAN.UI_M_APS_MKT_CODE_DESC}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_UI_M_APS_MKT_CODE_DESC}"
+											disabled="true" id="UI_M_APS_MKT_CODE_DESC" maxlength="200"
+											rendered="true" required="false" styleClass="input" 
+											title="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$UI_M_APS_MKT_CODE_DESC$tooltip}"
+											value="#{PM_AGENT_PF_SETUP_ACTION.PM_AGENT_PF_SETUP_BEAN.UI_M_APS_MKT_CODE_DESC}">
+
+										</h:inputText> <h:graphicImage id="serial_23" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_RANK_CODE_LABEL}"
+											for="APS_RANK_CODE" id="APS_RANK_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_RANK_CODE$caption}" />
+										<h:graphicImage id="serial_24" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_RANK_CODE}"
+											disabled="false" id="APS_RANK_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											validator="#{PM_AGENT_PF_SETUP_ACTION.validateAPS_RANK_CODE}"
+											title="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_RANK_CODE$tooltip}"
+											value="#{PM_AGENT_PF_SETUP_ACTION.PM_AGENT_PF_SETUP_BEAN.APS_RANK_CODE}">
+											<a4j:support
+												actionListener="#{PM_AGENT_PF_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="aj_2" immediate="true"
+												reRender="errorPanel,UI_M_APS_RANK_CODE_DESC,APS_RANK_CODE_LOV" />
+										</h:inputText> <rich:suggestionbox for="APS_RANK_CODE" height="200"
+											id="APS_RANK_CODE_LOV"
+											suggestionAction="#{PM_AGENT_PF_SETUP_ACTION.lovAPS_RANK_CODE}"
+											var="lov" width="200">
+											<h:column>
+												<h:outputText id="serial_25"
+													value="#{lov.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_26"
+													value="#{lov.name}" />
+											</h:column>
+
+											<a4j:support
+												event="onselect" id="clink_11" immediate="true"
+												reRender="UI_M_APS_RANK_CODE_DESC,errorPanel">
+													<f:setPropertyActionListener value="#{lov.name}" target="#{PM_AGENT_PF_SETUP_ACTION.PM_AGENT_PF_SETUP_BEAN.UI_M_APS_RANK_CODE_DESC}" />
+											</a4j:support>
+
+										</rich:suggestionbox> <h:inputText
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_UI_M_APS_RANK_CODE_DESC}"
+											disabled="true" id="UI_M_APS_RANK_CODE_DESC" maxlength="200"
+											rendered="true" required="false" styleClass="input" 
+											title="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$UI_M_APS_RANK_CODE_DESC$tooltip}"
+											value="#{PM_AGENT_PF_SETUP_ACTION.PM_AGENT_PF_SETUP_BEAN.UI_M_APS_RANK_CODE_DESC}" />
+										<h:graphicImage id="serial_27" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_EXP_MONTHS_LABEL}"
+											for="APS_EXP_MONTHS" id="APS_EXP_MONTHS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_EXP_MONTHS$caption}" />
+										<h:graphicImage id="serial_28" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_EXP_MONTHS}"
+											disabled="false" id="APS_EXP_MONTHS" maxlength="4"
+											rendered="true" required="true" styleClass="input" style="text-align : right;"
+											title="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_EXP_MONTHS$tooltip}"
+											validator="#{PM_AGENT_PF_SETUP_ACTION.validatorExpInMonths}"
+											value="#{PM_AGENT_PF_SETUP_ACTION.PM_AGENT_PF_SETUP_BEAN.APS_EXP_MONTHS}">
+											<a4j:support
+												actionListener="#{PM_AGENT_PF_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="clink_12" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_COMM_PER_LABEL}"
+											for="APS_COMM_PER" id="APS_COMM_PER_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_COMM_PER$caption}" />
+									 	</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_COMM_PER}"
+											disabled="false" id="APS_COMM_PER" maxlength="16"
+											rendered="true" required="false" styleClass="input" style="text-align : right;"
+											title="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_COMM_PER$tooltip}"
+											value="#{PM_AGENT_PF_SETUP_ACTION.PM_AGENT_PF_SETUP_BEAN.APS_COMM_PER}">
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_COMM_RATE_PER_LABEL}"
+											for="APS_COMM_RATE_PER" id="APS_COMM_RATE_PER_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_COMM_RATE_PER$caption}" />
+										 </td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_COMM_RATE_PER}"
+											disabled="false" id="APS_COMM_RATE_PER" maxlength="11"
+											rendered="true" required="false" styleClass="input" style="text-align : right;"
+											title="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_COMM_RATE_PER$tooltip}"
+											value="#{PM_AGENT_PF_SETUP_ACTION.PM_AGENT_PF_SETUP_BEAN.APS_COMM_RATE_PER}">
+										</h:inputText></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_COMM_TYPE_LABEL}"
+											for="APS_COMM_TYPE" id="APS_COMM_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_COMM_TYPE$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_COMM_TYPE}"
+											disabled="false" id="APS_COMM_TYPE" rendered="true"
+											required="true" styleClass="input"
+											title="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_COMM_TYPE$tooltip}"
+											value="#{PM_AGENT_PF_SETUP_ACTION.PM_AGENT_PF_SETUP_BEAN.APS_COMM_TYPE}">
+											<f:selectItems id="serial_31"
+												value="#{PM_AGENT_PF_SETUP_ACTION.LIST_APS_COMM_TYPE}" />
+											<a4j:support
+												actionListener="#{PM_AGENT_PF_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="clink_14" immediate="true"
+												reRender="err,errorMessages" />
+										</h:selectOneMenu></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_PROMOTE_YN_LABEL}"
+											for="APS_PROMOTE_YN" id="APS_PROMOTE_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_PROMOTE_YN$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_PROMOTE_YN}"
+											disabled="false" id="APS_PROMOTE_YN" rendered="true"
+											required="true" styleClass="input"
+											value="#{PM_AGENT_PF_SETUP_ACTION.PM_AGENT_PF_SETUP_BEAN.APS_PROMOTE_YN}" 
+											 title="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_PROMOTE_YN$tooltip}"  >
+											<f:selectItems id="serial_32"
+												value="#{PM_AGENT_PF_SETUP_ACTION.LIST_APS_PROMOTE_YN}" />
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_DEDUCT_YN_LABEL}"
+											for="APS_DEDUCT_YN" id="APS_DEDUCT_YN_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_DEDUCT_YN$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PM_AGENT_PF_SETUP_ACTION.COMP_APS_DEDUCT_YN}"
+											disabled="false" id="APS_DEDUCT_YN" rendered="true"
+											required="true" styleClass="input"
+											value="#{PM_AGENT_PF_SETUP_ACTION.PM_AGENT_PF_SETUP_BEAN.APS_DEDUCT_YN}"
+											title="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_DEDUCT_YN$tooltip}" >
+											<f:selectItems id="serial_33"
+												value="#{PM_AGENT_PF_SETUP_ACTION.LIST_APS_DEDUCT_YN}" />
+										</h:selectOneMenu></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="5" width="100%"><rich:toolBar
+							id="serial_34" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="serial_35" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink action="#{PM_AGENT_PF_SETUP_ACTION.save}"
+									id="clink_17" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_36" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="serial_37"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink id="clink_18" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_38" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="serial_39"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink action="#{PM_AGENT_PF_SETUP_ACTION.deleteRecord}"
+									id="clink_19" style="text-decoration:none" rendered="false"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_40" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/deleteRecord.gif" />
+									<h:outputText id="serial_41"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="clink_20" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_42" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="serial_43"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink action="#{PM100_A_TISB_utility.preBack}"
+									id="clink_21" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_44" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="serial_45"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="clink_22" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_46" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="serial_47"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="clink_23" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="serial_48" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="serial_49"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

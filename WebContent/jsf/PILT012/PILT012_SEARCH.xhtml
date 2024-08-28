@@ -1,0 +1,102 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILT012" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<h:form id="PILT012_SEARCH">
+		<table width="100%" cellpadding="0" cellspacing="0" border="0">
+			<tr>
+				
+			</tr>
+			<!-- Body row -->
+			<tr>
+				<td>
+				<table width="100%" border="0" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputText value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td><h:outputLabel value="#{message.PILT012$PS_IL_RI_CLAIM_REG_1$RCR_POL_NO$caption}" /> <h:inputText
+							binding="#{PILT012_CLAIMS_RI_CLOSING_SEARCH_ACTION.COMP_RCR_POL_NO}"
+							value="#{PILT012_CLAIMS_RI_CLOSING_SEARCH_ACTION.searchBean.RCR_POL_NO}" /></td>
+						<td><h:outputLabel value="#{message.PILT012$PS_IL_RI_CLAIM_REG_1$RCR_CLM_NO$caption}" /> <h:inputText
+							binding="#{PILT012_CLAIMS_RI_CLOSING_SEARCH_ACTION.COMP_RCR_CLM_NO}"
+							value="#{PILT012_CLAIMS_RI_CLOSING_SEARCH_ACTION.searchBean.RCR_CLM_NO}" /></td>	
+						<td><a4j:commandButton value="#{commonmsg.searchButton$caption}" id="fetch" styleClass="button"
+							action="#{PILT012_CLAIMS_RI_CLOSING_SEARCH_ACTION.fetch}" reRender="fetchList" >
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table --> <rich:dataTable id="fetchList"
+					value="#{PILT012_CLAIMS_RI_CLOSING_SEARCH_ACTION.dataTableBean}"
+					var="colData" cellpadding="5px" rows="15" border="1" width="100%"
+					binding="#{PILT012_CLAIMS_RI_CLOSING_SEARCH_ACTION.dataTable}">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+					<rich:column filterBy="#{colData.RCR_POL_NO}"
+						filterValue="#{PILT012_CLAIMS_RI_CLOSING_SEARCH_ACTION.searchBean.searchText}"
+						sortBy="#{colData.RCR_POL_NO}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILT012$PS_IL_RI_CLAIM_REG_1$RCR_POL_NO$caption}" />
+						</f:facet>
+						<h:commandLink
+							action="#{PILT012_CLAIMS_RI_CLOSING_SEARCH_ACTION.fetchMasterRecord}"
+							id="POL_NO_Link">
+						
+								<h:outputText value="#{colData.RCR_POL_NO}" />
+							
+
+							<f:param name="RCR_POL_NO" value="#{colData.RCR_POL_NO}" />
+							<f:param name="RCR_CLM_NO" value="#{colData.RCR_CLM_NO}" />
+							<f:param name="RCR_CLM_COVER_CODE" value="#{colData.RCR_CLM_COVER_CODE}" />
+							<f:param name="ROWID" value="#{colData.ROWID}" />
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column filterBy="#{colData.RCR_CLM_NO}"
+						sortBy="#{colData.RCR_CLM_NO}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILT012$PS_IL_RI_CLAIM_REG_1$RCR_CLM_NO$caption}" />
+						</f:facet>
+					
+							<h:outputText value="#{colData.RCR_CLM_NO}" />
+						
+					</rich:column>
+
+					<rich:column filterBy="#{colData.RCR_CLM_COVER_CODE}"
+						sortBy="#{colData.RCR_CLM_COVER_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILT012$PS_IL_RI_CLAIM_REG_1$RCR_CLM_COVER_CODE$caption}" />
+						</f:facet>
+					
+							<h:outputText value="#{colData.RCR_CLM_COVER_CODE}" />
+				
+					</rich:column>
+
+				</rich:dataTable>
+				</td>
+			</tr>
+
+			<!-- add footer to the page-->
+			<tr>
+				
+			</tr>
+		</table>
+	</h:form>
+</f:view>
+
+</ui:define>
+</ui:composition>

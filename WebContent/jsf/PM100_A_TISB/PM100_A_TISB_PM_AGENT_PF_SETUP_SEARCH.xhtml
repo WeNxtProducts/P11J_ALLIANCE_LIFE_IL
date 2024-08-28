@@ -1,0 +1,204 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+
+
+			<f:loadBundle basename="messageProperties_PM100_A_TISB" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			<table width="100%" cellpadding="0" cellspacing="0" border="0">
+				<tr>
+
+				</tr>
+
+				<h:form id="PM100_A_TISB_PM_AGENT_PF_SETUP">
+					<rich:simpleTogglePanel id="errorPanel" switchType="client"
+						opened="false">
+						<f:facet name="header">
+							<h:outputText id="err"
+								styleClass="#{PM100_A_TISB_search.messageStyle}"
+								value="#{commonmsg.errorPanel$heading} #{PM100_A_TISB_search.errorMap['current'] !=null? 
+ 										PM100_A_TISB_search.errorMap['current']: 
+										 PM100_A_TISB_search.warningMap['current']}" />
+						</f:facet>
+						<h:outputText id="errorMessages"
+							value="#{PM100_A_TISB_search.errorMessages}"
+							styleClass="ErrorMessages" escape="false" />
+						<h:messages styleClass="ErrorMessages" id="msg"
+							rendered="#{PM100_A_TISB_search.globalMsgRender}" />
+						<h:outputText id="warningMessages"
+							value="#{PM100_A_TISB_search.warningMessages}"
+							styleClass="WarningMessages" escape="false" />
+					</rich:simpleTogglePanel>
+
+
+
+					<!-- Filter to search and list -->
+					<table border="0" width="100%" cellpadding="0" cellspacing="0"
+						id="masthead">
+						<tr>
+							<td><h:outputLabel
+								value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+							<TD><h:outputLabel for="AgMktgCode"
+								value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_MKT_CODE$caption}" />
+							<h:inputText id="AgMktgCode"
+								value="#{PM100_A_TISB_search.searchBean.APS_MKT_CODE}">
+							</h:inputText></TD>
+
+							<TD><h:outputLabel for="AgRankCode"
+								value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_RANK_CODE$caption}" />
+							<h:inputText id="AgRankCode"
+								value="#{PM100_A_TISB_search.searchBean.APS_RANK_CODE}"></h:inputText></TD>
+
+
+
+							<td><h:commandButton styleClass="button"
+								value="#{commonmsg.searchButton$caption}" id="fetch"
+								action="#{PM100_A_TISB_search.fetch}">
+
+
+								<f:param name="Mcode"
+									value="#{PM100_A_TISB_search.searchBean.APS_MKT_CODE}" />
+								<f:param name="Rcode"
+									value="#{PM100_A_TISB_search.searchBean.APS_RANK_CODE}" />
+
+
+							</h:commandButton></td>
+
+
+						</tr>
+
+					</table>
+					<table cellpadding="0" cellspacing="0" border="0">
+						<tr>
+							<td><h:commandButton style="text-decoration:none"
+								action="#{PM100_A_TISB_search.deleteRow}"
+								value="#{menumessage.jsf$header$image$deleteRecord}"
+								rendered="false">
+
+
+							</h:commandButton></td>
+						</tr>
+
+					</table>
+
+					<!-- rich data table starts here -->
+
+					<rich:dataTable id="fetchList"
+						value="#{PM100_A_TISB_search.dataTableBean}"
+						binding="#{PM100_A_TISB_search.dataTable}" width="100%"
+						var="colData" cellpadding="5px" rows="5" border="1">
+						<rich:column rendered="false">
+							<f:facet name="header">
+								<h:outputText styleClass="label" value="" />
+							</f:facet>
+							<h:selectBooleanCheckbox id="checkBox"
+								value="#{colData.selected}">
+							</h:selectBooleanCheckbox>
+						</rich:column>
+
+
+						<rich:column filterBy="#{colData.APS_MKT_CODE}"
+							filterValue="#{PM100_A_TISB_search.searchBean.searchText}"
+							sortBy="#{colData.APS_MKT_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_MKT_CODE$caption}" />
+							</f:facet>
+							<h:commandLink action="#{PM100_A_TISB_search.fetchMasterRecord}"
+								id="APS_MKT_CODE_link">
+
+								<h:outputText value="#{colData.APS_MKT_CODE}" />
+
+								<f:param name="APS_MKT_CODE" value="#{colData.APS_MKT_CODE}" />
+								<f:param name="APS_RANK_CODE" value="#{colData.APS_RANK_CODE}" />
+								<f:param name="APS_EXP_MONTHS" value="#{colData.APS_EXP_MONTHS}" />
+								<f:param name="APS_COMM_PER" value="#{colData.APS_COMM_PER}" />
+								<f:param name="APS_COMM_RATE_PER"
+									value="#{colData.APS_COMM_RATE_PER}" />
+								<f:param name="APS_COMM_TYPE" value="#{colData.APS_COMM_TYPE}" />
+								<f:param name="ROWID" value="#{colData.ROWID}" />
+							</h:commandLink>
+						</rich:column>
+
+
+						<rich:column filterBy="#{colData.APS_RANK_CODE}"
+							sortBy="#{colData.APS_RANK_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_RANK_CODE$caption}" />
+							</f:facet>
+
+							<h:outputText value="#{colData.APS_RANK_CODE}" />
+
+
+
+						</rich:column>
+
+
+						<rich:column filterBy="#{colData.APS_EXP_MONTHS}"
+							sortBy="#{colData.PS_EXP_MONTHS}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_EXP_MONTHS$caption}" />
+							</f:facet>
+
+							<h:outputText value="#{colData.APS_EXP_MONTHS}" />
+
+
+
+						</rich:column>
+						<rich:column filterBy="#{colData.APS_COMM_PER}"
+							sortBy="#{colData.APS_COMM_PER}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.PM100_A_TISB$PM_AGENT_PF_SETUP$APS_COMM_PER$caption}" />
+							</f:facet>
+
+							<h:outputText value="#{colData.APS_COMM_PER}" />
+
+						</rich:column>
+
+
+
+						<rich:column filterBy="#{colData.APS_COMM_TYPE}"
+							sortBy="#{colData.APS_COMM_TYPE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Commission type" />
+							</f:facet>
+
+							<h:outputText value="#{colData.APS_COMM_TYPE}" />
+
+						</rich:column>
+						<f:facet name="footer">
+							<rich:datascroller id="dsID" for="fetchList" align="right"
+								pagesVar="pages" pageIndexVar="index" />
+						</f:facet>
+
+					</rich:dataTable>
+
+					<tr>
+						<td><h:commandButton styleClass="button" id="insertLink"
+							value="#{commonmsg.insertButton$caption}"
+							action="#{PM100_A_TISB_search.insert}"></h:commandButton></td>
+					</tr>
+				</h:form>
+
+				<!-- add footer to the page-->
+				<tr>
+
+				</tr>
+			</table>
+
+		</f:view>
+	</ui:define>
+</ui:composition>

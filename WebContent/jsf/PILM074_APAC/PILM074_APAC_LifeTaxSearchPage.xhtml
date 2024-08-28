@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILM074_APAC" var="message" />
+	<f:loadBundle basename="messageProperties" var="menumessage" />
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+		
+		<!-- Body row -->
+		<tr>
+			<td colspan="3" width="100%" vAlign="top" height="20">
+			<rich:simpleTogglePanel id="errorPanel"
+						switchType="client" opened="false">
+						<f:facet name="header">
+							<h:outputText id="err"
+								styleClass="#{PILM074_APAC_LifeTaxSetUpSearchPageAction.messageStyle}"
+								value="#{menumessage.errorPanel$heading}#{PILM074_APAC_LifeTaxSetUpSearchPageAction.errorMap['current'] !=null? PILM074_APAC_LifeTaxSetUpSearchPageAction.errorMap['current']: PILM074_APAC_LifeTaxSetUpSearchPageAction.warningMap['current']}" />
+						</f:facet>
+						<h:outputText id="errorMessages"
+							value="#{PILM074_APAC_LifeTaxSetUpSearchPageAction.errorMessages}"
+							styleClass="ErrorMessages" escape="false" />
+						<h:messages styleClass="ErrorMessages" id="msg"
+							rendered="#{PILM074_APAC_LifeTaxSetUpSearchPageAction.globalMsgRender}" />
+						<h:outputText id="warningMessages"
+							value="#{PILM074_APAC_LifeTaxSetUpSearchPageAction.warningMessages}"
+							styleClass="WarningMessages" escape="false" />
+					</rich:simpleTogglePanel>
+			</td>
+		</tr>
+		<tr>
+			<td><h:form id="LIFE_TAX_SETUP_SEARCH">
+
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputText
+							value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+						<td><h:outputText
+							value="#{message.PILM074_APAC$PM_LIFE_TAX_TYPE}" /> <h:inputText
+							value="#{PILM074_APAC_LifeTaxSetUpSearchPageAction.taxType}" /></td>
+						<td><h:outputText
+							value="#{message.PILM074_APAC$PM_LIFE_TAX_TYPE_DESC}" /> <h:inputText
+							value="#{PILM074_APAC_LifeTaxSetUpSearchPageAction.taxTypeDesc}" /></td>
+
+						<td><a4j:commandButton styleClass="button"
+							value="#{commonmsg.searchButton$caption}" id="a4link">
+							<a4j:support
+								action="#{PILM074_APAC_LifeTaxSetUpSearchPageAction.searchedData}"
+								event="onclick" reRender="dataTableId,errorPanel">
+							</a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{PILM074_APAC_LifeTaxSetUpSearchPageAction.searchList}"
+					var="lifeTax" cellpadding="5px" rows="10" border="1" width="100%">
+					<!-- Attach scroller as footer of the tab.le-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+
+					<rich:column
+						filterValue="#{PILM074_APAC_LifeTaxSetUpSearchPageAction.taxTypeSearch}"
+						filterBy="#{lifeTax.TH_TAX_TYPE}" sortBy="#{lifeTax.TH_TAX_TYPE}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILM074_APAC$PM_LIFE_TAX_TYPE}" />
+						</f:facet>
+						<h:commandLink
+							action="#{PILM074_APAC_LifeTaxSetUpSearchPageAction.redirectToLifeTax}">
+								<h:outputText value="#{lifeTax.TH_TAX_TYPE}" />
+							<f:param name="rowid" value="#{lifeTax.ROWID}" />
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column
+						filterValue="#{PILM074_APAC_LifeTaxSetUpSearchPageAction.taxTypeDescSearch}"
+						filterBy="#{lifeTax.TH_TAX_DESC}" sortBy="#{lifeTax.TH_TAX_DESC}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM074_APAC$PM_LIFE_TAX_TYPE_DESC}" />
+						</f:facet>
+						<h:outputText value="#{lifeTax.TH_TAX_DESC} " />
+					</rich:column>
+
+				</rich:dataTable>
+
+				<tr>
+					<td><a4j:commandButton 
+						value="#{menumessage.insertButton$caption}" styleClass="button"
+						action="#{PILM074_APAC_LifeTaxSetUpSearchPageAction.insertNavigation}">
+					</a4j:commandButton></td>
+				</tr>
+
+			</h:form></td>
+		</tr>
+
+		<!-- add footer to the page-->
+		<tr>
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

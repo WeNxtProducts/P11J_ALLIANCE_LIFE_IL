@@ -1,0 +1,1896 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Diabetes_ Mellitus_Questionnaire" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="60" rightMargin="20" topMargin="20" bottomMargin="20" uuid="bccc95e6-302f-415a-9e0c-5cb441c5f376">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="POL_SYS_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[
+ SELECT CUST_FIRST_NAME,
+       CUST_SURNAME,
+       CUST_DOB,
+       CUST_NAME,
+       POL_DS_TYPE,
+       POL_NO,
+       POAD_AGE,
+       (SELECT PC_DESC
+          FROM PM_CODES
+         WHERE PC_TYPE = 'IL_OCCU'
+           AND PC_CODE = POAD_OCC_CODE) OCCUPATION,
+       CUST_ADDR1,
+       CUST_ADDR2,
+       CUST_ADDR3,
+       CUST_REF_ID1,
+       (SELECT PC_DESC
+          FROM PM_CODES
+         WHERE PC_TYPE = 'NATLITY'
+           AND PC_CODE = POAD_NATIONALITY) NATIONALITY,
+       (SELECT PS_CODE_DESC
+          FROM PP_SYSTEM
+         WHERE PS_TYPE = 'CATG'
+           AND PS_CODE = POAD_CATG_CODE) GENDER,
+           CUST_PHONE, CUST_POST_BOX_NO, CUST_PIN_NUMBER, POL_LC_SUM_ASSURED
+  FROM PT_IL_POLICY, PM_CUSTOMER, PT_IL_POL_ASSURED_DTLS
+ WHERE POL_CUST_CODE = CUST_CODE
+   AND POAD_POL_SYS_ID = POL_SYS_ID
+   AND POL_SYS_ID =$P{POL_SYS_ID}
+]]>
+	</queryString>
+	<field name="CUST_FIRST_NAME" class="java.lang.String"/>
+	<field name="CUST_SURNAME" class="java.lang.String"/>
+	<field name="CUST_DOB" class="java.sql.Timestamp"/>
+	<field name="CUST_NAME" class="java.lang.String"/>
+	<field name="POL_DS_TYPE" class="java.lang.String"/>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POAD_AGE" class="java.math.BigDecimal"/>
+	<field name="OCCUPATION" class="java.lang.String"/>
+	<field name="CUST_ADDR1" class="java.lang.String"/>
+	<field name="CUST_ADDR2" class="java.lang.String"/>
+	<field name="CUST_ADDR3" class="java.lang.String"/>
+	<field name="CUST_REF_ID1" class="java.lang.String"/>
+	<field name="NATIONALITY" class="java.lang.String"/>
+	<field name="GENDER" class="java.lang.String"/>
+	<field name="CUST_PHONE" class="java.lang.String"/>
+	<field name="CUST_POST_BOX_NO" class="java.lang.String"/>
+	<field name="CUST_PIN_NUMBER" class="java.lang.String"/>
+	<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<staticText>
+				<reportElement x="3" y="19" width="57" height="16" uuid="b7c3e78f-8097-4937-8a45-3577b2c929a4"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Last Name: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="241" y="20" width="47" height="14" uuid="56091433-37ae-423e-9f46-fc6f882ef21e"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[First Name: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="45" width="57" height="15" uuid="340d14c7-8ed8-4239-b8a2-6335a86bfea9"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Date of Birth:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="45" width="123" height="15" uuid="646aa4ea-31f5-4f3b-8e2a-6d874a9ee2be">
+					<printWhenExpression><![CDATA[$F{POL_DS_TYPE}.equals("2")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Policy/Application Number:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="72" width="18" height="20" uuid="a44b8e5f-0221-4671-8253-377823d0adb1"/>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="72" width="474" height="36" uuid="7811e6fa-27ca-4989-8a6c-95f2c8295b7e"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Please state the diagnosis relevant to you, e.g. Type I or Type II Diabetes Mellitus, Gestational Diabetes, Impaired Glucose Tolerance or Impaired Fasting Glucose etc.  Attach a copy of any medical reports if available]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="116" width="473" height="26" uuid="d6eb2fa4-9bbd-4cf6-9831-49dacab206c2"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="152" width="17" height="20" uuid="46a42850-5c66-43b7-a705-d52f33cb278b"/>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="152" width="367" height="20" uuid="61e57a39-9d37-436d-88dc-766ffea0ba5b"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[When was the condition diagnosed or when did you first experience symptoms?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="152" width="84" height="20" uuid="8dcb0409-3a16-422c-8b90-14f329f7e83f"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[          /         /]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="183" width="12" height="20" uuid="4a18991a-93dd-435a-90ad-440e0d853c12"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="182" width="265" height="21" uuid="0f8e0e82-bf11-4579-9853-c38e63280bbd"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Do you test your own blood sugar at home?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="42" y="214" width="124" height="20" backcolor="#CCCCCC" uuid="e0145e97-ac15-4c69-8e27-5e87d8d26712"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Frequency of Testing]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="195" width="265" height="20" uuid="385a3d55-7195-43ed-a56a-5c71d048ef4d"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If yes, please provide details for the last 3 months:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="234" width="124" height="20" uuid="ac67dea3-378c-4c37-b727-f5670c226a2f"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="166" y="214" width="127" height="20" backcolor="#CCCCCC" uuid="4783d9d6-5f09-40d4-874c-155bc43b32fb"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Lowest Result]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="293" y="214" width="116" height="20" backcolor="#CCCCCC" uuid="abf22c13-200d-4903-96df-ff695af3240f"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Highest Result]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="409" y="214" width="106" height="20" forecolor="#000000" backcolor="#CCCCCC" uuid="67b29154-d47d-4377-ad46-9a6effa6b815"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[    Average Result]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="234" width="127" height="20" uuid="7e941340-5548-485a-9a64-7373001f9341"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="234" width="116" height="20" uuid="cad33b5b-38bd-42f3-b9b0-de26c9a8ae39"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="234" width="106" height="20" uuid="67364811-72f9-4df9-bcbd-9b0b7ce86e61"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="260" width="11" height="20" uuid="111d212d-c6ce-4330-b016-089a806a39cf"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[4]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="263" width="285" height="23" uuid="118f2cb0-ed87-4f50-af7e-bd88156c5610"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Have you had a glycosylated hemoglobin test (HbA1c)?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="275" width="454" height="20" uuid="09fd581a-e4e8-47ce-8d85-e2b83827cb02"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If yes, please provide details including the approximate date and result of your most recent test:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="290" width="473" height="28" uuid="65c9155a-0f57-4cbe-bd6d-dcc415b34149"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="325" width="12" height="20" uuid="d7693886-d043-44bd-a2d3-942f2fec9f7b"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[5.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="325" width="474" height="32" uuid="8e7c2093-cc6b-4442-9c97-87a8fcb72fa2"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Please provide details of any medication that you take in relation to your diabetes (please also include related medications such as those used to lower blood pressure and cholesterol):]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="42" y="353" width="204" height="20" backcolor="#CCCCCC" uuid="9449c5ee-2f6f-44d4-91d0-b1e0347c6417"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Name of medication]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="246" y="353" width="141" height="20" backcolor="#CCCCCC" uuid="317dbf92-46f0-4b08-9b76-2c4b716ac5f6"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[    Dose]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="387" y="353" width="125" height="20" backcolor="#CCCCCC" uuid="8697a00b-bb14-42d8-9e9a-0cf9df637ae3"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[    Frequency]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="373" width="204" height="20" uuid="43883b52-4f5d-41ba-a14e-a721b9fc18fd"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="393" width="204" height="20" uuid="15f379ef-114b-4331-be67-b44d18f03abe"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="413" width="204" height="20" uuid="5c4d7836-188e-48d2-8b72-4ef2862952ee"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="433" width="204" height="20" uuid="8345b756-2f0f-46be-af4b-eb040ca04d1a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="453" width="204" height="20" uuid="c0748982-9ad5-442c-99bd-d5f748cb9fa5"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="246" y="393" width="141" height="20" uuid="c0dd5f6c-dfce-4de1-b466-347553529d0c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="246" y="413" width="141" height="20" uuid="c87f24b5-15a4-44e9-afa5-965bdff6eace"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="246" y="433" width="141" height="20" uuid="0364ddca-9fd1-41d7-9760-2057a8e4f182"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="246" y="453" width="141" height="20" uuid="fbafd93d-30b5-40db-99a3-12f8d0780131"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="373" width="125" height="20" uuid="c1846326-8c55-4b42-a13c-586a60e4f80d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="393" width="125" height="20" uuid="71fd78fc-1d5f-4a7c-ab95-82dffdd1804a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="413" width="125" height="20" uuid="a0afbdb9-e9a0-4f76-b69a-3d7d31325d61"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="433" width="125" height="20" uuid="7c87109a-d809-4d7b-ba17-412dec6b0b19"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="387" y="453" width="125" height="20" uuid="1162d2e8-f459-4897-a66a-bcb27f1a76fb"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="3" y="0" width="513" height="20" forecolor="#FFFFFF" backcolor="#000000" uuid="62e496c3-1a97-4468-914b-1e38625c346c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[                                                              Diabetes Mellitus Questionnaire]]></text>
+			</staticText>
+			<line>
+				<reportElement x="366" y="58" width="137" height="1" uuid="ec8860b1-e56b-474f-b60c-d48cb2920331"/>
+			</line>
+			<line>
+				<reportElement x="288" y="34" width="203" height="1" uuid="51bada98-9fa4-4258-b6dc-5289db265843"/>
+			</line>
+			<line>
+				<reportElement x="60" y="58" width="177" height="1" uuid="46fa44b5-0e50-4767-aeae-0a72c6db336f"/>
+			</line>
+			<line>
+				<reportElement x="52" y="33" width="186" height="1" uuid="d9c421ca-5c8e-47a4-8068-efea64acd854"/>
+			</line>
+			<staticText>
+				<reportElement x="12" y="482" width="14" height="20" uuid="36f869c5-e643-425e-9968-79ad426abf18"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[6.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="482" width="345" height="25" uuid="ab2e3a3b-e8ee-4c99-ac68-440f5a242c34"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Have you ever been admitted to hospital or required emergency care?                           If yes, please provide details:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="42" y="507" width="124" height="32" backcolor="#CCCCCC" uuid="504d46cd-1553-4c59-b854-116818e4ebad"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Reason]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="539" width="124" height="20" uuid="a85c7c38-35a0-4d48-b020-0cb6d96c8e5e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="559" width="124" height="20" uuid="352e0f57-043e-4a29-9f9b-3d6309f2cf8d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="579" width="124" height="20" uuid="e54699d0-1ebd-4dd6-a399-7831bd2add7a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="166" y="507" width="127" height="32" backcolor="#CCCCCC" uuid="19a86284-28d0-4f24-b549-85fb0d514844"/>
+				<box leftPadding="4" bottomPadding="4">
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Name of doctor, hospital           or clinic]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="293" y="507" width="116" height="32" backcolor="#CCCCCC" uuid="93635c5c-77c1-4cb7-a60c-733b6b157a16"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="409" y="507" width="106" height="32" backcolor="#CCCCCC" uuid="233dc842-9f2c-4252-bdd1-b39007b07b8c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Dates]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="539" width="127" height="20" uuid="4c883afe-f6ab-4166-998a-d804b1bb9316"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="559" width="127" height="20" uuid="35533230-cca7-4d4b-9565-790c32e46312"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="166" y="579" width="127" height="20" uuid="8fc9ea09-b4dc-4019-8d67-103b4216c805"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="539" width="116" height="20" uuid="460e8236-4033-4146-aac5-01a65b7f6870"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="559" width="116" height="20" uuid="30b38da4-456e-436b-bd9d-6aa8ca246165"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="293" y="579" width="116" height="20" uuid="1f7e67d4-dafa-4a36-8acb-58141c2ced8a"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="539" width="106" height="20" uuid="86b3af46-16f7-494b-a5f4-2cef12761be0"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="579" width="106" height="20" uuid="02d15ed2-4b71-49cd-8d16-2b3722e6626b"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="605" width="11" height="16" uuid="4c93ab9a-e302-4b85-9da1-be2157ced200"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[7.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="605" width="468" height="16" uuid="deb24b32-1790-406d-9d0a-b7920d4b33c6"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Have you ever had:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="621" width="367" height="16" uuid="cea26826-c687-4f51-bdad-a8755b5e6538"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[i)    Eye problems?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="638" width="367" height="15" uuid="b1b5136f-82de-412a-86d1-1a0d7a8dbdcb"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[ii)  Heart problems?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="654" width="367" height="14" uuid="befdda88-894c-4370-8615-9c427769c748"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[iii) High blood pressure?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="670" width="367" height="15" uuid="7c838230-8853-43f3-a2fa-c0ab3c935318"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[iv) Kidney problems (including protein in your urine)?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="684" width="367" height="20" uuid="e36307f4-b7da-42e1-ad74-ede3168528a1"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[v)   Sensory problems (such as burning in your feet)?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="704" width="367" height="17" uuid="6e2f0b35-b5ca-45f7-a277-76bed865447f"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[vi) Any other complication?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="720" width="367" height="20" uuid="47707c5f-bd7f-4925-bed7-4972711454b7"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If you answered yes to any of the above questions, please provide details:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="743" width="470" height="29" uuid="84f5b35b-e509-4796-81ce-8e81fd77ac12"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="192" width="13" height="10" uuid="2d973cb4-4a35-4101-8e25-b0d64f384179"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="192" width="13" height="11" uuid="732f7844-b3e3-4abc-b69d-a81005117838"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="260" width="13" height="10" uuid="47a6154c-7362-46b7-8d4c-1d3f2ec17f16"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="452" y="260" width="13" height="11" uuid="22bb44e8-112a-4c87-99d4-7a4132d4781d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="487" width="13" height="10" uuid="08b8516f-f47f-453f-bbb9-7f8d500fe207"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="486" width="13" height="10" uuid="346801f6-9e71-4d05-b710-34427f627e01"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="620" width="13" height="14" uuid="00ed3cff-cafd-4c0b-9d99-1335eb5933f7"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="622" width="30" height="13" uuid="081e7c59-3634-496b-ba2d-3e58fe5d3d15"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="559" width="106" height="20" uuid="56f4d3f8-4b5b-41d6-a134-987e1bc46a1e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="412" y="782" width="100" height="20" uuid="ce15e0f6-7e7a-4396-9e15-745f1d5efd4f"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="464" y="621" width="13" height="14" uuid="50e1d3ea-0060-4dc5-8a51-44831cfe0d88"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="622" width="30" height="13" uuid="cc0f2a26-e247-4909-8fea-e63d442723cc"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="638" width="13" height="14" uuid="93da3f2d-41f2-439f-a8bf-7abc94b27307"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="639" width="30" height="13" uuid="e79d7b01-32eb-4103-9345-96b396fcf42a"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="465" y="639" width="13" height="14" uuid="c62fdc06-ad48-4366-9418-a42885235dc9"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="482" y="638" width="30" height="15" uuid="1ab2ef19-b5e5-42a2-b53b-746bd9366aa8"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="654" width="13" height="14" uuid="ca8ce98f-d9a7-4fd4-8fcf-433a971bfaaa"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="655" width="30" height="13" uuid="34cdf0b5-67c6-4d56-884b-f87db6044af1"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="466" y="656" width="13" height="14" uuid="b18733e8-db3a-48e0-8a39-98b1f82e4b99"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="483" y="656" width="30" height="14" uuid="2025df11-3cca-433a-9c56-ab543b460306"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="413" y="671" width="13" height="14" uuid="36d43952-188d-4eda-95e4-89614f3aa9e5"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="726" width="13" height="14" uuid="a7f5ab23-78ac-4c5e-8fa7-5c1e1d7c1fc5"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="689" width="13" height="14" uuid="a80d7d28-c40b-47de-8345-ea29ae17ab57"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="414" y="707" width="13" height="14" uuid="3b30a892-7a21-46dd-bf5b-574a3f63691c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="673" width="30" height="13" uuid="7cfc1827-2544-4a9b-bb4a-2a4cc01dfdb6"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="433" y="690" width="30" height="13" uuid="05f26e02-abdb-46c5-9cbb-77806e72b564"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="434" y="708" width="30" height="13" uuid="3966dc5f-b5af-4efc-af65-a80c132c3d52"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="725" width="30" height="13" uuid="2b799c1a-3749-4c87-82dc-f18b2ee7d386"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="466" y="674" width="13" height="14" uuid="33bf204c-5cea-4ec8-baff-450ec3704f12"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="466" y="692" width="13" height="14" uuid="67a8fbab-3da4-40e3-88d2-fe550e891fff"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="466" y="709" width="13" height="14" uuid="79c3a6eb-2112-4df6-b37b-57890386adf6"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="467" y="727" width="13" height="14" uuid="207a387e-d104-48ef-85b3-f0e4ecbf530f"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="483" y="673" width="30" height="14" uuid="a948e8ff-e6c3-40e5-b6f7-e96bf47f310a"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="483" y="691" width="30" height="14" uuid="65f6cd34-8615-4143-8b31-600f6756d466"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="485" y="709" width="30" height="14" uuid="9a482fdc-7396-4c0d-808d-76297d09a9f6"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="486" y="727" width="30" height="14" uuid="8f6cd17b-33a7-4a14-ab6d-dfc3f1d20db1"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="429" y="485" width="30" height="13" uuid="27f19342-f946-46e9-ae1e-a81dea541dcb"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="484" y="485" width="30" height="13" uuid="904bf39a-5676-4d2e-99c6-eb092b8aca25"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="416" y="260" width="30" height="13" uuid="9c50c61b-bcdf-402d-a048-417d3b7fa4f2"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="472" y="259" width="30" height="13" uuid="cad4d789-9801-4800-9370-77c7e1f0dfa7"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="416" y="190" width="30" height="13" uuid="04d67adc-3d40-42fc-b9e7-b3cbbbf0d7b4"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="192" width="30" height="13" uuid="2902e088-c566-4377-8aff-50eb2f80f045"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="50" y="21" width="187" height="14" uuid="84fe3a98-a7b3-414d-88ad-f051586a727f"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_SURNAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="21" width="100" height="14" uuid="3d75aabf-9fd7-4e1c-b2fc-573d785586f5"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_FIRST_NAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="58" y="46" width="169" height="13" uuid="1a804a21-e8ef-4341-a133-a31914773522"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_DOB}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="365" y="46" width="158" height="14" uuid="dd8a674e-d3db-45c8-8328-5e5557c160f6"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="241" y="45" width="124" height="20" uuid="5aa30d3c-9910-466e-95cf-f80432c1392a">
+					<printWhenExpression><![CDATA[$F{POL_DS_TYPE}.equals("1")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Proposal/Application Number:]]></text>
+			</staticText>
+		</band>
+		<band height="794">
+			<staticText>
+				<reportElement x="39" y="42" width="473" height="29" uuid="3aa20cd7-58db-4c7f-8eb7-bd8dd3903d60"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="18" y="81" width="11" height="20" uuid="c13e2dbf-67bd-43d4-b54f-63d678c0e299"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[8.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="37" y="81" width="489" height="31" uuid="d15d039a-fc92-4a3d-80fe-5a66eee309b1"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Please provide the name and address of the doctors, specialists or clinics that you see in relation to your diabetes:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="228" y="112" width="181" height="20" backcolor="#CCCCCC" uuid="9943cdaf-a96e-4748-be27-87d497e954b7"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="42" y="112" width="186" height="20" backcolor="#CCCCCC" uuid="473ad9aa-9162-4571-bd42-b8055dcca2b9"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Name of doctor, hospital or clinic]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="399" y="112" width="116" height="20" backcolor="#CCCCCC" uuid="744eccd8-b2c0-480d-b615-2d7f3c2fef09"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[   Date of last consult]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="132" width="186" height="20" uuid="466aa583-6a84-4ee0-a337-7ccfd30a4336"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="132" width="171" height="20" uuid="984d826f-d61c-4626-a37d-255a970724a4"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="152" width="171" height="20" uuid="ca0a6eca-2ad9-41a5-8c42-76da5fb12d8f"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="228" y="172" width="171" height="20" uuid="19853976-5533-4bb2-94ac-d06deeb4802e"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="152" width="186" height="20" uuid="8b57388a-740e-40d8-9391-f80dd939449d"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="172" width="186" height="20" uuid="43ee8965-a024-44cf-9d76-e29e98b0da4c"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="132" width="116" height="20" uuid="3736f758-46e1-4359-a26a-595013bca534"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="152" width="116" height="20" uuid="9ca0ee92-bcfd-4a81-bbac-b30a773b9308"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="399" y="172" width="116" height="20" uuid="8ce9d0cc-8941-4c07-a8aa-4cc99c256aa4"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="207" width="367" height="20" uuid="30a85766-3a37-452f-b466-6e87cf6c8a5a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Other than for the purpose of regular checks, has any further treatment or ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="239" width="217" height="20" uuid="03d21f27-762b-44fe-8c12-07ffe86dcca6"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If yes, please provide details:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="14" y="209" width="11" height="20" uuid="3cb62a6b-512a-4a7e-8835-2627e12d7b45"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[9.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="256" width="473" height="29" uuid="f67fa208-094f-476b-80a5-435755d0e4c4"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="295" width="18" height="20" uuid="23eb990e-5667-45c8-b196-92787317bdf8"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[10.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="295" width="367" height="20" uuid="b95e0a24-9072-44d9-8cd9-6a430a274e3c"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Have you ever taken time off work because of your diabetes?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="305" width="367" height="20" uuid="3526357d-cca8-40c3-9dd2-1a3b8012a1b6"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If yes, please provide details including dates and durations:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="325" width="473" height="29" uuid="984c9816-036c-4e94-8147-da10da22febd"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="369" width="18" height="20" uuid="daa697ad-f41f-4638-bbc3-ba065c578ab3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[11.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="369" width="367" height="20" uuid="ef350422-a82f-42bf-b115-a71c7b609235"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Have your working duties ever been affected or restricted in any way?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="379" width="367" height="20" uuid="52d4f609-4125-4de8-8b29-96ee5cd72784"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If yes, please provide details including dates and durations:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="399" width="474" height="29" uuid="74bdadad-74b9-46d4-aba3-4c8c4553abaf"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="432" width="367" height="20" uuid="54748507-ddea-4a97-91c1-afdb44b1aa4a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Please provide any additional information that you feel is important:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="452" width="473" height="29" uuid="93cbfe34-60b9-46af-85f6-d747f1e87735"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="491" width="474" height="29" uuid="f280138e-e294-442f-89d1-972f2f1170df"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75" lineStyle="Dotted"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="432" width="18" height="20" uuid="386d7aff-28de-4943-8d33-72da2e6db422"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[12.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="11" y="527" width="507" height="20" forecolor="#FFFFFF" backcolor="#000000" uuid="ded87710-4c14-4f84-a312-8619bf234968"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[  Declaration]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="558" width="501" height="33" uuid="c523aa1e-d7da-4477-868e-ae838db98954"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[I confirm that the answers I have given are, to the best of my knowledge, true, and that I have not withheld any material information that may influence the assessment or acceptance of this application.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="591" width="491" height="30" uuid="2fb22aef-0e87-4e02-9e8f-2e83ce4f24cb"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[I agree that this form will constitute part of my application for insurance(s) and that failure to disclose any material fact known to me may invalidate my insurance(s).]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="633" width="207" height="29" uuid="6584282a-d095-47ef-980f-e4fe7d5c8fea"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="633" width="77" height="29" uuid="823832dd-c3ae-4af3-b705-3118a1790dc9"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="633" width="198" height="29" uuid="52b2eba3-6f24-4549-87c8-116acaa04eec"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="662" width="100" height="20" uuid="cdca6271-12b3-44f7-a4fd-dfee91ec9645"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="221" y="662" width="100" height="20" uuid="cc1674d0-eb23-42c3-bd2c-781f92d13def"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Signature]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="439" y="662" width="77" height="20" uuid="c40cee07-526b-4908-98ec-05ff0cb692f0"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="221" width="367" height="20" uuid="8ff3a75f-e3f1-4aea-995a-fd05b0c11131"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[follow-up been discussed, recommended or otherwise contemplated?]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="427" y="211" width="13" height="10" uuid="3c994d93-57b9-413e-862b-ae3aa2c7e4c3"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="211" width="13" height="10" uuid="57bd4ac1-3d1b-4df6-95b6-55a9c9f96427"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="441" y="210" width="30" height="20" uuid="b8b16278-7f85-4768-98df-71df367dab8f"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="492" y="210" width="30" height="20" uuid="e7ed1d17-011d-41f2-a5c6-1c6974832522"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="295" width="14" height="10" uuid="e9de2957-2d28-4a29-8540-4a49e7081744"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="450" y="295" width="30" height="20" uuid="e9f7682d-1995-44e8-8a11-b47f77028b23"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[ Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="480" y="295" width="13" height="10" uuid="9ce1f8d5-2057-480e-881c-060aa439d9bf"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="496" y="295" width="30" height="20" uuid="ccea5e09-12e8-4e3c-9f62-1c94d5357a15"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="428" y="368" width="13" height="10" uuid="41e4a4c4-96aa-4531-bfcc-71369c125585"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="446" y="367" width="30" height="20" uuid="ef1c2080-fd2e-45db-af87-7c25bc77e969"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="479" y="367" width="13" height="10" uuid="5161256f-a6a0-4725-acce-9dde23029f35"/>
+				<box>
+					<topPen lineWidth="0.75"/>
+					<leftPen lineWidth="0.75"/>
+					<bottomPen lineWidth="0.75"/>
+					<rightPen lineWidth="0.75"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Static text]]></text>
+			</staticText>
+			<textField evaluationTime="Report">
+				<reportElement x="412" y="755" width="100" height="20" uuid="3005be40-dedf-448b-828a-a638e5a115ab"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="496" y="367" width="30" height="20" uuid="c7b86a62-84c7-48d9-9910-7347a7a708cf"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="446" y="642" width="80" height="20" uuid="86054566-49a2-4532-af39-d544b4800e68"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

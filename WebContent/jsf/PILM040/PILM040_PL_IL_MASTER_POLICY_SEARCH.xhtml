@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle var="message" basename="messageProperties_PILM040" />
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<!-- add header row -->
+		<tr>
+
+		</tr>
+		<tr>
+			<td><h:form id="PILM040_PL_IL_MASTER_POLICY_SEARCH">
+				<rich:simpleTogglePanel id="errorPanel"
+						switchType="client" opened="false">
+						<f:facet name="header">
+							<h:outputText id="err"
+								value="#{commonmsg.errorPanel$heading} #{PILM040_PL_IL_MASTER_POLICY_SEARCH.errorMap['current'] !=null? PILM040_PL_IL_MASTER_POLICY_SEARCH.errorMap['current']: PILM040_PL_IL_MASTER_POLICY_SEARCH.warningMap['current']}" />
+						</f:facet>
+						<h:outputText id="errorMessages"
+							value="#{PILM040_PL_IL_MASTER_POLICY_SEARCH.errorMessages}"
+							style="color: red; font-style: italic;font-weight:bold;"
+							escape="false" />
+						<h:messages styleClass="ErrorMessages" id="msg"
+							rendered="#{PILM040_PL_IL_MASTER_POLICY_SEARCH.globalMsgRender}" />
+						<h:outputText id="warningMessages"
+							value="#{PILM040_PL_IL_MASTER_POLICY_SEARCH.warningMessages}"
+							style="color: green; font-style: italic;font-weight:bold;"
+							escape="false" />
+
+					</rich:simpleTogglePanel>
+				<table border="0" width="100%" cellpadding="0" cellspacing="0"
+					id="masthead">
+					<tr>
+						<td><h:outputText
+							value="#{commonmsg.intialSearchCriteria$Caption}" />
+						</td>
+						<td><h:outputLabel
+							value="#{message.PILM040$PM_IL_MASTRE_POLICY_SEARCH$searchpagecustomercodetitle}" />
+						<h:inputText
+							value="#{PILM040_PL_IL_MASTER_POLICY_SEARCH.customerCode}" /></td>
+						<td><h:outputLabel
+							value="#{message.PILM040$PM_IL_MASTRE_POLICY_SEARCH$searchpageproductcodetitle} " />
+						<h:inputText
+							value="#{PILM040_PL_IL_MASTER_POLICY_SEARCH.productCode}" /></td>
+						<td><a4j:commandButton rendered="true"
+							value="#{commonmsg.searchButton$caption}" immediate="true"
+							id="a4link">
+							<a4j:support
+								action="#{PILM040_PL_IL_MASTER_POLICY_SEARCH.fetchButtonClick}"
+								event="onclick" reRender="dataTableId"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{PILM040_PL_IL_MASTER_POLICY_SEARCH.recordList}"
+					var="PM_IL_MASTER_POLICY_BEAN" cellpadding="5px" rows="10"
+					border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+					<!-- next column -->
+					<rich:column>
+
+						<h:selectBooleanCheckbox
+							value="#{PM_IL_MASTER_POLICY_BEAN.checkBox}">
+
+						</h:selectBooleanCheckbox>
+					</rich:column>
+					<rich:column filterBy="#{PM_IL_MASTER_POLICY_BEAN.MP_CUST_CODE}"
+						sortBy="#{PM_IL_MASTER_POLICY_BEAN.MP_CUST_CODE}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM040$PM_IL_MASTRE_POLICY_SEARCH$searchpagecustomercodetitle}" />
+						</f:facet>
+						<h:commandLink
+							action="#{PILM040_PL_IL_MASTER_POLICY_SEARCH.navigationToMainPage}">
+								<h:outputText value="#{PM_IL_MASTER_POLICY_BEAN.MP_CUST_CODE}" />
+							<f:param name="CustomerCode"
+								value="#{PM_IL_MASTER_POLICY_BEAN.MP_CUST_CODE}" />
+						</h:commandLink>
+					</rich:column>
+					<rich:column filterBy="#{PM_IL_MASTER_POLICY_BEAN.MP_PROD_CODE}"
+						sortBy="#{master.productCode}" filterEvent="onkeyup">
+
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM040$PM_IL_MASTRE_POLICY_SEARCH$searchpageproductcodetitle}" />
+						</f:facet>
+						<h:outputText value="#{PM_IL_MASTER_POLICY_BEAN.MP_PROD_CODE}" />
+					</rich:column>
+
+				</rich:dataTable>
+
+				<tr>
+					<td><h:commandButton
+						value="#{message.PILM040$PM_IL_MASTRE_POLICY_SEARCH$searchpagecommandbuttoninsert}"
+						action="#{PILM040_PL_IL_MASTER_POLICY_SEARCH.clearSession}"
+						styleClass="button" /></td>
+
+				</tr>
+			</h:form></td>
+		</tr>
+		<tr>
+		</tr>
+	</table>
+	</f:view>
+	</ui:define>
+</ui:composition>

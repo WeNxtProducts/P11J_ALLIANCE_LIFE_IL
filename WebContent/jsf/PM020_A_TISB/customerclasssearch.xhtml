@@ -1,0 +1,137 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PM020_A_TISB" var="message" />
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+		<!-- add header row -->
+		<tr>
+			
+		</tr>
+
+		<!-- Body row -->
+		<tr>
+			<td><h:form id="customermaster">
+
+				<tr>
+					<td colspan="3" width="100%" vAlign="top" height="20">
+					<table width="100%" id="errormsgtable" cellspacing="0">
+						<tr>
+							<td><rich:simpleTogglePanel id="errorPanel"
+								switchType="client" opened="false">
+								<f:facet name="header">
+									<h:outputText id="err"
+										value="#{commonmsg.errorPanel$heading} #{SearchCustomerClass.errorMap['current'] !=null? SearchCustomerClass.errorMap['current']: SearchCustomerClass.warningMap['current']}" />
+								</f:facet>
+								<h:outputText id="errorMessages"
+									value="#{SearchCustomerClass.errorMessages}"
+									style="color: red; font-style: italic;font-weight:bold;"
+									escape="false" />
+							   <h:messages  styleClass="ErrorMessages" id="msg" 
+							        rendered="# {SearchCustomerClass.globalMsgRender}"/>		
+								<h:outputText id="warningMessages"
+									value="#{SearchCustomerClass.warningMessages}"
+									style="color: green; font-style: italic;font-weight:bold;"
+									escape="false" />
+							</rich:simpleTogglePanel></td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%"  cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td><h:outputText
+							value="#{message.PM020_A_TISB$SEARCH$cCode}" />: <h:inputText
+							value="#{SearchCustomerClass.initClassCode}" /></td>
+						<!-- <td>Customer Description: <h:inputText
+							value="#{SearchCustomerClass.initClassNgsCode}" /></td>-->
+						<td><h:outputText
+							value="#{message.PM020_A_TISB$SEARCH$customertype}" />: <h:inputText
+							value="#{SearchCustomerClass.initClassType}" /></td>
+
+						<td><a4j:commandButton styleClass="button"
+							value="#{commonmsg.searchButton$caption}" id="a4link">
+							<a4j:support action="#{SearchCustomerClass.fetchCustomerDetails}"
+								event="onclick" reRender="dataTableId,errorPanel"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{SearchCustomerClass.namesList}" var="customermaster"
+					cellpadding="5px" rows="10" border="0" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+
+					
+					<rich:column filterBy="#{customermaster.CCLAS_CODE}"
+						sortBy="#{customermaster.CCLAS_CODE}" filterEvent="onkeyup">
+
+						<f:facet name="header">
+							<h:outputText value="#{message.PM020_A_TISB$SEARCH$cCode}" />
+						</f:facet>
+						<h:commandLink action="#{SearchCustomerClass.clearList}">
+					
+								<h:outputText value="#{customermaster.CCLAS_CODE}" />
+						
+							<f:param name="CustCode" value="#{customermaster.CCLAS_CODE}" />
+							<f:param name="classType" value="#{customermaster.CCLAS_TYPE}" />
+						</h:commandLink>
+
+					</rich:column>
+					<rich:column filterBy="#{customermaster.CCLAS_CLASS_DESC}"
+						sortBy="#{customermaster.CCLAS_CLASS_DESC}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PM020_A_TISB$SEARCH$custdesc}" />
+						</f:facet>
+						<h:outputText value="#{customermaster.CCLAS_CLASS_DESC} " />
+					</rich:column>
+					<rich:column filterBy="#{customermaster.CCLAS_TYPE}"
+						sortBy="#{customermaster.CCLAS_TYPE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PM020_A_TISB$SEARCH$customertype}" />
+						</f:facet>
+						<h:outputText value="#{customermaster.CCLAS_TYPE}" />
+					</rich:column>
+				</rich:dataTable>
+				<tr>
+					<td><h:commandButton value="Insert" styleClass="button"
+						action="#{SearchCustomerClass.clearSession}" /></td>
+					<td><a4j:commandButton id="delete" styleClass="button" value="Delete"
+						rendered="false" action="#{SearchCustomerClass.deleteRow}"
+						reRender="dataTableId"></a4j:commandButton></td>
+				</tr>
+			</h:form></td>
+
+		</tr>
+		<!-- add footer to the page-->
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties" var="msg" />
+			<f:loadBundle basename="messageProperties_PILM017" var="message" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="documentSetup" onkeypress="return event.keyCode != 13" >
+			<!-- End -->
+				<table cellpadding="0" cellspacing="0" class="noborder" width="100%">
+					<!-- add header row -->
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.saveData}"
+											id="AUTOID_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_2"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText escape="true" id="err"
+											styleClass="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.messageStyle}"
+											value="#{commonmsg.errorPanel$heading} #{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.errorMap['current'] !=null? PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.errorMap['current']: PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.warningMap['current']}" />
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.globalMsgRender}"
+										styleClass="ErrorMessages" />
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.warningMessages}" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<!--<tr>
+						<td align="right"><a4j:commandButton
+							value="#{msg.searchButton$caption}" styleClass="button"
+							id="a4link"
+							actionListener="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.fetchButtonClick}"
+							reRender="errorPanel,dataTableId,sectionDtls">
+						</a4j:commandButton></td>
+					</tr>-->
+					<!-- Body row -->
+					<tr>
+						<td><!-- initial filter to search and list --> <!--<table border="0" width="100%" cellpadding="0" cellspacing="0"
+							id="masthead">
+							<tr>
+								<td><h:outputLabel
+									value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+								<td>Age From <h:inputText
+									title="#{message.PILM017$PM_IL_JL_AGE_FACTOR$JAF_DIFF_AGE_FROM$tooltip}"
+									styleClass="forumRowHighlightNumeric"
+									value="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE1}" />
+								</td>
+								<td>Age To <h:inputText
+									styleClass="forumRowHighlightNumeric"
+									title="#{message.PILM017$PM_IL_JL_AGE_FACTOR$JAF_DIFF_AGE_TO$tooltip}"
+									value="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE2}" />
+								</td>
+							</tr>
+						</table>--> <!-- using rich data table --> <h:panelGroup
+							id="sectionDtls" style="border:0;height:15%;">
+							<rich:dataTable
+								binding="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.dataTable}"
+								border="1" cellpadding="5px" id="dataTableId" rows="10"
+								value="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.recordList}"
+								var="PM_IL_JL_AGE_FACTOR_BEAN" width="100%">
+								<!-- Attach scroller as footer of the table-->
+								<f:facet name="footer">
+									<h:panelGroup id="footerpanel" style="border:0">
+										<rich:datascroller align="right" id="dsID"
+											pageIndexVar="index" pagesVar="pages">
+										</rich:datascroller>
+										<a4j:commandButton
+											actionListener="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.AddRow}"
+											binding="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.UI_M_BUT_ADD}"
+											id="AUTOID_4" immediate="true"
+											reRender="errorPanel,sectionDtls" style="width:81px"
+											styleClass="button" value="#{commonmsg.addNewButtonCaption}" />
+										<a4j:commandButton
+											actionListener="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.deleteRow}"
+											binding="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.UI_M_BUT_DEL}"
+											id="AUTOID_5" immediate="true"
+											reRender="errorPanel,sectionDtls" style="width:81px"
+											styleClass="button" value="#{commonmsg.deleteButtonCaption}" />
+										<a4j:commandButton
+											actionListener="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.post}"
+											id="AUTOID_6" reRender="sectionDtls,errorPanel"
+											style="width:81px" styleClass="button"
+											value="#{commonmsg.postButtonCaption}" />
+									</h:panelGroup>
+								</f:facet>
+
+								<!-- next column -->
+
+								<rich:column
+									filterBy="#{PM_IL_JL_AGE_FACTOR_BEAN.JAF_DIFF_AGE_FROM}"
+									filterEvent="onkeyup"
+									sortBy="#{PM_IL_JL_AGE_FACTOR_BEAN.JAF_DIFF_AGE_FROM}"
+									styleClass="#{PM_IL_JL_AGE_FACTOR_BEAN.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_7" value="Age From" />
+									</f:facet>
+									<a4j:commandLink
+										action="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.getDetails}"
+										immediate="true" reRender="sectionDtls">
+										<h:outputText id="AUTOID_8"
+											value="#{PM_IL_JL_AGE_FACTOR_BEAN.JAF_DIFF_AGE_FROM}" />
+
+
+									</a4j:commandLink>
+								</rich:column>
+
+								<rich:column
+									filterBy="#{PM_IL_JL_AGE_FACTOR_BEAN.JAF_DIFF_AGE_TO}"
+									filterEvent="onkeyup"
+									sortBy="#{PM_IL_JL_AGE_FACTOR_BEAN.JAF_DIFF_AGE_TO}"
+									styleClass="#{PM_IL_JL_AGE_FACTOR_BEAN.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_9" value="Age To" />
+									</f:facet>
+									<h:outputText id="AUTOID_10"
+										value="#{PM_IL_JL_AGE_FACTOR_BEAN.JAF_DIFF_AGE_TO} " />
+								</rich:column>
+
+
+								<rich:column
+									filterBy="#{PM_IL_JL_AGE_FACTOR_BEAN.JAF_AGE_FACTOR}"
+									filterEvent="onkeyup"
+									sortBy="#{PM_IL_JL_AGE_FACTOR_BEAN.JAF_AGE_FACTOR}"
+									styleClass="#{PM_IL_JL_AGE_FACTOR_BEAN.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_11" value="Age Factor" />
+									</f:facet>
+									<h:outputText id="AUTOID_12"
+										value="#{PM_IL_JL_AGE_FACTOR_BEAN.JAF_AGE_FACTOR} " />
+								</rich:column>
+
+
+								<rich:column
+									filterBy="#{PM_IL_JL_AGE_FACTOR_BEAN.UI_JAF_EFF_FM_DT}"
+									filterEvent="onkeyup"
+									sortBy="#{PM_IL_JL_AGE_FACTOR_BEAN.UI_JAF_EFF_FM_DT}"
+									styleClass="#{PM_IL_JL_AGE_FACTOR_BEAN.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_13" value="Effective From Date" />
+									</f:facet>
+									<h:outputText id="AUTOID_14"
+										value="#{PM_IL_JL_AGE_FACTOR_BEAN.UI_JAF_EFF_FM_DT} " />
+								</rich:column>
+
+
+								<rich:column
+									filterBy="#{PM_IL_JL_AGE_FACTOR_BEAN.UI_JAF_EFF_To_DT}"
+									filterEvent="onkeyup"
+									sortBy="#{PM_IL_JL_AGE_FACTOR_BEAN.UI_JAF_EFF_To_DT}"
+									styleClass="#{PM_IL_JL_AGE_FACTOR_BEAN.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_15" value="Effective To Date" />
+									</f:facet>
+									<h:outputText id="AUTOID_16"
+										value="#{PM_IL_JL_AGE_FACTOR_BEAN.UI_JAF_EFF_To_DT} " />
+								</rich:column>
+
+							</rich:dataTable>
+
+
+							<table class="noborder" width="100%">
+								<tr>
+									<td class="oddrowright"><h:outputLabel styleClass="label"
+										value="#{message.PILM017$PM_IL_JL_AGE_FACTOR$JAF_DIFF_AGE_FROM$caption}" />
+									<h:graphicImage id="AUTOID_12222222" style=""
+										styleClass="searchimg" value="./../../images/mandatory.gif" />
+									</td>
+									<td class="oddrow"><h:inputText
+										binding="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.COMP_JAF_DIFF_AGE_FROM}"
+										id="JAF_DIFF_AGE_FROM" rendered="true" required="true"
+										disabled="false" styleClass="input"
+										style="text-align : right;"
+										title="#{message.PILM017$PM_IL_JL_AGE_FACTOR$JAF_DIFF_AGE_FROM$tooltip}"
+										validator="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.validateJAF_DIFF_AGE_FROM}"
+										value="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.PM_IL_JL_AGE_FACTOR_BEAN.JAF_DIFF_AGE_FROM}">
+										<a4j:support
+											actionListener="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.WHEN_VALIDATE}"
+											event="onblur" id="AUTOID_17" reRender="errorPanel"
+											immediate="true" />
+									</h:inputText></td>
+									<td class="oddrowright"><h:outputLabel styleClass="label"
+										value="#{message.PILM017$PM_IL_JL_AGE_FACTOR$JAF_DIFF_AGE_TO$caption}" />
+									<h:graphicImage id="AUTOID_8" style="" styleClass="searchimg"
+										value="./../../resources/images/mandatory.jpg" /></td>
+									<td class="oddrow"><h:inputText
+										binding="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.COMP_JAF_DIFF_AGE_TO}"
+										id="JAF_DIFF_AGE_TO" styleClass="input" disabled="false"
+										style="text-align : right;" required="true" rendered="true"
+										title="#{message.PILM017$PM_IL_JL_AGE_FACTOR$JAF_DIFF_AGE_TO$tooltip}"
+										validator="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.validateJAF_DIFF_AGE_TO}"
+										value="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.PM_IL_JL_AGE_FACTOR_BEAN.JAF_DIFF_AGE_TO}">
+										<a4j:support
+											actionListener="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.WHEN_VALIDATE}"
+											event="onblur" id="AUTOID_18" reRender="errorPanel"
+											immediate="true" />
+									</h:inputText></td>
+								</tr>
+								<tr>
+									<td class="evenrowright"><h:outputLabel styleClass="label"
+										value="#{message.PILM017$PM_IL_JL_AGE_FACTOR$JAF_AGE_FACTOR$caption}" />
+									<h:graphicImage id="AUTOID_8sdsds" style=""
+										styleClass="searchimg"
+										value="./../../resources/images/mandatory.jpg" /></td>
+									<td class="evenrow"><h:inputText required="true"
+										binding="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.COMP_JAF_AGE_FACTOR}"
+										id="JAF_AGE_FACTOR" styleClass="input"
+										style="text-align : right;"
+										title="#{message.PILM017$PM_IL_JL_AGE_FACTOR$JAF_AGE_FACTOR$tooltip}"
+										validator="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.validateJAF_AGE_FACTOR}"
+										value="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.PM_IL_JL_AGE_FACTOR_BEAN.JAF_AGE_FACTOR}">
+										<a4j:support
+											actionListener="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.WHEN_VALIDATE}"
+											event="onblur" id="AUTOID_19" reRender="errorPanel"
+											immediate="true">
+
+										</a4j:support>
+									</h:inputText></td>
+								</tr>
+								<tr>
+									<td class="oddrowright"><h:outputLabel styleClass="label"
+										value="#{message.PILM017$PM_IL_JL_AGE_FACTOR$JAF_EFF_FM_DT$caption}" />
+									<h:graphicImage id="AUTOID_8sdsdsdfdfd" style=""
+										styleClass="searchimg"
+										value="./../../resources/images/mandatory.jpg" /></td>
+									<td class="oddrow"><span title="Enter From Date" /> <rich:calendar
+										required="true" rendered="true"
+										binding="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.COMP_JAF_EFF_FM_DT}"
+										datePattern="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.datePattern}"
+										enableManualInput="true" id="JAF_EFF_FM_DT"
+										inputClass="calendarinput" inputSize="14"
+										title="#{message.PILM017$PM_IL_JL_AGE_FACTOR$JAF_EFF_FM_DT$tooltip}"
+										validator="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.validateJAF_EFF_FM_DT}"
+										value="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.PM_IL_JL_AGE_FACTOR_BEAN.JAF_EFF_FM_DT}">
+										<a4j:support
+											actionListener="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.WHEN_VALIDATE}"
+											event="oninputblur" id="date_1"
+											onsubmit="formatDate('documentSetup:JAF_EFF_FM_DT')"
+											reRender="errorPanel" immediate="true">
+										</a4j:support>
+
+										<a4j:support
+											actionListener="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.WHEN_VALIDATE}"
+											event="onchanged" id="date_3" reRender="errorPanel"
+											immediate="true">
+										</a4j:support>
+									</rich:calendar></td>
+									<td class="oddrowright"><h:outputLabel styleClass="label"
+										value="#{message.PILM017$PM_IL_JL_AGE_FACTOR$JAF_EFF_TO_DT$caption}" />
+									<h:graphicImage id="AUTOID_8sdsds54t454dfdfd" style=""
+										styleClass="searchimg"
+										value="./../../resources/images/mandatory.jpg" /></td>
+									<td class="oddrow"><span title="Enter To Date" /> <rich:calendar
+										required="true" rendered="true"
+										binding="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.COMP_JAF_EFF_TO_DT}"
+										datePattern="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.datePattern}"
+										enableManualInput="true" id="JAF_EFF_TO_DT"
+										inputClass="calendarinput" inputSize="14"
+										title="#{message.PILM017$PM_IL_JL_AGE_FACTOR$JAF_EFF_TO_DT$tooltip}"
+										validator="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.validateJAF_EFF_TO_DT}"
+										value="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.PM_IL_JL_AGE_FACTOR_BEAN.JAF_EFF_TO_DT}">
+										<a4j:support
+											actionListener="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.WHEN_VALIDATE}"
+											event="oninputblur" id="date_4"
+											onsubmit="formatDate('documentSetup:JAF_EFF_TO_DT')"
+											reRender="errorPanel" immediate="true">
+										</a4j:support>
+
+										<a4j:support
+											actionListener="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.WHEN_VALIDATE}"
+											event="onchanged" id="date_6" reRender="errorPanel"
+											immediate="true">
+										</a4j:support>
+									</rich:calendar></td>
+								</tr>
+							</table>
+
+						</h:panelGroup></td>
+					</tr>
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									action="#{PILM017_PM_IL_JL_AGE_FACTOR_SEARCH_PAGE_ACTION.saveData}"
+									id="AUTOID_20" rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_21" 
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="AUTOID_22"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

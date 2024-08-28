@@ -1,0 +1,473 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jsp/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+		<f:view
+			 beforePhase="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.onLoad}" 
+			 locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PM010_A" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+
+				</tr>
+			</table>
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_COMP_MASTER_DTL" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar id="serial_1" styleClass="toolBarStyle"
+									width="100%">
+									<rich:toolBarGroup id="serial_2" styleClass="toolBarGroupStyle">
+										<h:commandLink action="#{PM010_A_COMPOSITE_ACTION.backToSearch}"
+											id="serial_15" style="text-decoration:none" immediate="true"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_1"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="AUTOID_2"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+											</h:commandLink>												
+											<h:commandLink
+												action="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.saveAction}"
+												id="serial_3" style="text-decoration:none"
+												styleClass="toolbarCommandLinkStyle">
+												<h:graphicImage id="serial_4"
+													style="border: thin solid white" styleClass="searchimg"
+													value="./../../images/save.gif" />
+												<h:outputText id="serial_5"
+													styleClass="toolbaroutputTextStyle"
+													value="#{menumessage.jsf$header$image$save}" />
+											</h:commandLink>
+											<h:commandLink
+												action="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.delAction}"
+												id="serial_9" style="text-decoration:none"
+												styleClass="toolbarCommandLinkStyle">
+												<h:graphicImage id="serial_10"
+													style="border: thin solid white" styleClass="searchimg"
+													value="./../../images/deleteRecord.gif" />
+												<h:outputText id="serial_11"
+													styleClass="toolbaroutputTextStyle"
+													value="#{menumessage.jsf$header$image$deleteRecord}" />
+											</h:commandLink>
+
+										<h:commandLink id="serial_18" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_19"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="serial_20"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="serial_21" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_22"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="serial_23"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.errorMap['current'] !=null? PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.errorMap['current']: PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					 
+					<tr align="center">
+						<td colspan="3">
+						 <table class="noborder" width="100%">
+						 <tr>
+								<td valign="top" width="100%">
+								<table align="center" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowfreeze" colspan="4"></td>
+										<td class="oddrowfreeze">
+										<h:outputLabel
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_FRZ_FLAG_LABEL}" 
+										value="#{message.PM010_A$PM_COMP_MASTER_DTL$COMP_FREEZE_CHK$caption}"
+										id="COMP_FRZ_FLAG_LABEL" rendered="true" styleClass="label" />
+										<h:selectBooleanCheckbox id="COMP_FREEZE_CHK" disabled="false" rendered="true"
+										 styleClass="checkstyleclass"
+										 binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_FRZ_YN}"
+										 title="#{message.PM010_A$PM_COMP_MASTER_DTL$COMP_FREEZE_CHK$tooltip}"
+										 value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.FRZ_FLAG}">
+										<a4j:support
+												actionListener="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.fireFieldValidation}"
+												event="onload" id="SUPPORT_FRZ_FLAG" immediate="true"
+												reRender="COMP_FREEZE_CHK" />
+										</h:selectBooleanCheckbox>
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright">
+										<h:outputLabel
+											binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_COMP_CODE_LABEL}"
+										  id="ACMD_RANK_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="Company Code" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_CODE_INPUT}"
+											disabled="false" id="COMP_CODE_IP" maxlength="5"
+											rendered="true" required="true" styleClass="input" 
+											title="#{message.PM010_A$PM_COMP_MASTER_DTL$COMP_CODE_IP$tooltip}"
+											value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_CODE}">
+											
+											
+										</h:inputText></td>
+										
+										</tr>
+										<tr>
+										<td class="oddrow">
+										<h:outputLabel
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_COMP_NAME_LABEL}" 
+										value="Company Name"  id="ACMD_RANK_NAME_LABEL" rendered="true" styleClass="label" />
+										</td>
+										<td class="evenrow">
+										<h:inputText 
+										 binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_NAME_INPUT}"
+										 disabled="false" id="COMP_NAME_IP" size="70" rendered="true" required="true" styleClass="input"
+										 title="#{message.PM010_A$PM_COMP_MASTER_DTL$COMP_NAME_IP$tooltip}"
+										 value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_NAME}"
+										 >
+										
+										</h:inputText>
+										</td>
+										</tr>
+										<tr>
+										<td class="oddrowright">
+										<h:outputLabel
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_COMP_DESC_LABEL}" 
+										value="Short Description" id="ACMD_RANK_DESC_LABEL" rendered="true" styleClass="label" />
+										</td>
+										<td class="evenrow">
+										<!--Modified by ganesh on 06-09-2017 handling validation as suggested by vinoth  -->
+										<h:inputText 
+										 disabled="false" id="SHORT_DESC_IP" size="70" rendered="true" required="true" styleClass="input"
+										 binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_DESC_INPUT}"
+										 title="#{message.PM010_A$PM_COMP_MASTER_DTL$SHORT_DESC_IP$tooltip}"
+										 validator="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.validatorSHORT_DESC_IP}"
+										 value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_SHORT_NAME}">
+											<a4j:support
+												actionListener="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SHORT_DESC_IP_AJAX_SUPPORT" immediate="true"														
+												reRender="errorPanel" />										
+										</h:inputText>
+										<!-- End  -->
+										</td>
+										</tr>
+										<tr>
+										<td class="oddrowright">
+										<h:outputLabel 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_COMP_ADDR1_LABEL}" 
+										value="Address"  id="ACMD_RANK_ADDR_LABEL" rendered="true" styleClass="label" />
+										</td>
+										<td class="evenrow">
+										<h:inputText 
+										 binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_ADDR1_INPUT}"
+										 disabled="false" id="COMP_ADDR1_IP" size="70" rendered="true" styleClass="input"
+										 title="#{message.PM010_A$PM_COMP_MASTER_DTL$COMP_ADDR1_IP$tooltip}"
+										 value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_ADDR1}">
+										</h:inputText>
+										</td>
+										</tr>
+										<tr>
+										<td class="oddrowright">
+										<h:outputLabel styleClass="label" />
+										</td>
+										<td class="evenrow">
+										<h:inputText 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_ADDR2_INPUT}"
+										disabled="false" id="COMP_ADDR2_IP" size="70" rendered="true" styleClass="input"
+										title="#{message.PM010_A$PM_COMP_MASTER_DTL$COMP_ADDR2_IP$tooltip}"
+										value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_ADDR2}"> 
+										</h:inputText>
+										</td>
+										</tr>
+										<tr>
+										<td class="oddrowright">
+										<h:outputLabel styleClass="label" />
+										</td>
+										<td class="evenrow">
+										<h:inputText 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_ADDR3_INPUT}"
+										disabled="false" id="COMP_ADDR3_IP" size="70" rendered="true" styleClass="input"
+										title="#{message.PM010_A$PM_COMP_MASTER_DTL$COMP_ADDR3_IP$tooltip}"
+										value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_ADDR3}"> 
+										</h:inputText>
+										</td>
+										</tr>
+										
+										<!-- Added by Janani for factory testing feedback changes on 12.04.2017 -->
+
+											<tr>
+												<td class="oddrowright"><h:outputLabel
+														binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_DEF_NATION_LABEL}"
+														value="Default Nation" id="COMP_DEF_NATION_LABEL"
+														rendered="true" styleClass="label" /></td>
+												<td class="evenrow">
+												
+												<h:inputText
+																					binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_DEF_NATION}"
+																					id="COMP_DEF_NATION" maxlength="12"
+																					rendered="true" required="false"
+																					styleClass="inputsmall"
+																					title="#{message.PM010_A$PM_COMP_MASTER_DTL$COMP_DEF_NATION$tooltip}"
+																					validator="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.validatorCOMP_DEF_NATION}"
+																					value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_DEF_NATION}">
+																					<a4j:support
+																						actionListener="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.fireFieldValidation}"
+																						event="onblur" id="style_5ASDAQ1" immediate="true"
+																						focus="DEFAULT_BRANCH_CODE"
+																						reRender="errorPanel,DEFAULT_BRANCH_CODE" />
+																				</h:inputText> 
+																				
+																				<h:inputText
+																					binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_UI_M_COMP_DEF_NATION_DESC}"
+																					disabled="true"
+																					id="UI_M_COMP_DEF_NATION_DESC"
+																					maxlength="240" rendered="true" required="false"
+																					styleClass="input" 
+																					title="#{message.PM010_A$PM_COMP_MASTER_DTL$UI_M_COMP_DEF_NATION_DESC$tooltip}"
+																					value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.UI_M_COMP_DEF_NATION_DESC}" />
+																				<rich:suggestionbox for="COMP_DEF_NATION"
+																					height="200" id="NATN_CODE_LIST"
+																					suggestionAction="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.lovCOMP_DEF_NATION}"
+																					var="natnCode" width="250">
+																					<h:column>
+																						<h:outputLabel value="#{natnCode.code}" />
+																					</h:column>
+																					<h:column>
+																						<h:outputLabel value="#{natnCode.name}" />
+																					</h:column>
+																					<a4j:support ajaxSingle="true" 
+										event="onselect"
+									id="COMP_DEF_NATION_DESC_SUPPORT" immediate="true"
+									reRender="errorPanel,UI_M_COMP_DEF_NATION_DESC">
+									<f:setPropertyActionListener id="AUTOID_debit20"
+									target="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.UI_M_COMP_DEF_NATION_DESC}"
+									value="#{natnCode.name}" />
+									</a4j:support>
+																				</rich:suggestionbox> 
+																				<h:graphicImage id="AUTOID_68"
+																					styleClass="searchimg"
+																					value="./../../resources/images/Lov.gif" />
+												
+												
+												</td>
+											</tr>
+
+											<!-- End -->
+											
+											
+										<tr>
+										<td class="oddrowright">
+										<h:outputLabel 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_COMP_DEFAULT_BRANCH_LABEL}"
+										value="Default Branch"  id="ACMD_DEFAULT_BRANCH_LABEL" rendered="true" styleClass="label" />
+										</td>
+										<td class="evenrow">
+										
+										<h:inputText 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_DEFAULT_BRANCH_CODE_INPUT}"
+										disabled="false" id="DEFAULT_BRANCH_CODE" size="20" rendered="true" required="true" styleClass="input"
+										title="#{message.PM010_A$PM_COMP_MASTER_DTL$DEFAULT_BRANCH_CODE$tooltip}"
+										value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_DFLT_DIVN}"> 
+										<a4j:support
+																		actionListener="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.fireFieldValidation}"
+																		event="onblur" id="DEFAULT_BRANCH_NAME_AJAX_SUPPORT"
+																		immediate="true"
+																		reRender="DEFAULT_BRANCH_NAME" />
+										</h:inputText>
+										<rich:suggestionbox for="DEFAULT_BRANCH_CODE" height="200"
+									id="DEFAULT_BRANCH_SUGG"
+									suggestionAction="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.suggestionActionCityCode}"
+									var="citycode" width="250">
+									<h:column>
+										<h:outputText id="AUTOID_17"
+											value="#{citycode.COMP_DFLT_DIVN}" />
+									</h:column>
+									<h:column>
+										<h:outputText id="AUTOID_18" value="#{citycode.COMP_DFLT_DIVN_NAME}" />
+									</h:column>
+									<a4j:support
+										actionListener="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.getDivnName}"
+										event="onselect" id="AUTOID_19" immediate="true"
+										reRender="DEFAULT_BRANCH_NAME" />
+								</rich:suggestionbox>
+										<h:inputText 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_DEFAULT_BRANCH_NAME_INPUT}"
+										disabled="true" readonly="true" id="DEFAULT_BRANCH_NAME" size="45" rendered="true" required="false" styleClass="input"
+										title="#{message.PM010_A$PM_COMP_MASTER_DTL$DEFAULT_BRANCH_NAME$tooltip}"
+										value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_DFLT_DIVN_NAME}" />
+										</td>
+										</tr>
+										<tr>
+										<td class="oddrowright">
+										<h:outputLabel 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_COMP_DEFAULT_DEPT_LABEL}"
+										value="Default Department"  id="ACMD_DEFAULT_DEPT_LABEL" rendered="true" styleClass="label" />
+										</td>
+										<td class="evenrow">
+										<h:inputText 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_DEFAULT_DEPT_CODE_INPUT}"
+										disabled="false" id="DEFAULT_DEPT_CODE" size="20" rendered="true" required="true" styleClass="input"
+										title="#{message.PM010_A$PM_COMP_MASTER_DTL$DEFAULT_DEPT_CODE$tooltip}"
+										value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_DFLT_DEPT}">
+										<a4j:support
+																		actionListener="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.fireFieldValidation}"
+																		event="onblur" id="DEFAULT_DEPT_NAME_AJAX_SUPPORT"
+																		immediate="true"
+																		reRender="DEFAULT_DEPT_NAME" />
+										</h:inputText>										
+										<rich:suggestionbox for="DEFAULT_DEPT_CODE" height="200"
+									id="DEFAULT_DEPT_SUGG"
+									suggestionAction="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.suggestionDeptCode}"
+									var="deptCode" width="250">
+									<h:column>
+										<h:outputText id="DEPT_17"
+											value="#{deptCode.COMP_DFLT_DEPT}" />
+									</h:column>
+									<h:column>
+										<h:outputText id="DEPT_18" value="#{deptCode.COMP_DFLT_DEPT_NAME}" />
+									</h:column>
+									<a4j:support
+										actionListener="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.getDeptName}"
+										event="onselect" id="DEPT_19" immediate="true"
+										reRender="DEFAULT_DEPT_NAME" />
+								</rich:suggestionbox>										
+										<h:inputText 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_DEFAULT_DEPT_NAME}"
+										disabled="true" readonly="true" id="DEFAULT_DEPT_NAME" size="45" rendered="true" required="true" styleClass="input"
+										title="#{message.PM010_A$PM_COMP_MASTER_DTL$DEFAULT_DEPT_NAME$tooltip}"
+										value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_DFLT_DEPT_NAME}">
+										</h:inputText>
+										</td>
+										</tr>
+										<tr>
+										<td class="oddrowright">
+										<h:outputLabel 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_COMP_CEO_NAME_LABEL}" 
+										value="CEO Name"   id="ACMD_CEO_NAME_LABEL" rendered="true" styleClass="label" />
+										</td>
+										<td class="evenrow">
+										<h:inputText 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_CEO_NAME_INPUT}"
+										disabled="false" id="CEO_NAME_IP" size="70" rendered="true" required="true" styleClass="input"
+										title="#{message.PM010_A$PM_COMP_MASTER_DTL$CEO_NAME_IP$tooltip}"
+										value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_BL_CEO_NAME}"> 
+										</h:inputText>
+										</td>
+										</tr>
+										<tr>
+										<td class="oddrowright">
+										<h:outputLabel 
+										 binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_COMP_PHONE_LABEL}"
+										 value="Phone"  id="ACMD_PHONE_LABEL" rendered="true" styleClass="label" />
+										</td>
+										<td class="evenrow">
+										<h:inputText 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_PHONE_INPUT}"
+										disabled="false" id="PHONE_IP" rendered="true" required="true" styleClass="input"
+										title="#{message.PM010_A$PM_COMP_MASTER_DTL$PHONE_IP$tooltip}"
+										value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_PHONE}">
+										</h:inputText>
+										</td>
+										<td class="oddrowright">
+										<h:outputLabel 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_COMP_FAX_LABEL}"
+										value="Fax" id="ACMD_FAX_LABEL" rendered="true" styleClass="label" />
+										</td>
+										<td class="evenrow">
+										<h:inputText 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_FAX_INPUT}"
+										disabled="false" id="FAX_IP" rendered="true" required="true" styleClass="input"
+										title="#{message.PM010_A$PM_COMP_MASTER_DTL$FAX_IP$tooltip}"
+										value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_FAX}">
+										</h:inputText>
+										</td>
+										</tr>
+										<tr>
+										<td class="oddrowright">
+										<h:outputLabel 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_COMP_EMAIL_LABEL}"
+										value="Email" id="ACMD_EMAIL_LABEL" rendered="true" styleClass="label" />
+										</td>
+										<td class="evenrow">
+										<h:inputText 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_EMAIL_INPUT}"
+										disabled="false" id="EMAIL_IP" rendered="true" required="true" styleClass="input"
+										title="#{message.PM010_A$PM_COMP_MASTER_DTL$EMAIL_IP$tooltip}"
+										value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_EMAIL}">
+										</h:inputText>
+										</td>
+										<td class="oddrowright">
+										<h:outputLabel 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_COMP_WEBSITE_LABEL}" 
+										value="Website" id="ACMD_WEBSITE_LABEL" rendered="true" styleClass="label" />
+										</td>
+										<td class="evenrow">
+										<h:inputText 
+										binding="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.COMP_WEBSITE_INPUT}"
+										disabled="false" id="WEBSITE_IP" rendered="true" required="true" styleClass="input"
+										title="#{message.PM010_A$PM_COMP_MASTER_DTL$WEBSITE_IP$tooltip}"
+										value="#{PM010_A_COMPOSITE_ACTION.PM010_A_COMPANY_MASTER_ACTION_BEAN.PM010_A_COMPANY_BEAN.COMP_WEB_SITE}">
+										</h:inputText>
+										</td>
+										</tr>
+										</table>
+										</td>
+										</tr>
+										
+						 </table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="5" width="100%"></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+
+	</ui:define>
+</ui:composition>

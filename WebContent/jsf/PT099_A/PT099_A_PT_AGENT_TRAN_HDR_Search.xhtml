@@ -1,0 +1,132 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+<f:loadBundle basename="messageProperties_PT099_A" var="message" />
+<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+				
+		</tr>
+		<h:form id="PT_AGENT_TRAN_HDR_Search">
+		<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PT099_A_Search.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PT099_A_Search.errorMap['current'] !=null? 
+									PT099_A_Search.errorMap['current']:PT099_A_Search.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" styleClass="ErrorMessages"
+								value="#{PT099_A_Search.errorMessages}"
+								escape="false" />
+							<h:messages id="msg" styleClass="ErrorMessages"
+								rendered="#{PT099_A_Search.globalMsgRender}" />
+
+							<h:outputText id="warningMessages" styleClass="WarningMessages"
+								value="#{PT099_A_Search.warningMessages}"
+								escape="false" />
+
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+		<!-- Body row -->
+		<tr>
+			<td>
+				
+				<table border="0" width="100%" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td><h:outputLabel value="#{message.PT099_A$PT_AGENT_TRAN_HDR$UI_M_ATH_POL_NO$caption}"/>
+						 <h:inputText value="#{PT099_A_Search.UI_M_ATH_POL_NO}" /></td>
+						<td>
+							<h:commandButton 
+								value="#{commonmsg.searchButton$caption}" 
+								id="a4link" 
+								styleClass="button"
+								action="#{PT099_A_Search.fetch}">
+							</h:commandButton>
+						</td>
+
+					</tr>
+				</table>
+				
+				<!-- using rich data table -->
+				<rich:dataTable id="fetchList" value="#{PT099_A_Search.dataTableBean}"
+					var="colData" cellpadding="5px" rows="10" border="1"
+					width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+					
+				
+					<rich:column filterBy="#{colData.UI_M_ATH_POL_NO}" sortBy="#{colData.UI_M_ATH_POL_NO}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PT099_A$PT_AGENT_TRAN_HDR$UI_M_ATH_POL_NO$caption}"/>
+						</f:facet>
+						<h:commandLink
+							action="#{PT099_A_Search.fetchMasterRecord}">
+							
+								<h:outputText value="#{colData.UI_M_ATH_POL_NO}" />
+								
+						
+							<f:param name="rowid" value="#{colData.ROWID}"/>
+							<f:param name="polno" value="#{colData.UI_M_ATH_POL_NO}"/>
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column filterBy="#{colData.ATH_AGENT_CODE}" sortBy="#{colData.ATH_AGENT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PT099_A$PT_AGENT_TRAN_HDR$ATH_AGENT_CODE$caption}"/>
+						</f:facet>
+							
+								<h:outputText value="#{colData.ATH_AGENT_CODE}" />
+							
+						
+					</rich:column>
+					
+					<rich:column filterBy="#{colData.ATH_NEW_AGENT_CODE}" sortBy="#{colData.ATH_NEW_AGENT_CODE}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="#{message.PT099_A$PT_AGENT_TRAN_HDR$ATH_N_AGENT$caption}" />
+					</f:facet>
+					
+						<h:outputText value="#{colData.ATH_NEW_AGENT_CODE}" />
+		
+				</rich:column>
+													
+				</rich:dataTable>
+			</td>
+		</tr>
+		<tr>
+			<td>
+			<h:commandButton
+					value="#{commonmsg.insertButton$caption}"
+					styleClass="button"
+					action="#{PT099_A_Search.insertInTranHeader}"/>
+			</td>
+			
+		</tr>
+		<tr>
+			
+		</tr>
+		</h:form>
+	</table>
+</f:view>
+
+</ui:define>
+</ui:composition>

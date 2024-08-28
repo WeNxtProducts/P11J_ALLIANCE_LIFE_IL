@@ -1,0 +1,1794 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.loadBaseValue}">
+			<f:loadBundle basename="messageProperties_PILT024" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<table cellpadding="0" cellspacing="0" width="100%" border="0">
+				<h:form id="PT_IL_PREM_COLL">
+					<tr>
+						<td colspan="3" width="100%" vAlign="top">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILT024_COMPOSITE_ACTION.navigationEnabled}"
+											rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table cellspacing="0" width="100%" id="errormsgtable">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.errorMap['current'] !=null? PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.errorMap['current']: PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.globalMsgRender}" />
+									<h:outputText id="warningMessages"
+										value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="15%">
+						<table width="100%" cellspacing="0" cellpadding="0"
+							id="globalLink">
+							<tr>
+								<td><h:inputHidden
+									value="#{PILT024_COMPOSITE_ACTION.tabbedBar.tabClicked}"
+									id="myhidden" /> <h:panelGroup id="mypanel"
+									style="border:0;height:15%;">
+									<table width="100%">
+										<tr>
+											<td width="90%"><a4j:repeat
+												value="#{PILT024_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													onclick="document.getElementById('PT_IL_PREM_COLL:myhidden').value='#{currtab.id}'"
+													value="#{currtab.value}" disabled="#{currtab.disabled}"
+													action="#{PILT024_COMPOSITE_ACTION.tabbedBar.tabAction}"
+													styleClass="#{currtab.styleString}" />
+											</a4j:repeat></td>
+											<td width="*"><a4j:commandButton immediate="true"
+												disabled="#{PILT024_COMPOSITE_ACTION.tabbedBar.navigable}"
+												alt="first" image=".\..\..\images\firstrec.gif"
+												action="#{PILT024_COMPOSITE_ACTION.tabbedBar.gotoFirstTab}"
+												reRender="mypanel" /> <a4j:commandButton immediate="true"
+												disabled="#{PILT024_COMPOSITE_ACTION.tabbedBar.navigable}"
+												alt="previous" image=".\..\..\images\prevpage.gif"
+												action="#{PILT024_COMPOSITE_ACTION.tabbedBar.gotoPrevTab}"
+												reRender="mypanel" /> <a4j:commandButton immediate="true"
+												disabled="#{PILT024_COMPOSITE_ACTION.tabbedBar.navigable}"
+												alt="next" image=".\..\..\images\nextpage.gif"
+												action="#{PILT024_COMPOSITE_ACTION.tabbedBar.gotoNextTab}"
+												reRender="mypanel" /> <a4j:commandButton immediate="true"
+												disabled="#{PILT024_COMPOSITE_ACTION.tabbedBar.navigable}"
+												alt="last" image=".\..\..\images\lastRecord.gif"
+												action="#{PILT024_COMPOSITE_ACTION.tabbedBar.gotoLastTab}"
+												reRender="mypanel" /></td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PILT024$PT_IL_PREM_COLL$displayCaption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 500px; overflow: auto;">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td width="90%" vAlign="top">
+								<table id="bordertable" align="left" width="100%">
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_SCHD_PYMT_DT_LABEL}"
+											for="PC_SCHD_PYMT_DT" id="PC_SCHD_PYMT_DT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_SCHD_PYMT_DT$caption}" />
+										</td>
+										<td align="left"><rich:calendar
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_SCHD_PYMT_DT}"
+											datePattern="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true"
+											id="PC_SCHD_PYMT_DT" inputSize="11" rendered="true"
+											required="false" style="height:px;width:px;"
+											styleClass="calendarstyleclass"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_SCHD_PYMT_DT}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_WAIVE_PREM_YN_LABEL}"
+											for="PC_WAIVE_PREM_YN" id="PC_WAIVE_PREM_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_WAIVE_PREM_YN$caption}" />
+										<h:graphicImage style="" value=".\..\..\images\mandatory.jpg" /></td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_WAIVE_PREM_YN}"
+											disabled="false" id="PC_WAIVE_PREM_YN" maxlength="1"
+											rendered="true" required="true"
+											style="height:23px;width:63px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_WAIVE_PREM_YN$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_WAIVE_PREM_YN}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_WAIVE_LOAN_YN_LABEL}"
+											for="PC_WAIVE_LOAN_YN" id="PC_WAIVE_LOAN_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_WAIVE_LOAN_YN$caption}" />
+										<h:graphicImage style="" value=".\..\..\images\mandatory.jpg" /></td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_WAIVE_LOAN_YN}"
+											disabled="false" id="PC_WAIVE_LOAN_YN" maxlength="1"
+											rendered="true" required="true"
+											style="height:23px;width:63px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_WAIVE_LOAN_YN$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_WAIVE_LOAN_YN}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_BASIC_PREM_LABEL}"
+											for="PC_FC_BASIC_PREM" id="PC_FC_BASIC_PREM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_BASIC_PREM$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_BASIC_PREM}"
+											disabled="false" id="PC_FC_BASIC_PREM" maxlength="16"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_BASIC_PREM$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FC_BASIC_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_BASIC_PREM_LABEL}"
+											for="PC_LC_BASIC_PREM" id="PC_LC_BASIC_PREM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_BASIC_PREM$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_BASIC_PREM}"
+											disabled="false" id="PC_LC_BASIC_PREM" maxlength="16"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_BASIC_PREM$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_LC_BASIC_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_PAID_BASIC_PREM_LABEL}"
+											for="UI_M_PC_FC_PAID_BASIC_PREM"
+											id="UI_M_PC_FC_PAID_BASIC_PREM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_PAID_BASIC_PREM$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_PAID_BASIC_PREM}"
+											disabled="false" id="UI_M_PC_FC_PAID_BASIC_PREM"
+											maxlength="19" rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_PAID_BASIC_PREM$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_PAID_BASIC_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_PAID_BASIC_PREM_LABEL}"
+											for="UI_M_PC_LC_PAID_BASIC_PREM"
+											id="UI_M_PC_LC_PAID_BASIC_PREM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_PAID_BASIC_PREM$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_PAID_BASIC_PREM}"
+											disabled="false" id="UI_M_PC_LC_PAID_BASIC_PREM"
+											maxlength="19" rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_PAID_BASIC_PREM$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_PAID_BASIC_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_BAL_BASIC_PREM_LABEL}"
+											for="UI_M_PC_FC_BAL_BASIC_PREM"
+											id="UI_M_PC_FC_BAL_BASIC_PREM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_BAL_BASIC_PREM$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_BAL_BASIC_PREM}"
+											disabled="false" id="UI_M_PC_FC_BAL_BASIC_PREM"
+											maxlength="19" rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_BAL_BASIC_PREM$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_BAL_BASIC_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_BAL_BASIC_PREM_LABEL}"
+											for="UI_M_PC_LC_BAL_BASIC_PREM"
+											id="UI_M_PC_LC_BAL_BASIC_PREM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_BAL_BASIC_PREM$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_BAL_BASIC_PREM}"
+											disabled="false" id="UI_M_PC_LC_BAL_BASIC_PREM"
+											maxlength="19" rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_BAL_BASIC_PREM$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_BAL_BASIC_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_ADDL_PREM_LABEL}"
+											for="PC_FC_ADDL_PREM" id="PC_FC_ADDL_PREM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_ADDL_PREM$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_ADDL_PREM}"
+											disabled="false" id="PC_FC_ADDL_PREM" maxlength="16"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_ADDL_PREM$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FC_ADDL_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_ADDL_PREM_LABEL}"
+											for="PC_LC_ADDL_PREM" id="PC_LC_ADDL_PREM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_ADDL_PREM$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_ADDL_PREM}"
+											disabled="false" id="PC_LC_ADDL_PREM" maxlength="16"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_ADDL_PREM$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_LC_ADDL_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_PAID_ADDL_PREM_LABEL}"
+											for="UI_M_PC_FC_PAID_ADDL_PREM"
+											id="UI_M_PC_FC_PAID_ADDL_PREM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_PAID_ADDL_PREM$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_PAID_ADDL_PREM}"
+											disabled="false" id="UI_M_PC_FC_PAID_ADDL_PREM"
+											maxlength="19" rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_PAID_ADDL_PREM$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_PAID_ADDL_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_PAID_ADDL_PREM_LABEL}"
+											for="UI_M_PC_LC_PAID_ADDL_PREM"
+											id="UI_M_PC_LC_PAID_ADDL_PREM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_PAID_ADDL_PREM$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_PAID_ADDL_PREM}"
+											disabled="false" id="UI_M_PC_LC_PAID_ADDL_PREM"
+											maxlength="19" rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_PAID_ADDL_PREM$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_PAID_ADDL_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_BAL_ADDL_PREM_LABEL}"
+											for="UI_M_PC_FC_BAL_ADDL_PREM"
+											id="UI_M_PC_FC_BAL_ADDL_PREM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_BAL_ADDL_PREM$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_BAL_ADDL_PREM}"
+											disabled="false" id="UI_M_PC_FC_BAL_ADDL_PREM" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_BAL_ADDL_PREM$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_BAL_ADDL_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_BAL_ADDL_PREM_LABEL}"
+											for="UI_M_PC_LC_BAL_ADDL_PREM"
+											id="UI_M_PC_LC_BAL_ADDL_PREM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_BAL_ADDL_PREM$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_BAL_ADDL_PREM}"
+											disabled="false" id="UI_M_PC_LC_BAL_ADDL_PREM" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_BAL_ADDL_PREM$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_BAL_ADDL_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_LOAD_AMT_LABEL}"
+											for="PC_FC_LOAD_AMT" id="PC_FC_LOAD_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_LOAD_AMT$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_LOAD_AMT}"
+											disabled="false" id="PC_FC_LOAD_AMT" maxlength="16"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_LOAD_AMT$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FC_LOAD_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_LOAD_AMT_LABEL}"
+											for="PC_LC_LOAD_AMT" id="PC_LC_LOAD_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_LOAD_AMT$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_LOAD_AMT}"
+											disabled="false" id="PC_LC_LOAD_AMT" maxlength="16"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_LOAD_AMT$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_LC_LOAD_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_PAID_LOAD_LABEL}"
+											for="UI_M_PC_FC_PAID_LOAD" id="UI_M_PC_FC_PAID_LOAD_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_PAID_LOAD$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_PAID_LOAD}"
+											disabled="false" id="UI_M_PC_FC_PAID_LOAD" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_PAID_LOAD$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_PAID_LOAD}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_PAID_LOAD_LABEL}"
+											for="UI_M_PC_LC_PAID_LOAD" id="UI_M_PC_LC_PAID_LOAD_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_PAID_LOAD$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_PAID_LOAD}"
+											disabled="false" id="UI_M_PC_LC_PAID_LOAD" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_PAID_LOAD$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_PAID_LOAD}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_BAL_LOAD_AMT_LABEL}"
+											for="UI_M_PC_FC_BAL_LOAD_AMT"
+											id="UI_M_PC_FC_BAL_LOAD_AMT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_BAL_LOAD_AMT$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_BAL_LOAD_AMT}"
+											disabled="false" id="UI_M_PC_FC_BAL_LOAD_AMT" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_BAL_LOAD_AMT$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_BAL_LOAD_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_BAL_LOAD_AMT_LABEL}"
+											for="UI_M_PC_LC_BAL_LOAD_AMT"
+											id="UI_M_PC_LC_BAL_LOAD_AMT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_BAL_LOAD_AMT$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_BAL_LOAD_AMT}"
+											disabled="false" id="UI_M_PC_LC_BAL_LOAD_AMT" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_BAL_LOAD_AMT$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_BAL_LOAD_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_DISCOUNT_LABEL}"
+											for="PC_FC_DISCOUNT" id="PC_FC_DISCOUNT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_DISCOUNT$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_DISCOUNT}"
+											disabled="false" id="PC_FC_DISCOUNT" maxlength="16"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_DISCOUNT$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FC_DISCOUNT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_DISCOUNT_LABEL}"
+											for="PC_LC_DISCOUNT" id="PC_LC_DISCOUNT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_DISCOUNT$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_DISCOUNT}"
+											disabled="false" id="PC_LC_DISCOUNT" maxlength="16"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_DISCOUNT$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_LC_DISCOUNT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_PAID_DISC_LABEL}"
+											for="UI_M_PC_FC_PAID_DISC" id="UI_M_PC_FC_PAID_DISC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_PAID_DISC$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_PAID_DISC}"
+											disabled="false" id="UI_M_PC_FC_PAID_DISC" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_PAID_DISC$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_PAID_DISC}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_PAID_DISC_LABEL}"
+											for="UI_M_PC_LC_PAID_DISC" id="UI_M_PC_LC_PAID_DISC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_PAID_DISC$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_PAID_DISC}"
+											disabled="false" id="UI_M_PC_LC_PAID_DISC" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_PAID_DISC$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_PAID_DISC}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_BAL_DISC_LABEL}"
+											for="UI_M_PC_FC_BAL_DISC" id="UI_M_PC_FC_BAL_DISC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_BAL_DISC$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_BAL_DISC}"
+											disabled="false" id="UI_M_PC_FC_BAL_DISC" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_BAL_DISC$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_BAL_DISC}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_BAL_DISC_LABEL}"
+											for="UI_M_PC_LC_BAL_DISC" id="UI_M_PC_LC_BAL_DISC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_BAL_DISC$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_BAL_DISC}"
+											disabled="false" id="UI_M_PC_LC_BAL_DISC" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_BAL_DISC$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_BAL_DISC}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_CHARGE_LABEL}"
+											for="PC_FC_CHARGE" id="PC_FC_CHARGE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_CHARGE$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_CHARGE}"
+											disabled="false" id="PC_FC_CHARGE" maxlength="16"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_CHARGE$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FC_CHARGE}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_CHARGE_LABEL}"
+											for="PC_LC_CHARGE" id="PC_LC_CHARGE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_CHARGE$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_CHARGE}"
+											disabled="false" id="PC_LC_CHARGE" maxlength="16"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_CHARGE$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_LC_CHARGE}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_PAID_CUST_CHRG_LABEL}"
+											for="UI_M_PC_FC_PAID_CUST_CHRG"
+											id="UI_M_PC_FC_PAID_CUST_CHRG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_PAID_CUST_CHRG$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_PAID_CUST_CHRG}"
+											disabled="false" id="UI_M_PC_FC_PAID_CUST_CHRG"
+											maxlength="19" rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_PAID_CUST_CHRG$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_PAID_CUST_CHRG}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_PAID_CUST_CHRG_LABEL}"
+											for="UI_M_PC_LC_PAID_CUST_CHRG"
+											id="UI_M_PC_LC_PAID_CUST_CHRG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_PAID_CUST_CHRG$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_PAID_CUST_CHRG}"
+											disabled="false" id="UI_M_PC_LC_PAID_CUST_CHRG"
+											maxlength="19" rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_PAID_CUST_CHRG$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_PAID_CUST_CHRG}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_BAL_CUST_CHRG_LABEL}"
+											for="UI_M_PC_FC_BAL_CUST_CHRG"
+											id="UI_M_PC_FC_BAL_CUST_CHRG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_BAL_CUST_CHRG$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_BAL_CUST_CHRG}"
+											disabled="false" id="UI_M_PC_FC_BAL_CUST_CHRG" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_BAL_CUST_CHRG$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_BAL_CUST_CHRG}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_BAL_CUST_CHRG_LABEL}"
+											for="UI_M_PC_LC_BAL_CUST_CHRG"
+											id="UI_M_PC_LC_BAL_CUST_CHRG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_BAL_CUST_CHRG$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_BAL_CUST_CHRG}"
+											disabled="false" id="UI_M_PC_LC_BAL_CUST_CHRG" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_BAL_CUST_CHRG$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_BAL_CUST_CHRG}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_DUE_CONTR_LABEL}"
+											for="PC_FC_DUE_CONTR" id="PC_FC_DUE_CONTR_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_DUE_CONTR$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_DUE_CONTR}"
+											disabled="false" id="PC_FC_DUE_CONTR" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_DUE_CONTR$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FC_DUE_CONTR}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_DUE_CONTR_LABEL}"
+											for="PC_LC_DUE_CONTR" id="PC_LC_DUE_CONTR_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_DUE_CONTR$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_DUE_CONTR}"
+											disabled="false" id="PC_LC_DUE_CONTR" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_DUE_CONTR$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_LC_DUE_CONTR}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_PAID_CONTR_LABEL}"
+											for="UI_M_PC_FC_PAID_CONTR" id="UI_M_PC_FC_PAID_CONTR_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_PAID_CONTR$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_PAID_CONTR}"
+											disabled="false" id="UI_M_PC_FC_PAID_CONTR" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_PAID_CONTR$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_PAID_CONTR}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_PAID_CONTR_LABEL}"
+											for="UI_M_PC_LC_PAID_CONTR" id="UI_M_PC_LC_PAID_CONTR_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_PAID_CONTR$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_PAID_CONTR}"
+											disabled="false" id="UI_M_PC_LC_PAID_CONTR" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_PAID_CONTR$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_PAID_CONTR}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_BAL_CONTR_LABEL}"
+											for="UI_M_PC_FC_BAL_CONTR" id="UI_M_PC_FC_BAL_CONTR_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_BAL_CONTR$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_BAL_CONTR}"
+											disabled="false" id="UI_M_PC_FC_BAL_CONTR" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_BAL_CONTR$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_BAL_CONTR}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_BAL_CONTR_LABEL}"
+											for="UI_M_PC_LC_BAL_CONTR" id="UI_M_PC_LC_BAL_CONTR_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_BAL_CONTR$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_BAL_CONTR}"
+											disabled="false" id="UI_M_PC_LC_BAL_CONTR" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_BAL_CONTR$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_BAL_CONTR}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_TOPUP_DUE_FC_AMT_LABEL}"
+											for="UI_M_TOPUP_DUE_FC_AMT" id="UI_M_TOPUP_DUE_FC_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_TOPUP_DUE_FC_AMT$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_TOPUP_DUE_FC_AMT}"
+											disabled="false" id="UI_M_TOPUP_DUE_FC_AMT" maxlength="30"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_TOPUP_DUE_FC_AMT$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_TOPUP_DUE_FC_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_TOPUP_DUE_LC_AMT_LABEL}"
+											for="UI_M_TOPUP_DUE_LC_AMT" id="UI_M_TOPUP_DUE_LC_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_TOPUP_DUE_LC_AMT$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_TOPUP_DUE_LC_AMT}"
+											disabled="false" id="UI_M_TOPUP_DUE_LC_AMT" maxlength="30"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_TOPUP_DUE_LC_AMT$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_TOPUP_DUE_LC_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_TOPUP_PAID_FC_AMT_LABEL}"
+											for="UI_M_TOPUP_PAID_FC_AMT"
+											id="UI_M_TOPUP_PAID_FC_AMT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_TOPUP_PAID_FC_AMT$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_TOPUP_PAID_FC_AMT}"
+											disabled="false" id="UI_M_TOPUP_PAID_FC_AMT" maxlength="30"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_TOPUP_PAID_FC_AMT$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_TOPUP_PAID_FC_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_TOPUP_PAID_LC_AMT_LABEL}"
+											for="UI_M_TOPUP_PAID_LC_AMT"
+											id="UI_M_TOPUP_PAID_LC_AMT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_TOPUP_PAID_LC_AMT$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_TOPUP_PAID_LC_AMT}"
+											disabled="false" id="UI_M_TOPUP_PAID_LC_AMT" maxlength="30"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_TOPUP_PAID_LC_AMT$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_TOPUP_PAID_LC_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_TOPUP_BAL_LC_AMT_LABEL}"
+											for="UI_M_TOPUP_BAL_LC_AMT" id="UI_M_TOPUP_BAL_LC_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_TOPUP_BAL_LC_AMT$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_TOPUP_BAL_LC_AMT}"
+											disabled="false" id="UI_M_TOPUP_BAL_LC_AMT" maxlength="30"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_TOPUP_BAL_LC_AMT$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_TOPUP_BAL_LC_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_TOPUP_BAL_FC_AMT_LABEL}"
+											for="UI_M_TOPUP_BAL_FC_AMT" id="UI_M_TOPUP_BAL_FC_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_TOPUP_BAL_FC_AMT$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_TOPUP_BAL_FC_AMT}"
+											disabled="false" id="UI_M_TOPUP_BAL_FC_AMT" maxlength="30"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_TOPUP_BAL_FC_AMT$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_TOPUP_BAL_FC_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_INV_DUE_CHRG_LABEL}"
+											for="PC_FC_INV_DUE_CHRG" id="PC_FC_INV_DUE_CHRG_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_INV_DUE_CHRG$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FC_INV_DUE_CHRG}"
+											disabled="false" id="PC_FC_INV_DUE_CHRG" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FC_INV_DUE_CHRG$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FC_INV_DUE_CHRG}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_INV_DUE_CHRG_LABEL}"
+											for="PC_LC_INV_DUE_CHRG" id="PC_LC_INV_DUE_CHRG_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_INV_DUE_CHRG$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_LC_INV_DUE_CHRG}"
+											disabled="false" id="PC_LC_INV_DUE_CHRG" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_LC_INV_DUE_CHRG$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_LC_INV_DUE_CHRG}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_INV_PAID_CHRG_LABEL}"
+											for="UI_M_PC_FC_INV_PAID_CHRG"
+											id="UI_M_PC_FC_INV_PAID_CHRG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_INV_PAID_CHRG$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_INV_PAID_CHRG}"
+											disabled="false" id="UI_M_PC_FC_INV_PAID_CHRG" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_INV_PAID_CHRG$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_INV_PAID_CHRG}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_INV_PAID_CHRG_LABEL}"
+											for="UI_M_PC_LC_INV_PAID_CHRG"
+											id="UI_M_PC_LC_INV_PAID_CHRG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_INV_PAID_CHRG$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_INV_PAID_CHRG}"
+											disabled="false" id="UI_M_PC_LC_INV_PAID_CHRG" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:100px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_INV_PAID_CHRG$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_INV_PAID_CHRG}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_INV_BAL_CHRG_LABEL}"
+											for="UI_M_PC_FC_INV_BAL_CHRG"
+											id="UI_M_PC_FC_INV_BAL_CHRG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_INV_BAL_CHRG$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_FC_INV_BAL_CHRG}"
+											disabled="false" id="UI_M_PC_FC_INV_BAL_CHRG" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:99px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_FC_INV_BAL_CHRG$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_FC_INV_BAL_CHRG}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_INV_BAL_CHRG_LABEL}"
+											for="UI_M_PC_LC_INV_BAL_CHRG"
+											id="UI_M_PC_LC_INV_BAL_CHRG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_INV_BAL_CHRG$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PC_LC_INV_BAL_CHRG}"
+											disabled="false" id="UI_M_PC_LC_INV_BAL_CHRG" maxlength="19"
+											rendered="true" required="false"
+											style="height:23px;width:102px;"
+											styleClass="forumRowHighlightNumeric"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PC_LC_INV_BAL_CHRG$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PC_LC_INV_BAL_CHRG}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_12_LABEL}"
+											for="PC_FLEX_12" id="PC_FLEX_12_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_12$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_12}"
+											disabled="false" id="PC_FLEX_12" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_12$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_12}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_30_LABEL}"
+											for="PC_FLEX_30" id="PC_FLEX_30_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_30$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_30}"
+											disabled="false" id="PC_FLEX_30" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_30$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_30}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_29_LABEL}"
+											for="PC_FLEX_29" id="PC_FLEX_29_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_29$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_29}"
+											disabled="false" id="PC_FLEX_29" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_29$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_29}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_01_LABEL}"
+											for="PC_FLEX_01" id="PC_FLEX_01_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_01$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_01}"
+											disabled="false" id="PC_FLEX_01" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_01$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_01}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_02_LABEL}"
+											for="PC_FLEX_02" id="PC_FLEX_02_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_02$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_02}"
+											disabled="false" id="PC_FLEX_02" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_02$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_02}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_03_LABEL}"
+											for="PC_FLEX_03" id="PC_FLEX_03_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_03$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_03}"
+											disabled="false" id="PC_FLEX_03" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_03$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_03}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_04_LABEL}"
+											for="PC_FLEX_04" id="PC_FLEX_04_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_04$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_04}"
+											disabled="false" id="PC_FLEX_04" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_04$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_04}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_05_LABEL}"
+											for="PC_FLEX_05" id="PC_FLEX_05_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_05$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_05}"
+											disabled="false" id="PC_FLEX_05" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_05$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_05}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_06_LABEL}"
+											for="PC_FLEX_06" id="PC_FLEX_06_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_06$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_06}"
+											disabled="false" id="PC_FLEX_06" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_06$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_06}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_07_LABEL}"
+											for="PC_FLEX_07" id="PC_FLEX_07_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_07$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_07}"
+											disabled="false" id="PC_FLEX_07" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_07$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_07}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_08_LABEL}"
+											for="PC_FLEX_08" id="PC_FLEX_08_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_08$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_08}"
+											disabled="false" id="PC_FLEX_08" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_08$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_08}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_09_LABEL}"
+											for="PC_FLEX_09" id="PC_FLEX_09_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_09$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_09}"
+											disabled="false" id="PC_FLEX_09" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_09$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_09}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_10_LABEL}"
+											for="PC_FLEX_10" id="PC_FLEX_10_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_10$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_10}"
+											disabled="false" id="PC_FLEX_10" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_10$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_10}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_11_LABEL}"
+											for="PC_FLEX_11" id="PC_FLEX_11_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_11$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_11}"
+											disabled="false" id="PC_FLEX_11" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_11$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_11}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_13_LABEL}"
+											for="PC_FLEX_13" id="PC_FLEX_13_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_13$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_13}"
+											disabled="false" id="PC_FLEX_13" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_13$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_13}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_14_LABEL}"
+											for="PC_FLEX_14" id="PC_FLEX_14_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_14$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_14}"
+											disabled="false" id="PC_FLEX_14" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_14$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_14}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_15_LABEL}"
+											for="PC_FLEX_15" id="PC_FLEX_15_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_15$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_15}"
+											disabled="false" id="PC_FLEX_15" maxlength="2000"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_15$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_15}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_16_LABEL}"
+											for="PC_FLEX_16" id="PC_FLEX_16_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_16$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_16}"
+											disabled="false" id="PC_FLEX_16" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_16$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_16}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_17_LABEL}"
+											for="PC_FLEX_17" id="PC_FLEX_17_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_17$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_17}"
+											disabled="false" id="PC_FLEX_17" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_17$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_17}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_18_LABEL}"
+											for="PC_FLEX_18" id="PC_FLEX_18_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_18$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_18}"
+											disabled="false" id="PC_FLEX_18" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_18$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_18}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_19_LABEL}"
+											for="PC_FLEX_19" id="PC_FLEX_19_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_19$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_19}"
+											disabled="false" id="PC_FLEX_19" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_19$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_19}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_20_LABEL}"
+											for="PC_FLEX_20" id="PC_FLEX_20_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_20$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_20}"
+											disabled="false" id="PC_FLEX_20" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_20$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_20}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_21_LABEL}"
+											for="PC_FLEX_21" id="PC_FLEX_21_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_21$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_21}"
+											disabled="false" id="PC_FLEX_21" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_21$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_21}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_22_LABEL}"
+											for="PC_FLEX_22" id="PC_FLEX_22_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_22$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_22}"
+											disabled="false" id="PC_FLEX_22" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_22$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_22}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_23_LABEL}"
+											for="PC_FLEX_23" id="PC_FLEX_23_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_23$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_23}"
+											disabled="false" id="PC_FLEX_23" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_23$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_23}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_24_LABEL}"
+											for="PC_FLEX_24" id="PC_FLEX_24_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_24$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_24}"
+											disabled="false" id="PC_FLEX_24" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_24$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_24}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_25_LABEL}"
+											for="PC_FLEX_25" id="PC_FLEX_25_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_25$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_25}"
+											disabled="false" id="PC_FLEX_25" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_25$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_25}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_26_LABEL}"
+											for="PC_FLEX_26" id="PC_FLEX_26_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_26$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_26}"
+											disabled="false" id="PC_FLEX_26" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_26$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_26}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_27_LABEL}"
+											for="PC_FLEX_27" id="PC_FLEX_27_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_27$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_27}"
+											disabled="false" id="PC_FLEX_27" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_27$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_27}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_28_LABEL}"
+											for="PC_FLEX_28" id="PC_FLEX_28_LABEL" rendered="false"
+											styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_28$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_PC_FLEX_28}"
+											disabled="false" id="PC_FLEX_28" maxlength="240"
+											rendered="false" required="false"
+											style="height:23px;width:50px;"
+											styleClass="forumRowHighlight"
+											title="#{message.PILT024$PT_IL_PREM_COLL$PC_FLEX_28$tooltip}"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.PC_FLEX_28}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PREV_INST_DUE_DT_LABEL}"
+											for="UI_M_PREV_INST_DUE_DT" id="UI_M_PREV_INST_DUE_DT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PREV_INST_DUE_DT$caption}" />
+										</td>
+										<td align="left"><rich:calendar
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PREV_INST_DUE_DT}"
+											datePattern="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true"
+											id="UI_M_PREV_INST_DUE_DT" inputSize="30" rendered="true"
+											required="false" style="height:px;width:px;"
+											styleClass="calendarstyleclass"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PREV_INST_DUE_DT}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PREV_PAY_DT_LABEL}"
+											for="UI_M_PREV_PAY_DT" id="UI_M_PREV_PAY_DT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_PREV_PAY_DT$caption}" />
+										</td>
+										<td align="left"><rich:calendar
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_PREV_PAY_DT}"
+											datePattern="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true"
+											id="UI_M_PREV_PAY_DT" inputSize="30" rendered="true"
+											required="false" style="height:px;width:px;"
+											styleClass="calendarstyleclass"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_PREV_PAY_DT}" />
+										</td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_CURR_INV_DUE_DT_LABEL}"
+											for="UI_M_CURR_INV_DUE_DT" id="UI_M_CURR_INV_DUE_DT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_CURR_INV_DUE_DT$caption}" />
+										</td>
+										<td align="left"><rich:calendar
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_CURR_INV_DUE_DT}"
+											datePattern="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true"
+											id="UI_M_CURR_INV_DUE_DT" inputSize="30" rendered="true"
+											required="false" style="height:px;width:px;"
+											styleClass="calendarstyleclass"
+											value="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.PT_IL_PREM_COLL_BEAN.UI_M_CURR_INV_DUE_DT}" />
+										</td>
+									</tr>
+								</table>
+								</td>
+								<td width="10%" vAlign="top">
+								<table>
+									<tr>
+										<td><h:commandButton
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_BUT_APPROVE}"
+											disabled="false" id="UI_M_BUT_APPROVE" rendered=""
+											styleClass="button"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_APPROVE$tooltip}"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_APPROVE$caption}" />
+										</td>
+									</tr>
+									<tr>
+										<td><h:commandButton
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_BUT_BROKER_DTLS}"
+											disabled="false" id="UI_M_BUT_BROKER_DTLS" rendered=""
+											styleClass="button"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_BROKER_DTLS$tooltip}"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_BROKER_DTLS$caption}" />
+										</td>
+									</tr>
+									<tr>
+										<td><h:commandButton
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_BUT_CHG_DTL}"
+											disabled="false" id="UI_M_BUT_CHG_DTL" rendered=""
+											styleClass="button"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_CHG_DTL$tooltip}"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_CHG_DTL$caption}" />
+										</td>
+									</tr>
+									<tr>
+										<td><h:commandButton
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_BUT_CVR_DTL}"
+											disabled="false" id="UI_M_BUT_CVR_DTL" rendered=""
+											styleClass="button"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_CVR_DTL$tooltip}"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_CVR_DTL$caption}" />
+										</td>
+									</tr>
+									<tr>
+										<td><h:commandButton
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_BUT_FAC}"
+											disabled="false" id="UI_M_BUT_FAC" rendered=""
+											styleClass="button"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_FAC$tooltip}"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_FAC$caption}" />
+										</td>
+									</tr>
+									<tr>
+										<td><h:commandButton
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_BUT_INT_DTLS}"
+											disabled="false" id="UI_M_BUT_INT_DTLS" rendered=""
+											styleClass="button"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_INT_DTLS$tooltip}"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_INT_DTLS$caption}" />
+										</td>
+									</tr>
+									<tr>
+										<td><h:commandButton
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_BUT_INVEST_DETAILS}"
+											disabled="false" id="UI_M_BUT_INVEST_DETAILS" rendered=""
+											styleClass="button"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_INVEST_DETAILS$tooltip}"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_INVEST_DETAILS$caption}" />
+										</td>
+									</tr>
+									<tr>
+										<td><h:commandButton
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_BUT_PYMT_DTLS}"
+											disabled="false" id="UI_M_BUT_PYMT_DTLS" rendered=""
+											styleClass="button"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_PYMT_DTLS$tooltip}"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_PYMT_DTLS$caption}" />
+										</td>
+									</tr>
+									<tr>
+										<td><h:commandButton
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PREM_COLL_ACTION_BEAN.COMP_UI_M_BUT_RNEW_PREM_COLL}"
+											disabled="false" id="UI_M_BUT_RNEW_PREM_COLL" rendered=""
+											styleClass="button"
+											title="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_RNEW_PREM_COLL$tooltip}"
+											value="#{message.PILT024$PT_IL_PREM_COLL$UI_M_BUT_RNEW_PREM_COLL$caption}" />
+										</td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\save.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\savenext.GIF" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\firstrec.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\prevpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\nextpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\lastRecord.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\navigation.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</h:form>
+			</table>
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,1047 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM050_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_BANK_ACCOUNT_SETUP" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM050_APAC_SEARCH_PAGE_ACTION.backToSearch}"
+											id="AUTOID_12222" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="serial_4" 
+											styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="serial_5"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.saveRecord}"
+											id="AUTOID_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_2" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.UpdateRecord}"
+											id="AUTOID_4" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.DeleteRecord}"
+											id="AUTOID_7" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_10" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTOID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="errormsgtable" width="100%">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.messageStyle}"
+											value="#{commonmsg.errorPanel$heading} #{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.errorMap['current'] !=null? PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.errorMap['current']:PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.warningMap['current']}" />
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.globalMsgRender}"
+										styleClass="ErrorMessages" />
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.warningMessages}" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td>Payment Account Setup</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table align="center" class="noborder" width="100%">
+							<tr>
+								<td valign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowfreeze" colspan="4" />
+										<td class="oddrowfreeze" ><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_FRZ_FLAG_LABEL}"
+											for="BAS_FRZ_FLAG" id="BAS_FRZ_FLAG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_FRZ_FLAG$caption}" />
+										<h:selectBooleanCheckbox
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_FRZ_FLAG}"
+											disabled="false" id="BAS_FRZ_FLAG" rendered="true"
+											styleClass="forumRowHighlight"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_FRZ_FLAG$tooltip}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.CURR_FRZ_FLAG_NUM_VALUE}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.validateFRZ_FLAG}"
+												event="onclick" id="AUTOID_10_CHK" immediate="true" />
+										</h:selectBooleanCheckbox></td>
+										
+									</tr>
+									<tr>
+										<td width="20%" class="evenrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_DIVN_FM_CODE_LABEL}"
+											for="BAS_DIVN_FM_CODE" id="BAS_DIVN_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_DIVN_FM_CODE$caption}" />
+										</td>
+										<td width="28%" class="evenrow"><h:inputText 
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_DIVN_FM_CODE}"
+											disabled="false" id="BAS_DIVN_FM_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="input"   
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_DIVN_FM_CODE_WHEN_VALIDATE_ITEM}"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_DIVN_FM_CODE$tooltip}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_DIVN_FM_CODE}">
+											<a4j:support 
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.actionListenerBAS_DIVN_FM}"
+												event="onblur" id="AUTOID_22" immediate="true"
+												reRender="BAS_DIVN_FM_CODE,BAS_DIVN_FM_CODE_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="BAS_DIVN_FM_CODE" height="200"
+											id="BAS_DIVN_FM_CODE_LOV"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.lovBAS_DIVN_FM_CODE}"
+											var="Divn" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_23" value="#{Divn.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_24" value="#{Divn.name}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_25" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td width="4" class="evenrowright"/>
+										<td width="20%" class="evenrow" />
+										<td width="28%" class="evenrowright"/>
+										
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_DIVN_TO_CODE_LABEL}"
+											for="BAS_DIVN_TO_CODE" id="BAS_DIVN_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_DIVN_TO_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_DIVN_TO_CODE}"
+											disabled="false" id="BAS_DIVN_TO_CODE" maxlength="12"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_DIVN_TO_CODE_WHEN_VALIDATE_ITEM}"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_DIVN_TO_CODE$tooltip}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_DIVN_TO_CODE}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.actionListenerBAS_DIVN_TO}"
+												event="onblur" id="AUTOID_28" immediate="true"
+												reRender="BAS_DIVN_TO_CODE,BAS_DIVN_TO_CODE_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="BAS_DIVN_TO_CODE" height="200"
+											id="BAS_DIVN_TO_CODE_LOV"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.lovBAS_DIVN_TO_CODE}"
+											var="Divn" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_26" value="#{Divn.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_27" value="#{Divn.name}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_29" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright" />
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_DEPT_FM_CODE_LABEL}"
+											for="BAS_DEPT_FM_CODE" id="BAS_DEPT_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_DEPT_FM_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_DEPT_FM_CODE}"
+											disabled="false" id="BAS_DEPT_FM_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_DEPT_FM_CODE_WHEN_VALIDATE_ITEM}"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_DEPT_FM_CODE$tooltip}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_DEPT_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.actionListenerBAS_DEPT_FM}"
+												event="onblur" id="AUTOID_30" immediate="true"
+												reRender="UI_M_DEPT_FM_DESC,BAS_DEPT_FM_CODE_LOV,BAS_DEPT_FM_CODE,errorPanel">
+											</a4j:support>
+										</h:inputText> <h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_UI_M_DEPT_FM_DESC}"
+											disabled="true" id="UI_M_DEPT_FM_DESC" maxlength="100"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_DEPT_FM_DESC}" />
+										<h:graphicImage id="AUTOID_34" styleClass="searchimg"
+											value="./../../images/Lov.gif" /> <rich:suggestionbox
+											for="BAS_DEPT_FM_CODE" height="200" id="BAS_DEPT_FM_CODE_LOV"
+											immediate="true" nothingLabel="No Value Available"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.DepartmentSuggestionBox}"
+											var="Dept" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_31" value="#{Dept.lovCode}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_32" value="#{Dept.lovName}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTOID_33sds"
+												immediate="true" reRender="UI_M_DEPT_FM_DESC">
+												<f:setPropertyActionListener id="SELFID_1"
+													target="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_DEPT_FM_DESC}"
+													value="#{Dept.lovName}" />
+											</a4j:support>
+										</rich:suggestionbox></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright" />
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_DEPT_TO_CODE_LABEL}"
+											for="BAS_DEPT_TO_CODE" id="BAS_DEPT_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_DEPT_TO_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_DEPT_TO_CODE}"
+											disabled="false" id="BAS_DEPT_TO_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_DEPT_TO_CODE_WHEN_VALIDATE_ITEM}"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_DEPT_TO_CODE$tooltip}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_DEPT_TO_CODE}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.actionListenerBAS_DEPT_TO}"
+												event="onblur" id="AUTOID_35" immediate="true"
+												reRender="UI_M_DEPT_TO_DESC,BAS_DEPT_TO_CODE_LOV,BAS_DEPT_TO_CODE,errorPanel">
+											</a4j:support>
+										</h:inputText> <h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_UI_M_DEPT_TO_DESC}"
+											disabled="true" id="UI_M_DEPT_TO_DESC" maxlength="100"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_DEPT_TO_DESC}" />
+										<h:graphicImage id="AUTOID_39" styleClass="searchimg"
+											value="./../../images/Lov.gif" /> <rich:suggestionbox
+											for="BAS_DEPT_TO_CODE" height="200" id="BAS_DEPT_TO_CODE_LOV"
+											immediate="true" nothingLabel="No Value Available"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.DepartmentSuggestionBox}"
+											var="Dept" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_36" value="#{Dept.lovCode}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_37" value="#{Dept.lovName}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTOID_38sds"
+												immediate="true" reRender="UI_M_DEPT_TO_DESC">
+												<f:setPropertyActionListener id="SELFID_2"
+													target="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_DEPT_TO_DESC}"
+													value="#{Dept.lovName}" />
+											</a4j:support>
+										</rich:suggestionbox></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright" />
+									</tr>
+									<!-- 
+										<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_TXN_TYPE_LABEL}"
+											for="BAS_TXN_TYPE" id="COMP_BAS_TXN_TYPE_LABEL"
+											rendered="false" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_TXN_TYPE$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_TXN_TYPE}"
+											disabled="false" id="BAS_TXN_TYPE" rendered="false"
+											required="false" styleClass="input" title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_TXN_TYPE$tooltip}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_TXN_TYPE}">
+											<f:selectItems
+												value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_TXN_TYPE_LIST}" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrow"></td>
+										<td class="oddrowright"></td>
+									</tr>
+								 -->
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_SETUP_FOR_LABEL}"
+											for="BAS_SETUP_FOR" id="BAS_SETUP_FOR_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_SETUP_FOR$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_SETUP_FOR}"
+											disabled="false" id="BAS_SETUP_FOR"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_SETUP_FOR$tooltip}"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_SETUP_FOR_WHEN_VALIDATE_ITEM}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_SETUP_FOR}">
+											<!-- Commented by ganesh on 16-06-2017, ZBILQC-1719874 -->
+											<!-- <f:selectItem id="AUTOID_40" itemLabel="Select"
+												itemValue="" /> -->
+											<f:selectItems id="SELFID_1"
+												value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_SETUP_FOR_LIST}" />
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_26_SETUP" immediate="true"
+												reRender="errorPanel,BAS_CUST_BANK_CODE_LOV,
+												BAS_OUR_BANK_CODE,BAS_CUST_BANK_CODE,BAS_CUST_BANK_CODE_MANDATORY" />
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onchange" id="AUTOID_26_1SETUP" immediate="true"
+												reRender="errorPanel,BAS_CUST_BANK_CODE_LOV,
+												BAS_OUR_BANK_CODE,BAS_CUST_BANK_CODE,BAS_CUST_BANK_CODE_MANDATORY" />
+										</h:selectOneMenu></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_ASSURED_TYPE_LABEL}"
+											for="BAS_ASSURED_TYPE" id="BAS_ASSURED_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_ASSURED_TYPE$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_ASSURED_TYPE}"
+											disabled="false" id="BAS_ASSURED_TYPE"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_ASSURED_TYPE$tooltip}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_ASSURED_TYPE}">
+											<f:selectItem id="AUTOID_41" itemLabel="--Select--"
+												itemValue="" />
+											<f:selectItems id="SELFID_2"
+												value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_ASSURED_TYPE_LIST}" />
+										</h:selectOneMenu></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+									</tr>
+									<!-- 		<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_MAX_PAYEE_CHAR_LABEL}"
+											for="BAS_MAX_PAYEE_CHAR" id="BAS_MAX_PAYEE_CHAR_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_MAX_PAYEE_CHAR$caption}" />
+										<h:graphicImage id="AUTOID_42" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_MAX_PAYEE_CHAR}"
+											disabled="false" id="BAS_MAX_PAYEE_CHAR" maxlength="5"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_MAX_PAYEE_CHAR$tooltip}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_MAX_PAYEE_CHAR}" />
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+									</tr> -->
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_CUST_BANK_CODE_LABEL}"
+											for="BAS_CUST_BANK_CODE" id="BAS_CUST_BANK_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_CUST_BANK_CODE$caption}" >
+											<h:graphicImage id="AUTOID_240" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</h:outputLabel>
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_CUST_BANK_CODE}"
+											disabled="false" id="BAS_CUST_BANK_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_CUST_BANK_CODE$tooltip}"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_CUST_BANK_CODE_WHEN_VALIDATE_ITEM}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_CUST_BANK_CODE}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_43" immediate="true"
+												reRender="UI_M_CUST_BANK_DESC,BAS_CUST_BANK_CODE_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_UI_M_CUST_BANK_DESC}"
+											disabled="true" id="UI_M_CUST_BANK_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_CUST_BANK_DESC}" />
+										<rich:suggestionbox for="BAS_CUST_BANK_CODE" height="200"
+											id="BAS_CUST_BANK_CODE_LOV"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.lovBAS_CUST_BANK_CODE}"
+											var="Dept" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_44" value="#{Dept.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_45" value="#{Dept.name}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTOID_46" immediate="true"
+												reRender="UI_M_CUST_BANK_DESC">
+												<f:setPropertyActionListener id="SELFID_3"
+													target="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_CUST_BANK_DESC}"
+													value="#{Dept.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_47" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright" />
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_OUR_BANK_CODE_LABEL}"
+											for="BAS_OUR_BANK_CODE" id="BAS_OUR_BANK_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_OUR_BANK_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_OUR_BANK_CODE}"
+											disabled="false" id="BAS_OUR_BANK_CODE" 
+											maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_OUR_BANK_CODE$tooltip}"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_OUR_BANK_CODE_WHEN_VALIDATE_ITEM}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_OUR_BANK_CODE}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_48" immediate="true"
+												reRender="UI_M_OUR_BANK_DESC,BAS_OUR_BANK_CODE_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_UI_M_OUR_BANK_DESC}"
+											disabled="true" id="UI_M_OUR_BANK_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_OUR_BANK_DESC}" />
+										<rich:suggestionbox for="BAS_OUR_BANK_CODE" height="200"
+											id="BAS_OUR_BANK_CODE_LOV"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.lovBAS_OUR_BANK_CODE}"
+											var="Dept" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_49" value="#{Dept.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_50" value="#{Dept.name}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTOID_51" immediate="true"
+												reRender="UI_M_OUR_BANK_DESC">
+												<f:setPropertyActionListener id="SELFID_4"
+													target="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_OUR_BANK_DESC}"
+													value="#{Dept.name}" />
+											</a4j:support>
+										</rich:suggestionbox><h:graphicImage id="AUTOID_52" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright" />
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_MAIN_ACNT_CODE_LABEL}"
+											for="BAS_MAIN_ACNT_CODE" id="BAS_MAIN_ACNT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_MAIN_ACNT_CODE$caption}" />
+										<h:graphicImage id="AUTOID_53" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_MAIN_ACNT_CODE}"
+											disabled="false" id="BAS_MAIN_ACNT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_MAIN_ACNT_CODE$tooltip}"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_MAIN_ACNT_CODE_WHEN_VALIDATE_ITEM}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_MAIN_ACNT_CODE}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_54" immediate="true"
+												reRender="UI_M_MAIN_ACNT_DESC,BAS_MAIN_ACNT_CODE_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_UI_M_MAIN_ACNT_DESC}"
+											disabled="true" id="UI_M_MAIN_ACNT_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_MAIN_ACNT_DESC}" />
+										<rich:suggestionbox for="BAS_MAIN_ACNT_CODE" height="200"
+											id="BAS_MAIN_ACNT_CODE_LOV"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.lovBAS_MAIN_ACNT_CODE}"
+											var="Dept" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_55" value="#{Dept.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_56" value="#{Dept.name}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTOID_57" immediate="true"
+												reRender="UI_M_MAIN_ACNT_DESC">
+												<f:setPropertyActionListener id="SELFID_5"
+													target="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_MAIN_ACNT_DESC}"
+													value="#{Dept.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_58" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow" />
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_SUB_ACNT_CODE_LABEL}"
+											for="BAS_SUB_ACNT_CODE" id="BAS_SUB_ACNT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_SUB_ACNT_CODE$caption}" />
+										<h:graphicImage id="AUTOID_234" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_SUB_ACNT_CODE}"
+											disabled="false" id="BAS_SUB_ACNT_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_SUB_ACNT_CODE$tooltip}"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_SUB_ACNT_CODE_WHEN_VALIDATE_ITEM}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_SUB_ACNT_CODE}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_59" immediate="true"
+												reRender="UI_M_SUB_ACNT_DESC,errorPanel" />
+										</h:inputText> <h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_UI_M_SUB_ACNT_DESC}"
+											disabled="true" id="UI_M_SUB_ACNT_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_SUB_ACNT_DESC}" />
+										<rich:suggestionbox for="BAS_SUB_ACNT_CODE" height="200"
+											id="BAS_SUB_ACNT_CODE_LOV"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.lovBAS_SUB_ACNT_CODE}"
+											var="lov" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_60" value="#{lov.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_61" value="#{lov.name}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTOID_62" immediate="true"
+												reRender="UI_M_SUB_ACNT_DESC">
+												<f:setPropertyActionListener id="SELFID_6"
+													target="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_SUB_ACNT_DESC}"
+													value="#{lov.code}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_63" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright" />
+									</tr>
+									<!-- <tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_VALUE_FROM_LABEL}"
+											for="BAS_VALUE_FROM" id="BAS_VALUE_FROM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_VALUE_FROM$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_VALUE_FROM}"
+											disabled="false" id="BAS_VALUE_FROM" maxlength="14"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_VALUE_FROM$tooltip}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_VALUE_FROM}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.VALIDATE_BAS_VALUE_FROM}"
+												event="onblur" id="AUTOID_64" immediate="true"
+												reRender="BAS_VALUE_FROM">
+											</a4j:support>
+										</h:inputText> <h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_VALUE_TO}"
+											disabled="false" id="BAS_VALUE_TO" maxlength="22"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_VALUE_TO}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.VALIDATE_BAS_VALUE_TO}"
+												event="onblur" id="AUTOID_65" immediate="true"
+												reRender="BAS_VALUE_TO">
+											</a4j:support>
+										</h:inputText></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright" />
+										<td class="evenrow" />
+									</tr>  -->
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_DIVN_CODE_LABEL}"
+											for="BAS_DIVN_CODE" id="BAS_DIVN_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_DIVN_CODE$caption}" />
+											<h:graphicImage id="AUTOID_2401" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_DIVN_CODE}"
+											disabled="false" id="BAS_DIVN_CODE" maxlength="12"
+											rendered="true" styleClass="inputsmall"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_DIVN_CODE$tooltip}"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_DIVN_CODE_WHEN_VALIDATE_ITEM}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_DIVN_CODE}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_67" immediate="true"
+												reRender="errorPanel,UI_M_DIVN_DESC">
+											</a4j:support>
+										</h:inputText> <h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_UI_M_DIVN_DESC}"
+											disabled="true" id="UI_M_DIVN_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_DIVN_DESC}" />
+										<rich:suggestionbox for="BAS_DIVN_CODE" height="200"
+											id="BAS_DIVN_CODE_LOV"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.lovBAS_DIVN_CODE}"
+											var="Dept" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_68" value="#{Dept.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_69" value="#{Dept.name}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTOID_70" immediate="true"
+												reRender="UI_M_DIVN_DESC">
+												<f:setPropertyActionListener id="SELFID_7"
+													target="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_DIVN_DESC}"
+													value="#{Dept.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_71" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_DEPT_CODE_LABEL}"
+											for="BAS_DEPT_CODE" id="BAS_DEPT_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_DEPT_CODE$caption}" />
+											<h:graphicImage id="AUTOID_2402" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_DEPT_CODE}"
+											disabled="false" id="BAS_DEPT_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_DEPT_CODE$tooltip}"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_DEPT_CODE_WHEN_VALIDATE_ITEM}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_DEPT_CODE}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_72" immediate="true"
+												reRender="UI_M_DEPT_DESC,BAS_DEPT_CODE_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_UI_M_DEPT_DESC}"
+											disabled="true" id="UI_M_DEPT_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_DEPT_DESC}" />
+										<rich:suggestionbox fetchValue="#{Dept.code}"
+											for="BAS_DEPT_CODE" height="200" id="BAS_DEPT_CODE_LOV"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.lovBAS_DEPT_CODE}"
+											var="Dept" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_73" value="#{Dept.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_74" value="#{Dept.name}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTOID_70_DEPT"
+												immediate="true" reRender="UI_M_DEPT_DESC">
+												<f:setPropertyActionListener id="SELFID_8"
+													target="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_DEPT_DESC}"
+													value="#{Dept.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_75" styleClass="searchimg"
+											value="./../../images/Lov.gif" /> <!--<td id="td-background" align="left">
+						--></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright" />
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_ANLY_CODE_1_LABEL}"
+											for="BAS_ANLY_CODE_1" id="BAS_ANLY_CODE_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_ANLY_CODE_1$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_ANLY_CODE_1}"
+											disabled="false" id="BAS_ANLY_CODE_1" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_ANLY_CODE_1$tooltip}"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_ANLY_CODE_1_WHEN_VALIDATE_ITEM}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_ANLY_CODE_1}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_76" immediate="true"
+												reRender="UI_M_ANLY_1_DESC,BAS_ANLY_CODE_1_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_UI_M_ANLY_1_DESC}"
+											disabled="true" id="UI_M_ANLY_1_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_ANLY_1_DESC}" />
+										<rich:suggestionbox for="BAS_ANLY_CODE_1" height="200"
+											id="BAS_ANLY_CODE_1_LOV"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.lovBAS_ANLY_CODE_1}"
+											var="Dept" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_77" value="#{Dept.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_78" value="#{Dept.name}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTOID_79" immediate="true"
+												reRender="UI_M_ANLY_1_DESC">
+												<f:setPropertyActionListener id="SELFID_9"
+													target="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_ANLY_1_DESC}"
+													value="#{Dept.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_80" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_ANLY_CODE_2_LABEL}"
+											for="BAS_ANLY_CODE_2" id="BAS_ANLY_CODE_2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_ANLY_CODE_2$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_ANLY_CODE_2}"
+											disabled="false" id="BAS_ANLY_CODE_2" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_ANLY_CODE_2$tooltip}"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_ANLY_CODE_2_WHEN_VALIDATE_ITEM}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_ANLY_CODE_2}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_81" immediate="true"
+												reRender="UI_M_ANLY_2_DESC,BAS_ANLY_CODE_2_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_UI_M_ANLY_2_DESC}"
+											disabled="true" id="UI_M_ANLY_2_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_ANLY_2_DESC}">
+										</h:inputText> <rich:suggestionbox for="BAS_ANLY_CODE_2" height="200"
+											id="BAS_ANLY_CODE_2_LOV"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.lovBAS_ANLY_CODE_2}"
+											var="Dept" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_82" value="#{Dept.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_83" value="#{Dept.name}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTOID_84" immediate="true"
+												reRender="UI_M_ANLY_2_DESC">
+												<f:setPropertyActionListener id="SELFID_10"
+													target="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_ANLY_2_DESC}"
+													value="#{Dept.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="AUTOID_85" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_ACTY_CODE_1_LABEL}"
+											for="BAS_ACTY_CODE_1" id="BAS_ACTY_CODE_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_ACTY_CODE_1$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_ACTY_CODE_1}"
+											disabled="false" id="BAS_ACTY_CODE_1" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_ACTY_CODE_1$tooltip}"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_ACTY_CODE_1_WHEN_VALIDATE_ITEM}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_ACTY_CODE_1}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_81_ACTY" immediate="true"
+												reRender="UI_M_ACTY_1_DESC,BAS_ACTY_CODE_1_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="BAS_ACTY_CODE_1" height="200"
+											id="BAS_ACTY_CODE_1_LOV"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.lovBAS_ACTY_CODE_1}"
+											var="Dept" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_82_ACTY" value="#{Dept.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_83_ACTY" value="#{Dept.name}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTOID_84_ACTY"
+												immediate="true" reRender="UI_M_ACTY_1_DESC">
+												<f:setPropertyActionListener id="SELFID_11"
+													target="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_ACTY_1_DESC}"
+													value="#{Dept.name}" />
+											</a4j:support>
+										</rich:suggestionbox><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_UI_M_ACTY_1_DESC}"
+											disabled="true" id="UI_M_ACTY_1_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_ACTY_1_DESC}" />
+										<h:graphicImage id="AUTOID_86" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_ACTY_CODE_2_LABEL}"
+											for="BAS_ACTY_CODE_2" id="BAS_ACTY_CODE_2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_ACTY_CODE_2$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_BAS_ACTY_CODE_2}"
+											disabled="false" id="BAS_ACTY_CODE_2" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP$BAS_ACTY_CODE_2$tooltip}"
+											validator="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.BAS_ACTY_CODE_2_WHEN_VALIDATE_ITEM}"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.BAS_ACTY_CODE_2}">
+											<a4j:support
+												actionListener="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.fireFieldValidation}"
+												event="onblur" id="AUTOID_81_ACTY2" immediate="true"
+												reRender="UI_M_ACTY_2_DESC,BAS_ACTY_CODE_2_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="BAS_ACTY_CODE_2" height="200"
+											id="BAS_ACTY_CODE_2_LOV"
+											suggestionAction="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.lovBAS_ACTY_CODE_2}"
+											var="Dept" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_82_ACTY2" value="#{Dept.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_83_ACTY2" value="#{Dept.name}" />
+											</h:column>
+											<a4j:support event="onselect" id="AUTOID_84_ACTY2"
+												immediate="true" reRender="UI_M_ACTY_2_DESC">
+												<f:setPropertyActionListener id="SELFID_12"
+													target="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_ACTY_2_DESC}"
+													value="#{Dept.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.COMP_UI_M_ACTY_2_DESC}"
+											disabled="true" id="UI_M_ACTY_2_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.UI_M_ACTY_2_DESC}" />
+										<h:graphicImage id="AUTOID_87" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+									</tr>
+									<tr>
+										<h:inputHidden
+											value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.PM_IL_BANK_ACCOUNT_SETUP_BEAN.ROWID}" />
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<td valign="top" width="20%">
+					<table class="noborder" />
+					</td>
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.saveRecord}"
+											id="AUTOID_88" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_89" 
+											styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTOID_90"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.UpdateRecord}"
+											id="AUTOID_91" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_92"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_93"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.DeleteRecord}"
+											id="AUTOID_94" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_95"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_96"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_97" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_98"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTOID_99"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_100" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_101"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTOID_102"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_103" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_104"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_105"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_106" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_107"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_108"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

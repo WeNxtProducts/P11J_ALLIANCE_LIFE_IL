@@ -1,0 +1,155 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PM092_A" var="message" />
+	<table width="100%"  cellpadding="0" cellspacing="0"	border="0" >
+		<!-- add header row -->
+		<tr>
+			
+		</tr>
+
+		<!-- Body row -->
+		<tr>
+			<td><h:form id="coverSearchPage">
+				
+				<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err" value="#{commonmsg.errorPanel$heading} #{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.errorMap['current'] !=null? PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.errorMap['current']:PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" value="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.errorMessages}"
+								style="color: red; font-style: italic;font-weight:bold;"
+								escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.globalMsgRender}" />	
+							<h:outputText id="warningMessages" 
+								value="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.warningMessages}"
+								style="color: green; font-style: italic;font-weight:bold;" 
+								escape="false" />		
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>	
+				
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%"  cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td>
+							<h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/>
+						</td>
+						<td>
+							<h:outputText value="#{message.PM092_APAC$PM_AGENT_CONTEST_CONTEST_HEADER_SERACH_PAGE$serchpagecontestcodetitle}" />
+							<h:inputText
+							value="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.PM_AGENT_CONTEST_HDR_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE1}" />
+						</td>
+						<td>
+							<h:outputText value="#{message.PM092_APAC$PM_AGENT_CONTEST_CONTEST_HEADER_SERACH_PAGE$serchpagecontestleveltitle}" />
+							<h:inputText
+							value="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.PM_AGENT_CONTEST_HDR_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE2}" />
+						</td>
+						<td><a4j:commandButton
+							value="#{commonmsg.searchButton$caption}" id="a4link" styleClass="button">
+							<a4j:support
+								action="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.fetchButtonClick}"
+								event="onclick" reRender="dataTableId">
+							</a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.recordList}"
+					var="PM_AGENT_CONTEST_HDR_BEAN" cellpadding="5px" rows="10"
+					border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+					<rich:column
+						filterValue="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.PM_AGENT_CONTEST_HDR_SEARCH_PAGE_BEAN.FILTER_BY_VALUE1}"
+						filterBy="#{PM_AGENT_CONTEST_HDR_BEAN.ACH_CODE}"
+						sortBy="#{PM_AGENT_CONTEST_HDR_BEAN.ACH_CODE}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PM092_APAC$PM_AGENT_CONTEST_CONTEST_HEADER_SERACH_PAGE$searchpagecolumncontestcodetitle}" />
+						</f:facet>
+						<h:commandLink
+							action="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.updateOrInsertRecordLinkClicked}">
+			
+								<h:outputText value="#{PM_AGENT_CONTEST_HDR_BEAN.ACH_CODE}" />
+				
+							<f:param name="CURRENT_ROWID"
+								value="#{PM_AGENT_CONTEST_HDR_BEAN.ROWID}" />
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column
+						filterValue="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.PM_AGENT_CONTEST_HDR_SEARCH_PAGE_BEAN.FILTER_BY_VALUE2}"
+						filterBy="#{PM_AGENT_CONTEST_HDR_BEAN.ACH_LEVEL}"
+						sortBy="#{PM_AGENT_CONTEST_HDR_BEAN.ACH_LEVEL}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PM092_APAC$PM_AGENT_CONTEST_CONTEST_HEADER_SERACH_PAGE$searchpagecolumncontestleveltitle}" />
+						</f:facet>
+						<h:outputText value="#{PM_AGENT_CONTEST_HDR_BEAN.ACH_LEVEL} " />
+					</rich:column>
+
+					<rich:column
+					filterValue="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.PM_AGENT_CONTEST_HDR_SEARCH_PAGE_BEAN.FILTER_BY_VALUE3}"
+						filterBy="#{PM_AGENT_CONTEST_HDR_BEAN.ACH_DESC}"
+						sortBy="#{PM_AGENT_CONTEST_HDR_BEAN.ACH_DESC}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PM092_APAC$PM_AGENT_CONTEST_CONTEST_HEADER_SERACH_PAGE$searchpagecolumndescriptiontitle}" />
+						</f:facet>
+						<h:outputText value="#{PM_AGENT_CONTEST_HDR_BEAN.ACH_DESC} " />
+					</rich:column>
+
+					<rich:column 
+					filterValue="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.PM_AGENT_CONTEST_HDR_SEARCH_PAGE_BEAN.FILTER_BY_VALUE4}"
+						filterBy="#{PM_AGENT_CONTEST_HDR_BEAN.ACH_LONG_DESC}"
+						sortBy="#{PM_AGENT_CONTEST_HDR_BEAN.ACH_LONG_DESC}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PM092_APAC$PM_AGENT_CONTEST_CONTEST_HEADER_SERACH_PAGE$searchpagecolumnlongdescriptiontitle}" />
+						</f:facet>						
+						<h:outputText value="#{PM_AGENT_CONTEST_HDR_BEAN.ACH_LONG_DESC} " />
+					</rich:column>
+
+				</rich:dataTable>
+				<table width="100%" border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td align="left">
+						<h:commandButton value="#{message.PM092_APAC$PM_AGENT_CONTEST_CONTEST_HEADER_SERACH_PAGE$searchpagecommandlinkinsertcaption}"
+						 styleClass="button"	action="#{PM092_A_PM_AGENT_CONTEST_HDR_SEARCH_PAGE_ACTION.updateOrInsertRecordLinkClicked}">
+						</h:commandButton></td>
+					</tr>
+				</table>
+			</h:form></td>
+		</tr>
+
+		<!-- add footer to the page-->
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:a4j="http://richfaces.org/a4j" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:rich="http://richfaces.org/rich" xmlns:ui="http://java.sun.com/jsf/facelets" template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	
+<h:form id="RIPoolSetup"><table class="noborder" width="100%">
+		<!-- add header row -->
+		<tr>
+		</tr>
+		
+		<!-- add footer to the page-->
+		<tr>
+		</tr>
+	
+			<!-- Body row -->
+			<tr>
+				<td colspan="3" height="20" vAlign="top" width="100%">
+				<rich:simpleTogglePanel id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err" styleClass="#{PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.messageStyle}" value="#{commonmsg.errorPanel$heading} #{PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.errorMap['current'] !=null? PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.errorMap['current']:PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.warningMap['current']}"/>
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages" style="color: red; font-style: italic;font-weight:bold;" styleClass="ErrorMessages" value="#{PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.errorMessages}"/>
+							<h:messages id="msg" rendered="#{PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.globalMsgRender}" style="color: red;font-style: italic;font-weight:bold;"/>
+							<h:outputText escape="false" id="warningMessages" style="color: green; font-style: italic;font-weight:bold;" styleClass="WarningMessages" value="#{PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.warningMessages}"/>
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td><!-- initial filter to search and list -->
+				<table class="noborder" id="masthead" width="100%">
+					<tr>
+						<td>Initial Search Criteria</td>
+						<td>RI Pool Code: <h:inputText value="#{PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.PM_IL_RI_POOL_SETUP_SEARCH_PAGE_BEAN.riPoolCode}"/>
+						</td>
+
+						<td><a4j:commandButton id="a4link" styleClass="button" value="#{commonmsg.searchButton$caption}">
+							<a4j:support action="#{PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.fetchRecords}" event="onclick" id="AUTOID_1" reRender="dataTableId">
+							</a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table --> <rich:dataTable border="1" cellpadding="5px" id="dataTableId" rows="10" value="#{PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.PM_IL_RI_POOL_SETUP_SEARCH_PAGE_BEAN.riPoolSetupArrayList}" var="RIPoolSetup" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller align="right" id="dsID" pageIndexVar="index" pagesVar="pages">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+
+					<rich:column filterBy="#{RIPoolSetup.RPS_CODE}" filterEvent="onkeyup" filterValue="#{PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.PM_IL_RI_POOL_SETUP_SEARCH_PAGE_BEAN.storedRIPoolCode}" sortBy="#{RIPoolSetup.RPS_CODE}">
+						<f:facet name="header">
+							<h:outputText id="AUTOID_2" value="RI Pool Code"/>
+						</f:facet>
+						<h:commandLink action="#{PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.navigationToMainPage}" id="AUTOID_3">
+								<h:outputText id="AUTOID_4" value="#{RIPoolSetup.RPS_CODE}"/>
+							<f:param name="rowid" value="#{RIPoolSetup.ROWID}"/>
+
+						</h:commandLink>
+					</rich:column>
+					<rich:column filterBy="#{RIPoolSetup.RPS_DESC}" filterEvent="onkeyup" filterValue="#{PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.PM_IL_RI_POOL_SETUP_SEARCH_PAGE_BEAN.storedRIPoolDesc}" sortBy="#{RIPoolSetup.RPS_DESC}">
+						<f:facet name="header">
+							<h:outputText id="AUTOID_5" value="RI Pool Desc"/>
+						</f:facet>
+						<h:outputText id="AUTOID_6" value="#{RIPoolSetup.RPS_DESC}"/>
+					</rich:column>
+				</rich:dataTable>
+
+				<table class="noborder" width="100%">
+					<tr>
+						<td align="left"><h:commandButton action="#{PILM043_PM_IL_RI_POOL_SETUP_SEARCH_PAGE_ACTION.goToRIPoolSetup}" styleClass="button" value="Insert">
+						</h:commandButton></td>
+					</tr>
+				</table>
+
+				</td>
+			</tr>
+		</table></h:form></f:view>
+</ui:define>
+</ui:composition>

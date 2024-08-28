@@ -1,0 +1,627 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation letter" pageWidth="595" pageHeight="842" columnWidth="545" leftMargin="30" rightMargin="20" topMargin="20" bottomMargin="20" uuid="10db1549-ea3b-49f3-8cb2-dabb66d2a072">
+	<property name="ireport.zoom" value="1.1000000000000014"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="432"/>
+	<subDataset name="COVER_CODE" uuid="16fdae89-f72c-4cd4-a5af-f74a2e5a6433">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT COVER_DESC, POAC_LC_SA, POAC_PERIOD
+FROM (
+SELECT COVER_DESC         COVER_DESC,
+       QUOT_LC_SA POAC_LC_SA,
+       QUOT_PERIOD POAC_PERIOD
+  FROM PW_IL_QUICK_QUOTE, PM_IL_COVER
+ WHERE QUOT_SYS_ID = $P{QUOT_SYS_ID}
+   AND COVER_CODE = QUOT_PLAN_CODE
+UNION ALL
+SELECT COVER_DESC, QQAC_LC_SA, QQAC_PERIOD
+  FROM PW_IL_QQUOT_APPL_COVER, PM_IL_COVER
+ WHERE QQAC_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+   AND COVER_CODE = QQAC_COVER_CODE)]]>
+		</queryString>
+		<field name="COVER_DESC" class="java.lang.String"/>
+		<field name="POAC_LC_SA" class="java.math.BigDecimal"/>
+		<field name="POAC_PERIOD" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset1" uuid="cf484503-1a55-4957-9c04-065337c57b7d"/>
+	<subDataset name="TOTAL" uuid="aa36bc87-084d-46ef-88da-40cbb30db565">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT SUM(TOT_PREM)
+  FROM (SELECT SUM(QUOT_LC_PREM * (PMOP_RATE/PMOP_RATE_PER)) TOT_PREM
+          FROM PW_IL_QUICK_QUOTE, PM_IL_PLAN_MOP
+         WHERE QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+           AND PMOP_TYPE = QUOT_MOP
+        UNION ALL
+        SELECT SUM(NVL(QQAC_PREM_LC, 0)* (PMOP_RATE/PMOP_RATE_PER)) TOT_PREM
+          FROM PW_IL_QQUOT_APPL_COVER, PW_IL_QUICK_QUOTE, PM_IL_PLAN_MOP
+         WHERE QQAC_QUOT_SYS_ID = QUOT_SYS_ID
+          AND  QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+           AND PMOP_TYPE = QUOT_MOP
+        UNION ALL
+        SELECT SUM(QQAC_LC_CHRG_AMT * (PMOP_RATE/PMOP_RATE_PER)) TOT_PREM
+          FROM PW_IL_QQUOT_APPL_CHARGE, PW_IL_QUICK_QUOTE, PM_IL_PLAN_MOP
+         WHERE QQAC_QUOT_SYS_ID = QUOT_SYS_ID
+          AND  QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+           AND PMOP_TYPE = QUOT_MOP
+           AND QQAC_APPLY_PERIOD <> 'S'
+        UNION ALL
+        SELECT SUM(QQAC_LC_CHRG_AMT) TOT_PREM
+          FROM PW_IL_QQUOT_APPL_CHARGE
+         WHERE QQAC_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND QQAC_APPLY_PERIOD = 'S'
+         )]]>
+		</queryString>
+		<field name="SUM(TOT_PREM)" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset2" uuid="507dc347-fdd9-4ded-acac-f9634cb899b1"/>
+	<parameter name="QUOT_NO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="QUOT_IDX_NO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PTDA_COVER" class="java.lang.String"/>
+	<parameter name="PPD_COVER" class="java.lang.String"/>
+	<parameter name="PWR_COVER" class="java.lang.String"/>
+	<parameter name="PTDS_COVER" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT (SELECT LIV_CODE_DESC
+          FROM PP_LIST_ITEM_VALUES
+         WHERE LIV_SYS_PARAM = 'TITLE'
+           AND LIV_CODE = QUOT_CUST_TITLE) TITLE,
+       QUOT_CUST_NAME||' '||QUOT_CUST_SURNAME,
+       QUOT_CUST_ADDR1,
+       QUOT_CUST_ADDR2,
+       QUOT_CUST_ADDR3,
+       QQAD_ASSR_REF_ID1,
+       QUOT_BANK_CODE BANK_NAME,
+       QUOT_BANK_DIVN,
+       QUOT_BANK_ACNT,
+       QUOT_NO,
+      concat(QQAD_AGE,' Years') QQAD_AGE,
+       QUOT_LC_SA,
+       QUOT_PERIOD,
+       (SELECT PROD_DESC
+          FROM PM_IL_PRODUCT
+         WHERE PROD_CODE = QUOT_PROD_CODE) PLAN_TYPE,
+              DECODE(QUOT_MOP,
+                      'M',
+                      'MONTHLY',
+                      'Q',
+                      'QUARTERLY',
+                      'H',
+                      'HALF-YEARLY',
+                      'YEARLY') PAYMETHOD,
+       QUOT_SYS_ID
+  FROM PW_IL_QUICK_QUOTE, PW_IL_QQUOT_ASSURED_DTLS
+ WHERE QUOT_SYS_ID = QQAD_QUOT_SYS_ID
+   AND QUOT_NO = $P{QUOT_NO}
+   AND QUOT_IDX_NO = $P{QUOT_IDX_NO}]]>
+	</queryString>
+	<field name="TITLE" class="java.lang.String"/>
+	<field name="QUOT_CUST_NAME||&apos;&apos;||QUOT_CUST_SURNAME" class="java.lang.String"/>
+	<field name="QUOT_CUST_ADDR1" class="java.lang.String"/>
+	<field name="QUOT_CUST_ADDR2" class="java.lang.String"/>
+	<field name="QUOT_CUST_ADDR3" class="java.lang.String"/>
+	<field name="QQAD_ASSR_REF_ID1" class="java.lang.String"/>
+	<field name="BANK_NAME" class="java.lang.String"/>
+	<field name="QUOT_BANK_DIVN" class="java.lang.String"/>
+	<field name="QUOT_BANK_ACNT" class="java.lang.String"/>
+	<field name="QUOT_NO" class="java.lang.String"/>
+	<field name="QQAD_AGE" class="java.lang.String"/>
+	<field name="QUOT_LC_SA" class="java.math.BigDecimal"/>
+	<field name="QUOT_PERIOD" class="java.math.BigDecimal"/>
+	<field name="PLAN_TYPE" class="java.lang.String"/>
+	<field name="PAYMETHOD" class="java.lang.String"/>
+	<field name="QUOT_SYS_ID" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="130"/>
+	</title>
+	<pageHeader>
+		<band height="90">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 ? false:true]]></printWhenExpression>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="392" splitType="Stretch">
+			<staticText>
+				<reportElement x="38" y="2" width="22" height="20" uuid="f008a405-67b8-4794-a974-69dd105eded7"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="101" width="49" height="20" uuid="71f1da0c-82ab-43d5-ab2e-09b8059885bd"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dear sir ,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="126" width="177" height="20" uuid="50607386-84eb-487f-899e-646d83d9269d"/>
+				<textElement>
+					<font isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Life Insurance Quotation]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="147" width="403" height="15" uuid="6f651af3-1639-43b3-ae18-e0aefadd94be"/>
+				<text><![CDATA[With reference to your request we are pleased to quote our premium rates as below]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="212" width="194" height="20" uuid="aebc0510-4abc-47cb-92f4-e2f70e1de073"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="232" width="194" height="20" uuid="b0eeca20-8b0b-4d3e-8b2f-12865b71f691"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[Proposal No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="252" width="194" height="20" uuid="0e13bcd8-f009-4dca-adee-94df3aa43c8c"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[AGE
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="272" width="194" height="20" uuid="3d217a70-e01b-4506-9094-09f5db879f46"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[Sum Assured RO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="292" width="194" height="20" uuid="78f1c380-32f7-4445-af01-1acf0f9d3ad0"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[Policy Term years]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="312" width="194" height="20" uuid="71d4f05d-a8a0-4735-9140-4cd6f062e652"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[Type of plan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="332" width="194" height="20" uuid="976f2b8e-873b-4782-8983-da7b84a2970e"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[Frequency of premium due
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="352" width="157" height="20" uuid="eab78d39-2f45-4f6b-85b9-1950a7940a9a"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Benefits covered]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="332" y="352" width="116" height="20" uuid="49124f9d-3db9-4886-8687-bd890a06d828"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[  Term of cover-yrs
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="206" y="352" width="126" height="20" uuid="4e587e4d-6ed7-4699-9b76-23455090ca08"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[   Sum Assured RO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="42" y="24" width="20" height="13" uuid="5989b731-0993-4a2a-8736-769f431d6e98"/>
+				<textFieldExpression><![CDATA[$F{TITLE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="243" y="232" width="205" height="20" uuid="52464cc1-13b7-4c3e-b66a-75cf5b808db8"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{QUOT_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="243" y="252" width="205" height="20" uuid="ce5c06f8-dcda-4483-9a39-92bdd2f225d2"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{QQAD_AGE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="243" y="272" width="205" height="20" uuid="7e6a4849-b8c4-4ac9-af4a-4aa86dbf6367"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{QUOT_LC_SA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="243" y="292" width="205" height="20" uuid="6e97a8c9-eefc-4350-b905-d3195fad3363"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{QUOT_PERIOD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="243" y="312" width="205" height="20" uuid="88640fd6-587f-4e00-87d6-104dc55e6cb0"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{PLAN_TYPE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="243" y="332" width="205" height="20" uuid="ea19b900-7de1-4811-be7a-5d98158b2127"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{PAYMETHOD}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="48" y="372" width="400" height="20" uuid="630fe809-6c5b-4cec-bb19-7480a60c8df0"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="COVER_CODE" uuid="5e99a2dd-a53f-4ec0-90e9-0ceea2a10556">
+						<datasetParameter name="QUOT_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{QUOT_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="400">
+						<textField isBlankWhenNull="true">
+							<reportElement x="1" y="0" width="157" height="20" uuid="626e4b28-6be0-425a-a555-ef2f3a9ca507"/>
+							<box leftPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textFieldExpression><![CDATA[$F{COVER_DESC}]]></textFieldExpression>
+						</textField>
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="158" y="0" width="126" height="20" uuid="e3f8ca68-27fd-4485-b010-f8dcd0c10411"/>
+							<box rightPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right"/>
+							<textFieldExpression><![CDATA[$F{POAC_LC_SA}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="284" y="0" width="116" height="20" uuid="cedabcbb-a56a-4ce2-ba94-1e84c5e3d53c"/>
+							<box rightPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$F{POAC_PERIOD}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField isBlankWhenNull="true">
+				<reportElement x="243" y="172" width="205" height="20" uuid="ba7a739a-3100-4cb4-8701-e574ab81c4b6"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{BANK_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="243" y="192" width="205" height="20" uuid="22ccf9ac-720b-4f8f-a2e2-b3f9940d67fe"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{QUOT_BANK_DIVN}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="49" y="172" width="194" height="20" uuid="29af556e-dc59-47f1-819e-cb01521317da"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[Bank Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="192" width="194" height="20" uuid="f4a81647-8e26-4032-b9c4-a30c63b10877"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[Bank Branch]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="42" y="51" width="237" height="15" uuid="d73370b2-d7a3-42bf-953e-77179a1c0be3"/>
+				<textFieldExpression><![CDATA[$F{QUOT_CUST_ADDR1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="42" y="66" width="237" height="13" uuid="e3134197-eec1-49d2-8f32-10deee3dd2a6"/>
+				<textFieldExpression><![CDATA[$F{QUOT_CUST_ADDR2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="42" y="79" width="237" height="13" uuid="26acbcb1-a50a-4e08-87a2-f51e69f6d926"/>
+				<textFieldExpression><![CDATA[$F{QUOT_CUST_ADDR3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="42" y="37" width="238" height="14" uuid="a0069b7c-fe2f-443b-9128-e733cfbe9d43"/>
+				<textFieldExpression><![CDATA[$F{QQAD_ASSR_REF_ID1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="63" y="24" width="216" height="13" uuid="cabdebde-4ad7-428e-8495-07e25ae2b3b2"/>
+				<textFieldExpression><![CDATA[$F{QUOT_CUST_NAME||''||QUOT_CUST_SURNAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="243" y="212" width="205" height="20" uuid="0238627c-2620-496e-92b8-b0d628ef044a"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{QUOT_CUST_NAME||''||QUOT_CUST_SURNAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="438" y="2" width="38" height="18" uuid="e8614121-c7e8-4e08-a082-37e0dd96e98e"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Calibri" size="13" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="476" y="3" width="65" height="18" uuid="9b1bf061-5601-4fa2-8a37-e486300cf357"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="411">
+			<staticText>
+				<reportElement x="48" y="212" width="406" height="30" uuid="28a797e9-906e-42ce-8644-55ce759b1f1e"/>
+				<text><![CDATA[Please submit Proposal form, ID card copy, Proof of income, copy of loan offer. For Bank
+loans the proposal and the Assignment letter is to be counter signed by the Bank also.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="243" width="406" height="20" uuid="b25fce84-9b50-4d8b-801f-b793a33190d7"/>
+				<text><![CDATA[Please submit medical reports to confirm the above quotations.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="265" width="405" height="18" uuid="0f47f42e-ff46-4d25-a3ca-e9dabe188efd"/>
+				<text><![CDATA[This quotation is valid for 30 days, subject to decalration of good health by the proposer.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="285" width="420" height="16" uuid="66dfab71-122a-4919-a396-6ecdaa5f343e"/>
+				<text><![CDATA[After underwriting the Proposal Form and on accepting of the same by us, the above Premium ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="149" width="404" height="20" isRemoveLineWhenBlank="true" uuid="5b0b5ae5-495a-4a34-8534-243cb7c97bdc">
+					<printWhenExpression><![CDATA[$P{PWR_COVER}.equals("PWR")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="styled"/>
+				<text><![CDATA[<li>Passive War risk benefit is covered under this policy.</li>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="26" width="401" height="20" uuid="6d9c3302-b5d1-431e-a0f3-09a7074dd781"/>
+				<textElement markup="none"/>
+				<text><![CDATA[The above quotation shows the standard rates, which is subject to underwriting]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="192" width="406" height="16" uuid="a298f40d-912d-4449-9ef7-e76ec10f20da"/>
+				<text><![CDATA[3. Retired Persons and unemployed  or persons aged > 60 yrs are not eligible for PTD
+disability benefit					]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="48" y="170" width="404" height="20" uuid="15347e24-12ca-4604-bba4-61c28467eabe"/>
+				<text><![CDATA[2. For  Death Benefit pre-existing Conditon is Not excluded as per clause 13 of the Policy.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="0" width="283" height="20" uuid="e1e70fce-fe35-48bf-97bb-3ac0608bfc98"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[Total  Premium including Govt fees
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="46" width="404" height="21" uuid="51f97a75-487b-4222-9f4c-1a3c41c8bb04"/>
+				<text><![CDATA[This is a Decreasing Sum assured Plan where Sum at risk reduces on a monthly basis]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="332" y="0" width="117" height="20" uuid="4da0cd97-ae00-484f-821a-3efa9cdac63a"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="TOTAL" uuid="42f9b7a3-d1fd-4276-8d24-9c366407d1d8">
+						<datasetParameter name="QUOT_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{QUOT_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="117">
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="116" height="20" uuid="cf04e5e7-66c9-4e86-b2ce-4bbe8b0fa34b"/>
+							<box leftPadding="0" rightPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right"/>
+							<textFieldExpression><![CDATA[$F{SUM(TOT_PREM)}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="48" y="67" width="404" height="52" isRemoveLineWhenBlank="true" uuid="57e0cb99-93f5-4d42-bc73-a5d443f36277">
+					<printWhenExpression><![CDATA[$P{PTDA_COVER}.equals("PTDA")?true:
+$P{PTDS_COVER}.equals("PTDS")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement markup="styled"/>
+				<text><![CDATA[<li>Permanent and Total (100%) Disability due to accident or sickness occuring during policy
+term and that prevents the Life Insured from ever again performing the duties of any
+occupation or business whatsoever for remuneration or profit, sum assured payable after
+a waiting period of 365 days from the onset of Disability.</li>]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="119" width="410" height="27" uuid="9f22fd66-7c61-4b0d-ac17-5223ca205b07"/>
+				<text><![CDATA[1. Permanent Partial Disability benefit is covered under this policy. The claim payable shall be as per the schedule for PPD, subject to the proportion of the Decreasing Sum Assured]]></text>
+			</staticText>
+		</band>
+		<band height="208">
+			<staticText>
+				<reportElement x="41" y="62" width="202" height="20" uuid="f2dc47de-24c3-45d5-84a5-4575a07b5a2c"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[Bank Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="112" width="96" height="18" uuid="23f1347d-f93a-48e9-8b60-b2f4afbbf44b"/>
+				<text><![CDATA[Yours Sincerely]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="243" y="62" width="208" height="20" uuid="62853e6e-b5ae-47bc-9abd-8da3d2823705"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{BANK_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="243" y="43" width="208" height="19" uuid="67545f95-a77f-4081-b0e4-c572b05fa653"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{QUOT_BANK_ACNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="41" y="43" width="202" height="19" uuid="b81aa626-eddb-4d52-8e21-3d75b9b13ee5"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[Account No :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="155" width="97" height="21" uuid="9fa39898-3ca4-47ac-87e8-4d903f95a68a"/>
+				<text><![CDATA[Authorised signatory]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="22" width="410" height="21" uuid="2c6a2da0-fc93-4df4-84f3-ca70d9b00850"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[May be remitted to our Below Bank Details]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="120"/>
+	</pageFooter>
+</jasperReport>

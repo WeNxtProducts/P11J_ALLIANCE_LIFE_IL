@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3f8fce81-8836-4fde-ad32-da7136e2c295">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Agent_name" uuid="2d501e91-7aaa-4bad-8e43-8c5aee181da1">
+		<parameter name="POL_AGENT_CODE" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT CUST_NAME
+             FROM PM_CUSTOMER
+            WHERE CUST_CODE =$P{POL_AGENT_CODE}]]>
+		</queryString>
+		<field name="CUST_NAME" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataset1" uuid="369e79b2-b573-403d-b0ac-4f5772da7d15"/>
+	<parameter name="POL_SYS_ID" class="java.lang.String"/>
+	<parameter name="DS_TYPE" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT POL_LC_SUM_ASSURED,
+       POL_PERIOD,
+       PRS_MONTH,
+       PRS_LC_SA,
+       PROD_DESC,
+       DECODE(PROD_DEF_PERIOD_FLAG, 'M', 'Months', 'Y', 'Years') DEF_TYPE,
+       POL_ASSURED_NAME,
+       POL_NO,
+       POL_END_NO,
+       POL_END_NO_IDX,
+       (SELECT POBH_BROKER_CODE
+          FROM PT_IL_POL_BROKER_HEAD
+         WHERE POBH_POL_SYS_ID = POL_SYS_ID
+           AND POBH_SRNO = 1) AGENT_CODE,
+       POL_START_DT,
+       POL_EXPIRY_DT
+  FROM PT_IL_POL_RED_SA, PT_IL_POLICY, PM_IL_PRODUCT
+ WHERE POL_SYS_ID = PRS_POL_SYS_ID
+   AND POL_PROD_CODE = PROD_CODE
+   AND POL_sys_id = $P{POL_SYS_ID}
+  AND PRS_MONTH > 0
+ order by PRS_MONTH]]>
+	</queryString>
+	<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<field name="POL_PERIOD" class="java.math.BigDecimal"/>
+	<field name="PRS_MONTH" class="java.math.BigDecimal"/>
+	<field name="PRS_LC_SA" class="java.math.BigDecimal"/>
+	<field name="PROD_DESC" class="java.lang.String"/>
+	<field name="DEF_TYPE" class="java.lang.String"/>
+	<field name="POL_ASSURED_NAME" class="java.lang.String"/>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POL_END_NO" class="java.lang.String"/>
+	<field name="POL_END_NO_IDX" class="java.math.BigDecimal"/>
+	<field name="AGENT_CODE" class="java.lang.String"/>
+	<field name="POL_START_DT" class="java.sql.Timestamp"/>
+	<field name="POL_EXPIRY_DT" class="java.sql.Timestamp"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="211" splitType="Stretch">
+			<staticText>
+				<reportElement x="142" y="190" width="137" height="20" uuid="1c6576e9-41c4-457d-9169-7fa12fc07d18"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Policy Term- years]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="9" width="247" height="20" uuid="1c085e04-26b8-46dc-b0c1-ea5456b0c51d"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Decreasing Sum Assured schedule (DSA) for]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="170" width="137" height="20" uuid="d8620919-3f90-4e8f-aef4-93b9fc4ef872"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Sum assured at commencement ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="289" y="171" width="210" height="20" uuid="5256a8e0-f44f-4334-877f-8ffb16ee0048"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_LC_SUM_ASSURED}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="289" y="190" width="210" height="20" uuid="0b8abe78-30aa-421b-a8b8-6365e6a65b60"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_PERIOD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="279" y="171" width="10" height="20" uuid="873228c5-2fd8-494a-a1fe-fbaddb99f2e1"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="190" width="10" height="20" uuid="b53f1968-6960-439a-ac19-90434d329531"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="324" y="10" width="100" height="20" uuid="ead2802a-a746-4ac1-ab7e-dbf015814357"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROD_DESC}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="289" y="38" width="210" height="20" uuid="4ab2a948-8e4a-4fcc-bb04-66e5419eb516"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_ASSURED_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="279" y="38" width="10" height="20" uuid="31d720de-1ff7-4b99-a449-4cd0afa31853"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="289" y="58" width="210" height="20" uuid="e55d5b6e-3eca-49f1-a093-0402677651b2"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="289" y="78" width="210" height="20" isRemoveLineWhenBlank="true" uuid="80b212f6-144d-4922-a7fd-da0f8d4f1aa1">
+					<printWhenExpression><![CDATA[$P{DS_TYPE}.equals("2")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_END_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="289" y="95" width="210" height="20" uuid="3920ee2e-0f6b-42c2-abfe-9ae057b45b9b"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AGENT_CODE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="289" y="131" width="210" height="20" uuid="52afad26-b6c5-466e-876a-24300f7bdbbd"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_START_DT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="289" y="151" width="210" height="20" uuid="385b13d6-3171-4adb-94cc-1be6d4abf077"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_EXPIRY_DT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="279" y="58" width="10" height="20" uuid="9ed23ef5-0451-4770-bc02-976f4f313367"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="78" width="10" height="20" isRemoveLineWhenBlank="true" uuid="361ea239-01e5-4bd1-843e-e5a679dc106f">
+					<printWhenExpression><![CDATA[$P{DS_TYPE}.equals("2")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="98" width="10" height="17" uuid="30eab580-3da1-456c-8910-200b2ef2d0e0"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="131" width="10" height="20" uuid="aa721dea-0816-4214-879e-f75e5b5f6052"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="151" width="10" height="20" uuid="cf3513db-3f6b-4c51-a589-5afb74182cc6"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="151" width="137" height="20" uuid="64dad951-cf33-4440-bad1-0d47007c7676"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Policy To Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="38" width="137" height="20" uuid="eb209e6a-790d-48d1-9648-35becc18a36e"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Assured Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="58" width="137" height="20" uuid="a0122247-3483-471f-b37b-72ea199784ac"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Policy No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="78" width="137" height="17" isRemoveLineWhenBlank="true" uuid="156c758b-ad49-4fff-8988-c1ff23cb0b68">
+					<printWhenExpression><![CDATA[$P{DS_TYPE}.equals("2")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Endorsement No 	 	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="95" width="137" height="20" uuid="3250c11f-ed88-4308-8e19-0f93495299ca"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Agent code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="142" y="131" width="137" height="20" uuid="243a2c5c-a5a0-4b67-8a6a-d809c24792e9"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Policy From Date]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="289" y="114" width="211" height="24" uuid="f02d2713-ddfa-4db5-812d-cfe9291b0c4f"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Agent_name" uuid="8c13880f-2758-449c-8cd7-d23326f5be6a">
+						<datasetParameter name="POL_AGENT_CODE">
+							<datasetParameterExpression><![CDATA[$F{AGENT_CODE}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="24" width="211">
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="210" height="18" uuid="77c06368-5255-4ca2-a4a4-3b724b1987d7"/>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{CUST_NAME}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="142" y="114" width="137" height="18" uuid="e19b08dd-a4bb-4d65-87c4-99516381d847"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Agent Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="115" width="10" height="17" uuid="4da32656-0113-4696-9238-2f416031a245"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<columnHeader>
+		<band height="20">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 ? true : false]]></printWhenExpression>
+			<staticText>
+				<reportElement x="242" y="0" width="100" height="20" uuid="ed706b10-c1ca-49bf-82b1-340ff4764488"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[DSA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="142" y="0" width="100" height="20" uuid="54439a41-b04c-400f-911b-c63f8a84ac80"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{DEF_TYPE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="142" y="0" width="100" height="20" uuid="cef3f90c-13eb-4692-b05d-1f1cca7d6266"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{PRS_MONTH}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000">
+				<reportElement x="242" y="0" width="100" height="20" uuid="c785e19c-210f-4f0d-b2ba-d6a37c689a88"/>
+				<box leftPadding="10" rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{PRS_LC_SA}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

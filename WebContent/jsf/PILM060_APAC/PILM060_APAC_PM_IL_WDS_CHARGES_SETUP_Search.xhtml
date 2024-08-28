@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILM060_APAC" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<h:form id="PILM060_APAC_PM_IL_WDS_CHARGES_SETUP">
+		<table width="100%" cellpadding="0" cellspacing="0" border="0">
+			<!-- Body row -->
+			<tr>
+				<td>
+				<table border="0" width="100%" cellpadding="0" cellspacing="0"
+					id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td><h:outputLabel
+							value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$UI_M_PROD_CODE$caption}" />
+						<h:inputText
+							value="#{PILM060_APAC_search.searchBean.UI_M_PROD_CODE}" /></td>
+						<td><h:commandButton styleClass="button"
+							value="#{commonmsg.searchButton$caption}" id="fetch"
+							action="#{PILM060_APAC_search.fetch}">
+							<f:param name="Pcode"
+								value="#{PILM060_APAC_search.searchBean.UI_M_PROD_CODE}" />
+						</h:commandButton></td>
+					</tr>
+				</table>
+				<!-- using rich data table --> <rich:dataTable id="fetchList"
+					value="#{PILM060_APAC_search.dataTableBean}" var="colData"
+					cellpadding="5px" rows="10" border="1" width="100%"
+					binding="#{PILM060_APAC_search.dataTable}">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+					<rich:column rendered="false">
+						<f:facet name="header">
+							<h:outputText styleClass="label" value="" />
+						</f:facet>
+						<h:selectBooleanCheckbox id="checkBox" value="#{colData.selected}">
+						</h:selectBooleanCheckbox>
+					</rich:column>
+					<rich:column filterBy="#{colData.WCS_PROD_CODE}"
+						sortBy="#{colData.WCS_PROD_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$UI_M_PROD_CODE$caption}" />
+						</f:facet>
+						<h:commandLink action="#{PILM060_APAC_search.fetchMasterRecord}"
+							id="WCS_PROD_CODE_Link">
+								<h:outputText value="#{colData.WCS_PROD_CODE}" />
+							<f:param name="WCS_PROD_CODE" value="#{colData.WCS_PROD_CODE}" />
+							<f:param name="UI_M_PROD_CODE_DESC"
+								value="#{colData.UI_M_PROD_CODE_DESC}" />
+						</h:commandLink>
+					</rich:column>
+					<rich:column filterBy="#{colData.UI_M_PROD_CODE_DESC}"
+						sortBy="#{colData.UI_M_PROD_CODE_DESC}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$UI_M_PROD_CODE_DESC$caption}" />
+						</f:facet>
+							<h:outputText value="#{colData.UI_M_PROD_CODE_DESC}" />
+					</rich:column>
+					
+				</rich:dataTable></td>
+			</tr>
+			
+			<!-- add footer to the page-->
+			<tr>
+			</tr>
+		</table>
+	</h:form>
+	</f:view>
+	</ui:define>
+</ui:composition>

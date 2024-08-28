@@ -1,0 +1,541 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PLM010" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table cellpadding="0" cellspacing="0" width="100%" border="0">
+		<tr>
+			
+		</tr>
+		<h:form id="PM_ASSURED">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">
+				<table width="100%" cellpadding="0" cellspacing="0">
+					<tr>  
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup styleClass="toolBarGroupStyle">
+							<h:commandLink style="text-decoration:none"
+							styleClass="toolbarCommandLinkStyle" 
+							immediate="true" 
+							action="#{PLM010_PM_ASSURED_ACTION.searchPage}">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/back.png" />
+							<h:outputText styleClass="toolbaroutputTextStyle" 
+							value="#{menumessage.jsf$header$image$back}" />
+						</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+								styleClass="toolbarCommandLinkStyle"
+							actionListener="#{PLM010_PM_ASSURED_ACTION.saveRecord}">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/save.gif" />
+							<h:outputText styleClass="toolbaroutputTextStyle" 
+							value="#{menumessage.jsf$header$image$save}" />
+						</h:commandLink> 
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" >
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PLM010_PM_ASSURED_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PLM010_PM_ASSURED_ACTION.errorMap['current'] !=null? PLM010_PM_ASSURED_ACTION.errorMap['current']: PLM010_PM_ASSURED_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PLM010_PM_ASSURED_ACTION.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PLM010_PM_ASSURED_ACTION.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PLM010_PM_ASSURED_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<table width="100%" id="linkstable">
+					<tr>
+						<td><h:outputLabel
+							value="#{message.PLM010$PM_ASSURED$displayCaption}" /></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+				<div style="height:450px; overflow: auto;">
+				<table width="100%">
+					<tr>
+						<td width="100%" vAlign="top">
+						<table id="bordertable" border="0" align="left" width="100%">
+							<tr>
+								<td id="td-background" align="left" style="width: 130px;"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_CUST_CODE_LABEL}"
+									for="ASSR_CUST_CODE" id="CUST_CODE_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_CUSTOMER$CUST_CODE$caption}" /> <h:graphicImage
+									style="" value="./../../images/mandatory.jpg" /></td>
+								<td align="left"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_CUST_CODE}"
+									id="ASSR_CUST_CODE" maxlength="12" rendered="true"
+									required="true" style="height:23px;width:85px;"
+									styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_CUSTOMER$CUST_CODE$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_CUST_CODE}">
+									<a4j:support event="onblur" immediate="true"
+										reRender="errorPanel,CUST_NAME,CUST_CODE_LOV"
+										actionListener="#{PLM010_PM_ASSURED_ACTION.M_CUST_CLASS_DESC_when_validateListener}">
+									</a4j:support>
+								</h:inputText> <rich:suggestionbox height="100" width="200" immediate="true"
+									id="CUST_CODE_LOV"
+									suggestionAction="#{PLM010_PM_ASSURED_ACTION.getUnitCode_M_CUST_CODE}"
+									for="ASSR_CUST_CODE" var="cust_code">
+									<h:column>
+										<h:outputText value="#{cust_code.CUST_CODE}" />
+									</h:column>
+									<h:column>
+										<h:outputText value="#{cust_code.CUST_NAME}" />
+									</h:column>
+								</rich:suggestionbox> <h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_CUST_NAME}"
+									required="true" disabled="true" id="CUST_NAME" maxlength="60"
+									rendered="true" style="height:23px;width:226px;"
+									styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_CUSTOMER$CUST_NAME$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.CUST_NAME}" />
+								<h:graphicImage style="border: thin solid white"
+									value="./../../images/Lov.gif" />
+								</td>
+								<td colspan="4">&nbsp;</td>
+								<td>&nbsp;</td>
+								<td align="right"><table><tr><td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_FRZ_FLAG_LABEL}"
+									for="ASSR_FRZ_FLAG" id="ASSR_FRZ_FLAG_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_FRZ_FLAG$caption}" /> </td>
+								<td align="left"><h:selectBooleanCheckbox id="ASSR_FRZ_FLAG" 
+										title="#{message.PLM010$PM_ASSURED$ASSR_FRZ_FLAG$tooltip}"
+										value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_FRZ_FLAG_CHECK}" >
+										<a4j:support immediate="true" actionListener="#{PLM010_PM_ASSURED_ACTION.onclickASSR_FRZ_FLAG}" event="onclick" />
+										</h:selectBooleanCheckbox>
+										
+								</td>
+								</tr>
+								</table>
+								</td>
+							</tr>
+							<tr>
+							<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_CODE_LABEL}"
+									for="ASSR_CODE" id="ASSR_CODE_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_CODE$caption}" /> <h:graphicImage
+									style="" value="./../../images/mandatory.jpg" /></td>
+								<td align="left" colspan="5"><h:inputText
+									validator="#{PLM010_PM_ASSURED_ACTION.when_validate_assr_code_validator}"
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_CODE}"
+									id="ASSR_CODE" maxlength="12" rendered="true"
+									required="true" style="height:23px;width:85px;"
+									styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_CODE$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_CODE}">
+									<a4j:support event="onblur" 
+												 immediate="true"
+											 	 reRender="errorPanel,ASSR_CODE"
+											  	 actionListener="#{PLM010_PM_ASSURED_ACTION.when_validate_assr_code}">
+									</a4j:support>						
+									</h:inputText>
+								</td>
+							</tr>
+							<tr>
+							
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_NAME_LABEL}"
+									for="ASSR_NAME_LABEL" id="ASSR_NAME_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_NAME$caption}" /> <h:graphicImage
+									style="" value="./../../images/mandatory.jpg" /></td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_NAME}"
+									disabled="false" id="ASSR_NAME" maxlength="2000"
+									rendered="true" required="true" 
+									style="height:23px;width:306px;" styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_NAME$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_NAME}">
+									<a4j:support event="onblur" 
+												 immediate="true"
+											 	 reRender="errorPanel,ASSR_NAME"
+											  	 actionListener="#{PLM010_PM_ASSURED_ACTION.when_validate_assr_name}">
+									</a4j:support>
+									</h:inputText>
+								</td>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_BL_NAME_LABEL}"
+									for="ASSR_BL_NAME" id="ASSR_BL_NAME_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_BL_NAME$caption}" />
+								</td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_BL_NAME}"
+									disabled="false" id="ASSR_BL_NAME" maxlength="2000"
+									rendered="true" required="false" 
+									style="height:23px;width:306px;" styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_BL_NAME$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_BL_NAME}"/>
+								</td>	
+								
+							</tr>
+							<tr>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_OCC_CODE_LABEL}"
+									for="ASSR_OCC_CODE" id="ASSR_OCC_CODE_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_OCC_CODE$caption}" /></td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_OCC_CODE}"
+									disabled="false" id="ASSR_OCC_CODE" maxlength="12"
+									rendered="true" required="false"
+									style="height:23px;width:85px;" styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_OCC_CODE$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_OCC_CODE}">
+									<a4j:support event="onblur"
+										actionListener="#{PLM010_PM_ASSURED_ACTION.M_ASSR_OCC_DESC_when_validateListener}"
+										immediate="true" reRender="ASSR_OCC_CODE_LOV,UI_M_ASSR_OCC_DESC,errorPanel">
+									</a4j:support>
+								</h:inputText> <rich:suggestionbox height="200" width="400"
+									for="ASSR_OCC_CODE" id="ASSR_OCC_CODE_LOV"
+									suggestionAction="#{PLM010_PM_ASSURED_ACTION.getUnitCode_ASSR_OCC_CODE}"
+									var="assr_occ_code">
+									<h:column>
+										<h:outputText value="#{assr_occ_code.ASSR_OCC_CODE}" />
+									</h:column>
+									<h:column>
+										<h:outputText value="#{assr_occ_code.UI_M_ASSR_OCC_DESC}" />
+									</h:column>
+								</rich:suggestionbox> <h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_UI_M_ASSR_OCC_DESC}"
+									disabled="true" id="UI_M_ASSR_OCC_DESC" maxlength="240"
+									rendered="true" required="false"
+									style="height:23px;width:226px;" styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$UI_M_ASSR_OCC_DESC$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.UI_M_ASSR_OCC_DESC}" />
+								<h:graphicImage style="border: thin solid white"
+									value="./../../images/Lov.gif" /></td>
+
+							</tr>
+							<tr>
+							<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_FLOOR_LABEL}"
+									for="ASSR_FLOOR" id="ASSR_FLOOR_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_FLOOR$caption}" /></td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_FLOOR}"
+									disabled="false" id="ASSR_FLOOR" maxlength="240"
+									rendered="true" required="false"
+									style="height:23px;width:306px;" styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_FLOOR$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_FLOOR}" />
+								</td>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_BUILDING_LABEL}"
+									for="ASSR_BUILDING" id="ASSR_BUILDING_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_BUILDING$caption}" /></td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_BUILDING}"
+									disabled="false" id="ASSR_BUILDING" maxlength="240"
+									rendered="true" required="false"
+									style="height:23px;width:306px;" styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_BUILDING$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_BUILDING}" />
+								</td>
+							</tr>
+							
+							<tr>	
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_STREET_LABEL}"
+									for="ASSR_STREET" id="ASSR_STREET_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_STREET$caption}" /></td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_STREET}"
+									disabled="false" id="ASSR_STREET" maxlength="240"
+									rendered="true" required="false"
+									style="height:23px;width:306px;" styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_STREET$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_STREET}" />
+								</td>
+							</tr>
+							<tr>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_ADDR1_LABEL}"
+									for="ASSR_ADDR1" id="ASSR_ADDR1_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_ADDR1$caption}" /> <h:graphicImage
+									style="" value="./../../images/mandatory.jpg" /></td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_ADDR1}"
+									disabled="false" id="ASSR_ADDR1" maxlength="30" rendered="true"
+									required="true" style="height:23px;width:306px;"
+									styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_ADDR1$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_ADDR1}" >
+									<a4j:support event="onblur" 
+												 immediate="true"
+											 	 reRender="errorPanel,ASSR_ADDR1"
+											  	 actionListener="#{PLM010_PM_ASSURED_ACTION.when_validate_assr_addr}">
+									</a4j:support>
+									</h:inputText>
+								</td>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_BL_ADDR1_LABEL}"
+									for="ASSR_BL_ADDR1" id="ASSR_BL_ADDR1_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_BL_ADDR1$caption}" /> 
+								</td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_BL_ADDR1}"
+									disabled="false" id="ASSR_BL_ADDR1" maxlength="30" rendered="true"
+									required="false" style="height:23px;width:306px;"
+									styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_BL_ADDR1$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_BL_ADDR1}" />
+								</td>	
+							</tr>
+							<tr>
+								<td>&nbsp;</td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_ADDR2}"
+									disabled="false" id="ASSR_ADDR2" maxlength="30" rendered="true"
+									required="false" style="height:23px;width:306px;"
+									styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_ADDR2$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_ADDR2}" />
+								</td>
+								<td>&nbsp;</td>
+								<td align="left"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_BL_ADDR2}"
+									disabled="false" id="ASSR_BL_ADDR2" maxlength="30" rendered="true"
+									required="false" style="height:23px;width:306px;"
+									styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_BL_ADDR2$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_BL_ADDR2}" />
+								</td>
+							</tr>
+							<tr>
+							
+								<td>&nbsp;</td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_ADDR3}"
+									disabled="false" id="ASSR_ADDR3" maxlength="30" rendered="true"
+									required="false" style="height:23px;width:306px;"
+									styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_ADDR3$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_ADDR3}" />
+								</td>
+								<td>&nbsp;</td>
+								<td align="left"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_BL_ADDR3}"
+									disabled="false" id="ASSR_BL_ADDR3" maxlength="30" rendered="true"
+									required="false" style="height:23px;width:306px;"
+									styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_BL_ADDR3$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_BL_ADDR3}" />
+								</td>
+							</tr>
+							<tr>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_CONTACT_LABEL}"
+									for="ASSR_CONTACT" id="ASSR_CONTACT_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_CONTACT$caption}" /></td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_CONTACT}"
+									disabled="false" id="ASSR_CONTACT" maxlength="60"
+									rendered="true" required="false"
+									style="height:23px;width:307px;" styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_CONTACT$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_CONTACT}" />
+								</td>
+							</tr>
+							<tr>
+							
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_PHONE_LABEL}"
+									for="ASSR_PHONE" id="ASSR_PHONE_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_PHONE$caption}" /></td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_PHONE}"
+									disabled="false" id="ASSR_PHONE" maxlength="15" rendered="true"
+									required="false" style="height:23px;width:113px;"
+									styleClass="forumRowHighlightNumeric"
+									title="#{message.PLM010$PM_ASSURED$ASSR_PHONE$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_PHONE}" />
+								</td>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_FAX_LABEL}"
+									for="ASSR_FAX" id="ASSR_FAX_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_FAX$caption}" /></td>
+								<td align="left" colspan="3"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_FAX}"
+									disabled="false" id="ASSR_FAX" maxlength="15" rendered="true"
+									required="false" style="height:23px;width:107px;"
+									styleClass="forumRowHighlightNumeric"
+									title="#{message.PLM010$PM_ASSURED$ASSR_FAX$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_FAX}" />
+								</td>
+								
+							</tr>
+							<tr>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_OFFICE_PHONE_LABEL}"
+									for="ASSR_OFFICE_PHONE" id="ASSR_OFFICE_PHONE_LABEL"
+									rendered="true" styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_OFFICE_PHONE$caption}" />
+								</td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_OFFICE_PHONE}"
+									disabled="false" id="ASSR_OFFICE_PHONE" maxlength="240"
+									rendered="true" required="false"
+									style="height:23px;width:113px;" styleClass="forumRowHighlightNumeric"
+									title="#{message.PLM010$PM_ASSURED$ASSR_OFFICE_PHONE$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_OFFICE_PHONE}" />
+								</td>
+							</tr>
+							<tr>	
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_PIN_NO_LABEL}"
+									for="ASSR_PIN_NO" id="ASSR_PIN_NO_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_PIN_NO$caption}" /></td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_PIN_NO}"
+									disabled="false" id="ASSR_PIN_NO" maxlength="240"
+									rendered="true" required="false"
+									style="height:23px;width:113px;" styleClass="forumRowHighlightNumeric"
+									title="#{message.PLM010$PM_ASSURED$ASSR_PIN_NO$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_PIN_NO}" />
+								</td>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_DOB_LABEL}"
+									for="ASSR_DOB" id="ASSR_DOB_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_DOB$caption}" /></td>
+								<td align="left"><rich:calendar
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_DOB}"
+									datePattern="#{PLM010_PM_ASSURED_ACTION.datePattern}"
+									disabled="false" enableManualInput="true" id="ASSR_DOB"
+									inputSize="9" rendered="true" required="false"
+									style="height:px;width:px;" styleClass="calendarstyleclass"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_DOB}">
+									<a4j:support event="oninputblur" onsubmit="formatDate('PM_ASSURED:ASSR_DOB')"
+										 reRender="errorPanel"  id="date_1"
+										 immediate="true"
+										 actionListener="#{PLM010_PM_ASSURED_ACTION.dob_dt_when_validate_item}"> 
+									</a4j:support>
+									<a4j:support event="oninputchanged"
+										 reRender="errorPanel" id="date_2"
+										 immediate="true"
+										 actionListener="#{PLM010_PM_ASSURED_ACTION.dob_dt_when_validate_item}"> 
+								</a4j:support>
+								</rich:calendar>
+								</td>
+							</tr>
+							<tr>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_ID_NO_LABEL}"
+									for="ASSR_ID_NO" id="ASSR_ID_NO_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_ID_NO$caption}" /></td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_ID_NO}"
+									disabled="false" id="ASSR_ID_NO" maxlength="240"
+									rendered="true" required="false"
+									style="height:23px;width:113px;" styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_ID_NO$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_ID_NO}" />
+								</td>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_VAT_NO_LABEL}"
+									for="ASSR_VAT_NO" id="ASSR_VAT_NO_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_VAT_NO$caption}" /></td>
+								<td align="left"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_VAT_NO}"
+									disabled="false" id="ASSR_VAT_NO" maxlength="240"
+									rendered="true" required="false"
+									style="height:23px;width:107px;" styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_VAT_NO$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_VAT_NO}" />
+								</td>
+							</tr>
+							<tr>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_REMARKS_LABEL}"
+									for="ASSR_REMARKS" id="ASSR_REMARKS_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_REMARKS$caption}" /></td>
+								<td align="left" colspan="5"><h:inputText
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_REMARKS}"
+									disabled="false" id="ASSR_REMARKS" maxlength="240"
+									rendered="true" required="false"
+									style="height:23px;width:308px;" styleClass="forumRowHighlight"
+									title="#{message.PLM010$PM_ASSURED$ASSR_REMARKS$tooltip}"
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_REMARKS}" />
+								</td>
+								<td id="td-background" align="left"><h:outputLabel
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_DFLT_YN_LABEL}"
+									for="ASSR_DFLT_YN" id="ASSR_DFLT_YN_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PLM010$PM_ASSURED$ASSR_DFLT_YN$caption}" /> <h:graphicImage
+									style="" value="./../../images/mandatory.jpg" /></td>
+								<td align="left" colspan="5"><h:selectOneMenu
+									binding="#{PLM010_PM_ASSURED_ACTION.COMP_ASSR_DFLT_YN}"
+									disabled="false" id="ASSR_DFLT_YN" rendered="true"
+									required="true" style="height:23px;width:54px;"
+									styleClass="combostyleclass"
+									title="#{message.PLM010$PM_ASSURED$ASSR_DFLT_YN$tooltip}" 
+									value="#{PLM010_PM_ASSURED_ACTION.PM_ASSURED_BEAN.ASSR_DFLT_YN}">
+									<f:selectItems
+									value="#{PLM010_PM_ASSURED_ACTION.DFLT_YN_LIST}" />
+									<a4j:support event="onblur" immediate="true" reRender="errorPanel" actionListener="#{PLM010_PM_ASSURED_ACTION.agentYNEvent}" />
+									</h:selectOneMenu>
+								</td>
+							</tr>
+							
+						</table>
+						</td>
+						
+					</tr>
+				</table>
+				</div>
+				</td>
+			</tr>
+		</h:form>
+	</table>
+	<table width="100%">
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

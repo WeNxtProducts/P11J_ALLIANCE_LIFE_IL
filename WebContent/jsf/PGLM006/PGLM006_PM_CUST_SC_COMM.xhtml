@@ -1,0 +1,503 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PGLM006" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PM_CUST_SC_COMM">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.saveForm}"
+											id="AUTOID_1" rendered="true" style="text-decoration:none" 
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_2" accesskey="s"
+												styleClass="toolbarButtonStyle"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.saveAndNext}"
+											id="AUTOID_4" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_5"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_8"
+												styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_10" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_11"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="AUTOID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_14"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_17"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="AUTOID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_20"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="AUTOID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+									
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD" location="right">
+										<w:treeWizard binding="#{PGLM006_COMPOSITE_ACTION.wizard}"/>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.errorMap['current'] !=null? PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.errorMap['current']:PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="ErrorMessages"
+								value="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					
+					<tr>
+						<td colspan="3">
+						<div id="tablecontainer">
+						<div id="sidebar" style="width: 21%; vertical-align: top">
+						<div align="center" id="handle" style="width: 5%;">
+<a4j:commandLink
+													actionListener="#{PGLM006_COMPOSITE_ACTION.wizard.toggle}"
+													id="BACK_TOOL_FOOTER1" immediate="true" rendered="true"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+														<img align="middle"
+																alt="Click to toggle the sidebar" height="123"
+																onclick="toggleSideBar();"
+																src="./../../resources/images/toggle.jpg" style="border: 0;"
+														width="14" />
+												</a4j:commandLink></div>
+
+						<div id="sbText" style="display: compact;">
+						<div id="linkstable1" style="display: compact; width: 95%">
+						 	<w:treeWizardPanel binding="#{PGLM006_COMPOSITE_ACTION.wizard.wizardPanel}" id="wizardPanel"/>
+						 </div>
+						</div>
+						</div>
+						<div id="content" style="width: 75%;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td vAlign="top" width="100%"><h:panelGroup
+									id="PM_CUST_COMM" style="border:0;height:15%;width:100%">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td width="100%"><rich:panel
+												style="width:100%;overflow:auto">
+												<rich:dataTable
+													binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.dataTable}"
+													id="PM_CUST_SC_COMM_DATA_GRID" rows="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN..recordsPerPage}"
+													value="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.dataList_PM_CUST_SC_COMM}"
+													var="tableVar">
+													<rich:column filterBy="#{tableVar.CSC_SC_CODE}"
+														filterEvent="onkeyup" id="COLUMN_CSC_SC_CODE"
+														rendered="true" sortBy="#{tableVar.CSC_SC_CODE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_CSC_SC_CODE"
+																value=".\..\..\images\mandatory.jpg">
+																<h:outputText id="COLUMN_CAPTION_CSC_SC_CODE"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PGLM006$PM_CUST_SC_COMM$CSC_SC_CODE$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<a4j:commandLink
+															action="#{PGLM006_PM_CUST_SC_COMM_ACTION.displayRecords}"
+															id="GOTO_LINK_CSC_SC_CODE" immediate="true"
+															reRender="errorPanel,PM_CUST_SC_COMM_PANEL">
+															<h:outputText id="LINK_CAPTION_CSC_SC_CODE"
+																value="#{tableVar.CSC_SC_CODE}" />
+														</a4j:commandLink>
+													</rich:column>
+													<rich:column filterBy="#{tableVar.UI_M_SC_DESC}"
+														filterEvent="onkeyup" id="COLUMN_UI_M_SC_DESC"
+														rendered="true" sortBy="#{tableVar.UI_M_SC_DESC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_M_SC_DESC"
+																styleClass="forumRowHighlight"
+																value="#{message.PGLM006$PM_CUST_SC_COMM$UI_M_SC_DESC$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_UI_M_SC_DESC"
+															value="#{tableVar.UI_M_SC_DESC}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CSC_COMM_CODE}"
+														filterEvent="onkeyup" id="COLUMN_CSC_COMM_CODE"
+														rendered="true" sortBy="#{tableVar.CSC_COMM_CODE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_CSC_COMM_CODE"
+																value=".\..\..\images\mandatory.jpg">
+																<h:outputText id="COLUMN_CAPTION_CSC_COMM_CODE"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PGLM006$PM_CUST_SC_COMM$CSC_COMM_CODE$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CSC_COMM_CODE"
+															value="#{tableVar.CSC_COMM_CODE}" />
+													</rich:column>
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PM_CUST_SC_COMM_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.addRow}"
+																id="addRow" reRender="PM_CUST_SC_COMM_PANEL,errorPanel" accesskey="c"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.deleteRow}"
+																id="deleteRow" accesskey="r"
+																reRender="PM_CUST_SC_COMM_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.postRecord}"
+																id="postRecord" accesskey="p"
+																reRender="PM_CUST_SC_COMM_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</rich:panel></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table class="noborder" width="100%">
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_CSC_SC_CODE_LABEL}"
+														for="CSC_SC_CODE" id="CSC_SC_CODE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$CSC_SC_CODE$caption}" />
+													<h:graphicImage style=""
+														value=".\..\..\images\mandatory.jpg" /></td>
+													<td align="left"><h:inputText
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_CSC_SC_CODE}"
+														disabled="false" id="CSC_SC_CODE" maxlength="12"
+														rendered="true" required="true"
+														style="height:23px;width:96px;"
+														styleClass="forumRowHighlight"
+														title="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$CSC_SC_CODE$tooltip}"
+														value="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.PM_CUST_SC_COMM_BEAN.CSC_SC_CODE}" />
+													<h:inputText
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_UI_M_SC_DESC}"
+														disabled="false" id="UI_M_SC_DESC" maxlength="30"
+														rendered="true" required="false"
+														style="height:23px;width:227px;"
+														styleClass="forumRowHighlight"
+														title="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$UI_M_SC_DESC$tooltip}"
+														value="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.PM_CUST_SC_COMM_BEAN.UI_M_SC_DESC}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_CSC_FRZ_FLAG_LABEL}"
+														for="CSC_FRZ_FLAG" id="CSC_FRZ_FLAG_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$CSC_FRZ_FLAG$caption}" />
+													<h:graphicImage style=""
+														value=".\..\..\images\mandatory.jpg" /></td>
+													<td align="left"><h:selectBooleanCheckbox
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_CSC_FRZ_FLAG}"
+														disabled="false" id="CSC_FRZ_FLAG" rendered="true"
+														styleClass="checkstyleclass"
+														title="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$CSC_FRZ_FLAG$tooltip}"
+														validator="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.validateCSC_FRZ_FLAG}"
+														value="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.PM_CUST_SC_COMM_BEAN.CSC_FRZ_FLAG_UI}">
+														<a4j:support
+															actionListener="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.fireFieldValidation}"
+															event="onclick" id="SUPPORT_CSC_FRZ_FLAG"
+															immediate="true" reRender="errorPanel" />
+													</h:selectBooleanCheckbox></td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_CSC_COMM_CODE_LABEL}"
+														for="CSC_COMM_CODE" id="CSC_COMM_CODE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$CSC_COMM_CODE$caption}" />
+													<h:graphicImage style=""
+														value=".\..\..\images\mandatory.jpg" /></td>
+													<td align="left"><h:inputText
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_CSC_COMM_CODE}"
+														disabled="false" id="CSC_COMM_CODE" maxlength="12"
+														rendered="true" required="true"
+														style="height:23px;width:96px;"
+														styleClass="forumRowHighlight"
+														title="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$CSC_COMM_CODE$tooltip}"
+														value="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.PM_CUST_SC_COMM_BEAN.CSC_COMM_CODE}" />
+														
+													<h:inputText
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_UI_M_COMM_DESC}"
+														disabled="false" id="UI_M_COMM_DESC" maxlength="30"
+														rendered="true" required="false"
+														style="height:23px;width:227px;"
+														styleClass="forumRowHighlight"
+														title="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$UI_M_COMM_DESC$tooltip}"
+														value="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.PM_CUST_SC_COMM_BEAN.UI_M_COMM_DESC}" />
+														<h:graphicImage id="GRAPH_IMG_SUGG_PBEN_BNF_TYPE" style="" styleClass="searchimg" value="./../../images/Lov.gif"/> 
+													<rich:suggestionbox for="CSC_COMM_CODE" height="200"
+														id="CSC_COMM_CODE_SUGGESTION_BOX" immediate="true"
+														suggestionAction="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.getClassCodeLov}"
+														var="CSC_COMM_CODE_LOV" width="200">
+														<h:column>
+															<h:outputText id="SUGG_COL_0_CSC_COMM_CODE"
+																value="#{CSC_COMM_CODE_LOV.CSC_COMM_CODE}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="SUGG_COL_1_CSC_COMM_CODE"
+																value="#{CSC_COMM_CODE_LOV.UI_M_COMM_DESC}" />
+														</h:column>
+														<a4j:support ajaxSingle="true" event="onselect"
+															id="AUTOID_SEL_18" immediate="true"
+															reRender="errorPanel, UI_M_COMM_DESC">
+															<f:setPropertyActionListener id="AUTOID_131"
+																target="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.PM_CUST_SC_COMM_BEAN.UI_M_COMM_DESC}"
+																value="#{CSC_COMM_CODE_LOV.UI_M_COMM_DESC}" />
+														</a4j:support>
+													</rich:suggestionbox>
+													</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_CSC_COMM_PERC_LABEL}"
+														for="CSC_COMM_PERC" id="CSC_COMM_PERC_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$CSC_COMM_PERC$caption}" />
+													<h:graphicImage style=""
+														value=".\..\..\images\mandatory.jpg" /></td>
+													<td align="left"><h:inputText
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_CSC_COMM_PERC}"
+														disabled="false" id="CSC_COMM_PERC" maxlength="40"
+														rendered="true" required="true"
+														style="height:23px;width:96px;"
+														styleClass="forumRowHighlightNumeric"
+														title="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$CSC_COMM_PERC$tooltip}"
+														value="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.PM_CUST_SC_COMM_BEAN.CSC_COMM_PERC}" />
+													</td>
+												</tr>
+												
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_CSC_RANGE_FM_LABEL}"
+														for="CSC_RANGE_FM" id="CSC_RANGE_FM_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$CSC_RANGE_FM$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_CSC_RANGE_FM}"
+														disabled="false" id="CSC_RANGE_FM" maxlength="40"
+														rendered="true" required="false"
+														validator="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.validateCSC_RANGE_FM}"
+														style="height:23px;width:96px;"
+														styleClass="forumRowHighlightNumeric"
+														title="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$CSC_RANGE_FM$tooltip}"
+														value="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.PM_CUST_SC_COMM_BEAN.CSC_RANGE_FM}">
+														<a4j:support
+															actionListener="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.fireFieldValidation}"
+															event="onclick" id="SUPPORT_CSC_RANGE_FM"
+															immediate="true" reRender="errorPanel,CSC_RANGE_TO" />
+														</h:inputText>
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_CSC_RANGE_TO_LABEL}"
+														for="CSC_RANGE_TO" id="CSC_RANGE_TO_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$CSC_RANGE_TO$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.COMP_CSC_RANGE_TO}"
+														disabled="false" id="CSC_RANGE_TO" maxlength="40"
+														rendered="true" required="false"
+														validator="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.validateCSC_RANGE_TO}"
+														style="height:23px;width:96px;"
+														styleClass="forumRowHighlightNumeric"
+														title="#{message_PGLM006.PGLM006$PM_CUST_SC_COMM$CSC_RANGE_TO$tooltip}"
+														value="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.PM_CUST_SC_COMM_BEAN.CSC_RANGE_TO}">
+														<a4j:support
+															actionListener="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.fireFieldValidation}"
+															event="onclick" id="SUPPORT_CSC_RANGE_TO"
+															immediate="true" reRender="errorPanel,CSC_RANGE_FM" />
+														</h:inputText>
+													</td>
+												</tr>
+						
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</div>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.saveForm}"
+											id="AUTOID_43" rendered="true" style="text-decoration:none" 
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_44" accesskey="s"
+												styleClass="toolbarButtonStyle"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="AUTOID_45"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PGLM006_COMPOSITE_ACTION.PM_CUST_SC_COMM_ACTION_BEAN.saveAndNext}"
+											id="AUTOID_46" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_47"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="AUTOID_48"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_49" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_50"
+												styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_51"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.getFirstPage}"
+											id="AUTOID_52" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_53"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="AUTOID_54"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_ACTION.getPreviousPage}"
+											id="AUTOID_55" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_56"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="AUTOID_57"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_58" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_59"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="AUTOID_60"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_61" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_62"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="AUTOID_63"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM" 
+										location="right">
+										<w:wizardPanelFooter binding="#{PGLM006_COMPOSITE_ACTION.wizard.wizardPanelFooter}"/>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

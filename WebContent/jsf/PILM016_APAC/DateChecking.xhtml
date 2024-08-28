@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+<f:view>
+	<f:loadBundle basename="messageProperties" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" border="0">
+		<tr>
+		</tr>
+		<h:form id="PM_IL_CONTRACTOR">
+
+			<tr>
+				<td width="100%" vAlign="top">
+				<table width="100%" id="toolbartable">
+					<tr>
+						<td><h:commandLink style="text-decoration:none"
+							action="#{PM_IL_CONTRACTOR_ACTION.insertAction}">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/save.gif" />
+							<h:outputText value="#{menumessage.jsf$header$image$save}" />
+						</h:commandLink> <!--<h:commandLink style="text-decoration:none" action="#{PM_IL_CONTRACTOR_ACTION.deleteAction}">
+								<h:graphicImage style="border: thin solid white"
+									value="./../../images/deleteRecord.gif" />
+								<h:outputText
+									value="#{menumessage.jsf$header$image$deleteRecord} " />
+							</h:commandLink> 
+							--><h:commandLink style="text-decoration:none" immediate="true"
+							action="#{Utility.preBack}">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/back.png" />
+							<h:outputText value="#{menumessage.jsf$header$image$prevpage}" />
+						</h:commandLink></td>
+					</tr>
+					<tr>
+						<td width="100%" vAlign="top" height="20"><rich:simpleTogglePanel
+							id="errorPanel" switchType="client" width="100%" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									value="Error:#{PM_IL_CONTRACTOR_ACTION.errorMap['current']}" />
+							</f:facet>
+
+							<h:outputText id="errorMessages"
+								value="#{PM_IL_CONTRACTOR_ACTION.errorMessages}"
+								style="color: red; font-style: italic;font-weight:bold;"
+								escape="false" />
+
+						</rich:simpleTogglePanel></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+
+				<table id="bordertable" align="left">
+					<tr>
+						<td id="td-background" align="left"><h:outputLabel
+							binding="#{PM_IL_CONTRACTOR_ACTION.COMP_CONT_AD_BANK_CODE_LABEL}"
+							for="CONT_AD_BANK_CODE" id="CONT_AD_BANK_CODE_LABEL"
+							rendered="true" styleClass="label"
+							value="#{message.PILM016_APAC$PM_IL_CONTRACTOR$CONT_AD_BANK_CODE$caption}" />
+						</td>
+						<td align="left"><h:inputText
+							binding="#{PM_IL_CONTRACTOR_ACTION.COMP_CONT_AD_BANK_CODE}"
+							disabled="false" id="CONT_AD_BANK_CODE" maxlength="12"
+							rendered="true" required="false" style="height:23px;width:90px;"
+							styleClass="forumRowHighlight"
+							title="Enter the Auto Debit Bank code"
+							value="#{PM_IL_CONTRACTOR_ACTION.PM_IL_CONTRACTOR_BEAN.CONT_AD_BANK_CODE}">
+
+							<rich:suggestionbox height="200" width="250"
+								suggestionAction="#{PM_IL_CONTRACTOR_ACTION.suggestionActionReceiptBankCode}"
+								for="CONT_AD_BANK_CODE" var="bankcode">
+								<h:column>
+									<h:outputText value="#{bankcode.CONT_AD_BANK_CODE}" />
+								</h:column>
+								<h:column>
+									<h:outputText value="#{bankcode.UI_M_CONT_AD_BANK_NAME}" />
+								</h:column>
+							</rich:suggestionbox>
+							<a4j:support event="onblur" immediate="true"
+								actionListener="#{PM_IL_CONTRACTOR_ACTION.getReceiptBankCodeDesc}"
+								reRender="UI_M_CONT_AD_BANK_NAME" />
+						</h:inputText> <h:inputText
+							binding="#{PM_IL_CONTRACTOR_ACTION.COMP_UI_M_CONT_AD_BANK_NAME}"
+							disabled="false" id="UI_M_CONT_AD_BANK_NAME" maxlength="240"
+							rendered="true" required="false" style="height:23px;width:175px;"
+							styleClass="forumRowHighlight" title="Displays The Bank Name"
+							value="#{PM_IL_CONTRACTOR_ACTION.PM_IL_CONTRACTOR_BEAN.UI_M_CONT_AD_BANK_NAME}" />
+						</td>
+						<td id="td-background" align="left"><h:outputLabel
+							binding="#{PM_IL_CONTRACTOR_ACTION.COMP_CONT_AD_ACC_NO_LABEL}"
+							for="CONT_AD_ACC_NO" id="CONT_AD_ACC_NO_LABEL" rendered="true"
+							styleClass="label"
+							value="#{message.PILM016_APAC$PM_IL_CONTRACTOR$CONT_AD_ACC_NO$caption}" />
+						</td>
+						<td align="left"><h:inputText
+							binding="#{PM_IL_CONTRACTOR_ACTION.COMP_CONT_AD_ACC_NO}"
+							disabled="false" id="CONT_AD_ACC_NO" maxlength="60"
+							rendered="true" required="true" style="height:23px;width:93px;"
+							styleClass="forumRowHighlight"
+							title="Enter Auto Debit Account No"
+							validator="#{PM_IL_CONTRACTOR_ACTION.validateCONT_AD_ACC_NO}"
+							value="#{PM_IL_CONTRACTOR_ACTION.PM_IL_CONTRACTOR_BEAN.CONT_AD_ACC_NO}">
+							<a4j:support event="onblur" immediate="true"
+								actionListener="#{PM_IL_CONTRACTOR_ACTION.pilm016_apac_pm_il_contractor_cont_ad_acc_no_key_next_item}"
+								reRender="errorMessages,err" />
+						</h:inputText></td>
+
+
+
+
+
+
+					</tr>
+					<tr>
+						<td colspan="5" width="100%">
+						<hr color="black" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="5" width="100%" align="right"><h:commandLink
+							style="text-decoration:none"
+							action="#{PM_IL_CONTRACTOR_ACTION.insertAction}">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/save.gif" />
+							<h:outputText value="#{menumessage.jsf$header$image$save}" />
+						</h:commandLink></td>
+					</tr>
+				</table>
+				</td>
+				</tr>
+				
+		</h:form>
+		<tr>
+		</tr>
+	</table>
+</f:view>
+
+</ui:define>
+</ui:composition>

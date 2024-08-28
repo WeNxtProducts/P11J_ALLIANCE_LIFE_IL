@@ -1,0 +1,415 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PGIM_LOV_DEFN" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" border="0">
+		<tr>
+			
+		</tr>
+		<h:form id="PGIM_LOV_DEFN">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">&nbsp;&nbsp;
+				<table width="100%" id="toolbartable">
+					<tr>
+						<td><h:commandLink style="text-decoration:none"
+							immediate="true"
+							action="#{PGIM_LOV_DEFN_ACTION.backToSearch}">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/back.png" />
+							<h:outputText value="#{menumessage.jsf$header$image$back}" />
+						</h:commandLink> 
+						<h:commandLink style="text-decoration:none"
+						action="#{PGIM_LOV_DEFN_ACTION.saveAndCommit}">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/save.gif" />
+							<h:outputText value="#{menumessage.jsf$header$image$save}" />
+						</h:commandLink> <h:commandLink style="text-decoration:none">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/savenext.GIF" />
+							<h:outputText value="#{menumessage.jsf$header$image$savenext}" />
+						</h:commandLink> <h:commandLink style="text-decoration:none">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/deleteRecord.gif" />
+							<h:outputText
+								value="#{menumessage.jsf$header$image$deleteRecord}" />
+						</h:commandLink> <h:commandLink style="text-decoration:none">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/firstrec.gif" />
+							<h:outputText value="#{menumessage.jsf$header$image$firstrec}" />
+						</h:commandLink> <h:commandLink style="text-decoration:none">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/prevpage.gif" />
+							<h:outputText value="#{menumessage.jsf$header$image$prevpage}" />
+						</h:commandLink> <h:commandLink style="text-decoration:none">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/nextpage.gif" />
+							<h:outputText value="#{menumessage.jsf$header$image$nextpage}" />
+						</h:commandLink> <h:commandLink style="text-decoration:none">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/lastRecord.gif" />
+							<h:outputText value="#{menumessage.jsf$header$image$lastRecord}" />
+						</h:commandLink></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									value="#{commonmsg.errorPanel$heading} #{PGIM_LOV_DEFN_ACTION.errorMap['current'] !=null? PGIM_LOV_DEFN_ACTION.errorMap['current']:PGIM_LOV_DEFN_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PGIM_LOV_DEFN_ACTION.errorMessages}"
+								style="color: red; font-style: italic;font-weight:bold;"
+								escape="false" />
+							<h:messages
+								style="color: red;font-style: italic;font-weight:bold;" id="msg"
+								rendered="#{PGIM_LOV_DEFN_ACTION.globalMsgRender}" />
+
+							<h:outputText id="warningMessages"
+								value="#{PGIM_LOV_DEFN_ACTION.warningMessages}"
+								style="color: green; font-style: italic;font-weight:bold;"
+								escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<table width="100%" id="linkstable">
+					<tr>
+						<td>PGIM_LOV_DEFN</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="3">
+				<div style="height 260px; overflow: auto;">
+				<table width="100%">
+					<tr>
+						<td></td>
+						<td width="100%" vAlign="top">
+						<table id="bordertable" align="left" width="100%">
+
+							<!-- Add,Remove Row Buttons-->
+							<tr>
+								<td><h:commandButton value="Add New" immediate="true"
+									action="#{PGIM_LOV_DEFN_ACTION.addRow}">
+								</h:commandButton> <h:commandButton value="Remove Row" immediate="true"
+									action="#{PGIM_LOV_DEFN_ACTION.removeRow}">
+								</h:commandButton></td>
+							</tr>
+							
+							<!-- Data Table -->
+							<tr>
+								<td><rich:panel
+									style="width:960px;overflow:auto;height:300px;">
+									<rich:dataTable id="PGIM_LOV_DEFN"
+										rows="#{PGIM_LOV_DEFN_ACTION.recordsPerPage}"
+										value="#{PGIM_LOV_DEFN_ACTION.lovDetailsList}"
+										var="PGIM_LOV" binding="#{PGIM_LOV_DEFN_ACTION.dataTable}">
+										
+										<f:facet name="footer">
+											<rich:datascroller id="payorcoverscroller" align="left"
+												page="#{PGIM_LOV_DEFN_ACTION.currPage}"></rich:datascroller>
+										</f:facet>
+
+										<!-- CheckBox-->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="label" value="" />
+											</f:facet>
+											<h:selectBooleanCheckbox id="checkBox">
+												<a4j:support event="onclick" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.checkBoxStatus}">
+												</a4j:support>
+												<a4j:support event="onblur" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.checkBox_action}">
+												</a4j:support>
+											</h:selectBooleanCheckbox>
+										</rich:column>
+
+										<!-- PLD_PROG_CODE-->
+
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="label"
+													value="#{message.PGIM_LOV_DEFN$PLD_PROG_CODE$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_PROG_CODE}"
+												id="PLD_PROG_CODE" style="width:100" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_PROG_CODE}">
+												<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_PROG_CODE}" />
+											</h:inputText>
+										</rich:column>
+
+										<!-- PLD_BLOCK_NAME-->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PGIM_LOV_DEFN$PLD_BLOCK_NAME$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_BLOCK_NAME}"
+												id="PLD_BLOCK_NAME" style="width:150px;" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_BLOCK_NAME}">
+												<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_BLOCK_NAME}" />
+											</h:inputText>
+										</rich:column>
+
+										<!-- PLD_FIELD_NAME -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PGIM_LOV_DEFN$PLD_FIELD_NAME$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_FIELD_NAME}"
+												id="PLD_FIELD_NAME" style="width:130px;" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_FIELD_NAME}" />
+												<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_FIELD_NAME}" />
+										</rich:column>
+
+										<!-- PLD_LOV_TITLE -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PGIM_LOV_DEFN$PLD_LOV_TITLE$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_LOV_TITLE}"
+												id="PLD_LOV_TITLE" style="width:120px;" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_LOV_TITLE}">
+												<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_LOV_TITLE}" />
+											</h:inputText>
+										</rich:column>
+
+										<!-- PLD_LOV_TITLE_BL -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PGIM_LOV_DEFN$PLD_LOV_TITLE_BL$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_LOV_TITLE_BL}"
+												id="PLD_LOV_TITLE_BL" style="width:100px;" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_LOV_TITLE_BL}">
+													<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_LOV_TITLE_BL}" />
+											</h:inputText>
+										</rich:column>
+
+										<!-- PLD_LOV_SELECT_STMT -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="label"
+													value="#{message.PGIM_LOV_DEFN$PLD_LOV_SELECT_STMT$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_LOV_SELECT_STMT}"
+												id="PLD_LOV_SELECT_STMT" style="width:200;" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_LOV_SELECT_STMT}">
+												<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_LOV_SELECT_STMT}" />
+											</h:inputText>
+										</rich:column>
+
+										<!-- PLD_COLUMN_HEAD -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PGIM_LOV_DEFN$PLD_COLUMN_HEAD$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_COLUMN_HEAD}"
+												id="PLD_COLUMN_HEAD" style="width:85px;" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_COLUMN_HEAD}">
+												<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_COLUMN_HEAD}" />
+											</h:inputText>
+										</rich:column>
+
+										<!-- PLD_COLUMN_HEAD_BL -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="label"
+													value="#{message.PGIM_LOV_DEFN$PLD_COLUMN_HEAD_BL$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_COLUMN_HEAD_BL}"
+												id="PLD_COLUMN_HEAD_BL" style="width:90;" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_COLUMN_HEAD_BL }"> 
+												<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_COLUMN_HEAD_BL}" />
+											</h:inputText>
+										</rich:column>
+
+										<!-- PLD_PARA_COL_1 -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PGIM_LOV_DEFN$PLD_PARA_COL_1$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_PARA_COL_1}"
+												id="PLD_PARA_COL_1" style="width:100px;" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_PARA_COL_1}">
+												<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_PARA_COL_1}" />
+											</h:inputText>
+										</rich:column>
+
+										<!-- PLD_PARA_COL_2 -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PGIM_LOV_DEFN$PLD_PARA_COL_2$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_PARA_COL_2}"
+												id="PLD_PARA_COL_2" style="width:100px;" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_PARA_COL_2}">
+												<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_PARA_COL_2}" />
+											</h:inputText>
+										</rich:column>
+
+										<!-- PLD_PARA_COL_3 -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PGIM_LOV_DEFN$PLD_PARA_COL_3$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_PARA_COL_3}"
+												id="PLD_PARA_COL_3" style="width:100px;" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_PARA_COL_3}">
+												<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_PARA_COL_3}" />
+											</h:inputText>
+										</rich:column>
+
+										<!-- PLD_PARA_COL_4 -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PGIM_LOV_DEFN$PLD_PARA_COL_4$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_PARA_COL_4}"
+												id="PLD_PARA_COL_4" style="width:100px;" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_PARA_COL_4}">
+												<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_PARA_COL_4}" />
+											</h:inputText>
+										</rich:column>
+
+										<!-- PLD_PARA_COL_5 -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PGIM_LOV_DEFN$PLD_PARA_COL_5$caption}" />
+											</f:facet>
+											<h:inputText
+												binding="#{PGIM_LOV_DEFN_ACTION.COMP_PLD_PARA_COL_5}"
+												id="PLD_PARA_COL_5" style="width:100px;" styleClass="forumRowHighlight"
+												value="#{PGIM_LOV.PLD_PARA_COL_5}">
+												<a4j:support event="onblur"
+													reRender="errorMessages,errorPanel,err" immediate="true"
+													actionListener="#{PGIM_LOV_DEFN_ACTION.getPLD_PARA_COL_5}" />
+											</h:inputText>
+										</rich:column>
+
+
+									</rich:dataTable>
+								</rich:panel></td>
+							</tr>
+
+							<tr>
+								<td colspan="5" width="100%">
+								<hr color="black" />
+								</td>
+							</tr>
+
+							<tr>
+								<td colspan="5" width="100%" align="right"><h:commandLink
+									style="text-decoration:none"
+									action="#{PGIM_LOV_DEFN_ACTION.saveAndCommit}">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/save.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink> <h:commandLink style="text-decoration:none">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/savenext.GIF" />
+									<h:outputText value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink> <h:commandLink style="text-decoration:none">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/firstrec.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink> <h:commandLink style="text-decoration:none">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/prevpage.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink> <h:commandLink style="text-decoration:none">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/nextpage.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink> <h:commandLink style="text-decoration:none">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink></td>
+							</tr>
+
+						</table>
+						</td>
+						<td></td>
+					</tr>
+				</table>
+				</div>
+				</td>
+			</tr>
+		</h:form>
+	</table>
+	<table width="100%">
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

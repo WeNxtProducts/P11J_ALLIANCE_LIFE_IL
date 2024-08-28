@@ -1,0 +1,478 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml"
+	xmlns:w="http://3i-infotech.com/premia">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}" 
+		 >
+			<f:loadBundle basename="messageProperties_PILM039" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			<h:form id="PM_IL_END_APPR_SETUP" onkeypress="return event.keyCode != 13">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+
+					<!--<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20"></td>
+			</tr>
+			-->
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.saveCurrentRecord}"
+											id="AUTOID_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_2"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_4" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_7" rendered="false"
+											style="text-decoration:none">
+											<h:graphicImage id="AUTOID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<a4j:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_10"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTOID_11"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</a4j:commandLink>
+										<a4j:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_12"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTOID_13"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</a4j:commandLink>
+										<a4j:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</a4j:commandLink>
+										<a4j:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_16"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_17"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</a4j:commandLink>
+									</rich:toolBarGroup>
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD"
+												location="right">
+												<w:treeWizard binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.wizard}" caption="#{message_PILM039.PILM039$WIZARD$HEADER_CAPTION}" id="wizard" rendered="true"/>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.errorMap['current'] !=null? PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.errorMap['current']:PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:messages id="msg"
+								rendered="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.errorMessages}" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div id="tablecontainer">
+						<div id="sidebar" style="width: 21%; vertical-align: top">
+						<div align="center" id="handle" style="width: 5%;"><a4j:commandLink
+											actionListener="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.wizard.toggle}"
+											id="BACK_TOOL_FOOTER1" immediate="true" rendered="true"
+											style="text-decoration:none;align:left"
+											styleClass="toolbarCommandLinkStyle">
+											<img align="left" alt="Click to toggle the sidebar" height="123"
+												onclick="toggleSideBar();"
+												src="./../../resources/images/toggle.jpg" style="border: 0;"
+												width="14" />
+										</a4j:commandLink></div>
+
+						<div id="sbText" style="display: compact;">
+						<div id="linkstable1" style="vertical-align: top; width: 95%">
+						<w:treeWizardPanel
+										binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.wizard.wizardPanel}"
+										id="wizardPanel" />
+						</div>
+						</div>
+						</div>
+
+						<div id="content" style="width: 79%;">
+						<table width="100%">
+							<tr>
+								<td valign="top" width="100%"><rich:panel id="richPanel"
+									style="width:99%">
+									<rich:dataTable
+										binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.dataTable}"
+										id="dataTableId" width="100%" cellspacing="0" border="0"
+										rows="5"
+										value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.list}"
+										var="listValue">
+										<rich:column filterBy="#{listValue.EAS_FM_END_CODE}"
+											filterEvent="onkeyup"
+											filterValue="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.filterByEAS_FM_END_CODE}"
+											sortBy="#{listValue.EAS_FM_END_CODE}"
+											styleClass="#{listValue.rowSelected}">
+											<f:facet name="header">
+												<h:outputText id="AUTOID_OT_FM_END"
+													styleClass="forumRowHighlight"
+													value="#{message.PILM039$PM_IL_END_APPR_SETUP$EAS_FM_END_CODE$caption}" />
+											</f:facet>
+
+											<a4j:commandLink
+												action="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.getDetails}"
+												immediate="true" reRender="errorPanel,richPanel">
+												<h:outputText id="AUTOID_ot"
+													value="#{listValue.EAS_FM_END_CODE} " />
+											</a4j:commandLink>
+
+										</rich:column>
+
+										<rich:column filterBy="#{listValue.EAS_TO_END_CODE}"
+											filterEvent="onkeyup"
+											filterValue="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.filterByEAS_TO_END_CODE}"
+											sortBy="#{listValue.EAS_TO_END_CODE}"
+											styleClass="#{listValue.rowSelected}">
+											<f:facet name="header">
+												<h:outputText id="AUTOID_26_OT"
+													styleClass="forumRowHighlight"
+													value="#{message.PILM039$PM_IL_END_APPR_SETUP$EAS_TO_END_CODE$caption}" />
+											</f:facet>
+											<h:outputText id="EAS_TO_END_CODE" rendered="true"
+												style="width:20px;" value="#{listValue.EAS_TO_END_CODE}">
+											</h:outputText>
+										</rich:column>
+
+										<!-- Attach scroller as footer of the table-->
+										<f:facet name="footer">
+											<h:panelGroup id="footerpanel" style="border:0">
+												<rich:datascroller align="right" />
+												<h:commandButton
+													action="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.AddRow}"
+													disabled="false" id="AUTOID_26_ADD" immediate="true"
+													reRender="errorPanel,richPanel" rendered="true"
+													style="width:81px" styleClass="button"
+													value="#{commonmsg.addNewButtonCaption}" />
+												<h:commandButton
+													action="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.deleteRow}"
+													disabled="false" id="AUTOID_27_DELETE" immediate="true"
+													reRender="errorPanel,richPanel" rendered="true"
+													style="width:81px" styleClass="button"
+													value="#{commonmsg.deleteButtonCaption}" />
+												<h:commandButton
+													action="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.postRecord}"
+													id="AUTOID_28_POST" reRender="errorPanel,richPanel"
+													rendered="true" style="width:81px" styleClass="button"
+													value="#{commonmsg.postButtonCaption}" />
+
+											</h:panelGroup>
+										</f:facet>
+									</rich:dataTable>
+									<table width="100%">
+							<tr>
+								<td class="oddrowright" width="20%"><h:outputLabel
+									binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.COMP_EAS_FM_END_CODE_LABEL}"
+									for="EAS_FM_END_CODE" id="EAS_FM_END_CODE_LABEL"
+									styleClass="label"
+									value="#{message.PILM039$PM_IL_END_APPR_SETUP$EAS_FM_END_CODE$caption}" />
+								</td>
+								<td class="oddrow" width="28%"><h:inputText
+									binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.COMP_EAS_FM_END_CODE}"
+									id="EAS_FM_END_CODE" maxlength="50" rendered="true"
+									validator="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.validateEAS_FM_END_CODE}"
+									required="false" styleClass="inputsmall"
+									title="#{message.PILM039$PM_IL_APPR_SETUP_DET$EAS_FM_END_CODE$tooltip}"
+									value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.PM_IL_END_APPR_SETUP_BEAN.EAS_FM_END_CODE}">
+								<a4j:support
+										event="onblur" id="SELF_ID_23A" immediate="true"
+										actionListener="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.actionListenerEAS_FM_END_CODE}"
+										oncomplete="setFocus('PM_IL_END_APPR_SETUP:EAS_TO_END_CODE','PM_IL_END_APPR_SETUP:EAS_FM_END_CODE')"
+										reRender="errorPanel,EAS_FM_END_CODE,EAS_FM_END_CODE_DESC,EAS_TO_END_CODE_SUGG">
+									</a4j:support>
+								</h:inputText> <h:inputText
+									binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.COMP_EAS_FM_END_CODE_DESC}"
+									id="EAS_FM_END_CODE_DESC" maxlength="150" rendered="true"
+									required="false" styleClass="input" disabled="true"
+									value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.PM_IL_END_APPR_SETUP_BEAN.EAS_FM_END_CODE_DESC}">
+									<rich:suggestionbox
+										fetchValue="#{currDivn.EAS_FM_END_CODE}"
+										for="EAS_FM_END_CODE" height="200" id="AUTOID_27"
+										suggestionAction="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.getLovForEAS_FM_TO_END_CODE}"
+										var="currDivn" width="350">
+										<h:column>
+											<h:outputText id="AUTOID_28"
+												value="#{currDivn.EAS_FM_END_CODE}" />
+										</h:column>
+										<h:column>
+											<h:outputText id="AUTOID_29"
+												value="#{currDivn.EAS_FM_END_CODE_DESC}" />
+										</h:column>
+										<a4j:support ajaxSingle="true" event="onselect"
+											id="COMP_1_INPUT_SUGG_SUPPORT" immediate="true"
+											reRender="errorPanel,EAS_FM_END_CODE_DESC">
+											<f:setPropertyActionListener id="AUTOID_30"
+												target="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.PM_IL_END_APPR_SETUP_BEAN.EAS_FM_END_CODE_DESC}"
+												value="#{currDivn.EAS_FM_END_CODE_DESC}" />
+										</a4j:support>
+									</rich:suggestionbox>
+								</h:inputText>
+								<h:graphicImage
+												id="AUTOID_35_GI_1" styleClass="searchimg"
+												value="./../../images/Lov.gif" />
+								</td>
+								<td class="oddrow" width="4%"/>
+								<td class="oddrow" width="20%"/>
+								<td class="oddrow" width="28%"/>
+							</tr>
+							<tr>
+								<td class="evenrowright"><h:outputLabel
+									binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.COMP_EAS_TO_END_CODE_LABEL}"
+									for="EAS_TO_END_CODE" id="EAS_TO_END_CODE_LABEL"
+									styleClass="label"
+									value="#{message.PILM039$PM_IL_END_APPR_SETUP$EAS_TO_END_CODE$caption}" />
+								</td>
+								<td class="evenrow"><h:inputText
+									binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.COMP_EAS_TO_END_CODE}"
+									id="EAS_TO_END_CODE" maxlength="50" rendered="true"
+									required="false" styleClass="inputsmall"
+									validator="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.validateEAS_TO_END_CODE}"									title="#{message.PILM039$PM_IL_END_APPR_SETUP$EAS_TO_END_CODE$tooltip}"
+									value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.PM_IL_END_APPR_SETUP_BEAN.EAS_TO_END_CODE}">
+									<a4j:support
+										event="onblur" id="SUPP_EAS_TO_END_CODE" immediate="true"
+										actionListener="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.actionListenerEAS_TO_END_CODE}"
+										reRender="errorPanel,EAS_TO_END_CODE,EAS_TO_END_CODE_DESC" >
+									</a4j:support>
+									</h:inputText> <h:inputText
+									binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.COMP_EAS_TO_END_CODE_DESC}"
+									id="EAS_TO_END_CODE_DESC" maxlength="150" disabled="true"
+									rendered="true" required="false" styleClass="input"
+									value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.PM_IL_END_APPR_SETUP_BEAN.EAS_TO_END_CODE_DESC}">
+									<rich:suggestionbox fetchValue="#{currDivn.EAS_TO_END_CODE}"
+										for="EAS_TO_END_CODE" height="200" id="EAS_TO_END_CODE_SUGG"
+										suggestionAction="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.getLovForEAS_FM_TO_END_CODE}"
+										var="currDivn" width="350">
+										<h:column>
+											<h:outputText id="AUTOID_35"
+												value="#{currDivn.EAS_TO_END_CODE}" />
+										</h:column>
+										<h:column>
+											<h:outputText id="AUTOID_36"
+												value="#{currDivn.EAS_TO_END_CODE_DESC}" />
+										</h:column>
+										<a4j:support ajaxSingle="true" event="onselect"
+											id="COMP_1_INPUT_SUGG_SUPPORT" immediate="true"
+											reRender="errorPanel,EAS_TO_END_CODE_DESC">
+											<f:setPropertyActionListener id="AUTOID_37"
+												target="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.PM_IL_END_APPR_SETUP_BEAN.EAS_TO_END_CODE_DESC}"
+												value="#{currDivn.EAS_TO_END_CODE_DESC}" />
+										</a4j:support>
+									</rich:suggestionbox>
+								</h:inputText>
+								<h:graphicImage
+												id="AUTOID_35_GI_2" styleClass="searchimg"
+												value="./../../images/Lov.gif" /></td>
+								<td class="evenrowright"/>
+								<td class="evenrow"/>
+								<td class="evenrowright"/>
+							</tr>
+							<tr>
+								<td class="oddrowright"><h:outputLabel
+									binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.COMP_EAS_END_PROC_YN_LABEL}"
+									for="EAS_END_PROC_YN" id="EAS_END_PROC_YN_LABEL"
+									styleClass="label"
+									value="#{message.PILM039$PM_IL_END_APPR_SETUP$EAS_END_PROC_YN$caption}" />
+								</td>
+								<td class="oddrow"><h:selectOneMenu 
+									binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.COMP_EAS_END_PROC_YN}"
+									disabled="false" id="EAS_END_PROC_YN" immediate="true"
+									rendered="true" styleClass="input"
+									validator="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.validateEAS_END_PROC_YN}"
+									title="#{message.PILM039$PM_IL_END_APPR_SETUP$EAS_END_PROC_YN$tooltip}"
+									value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.PM_IL_END_APPR_SETUP_BEAN.EAS_END_PROC_YN}">
+									<f:selectItems id="AUTO_ID_70"
+										value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.EAS_END_PROC_YN}" />
+									<a4j:support
+										actionListener="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.fireFieldValidation}"
+										event="onchange" focus="EAS_END_PROC_YN" id="AUTOID_40_SU"
+										immediate="true" reRender="errorPanel,dataTableId" />
+									<a4j:support event="onblur" id="AUTO_ID_71" immediate="true"
+										actionListener="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.fireFieldValidation}"
+										reRender="errorPanel,dataTableId" />
+								</h:selectOneMenu></td>
+								<td class="oddrowright"></td>
+								<td class="oddrowright"><h:outputLabel
+									binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.COMP_EAS_END_APPR_YN_LABEL}"
+									for="EAS_END_APPR_YN" id="EAS_END_APPR_YN_LABEL"
+									rendered="true" styleClass="label"
+									value="#{message.PILM039$PM_IL_END_APPR_SETUP$EAS_END_APPR_YN$caption}" />
+								</td>
+								<td class="oddrow"><h:selectOneMenu
+									binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.COMP_EAS_END_APPR_YN}"
+									disabled="false" id="EAS_END_APPR_YN" immediate="true"
+									rendered="true" styleClass="input"
+									validator="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.validateEAS_END_APPR_YN}"
+									title="#{message.PILM039$PM_IL_END_APPR_SETUP$EAS_END_APPR_YN$tooltip}"
+									value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.PM_IL_END_APPR_SETUP_BEAN.EAS_END_APPR_YN}">
+									<f:selectItems id="AUTO_ID_70_SL"
+										value="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.EAS_END_APPR_YN}" />
+									<a4j:support
+										actionListener="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.fireFieldValidation}"
+										event="onchange" focus="EAS_END_APPR_YN"
+										id="AUTOID_43_EAS_END_APPR_YN" immediate="true"
+										reRender="errorPanel,dataTableId" />
+									<a4j:support event="onblur" id="AUTO_ID_71_SU"
+										immediate="true"
+										actionListener="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.fireFieldValidation}"
+										reRender="errorPanel,dataTableId" />
+
+								</h:selectOneMenu></td>
+							</tr>
+							</table>
+								</rich:panel></td>
+							</tr>
+						</table>
+						</div>
+						</div>
+						</td>
+					</tr>
+				</table>
+				<td valign="top" width="20%">
+				<table class="noborder" />
+				</td>
+				<tr>
+					<td colspan="3" vAlign="top" width="100%">
+					<table class="noborder" id="toolbartable" width="100%">
+						<tr>
+							<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+								<rich:toolBarGroup location="right"
+									styleClass="toolBarGroupStyle">
+									<h:commandLink
+										action="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.PM_IL_END_APPR_SETUP_ACTION_BEAN.saveRecord}"
+										id="AUTOID_48" rendered="false" style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="AUTOID_49"
+											style="border: thin solid white" styleClass="searchimg"
+											value="./../../images/save.gif" />
+										<h:outputText id="AUTOID_50"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$save}" />
+									</h:commandLink>
+									<h:commandLink id="AUTOID_51" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="AUTOID_52"
+											style="border: thin solid white" styleClass="searchimg"
+											value="./../../images/savenext.GIF" />
+										<h:outputText id="AUTOID_53"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$savenext}" />
+									</h:commandLink>
+									<h:commandLink id="AUTOID_54" rendered="false"
+										style="text-decoration:none">
+										<h:graphicImage id="AUTOID_55"
+											style="border: thin solid white" styleClass="searchimg"
+											value="./../../images/deleteRecord.gif" />
+										<h:outputText id="AUTOID_56"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$deleteRecord}" />
+									</h:commandLink>
+									<a4j:commandLink rendered="false" style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="AUTOID_57"
+											style="border: thin solid white" styleClass="searchimg"
+											value="./../../images/firstrec.gif" />
+										<h:outputText id="AUTOID_58"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$firstrec}" />
+									</a4j:commandLink>
+									<a4j:commandLink rendered="false" style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="AUTOID_59"
+											style="border: thin solid white" styleClass="searchimg"
+											value="./../../images/prevpage.gif" />
+										<h:outputText id="AUTOID_60"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$prevpage}" />
+									</a4j:commandLink>
+									<a4j:commandLink rendered="false" style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="AUTOID_61"
+											style="border: thin solid white" styleClass="searchimg"
+											value="./../../images/nextpage.gif" />
+										<h:outputText id="AUTOID_62"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$nextpage}" />
+									</a4j:commandLink>
+									<a4j:commandLink rendered="false" style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="AUTOID_63"
+											style="border: thin solid white" styleClass="searchimg"
+											value="./../../images/lastRecord.gif" />
+										<h:outputText id="AUTOID_64"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$lastRecord}" />
+									</a4j:commandLink>
+								</rich:toolBarGroup>
+								<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM"
+										location="right">
+										<w:wizardPanelFooter id="UASETUP_WPF_5"
+											binding="#{PM_IL_APPR_SETUP_COMPOSITE_ACTION.wizard.wizardPanelFooter}" />
+									</rich:toolBarGroup>
+							</rich:toolBar></td>
+						</tr>
+					</table>
+					</td>
+				</tr>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,466 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.beforePhaseListener}">
+			<f:loadBundle basename="messageProperties_SSO" var="message" />
+			<h:form id="PM_APPLICATION_DTLS">
+				<table cellpadding="0" cellspacing="0" width="100%" border="0">
+					<tr>
+						<td colspan="3" width="100%" valign="top">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar id="COMP_001" styleClass="toolBarStyle"
+									width="100%">
+									<rich:toolBarGroup id="COMP_002" styleClass="toolBarGroupStyle">
+										<h:commandLink id="COMP_003" action="SSO_MANAGER_SEARCH"
+											rendered="false" style="text-decoration:none"
+											immediate="true" styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_004" styleClass="toolbarImageStyle"
+												value="./../../resources/images/back.png" />
+											<h:outputText id="COMP_005"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_006"
+											action="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.saveRecord}"
+											rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_007" styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="COMP_008"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_009" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_010" styleClass="toolbarImageStyle"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="COMP_011"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_012" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_013" styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="COMP_014"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_015" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_016" styleClass="toolbarImageStyle"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="COMP_017"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_018" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_019" styleClass="toolbarImageStyle"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="COMP_020"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_021" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_022" styleClass="toolbarImageStyle"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="COMP_023"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_024" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_0241" styleClass="toolbarImageStyle"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="COMP_025"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink id="COMP_026"
+											action="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.navigationEnabled}"
+											immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="COMP_027" styleClass="toolbarImageStyle"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="COMP_028"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20"><rich:simpleTogglePanel
+							id="errorPanel" switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.errorMap['current'] !=null? SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.errorMap['current']: SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel id="COMP_029"
+									value="#{message.SSO$PM_APPLICATION_DTLS$PAGE$CAPTION}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<table width="100%" align="right">
+							<tr align="right">
+								<td><h:commandButton id="UI_M_BUT_BACK" rendered="true"
+									styleClass="button" style="width:96px;"
+									action="PM_LOGIN_SWITCH"
+									title="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$UI_M_BUT_BACK$tooltip}"
+									immediate="true"
+									value="#{message.SSO$SSO_MANAGER_SEARCH_PAGE$UI_M_BUT_BACK$caption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td width="90%" valign="top"><h:panelGroup
+									id="PM_APPLICATION_DTLS_SETUP_PANEL"
+									style="border:0;height:15%;">
+									<table id="bordertable" align="left" width="100%">
+										<tr>
+											<td><rich:dataTable
+												binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.dataTable}"
+												id="PM_APPLICATION_DTLS_DATA_GRID" rows="5" width="100%"
+												value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.PM_APPLICATION_DTLS_LIST}"
+												var="applDtls">
+												<f:facet name="header">
+													<h:outputText id="COMP_030" styleClass="forumRowHighlight"
+														value="#{message.SSO$PM_APPLICATION_DTLS$PARA_CODE$caption}" />
+												</f:facet>
+												<rich:column styleClass="#{applDtls.rowSelected}"
+													filterEvent="onkeyup" rendered="true" id="COMP_031"
+													filterBy="#{PAD_APPL_CODE.PAD_APPL_CODE}"
+													sortBy="#{PAD_APPL_CODE.PAD_APPL_CODE}">
+													<f:facet name="header">
+														<h:outputText id="COMP_032" styleClass="forumRowHighlight"
+															value="#{message.SSO$PM_APPLICATION_DTLS$PARA_CODE$caption}" />
+													</f:facet>
+													<a4j:commandLink
+														actionListener="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.displayRecord}"
+														immediate="true" id="COMP_033"
+														reRender="errorPanel,PM_APPLICATION_DTLS_DATA_GRID,APPLICATION_DETAILS_PANEL">
+														<h:outputText id="COMP_034"
+															value="#{applDtls.PAD_APPL_CODE}" />
+													</a4j:commandLink>
+												</rich:column>
+												<rich:column styleClass="#{applDtls.rowSelected}"
+													filterEvent="onkeyup" rendered="true" id="COMP_035"
+													filterBy="#{applDtls.PAD_APPL_DESC}"
+													sortBy="#{applDtls.PAD_APPL_DESC}">
+													<f:facet name="header">
+														<h:outputText id="COMP_036" styleClass="forumRowHighlight"
+															value="#{message.SSO$PM_APPLICATION_DTLS$PAD_APPL_DESC$caption}" />
+													</f:facet>
+													<h:outputText id="COMP_037"
+														value="#{applDtls.PAD_APPL_DESC}" />
+												</rich:column>
+												<rich:column styleClass="#{applDtls.rowSelected}"
+													filterEvent="onkeyup" rendered="true" id="COMP_038"
+													filterBy="#{applDtls.PAD_APPL_URL}"
+													sortBy="#{applDtls.PAD_APPL_URL}">
+													<f:facet name="header">
+														<h:outputText id="COMP_039" styleClass="forumRowHighlight"
+															value="#{message.SSO$PM_APPLICATION_DTLS$PAD_APPL_URL$caption}" />
+													</f:facet>
+													<h:outputText id="COMP_040"
+														value="#{applDtls.PAD_APPL_URL}" />
+												</rich:column>
+												<f:facet name="footer">
+													<h:panelGroup id="COMP_045">
+														<rich:datascroller align="right"
+															id="PM_POL_SUB_CLASS_SETUP_SCROLL" />
+														<a4j:commandButton
+															actionListener="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.createRecord}"
+															id="addRow" immediate="true"
+															reRender="errorPanel,APPLICATION_DETAILS_PANEL"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.addNewButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.deleteRecord}"
+															id="deleteRow" immediate="true"
+															reRender="errorPanel,PM_APPLICATION_DTLS_DATA_GRID,APPLICATION_DETAILS_PANEL"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.deleteButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.postRecord}"
+															id="postRecord" immediate="false"
+															reRender="errorPanel,PM_APPLICATION_DTLS_DATA_GRID,APPLICATION_DETAILS_PANEL"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.postButtonCaption}" />
+													</h:panelGroup>
+												</f:facet>
+											</rich:dataTable></td>
+										</tr>
+										<tr>
+											<td><rich:panel id="APPLICATION_DETAILS_PANEL">
+												<fieldset style="width: 100%"><legend> <h:outputLabel
+													id="SYSTEM_SETUP_LEGEND" rendered="true" styleClass="label"
+													value="#{message.SSO$PM_APPLICATION_DTLS$SYSTEM_SETUP_LEGEND$caption}" />
+												</legend>
+												<table width="100%">
+													<tr>
+														<td id="td-background"><h:outputLabel for="PARA_CODE"
+															id="PARA_CODE_LABEL" rendered="true" styleClass="label"
+															value="#{message.SSO$PM_APPLICATION_DTLS$PARA_CODE$caption}" />
+														<h:graphicImage id="PARA_CODE_MANDATORY"
+															value="./../../resources/images/mandatory.gif" /></td>
+														<td align="left"><h:inputText
+															binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.COMP_PARA_CODE}"
+															disabled="false" id="PARA_CODE" maxlength="10"
+															rendered="true" required="true" style="width:250px;"
+															styleClass="forumRowHighlight"
+															title="#{message.SSO$PM_APPLICATION_DTLS$PARA_CODE$tooltip}"
+															validator="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.validateAppCode}"
+															value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.IM_SYSTEM_SETUP_BEAN.PARA_CODE}">
+															<a4j:support id="SUPPORT_PARA_CODE" event="onblur"
+																immediate="true"
+																actionListener="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.fireFieldValidation}"
+																reRender="errorPanel" />
+														</h:inputText></td>
+														<td>&nbsp;</td>
+														<td id="td-background"><h:outputLabel
+															for="PARA_VALUE" id="PARA_VALUE_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.SSO$PM_APPLICATION_DTLS$PARA_VALUE$caption}" />
+														<h:graphicImage id="PARA_VALUE_MANDATORY"
+															value="./../../resources/images/mandatory.gif" /></td>
+														<td align="left"><h:inputText
+															binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.COMP_PARA_VALUE}"
+															disabled="false" id="PARA_VALUE" maxlength="15"
+															rendered="true" required="true" style="width:250px;"
+															styleClass="forumRowHighlight"
+															title="#{message.SSO$PM_APPLICATION_DTLS$PARA_VALUE$tooltip}"
+															value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.IM_SYSTEM_SETUP_BEAN.PARA_VALUE}">
+														</h:inputText></td>
+													</tr>
+													<tr>
+														<td id="td-background"><h:outputLabel for="PARA_NAME"
+															id="PARA_NAME_LABEL" rendered="true" styleClass="label"
+															value="#{message.SSO$PM_APPLICATION_DTLS$PARA_NAME$caption}" />
+														</td>
+														<td align="left"><h:inputText
+															binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.COMP_PARA_NAME}"
+															disabled="false" id="PARA_NAME" maxlength="250"
+															rendered="true" required="false" style="width:250px;"
+															styleClass="forumRowHighlight"
+															title="#{message.SSO$PM_APPLICATION_DTLS$PARA_NAME$tooltip}"
+															value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.IM_SYSTEM_SETUP_BEAN.PARA_NAME}">
+														</h:inputText></td>
+														<td>&nbsp;</td>
+														<td id="td-background"><h:outputLabel
+															for="PARA_BL_NAME" id="PARA_BL_NAME_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.SSO$PM_APPLICATION_DTLS$PARA_BL_NAME$caption}" />
+														</td>
+														<td align="left"><h:inputText
+															binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.COMP_PARA_BL_NAME}"
+															disabled="false" id="PARA_BL_NAME" maxlength="250"
+															rendered="true" required="false" style="width:250px;"
+															styleClass="forumRowHighlight"
+															title="#{message.SSO$PM_APPLICATION_DTLS$PARA_BL_NAME$tooltip}"
+															value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.IM_SYSTEM_SETUP_BEAN.PARA_BL_NAME}">
+														</h:inputText></td>
+													</tr>
+													<tr>
+														<td id="td-background"><h:outputLabel
+															for="PARA_MODULE" id="PARA_MODULE_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.SSO$PM_APPLICATION_DTLS$PARA_MODULE$caption}" />
+														<h:graphicImage id="PARA_MODULE_MANDATORY"
+															value="./../../resources/images/mandatory.gif" /></td>
+														<td align="left"><h:inputText
+															binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.COMP_PARA_MODULE}"
+															disabled="true" id="PARA_MODULE" maxlength="50"
+															rendered="true" required="true" style="width:250px;"
+															styleClass="forumRowHighlight"
+															title="#{message.SSO$PM_APPLICATION_DTLS$PARA_MODULE$tooltip}"
+															value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.IM_SYSTEM_SETUP_BEAN.PARA_MODULE}">
+														</h:inputText></td>
+														<td>&nbsp;</td>
+														<td>&nbsp;</td>
+														<td>&nbsp;</td>
+													</tr>
+												</table>
+												</fieldset>
+												<br />
+												<fieldset style="width: 100%"><legend> <h:outputLabel
+													id="SYSTEM_SYSTEM_LEGEND" rendered="true"
+													styleClass="label"
+													value="#{message.SSO$PM_APPLICATION_DTLS$SYSTEM_SYSTEM_LEGEND$caption}" />
+												</legend>
+												<table width="100%">
+													<tr>
+														<td id="td-background"><h:outputLabel
+															for="PAD_APPL_DESC" id="PAD_APPL_DESC_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.SSO$PM_APPLICATION_DTLS$PAD_APPL_DESC$caption}" />
+														<h:graphicImage id="PAD_APPL_DESC_MANDATORY"
+															value="./../../resources/images/mandatory.gif" /></td>
+														<td align="left"><h:inputText
+															binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.COMP_PAD_APPL_DESC}"
+															disabled="false" id="PAD_APPL_DESC" maxlength="50"
+															rendered="true" required="true" style="width:200px;"
+															styleClass="forumRowHighlight"
+															title="#{message.SSO$PM_APPLICATION_DTLS$PAD_APPL_DESC$tooltip}"
+															validator="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.validateAppName}"
+															value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.PM_APPLICATION_DTLS_BEAN.PAD_APPL_DESC}">
+															<a4j:support id="SUPPORT_PAD_APPL_DESC" event="onblur"
+																immediate="true"
+																actionListener="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.fireFieldValidation}"
+																reRender="errorPanel" />
+														</h:inputText></td>
+														<td>&nbsp;</td>
+														<td id="td-background"><h:outputLabel
+															for="PAD_APPL_URL" id="PAD_APPL_URL_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.SSO$PM_APPLICATION_DTLS$PAD_APPL_URL$caption}" />
+														<h:graphicImage id="PAD_APPL_URL_MANDATORY"
+															value="./../../resources/images/mandatory.gif" /></td>
+														<td align="left"><h:inputText
+															binding="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.COMP_PAD_APPL_URL}"
+															disabled="false" id="PAD_APPL_URL" maxlength="300"
+															rendered="true" required="true" style="width:350px;"
+															styleClass="forumRowHighlight"
+															title="#{message.SSO$PM_APPLICATION_DTLS$PAD_APPL_URL$tooltip}"
+															value="#{SSO_MANAGER_COMPOSITE_ACTION.PM_APPLICATION_SETUP_ACTION_BEAN.PM_APPLICATION_DTLS_BEAN.PAD_APPL_URL}">
+														</h:inputText></td>
+													</tr>
+												</table>
+												</fieldset>
+											</rich:panel></td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar id="COMP_056"
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="COMP_057" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="COMP_058" rendered="true"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_059" styleClass="toolbarImageStyle"
+										value="./../../resources/images/save.gif" />
+									<h:outputText id="COMP_060" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="COMP_061" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_062" styleClass="toolbarImageStyle"
+										value="./../../resources/images/savenext.GIF" />
+									<h:outputText id="COMP_063" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="COMP_064" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_065" styleClass="toolbarImageStyle"
+										value="./../../resources/images/firstrec.gif" />
+									<h:outputText id="COMP_066" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="COMP_067" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_068" styleClass="toolbarImageStyle"
+										value="./../../resources/images/prevpage.gif" />
+									<h:outputText id="COMP_069" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="COMP_070" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_071" styleClass="toolbarImageStyle"
+										value="./../../resources/images/nextpage.gif" />
+									<h:outputText id="COMP_072" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="COMP_073" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_074" styleClass="toolbarImageStyle"
+										value="./../../resources/images/lastRecord.gif" />
+									<h:outputText id="COMP_075" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="COMP_076" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="COMP_077" styleClass="toolbarImageStyle"
+										value="./../../resources/images/navigation.gif" />
+									<h:outputText id="COMP_078" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

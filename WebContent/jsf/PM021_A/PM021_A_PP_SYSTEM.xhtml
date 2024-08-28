@@ -1,0 +1,372 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PM021_A_PP_SYSTEM_ACTION.beforePhase}">
+			<f:loadBundle basename="messageProperties_PM021_A" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+
+				</tr>
+			</table>
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PP_SYSTEM" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+
+
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM021_A_PP_SYSTEM_ACTION.backToSearch}"
+											id="AUTOID_CL" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_GI" styleClass="searchimg"
+												value="./../../resources/images/back.png" />
+											<h:outputText id="AUTOID_OT"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+
+										<h:commandLink action="#{PM021_A_PP_SYSTEM_ACTION.saveAction}"
+											id="AUTOID_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_2"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<a4j:commandLink id="AUTOID_7" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+											<rich:componentControl attachTo="AUTOID_7" event="onclick"
+												for="DELETE_PANEL" id="DELETE_COMP_CONTROL" operation="show" />
+										</a4j:commandLink>
+
+										<!-- Delete confirmation Confirmation popup -->
+										<rich:modalPanel height="110" id="DELETE_PANEL" width="300">
+											<f:facet name="header">
+												<h:panelGroup>
+													<h:outputText id="AUTOID_1M"
+														style="color: #FFFFFF; font-size: 14px;font-weight: bold;"
+														value="#{commonmsg.premia$broker$delete$confirmation$caption}" />
+												</h:panelGroup>
+											</f:facet>
+											<f:facet name="controls">
+												<h:panelGroup>
+													<h:graphicImage id="DELETE_PANEL_hidelink"
+														style="cursor:pointer" styleClass="searchimg"
+														value="./../../resources/images/close.png" />
+													<rich:componentControl attachTo="DELETE_PANEL_hidelink"
+														event="onclick" for="DELETE_PANEL" operation="hide" />
+												</h:panelGroup>
+											</f:facet>
+											<table align="center" class="noborder">
+												<tr align="center">
+													<td><h:outputText id="AUTOID_2M"
+														value="#{commonmsg.premia$broker$delete$confirmation$message}" />
+													</td>
+												</tr>
+												<tr align="center">
+													<td><h:commandButton
+														action="#{PM021_A_PP_SYSTEM_ACTION.deleteAction}"
+														id="DELETE_PANEL_continuebutton"
+														style="width:65px;height:20px;" styleClass="button"
+														value="#{commonmsg.premia$broker$delete$confirmation$ok}">
+														<rich:componentControl
+															attachTo="DELETE_PANEL_continuebutton" event="onclick"
+															for="DELETE_PANEL" operation="hide" />
+													</h:commandButton> <rich:spacer height="25" id="AUTOID_3M" width="10" /> <a4j:commandButton
+														id="DELETE_PANEL_cancelbutton" immediate="true"
+														style="width:65px;height:20px;" styleClass="button"
+														value="#{commonmsg.premia$broker$delete$confirmation$cancel}">
+														<rich:componentControl
+															attachTo="DELETE_PANEL_cancelbutton" event="onclick"
+															for="DELETE_PANEL" operation="hide" />
+													</a4j:commandButton> <br />
+													</td>
+												</tr>
+											</table>
+										</rich:modalPanel>
+
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM021_A_PP_SYSTEM_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM021_A_PP_SYSTEM_ACTION.errorMap['current'] !=null? PM021_A_PP_SYSTEM_ACTION.errorMap['current']: PM021_A_PP_SYSTEM_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PM021_A_PP_SYSTEM_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PM021_A_PP_SYSTEM_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PM021_A_PP_SYSTEM_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PM021_A$PP_SYSTEM$DISPLAY$caption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table align="center" class="noborder" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+								<td valign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PM021_A_PP_SYSTEM_ACTION.COMP_PS_TYPE_LABEL}"
+											for="PS_TYPE" id="PS_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM021_A$PP_SYSTEM$PS_TYPE$caption}" /> <h:graphicImage
+											id="AUTOID_22" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PM021_A_PP_SYSTEM_ACTION.COMP_PS_TYPE}"
+											disabled="false" id="PS_TYPE" maxlength="12" rendered="true"
+											required="true" styleClass="input"
+											title="#{message.PM021_A$PP_SYSTEM$PS_TYPE$tooltip}"
+											value="#{PM021_A_PP_SYSTEM_ACTION.PP_SYSTEM_BEAN.PS_TYPE}">
+											<a4j:support
+												actionListener="#{PM021_A_PP_SYSTEM_ACTION.validatePS_TYPE}"
+												event="onblur" id="AUTOID_23" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+										<td class="oddrowright" width="4%">&nbsp;</td>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PM021_A_PP_SYSTEM_ACTION.COMP_PS_TYPE_DESC_LABEL}"
+											for="PS_TYPE_DESC" id="PS_TYPE_DESC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM021_A$PP_SYSTEM$PS_TYPE_DESC$caption}" />
+										<h:graphicImage id="AUTOID_24" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PM021_A_PP_SYSTEM_ACTION.COMP_PS_TYPE_DESC}"
+											disabled="false" id="PS_TYPE_DESC" maxlength="30"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PM021_A$PP_SYSTEM$PS_TYPE_DESC$tooltip}"
+											value="#{PM021_A_PP_SYSTEM_ACTION.PP_SYSTEM_BEAN.PS_TYPE_DESC}">
+											<a4j:support
+												actionListener="#{PM021_A_PP_SYSTEM_ACTION.validatePS_TYPE_DESC}"
+												event="onblur" id="AUTOID_25" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PM021_A_PP_SYSTEM_ACTION.COMP_PS_CODE_LABEL}"
+											for="PS_CODE" id="PS_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM021_A$PP_SYSTEM$PS_CODE$caption}" /> <h:graphicImage
+											id="AUTOID_26" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PM021_A_PP_SYSTEM_ACTION.COMP_PS_CODE}"
+											disabled="false" id="PS_CODE" maxlength="12" rendered="true"
+											required="true" styleClass="input"
+											title="#{message.PM021_A$PP_SYSTEM$PS_CODE$tooltip}"
+											validator="#{PM021_A_PP_SYSTEM_ACTION.L_CHK_PS_CODE_EXISTS}"
+											value="#{PM021_A_PP_SYSTEM_ACTION.PP_SYSTEM_BEAN.PS_CODE}">
+											<a4j:support
+												actionListener="#{PM021_A_PP_SYSTEM_ACTION.validatePS_CODE}"
+												event="onblur" id="AUTOID_27" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+										<td class="evenrowright" width="4%">&nbsp;</td>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PM021_A_PP_SYSTEM_ACTION.COMP_PS_CODE_DESC_LABEL}"
+											for="PS_CODE_DESC" id="PS_CODE_DESC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM021_A$PP_SYSTEM$PS_CODE_DESC$caption}" />
+										<h:graphicImage id="AUTOID_28" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PM021_A_PP_SYSTEM_ACTION.COMP_PS_CODE_DESC}"
+											disabled="false" id="PS_CODE_DESC" maxlength="200"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PM021_A$PP_SYSTEM$PS_CODE_DESC$tooltip}"
+											value="#{PM021_A_PP_SYSTEM_ACTION.PP_SYSTEM_BEAN.PS_CODE_DESC}">
+											<a4j:support
+												actionListener="#{PM021_A_PP_SYSTEM_ACTION.validatePS_CODE_DESC}"
+												event="onblur" id="AUTOID_29" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PM021_A_PP_SYSTEM_ACTION.COMP_PS_VALUE_LABEL}"
+											for="PS_VALUE" id="PS_VALUE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM021_A$PP_SYSTEM$PS_VALUE$caption}" /></td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PM021_A_PP_SYSTEM_ACTION.COMP_PS_VALUE}"
+											disabled="false" id="PS_VALUE" maxlength="14" rendered="true"
+											required="false" styleClass="inputNumeric"
+											title="#{message.PM021_A$PP_SYSTEM$PS_VALUE$tooltip}"
+											value="#{PM021_A_PP_SYSTEM_ACTION.PP_SYSTEM_BEAN.PS_VALUE}">
+											<f:validateDoubleRange minimum="0" maximum="99999999999999" />
+											<a4j:support event="onblur" id="AUTOID_VALUE_SUP"
+												immediate="true" reRender="errorPanel" />
+										</h:inputText></td>
+										<td class="oddrow" width="4%">&nbsp;</td>
+										<td class="oddrow" width="20%">&nbsp;</td>
+										<td class="oddrow" width="28%">&nbsp;</td>
+									</tr>
+									<tr>
+										<td colspan="5" width="100%"><rich:simpleTogglePanel
+											id="bilingualPanel"
+											label="#{message.PM021_A$BILINGUAL$label}"
+											switchType="client" value="BilswitchType=" height="100%">
+
+											<table id="Bil" align="left" width="100%" class="noborder"
+												cellpadding="0" cellspacing="0" border="0">
+
+												<tr>
+													<td class="oddrowright" width="20%"><h:outputLabel
+														binding="#{PM021_A_PP_SYSTEM_ACTION.COMP_PS_BL_CODE_DESC_LABEL}"
+														for="PS_BL_CODE_DESC" id="PS_BL_CODE_DESC_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM021_A$PP_SYSTEM_1$PS_BL_CODE_DESC$caption}" />
+													</td>
+													<td class="oddrow" width="28%"><h:inputText
+														binding="#{PM021_A_PP_SYSTEM_ACTION.COMP_PS_BL_CODE_DESC}"
+														disabled="false" id="PS_BL_CODE_DESC" maxlength="720"
+														rendered="true" required="false" styleClass="input"
+														title="#{message.PM021_A$PP_SYSTEM$PS_BL_CODE_DESC$tooltip}"
+														value="#{PM021_A_PP_SYSTEM_ACTION.PP_SYSTEM_BEAN.PS_BL_CODE_DESC}" />
+													</td>
+													<td class="oddrow" width="4%">&nbsp;</td>												<td class="oddrow" width="20%">&nbsp;</td>
+													<td class="oddrow" width="20%">&nbsp;</td>
+													<td class="oddrow" width="28%">&nbsp;</td>
+												</tr>
+
+											</table>
+										</rich:simpleTogglePanel></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="5" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink action="#{PM021_A_PP_SYSTEM_ACTION.saveAction}"
+									id="AUTOID_30" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_31" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="AUTOID_32"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink id="AUTOID_33" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_34" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="AUTOID_35"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<a4j:commandLink id="AUTOID_36" style="text-decoration:none"
+									rendered="true" styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_37" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/deleteRecord.gif" />
+									<h:outputText id="AUTOID_38"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+									<rich:componentControl attachTo="AUTOID_36" event="onclick"
+										for="DELETE_PANEL" id="DELETE_COMP_1_CONTROL" operation="show" />
+								</a4j:commandLink>
+
+								<h:commandLink id="AUTOID_39" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_40" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="AUTOID_41"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink action="#{PM021_A_Utility.preBack}"
+									rendered="false" id="AUTOID_42" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_43" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="AUTOID_44"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink id="AUTOID_45" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_46" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="AUTOID_47"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink id="AUTOID_48" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_49" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="AUTOID_50"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+
+	</ui:define>
+</ui:composition>

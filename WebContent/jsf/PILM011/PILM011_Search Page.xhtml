@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+		<f:loadBundle basename="messageProperties" var="message" />
+		<f:loadBundle basename="menu" var="menumessage" />
+		<f:loadBundle basename="messageProperties_PILM011"
+			var="componentMessage" />
+
+		<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+			<tr>
+				
+			</tr>
+	<h:form id="LoanRepaymentSearchPage">
+				<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err" escape="true"
+									styleClass="#{PILM011_PM_CODES_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM011_PM_CODES_ACTION.errorMap['current'] !=null? PILM011_PM_CODES_ACTION.errorMap['current']: PILM011_PM_CODES_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" styleClass="ErrorMessages"
+								value="#{PILM011_PM_CODES_ACTION.errorMessages}" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PILM011_PM_CODES_ACTION.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PILM011_PM_CODES_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table border="0" width="100%" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputText
+							value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td><h:outputLabel
+							value="#{componentMessage.PILM011$PM_CODES$PC_CODE$caption}" />
+						<h:inputText id="PC_CODE"
+							value="#{PILM011_PM_IL_LOAN_SLAB_INTEREST_SEARCH.pm_codes_bean.PC_CODE}"
+							binding="#{PILM011_PM_IL_LOAN_SLAB_INTEREST_SEARCH.PC_CODE}" />
+						</td>
+
+						<td><h:outputLabel
+							value="#{componentMessage.PILM011$PM_CODES$PC_DESC$caption}" />
+						<h:inputText id="PC_DESC"
+							value="#{PILM011_PM_IL_LOAN_SLAB_INTEREST_SEARCH.pm_codes_bean.PC_DESC}"
+							binding="#{PILM011_PM_IL_LOAN_SLAB_INTEREST_SEARCH.PC_DESC}" />
+						</td>
+						<td><a4j:commandButton  styleClass="button"
+							value="#{commonmsg.searchButton$caption}" id="fetch"
+							immediate="true"
+							actionListener="#{PILM011_PM_IL_LOAN_SLAB_INTEREST_SEARCH.fetchData}"
+							reRender="fetchList" /></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			
+			
+			<rich:dataTable id="fetchList" 
+				value="#{PILM011_PM_IL_LOAN_SLAB_INTEREST_SEARCH.searchList}"
+				binding="#{PILM011_PM_IL_LOAN_SLAB_INTEREST_SEARCH.searchDataTable}"
+				width="100%" var="colData" cellpadding="5px" rows="10" border="1">
+
+				<rich:column filterBy="#{colData.PC_CODE}"
+					filterValue="#{PILM011_PM_IL_LOAN_SLAB_INTEREST_SEARCH.pm_codes_bean.filterText}"
+					sortBy="#{colData.PC_CODE}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Loan Code" />
+					</f:facet>
+					<h:commandLink
+						action="#{PILM011_PM_IL_LOAN_SLAB_INTEREST_SEARCH.executeQuery}"
+						id="PC_CODE">
+							<h:outputText value="#{colData.PC_CODE}" />
+						<f:param name="ROWID" value="#{colData.ROWID}" />
+						<f:param name="PC_CODE" value="#{colData.PC_CODE}" />
+					</h:commandLink>
+				</rich:column>
+
+				<rich:column filterBy="#{colData.PC_DESC}"
+					sortBy="#{colData.PC_DESC}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Description" />
+					</f:facet>
+						<h:outputText value="#{colData.PC_DESC}" />
+					<f:param name="PC_DESC" value="#{colData.PC_DESC}" />
+				</rich:column>
+				<f:facet name="footer">
+					<rich:datascroller id="dataScroller" for="fetchList" align="right" />
+				</f:facet>
+			</rich:dataTable>
+	</h:form>
+			<tr>
+			</tr>
+		</table>
+</f:view>
+</ui:define>
+</ui:composition>

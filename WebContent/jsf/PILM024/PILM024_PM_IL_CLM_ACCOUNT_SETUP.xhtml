@@ -1,0 +1,1299 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+		<f:view
+			beforePhase="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM024" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_CLM_ACCOUNT_SETUP" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM024_COMPOSITE_ACTION.backToSearch}"
+											id="AUTO_ID_1" style="text-decoration:none" immediate="true"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTO_ID_2"
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.saveRecord}"
+											id="style_36" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTO_ID_4"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_5"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_6" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_7"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_8"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.DeleteRecord}"
+											disabled="true" id="AUTO_ID_9" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_10"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_11"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_12" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_13"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_14"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="AUTO_ID_15" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_16"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_17"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_18" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_19"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_20"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.errorMap['current'] !=null? PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.errorMap['current']:PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.warningMap['current']}" />
+
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td>Claims Account Setup</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table align="center" class="noborder" width="100%">
+							<tr>
+								<td valign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowfreeze" colspan="4" />
+										<td class="oddrowfreeze"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_FRZ_FLAG_LABEL}"
+											for="CLMAS_FRZ_FLAG" id="CLMAS_FRZ_FLAG_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_FRZ_FLAG$caption}" />
+										<h:selectBooleanCheckbox id="CLMAS_FRZ_FLAG" rendered="true"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.FRZ_FLAG}"
+											title="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_FRZ_FLAG$tooltip}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_SRC_BUS_FM_LABEL}"
+											for="CLMAS_SRC_BUS_FM" id="CLMAS_SRC_BUS_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_SRC_BUS_FM$caption}" />
+										<h:graphicImage id="AUTO_ID_21" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_SRC_BUS_FM}"
+											disabled="false" id="CLMAS_SRC_BUS_FM" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the source of business from code"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_SRC_BUS_FM}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_SRC_BUS_FM}"
+												event="onblur" id="AUTO_ID_22" immediate="true"
+												reRender="CLMAS_SRC_BUS_FM_LOV,CLMAS_SRC_BUS_FM,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_SRC_BUS_FM" height="200"
+											id="CLMAS_SRC_BUS_FM_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_SRC_BUS_FM_lovAction}"
+											var="CLMAS_SRC_BUS_FM" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_23"
+													value="#{CLMAS_SRC_BUS_FM.PC_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_24"
+													value="#{CLMAS_SRC_BUS_FM.PC_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_25" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" width="4%" />
+
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_SRC_BUS_TO_LABEL}"
+											for="CLMAS_SRC_BUS_TO" id="CLMAS_SRC_BUS_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_SRC_BUS_TO$caption}" />
+										<h:graphicImage id="AUTO_ID_26" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_SRC_BUS_TO}"
+											disabled="false" id="CLMAS_SRC_BUS_TO" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the source of business to code"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_SRC_BUS_TO}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_SRC_BUS_TO}"
+												event="onblur" id="AUTO_ID_27" immediate="true"
+												reRender="CLMAS_SRC_BUS_TO_LOV,CLMAS_SRC_BUS_TO,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_SRC_BUS_TO" height="200"
+											id="CLMAS_SRC_BUS_TO_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_SRC_BUS_FM_lovAction}"
+											var="CLMAS_SRC_BUS_TO" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_28"
+													value="#{CLMAS_SRC_BUS_TO.PC_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_29"
+													value="#{CLMAS_SRC_BUS_TO.PC_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_30" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_BUS_FM_CODE_LABEL}"
+											for="CLMAS_BUS_FM_CODE" id="CLMAS_BUS_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_BUS_FM_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_31" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_BUS_FM_CODE}"
+											disabled="false" id="CLMAS_BUS_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Starting Code for the Business code range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_BUS_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_BUS_FM_CODE}"
+												event="onblur" id="AUTO_ID_32" immediate="true"
+												reRender="CLMAS_BUS_FM_CODE,CLMAS_BUS_FM_CODE_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_BUS_FM_CODE" height="200"
+											id="CLMAS_BUS_FM_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_BUS_FM_CODE_lovAction}"
+											var="CLMAS_BUS_FM_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_33"
+													value="#{CLMAS_BUS_FM_CODE.PS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_34"
+													value="#{CLMAS_BUS_FM_CODE.PS_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_35" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_BUS_TO_CODE_LABEL}"
+											for="CLMAS_BUS_TO_CODE" id="CLMAS_BUS_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_BUS_TO_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_36" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_BUS_TO_CODE}"
+											disabled="false" id="CLMAS_BUS_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Ending Code for the Business code range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_BUS_TO_CODE}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_BUS_TO_CODE}"
+												event="onblur" id="AUTO_ID_37" immediate="true"
+												reRender="CLMAS_BUS_TO_CODE,CLMAS_BUS_TO_CODE_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_BUS_TO_CODE" height="200"
+											id="CLMAS_BUS_TO_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_BUS_FM_CODE_lovAction}"
+											var="CLMAS_BUS_TO_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_38"
+													value="#{CLMAS_BUS_TO_CODE.PS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_39"
+													value="#{CLMAS_BUS_TO_CODE.PS_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_40" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DIVN_FM_CODE_LABEL}"
+											for="CLMAS_DIVN_FM_CODE" id="CLMAS_DIVN_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_DIVN_FM_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_41" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DIVN_FM_CODE}"
+											disabled="false" id="CLMAS_DIVN_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Starting Code for the Branch Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_DIVN_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_DIVN_FM_CODE}"
+												event="onblur" id="style_1" immediate="true"
+												reRender="CLMAS_DIVN_FM_CODE,CLMAS_DIVN_FM_CODE_LOV,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_DIVN_FM_CODE" height="200"
+											id="CLMAS_DIVN_FM_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_DIVN_FM_CODE_lovAction}"
+											var="CLMAS_DIVN_FM_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_42"
+													value="#{CLMAS_DIVN_FM_CODE.DIVN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_43"
+													value="#{CLMAS_DIVN_FM_CODE.DIVN_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_2" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DIVN_TO_CODE_LABEL}"
+											for="CLMAS_DIVN_TO_CODE" id="CLMAS_DIVN_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_DIVN_TO_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_44" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DIVN_TO_CODE}"
+											disabled="false" id="CLMAS_DIVN_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Ending Code for the Branch Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_DIVN_TO_CODE}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_DIVN_TO_CODE}"
+												event="onblur" id="style_3" immediate="true"
+												reRender="CLMAS_DIVN_TO_CODE_LOV,CLMAS_DIVN_TO_CODE,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_DIVN_TO_CODE" height="200"
+											id="CLMAS_DIVN_TO_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_DIVN_FM_CODE_lovAction}"
+											var="CLMAS_DIVN_TO_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_45"
+													value="#{CLMAS_DIVN_TO_CODE.DIVN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_46"
+													value="#{CLMAS_DIVN_TO_CODE.DIVN_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_4" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DEPT_FM_CODE_LABEL}"
+											for="CLMAS_DEPT_FM_CODE" id="CLMAS_DEPT_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_DEPT_FM_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_47" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DEPT_FM_CODE}"
+											disabled="false" id="CLMAS_DEPT_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Starting Code for the Department Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_DEPT_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_DEPT_FM_CODE}"
+												event="onblur" id="style_5" immediate="true"
+												reRender="CLMAS_DEPT_FM_CODE_LOV,CLMAS_DEPT_FM_CODE,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_DEPT_FM_CODE" height="200"
+											id="CLMAS_DEPT_FM_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_DEPT_FM_CODE_lovAction}"
+											var="CLMAS_DEPT_FM_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_48"
+													value="#{CLMAS_DEPT_FM_CODE.DEPT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_49"
+													value="#{CLMAS_DEPT_FM_CODE.DEPT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_6" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DEPT_TO_CODE_LABEL}"
+											for="CLMAS_DEPT_TO_CODE" id="CLMAS_DEPT_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_DEPT_TO_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_50" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DEPT_TO_CODE}"
+											disabled="false" id="CLMAS_DEPT_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Ending Code for the Department Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_DEPT_TO_CODE}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_DEPT_TO_CODE}"
+												event="onblur" id="style_7" immediate="true"
+												reRender="CLMAS_DEPT_TO_CODE_LOV,CLMAS_DEPT_TO_CODE,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_DEPT_TO_CODE" height="200"
+											id="CLMAS_DEPT_TO_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_DEPT_FM_CODE_lovAction}"
+											var="CLMAS_DEPT_TO_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_51"
+													value="#{CLMAS_DEPT_TO_CODE.DEPT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_52"
+													value="#{CLMAS_DEPT_TO_CODE.DEPT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_8" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DOC_FM_TYPE_LABEL}"
+											for="CLMAS_DOC_FM_TYPE" id="CLMAS_DOC_FM_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_DOC_FM_TYPE$caption}" />
+										<h:graphicImage id="AUTO_ID_53" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DOC_FM_TYPE}"
+											disabled="false" id="CLMAS_DOC_FM_TYPE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Starting Code for the Document Type Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_DOC_FM_TYPE}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_DOC_FM_TYPE}"
+												event="onblur" id="style_9" immediate="true"
+												reRender="CLMAS_DOC_FM_TYPE_LOV,CLMAS_DOC_FM_TYPE,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_DOC_FM_TYPE" height="200"
+											id="CLMAS_DOC_FM_TYPE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_DOC_FM_TYPE_lovAction}"
+											var="CLMAS_DOC_FM_TYPE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_54"
+													value="#{CLMAS_DOC_FM_TYPE.DS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_55"
+													value="#{CLMAS_DOC_FM_TYPE.DS_DESC}" />
+											</h:column>
+										</rich:suggestionbox></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DOC_TO_TYPE_LABEL}"
+											for="CLMAS_DOC_TO_TYPE" id="CLMAS_DOC_TO_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_DOC_TO_TYPE$caption}" />
+										<h:graphicImage id="style_10" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DOC_TO_TYPE}"
+											disabled="false" id="CLMAS_DOC_TO_TYPE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Ending Code for the Document Type Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_DOC_TO_TYPE}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_DOC_TO_TYPE}"
+												event="onblur" id="style_11" immediate="true"
+												reRender="CLMAS_DOC_TO_TYPE_LOV,CLMAS_DOC_TO_TYPE,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_DOC_TO_TYPE" height="200"
+											id="CLMAS_DOC_TO_TYPE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_DOC_FM_TYPE_lovAction}"
+											var="CLMAS_DOC_TO_TYPE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_56"
+													value="#{CLMAS_DOC_TO_TYPE.DS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_57"
+													value="#{CLMAS_DOC_TO_TYPE.DS_DESC}" />
+											</h:column>
+										</rich:suggestionbox></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_CLM_TYPE_FM_CODE_LABEL}"
+											for="CLMAS_CLM_TYPE_FM_CODE"
+											id="CLMAS_CLM_TYPE_FM_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_CLM_TYPE_FM_CODE$caption}" />
+										<h:graphicImage id="style_12" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_CLM_TYPE_FM_CODE}"
+											disabled="false" id="CLMAS_CLM_TYPE_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Starting Code for the Claim Type Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_CLM_TYPE_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_CLM_TYPE_FM_CODE}"
+												event="onblur" id="style_90" immediate="true"
+												reRender="CLMAS_CLM_TYPE_FM_CODE_LOV,CLMAS_CLM_TYPE_FM_CODE,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_CLM_TYPE_FM_CODE" height="200"
+											id="CLMAS_CLM_TYPE_FM_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLM_TYPE_FM_CODE_lovAction}"
+											var="CLMAS_CLM_TYPE_FM_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_58"
+													value="#{CLMAS_CLM_TYPE_FM_CODE.PS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_59"
+													value="#{CLMAS_CLM_TYPE_FM_CODE.PS_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_13" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_CLM_TYPE_TO_CODE_LABEL}"
+											for="CLMAS_CLM_TYPE_TO_CODE"
+											id="CLMAS_CLM_TYPE_TO_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_CLM_TYPE_TO_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_60" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_CLM_TYPE_TO_CODE}"
+											disabled="false" id="CLMAS_CLM_TYPE_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Ending Code for the Claim Type Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_CLM_TYPE_TO_CODE}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_CLM_TYPE_TO_CODE}"
+												event="onblur" id="style_14" immediate="true"
+												reRender="CLMAS_CLM_TYPE_TO_CODE_LOV,CLMAS_CLM_TYPE_TO_CODE,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_CLM_TYPE_TO_CODE" height="200"
+											id="CLMAS_CLM_TYPE_TO_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLM_TYPE_FM_CODE_lovAction}"
+											var="CLMAS_CLM_TYPE_TO_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_61"
+													value="#{CLMAS_CLM_TYPE_TO_CODE.PS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_62"
+													value="#{CLMAS_CLM_TYPE_TO_CODE.PS_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_15" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_PROD_CODE_FM_LABEL}"
+											for="CLMAS_PROD_CODE_FM" id="CLMAS_PROD_CODE_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_PROD_CODE_FM$caption}" />
+										<h:graphicImage id="AUTO_ID_63" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_PROD_CODE_FM}"
+											disabled="false" id="CLMAS_PROD_CODE_FM" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Starting Code for the Product Code Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_PROD_CODE_FM}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_PROD_CODE_FM}"
+												event="onblur" id="style_16" immediate="true"
+												reRender="CLMAS_PROD_CODE_FM_LOV,CLMAS_PROD_CODE_FM,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_PROD_CODE_FM" height="200"
+											id="CLMAS_PROD_CODE_FM_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_PROD_CODE_FM_lovAction}"
+											var="CLMAS_PROD_CODE_FM" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_64"
+													value="#{CLMAS_PROD_CODE_FM.PROD_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_65"
+													value="#{CLMAS_PROD_CODE_FM.PROD_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="style_17" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_PROD_CODE_TO_LABEL}"
+											for="CLMAS_PROD_CODE_TO" id="CLMAS_PROD_CODE_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_PROD_CODE_TO$caption}" />
+										<h:graphicImage id="AUTO_ID_66" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_PROD_CODE_TO}"
+											disabled="false" id="CLMAS_PROD_CODE_TO" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Ending Code for the Product Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_PROD_CODE_TO}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_PROD_CODE_TO}"
+												event="onblur" id="style_19" immediate="true"
+												reRender="CLMAS_PROD_CODE_TO_LOV,CLMAS_PROD_CODE_TO,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_PROD_CODE_TO" height="200"
+											id="CLMAS_PROD_CODE_TO_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_PROD_CODE_FM_lovAction}"
+											var="CLMAS_PROD_CODE_TO" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_67"
+													value="#{CLMAS_PROD_CODE_TO.PROD_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_68"
+													value="#{CLMAS_PROD_CODE_TO.PROD_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_69" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_COVER_CODE_FM_LABEL}"
+											for="CLMAS_COVER_CODE_FM" id="CLMAS_COVER_CODE_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_COVER_CODE_FM$caption}" />
+										<h:graphicImage id="AUTO_ID_70" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_COVER_CODE_FM}"
+											disabled="false" id="CLMAS_COVER_CODE_FM" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Starting Code for the Cover Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_COVER_CODE_FM}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_COVER_CODE_FM}"
+												event="onblur" id="style_20" immediate="true"
+												reRender="CLMAS_COVER_CODE_FM_LOV,CLMAS_COVER_CODE_FM,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_COVER_CODE_FM" height="200"
+											id="CLMAS_COVER_CODE_FM_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_COVER_CODE_FM_lovAction}"
+											var="CLMAS_COVER_CODE_FM" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_71"
+													value="#{CLMAS_COVER_CODE_FM.COVER_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_72"
+													value="#{CLMAS_COVER_CODE_FM.COVER_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_73" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_COVER_CODE_TO_LABEL}"
+											for="CLMAS_COVER_CODE_TO" id="CLMAS_COVER_CODE_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_COVER_CODE_TO$caption}" />
+										<h:graphicImage id="AUTO_ID_74" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_COVER_CODE_TO}"
+											disabled="false" id="CLMAS_COVER_CODE_TO" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Ending Code for the Cover code  Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_COVER_CODE_TO}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_COVER_CODE_TO}"
+												event="onblur" id="style_21" immediate="true"
+												reRender="CLMAS_COVER_CODE_TO_LOV,CLMAS_COVER_CODE_TO,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_COVER_CODE_TO" height="200"
+											id="CLMAS_COVER_CODE_TO_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_COVER_CODE_FM_lovAction}"
+											var="CLMAS_COVER_CODE_TO" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_75"
+													value="#{CLMAS_COVER_CODE_TO.COVER_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_76"
+													value="#{CLMAS_COVER_CODE_TO.COVER_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage id="AUTO_ID_77" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_CUST_CLS_FM_CODE_LABEL}"
+											for="CLMAS_CUST_CLS_FM_CODE"
+											id="CLMAS_CUST_CLS_FM_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_CUST_CLS_FM_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_78" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_CUST_CLS_FM_CODE}"
+											disabled="false" id="CLMAS_CUST_CLS_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Starting Code for the Cust Class Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_CUST_CLS_FM_CODE}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_CUST_CLS_FM_CODE}"
+												event="onblur" id="style_22" immediate="true"
+												reRender="CLMAS_CUST_CLS_FM_CODE_LOV,CLMAS_CUST_CLS_FM_CODE,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_CUST_CLS_FM_CODE" height="200"
+											id="CLMAS_CUST_CLS_FM_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_CUST_CLS_FM_CODE_lovAction}"
+											var="CLMAS_CUST_CLS_FM_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_79"
+													value="#{CLMAS_CUST_CLS_FM_CODE.CCLAS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_80"
+													value="#{CLMAS_CUST_CLS_FM_CODE.CCLAS_CLASS_DESC}" />
+											</h:column>
+										</rich:suggestionbox></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_CUST_CLS_TO_CODE_LABEL}"
+											for="CLMAS_CUST_CLS_TO_CODE"
+											id="CLMAS_CUST_CLS_TO_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_CUST_CLS_TO_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_CUST_CLS_TO_CODE}"
+											disabled="false" id="CLMAS_CUST_CLS_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="Enter the Ending Code for the Cust Class Range"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_CUST_CLS_TO_CODE}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.WHEN_VALIDATE_CLMAS_CUST_CLS_TO_CODE}"
+												event="onblur" id="style_23" immediate="true"
+												reRender="CLMAS_CUST_CLS_TO_CODE_LOV,CLMAS_CUST_CLS_TO_CODE,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_CUST_CLS_TO_CODE" height="200"
+											id="CLMAS_CUST_CLS_TO_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_CUST_CLS_FM_CODE_lovAction}"
+											var="CLMAS_CUST_CLS_TO_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_81"
+													value="#{CLMAS_CUST_CLS_TO_CODE.CCLAS_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_82"
+													value="#{CLMAS_CUST_CLS_TO_CODE.CCLAS_CLASS_DESC}" />
+											</h:column>
+										</rich:suggestionbox></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_ASSURED_TYPE_LABEL}"
+											for="CLMAS_ASSURED_TYPE" id="CLMAS_ASSURED_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_ASSURED_TYPE$caption}" />
+										<h:graphicImage id="AUTO_ID_83" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_ASSURED_TYPE}"
+											disabled="false" id="CLMAS_ASSURED_TYPE" rendered="true"
+											required="true" styleClass="input" title="Assured Type"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_ASSURED_TYPE}">
+											<f:selectItems id="style_24"
+												value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_ASSURED_TYPE_LIST}" />
+										</h:selectOneMenu></td>
+										<td colspan="3" class="oddrow"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_TYPE_LABEL}"
+											for="CLMAS_TYPE" id="CLMAS_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_TYPE$caption}" />
+										<h:graphicImage id="AUTO_ID_84" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_TYPE}"
+											disabled="false" id="CLMAS_TYPE" rendered="true"
+											required="true" styleClass="input" title="Claims type"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_TYPE}">
+											<f:selectItems id="style_25"
+												value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.UI_M_CLAIM_SETUP_LIST}" />
+										</h:selectOneMenu></td>
+										<td class="evenrow" colspan="3"/>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_FORCE_DIVN_YN_LABEL}"
+											for="CLMAS_FORCE_DIVN_YN" id="CLMAS_FORCE_DIVN_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_FORCE_DIVN_YN$caption}" />
+										<h:graphicImage id="AUTO_ID_85" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_FORCE_DIVN_YN}"
+											disabled="false" id="CLMAS_FORCE_DIVN_YN" rendered="true"
+											required="true" styleClass="input" title="Force Division Yn"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_FORCE_DIVN_YN}">
+											<f:selectItems id="style_26"
+												value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_FORCE_DIVN_YN_LIST}" />
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.ForceBranchChange}"
+												event="onblur" id="style_34" immediate="true"
+												reRender="CLMAS_FORCE_DEPT_YN,CLMAS_DIVN_CODE,CLMAS_DEPT_CODE" />
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.ForceBranchChange}"
+												event="onchange" id="style_35" immediate="true"
+												reRender="CLMAS_FORCE_DEPT_YN,CLMAS_DIVN_CODE,CLMAS_DEPT_CODE" />
+										</h:selectOneMenu></td>
+										<td colspan="3" class="oddrow"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_FORCE_DEPT_YN_LABEL}"
+											for="CLMAS_FORCE_DEPT_YN" id="CLMAS_FORCE_DEPT_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_FORCE_DEPT_YN$caption}" />
+										<h:graphicImage id="AUTO_ID_86" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_FORCE_DEPT_YN}"
+											disabled="true" id="CLMAS_FORCE_DEPT_YN" rendered="true"
+											required="true" styleClass="input" title="Force Dept Yn"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_FORCE_DEPT_YN}">
+											<f:selectItems id="style_27"
+												value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_FORCE_DEPT_YN_LIST}" />
+										</h:selectOneMenu></td>
+										<td class="evenrow" colspan="3" />
+
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_MAIN_ACNT_CODE_LABEL}"
+											for="CLMAS_MAIN_ACNT_CODE" id="CLMAS_MAIN_ACNT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_MAIN_ACNT_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_87" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_MAIN_ACNT_CODE}"
+											disabled="false" id="CLMAS_MAIN_ACNT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="Enter the Main Account / Control Account Code."
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_MAIN_ACNT_CODE}"
+											validator="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_MAIN_ACNT_CODE_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="style_28" immediate="true"
+												reRender="errorPanel,UI_M_MAIN_ACNT_NAME,CLMAS_ACTY_CODE_1_LABEL,CLMAS_ACTY_CODE_2_LABEL">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_MAIN_ACNT_CODE" height="200"
+											id="CLMAS_MAIN_ACNT_CODE_LOV" style="position:absolute"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_MAIN_ACNT_CODE_lovAction}"
+											var="CLMAS_MAIN_ACNT_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_88"
+													value="#{CLMAS_MAIN_ACNT_CODE.MAIN_ACNT_CODE}" />
+
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_89"
+													value="#{CLMAS_MAIN_ACNT_CODE.MAIN_ACNT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_UI_M_MAIN_ACNT_NAME}"
+											disabled="true" id="UI_M_MAIN_ACNT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.UI_M_MAIN_ACNT_NAME}">
+										</h:inputText> <h:graphicImage id="AUTO_ID_90" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td colspan="3" class="oddrow"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_SUB_ACNT_CODE_LABEL}"
+											for="CLMAS_SUB_ACNT_CODE" id="CLMAS_SUB_ACNT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_SUB_ACNT_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_SUB_ACNT_CODE}"
+											disabled="false" id="CLMAS_SUB_ACNT_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Sub Account Code."
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_SUB_ACNT_CODE}"
+											validator="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_SUB_ACNT_CODE_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="style_29" immediate="true"
+												reRender="UI_M_SUB_ACNT_NAME,CLMAS_SUB_ACNT_CODE_LOV,CLMAS_SUB_ACNT_CODE,errorPanel,errorMessages,err">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_SUB_ACNT_CODE" height="200"
+											id="CLMAS_SUB_ACNT_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_SUB_ACNT_CODE_lovAction}"
+											var="CLMAS_SUB_ACNT_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_91"
+													value="#{CLMAS_SUB_ACNT_CODE.SUB_ACNT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_92"
+													value="#{CLMAS_SUB_ACNT_CODE.SUB_ACNT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_UI_M_SUB_ACNT_NAME}"
+											disabled="true" id="UI_M_SUB_ACNT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.UI_M_SUB_ACNT_NAME}">
+
+										</h:inputText> <h:graphicImage id="AUTO_ID_93" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" colspan="3"/>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DIVN_CODE_LABEL}"
+											for="CLMAS_DIVN_CODE" id="CLMAS_DIVN_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_DIVN_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_94" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DIVN_CODE}"
+											disabled="false" id="CLMAS_DIVN_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="Enter the Branch Code"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_DIVN_CODE}"
+											validator="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_DIVN_CODE_WHEN_VALIDATE_ITEM}">
+
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="style_80" immediate="true"
+												reRender="UI_M_DIVN_NAME,CLMAS_DIVN_CODE_LOV,CLMAS_DIVN_CODE,errorPanel,errorMessages,err">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_DIVN_CODE" height="200"
+											id="CLMAS_DIVN_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_DIV_COMP_CODE_lovAction}"
+											var="CLMAS_DIVN_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_95"
+													value="#{CLMAS_DIVN_CODE.DIVN_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_96"
+													value="#{CLMAS_DIVN_CODE.DIVN_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_UI_M_DIVN_NAME}"
+											disabled="true" id="UI_M_DIVN_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.UI_M_DIVN_NAME}">
+										</h:inputText> <h:graphicImage id="AUTO_ID_97" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td colspan="3" class="oddrow"/>
+									</tr>
+									<tr>
+
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DEPT_CODE_LABEL}"
+											for="CLMAS_DEPT_CODE" id="CLMAS_DEPT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_DEPT_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_98" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_DEPT_CODE}"
+											disabled="false" id="CLMAS_DEPT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="Enter the Department Code"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_DEPT_CODE}"
+											validator="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_DEPT_CODE_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="style_30" immediate="true"
+												reRender="UI_M_DEPT_NAME,CLMAS_DEPT_CODE_LOV,CLMAS_DEPT_CODE,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_DEPT_CODE" height="200"
+											id="CLMAS_DEPT_CODE_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_DEPT_COMP_CODE_lovAction}"
+											var="CLMAS_DEPT_CODE" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_99"
+													value="#{CLMAS_DEPT_CODE.DEPT_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_100"
+													value="#{CLMAS_DEPT_CODE.DEPT_NAME}" />
+											</h:column>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_UI_M_DEPT_NAME}"
+											disabled="true" id="UI_M_DEPT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.UI_M_DEPT_NAME}">
+										</h:inputText> <h:graphicImage id="AUTO_ID_101" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" colspan="3"/>
+									</tr>
+									<tr>
+
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_ANLY_CODE_1_LABEL}"
+											for="CLMAS_ANLY_CODE_1" id="CLMAS_ANLY_CODE_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_ANLY_CODE_1$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_ANLY_CODE_1}"
+											disabled="false" id="CLMAS_ANLY_CODE_1" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Analysis  Code [1]"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_ANLY_CODE_1}"
+											validator="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_ANLY_CODE_1_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.validateCLMAS_ANLY_CODE_1}"
+												event="onblur" id="style_31" immediate="true"
+												reRender="UI_M_ANLY_NAME,CLMAS_ANLY_CODE_1_LOV,CLMAS_ANLY_CODE_1,errorPanel,errorMessages,err">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_ANLY_CODE_1" height="200"
+											id="CLMAS_ANLY_CODE_1_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_FM_ANALYSIS1_lovAction}"
+											var="CLMAS_ANLY_CODE_1" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_102"
+													value="#{CLMAS_ANLY_CODE_1.ANLY_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_103"
+													value="#{CLMAS_ANLY_CODE_1.ANLY_NAME}" />
+											</h:column>
+											<a4j:support event="onselect" ajaxSingle="true"
+												id="AUTO_ANLY_1" immediate="true"
+												reRender="UI_M_ACTY_NAME_1">
+												<f:setPropertyActionListener
+													value="#{CLMAS_ANLY_CODE_1.ANLY_NAME}"
+													target="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_UI_M_ANLY_NAME}"
+											disabled="true" id="UI_M_ANLY_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME}">
+										</h:inputText> <h:graphicImage id="AUTO_ID_104" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td colspan="3" class="oddrow"/>
+									</tr>
+									<tr>
+
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_ANLY_CODE_2_LABEL}"
+											for="CLMAS_ANLY_CODE_2" id="CLMAS_ANLY_CODE_2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM024$PM_IL_CLM_ACCOUNT_SETUP$CLMAS_ANLY_CODE_2$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_ANLY_CODE_2}"
+											disabled="false" id="CLMAS_ANLY_CODE_2" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Analysis  Code [2]"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_ANLY_CODE_2}"
+											validator="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_ANLY_CODE_2_WHEN_VALIDATE_ITEM}">
+
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="style_32" immediate="true"
+												reRender="UI_M_ANLY_NAME_1,CLMAS_ANLY_CODE_2_LOV,CLMAS_ANLY_CODE_2,errorPanel,errorMessages,err">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_ANLY_CODE_2" height="200"
+											id="CLMAS_ANLY_CODE_2_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_FM_ANALYSIS2_lovAction}"
+											var="CLMAS_ANLY_CODE_2" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_105"
+													value="#{CLMAS_ANLY_CODE_2.ANLY_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_106"
+													value="#{CLMAS_ANLY_CODE_2.ANLY_NAME}" />
+											</h:column>
+											<a4j:support event="onselect" ajaxSingle="true"
+												id="AUTO_ANLY_2" immediate="true"
+												reRender="UI_M_ACTY_NAME_1">
+												<f:setPropertyActionListener
+													value="#{CLMAS_ANLY_CODE_2.ANLY_NAME}"
+													target="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME_1}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_UI_M_ANLY_NAME_1}"
+											disabled="true" id="UI_M_ANLY_NAME_1" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME_1}">
+										</h:inputText> <h:graphicImage id="AUTO_ID_107" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" colspan="3"/>
+									</tr>
+									<tr>
+
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_ACTY_CODE_1_LABEL}"
+											for="CLMAS_ACTY_CODE_1" id="CLMAS_ACTY_CODE_1_LABEL"
+											rendered="true" styleClass="label" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_ACTY_CODE_1}"
+											disabled="false" id="CLMAS_ACTY_CODE_1" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Activity  Code [1]"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_ACTY_CODE_1}"
+											validator="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_ACTY_CODE_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="style_33" immediate="true"
+												reRender="UI_M_ACTY_NAME,errorPanel,errorMessages,err">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="CLMAS_ACTY_CODE_1" height="200"
+											id="CLMAS_ACTY_CODE_1_LOV"
+											suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_ACTY_CODE_lovAction}"
+											var="CLMAS_ACTY_CODE_1" width="200">
+											<h:column>
+												<h:outputText id="AUTO_ID_108"
+													value="#{CLMAS_ACTY_CODE_1.AVAL_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_109"
+													value="#{CLMAS_ACTY_CODE_1.AVAL_VALUE_NAME}" />
+											</h:column>
+											<a4j:support event="onselect" ajaxSingle="true"
+												id="AUTO_ACTY_1" immediate="true" reRender="UI_M_ACTY_NAME">
+												<f:setPropertyActionListener
+													value="#{CLMAS_ACTY_CODE_1.AVAL_VALUE_NAME}"
+													target="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_UI_M_ACTY_NAME}"
+											disabled="true" id="UI_M_ACTY_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME}" />
+										<h:graphicImage id="AUTO_ID_110" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td colspan="3" class="oddrow"/>
+									</tr>
+									<tr>
+
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_ACTY_CODE_2_LABEL}"
+											for="CLMAS_ACTY_CODE_2" id="CLMAS_ACTY_CODE_2_LABEL"
+											rendered="true" styleClass="label" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_CLMAS_ACTY_CODE_2}"
+											disabled="false" id="CLMAS_ACTY_CODE_2" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Activity  Code [2]"
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.CLMAS_ACTY_CODE_2}"
+											validator="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_ACTY_CODE_1_WHEN_VALIDATE_ITEM}">
+											<a4j:support
+												actionListener="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="style_334" immediate="true"
+												reRender="UI_M_ACTY_NAME_1,AUTO_ID_111,errorPanel,errorMessages,err">
+											</a4j:support>
+											<rich:suggestionbox for="CLMAS_ACTY_CODE_2" height="200"
+												id="AUTO_ID_111"
+												suggestionAction="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.CLMAS_ACTY_CODE_lovAction}"
+												var="CLMAS_ACTY_CODE_2" width="200">
+												<h:column>
+													<h:outputText id="AUTO_ID_112"
+														value="#{CLMAS_ACTY_CODE_2.AVAL_CODE}" />
+												</h:column>
+												<h:column>
+													<h:outputText id="AUTO_ID_113"
+														value="#{CLMAS_ACTY_CODE_2.AVAL_VALUE_NAME}" />
+												</h:column>
+												<a4j:support event="onselect" ajaxSingle="true"
+													id="AUTO_ACTY_2" immediate="true"
+													reRender="UI_M_ACTY_NAME_1">
+													<f:setPropertyActionListener
+														value="#{CLMAS_ACTY_CODE_2.AVAL_VALUE_NAME}"
+														target="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME_1}" />
+												</a4j:support>
+											</rich:suggestionbox>
+										</h:inputText> <h:inputText
+											binding="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.COMP_UI_M_ACTY_NAME_1}"
+											disabled="true" id="UI_M_ACTY_NAME_1" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PM_IL_CLM_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME_1}" />
+										<h:graphicImage id="AUTO_ID_114" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td colspan="3" class="evenrow"/>
+									</tr>
+								</table>
+								</td>
+								<td valign="top" width="10%" />
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									action="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.saveRecord}"
+									id="style_37" rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="style_44" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="style_51" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink id="style_38" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="style_45" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="style_52" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.DeleteRecord}"
+									disabled="true" id="style_39" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="style_46" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/deleteRecord.gif" />
+									<h:outputText id="style_53" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+								</h:commandLink>
+								<h:commandLink id="style_40" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="style_47" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="style_54" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PILM024_COMPOSITE_ACTION.PM_IL_CLM_ACCOUNT_SETUP_ACTION_BEAN.PreviousPage}"
+									id="style_41" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="style_48" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="style_55" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink id="style_42" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="style_49" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="style_56" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink id="style_43" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="style_50" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="style_57" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

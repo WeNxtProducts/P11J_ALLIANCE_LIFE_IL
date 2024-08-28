@@ -1,0 +1,399 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DIVING QUESTIONNAIRE" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="60" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5cf3ff15-b159-4701-88b8-6083aab4d63d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="POL_SYS_ID" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[ SELECT CUST_FIRST_NAME,
+       CUST_SURNAME,
+       CUST_DOB,
+       CUST_NAME,
+       POL_DS_TYPE,
+       POL_NO,
+       POAD_AGE,
+       (SELECT PC_DESC
+          FROM PM_CODES
+         WHERE PC_TYPE = 'IL_OCCU'
+           AND PC_CODE = POAD_OCC_CODE) OCCUPATION,
+       CUST_ADDR1,
+       CUST_ADDR2,
+       CUST_ADDR3,
+       CUST_REF_ID1,
+       (SELECT PC_DESC
+          FROM PM_CODES
+         WHERE PC_TYPE = 'NATLITY'
+           AND PC_CODE = POAD_NATIONALITY) NATIONALITY,
+       (SELECT PS_CODE_DESC
+          FROM PP_SYSTEM
+         WHERE PS_TYPE = 'CATG'
+           AND PS_CODE = POAD_CATG_CODE) GENDER,
+           CUST_PHONE, CUST_POST_BOX_NO, CUST_PIN_NUMBER, POL_LC_SUM_ASSURED
+  FROM PT_IL_POLICY, PM_CUSTOMER, PT_IL_POL_ASSURED_DTLS
+ WHERE POL_CUST_CODE = CUST_CODE
+   AND POAD_POL_SYS_ID = POL_SYS_ID
+   AND POL_SYS_ID =$P{POL_SYS_ID}
+
+]]>
+	</queryString>
+	<field name="CUST_FIRST_NAME" class="java.lang.String"/>
+	<field name="CUST_SURNAME" class="java.lang.String"/>
+	<field name="CUST_DOB" class="java.sql.Timestamp"/>
+	<field name="CUST_NAME" class="java.lang.String"/>
+	<field name="POL_DS_TYPE" class="java.lang.String"/>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POAD_AGE" class="java.math.BigDecimal"/>
+	<field name="OCCUPATION" class="java.lang.String"/>
+	<field name="CUST_ADDR1" class="java.lang.String"/>
+	<field name="CUST_ADDR2" class="java.lang.String"/>
+	<field name="CUST_ADDR3" class="java.lang.String"/>
+	<field name="CUST_REF_ID1" class="java.lang.String"/>
+	<field name="NATIONALITY" class="java.lang.String"/>
+	<field name="GENDER" class="java.lang.String"/>
+	<field name="CUST_PHONE" class="java.lang.String"/>
+	<field name="CUST_POST_BOX_NO" class="java.lang.String"/>
+	<field name="CUST_PIN_NUMBER" class="java.lang.String"/>
+	<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<detail>
+		<band height="802" splitType="Stretch">
+			<staticText>
+				<reportElement x="186" y="44" width="211" height="20" uuid="fdcb541c-b2c3-4dae-9a03-4261493d2e2e"/>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DIVING QUESTIONNAIRE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="81" width="46" height="20" uuid="b2aabf98-2669-4375-8e8b-5b8bae3f5bb6"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Name :	]]></text>
+			</staticText>
+			<line>
+				<reportElement x="57" y="93" width="190" height="1" uuid="c077f501-2dc2-45c6-9d16-17f71f6018dd"/>
+			</line>
+			<staticText>
+				<reportElement x="254" y="81" width="74" height="20" uuid="6e5018e3-b598-4079-85d2-fc124c96d5cb"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Date of Birth :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="320" y="93" width="124" height="1" uuid="d1e49c9a-a3e1-433f-8d1c-b88ed017a30d"/>
+			</line>
+			<staticText>
+				<reportElement x="23" y="100" width="69" height="20" uuid="88285eb6-c272-4ba0-92ff-b7595e0d9eb2"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Occupation :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="84" y="113" width="161" height="1" uuid="79b68e54-251b-4986-bdac-14612002d046"/>
+			</line>
+			<staticText>
+				<reportElement x="254" y="100" width="70" height="20" uuid="a0df2018-6b80-4683-a847-894122d7f3b9">
+					<printWhenExpression><![CDATA[$F{POL_DS_TYPE}.equals("1")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Proposal No :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="316" y="113" width="129" height="1" uuid="679f59d7-88b2-4905-bae4-ba8cfd3ee15e"/>
+			</line>
+			<staticText>
+				<reportElement x="23" y="120" width="440" height="20" uuid="520b1810-c337-4f13-b80a-dfaa34b61c9f"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Note:-  If the answer to any of the following questions is YES, please provide full details.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="148" width="215" height="15" uuid="585b12d9-6cd3-4e45-986b-1be28854f7d2"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Diving  status (amateur or professional)]]></text>
+			</staticText>
+			<line>
+				<reportElement x="239" y="162" width="206" height="1" uuid="f52cba5a-bad9-4150-a2e5-536f2c60906f"/>
+			</line>
+			<staticText>
+				<reportElement x="46" y="162" width="423" height="28" uuid="f695d166-4865-4035-b619-4bbcb6bdb1b0"/>
+				<box leftPadding="0" rightPadding="0"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[If professional, please state name of employer and nature of work undertaken:
+Salvage/Maintenance/Construction/Dredging/Pipe Laying/Cable Laying/Survey.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="46" y="201" width="403" height="1" uuid="256c0a27-47f4-4482-a00d-85086e733a53"/>
+			</line>
+			<staticText>
+				<reportElement x="46" y="206" width="469" height="34" uuid="e22ed55a-b741-4fab-8ab3-ccceba3579bf"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Type of diving: Snorkel/Aqualung/Diving Bell/Other.
+Please specify:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="123" y="230" width="325" height="1" uuid="bea0ebb0-f749-45f7-891a-9cdf8abf921e"/>
+			</line>
+			<staticText>
+				<reportElement x="46" y="240" width="469" height="39" uuid="3c143b94-89cf-45b3-bf35-5684e9f9c81a"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[What are your diving qualifications (Amateur-BSAC class/Professional-Royal
+Navy or Government approved training scheme).]]></text>
+			</staticText>
+			<line>
+				<reportElement x="47" y="275" width="401" height="1" uuid="31cdaf23-ebf2-4bd9-bb53-8173c9e61ddb"/>
+			</line>
+			<staticText>
+				<reportElement x="46" y="284" width="469" height="15" uuid="66ee6925-a6b2-48b6-bc3a-00f08822c925"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Do you belong to the BSAC or professional diving organisation?                                    YES/NO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="46" y="308" width="404" height="1" uuid="ace9f639-4ed2-4fcf-badd-41db3cb4410c"/>
+			</line>
+			<staticText>
+				<reportElement x="45" y="310" width="182" height="15" uuid="35223d1c-2b5b-44de-8891-4b0a81eb6cdd"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[How long have you been diving?]]></text>
+			</staticText>
+			<line>
+				<reportElement x="203" y="323" width="245" height="1" uuid="9f9479d7-f7cd-4e44-a78e-fd3ab23d50c4"/>
+			</line>
+			<staticText>
+				<reportElement x="45" y="336" width="197" height="15" uuid="d3743978-8e69-4605-9b88-6f41d9d44ad6"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Average number of dives per annum?]]></text>
+			</staticText>
+			<line>
+				<reportElement x="217" y="350" width="231" height="1" uuid="d7408a68-e8ed-4f93-a8ef-a09cdac14c9a"/>
+			</line>
+			<staticText>
+				<reportElement x="45" y="361" width="470" height="15" uuid="f96da2ea-e8d9-49b2-bde5-8ca70539ac77"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Do you ever dive alone, and if so, in what circumstances?                                               YES/NO]]></text>
+			</staticText>
+			<line>
+				<reportElement x="47" y="387" width="401" height="1" uuid="ec5a1d3f-c0f1-456e-899c-68df0707c3fc"/>
+			</line>
+			<staticText>
+				<reportElement x="46" y="396" width="469" height="15" uuid="f6e67001-0ff6-4ba2-8be4-babebc0a0336"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Please give details of diving locations, e.g. Sea/Harbours/Oil Rigs/Lakes/Rivers.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="48" y="421" width="400" height="1" uuid="2a500967-ff31-43ae-9f7b-65163f8305e8"/>
+			</line>
+			<line>
+				<reportElement x="48" y="436" width="400" height="1" uuid="6517eb1d-90b1-44c5-aefe-0e8bec944045"/>
+			</line>
+			<staticText>
+				<reportElement x="46" y="444" width="469" height="72" uuid="7fa971a7-ff5e-445e-a662-730d9d498b90"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Please state:-
+a)  Normal depth of dive
+b)  Maximum depth of dive
+c)  What type of equipment
+d)  Do you do saturation diving?]]></text>
+			</staticText>
+			<line>
+				<reportElement x="48" y="566" width="400" height="1" uuid="f0cb115f-1fe3-4c57-9897-c0a560211693"/>
+			</line>
+			<staticText>
+				<reportElement x="44" y="566" width="472" height="15" uuid="68352009-4f39-45cf-8ee9-112d2d10ee4a"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Have you ever suffered any illness or injury as a result of your diving activities or ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="615" width="471" height="15" uuid="685d1f04-5676-4a20-b7a1-4d53281d4795"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Do you use explosives?                                                                                                             YES/NO
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="673" width="493" height="34" uuid="e1acc5ed-aae8-4867-a751-fc0854eb0768"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[I agree that the above questions and answers shall form part of my proposal for life assurance/disability benefits.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="356" y="24" width="42" height="16" uuid="6c85a8ac-9125-4122-af02-d6fad8a2aed8"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Form No:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="729" width="128" height="25" uuid="1ea27dea-0f96-4e36-aa1d-596fe865051b"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[SIGNATURE
+
+]]></text>
+			</staticText>
+			<line>
+				<reportElement x="48" y="640" width="400" height="1" uuid="dbbd913b-3684-4134-a770-9c9c5c18925c"/>
+			</line>
+			<line>
+				<reportElement x="46" y="605" width="402" height="1" uuid="c9722bb6-4291-4e32-9ab0-73f6d74060db"/>
+			</line>
+			<staticText>
+				<reportElement x="45" y="519" width="470" height="15" uuid="9a987a19-9145-4f73-a23c-2b36d8167a93"/>
+				<text><![CDATA[When were you last medically examined for the purposes of establishing diving]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="534" width="470" height="15" uuid="9691646d-9653-4c31-b652-27e86b54ff80"/>
+				<text><![CDATA[fitness?  Please give name of examining doctor and date.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="580" width="470" height="15" uuid="50c1afb4-ede0-460e-85f2-ac009b3a2f4f"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[have you ever had an accident whilst diving?                                                                      YES/NO
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="148" width="23" height="15" uuid="862a855a-75b4-4906-8f74-a487b1f49e9a"/>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="206" width="23" height="15" uuid="38f900b5-cf26-4d44-ad9c-59290a63f19c"/>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="240" width="23" height="15" uuid="86fcfa07-ed33-4b6e-a1d6-a2d825a80f7f"/>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="284" width="23" height="15" uuid="e42ef151-0384-4ec1-b30b-01e9f5b6134a"/>
+				<text><![CDATA[4.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="310" width="23" height="15" uuid="a4ee164c-8731-4612-939e-e24d0d248c16"/>
+				<text><![CDATA[5.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="336" width="23" height="15" uuid="70aa80bb-7afa-43e6-91f7-2ea1ed6945e1"/>
+				<text><![CDATA[6.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="361" width="23" height="15" uuid="ad9c5e80-1579-4b7b-ba7a-36ad5ee1b7dd"/>
+				<text><![CDATA[7.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="396" width="23" height="15" uuid="8f7fc589-f84f-4af8-808f-f90a6d2c1e0a"/>
+				<text><![CDATA[8.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="444" width="23" height="15" uuid="e117c2b1-bed2-46d6-bb2e-c4086a676bcc"/>
+				<text><![CDATA[9.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="519" width="23" height="15" uuid="af9b30aa-5422-435f-b23a-114637015a44"/>
+				<text><![CDATA[10.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="566" width="23" height="15" uuid="1234747f-a5dd-4b88-8dd7-46f528a8c524"/>
+				<text><![CDATA[11.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="615" width="23" height="15" uuid="6c41872a-be26-478f-9530-8a0f43a5ade9"/>
+				<text><![CDATA[12.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="376" y="731" width="72" height="23" uuid="9dc43d84-538e-41d8-9ab0-288add1420cb"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[DATE :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="57" y="73" width="190" height="20" uuid="019d570e-67a8-472d-b83d-ca8cf95e5eab"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_NAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="320" y="73" width="185" height="20" uuid="28b58b7a-4a18-4a89-8492-df1863a56a26"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_DOB}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="83" y="93" width="164" height="20" uuid="91ac848b-39ab-45df-9256-1085f18d9a0e"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{OCCUPATION}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="317" y="93" width="189" height="20" uuid="ea9885ef-003e-44c5-8211-d67ab60c5819"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="406" y="731" width="100" height="23" uuid="26b7529c-4e88-4ae7-85a5-5f974eb22484"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="399" y="35" width="87" height="1" uuid="be95ec3a-51a0-4c0e-8420-cf3195cd23e3"/>
+			</line>
+			<staticText>
+				<reportElement x="254" y="100" width="100" height="20" uuid="dfd7b60f-067c-4594-87cb-c4a32cc123b9">
+					<printWhenExpression><![CDATA[$F{POL_DS_TYPE}.equals("2")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<text><![CDATA[Policy No :]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<lastPageFooter>
+		<band/>
+	</lastPageFooter>
+</jasperReport>

@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">	
+	<f:loadBundle basename="messageProperties_PGIM_LOV_DEFN" var="message" />
+	<table width="100%" border="0">
+		<!-- add header row -->
+		<tr>
+			
+		</tr>
+
+		<!-- Body row -->
+		<tr>
+			<td><h:form id="lovform">
+
+				<h:inputHidden id="progcode"
+					value="#{PGIM_LOV_DEFN_ACTION.PGIM_LOV_DEFN_BEAN.PLD_PROG_CODE}" />
+					
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%"  cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputText
+							value="#{commonmsg.intialSearchCriteria$Caption}" />
+							</td>
+						<td>
+						<h:outputText
+							value="#{message.PGIM_LOV_DEFN$SEARCH$SEARCH_PROGRAM_CODE$caption}" />
+							<h:inputText
+							id="POL_NO_SEARCH"
+							value="#{PGIM_LOV_DEFN_SEARCH_ACTION.PLD_PROG_CODE_SEARCH}" /></td>
+						<td><h:outputText
+							value="#{message.PGIM_LOV_DEFN$SEARCH$SEARCH_BLOCK_NAME$caption}" /><h:inputText
+							id="POL_CUST_CODE_SEARCH"
+							value="#{PGIM_LOV_DEFN_SEARCH_ACTION.PLD_BLOCK_NAME_SEARCH}" /></td>
+						<td><h:outputText
+							value="#{message.PGIM_LOV_DEFN$SEARCH$SEARCH_FIELD_NAME$caption}" /><h:inputText
+							id="POL_PERIOD_SEARCH"
+							value="#{PGIM_LOV_DEFN_SEARCH_ACTION.PLD_FIELD_NAME_SEARCH}" /></td>
+							
+						<td><a4j:commandButton value="#{commonmsg.searchButton$caption}" id="a4link">
+							<a4j:support action="#{PGIM_LOV_DEFN_SEARCH_ACTION.fetchlovList}"
+								event="onclick" reRender="dataTableId"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{PGIM_LOV_DEFN_SEARCH_ACTION.DATA}" var="lov"
+					cellpadding="5px" rows="10" border="1" width="100%">
+
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+					<rich:column filterBy="#{lov.PLD_PROG_CODE}" sortBy="#{lov.PLD_PROG_CODE}"
+						filterEvent="onkeyup"
+						filterValue="#{PGIM_LOV_DEFN_SEARCH_ACTION.PLD_PROG_CODE}">
+						<f:facet name="header">
+							<h:outputText value="Program Code" />
+						</f:facet>
+						<h:commandLink
+							action="#{PGIM_LOV_DEFN_SEARCH_ACTION.redirectTolovDtls}"
+							onclick="document.getElementById('lovform:progcode').value='#{lov.PLD_PROG_CODE}';">
+							
+								<h:outputText value="#{lov.PLD_PROG_CODE} " />
+							
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column filterBy="#{lov.PLD_BLOCK_NAME}"
+						sortBy="#{lov.PLD_BLOCK_NAME}" filterEvent="onkeyup"
+						filterValue="#{PGIM_LOV_DEFN_SEARCH_ACTION.PLD_BLOCK_NAME}">
+						<f:facet name="header">
+							<h:outputText value="Block Name" />
+						</f:facet>
+						<h:outputText value="#{lov.PLD_BLOCK_NAME}" />
+					</rich:column>
+
+					<rich:column filterBy="#{lov.PLD_FIELD_NAME}"
+						sortBy="#{lov.PLD_FIELD_NAME}" filterEvent="onkeyup"
+						filterValue="#{PGIM_LOV_DEFN_SEARCH_ACTION.PLD_FIELD_NAME}">
+						<f:facet name="header">
+							<h:outputText value="Field Name" />
+						</f:facet>
+						<h:outputText value="#{lov.PLD_FIELD_NAME}" />
+					</rich:column>
+
+					<rich:column filterBy="#{lov.PLD_LOV_TITLE}"
+						sortBy="#{lov.PLD_LOV_TITLE}" filterEvent="onkeyup"
+						filterValue="#{PGIM_LOV_DEFN_SEARCH_ACTION.PLD_LOV_TITLE}">
+						<f:facet name="header">
+							<h:outputText value="Lov Title" />
+						</f:facet>
+						<h:outputText value="#{lov.PLD_LOV_TITLE}" />
+					</rich:column>
+					
+				</rich:dataTable>
+				<tr>
+					<td><h:commandLink value="New Record"
+						action="#{PGIM_LOV_DEFN_SEARCH_ACTION.createNewlov}">
+					</h:commandLink></td>
+				</tr>
+			</h:form></td>
+		</tr>
+		<!-- add footer to the page-->
+		<tr>
+		</tr>
+	</table>	
+	</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<!-- add header row -->
+		
+
+		<!-- Body row -->
+		<h:form id="documentSetup">
+			<tr>
+				<td><!-- initial filter to search and list -->
+				<table border="0" width="100%" cellpadding="0" cellspacing="0"
+					id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td>MAP ID: <h:inputText
+							value="#{PILM041_PM_IL_DATA_UPLOAD_SEARCH_PAGE_ACTION.PM_IL_DATA_UPLOAD_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE1}" />
+						</td>
+						<td>MAP ID: <h:inputText
+							value="#{PILM041_PM_IL_DATA_UPLOAD_SEARCH_PAGE_ACTION.PM_IL_DATA_UPLOAD_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE2}" />
+						</td>
+						<td><a4j:commandButton value="#{commonmsg.searchButton$caption}" id="a4link"
+							styleClass="button"
+							actionListener="#{PILM041_PM_IL_DATA_UPLOAD_SEARCH_PAGE_ACTION.fetchButtonClick}"
+							reRender="dataTableId">
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table --> <rich:dataTable id="dataTableId"
+					value="#{PILM041_PM_IL_DATA_UPLOAD_SEARCH_PAGE_ACTION.recordList}"
+					var="UPLOAD_SETUP_BEAN" cellpadding="5px" rows="10" border="1"
+					width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+
+					<rich:column filterEvent="onkeyup"
+						filterValue="#{PILM041_PM_IL_DATA_UPLOAD_SEARCH_PAGE_ACTION.PM_IL_DATA_UPLOAD_SEARCH_PAGE_BEAN.FILTER_BY_VALUE1}"
+						filterBy="#{UPLOAD_SETUP_BEAN.DUM_MAP_CODE}"
+						sortBy="#{UPLOAD_SETUP_BEAN.DUM_MAP_CODE}">
+						<f:facet name="header">
+							<h:outputText value="Document Code" />
+						</f:facet>
+						<h:commandLink
+							action="#{PILM041_PM_IL_DATA_UPLOAD_SEARCH_PAGE_ACTION.updateOrInsertRecordLinkClicked}">
+								<h:outputText value="#{UPLOAD_SETUP_BEAN.DUM_MAP_CODE}" />
+							<f:param name="CURRENT_ROWID" value="#{UPLOAD_SETUP_BEAN.ROWID}"></f:param>
+						</h:commandLink>
+					</rich:column>
+					<rich:column filterEvent="onkeyup"
+						filterValue="#{PILM041_PM_IL_DATA_UPLOAD_SEARCH_PAGE_ACTION.PM_IL_DATA_UPLOAD_SEARCH_PAGE_BEAN.FILTER_BY_VALUE2}"
+						filterBy="#{UPLOAD_SETUP_BEAN.DUM_MAP_CODE_DESC}"
+						sortBy="#{UPLOAD_SETUP_BEAN.DUM_MAP_CODE_DESC}">
+						<f:facet name="header">
+							<h:outputText value="Document Code" />
+						</f:facet>
+						<h:outputText>
+								<h:outputText value="#{UPLOAD_SETUP_BEAN.DUM_MAP_CODE_DESC}" />
+						</h:outputText>
+					</rich:column>
+				</rich:dataTable>
+				<table width="100%" cellpadding="0" cellspacing="0" border="0">
+					<tr>
+						<td align="left"><h:commandButton value="Insert"
+							action="#{PILM041_PM_IL_DATA_UPLOAD_SEARCH_PAGE_ACTION.updateOrInsertRecordLinkClicked}"
+							styleClass="button">
+						</h:commandButton></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+		</h:form>
+
+		<!-- add footer to the page-->
+		
+	</table>
+	</f:view>
+	</ui:define>
+</ui:composition>

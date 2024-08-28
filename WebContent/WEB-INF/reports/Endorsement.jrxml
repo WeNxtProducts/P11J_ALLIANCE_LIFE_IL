@@ -1,0 +1,2065 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Endorsement" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="40" rightMargin="20" topMargin="20" bottomMargin="20" uuid="85045cf6-0d25-4d21-a67c-bff50cf329fe">
+	<property name="ireport.zoom" value="1.1000000000000052"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="96"/>
+	<subDataset name="TAX" uuid="04ec895f-29f5-428e-a40f-284d85bfce7f">
+		<parameter name="POLH_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="END_NO_IDX" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="END_TYPE" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT DECODE(POLH_N_END_TYPE, '002', NVL(POCH_N_LC_VALUE,0), NVL(POCH_N_LC_VALUE,0)) TAX_AMT
+  FROM PH_IL_POL_CHARGE, PH_IL_POLICY
+ WHERE POCH_POL_SYS_ID = $P{POLH_SYS_ID}
+   AND POCH_END_NO_IDX = $P{END_NO_IDX}
+   AND POLH_SYS_ID = POCH_POL_SYS_ID
+   AND POLH_END_NO_IDX = POCH_END_NO_IDX
+   AND POCH_N_CHRG_CODE = 'GOV.FEE']]>
+		</queryString>
+		<field name="TAX_AMT" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="OTHER_CHARGE" uuid="dab9a097-69a7-4aa5-bc12-b07a118b28d1">
+		<parameter name="POLH_SYS_ID" class="java.lang.String"/>
+		<parameter name="END_NO_IDX" class="java.lang.String"/>
+		<parameter name="END_TYPE" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT SUM(DECODE(POLH_N_END_TYPE, '002', NVL(POCH_O_LC_VALUE,0), NVL(POCH_N_LC_VALUE,0))) OTHER_CHRG
+  FROM PH_IL_POL_CHARGE, PH_IL_POLICY
+ WHERE POCH_POL_SYS_ID = $P{POLH_SYS_ID}
+   AND POCH_END_NO_IDX = $P{END_NO_IDX}
+   AND POLH_SYS_ID = POCH_POL_SYS_ID
+   AND POLH_END_NO_IDX = POCH_END_NO_IDX
+   AND POCH_N_CHRG_CODE <> 'GOV.FEE']]>
+		</queryString>
+		<field name="OTHER_CHRG" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="BROKER" uuid="2444a536-107f-4382-8f49-c191ec64afb6">
+		<parameter name="POLH_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT CUST_NAME ||'('||POBH_BROKER_CODE||')'
+          FROM PT_IL_POL_BROKER_HEAD, PM_CUSTOMER
+         WHERE POBH_POL_SYS_ID = $P{POLH_SYS_ID}
+           AND POBH_SRNO = 1
+           AND POBH_BROKER_CODE = CUST_CODE]]>
+		</queryString>
+		<field name="CUST_NAME||&apos;(&apos;||POBH_BROKER_CODE||&apos;)&apos;" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="ENDORSEMENT_DESC" uuid="f268c65e-8b52-45b2-9568-be20db22c580">
+		<parameter name="POLH_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[select POL_END_DESC  from PT_IL_POLICY where POL_SYS_ID =$P{POLH_SYS_ID}]]>
+		</queryString>
+		<field name="POL_END_DESC" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataset1" uuid="f80c30d5-c213-4e34-8467-64f781a73ec4"/>
+	<subDataset name="dataset2" uuid="585bdf83-29e1-4703-ad48-d144cdf26d6d"/>
+	<subDataset name="Total_premium" uuid="2be1198a-915d-4738-bcfb-082d9f1a8093">
+		<parameter name="POLH_SYS_ID" class="java.lang.String"/>
+		<parameter name="END_NO_IDX" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="END_TYPE" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT NVL(TOT_PREM,0) + NVL(LOAD_AMT, 0) + NVL(CHRG_AMT, 0) - NVL(DISC_AMT, 0)
+  FROM (SELECT DECODE(POLH_N_END_TYPE,
+                      '009',
+                      POLH_O_FC_BASIC_PREM,
+                      '001',
+                      POLH_O_FC_BASIC_PREM,
+                      POLH_N_FC_BASIC_PREM) +
+               DECODE(POLH_N_END_TYPE,
+                      '009',
+                      POLH_O_FC_ADDL_PREM,
+                      '001',
+                      POLH_O_FC_ADDL_PREM,
+                      POLH_N_FC_ADDL_PREM) TOT_PREM,
+               (SELECT DECODE(POLH_N_END_TYPE,
+                              '002',
+                               SUM(NVL(PDLH_O_FC_DISC_LOAD_VALUE,0)),
+                               SUM(NVL(PDLH_N_FC_DISC_LOAD_VALUE,0)))
+                  FROM PH_IL_POL_DISC_LOAD
+                 WHERE PDLH_POL_SYS_ID = $P{POLH_SYS_ID}
+                   AND POLH_SYS_ID = PDLH_POL_SYS_ID
+                   AND PDLH_N_DISC_LOAD_TYPE = 'D'
+                   AND PDLH_END_NO_IDX = POLH_END_NO_IDX
+                   AND POLH_END_NO_IDX = $P{END_NO_IDX}
+                   GROUP BY POLH_N_END_TYPE) DISC_AMT,
+               (SELECT DECODE(POLH_N_END_TYPE,
+                              '002',
+                              SUM(NVL(PDLH_O_FC_DISC_LOAD_VALUE,0)),
+                              SUM(NVL(PDLH_N_FC_DISC_LOAD_VALUE,0)))
+                  FROM PH_IL_POL_DISC_LOAD
+                 WHERE PDLH_POL_SYS_ID = $P{POLH_SYS_ID}
+                   AND POLH_SYS_ID = PDLH_POL_SYS_ID
+                   AND PDLH_N_DISC_LOAD_TYPE = 'L'
+                   AND PDLH_END_NO_IDX = POLH_END_NO_IDX
+                   AND POLH_END_NO_IDX = $P{END_NO_IDX}
+                   GROUP BY POLH_N_END_TYPE) LOAD_AMT,
+               (SELECT DECODE(POLH_N_END_TYPE,
+                              '002',
+                              SUM(NVL(POCH_N_LC_VALUE,0)),
+                              SUM(NVL(POCH_N_LC_VALUE,0)))
+                  FROM PH_IL_POL_CHARGE
+                 WHERE POCH_POL_SYS_ID = $P{POLH_SYS_ID}
+                   AND POLH_SYS_ID = POCH_POL_SYS_ID
+                   AND POLH_END_NO_IDX = (POCH_END_NO_IDX)
+                   AND POLH_END_NO_IDX = $P{END_NO_IDX}
+                   GROUP BY POLH_N_END_TYPE) CHRG_AMT
+          FROM PH_IL_POLICY
+         WHERE POLH_SYS_ID = $P{POLH_SYS_ID}
+           AND POLH_END_NO_IDX = $P{END_NO_IDX})]]>
+		</queryString>
+		<field name="NVL(TOT_PREM,0)+NVL(LOAD_AMT,0)+NVL(CHRG_AMT,0)-NVL(DISC_AMT,0)" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset3" uuid="9f4348e6-aca1-4027-9cd0-2cb918d33c19"/>
+	<subDataset name="dataset4" uuid="44caa2e6-ca08-41c2-b561-dd279597f9b8"/>
+	<subDataset name="RIDER" uuid="472a7ff2-6c44-436b-a674-7eccecfda811">
+		<parameter name="POLH_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="END_NO_IDX" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT (SELECT COVER_DESC
+            FROM PM_IL_COVER
+           WHERE COVER_CODE = POACH_N_COVER_CODE) BENF_NAME,
+         POACH_O_LC_SA,
+         POACH_N_LC_SA,
+         POACH_O_PERIOD,
+         POACH_N_PERIOD,
+         POACH_O_LC_PREM,
+         POACH_N_LC_PREM
+    FROM PH_IL_POL_ADDL_COVER
+   WHERE POACH_POL_SYS_ID = $P{POLH_SYS_ID}
+  AND POACH_END_NO_IDX = $P{END_NO_IDX}
+  AND POACH_N_DEL_FLAG IN ('N','Y')]]>
+		</queryString>
+		<field name="BENF_NAME" class="java.lang.String"/>
+		<field name="POACH_O_LC_SA" class="java.math.BigDecimal"/>
+		<field name="POACH_N_LC_SA" class="java.math.BigDecimal"/>
+		<field name="POACH_O_PERIOD" class="java.math.BigDecimal"/>
+		<field name="POACH_N_PERIOD" class="java.math.BigDecimal"/>
+		<field name="POACH_O_LC_PREM" class="java.math.BigDecimal"/>
+		<field name="POACH_N_LC_PREM" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset5" uuid="fd5b2e9b-16a7-4874-9ae9-db230d7145b9"/>
+	<subDataset name="dataset6" uuid="10294640-de1f-4cc9-af87-1513d79bd152"/>
+	<subDataset name="dataset7" uuid="7ba5b729-fe01-4f66-87be-34d7090a9474"/>
+	<subDataset name="dataset8" uuid="58398457-1ca8-4ef2-ad2a-dd04a27cfa5c"/>
+	<subDataset name="dataset9" uuid="21e7d6c9-870c-465a-a95c-0656fde7e990"/>
+	<subDataset name="dataset10" uuid="d18e4929-6f6f-42e2-9c16-f0756d7c3ad0"/>
+	<subDataset name="INC/DECSA" uuid="4014e402-0c46-4756-9cda-bd4e3fa1664f">
+		<parameter name="POLH_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="END_NO_IDX" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT COVER_DESC COV_NAME,
+       POLH_N_LC_SUM_ASSURED NEW_SA,
+       POLH_N_LC_BASIC_PREM NEW_PREM,
+       POLH_O_LC_SUM_ASSURED OLD_SA,
+       POLH_O_LC_BASIC_PREM OLD_PREM
+  FROM PH_IL_POLICY, PM_IL_COVER
+ WHERE POLH_SYS_ID =  $P{POLH_SYS_ID}
+   AND POLH_END_NO_IDX = $P{END_NO_IDX}
+   AND POLH_PLAN_CODE = COVER_CODE
+UNION ALL
+SELECT COVER_DESC COV_NAME,
+       POACH_N_LC_SA NEW_SA,
+       POACH_N_LC_PREM NEW_PREM,
+       POACH_O_LC_SA OLD_SA,
+       POACH_O_LC_PREM OLD_PREM
+  FROM PH_IL_POL_ADDL_COVER, PM_IL_COVER
+ WHERE POACH_POL_SYS_ID = $P{POLH_SYS_ID}
+   AND POACH_END_NO_IDX = $P{END_NO_IDX}
+   AND POACH_O_COVER_CODE = COVER_CODE]]>
+		</queryString>
+		<field name="COV_NAME" class="java.lang.String"/>
+		<field name="NEW_SA" class="java.math.BigDecimal"/>
+		<field name="NEW_PREM" class="java.math.BigDecimal"/>
+		<field name="OLD_SA" class="java.math.BigDecimal"/>
+		<field name="OLD_PREM" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset11" uuid="28050a55-14a0-4209-81b4-7b8a2788ff8a"/>
+	<subDataset name="ALTERM" uuid="0e37f05b-c362-485b-ab53-c72ee70fef4c">
+		<parameter name="POLH_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="END_NO_IDX" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT POLH_O_PERIOD,
+          POLH_N_PERIOD,
+          POLH_O_LC_BASIC_PREM,
+          POLH_N_LC_BASIC_PREM
+     FROM PH_IL_POLICY
+    WHERE POLH_SYS_ID = $P{POLH_SYS_ID}
+   UNION ALL
+   SELECT POACH_O_PERIOD, POACH_N_PERIOD, POACH_O_LC_PREM, POACH_N_LC_PREM
+     FROM PH_IL_POL_ADDL_COVER
+    WHERE POACH_POL_SYS_ID = $P{POLH_SYS_ID}
+      AND POACH_END_NO_IDX = $P{END_NO_IDX}]]>
+		</queryString>
+		<field name="POLH_O_PERIOD" class="java.math.BigDecimal"/>
+		<field name="POLH_N_PERIOD" class="java.math.BigDecimal"/>
+		<field name="POLH_O_LC_BASIC_PREM" class="java.math.BigDecimal"/>
+		<field name="POLH_N_LC_BASIC_PREM" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset12" uuid="b3c6b080-6eb0-4093-82db-10305aa069c4"/>
+	<subDataset name="dataset13" uuid="f60f1fcb-152b-4186-bbed-3df51a050612"/>
+	<subDataset name="dataset14" uuid="df581e96-c563-4354-9ffa-4c0edc3542b9"/>
+	<subDataset name="GEN002/3" uuid="2e5cab1f-53e7-467f-8c38-f22a1343303d">
+		<parameter name="POLH_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="END_NO_IDX" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT PBENH_O_BNF_TYPE,
+       PBENH_N_BNF_TYPE,
+       PBENH_O_BNF_NAME,
+       PBENH_N_BNF_NAME,
+       PBENH_O_PERC,
+       PBENH_N_PERC,
+      (SELECT INITCAP(PC_DESC) FROM PM_CODES WHERE PC_TYPE = 'ILBENFREL' AND PC_CODE = PBENH_O_RELATION_CODE)PBENH_O_RELATION_CODE,
+(SELECT INITCAP(PC_DESC) FROM PM_CODES WHERE PC_TYPE = 'ILBENFREL' AND PC_CODE = PBENH_N_RELATION_CODE)PBENH_N_RELATION_CODE
+  FROM PH_IL_POL_BENEFICIARY
+ WHERE PBENH_POL_SYS_ID = $P{POLH_SYS_ID}
+   AND PBENH_END_NO_IDX = $P{END_NO_IDX}]]>
+		</queryString>
+		<field name="PBENH_O_BNF_TYPE" class="java.lang.String"/>
+		<field name="PBENH_N_BNF_TYPE" class="java.lang.String"/>
+		<field name="PBENH_O_BNF_NAME" class="java.lang.String"/>
+		<field name="PBENH_N_BNF_NAME" class="java.lang.String"/>
+		<field name="PBENH_O_PERC" class="java.math.BigDecimal"/>
+		<field name="PBENH_N_PERC" class="java.math.BigDecimal"/>
+		<field name="PBENH_O_RELATION_CODE" class="java.lang.String"/>
+		<field name="PBENH_N_RELATION_CODE" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataset15" uuid="1b9bcb76-dfdf-4585-a4d1-e4d83d8190c7"/>
+	<subDataset name="dataset16" uuid="1dffd10d-7663-4c0b-b86b-8acd879ea037"/>
+	<subDataset name="dataset17" uuid="85f4bdef-8798-4a89-bf06-66b9e408e7c0"/>
+	<subDataset name="dataset18" uuid="b5c3dcc8-62df-44fd-8dcb-062bb5ff82a1"/>
+	<subDataset name="GEN004" uuid="e0fa362e-4b44-4210-87b7-2c695cca205c">
+		<parameter name="POLH_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="END_NO_IDX" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT PBENH_O_BANK_CODE,
+       PBENH_N_BANK_CODE,
+       PBENH_O_DIVISION,
+       PBENH_N_DIVISION
+  FROM PH_IL_POL_BENEFICIARY
+ WHERE PBENH_POL_SYS_ID = $P{POLH_SYS_ID}
+   AND PBENH_END_NO_IDX = $P{END_NO_IDX}
+   AND PBENH_N_BANK_CODE IS NOT NULL]]>
+		</queryString>
+		<field name="PBENH_O_BANK_CODE" class="java.lang.String"/>
+		<field name="PBENH_N_BANK_CODE" class="java.lang.String"/>
+		<field name="PBENH_O_DIVISION" class="java.lang.String"/>
+		<field name="PBENH_N_DIVISION" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataset19" uuid="1570f1cf-6a82-44e3-8f82-05edbcbea693"/>
+	<parameter name="POLH_SYS_ID" class="java.lang.String"/>
+	<parameter name="END_NO_IDX" class="java.lang.String"/>
+	<parameter name="END_TITLE" class="java.lang.String"/>
+	<parameter name="OLD_VALUE1" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NEW_VALUE1" class="java.lang.String"/>
+	<parameter name="OLD_VALUE2" class="java.lang.String"/>
+	<parameter name="NEW_VALUE2" class="java.lang.String"/>
+	<parameter name="OLD_VALUE3" class="java.lang.String"/>
+	<parameter name="NEW_VALUE3" class="java.lang.String"/>
+	<parameter name="OLD_VALUE4" class="java.lang.String"/>
+	<parameter name="NEW_VALUE4" class="java.lang.String"/>
+	<parameter name="OLD_VALUE5" class="java.lang.String"/>
+	<parameter name="NEW_VALUE5" class="java.lang.String"/>
+	<parameter name="OLD_VALUE6" class="java.lang.String"/>
+	<parameter name="NEW_VALUE6" class="java.lang.String"/>
+	<parameter name="END_TYPE" class="java.lang.String"/>
+	<parameter name="OLD_VALUE7" class="java.lang.String"/>
+	<parameter name="NEW_VALUE7" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT NVL(POLH_N_ASSURED_NAME, POLH_O_ASSURED_NAME),POLH_SYS_ID,
+       NVL(POLH_N_CUST_CODE, POLH_O_CUST_CODE),
+       POLH_N_RES_ADDRESS_1,
+       POLH_N_RES_ADDRESS_2,
+       POLH_N_RES_ADDRESS_3,
+       POLH_N_END_EFF_FROM_DT,
+       NVL(POLH_N_MOBILE_NO, POLH_O_MOBILE_NO),
+       POLH_N_END_NO,
+       POLH_ISSUE_DT,
+       POLH_DIVN_CODE,
+       DIVN_NAME,
+       POLH_NO, POLH_SYS_ID, POLH_END_NO_IDX,
+       (SELECT PS_CODE_DESC
+          FROM PP_SYSTEM, PM_IL_PLAN
+         WHERE PS_TYPE = 'ILPLANTYPE'
+           AND PS_CODE = PLAN_TYPE
+           AND PLAN_CODE = POLH_PLAN_CODE)PLAN_TYPE,
+       DECODE(POLH_N_END_TYPE,
+                      '009',
+                      (POLH_O_FC_BASIC_PREM + POLH_O_FC_ADDL_PREM),
+                      '001',
+                      (POLH_O_FC_BASIC_PREM + POLH_O_FC_ADDL_PREM),
+                      (POLH_N_FC_BASIC_PREM + POLH_N_FC_ADDL_PREM)) ADDL_PREM,
+       POLH_O_START_DT,
+       POLH_O_EXPIRY_DT,
+       (SELECT PS_CODE_DESC
+          FROM PP_SYSTEM
+         WHERE PS_TYPE = 'IL_END_TYP'
+          AND PS_CODE = POLH_N_END_TYPE) ENDT_TYPE,
+          POLH_N_END_DESC END_DESC,(SELECT INITCAP(COMP_NAME)COMP_NAME FROM PM_COMPANY)COMP_NAME
+  FROM PH_IL_POLICY,FM_DIVISION
+ WHERE POLH_SYS_ID =$P{POLH_SYS_ID}
+   AND POLH_DIVN_CODE =DIVN_CODE
+   AND POLH_END_NO_IDX =$P{END_NO_IDX}]]>
+	</queryString>
+	<field name="NVL(POLH_N_ASSURED_NAME,POLH_O_ASSURED_NAME)" class="java.lang.String"/>
+	<field name="POLH_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="NVL(POLH_N_CUST_CODE,POLH_O_CUST_CODE)" class="java.lang.String"/>
+	<field name="POLH_N_RES_ADDRESS_1" class="java.lang.String"/>
+	<field name="POLH_N_RES_ADDRESS_2" class="java.lang.String"/>
+	<field name="POLH_N_RES_ADDRESS_3" class="java.lang.String"/>
+	<field name="POLH_N_END_EFF_FROM_DT" class="java.sql.Timestamp"/>
+	<field name="NVL(POLH_N_MOBILE_NO,POLH_O_MOBILE_NO)" class="java.lang.String"/>
+	<field name="POLH_N_END_NO" class="java.lang.String"/>
+	<field name="POLH_ISSUE_DT" class="java.sql.Timestamp"/>
+	<field name="POLH_DIVN_CODE" class="java.lang.String"/>
+	<field name="DIVN_NAME" class="java.lang.String"/>
+	<field name="POLH_NO" class="java.lang.String"/>
+	<field name="POLH_END_NO_IDX" class="java.math.BigDecimal"/>
+	<field name="PLAN_TYPE" class="java.lang.String"/>
+	<field name="ADDL_PREM" class="java.math.BigDecimal"/>
+	<field name="POLH_O_START_DT" class="java.sql.Timestamp"/>
+	<field name="POLH_O_EXPIRY_DT" class="java.sql.Timestamp"/>
+	<field name="ENDT_TYPE" class="java.lang.String"/>
+	<field name="END_DESC" class="java.lang.String"/>
+	<field name="COMP_NAME" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90">
+			<textField>
+				<reportElement x="251" y="55" width="100" height="20" uuid="2dad0ae4-4609-4ff1-9b0c-251e79cff6a6"/>
+				<textFieldExpression><![CDATA[$P{POLH_SYS_ID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="374" y="70" width="100" height="20" uuid="52b5d284-d0fd-40e4-846e-32069a09c65a"/>
+				<textFieldExpression><![CDATA[$P{END_NO_IDX}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="50">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 ? false:true]]></printWhenExpression>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="229">
+			<staticText>
+				<reportElement x="279" y="90" width="140" height="15" uuid="11cb289e-7f0c-4ab5-805b-b231f6226087"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Endorsement Effective Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="58" width="139" height="15" uuid="2a40b8d8-8692-4f9b-9b4e-a148e4fa6c07"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Client Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="143" width="90" height="15" uuid="85cfc7a2-66f3-4524-8e0b-2dff79244f5a"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Policy No ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="178" width="91" height="15" uuid="6e43e133-bb24-4a30-acd6-c2b7136e6200">
+					<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN001")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:
+$P{END_TYPE}.equals("GEN005")?false:
+$P{END_TYPE}.equals("GEN006")?false:
+$P{END_TYPE}.equals("GEN007")?false:true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total Premium due]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="126" width="141" height="15" isRemoveLineWhenBlank="true" uuid="caa79f17-881b-4ce2-a08b-354305efa61d">
+					<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN001")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:
+$P{END_TYPE}.equals("GEN005")?false:
+$P{END_TYPE}.equals("GEN006")?false:
+$P{END_TYPE}.equals("GEN007")?false:true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Add Govt Tax  '0.55%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="188" y="195" width="19" height="15" uuid="f97cb9a5-5946-49dd-a1dc-6f4640620954"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="41" width="90" height="15" uuid="a347bc5e-b866-4b72-8f89-dbb8bf682e77"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Name(Insured)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="214" width="90" height="15" uuid="194dadd6-c37b-4fc1-8777-48dca50e374c"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Broker/Agency ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="161" width="90" height="15" uuid="7e8b4f1f-87ab-40eb-9475-6e279007a694"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Policy Type ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="108" width="89" height="15" uuid="1e568076-26b4-4963-bd0f-93b3a85540c3"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Phone ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="57" width="90" height="15" uuid="e2296178-d56a-47ee-9dd7-662842bc6cc5"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Address ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="125" width="90" height="15" uuid="53810dbc-680b-4f44-a104-09ec8c4f0100"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Endorsement No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="195" width="89" height="15" uuid="f8b8054e-65df-47d7-8718-ff386bc6cefe"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Policy Period ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="107" y="195" width="31" height="15" uuid="4702ea2f-5841-4c12-934e-f3213b2cceb9"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[From]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="143" width="133" height="15" isRemoveLineWhenBlank="true" uuid="b817ec78-4195-496c-b645-7f7fc22f8ee2">
+					<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN001")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:
+$P{END_TYPE}.equals("GEN005")?false:
+$P{END_TYPE}.equals("GEN006")?false:
+$P{END_TYPE}.equals("GEN007")?false:true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Other Charges]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="280" y="74" width="139" height="15" uuid="4f0e9e68-481c-4b39-86ae-7b0ecd9d8aa3"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Policy Issue Date   ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="279" y="109" width="141" height="15" isRemoveLineWhenBlank="true" uuid="fcd3a5d9-25c0-4265-b631-18a83774b4fc">
+					<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN001")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:
+$P{END_TYPE}.equals("GEN005")?false:
+$P{END_TYPE}.equals("GEN006")?false:
+$P{END_TYPE}.equals("GEN007")?false:true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Additional Premium]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="106" y="57" width="160" height="15" isPrintWhenDetailOverflows="true" uuid="59c241d6-a686-4cc1-8bbe-4d335bbcf402"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POLH_N_RES_ADDRESS_1}+","]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="106" y="74" width="160" height="15" isPrintWhenDetailOverflows="true" uuid="0370457f-4b22-409b-aba5-8565e209cbb2">
+					<printWhenExpression><![CDATA[$F{POLH_N_RES_ADDRESS_2}.isEmpty()?false:true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POLH_N_RES_ADDRESS_2}+","]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="106" y="90" width="160" height="15" isPrintWhenDetailOverflows="true" uuid="2f7ff5ee-0467-4ec1-8ec7-26610b118a7d">
+					<printWhenExpression><![CDATA[$F{POLH_N_RES_ADDRESS_3}.isEmpty()?false:true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POLH_N_RES_ADDRESS_3}+"."]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="107" y="125" width="169" height="15" uuid="1d80eb19-cfcf-45a4-9ea4-d76b5b3e0721"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POLH_N_END_NO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="136" y="195" width="52" height="15" uuid="81e93ec3-d7b7-46a9-a100-1b3377c7d597"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POLH_O_START_DT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="204" y="195" width="132" height="15" uuid="baaac253-5792-4842-93d5-752ca325a2df"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POLH_O_EXPIRY_DT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="107" y="143" width="169" height="15" uuid="3b4d53cb-8f50-43a6-b6e5-d13477d1843d"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POLH_NO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="418" y="74" width="106" height="15" uuid="a18ec2ce-a87d-4f98-bb3b-26fa1100010f"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POLH_ISSUE_DT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="418" y="58" width="106" height="15" uuid="76bfc750-fe1e-4801-a597-092c4257bf1b"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NVL(POLH_N_CUST_CODE,POLH_O_CUST_CODE)}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="106" y="41" width="170" height="15" uuid="ba20a61a-307b-4921-b398-e30387653ef6"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NVL(POLH_N_ASSURED_NAME,POLH_O_ASSURED_NAME)}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="418" y="90" width="106" height="15" uuid="52355443-48d5-46ca-a43c-6e909334db7e"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POLH_N_END_EFF_FROM_DT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="107" y="161" width="423" height="15" uuid="fa2772eb-c460-475e-97ec-08215563ded7"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ENDT_TYPE}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="418" y="144" width="113" height="15" uuid="4278af0e-676e-4be4-a5b4-6f4a8b737c1f"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="OTHER_CHARGE" uuid="3d47e65c-cbc6-4e8d-a007-339bed5231f5">
+						<datasetParameter name="POLH_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{POLH_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="END_NO_IDX">
+							<datasetParameterExpression><![CDATA[$F{POLH_END_NO_IDX}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="END_TYPE">
+							<datasetParameterExpression><![CDATA[$P{END_TYPE}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="15" width="113">
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="106" height="15" isRemoveLineWhenBlank="true" uuid="c0a26015-7a60-4191-a1ad-7add5952e058">
+								<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN001")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:
+$P{END_TYPE}.equals("GEN005")?false:
+$P{END_TYPE}.equals("GEN006")?false:
+$P{END_TYPE}.equals("GEN007")?false:true]]></printWhenExpression>
+							</reportElement>
+							<textElement>
+								<font fontName="Calibri" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$P{END_TYPE}.equals("001")?"0.000":$F{OTHER_CHRG}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="100" y="41" width="8" height="15" uuid="1c56b6e4-28e0-49bf-b9c8-eb64eb9c6edc"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="57" width="8" height="15" uuid="03884af2-100c-413c-b351-ca035b746a34"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="108" width="8" height="15" uuid="76c2dff7-35bb-4833-a7ba-a486ce6e3fb0"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="125" width="8" height="15" uuid="e19202a8-48cb-404e-8739-eaf12d386e92"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="143" width="8" height="15" uuid="cdd36601-8d65-46d9-85b3-63b74abaa0d3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="161" width="8" height="15" uuid="b9d1d3a4-680a-4e46-ace7-2d3109626ea8"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="195" width="8" height="15" uuid="492a176d-1177-4fab-aadd-cf5e8b10fa89"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="98" y="214" width="8" height="15" uuid="43b28130-557e-4102-a3f4-bb4173036cd8"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="58" width="8" height="15" uuid="c5d13e98-01e2-41b3-b8d7-8e9335c215cc"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="74" width="8" height="15" uuid="db6be323-d2b6-4569-bfc3-12f68645dbb9"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="410" y="90" width="8" height="15" uuid="2506e5d9-c030-459a-bbdc-2ff8c0bfb4ac"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="411" y="109" width="8" height="15" isRemoveLineWhenBlank="true" uuid="45da7330-d8a9-4e4e-8427-720fb52a0da7">
+					<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN001")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:
+$P{END_TYPE}.equals("GEN005")?false:
+$P{END_TYPE}.equals("GEN006")?false:
+$P{END_TYPE}.equals("GEN007")?false:true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="411" y="126" width="8" height="15" isRemoveLineWhenBlank="true" uuid="706e4492-474a-4938-9a0b-a6cfaaf44c17">
+					<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN001")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:
+$P{END_TYPE}.equals("GEN005")?false:
+$P{END_TYPE}.equals("GEN006")?false:
+$P{END_TYPE}.equals("GEN007")?false:true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="412" y="143" width="8" height="15" isRemoveLineWhenBlank="true" uuid="17e8a174-0ddc-41b8-b198-b66d52a0951a">
+					<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN001")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:
+$P{END_TYPE}.equals("GEN005")?false:
+$P{END_TYPE}.equals("GEN006")?false:
+$P{END_TYPE}.equals("GEN007")?false:true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="99" y="179" width="8" height="15" uuid="89571fe3-cba0-4861-b306-ed2c9f6fc0ac">
+					<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN001")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:
+$P{END_TYPE}.equals("GEN005")?false:
+$P{END_TYPE}.equals("GEN006")?false:
+$P{END_TYPE}.equals("GEN007")?false:true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="106" y="213" width="358" height="16" uuid="4f4de057-8c9e-4713-ab86-ba053ff480cc"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="BROKER" uuid="a426b14e-3033-4f73-a89d-912803121521">
+						<datasetParameter name="POLH_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{POLH_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="16" width="358">
+						<textField>
+							<reportElement x="0" y="1" width="355" height="15" uuid="3639b4fb-0508-4eba-b69c-7980611b3ea8"/>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{CUST_NAME||'('||POBH_BROKER_CODE||')'}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="106" y="178" width="230" height="15" uuid="8b5de917-f8e2-4cfb-bd76-5da691dc82dc"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Total_premium" uuid="cd552f0b-2c89-4afb-b948-ff7748cc029f">
+						<datasetParameter name="POLH_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POLH_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="END_NO_IDX">
+							<datasetParameterExpression><![CDATA[$P{END_NO_IDX}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="END_TYPE">
+							<datasetParameterExpression><![CDATA[$P{END_TYPE}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="15" width="230">
+						<textField pattern="###0.0;(###0.0)" isBlankWhenNull="true">
+							<reportElement x="2" y="0" width="204" height="15" uuid="4fda68f7-a143-45af-994e-cd66e62b0f19">
+								<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN001")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:
+$P{END_TYPE}.equals("GEN005")?false:
+$P{END_TYPE}.equals("GEN006")?false:
+$P{END_TYPE}.equals("GEN007")?false:true]]></printWhenExpression>
+							</reportElement>
+							<textElement>
+								<font fontName="Calibri" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{NVL(TOT_PREM,0)+NVL(LOAD_AMT,0)+NVL(CHRG_AMT,0)-NVL(DISC_AMT,0)}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField isBlankWhenNull="true">
+				<reportElement x="418" y="109" width="106" height="15" isRemoveLineWhenBlank="true" uuid="89dd0efe-89bc-46a7-ba01-dfa42e6ac7d9">
+					<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN001")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:
+$P{END_TYPE}.equals("GEN005")?false:
+$P{END_TYPE}.equals("GEN006")?false:
+$P{END_TYPE}.equals("GEN007")?false:true]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADDL_PREM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="166" y="10" width="267" height="20" uuid="06f78d19-c3da-4f02-8b04-2b041816fd3a"/>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Endorsement - "+$P{END_TITLE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="280" y="41" width="81" height="15" uuid="fd583478-96cc-4992-896a-4ce1e4e3df3c"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="411" y="42" width="7" height="15" uuid="179ab616-05a1-4a9e-80c0-266cb7137093"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="419" y="43" width="100" height="15" uuid="32a184a9-f2e7-4109-bf2b-60d8a9710752"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="106" y="108" width="170" height="15" uuid="357640ee-63ff-416c-85b8-f9a3eebd71e1"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NVL(POLH_N_MOBILE_NO,POLH_O_MOBILE_NO)}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="418" y="126" width="117" height="15" uuid="96043885-333d-4c1e-8bff-3e9d09bd8d2e"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="TAX" uuid="8e6b580a-eaa2-4d57-94d0-4654aaa58896">
+						<datasetParameter name="POLH_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POLH_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="END_NO_IDX">
+							<datasetParameterExpression><![CDATA[$P{END_NO_IDX}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="END_TYPE">
+							<datasetParameterExpression><![CDATA[$P{END_TYPE}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="15" width="117">
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="106" height="15" isRemoveLineWhenBlank="true" uuid="366a1bae-7e6e-4297-9e74-3486dfa9b9e9">
+								<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN001")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:
+$P{END_TYPE}.equals("GEN005")?false:
+$P{END_TYPE}.equals("GEN006")?false:
+$P{END_TYPE}.equals("GEN007")?false:true]]></printWhenExpression>
+							</reportElement>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{TAX_AMT}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="77" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="32" width="125" height="20" uuid="6fc35726-037e-4402-a4ec-13fc99efa444"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Endorsement Reason / Type:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="137" y="3" width="243" height="20" uuid="d585655c-8124-48d0-a6d7-03395a057cae"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ENDORSEMENT ATTACHED TO THE POLICY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="52" width="123" height="20" uuid="5feaa142-79dc-4637-85c4-74ed487bfadc"/>
+				<textElement>
+					<font fontName="Calibri" size="10" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Endorsement Description]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="133" y="52" width="386" height="25" uuid="b1717e06-9703-4f46-8744-5953d153add8"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="ENDORSEMENT_DESC" uuid="9573e1bb-980c-420c-9048-6e43b2e2b291">
+						<datasetParameter name="POLH_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{POLH_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="25" width="386">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="361" height="25" isPrintWhenDetailOverflows="true" uuid="09fdcef0-ee37-4e01-b766-ef82c79c6cb6"/>
+							<textElement>
+								<font fontName="Calibri" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POL_END_DESC}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField>
+				<reportElement x="134" y="32" width="360" height="20" uuid="39ab0840-69a1-4d99-8742-00287aa3e5e8"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{END_TITLE}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band>
+			<printWhenExpression><![CDATA[$P{END_TYPE}.equals("ADDRIDER")?false:
+$P{END_TYPE}.equals("DELRIDER")?false:true]]></printWhenExpression>
+		</band>
+		<band height="78">
+			<staticText>
+				<reportElement x="10" y="42" width="230" height="15" uuid="e8547248-52d2-4f0d-bb16-28cb41fbc2b2"/>
+				<textElement textAlignment="Left">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[In witness whereof this endorsement has been signed at]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="6" width="505" height="15" uuid="d0d816ca-cac7-4d54-a0d5-28a99a0a2c13"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[All other terms,conditions,warranties and exception of the policy remain unaltered.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="23" width="502" height="15" uuid="41caf148-aca9-4537-952d-db8d9699fd86"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If there is any correction or alteration in the above the same should be reported to us in writing  within 15 days.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="241" y="42" width="70" height="15" uuid="4cf15fd3-aef0-4e49-b868-34401e89c375"/>
+				<textElement textAlignment="Justified" verticalAlignment="Top">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{DIVN_NAME}+" on"]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="310" y="42" width="100" height="15" uuid="70c5ba22-0beb-478a-803c-d755373e5e5f"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="60" width="100" height="15" uuid="f870345a-c364-4e99-9b7a-b2252a3d511d"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type of alteration:]]></text>
+			</staticText>
+		</band>
+		<band height="164">
+			<printWhenExpression><![CDATA[$P{END_TYPE}.equals("ADDRIDER")?false:
+$P{END_TYPE}.equals("DELRIDER")?false:
+$P{END_TYPE}.equals("INCSA")?false:
+$P{END_TYPE}.equals("DECSA")?false:
+$P{END_TYPE}.equals("ALTERM")?false:
+$P{END_TYPE}.equals("GEN002")?false:
+$P{END_TYPE}.equals("GEN003")?false:
+$P{END_TYPE}.equals("GEN004")?false:true]]></printWhenExpression>
+			<staticText>
+				<reportElement x="10" y="3" width="200" height="21" uuid="a96562ef-ace6-4735-90e9-6e2e99910d0e"/>
+				<box topPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Old Details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="3" width="200" height="21" uuid="c838645a-30d4-460b-8f55-eccf33e43923"/>
+				<box topPadding="1">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[New Details]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="10" y="24" width="200" height="20" isRemoveLineWhenBlank="true" uuid="3dba29c6-5738-4b40-b6f8-901a8d4fb3ea">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE1}.equals( "" ) && $P{NEW_VALUE1}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{OLD_VALUE1} == null ? "" : $P{OLD_VALUE1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="210" y="24" width="200" height="20" isRemoveLineWhenBlank="true" uuid="e10aabfa-61d2-4931-97af-7f9a0aec8d49">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE1}.equals( "" ) && $P{NEW_VALUE1}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NEW_VALUE1} == null ? "" : $P{NEW_VALUE1}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="10" y="44" width="200" height="20" isRemoveLineWhenBlank="true" uuid="101f47a4-3c0d-406a-bb36-3c87b0fbc78c">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE2}.equals( "" ) && $P{NEW_VALUE2}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{OLD_VALUE2} == null ? "" : $P{OLD_VALUE2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="210" y="44" width="200" height="20" isRemoveLineWhenBlank="true" uuid="944bef13-d176-4cba-8f35-3221252fd582">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE2}.equals( "" ) && $P{NEW_VALUE2}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NEW_VALUE2} == null ? "" : $P{NEW_VALUE2}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="210" y="64" width="200" height="20" isRemoveLineWhenBlank="true" uuid="d154edb0-efe0-46f7-b336-f02d16cabfca">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE3}.equals( "" ) && $P{NEW_VALUE3}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NEW_VALUE3} == null ? "" : $P{NEW_VALUE3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="10" y="64" width="200" height="20" isRemoveLineWhenBlank="true" uuid="62968d3e-24f5-4807-955f-f2fd530f42d5">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE3}.equals( "" ) && $P{NEW_VALUE3}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{OLD_VALUE3} == null ? "" : $P{OLD_VALUE3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="210" y="84" width="200" height="20" isRemoveLineWhenBlank="true" uuid="0344ac6b-3a11-4529-8425-9343552b5963">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE4}.equals( "" ) && $P{NEW_VALUE4}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NEW_VALUE4} == null ? "" : $P{NEW_VALUE4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="10" y="84" width="200" height="20" isRemoveLineWhenBlank="true" uuid="1b171c55-dd56-4e1b-95ed-cc738d2fd2e2">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE4}.equals( "" ) && $P{NEW_VALUE4}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{OLD_VALUE4} == null ? "" : $P{OLD_VALUE4}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="210" y="104" width="200" height="20" isRemoveLineWhenBlank="true" uuid="f303717e-e960-4a26-ae57-b3688a6ed477">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE5}.equals( "" ) && $P{NEW_VALUE5}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NEW_VALUE5} == null ? "" : $P{NEW_VALUE5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="10" y="104" width="200" height="20" isRemoveLineWhenBlank="true" uuid="594411a2-db53-4b0e-8b11-886a20b1e1be">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE5}.equals( "" ) && $P{NEW_VALUE5}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{OLD_VALUE5} == null ? "" : $P{OLD_VALUE5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="210" y="124" width="200" height="20" isRemoveLineWhenBlank="true" uuid="408fa60f-f8e3-46c7-9c43-4846d43c192f">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE6}.equals( "" ) && $P{NEW_VALUE6}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NEW_VALUE6} == null ? "" : $P{NEW_VALUE6}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="10" y="124" width="200" height="20" isRemoveLineWhenBlank="true" uuid="958e3298-36ff-4fa0-9803-3cc5c1ef6bd0">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE6}.equals( "" ) && $P{NEW_VALUE6}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{OLD_VALUE6} == null ? "" : $P{OLD_VALUE6}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="210" y="144" width="200" height="20" isRemoveLineWhenBlank="true" uuid="e56cbb93-2831-4fe4-94b5-d8e5b32d7528">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE7}.equals( "" ) && $P{NEW_VALUE7}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{NEW_VALUE7} == null ? "" : $P{NEW_VALUE7}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Transparent" x="10" y="144" width="200" height="20" isRemoveLineWhenBlank="true" uuid="5f912b5c-40d5-4174-a2ce-177d9fe5f07f">
+					<printWhenExpression><![CDATA[$P{OLD_VALUE7}.equals( "" ) && $P{NEW_VALUE7}.equals( "" ) ?
+false : true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{OLD_VALUE7} == null ? "" : $P{OLD_VALUE7}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="41">
+			<printWhenExpression><![CDATA[$P{END_TYPE}.equals("ADDRIDER")?true:
+$P{END_TYPE}.equals("DELRIDER")?true:false]]></printWhenExpression>
+			<staticText>
+				<reportElement x="10" y="0" width="175" height="20" uuid="8d41836b-6d5d-44cb-9e49-b3d4bdb266c0"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Benefits Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="185" y="0" width="125" height="20" uuid="e5bbb8d4-01ea-421e-bf78-773e70eab6ef"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Sum Assured]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="75" height="20" uuid="c6d0e8fd-aa94-4088-bdf8-9d5fe005917c"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Term ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="0" width="125" height="20" uuid="8fe724f3-a5c3-4b4c-8986-13da7fda2eab"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Premium]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="9" y="20" width="506" height="21" uuid="54e0a56b-0f09-45b9-8c65-0a217b86eeea"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="RIDER" uuid="de4e0fbe-a4e6-4287-b127-cf5ecb108c9c">
+						<datasetParameter name="POLH_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POLH_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="END_NO_IDX">
+							<datasetParameterExpression><![CDATA[$P{END_NO_IDX}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="21" width="506">
+						<textField isBlankWhenNull="true">
+							<reportElement x="2" y="0" width="175" height="20" uuid="4391c0ad-b1b1-4942-94da-75bf81b02aaf"/>
+							<box leftPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{BENF_NAME}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.000" isBlankWhenNull="true">
+							<reportElement x="175" y="0" width="125" height="20" uuid="a5209839-b581-4e2a-9bbd-da797aab0449"/>
+							<box leftPadding="4" rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POACH_N_LC_SA}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="300" y="0" width="75" height="20" uuid="58613e2c-f47a-4394-b2b9-7a6664985206"/>
+							<box leftPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POACH_N_PERIOD}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.000" isBlankWhenNull="true">
+							<reportElement x="376" y="0" width="125" height="20" uuid="93b20de0-dbe7-47e5-a6ef-4b0026f06de2"/>
+							<box leftPadding="4" rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POACH_N_LC_PREM}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="40">
+			<printWhenExpression><![CDATA[$P{END_TYPE}.equals("INCSA")?true:
+$P{END_TYPE}.equals("DECSA")?true:false]]></printWhenExpression>
+			<staticText>
+				<reportElement x="10" y="0" width="170" height="20" uuid="60030fae-2768-4608-abf9-37c3a341f985"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Cover Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="345" y="0" width="90" height="20" uuid="8052cfee-ca0c-49f3-8627-4f85d3392fb1"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[New Sum Assured]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="0" width="75" height="20" uuid="ddfa8bc3-6b7f-4a75-9700-fbead3f5f2db"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[New Premium]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="10" y="20" width="500" height="20" uuid="02733f44-6b0b-4b6f-aec6-a3120786dcc5"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="INC/DECSA" uuid="28c2a742-c4b2-42dc-9b17-7639c42e1d4c">
+						<datasetParameter name="POLH_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POLH_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="END_NO_IDX">
+							<datasetParameterExpression><![CDATA[$P{END_NO_IDX}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="500">
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="170" height="20" uuid="0f861441-1a3f-4067-b7ca-40d50faf6f19"/>
+							<box leftPadding="4" rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{COV_NAME}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.000" isBlankWhenNull="true">
+							<reportElement x="170" y="0" width="90" height="20" uuid="aa91e212-b255-4aed-9840-f7de91faf2d9"/>
+							<box leftPadding="4" rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{OLD_SA}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.000" isBlankWhenNull="true">
+							<reportElement x="260" y="0" width="75" height="20" uuid="8a671027-cd63-4430-8102-8b7b965ff380"/>
+							<box leftPadding="4" rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{OLD_PREM}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.000" isBlankWhenNull="true">
+							<reportElement x="335" y="0" width="90" height="20" uuid="5ac27ee9-6df0-4225-93fe-b04584660a59"/>
+							<box leftPadding="4" rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{NEW_SA}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0.000" isBlankWhenNull="true">
+							<reportElement x="425" y="0" width="75" height="20" uuid="4a78ee57-ab59-42ef-8041-fb72b8ebb4cd"/>
+							<box leftPadding="4" rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{NEW_PREM}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="270" y="0" width="75" height="20" uuid="dfeed40d-1edd-4957-be6c-ff3648f813ba"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Old Premium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="0" width="90" height="20" uuid="d22adb87-924c-4a09-8008-c3860fb29a36"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Old Sum Assured]]></text>
+			</staticText>
+		</band>
+		<band height="40">
+			<printWhenExpression><![CDATA[$P{END_TYPE}.equals("ALTERM")?true:false]]></printWhenExpression>
+			<staticText>
+				<reportElement x="10" y="0" width="125" height="20" uuid="8035157d-69c7-41c9-8673-bb4246c6f093"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Old Term]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="0" width="125" height="20" uuid="1d05e9fd-6c18-462d-9420-098ccb1cff9a"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Old Premium]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="10" y="19" width="510" height="21" uuid="54f85f34-1c43-4f2f-ba66-61d630c96062"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="ALTERM" uuid="c8c0862b-f85a-41cf-ba59-fac6818d121e">
+						<datasetParameter name="POLH_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POLH_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="END_NO_IDX">
+							<datasetParameterExpression><![CDATA[$P{END_NO_IDX}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="21" width="510">
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="1" width="125" height="20" uuid="bdbfb708-a09d-4b1f-88cd-4966bdba75b9"/>
+							<box leftPadding="4" rightPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POLH_O_PERIOD}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="250" y="1" width="125" height="20" uuid="86dc7f1d-6e10-483d-b8b9-20e278250f06"/>
+							<box leftPadding="4" rightPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POLH_N_PERIOD}]]></textFieldExpression>
+						</textField>
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="123" y="1" width="125" height="20" uuid="5d6c04fe-de60-4053-83d7-c5b4eac7b2a0"/>
+							<box rightPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POLH_O_LC_BASIC_PREM}]]></textFieldExpression>
+						</textField>
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="373" y="1" width="125" height="20" uuid="23cbb8f0-20fd-41c2-a284-5b1e7f7901ad"/>
+							<box rightPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POLH_N_LC_BASIC_PREM}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="385" y="0" width="125" height="20" uuid="1d76ea7c-8a1e-4ba2-ad5b-68347b174b36"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[New Premium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="0" width="125" height="20" uuid="5990aaf4-8747-49c0-936c-1d46c06f460f"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[New Term]]></text>
+			</staticText>
+		</band>
+		<band height="60">
+			<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN002")?true:
+$P{END_TYPE}.equals("GEN003")?true:false]]></printWhenExpression>
+			<staticText>
+				<reportElement x="10" y="0" width="63" height="40" uuid="6621510e-9211-4dc0-90c6-190e6b4eabf4"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Old
+Beneficiary
+Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="136" y="0" width="63" height="40" uuid="630174ec-4763-45f0-8a65-146cb4850c24"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Old Percentage]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="73" y="0" width="63" height="40" uuid="11bd85c8-31ef-4354-9310-a638bf77c440"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Old
+Beneficiary
+Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="325" y="0" width="63" height="40" uuid="95ef5e5a-a1ba-40ba-bcd8-18dabe4340cd"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[New
+Beneficiary
+Name]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="7" y="40" width="519" height="20" uuid="f1144d20-b7d6-4253-a130-d8f4ede8b7e8"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="GEN002/3" uuid="fd5d42eb-4866-45bd-ae7d-cda07a7a4293">
+						<datasetParameter name="POLH_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POLH_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="END_NO_IDX">
+							<datasetParameterExpression><![CDATA[$P{END_NO_IDX}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="519">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToTallestObject" x="3" y="0" width="63" height="20" uuid="259ce02b-72da-4ffd-bc66-ad42c7820d69"/>
+							<box leftPadding="4" bottomPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBENH_O_BNF_TYPE}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToTallestObject" x="255" y="0" width="63" height="20" uuid="9336e6d0-65b4-4e87-8b81-c6ff4174c5a6"/>
+							<box leftPadding="4" bottomPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBENH_N_BNF_TYPE}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToTallestObject" x="130" y="0" width="62" height="20" uuid="86b307ae-99a0-420c-aa87-7f732b779551"/>
+							<box leftPadding="4" bottomPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBENH_O_PERC}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToTallestObject" x="381" y="0" width="63" height="20" uuid="810d9085-e8c0-4250-85a0-14582196a89c"/>
+							<box leftPadding="4" bottomPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBENH_N_PERC}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToTallestObject" x="66" y="0" width="64" height="20" uuid="12140a06-d8d9-47c3-8753-a6b81e7a27b0"/>
+							<box leftPadding="4" bottomPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBENH_O_BNF_NAME}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToTallestObject" x="318" y="0" width="63" height="20" uuid="03815b80-b1c3-4f9b-b8b9-8724f1670095"/>
+							<box leftPadding="4" bottomPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBENH_N_BNF_NAME}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToTallestObject" x="192" y="0" width="63" height="20" uuid="456bf829-2c88-407d-b23d-3dd7313ef564"/>
+							<box leftPadding="4" bottomPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBENH_O_RELATION_CODE}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToTallestObject" x="444" y="0" width="63" height="20" uuid="0d0ef65b-261e-4d21-9729-d64ac8db2fcc"/>
+							<box leftPadding="4" bottomPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBENH_N_RELATION_CODE}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="262" y="0" width="63" height="40" uuid="4066313e-96de-4720-84c7-d8f92e1016ae"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[New
+Beneficiary
+Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="388" y="0" width="63" height="40" uuid="689ccec8-ad1f-4811-8c9a-a7d47d1904a5"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[New
+Percentage]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="199" y="0" width="63" height="40" uuid="dd290d96-d969-4494-8cbc-0881f3c5095a"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Old
+Relation
+Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="451" y="0" width="63" height="40" uuid="81da6f68-4b35-4237-b702-5d866c6f366d"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[New
+Relation
+Code]]></text>
+			</staticText>
+		</band>
+		<band height="39">
+			<printWhenExpression><![CDATA[$P{END_TYPE}.equals("GEN004")?true:false]]></printWhenExpression>
+			<staticText>
+				<reportElement x="11" y="0" width="120" height="20" uuid="f40d5913-2cc2-4e42-9509-e9a2a79a97c5"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Old Bank Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="369" y="0" width="119" height="20" uuid="8256648e-dc45-4e67-9065-bfbaa5764228"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[New Branch Code]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="11" y="19" width="477" height="20" uuid="90453be6-53ad-4b39-8159-35c428b64c56"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="GEN004" uuid="caef1459-4a12-4832-a043-9f60701262e2">
+						<datasetParameter name="POLH_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POLH_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="END_NO_IDX">
+							<datasetParameterExpression><![CDATA[$P{END_NO_IDX}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="477">
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="1" width="120" height="19" uuid="0ff4ce96-8ce1-4359-a554-9e1bc0725bc1"/>
+							<box leftPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBENH_O_BANK_CODE}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="238" y="1" width="119" height="19" uuid="b5e13392-ede5-481a-a6f7-f6b8d11cfda7"/>
+							<box leftPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBENH_N_BANK_CODE}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="120" y="1" width="119" height="19" uuid="d4e72249-fe99-47e9-9e60-1dccddcad7c7"/>
+							<box leftPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBENH_O_DIVISION}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="358" y="1" width="119" height="19" uuid="8af39da3-740d-4b72-a797-be933b44e929"/>
+							<box leftPadding="4">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBENH_N_DIVISION}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="131" y="0" width="119" height="20" uuid="d2d7ae2e-64df-4878-92ef-cdf18b5de7c2"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Old Branch Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="0" width="119" height="20" uuid="83edf7af-cbb4-4c29-8514-9a180c948756"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[New Bank Code]]></text>
+			</staticText>
+		</band>
+		<band height="82">
+			<staticText>
+				<reportElement x="10" y="8" width="159" height="20" uuid="f98ce9c8-44b0-4d73-9c06-922b01af70ef"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[For and on behalf of ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="62" width="100" height="20" uuid="9e78cd0c-0d00-4904-b968-529b53582ec0"/>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Authorised Signatory]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="32" width="334" height="20" uuid="2e09fd7a-9570-453c-b082-1f89c1523131"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{COMP_NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="90">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 ? true:false]]></printWhenExpression>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>

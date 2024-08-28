@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILM055_APAC" var="message" />
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+		</tr>
+		<tr>
+			<td><h:form id="PM_IL_FUND_SETUP">
+				<tr>
+					<td colspan="3" width="100%" vAlign="top" height="20">
+					<rich:simpleTogglePanel id="errorPanel"
+								switchType="client" opened="false">
+								<f:facet name="header">
+									<h:outputText id="err"
+										value="#{commonmsg.errorPanel$heading} #{PILM055_APAC_PM_IL_FUND_SETUP_ACTION.errorMap['current'] !=null? PILM055_APAC_PM_IL_FUND_SETUP_ACTION.errorMap['current']:PILM055_APAC_PM_IL_FUND_SETUP_ACTION.warningMap['current']}" />
+								</f:facet>
+								<h:outputText id="errorMessages"
+									value="#{PILM055_APAC_PM_IL_FUND_SETUP_ACTION.errorMessages}"
+									style="color: red; font-style: italic;font-weight:bold;"
+									escape="false" />
+								<h:messages
+									style="color: red;font-style: italic;font-weight:bold;"
+									id="msg"
+									rendered="#{PILM055_APAC_PM_IL_FUND_SETUP_ACTION.globalMsgRender}" />
+
+								<h:outputText id="warningMessages"
+									value="#{PILM055_APAC_PM_IL_FUND_SETUP_ACTION.warningMessages}"
+									style="color: green; font-style: italic;font-weight:bold;"
+									escape="false" />
+							</rich:simpleTogglePanel>
+					</td>
+				</tr>
+				<table border="0" width="100%" cellpadding="0" cellspacing="0"
+					id="masthead">
+					<tr>
+						<td><h:outputLabel
+								value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td>Fund Code: <h:inputText
+							value="#{PILM055_APAC_PM_IL_FUND_SETUP_SEARCH_PAGE.initFundCode}"
+							immediate="true" /></td>
+						<td>Fund Description: <h:inputText
+							value="#{PILM055_APAC_PM_IL_FUND_SETUP_SEARCH_PAGE.initFundDescription}"
+							immediate="true" /></td>
+						<td><h:commandButton
+							value="#{commonmsg.searchButton$caption}"
+							id="a4link" styleClass="button"
+							action="#{PILM055_APAC_PM_IL_FUND_SETUP_SEARCH_PAGE.fetchPolicyDetails}">
+						</h:commandButton></td>
+					</tr>
+				</table>
+
+				<rich:dataTable id="dataTableId"
+					value="#{PILM055_APAC_PM_IL_FUND_SETUP_SEARCH_PAGE.fundlist}"
+					var="claim" cellpadding="5px" rows="10" border="1" width="100%">
+					<rich:column rendered="false">
+						<f:facet name="header">
+							<h:outputText styleClass="label" value="" />
+						</f:facet>
+						<h:selectBooleanCheckbox id="checkBox" value="#{claim.CHECK_BOX}">
+							<a4j:support event="onclick"
+								actionListener="#{PILM055_APAC_PM_IL_FUND_SETUP_SEARCH_PAGE.checkBoxStatus}">
+							</a4j:support>
+						</h:selectBooleanCheckbox>
+					</rich:column>
+
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+					<rich:column filterBy="#{claim.FS_CODE}" sortBy="#{claim.FS_CODE}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Fund Code" />
+						</f:facet>
+						<h:commandLink
+							action="#{PILM055_APAC_PM_IL_FUND_SETUP_SEARCH_PAGE.clearList}">
+							<f:param name="ROWID" value="#{claim.ROWID}" />
+								<h:outputText value="#{claim.FS_CODE}" />
+						</h:commandLink>
+
+					</rich:column>
+
+					<rich:column filterBy="#{claim.FS_DESC}" sortBy="#{claim.FS_DESC}"
+						filterEvent="onkeyup"
+						filterValue="#{PILM055_APAC_PM_IL_FUND_SETUP_SEARCH_PAGE.searchedName}">
+						<f:facet name="header">
+							<h:outputText value="Fund Description" />
+						</f:facet>
+						<h:outputText value="#{claim.FS_DESC}" />
+					</rich:column>
+
+				</rich:dataTable>
+				<tr>
+					<td><h:commandButton id="InsertLink" value="Insert" styleClass="button"
+						action="#{PILM055_APAC_PM_IL_FUND_SETUP_SEARCH_PAGE.clearSession}" />
+
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp; <h:commandButton rendered="false"
+						id="DeleteButton" value="Delete"
+						actionListener="#{PILM055_APAC_PM_IL_FUND_SETUP_SEARCH_PAGE.DeleteRow}" />
+					</td>
+				</tr>
+			</h:form>
+			</td>
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

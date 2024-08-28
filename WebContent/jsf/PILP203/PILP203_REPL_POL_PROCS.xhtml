@@ -1,0 +1,576 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!-- Added by saritha on 20-Feb-2017 for RM018T - DEV_IL_ZB Life_027-Replacement Policy -->
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"	
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+	
+	<style>
+.address {
+	width: 80%;
+}
+</style>
+
+
+		<f:view
+			beforePhase="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILP203" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<f:loadBundle basename="messageProperties" var="commonMessages" />
+			<!-- onkeypress Added by saritha on 24-Feb-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PT_IL_POL_BROKER_HEAD_ORIGINAL" onkeypress="return event.keyCode != 13">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+							<table class="noborder" id="toolbartable" width="100%">
+								<tr>
+									<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+											<rich:toolBarGroup styleClass="toolBarGroupStyle">
+												<h:commandLink id="SELF_ID_1" rendered="true"
+													action="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.saveRecord}"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:commandButton id="SELF_ID_2"
+														style="border: thin solid white"
+														styleClass="toolbarButtonStyle" accesskey="s"
+														image="./../../images/save.gif" />
+													<h:outputText id="SELF_ID_3"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+
+												<h:commandLink id="SELF_ID_4" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_5"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/savenext.GIF" />
+													<h:outputText id="SELF_ID_6"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$savenext}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_7" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_8"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/deleteRecord.gif" />
+													<h:outputText id="SELF_ID_9"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$deleteRecord}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_10" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_11"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/firstrec.gif" />
+													<h:outputText id="SELF_ID_12"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$firstrec}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_13" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_14"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/prevpage.gif" />
+													<h:outputText id="SELF_ID_15"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$prevpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_16" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_17"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/nextpage.gif" />
+													<h:outputText id="SELF_ID_18"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$nextpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_19" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_20"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/lastRecord.gif" />
+													<h:outputText id="SELF_ID_21"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$lastRecord}" />
+												</h:commandLink>
+											</rich:toolBarGroup>
+										</rich:toolBar></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+								id="errorPanel" opened="false" switchType="client">
+								<f:facet name="header">
+									<h:outputText id="err"
+										styleClass="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.messageStyle}"
+										value="#{commonmsg.errorPanel$heading} #{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.errorMap['current'] !=null? PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.errorMap['current']: PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.warningMap['current']}" />
+								</f:facet>
+								<h:outputText escape="false" id="errorMessages"
+									style="color: red; font-style: italic;font-weight:bold;"
+									value="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.errorMessages}" />
+								<h:messages id="msg"
+									rendered="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.globalMsgRender}"
+									styleClass="ErrorMessages" />
+								<h:outputText escape="false" id="warningMessages"
+									style="color: green; font-style: italic;font-weight:bold;"
+									value="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.warningMessages}" />
+							</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+							<table class="noborder" id="linkstable" width="100%">
+								<tr>
+									<td><h:outputLabel
+											value="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$caption}" /></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<table class="noborder" width="100%">
+								<tr>
+									<td valign="top" width="100%">
+										<table class="noborder" width="100%">
+											<tr>
+											<td class="oddrowright" width="31%"></td>
+											
+											
+											<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_POBH_ORI_POL_NO_LABEL}"
+											for="POBH_ORI_POL_NO" id="POBH_ORI_POL_NO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$POBH_ORI_POL_NO$caption}" />
+												<h:graphicImage id="AUTOID_53" style="" styleClass="searchimg"
+											value="./../../images/mandatory.gif" />
+										</td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_POBH_ORI_POL_NO}"
+											onfocus="currFocus('PT_IL_POL_BROKER_HEAD_ORIGINAL:POBH_ORI_POL_NO')"
+											disabled="false" id="POBH_ORI_POL_NO" maxlength="40"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$POBH_ORI_POL_NO$tooltip}"
+											validator="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.ValidatePOBH_ORI_POL_NO}"
+											value="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.PT_IL_POL_BROKER_HEAD_ORIGINAL_BEAN.POBH_ORI_POL_NO}">
+											
+												<a4j:support
+														actionListener="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.fireFieldValidation}"
+														event="onblur" id="POL_ASSRD_REF_ID2_AJAX_SUPPORT"
+														immediate="true"
+														reRender="errorPanel">
+													</a4j:support>
+											</h:inputText>
+											<h:graphicImage id="GRAPH_IMG_SUGG_POBH_ORI_POL_NO"
+														styleClass="searchimg" value="./../../images/Lov.gif" />
+											<rich:suggestionbox for="POBH_ORI_POL_NO" height="200"
+													id="POBH_ORI_POL_NO_LOV"
+													suggestionAction="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.lovPOBH_ORI_POL_NO}"
+													var="panelCode" width="250">
+													<h:column id="COLUMN_SUGG_1">
+														<h:outputText id="AUTOID_36" value="#{panelCode.code}" />
+													</h:column>
+												
+												<!-- 	<h:column id="COLUMN_SUGG_2">
+														<h:outputText id="AUTOID_37" value="#{panelCode.name}" />
+													</h:column>  -->
+												 <a4j:support ajaxSingle="true" event="onselect"
+														immediate="true" id="POBH_ORI_POL_NO_SUGG_SUPPORT"
+														reRender="errorPanel"/>
+															<!-- <f:setPropertyActionListener id="AUTOID_38"
+															target="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.PT_IL_POL_BROKER_HEAD_ORIGINAL_BEAN.UI_POBH_ORI_POL_NO_DESC}"
+															value="#{panelCode.code}" /> 
+													</a4j:support> -->
+													<!-- <a4j:support ajaxSingle="true" event="onblur"
+														immediate="true" id="POBH_ORI_POL_NO_SUGG_SUPPORT1"
+														reRender="errorPanel">
+														<f:setPropertyActionListener id="AUTOID_38_1"
+															target="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.PT_IL_POL_BROKER_HEAD_ORIGINAL_BEAN.UI_POBH_ORI_POL_NO_DESC}"
+															value="#{panelCode.name}" /> 
+													</a4j:support> -->
+												</rich:suggestionbox>
+												
+												</td>
+														<td align="right" colspan="3" valign="top" width="100%">
+													<h:commandButton
+														actionListener="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.whenButtonPressedprocess}"
+														binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_REPL_POL_PROCESS}"
+														disabled="true" id="REPL_POL_PROCESS"
+														immediate="true"
+														rendered="true" style="width:80px;" styleClass="button"
+														title="PROCESS" value="Process" reRender="errorpanel,OBD">
+													</h:commandButton>
+													</td>
+											</tr>
+											<tr>
+											<td class="oddrowright" width="20%"></td>
+											<td class="oddrowright"><h:outputLabel
+											binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_POBH_ORI_DATE_LABEL}"
+											for="POBH_ORI_DATE" id="POBH_ORI_DATE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$POBH_ORI_DATE$caption}" />
+											<h:graphicImage
+											id="SELF_ID_30" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_POBH_ORI_DATE}"
+											datePattern="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true" id="POBH_ORI_DATE"
+											inputSize="11" rendered="true" required="true"
+											inputClass="calendarinput"
+											title="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$POBH_ORI_DATE$tooltip}"
+											validator="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.ValidatePOBH_ORI_DATE}"
+											value="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.PT_IL_POL_BROKER_HEAD_ORIGINAL_BEAN.POBH_ORI_DATE}">
+														<a4j:support
+															actionListener="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.fireFieldValidation}"
+															event="oninputselect" id="POL_DT_AJAX_SUPPORT_1"
+															immediate="true"
+															onsubmit="formatDate('PT_IL_POL_BROKER_HEAD_ORIGINAL:POBH_ORI_DATE')"
+															reRender="errorPanel" />
+														<a4j:support
+															actionListener="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.fireFieldValidation}"
+															event="oninputblur" id="POL_DT_AJAX_SUPPORT_2"
+															immediate="true"
+															onsubmit="formatDate('PT_IL_POL_BROKER_HEAD_ORIGINAL:POBH_ORI_DATE')"
+															reRender="errorPanel" />
+														<a4j:support
+															actionListener="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.fireFieldValidation}"
+															event="oninputchanged" id="POL_DT_AJAX_SUPPORT_3"
+															immediate="true"
+															reRender="errorPanel" />
+													</rich:calendar></td>
+										</tr>
+											<tr>
+											</tr>
+											<tr></tr>
+											</table>
+											</td>
+											</tr>
+											</table>
+											</td>
+											
+											</tr>
+											</table>
+											<tr>
+											</tr>
+											<tr>
+												<td class="evenrowright"></td>
+												<td class="evenrowright"></td>
+												<td class="evenrowright"></td>
+											</tr>
+										
+									<tr>
+									<td valign="top" width="100%"><h:panelGroup
+									id="OBD" style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+											width="100%" border="0">
+										<tr>
+											<!-- <td><rich:panel style="overflow:auto; width : 100%; height : 130px;"> -->
+											<td>
+												<rich:dataTable
+													binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.dataTable}"
+													id="PT_IL_POL_BROKER_DTL_PANEL" rows="5"
+													value="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.dataList_PT_IL_POL_BROKER_HEAD_ORIGINAL}"
+													var="tableVar" width="100%">
+													<rich:column filterBy="#{tableVar.POBH_ORI_AGENT_CODE}"
+														filterEvent="onkeyup" id="COLUMN_POBH_ORI_AGENT_CODE"
+														rendered="true" sortBy="#{tableVar.POBH_ORI_AGENT_CODE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+																<h:outputText id="COLUMN_CAPTION_POBH_ORI_AGENT_CODE"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$COLUMN_POBH_ORI_AGENT_CODE$caption}" />
+														</f:facet>
+														<a4j:commandLink
+															action="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.displayRecords}"
+															id="GOTO_LINK_POBH_ORI_AGENT_CODE" immediate="true"
+															reRender="errorPanel,OBD">
+															<h:outputText id="LINK_CAPTION_POBH_ORI_AGENT_CODE"
+																value="#{tableVar.POBH_ORI_AGENT_CODE}" />
+														</a4j:commandLink>
+													</rich:column>
+													<!-- Commentted by saritha on 24-06-2017 for ssp call id ZBILQC-1722078 --> 
+													<!-- <rich:column filterBy="#{tableVar.POBH_ORI_SHARE_PERC}"
+														filterEvent="onkeyup" id="COLUMN_POBH_ORI_SHARE_PERC"
+														rendered="true" sortBy="#{tableVar.POBH_ORI_SHARE_PERC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+																<h:outputText id="COLUMN_CAPTION_POBH_ORI_SHARE_PERC"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$COLUMN_POBH_ORI_SHARE_PERC$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_POBH_ORI_SHARE_PERC"
+															value="#{tableVar.POBH_ORI_SHARE_PERC}" />
+													</rich:column> -->
+													<!-- End -->
+													<rich:column filterBy="#{tableVar.POBH_ORI_COMMISSION}"
+														filterEvent="onkeyup" id="COLUMN_POBH_ORI_COMMISSION" rendered="true"
+														sortBy="#{tableVar.POBH_ORI_COMMISSION}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+																<h:outputText id="COLUMN_CAPTION_POBH_ORI_COMMISSION"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$COLUMN_POBH_ORI_COMMISSION$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_POBH_ORI_COMMISSION"
+															value="#{tableVar.POBH_ORI_COMMISSION}" />
+													</rich:column>
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PT_IL_POL_BROKER_DTL_SCROLL" page="1" />
+															<a4j:commandButton
+															binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_REPL_POL_ADD}"
+																actionListener="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.addRow}"
+																id="addRow" immediate="true" accesskey="c"
+																reRender="errorPanel,OBD"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+															binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_REPL_POL_DELETE}"
+																actionListener="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.deleteRow}"
+																id="deleteRow" immediate="true" accesskey="r"
+																reRender="OBD,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+															binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_REPL_POL_POST}"
+																actionListener="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.postRecord}"
+																id="postRecord" accesskey="p" immediate="true"
+																reRender="OBD,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+										</td>
+											
+										</tr>
+										<tr>
+											<td colspan="2">
+											<table class="noborder" width="100%">
+												<tr>
+													<td class="oddrowright" width="20%"><h:outputLabel
+														binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_POBH_ORI_AGENT_CODE_LABEL}"
+														for="POBH_ORI_AGENT_CODE" id="POBH_ORI_AGENT_CODE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$POBH_ORI_AGENT_CODE$caption}" />
+													<h:graphicImage id="MAND_AGENT_CODE3"
+																	styleClass="searchimg"
+																	value="./../../images/mandatory.gif" />
+													</td>
+													 <td class="oddrow" width="22%"><h:inputText
+														binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_POBH_ORI_AGENT_CODE}"
+														id="POBH_ORI_AGENT_CODE" maxlength="12"
+														onfocus="currFocus('PT_IL_POL_BROKER_HEAD_ORIGINAL:POBH_ORI_AGENT_CODE')"
+														rendered="true" required="true" styleClass="inputsmall"
+														title="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$POBH_ORI_AGENT_CODE$tooltip}"
+														validator="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.POBH_ORI_AGENT_CODE_WHEN_VALIDATE_ITEM}"
+														value="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.PT_IL_POL_BROKER_HEAD_ORIGINAL_BEAN.POBH_ORI_AGENT_CODE}">
+														<a4j:support
+															actionListener="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="POBH_ORI_AGENT_CODE_a4jSupport"
+															immediate="true"
+															reRender="errorPanel,POBH_ORI_AGENT_CODE_LOV,POBH_ORI_AGENT_DESC,POBH_ORI_COMMISSION">
+														</a4j:support>
+														<!-- <a4j:support
+															actionListener="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.fireFieldValidation}"
+															event="onselect" id="POBH_ORI_AGENT_CODE_a4jSupport_1"
+															immediate="true"
+															reRender="errorPanel,POBH_ORI_AGENT_CODE_LOV,POBH_ORI_AGENT_DESC">
+														</a4j:support> -->
+													</h:inputText><h:inputText
+														binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_POBH_ORI_AGENT_DESC}"
+														disabled="true" id="POBH_ORI_AGENT_DESC" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$POBH_ORI_AGENT_DESC$caption}"
+														value="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.PT_IL_POL_BROKER_HEAD_ORIGINAL_BEAN.POBH_ORI_AGENT_DESC}">
+													</h:inputText> <h:graphicImage id="GRAPH_IMG_SUGG_POBH_ORI_AGENT"
+														styleClass="searchimg" value="./../../images/Lov.gif" />
+													<rich:suggestionbox for="POBH_ORI_AGENT_CODE" height="200"
+														id="POBH_ORI_AGENT_CODE_LOV" immediate="true"
+														suggestionAction="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.prepareSuggestionList_AGENT_CODE}"
+														var="panelCode" width="300">
+														<h:column>
+															<h:outputText id="SUGG_COL_0_POBH_ORI_AGENT_CODE_LOV"
+																value="#{panelCode.code}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="SUGG_COL_1_POBH_ORI_AGENT_CODE_LOV"
+																value="#{panelCode.name}" />
+														</h:column>
+														<a4j:support ajaxSingle="true" event="onselect"
+														immediate="true" id="POBH_ORI_AGENT_CODE_SUGG_SUPPORT"
+														reRender="errorPanel,POBH_ORI_AGENT_DESC">
+														<f:setPropertyActionListener id="AUTOID_46"
+															target="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.PT_IL_POL_BROKER_HEAD_ORIGINAL_BEAN.POBH_ORI_AGENT_DESC}"
+															value="#{panelCode.name}" />
+													</a4j:support>	
+													</rich:suggestionbox></td>
+													<td class="oddrow">&nbsp;</td>
+													<!-- rendered=false modified by saritha on 24-06-2017 for ssp call id ZBILQC-1722078 --> 
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_POBH_ORI_SHARE_PERC_LABEL}"
+														for="POBH_ORI_SHARE_PERC" id="POBH_ORI_SHARE_PERC_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$POBH_ORI_SHARE_PERC$caption}" />
+														<!-- <h:graphicImage id="MAND_AGENT_CODE4"
+																	styleClass="searchimg"
+																	value="./../../images/mandatory.gif" /> -->
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_POBH_ORI_SHARE_PERC}"
+														id="POBH_ORI_SHARE_PERC" maxlength="100" rendered="false" required="true"
+														styleClass="inputNumeric" disabled="false"
+														title="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$POBH_ORI_SHARE_PERC$tooltip}"
+														validator="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.validatePOBH_ORI_SHARE_PERC}"
+														value="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.PT_IL_POL_BROKER_HEAD_ORIGINAL_BEAN.POBH_ORI_SHARE_PERC}">
+														<f:converter converterId="PELNumberFormatter" />
+														<a4j:support
+															actionListener="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="POBH_ORI_SHARE_PERC_a4jSupport" immediate="true"
+															reRender="errorPanel">
+														</a4j:support>
+													</h:inputText></td>
+													<!-- End -->
+												</tr>
+												<tr>
+													<td class="evenrowright" width="20%"><h:outputLabel
+														binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_POBH_ORI_COMMISSION_LABEL}"
+														for="POBH_ORI_COMMISSION" id="POBH_ORI_COMMISSION_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$POBH_ORI_COMMISSION$caption}" />
+														<h:graphicImage id="MAND_AGENT_CODE5"
+																	styleClass="searchimg"
+																	value="./../../images/mandatory.gif" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.COMP_POBH_ORI_COMMISSION}"
+														id="POBH_ORI_COMMISSION" maxlength="12" rendered="true" required="true"
+														styleClass="inputNumeric" disabled="false"
+														title="#{message.PILP203$PT_IL_POL_BROKER_HEAD_ORIGINAL$POBH_ORI_COMMISSION$tooltip}"
+														validator="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.validatePOBH_ORI_COMMISSION}"
+														value="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.PT_IL_POL_BROKER_HEAD_ORIGINAL_BEAN.POBH_ORI_COMMISSION}">
+														<a4j:support
+															actionListener="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="POBH_ORI_COMMISSION_a4jSupport"
+															immediate="true"
+															reRender="errorPanel">
+														</a4j:support>
+													</h:inputText></td>		
+													
+												</tr>
+											</table>
+											</td>
+											
+											</tr>
+											
+											</table>
+								</h:panelGroup>
+								</td>
+					
+						<tr>
+						<td colspan="3" valign="top" width="100%">
+							<table class="noborder" id="toolbartable" width="100%">
+								<tr>
+									<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+											<rich:toolBarGroup location="right"
+												styleClass="toolBarGroupStyle">
+												<h:commandLink id="SELF_ID_59" rendered="true"
+													action="#{PILP203_COMPOSITE_ACTION.PT_IL_POL_BROKER_HEAD_ORIGINAL_ACTION_BEAN.saveRecord}"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_60"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/save.gif" />
+													<h:outputText id="SELF_ID_61"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_62" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_63"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/savenext.GIF" />
+													<h:outputText id="SELF_ID_64"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$savenext}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_65" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_66"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/deleteRecord.gif" />
+													<h:outputText id="SELF_ID_67"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$deleteRecord}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_68" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_69"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/firstrec.gif" />
+													<h:outputText id="SELF_ID_70"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$firstrec}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_71" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_72"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/prevpage.gif" />
+													<h:outputText id="SELF_ID_73"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$prevpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_74" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_75"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/nextpage.gif" />
+													<h:outputText id="SELF_ID_76"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$nextpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_77" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_78"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/lastRecord.gif" />
+													<h:outputText id="SELF_ID_79"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$lastRecord}" />
+												</h:commandLink>
+											</rich:toolBarGroup>
+										</rich:toolBar></td>
+									
+								</tr>
+							</table>
+						</td>
+					</tr>				
+				</tr>
+			</h:form>
+			</f:view>
+	</ui:define>
+</ui:composition>
+<!-- End	 -->																	

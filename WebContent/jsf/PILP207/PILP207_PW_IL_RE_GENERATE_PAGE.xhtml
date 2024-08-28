@@ -1,0 +1,663 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<style>
+.rich-table input {
+	width: 94%;
+}
+
+.rich-table input.calendarinputset {
+	width: 70px;
+}
+
+table.rich-table thead tr th:nth-child(11) input {
+	width: 50px;
+}
+
+table.rich-table thead tr th:nth-child(12) input {
+	width: 150px;
+}
+</style>
+		<f:view
+			beforePhase="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILP207"
+				var="message_PILP207" />
+			<h:form id="PW_IL_BENIFIT_PAYMT"
+				onkeypress="return event.keyCode != 13">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+							<table class="noborder" id="toolbartable" width="100%">
+								<tr>
+									<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+											<rich:toolBarGroup styleClass="toolBarGroupStyle">
+											<h:commandLink
+											action="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.backButton}"
+											id="AUTOID_1" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="AUTOID_2"
+												styleClass="toolbarButtonStyle"
+												image="./../../resources/images/back.png" accesskey="b" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										
+												<h:commandLink id="SELF_ID_1" rendered="false"
+													action="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.saveRecord}"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:commandButton id="SELF_ID_2"
+														style="border: thin solid white"
+														styleClass="toolbarButtonStyle" accesskey="s"
+														image="./../../images/save.gif" />
+													<h:outputText id="SELF_ID_3"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+
+												<h:commandLink id="SELF_ID_4" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_5"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/savenext.GIF" />
+													<h:outputText id="SELF_ID_6"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$savenext}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_7" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_8"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/deleteRecord.gif" />
+													<h:outputText id="SELF_ID_9"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$deleteRecord}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_10" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_11"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/firstrec.gif" />
+													<h:outputText id="SELF_ID_12"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$firstrec}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_13" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_14"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/prevpage.gif" />
+													<h:outputText id="SELF_ID_15"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$prevpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_16" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_17"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/nextpage.gif" />
+													<h:outputText id="SELF_ID_18"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$nextpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_19" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_20"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/lastRecord.gif" />
+													<h:outputText id="SELF_ID_21"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$lastRecord}" />
+												</h:commandLink>
+											</rich:toolBarGroup>
+										</rich:toolBar></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+								id="errorPanel" opened="false" switchType="client">
+								<f:facet name="header">
+									<h:outputText id="err"
+										styleClass="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.messageStyle}"
+										value="#{commonmsg.errorPanel$heading} #{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.errorMap['current'] !=null? PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.errorMap['current']: PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.warningMap['current']}" />
+								</f:facet>
+								<h:outputText escape="false" id="errorMessages"
+									style="color: red; font-style: italic;font-weight:bold;"
+									value="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.errorMessages}" />
+								<h:messages id="msg"
+									rendered="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.globalMsgRender}"
+									styleClass="ErrorMessages" />
+								<h:outputText escape="false" id="warningMessages"
+									style="color: green; font-style: italic;font-weight:bold;"
+									value="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.warningMessages}" />
+							</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+							<table class="noborder" id="linkstable" width="100%">
+								<tr>
+									<td><h:outputLabel
+											value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$DISPLAY$caption}" /></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<table class="noborder" width="100%">
+								<tr>
+									<td valign="top" width="100%">
+										<table class="noborder" width="100%">
+											<tr>
+												<td class="evenrow"><h:outputLabel
+														binding="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.COMP_UI_M_PIBP_RE_GEN_FM_DT_LABEL}"
+														for="UI_M_PIBP_RE_GEN_DT"
+														id="UI_M_PIBP_PAYMENT_FM_DT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$UI_M_PIBP_RE_GEN_DT$caption}" />
+													<h:graphicImage id="SELF_ID_130" style=""
+														styleClass="searchimg"
+														value="./../../images/mandatory.jpg" /></td>
+												<td class="evenrow"><rich:calendar
+														binding="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.COMP_UI_M_PIBP_RE_GEN_FM_DT}"
+														datePattern="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.datePattern}"
+														enableManualInput="true" id="UI_M_PIBP_RE_GEN_FM_DT"
+														rendered="true" required="true" inputClass="calendarinput"
+														inputSize="11"
+														title="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$UI_M_PIBP_PAYMENT_FM_DT$tooltip}"
+														validator="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.validateUI_M_PIBP_RE_GEN_FM_DT}"
+														value="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.PW_IL_BENIFIT_PAYMT_BEAN.UI_M_PIBP_RE_GEN_FM_DT}">
+												
+													<!-- changed from oninputblur to oninputchange by Janani on 13.09.2017 for ZBILQC-1732129 -->
+														<a4j:support
+															actionListener="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.fireFieldValidation}"
+															event="oninputchange" id="date_3" reRender="errorPanel"
+															immediate="true"
+															onsubmit="formatDate('PW_IL_BENIFIT_PAYMT:UI_M_PIBP_RE_GEN_FM_DT')" />
+																<!-- End of ZBILQC-1732129 -->	
+													</rich:calendar></td>
+												<td class="evenrow"><h:outputLabel
+														binding="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.COMP_UI_M_PIBP_RE_GEN_TO_DT_LABEL}"
+														for="UI_M_PIBP_RE_GEN_TO_DT" id="PIBP_RE_GEN_DT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$UI_M_PIBP_RE_GEN_TO_DT$caption}" />
+													<h:graphicImage id="SELF_ID_30" style=""
+														styleClass="searchimg"
+														value="./../../images/mandatory.jpg" /></td>
+												<td class="evenrow"><rich:calendar
+														binding="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.COMP_UI_M_PIBP_RE_GEN_TO_DT}"
+														datePattern="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.datePattern}"
+														enableManualInput="true" id="UI_M_PIBP_RE_GEN_TO_DT"
+														rendered="true" required="true" inputClass="calendarinput"
+														inputSize="11"
+														title="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$UI_M_PIBP_RE_GEN_TO_DT$tooltip}"
+														validator="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.validateUI_M_PIBP_RE_GEN_TO_DT}"
+														value="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.PW_IL_BENIFIT_PAYMT_BEAN.UI_M_PIBP_RE_GEN_TO_DT}">
+														
+															<!-- changed from oninputblur to oninputchange by Janani on 13.09.2017 for ZBILQC-1732129 -->
+														<a4j:support
+															actionListener="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.fireFieldValidation}"
+															event="oninputchange" id="date_13" reRender="errorPanel"
+															immediate="true"
+															onsubmit="formatDate('PW_IL_BENIFIT_PAYMT:UI_M_PIBP_RE_GEN_TO_DT')" />
+															<!-- End of ZBILQC-1732129 -->	
+													</rich:calendar></td>
+
+												<td class="evenrowright">
+													<!-- <h:commandButton
+									action="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.whenButtonPressedUI_M_BUT_OK}"
+									binding="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.COMP_UI_M_BUT_OK}"
+									disabled="false" id="UI_M_BUT_OK" 
+									reRender="errorPanel,REPORT_MODAL_PANEL"
+									rendered="true" style="width:100px;" styleClass="button" title=""
+									value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$UI_M_FETCH$caption}">
+									</h:commandButton> --> <a4j:commandButton
+														actionListener="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.FetchRegenerateRecord}"
+														disabled="false" id="UI_M_BUT_OK" reRender="errorPanel,UI_M_RE_GEN_FILE_NAME_CHECK_BOX"
+														rendered="true" style="width:100px;" styleClass="button"
+														title=""
+														value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$UI_M_FETCH$caption}">
+													</a4j:commandButton> <h:commandButton
+														action="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.Regenerate_Process}"
+														binding="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.COMP_UI_M_RE_GEN_TXT_FILE}"
+														disabled="false" id="UI_M_RE_GEN_TXT_FILE"
+														reRender="errorPanel" rendered="true" style="width:100px;"
+														styleClass="button" title=""
+														value="#{message_PILP207.PILP207$PW_IL_BALANCE_SUM$UI_M_RE_GEN_TXT_FILE$caption}">
+													</h:commandButton>
+
+
+												</td>
+
+											</tr>
+											<tr>
+												<td class="evenrow"><h:outputLabel
+														id="UI_M_PIBP_RE_GEN_FILE_LIST_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$UI_M_PIBP_RE_GEN_FILE_LIST_LABEL$caption}" /></td>
+												<td class="evenrow"><!-- <h:selectManyCheckbox
+														id="UI_M_RE_GEN_FILE_NAME_CHECK_BOX"
+														binding="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.COMP_UI_M_RE_GEN_FILE_NAME_CHECK_BOX}"
+														value="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.PW_IL_BENIFIT_PAYMT_BEAN.RE_GEN_FILE_NAME}"
+														layout="pageDirection">
+														<f:selectItems id="SEL_ITEMS_RE_GEN_FILE_NAME"
+															value="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.listRE_GEN_FILE_NAME}" />
+														
+													</h:selectManyCheckbox> -->
+													<h:selectManyListbox
+														id="UI_M_RE_GEN_FILE_NAME_CHECK_BOX" size="5"
+														binding="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.COMP_UI_M_RE_GEN_FILE_NAME_LIST_BOX}"
+														value="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.PW_IL_BENIFIT_PAYMT_BEAN.RE_GEN_FILE_NAME}"
+														>
+														<f:selectItem itemLabel="SELECT REGENERATE FILE" itemValue="SELECT REGENERATE FILE" id="SEL_ITEMS_RE_GEN_FILE_NAME_1" ></f:selectItem>
+														<f:selectItems id="SEL_ITEMS_RE_GEN_FILE_NAME"
+															value="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.listRE_GEN_FILE_NAME}" />
+														
+													</h:selectManyListbox>
+													</td>
+													<!-- <a4j:support
+															actionListener="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="RE_GEN_FILE_NAME_a4jSupport"
+															immediate="true" reRender="errorPanel">
+														</a4j:support> -->
+											</tr>
+
+											<!-- <tr>
+										<td colspan="5" width="100%">
+										<table  class="noborder" width="100%">
+											<tr>
+												<td valign="top" width="100%"><h:panelGroup id="GHLH"
+													style="border:0;height:15%;">
+													<table align="left" class="noborder" id="bordertable"
+														width="100%">
+														<tr>
+															<td colspan="5"><rich:dataTable
+																binding="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.dataTable}"
+																id="PW_IL_BENIFIT_PAYMT_PANEL_DATA_GRID" rows="5"
+																value="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.dataList_PW_IL_BENIFIT_PAYMT}"
+																var="dataTable" width="100%">
+
+																next column
+																<rich:column filterBy="#{dataTable.PIBP_CLIENT_ID}"
+																	filterEvent="onkeyup" sortBy="#{dataTable.PIBP_CLIENT_ID}"
+																	styleClass="#{dataTable.rowSelected}">
+
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_32"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_CLIENT_ID$caption}" />
+																	</f:facet>
+																	<a4j:commandLink
+																		action="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.displayRecords}"
+																		immediate="true" reRender="errorPanel,GHLH">
+																		<h:outputText id="SELF_ID_33"
+																			value="#{dataTable.PIBP_CLIENT_ID} " />
+																	</a4j:commandLink>
+																</rich:column>
+																next column
+																<rich:column filterBy="#{dataTable.PIBP_POLICY_ID}"
+																	filterEvent="onkeyup"
+																	sortBy="#{dataTable.PIBP_POLICY_ID}"
+																	styleClass="#{dataTable.rowSelected}">
+
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_34"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_POLICY_ID$caption}" />
+																	</f:facet>
+																	<h:outputText id="SELF_ID_35" 
+																		value="#{dataTable.PIBP_POLICY_ID} " />
+																</rich:column>
+																
+																<rich:column filterBy="#{dataTable.PIBP_CLIENT_NAME}"
+																	filterEvent="onkeyup"
+																	sortBy="#{dataTable.PIBP_CLIENT_NAME}"
+																	styleClass="#{dataTable.rowSelected}">
+
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_38"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_CLIENT_NAME$caption}" />
+																	</f:facet>
+																	<h:outputText id="SELF_ID_39" 
+																		value="#{dataTable.PIBP_CLIENT_NAME} " />
+																</rich:column>
+
+																next column
+																<rich:column filterBy="#{dataTable.PIBP_BANK_CODE}"
+																	filterEvent="onkeyup"
+																	sortBy="#{dataTable.PIBP_BANK_CODE}"
+																	styleClass="#{dataTable.rowSelected}">
+
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_42"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_BANK_CODE$caption}" />
+																	</f:facet>
+																	<h:outputText id="SELF_ID_43" 
+																		value="#{dataTable.PIBP_BANK_CODE} " />
+																</rich:column>
+
+																next column
+																<rich:column filterBy="#{dataTable.PIBP_BRANCH_SHORT_CODE}"
+																	filterEvent="onkeyup" sortBy="#{dataTable.PIBP_BRANCH_SHORT_CODE}"
+																	styleClass="#{dataTable.rowSelected}">
+
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_44"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_BRANCH_SHORT_CODE$caption}" />
+																	</f:facet>
+																	<h:outputText id="SELF_ID_45"
+																		value="#{dataTable.PIBP_BRANCH_SHORT_CODE} " />
+																</rich:column>
+																next column
+																<rich:column filterBy="#{dataTable.PIBP_PROD_CODE}"
+																	filterEvent="onkeyup" sortBy="#{dataTable.PIBP_PROD_CODE}"
+																	styleClass="#{dataTable.rowSelected}">
+
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_60"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_PROD_CODE$caption}" />
+																	</f:facet>
+																	<h:outputText id="SELF_ID_47"
+																		value="#{dataTable.PIBP_PROD_CODE} " />
+																</rich:column>
+																next column
+																<rich:column filterBy="#{dataTable.PIBP_COMPANY}"
+																	filterEvent="onkeyup" sortBy="#{dataTable.PIBP_COMPANY}"
+																	styleClass="#{dataTable.rowSelected}">
+
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_62"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_COMPANY$caption}" />
+																	</f:facet>
+																	<h:outputText id="SELF_ID_63"
+																		value="#{dataTable.PIBP_COMPANY} " />
+																</rich:column>
+																next column
+																<rich:column filterBy="#{dataTable.PIBP_PAYMENT_DT}"
+																	filterEvent="onkeyup"
+																	sortBy="#{dataTable.PIBP_PAYMENT_DT}"
+																	styleClass="#{dataTable.rowSelected} datesetwidth">
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_36"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_PAYMENT_DT$caption}" />
+																	</f:facet>
+																			<rich:calendar
+																			inputClass="calendarinputset"
+																			datePattern="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.datePattern}"
+																			disabled="#{tableVar.rowSelected == 'dataTableSelectedRow' ? false : true}"
+																			id="LINK_CAPTION_PIBP_PAYMENT_DT" inputSize="10"
+																			value="#{dataTable.PIBP_PAYMENT_DT}">
+																		</rich:calendar>
+																</rich:column>
+																next column
+																next column
+																<rich:column filterBy="#{dataTable.PIBP_GROSS_AMOUNT}"
+																	filterEvent="onkeyup" sortBy="#{dataTable.PIBP_GROSS_AMOUNT}"
+																	styleClass="#{dataTable.rowSelected}">
+
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_50"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_GROSS_AMOUNT$caption}" />
+																	</f:facet>
+																	<h:outputText id="SELF_ID_51"
+																		value="#{dataTable.PIBP_GROSS_AMOUNT} " />
+																</rich:column>
+																next column
+																<rich:column filterBy="#{dataTable.PIBP_MED_AID_DEDUCTION}"
+																	filterEvent="onkeyup" sortBy="#{dataTable.PIBP_MED_AID_DEDUCTION}"
+																	styleClass="#{dataTable.rowSelected}">
+
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_52"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_MED_AID_DEDUCTION$caption}" />
+																	</f:facet>
+																	<h:outputText id="SELF_ID_53" style="text-align: right; display: inline-block; width: 100%;"
+																		value="#{dataTable.PIBP_MED_AID_DEDUCTION} " />
+																</rich:column>
+																	next column
+																<rich:column filterBy="#{dataTable.PIBP_POL_PREMIUM}"
+																	filterEvent="onkeyup" sortBy="#{dataTable.PIBP_POL_PREMIUM}"
+																	styleClass="#{dataTable.rowSelected}">
+
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_54"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_POL_PREMIUM$caption}" />
+																	</f:facet>
+																	<h:outputText id="SELF_ID_55"
+																	inputstyle="flaginputctrl"
+																	inputStyle="flaginputctr"
+																		value="#{dataTable.PIBP_POL_PREMIUM} " />
+																</rich:column>
+																	next column
+																<rich:column filterBy="#{dataTable.PIBP_LOST_POL_FEES}"
+																	filterEvent="onkeyup" sortBy="#{dataTable.PIBP_LOST_POL_FEES}"
+																	styleClass="#{dataTable.rowSelected}">
+
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_56"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_LOST_POL_FEES$caption}" />
+																	</f:facet>
+																	<h:outputText id="SELF_ID_57"
+																		value="#{dataTable.PIBP_LOST_POL_FEES} " />
+																</rich:column>
+																next column
+																<rich:column filterBy="#{dataTable.PIBP_NET_AMOUNT}"
+																	filterEvent="onkeyup" sortBy="#{dataTable.PIBP_NET_AMOUNT}"
+																	styleClass="#{dataTable.rowSelected}">
+
+																	<f:facet name="header">
+																		<h:outputText id="SELF_ID_77"
+																			styleClass="forumRowHighlight"
+																			value="#{message_PILP207.PILP207$PW_IL_BENIFIT_PAYMT$PIBP_NET_AMOUNT$caption}" />
+																	</f:facet>
+																	<h:outputText id="SELF_ID_781"
+																		value="#{dataTable.PIBP_NET_AMOUNT} " />
+																</rich:column>
+																
+
+
+																Attach scroller as footer of the table
+																<f:facet name="footer">
+																	<h:panelGroup id="footerpanel" style="border:0">
+																		<rich:datascroller align="right" />
+																		<a4j:commandButton
+																			actionListener="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.AddRow}"
+																			id="SELF_ID_48" immediate="true"
+																			reRender="errorPanel,GHLH" rendered="false"
+																			style="width:81px" styleClass="button"
+																			value="#{commonmsg.addNewButtonCaption}" />
+																		<a4j:commandButton
+																			actionListener="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.deleteRow}"
+																			id="SELF_ID_49" immediate="true"
+																			reRender="errorPanel,GHLH" rendered="false"
+																			style="width:81px" styleClass="button"
+																			value="#{commonmsg.deleteButtonCaption}" />
+																		
+
+																	</h:panelGroup>
+																</f:facet>
+															</rich:dataTable></td>
+														</tr>
+													</table>
+												</h:panelGroup></td>
+											</tr>
+										</table>
+										</td>
+									</tr> -->
+										</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+							<table class="noborder" id="toolbartable" width="100%">
+								<tr>
+									<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+											<rich:toolBarGroup location="right"
+												styleClass="toolBarGroupStyle">
+												<h:commandLink id="SELF_ID_59" rendered="false"
+													action="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.saveRecord}"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_60"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/save.gif" />
+													<h:outputText id="SELF_ID_61"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_62" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_63"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/savenext.GIF" />
+													<h:outputText id="SELF_ID_64"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$savenext}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_65" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_66"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/deleteRecord.gif" />
+													<h:outputText id="SELF_ID_67"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$deleteRecord}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_68" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_69"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/firstrec.gif" />
+													<h:outputText id="SELF_ID_70"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$firstrec}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_71" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_72"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/prevpage.gif" />
+													<h:outputText id="SELF_ID_73"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$prevpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_74" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_75"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/nextpage.gif" />
+													<h:outputText id="SELF_ID_76"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$nextpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_77" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_78"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/lastRecord.gif" />
+													<h:outputText id="SELF_ID_79"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$lastRecord}" />
+												</h:commandLink>
+											</rich:toolBarGroup>
+										</rich:toolBar></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+			<!-- ok/cancel panel starts here -->
+			<rich:modalPanel id="REPORT_MODAL_PANEL" height="110" width="300"
+				binding="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.COMP_REPORT_MODAL_PANEL}">
+				<f:facet name="header">
+					<h:panelGroup>
+						<h:outputText
+							value="#{commonmsg.IP_REP_INFO$DOCUMENT_PRINT$caption}" />
+					</h:panelGroup>
+				</f:facet>
+				<f:facet name="controls">
+					<h:panelGroup>
+						<h:form id="FT_REPORT_MODAL_PANEL_1">
+							<h:commandLink immediate="true" id="CLOSE_LINK"
+								action="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.cancelModalPanel}">
+								<h:graphicImage value="./../../resources/images/close.png"
+									styleClass="toolbarImageStyle" style="cursor:pointer"
+									id="REPORT_MODAL_PANEL_hidelink" />
+							</h:commandLink>
+						</h:form>
+					</h:panelGroup>
+				</f:facet>
+				<h:form id="FT_REPORT_MODAL_PANEL_21">
+					<table width="100%">
+						<tr>
+							<td align="center"><h:outputText id="CONFIRMATION_MSG"
+									style="font-size: 14px;"
+									value="#{commonmsg.IP_REP_INFO$CONFIRMATION_MSG$caption}" /></td>
+						</tr>
+						<tr>
+							<td><rich:spacer id="SPACER_MODAL_1" width="100%;"
+									height="18px" /> <rich:separator id="SEPARATOR" width="100%"
+									height="1px" /></td>
+						</tr>
+						<tr>
+							<td align="center"><h:panelGroup>
+									<h:commandLink immediate="true" id="PRINT_LINK" target="_self"
+										action="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.runActionAfterValidate}">
+										<a4j:commandButton reRender="REPORT_MODAL_PANEL"
+											action="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.cancelModalPanel}"
+											id="OK_BUTTON" styleClass="button" style="width:70px;"
+											value="#{commonmsg.IP_REP_INFO$OK_BUTTON$caption}" />
+
+									</h:commandLink>
+								</h:panelGroup> <rich:spacer id="SPACER_MODAL_2" width="5px;" /> <a4j:commandButton
+									binding="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.COMP_CANCEL_BUTTON}"
+									id="CANCEL_BUTTON" styleClass="button" style="width:70px;"
+									action="#{PILP207_COMPOSITE_ACTION.PW_IL_BENIFIT_PAYMT_ACTION_BEAN.cancelModalPanel}"
+									reRender="REPORT_MODAL_PANEL"
+									value="#{commonmsg.IP_REP_INFO$CANCEL_BUTTON$caption}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</rich:modalPanel>
+			<!-- end -->
+
+		</f:view>
+
+	</ui:define>
+</ui:composition>

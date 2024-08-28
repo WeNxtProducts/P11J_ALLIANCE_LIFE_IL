@@ -1,0 +1,1274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="3f8fce81-8836-4fde-ad32-da7136e2c295">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Agent_name" uuid="2d501e91-7aaa-4bad-8e43-8c5aee181da1">
+		<parameter name="POL_AGENT_CODE" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT CUST_NAME
+             FROM PM_CUSTOMER
+            WHERE CUST_CODE =$P{POL_AGENT_CODE}]]>
+		</queryString>
+		<field name="CUST_NAME" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="DETAILS_DATASET" uuid="369e79b2-b573-403d-b0ac-4f5772da7d15">
+		<parameter name="POL_SYS_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT RST_MONTH1,
+       RST_SA1,
+       RST_MONTH2,
+       RST_SA2,
+       RST_MONTH3,
+       RST_SA3,
+       RST_MONTH4,
+       RST_SA4,
+       RST_MONTH5,
+       RST_SA5,
+       RST_MONTH6,
+       RST_SA6,
+       RST_MONTH7,
+       RST_SA7,
+       RST_MONTH8,
+       RST_SA8,
+       RST_MONTH9,
+       RST_SA9,
+       RST_MONTH10,
+       RST_SA10,
+       RST_MONTH11,
+       RST_SA11,
+       RST_MONTH12,
+       RST_SA12
+  FROM PW_RSA_REP_TAB WHERE RST_POL_SYS_ID = $P{POL_SYS_ID} ORDER BY RST_MONTH1]]>
+		</queryString>
+		<field name="RST_MONTH1" class="java.math.BigDecimal"/>
+		<field name="RST_SA1" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH2" class="java.math.BigDecimal"/>
+		<field name="RST_SA2" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH3" class="java.math.BigDecimal"/>
+		<field name="RST_SA3" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH4" class="java.math.BigDecimal"/>
+		<field name="RST_SA4" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH5" class="java.math.BigDecimal"/>
+		<field name="RST_SA5" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH6" class="java.math.BigDecimal"/>
+		<field name="RST_SA6" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH7" class="java.math.BigDecimal"/>
+		<field name="RST_SA7" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH8" class="java.math.BigDecimal"/>
+		<field name="RST_SA8" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH9" class="java.math.BigDecimal"/>
+		<field name="RST_SA9" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH10" class="java.math.BigDecimal"/>
+		<field name="RST_SA10" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH11" class="java.math.BigDecimal"/>
+		<field name="RST_SA11" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH12" class="java.math.BigDecimal"/>
+		<field name="RST_SA12" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="DETAILS_DATASET_HEADER" uuid="be0ce999-ab28-4c1b-b621-7e35fa50385a">
+		<parameter name="POL_SYS_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT RST_MONTH1,
+       RST_SA1,
+       RST_MONTH2,
+       RST_SA2,
+       RST_MONTH3,
+       RST_SA3,
+       RST_MONTH4,
+       RST_SA4,
+       RST_MONTH5,
+       RST_SA5,
+       RST_MONTH6,
+       RST_SA6,
+       RST_MONTH7,
+       RST_SA7,
+       RST_MONTH8,
+       RST_SA8,
+       RST_MONTH9,
+       RST_SA9,
+       RST_MONTH10,
+       RST_SA10,
+       RST_MONTH11,
+       RST_SA11,
+       RST_MONTH12,
+       RST_SA12,
+       (SELECT
+       DISTINCT(DECODE(PROD_DEF_PERIOD_FLAG, 'M', 'Months', 'Y', 'Years'))
+  FROM PT_IL_POL_RED_SA, PT_IL_POLICY, PM_IL_PRODUCT
+ WHERE POL_SYS_ID = PRS_POL_SYS_ID
+   AND POL_PROD_CODE = PROD_CODE
+   AND POL_sys_id = $P{POL_SYS_ID}
+  AND PRS_MONTH > 0)HEADER_COLUMN,'d' DSA_COLUMN
+  FROM PW_RSA_REP_TAB WHERE RST_POL_SYS_ID = $P{POL_SYS_ID} AND ROWNUM = 1 ORDER BY RST_MONTH6]]>
+		</queryString>
+		<field name="RST_MONTH1" class="java.math.BigDecimal"/>
+		<field name="RST_SA1" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH2" class="java.math.BigDecimal"/>
+		<field name="RST_SA2" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH3" class="java.math.BigDecimal"/>
+		<field name="RST_SA3" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH4" class="java.math.BigDecimal"/>
+		<field name="RST_SA4" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH5" class="java.math.BigDecimal"/>
+		<field name="RST_SA5" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH6" class="java.math.BigDecimal"/>
+		<field name="RST_SA6" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH7" class="java.math.BigDecimal"/>
+		<field name="RST_SA7" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH8" class="java.math.BigDecimal"/>
+		<field name="RST_SA8" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH9" class="java.math.BigDecimal"/>
+		<field name="RST_SA9" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH10" class="java.math.BigDecimal"/>
+		<field name="RST_SA10" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH11" class="java.math.BigDecimal"/>
+		<field name="RST_SA11" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH12" class="java.math.BigDecimal"/>
+		<field name="RST_SA12" class="java.math.BigDecimal"/>
+		<field name="HEADER_COLUMN" class="java.lang.String"/>
+		<field name="DSA_COLUMN" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="DETAILS_DATASET_YEARS" uuid="70efb4e7-20d8-4f96-9aca-eb6775733a51">
+		<parameter name="POL_SYS_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT RST_MONTH1,
+       RST_SA1,
+       RST_MONTH2,
+       RST_SA2,
+       RST_MONTH3,
+       RST_SA3,
+       RST_MONTH4,
+       RST_SA4,
+       RST_MONTH5,
+       RST_SA5,
+       RST_MONTH6,
+       RST_SA6,
+       RST_MONTH7,
+       RST_SA7,
+       RST_MONTH8,
+       RST_SA8,
+       RST_MONTH9,
+       RST_SA9,
+       RST_MONTH10,
+       RST_SA10,
+       RST_MONTH11,
+       RST_SA11,
+       RST_MONTH12,
+       RST_SA12
+  FROM PW_RSA_REP_TAB WHERE RST_POL_SYS_ID = $P{POL_SYS_ID} ORDER BY RST_MONTH1]]>
+		</queryString>
+		<field name="RST_MONTH1" class="java.math.BigDecimal"/>
+		<field name="RST_SA1" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH2" class="java.math.BigDecimal"/>
+		<field name="RST_SA2" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH3" class="java.math.BigDecimal"/>
+		<field name="RST_SA3" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH4" class="java.math.BigDecimal"/>
+		<field name="RST_SA4" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH5" class="java.math.BigDecimal"/>
+		<field name="RST_SA5" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH6" class="java.math.BigDecimal"/>
+		<field name="RST_SA6" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH7" class="java.math.BigDecimal"/>
+		<field name="RST_SA7" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH8" class="java.math.BigDecimal"/>
+		<field name="RST_SA8" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH9" class="java.math.BigDecimal"/>
+		<field name="RST_SA9" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH10" class="java.math.BigDecimal"/>
+		<field name="RST_SA10" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH11" class="java.math.BigDecimal"/>
+		<field name="RST_SA11" class="java.math.BigDecimal"/>
+		<field name="RST_MONTH12" class="java.math.BigDecimal"/>
+		<field name="RST_SA12" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset1" uuid="280d3aec-4411-45e0-bed6-1755580092e3"/>
+	<subDataset name="dataset3" uuid="0f1a833d-fbff-4200-82a3-ab8797947a4f"/>
+	<subDataset name="dataset4" uuid="252605bb-4233-49c9-b210-94d4444f0d5a"/>
+	<subDataset name="dataset2" uuid="fcf7ab4a-48c6-4af3-8e67-0372f159e02f"/>
+	<subDataset name="dataset5" uuid="a5d53d1d-9d8d-43fa-9ef6-054860708b2c"/>
+	<parameter name="POL_SYS_ID" class="java.lang.String"/>
+	<parameter name="DS_TYPE" class="java.lang.String"/>
+	<parameter name="TOTAL_COUNT" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT(POL_NO),POL_SYS_ID,
+       PROD_DESC,POL_LC_SUM_ASSURED,POL_PERIOD,
+       DECODE(PROD_DEF_PERIOD_FLAG, 'M', 'Months', 'Y', 'Years') DEF_TYPE,
+       POL_ASSURED_NAME,
+       POL_END_NO,
+       POL_END_NO_IDX,
+       (SELECT POBH_BROKER_CODE
+          FROM PT_IL_POL_BROKER_HEAD
+         WHERE POBH_POL_SYS_ID = POL_SYS_ID
+           AND POBH_SRNO = 1) AGENT_CODE,
+       POL_START_DT,
+       POL_EXPIRY_DT,
+(SELECT PROD_DEF_PERIOD_FLAG FROM PM_IL_PRODUCT WHERE PROD_CODE = (
+   SELECT POL_PROD_CODE FROM PT_IL_POLICY WHERE POL_SYS_ID = $P{POL_SYS_ID}))DS_TYPE
+  FROM PT_IL_POL_RED_SA, PT_IL_POLICY, PM_IL_PRODUCT
+ WHERE POL_SYS_ID = PRS_POL_SYS_ID
+   AND POL_PROD_CODE = PROD_CODE
+   AND POL_sys_id = $P{POL_SYS_ID}
+  AND PRS_MONTH > 0]]>
+	</queryString>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POL_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="PROD_DESC" class="java.lang.String"/>
+	<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<field name="POL_PERIOD" class="java.math.BigDecimal"/>
+	<field name="DEF_TYPE" class="java.lang.String"/>
+	<field name="POL_ASSURED_NAME" class="java.lang.String"/>
+	<field name="POL_END_NO" class="java.lang.String"/>
+	<field name="POL_END_NO_IDX" class="java.math.BigDecimal"/>
+	<field name="AGENT_CODE" class="java.lang.String"/>
+	<field name="POL_START_DT" class="java.sql.Timestamp"/>
+	<field name="POL_EXPIRY_DT" class="java.sql.Timestamp"/>
+	<field name="DS_TYPE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="168" splitType="Stretch">
+			<staticText>
+				<reportElement x="431" y="79" width="137" height="20" uuid="1c6576e9-41c4-457d-9169-7fa12fc07d18"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Policy Term- years]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="32" width="247" height="20" uuid="1c085e04-26b8-46dc-b0c1-ea5456b0c51d"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Decreasing Sum Assured schedule (DSA)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="59" width="137" height="20" uuid="d8620919-3f90-4e8f-aef4-93b9fc4ef872"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Sum assured at commencement ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="578" y="59" width="135" height="20" uuid="5256a8e0-f44f-4334-877f-8ffb16ee0048"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_LC_SUM_ASSURED}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="578" y="79" width="135" height="20" uuid="0b8abe78-30aa-421b-a8b8-6365e6a65b60"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_PERIOD}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="568" y="59" width="10" height="20" uuid="873228c5-2fd8-494a-a1fe-fbaddb99f2e1"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="568" y="79" width="10" height="20" uuid="b53f1968-6960-439a-ac19-90434d329531"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="59" width="135" height="20" uuid="4ab2a948-8e4a-4fcc-bb04-66e5419eb516"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_ASSURED_NAME}+"       "+$F{DS_TYPE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="59" width="10" height="20" uuid="31d720de-1ff7-4b99-a449-4cd0afa31853"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="79" width="135" height="20" uuid="e55d5b6e-3eca-49f1-a093-0402677651b2"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="99" width="135" height="20" isRemoveLineWhenBlank="true" uuid="80b212f6-144d-4922-a7fd-da0f8d4f1aa1">
+					<printWhenExpression><![CDATA[$P{DS_TYPE}.equals("2")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_END_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="288" y="119" width="135" height="20" uuid="3920ee2e-0f6b-42c2-abfe-9ae057b45b9b"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AGENT_CODE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="578" y="100" width="135" height="20" uuid="52afad26-b6c5-466e-876a-24300f7bdbbd"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_START_DT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="578" y="120" width="135" height="20" uuid="385b13d6-3171-4adb-94cc-1be6d4abf077"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_EXPIRY_DT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="278" y="79" width="10" height="20" uuid="9ed23ef5-0451-4770-bc02-976f4f313367"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="99" width="10" height="20" isRemoveLineWhenBlank="true" uuid="361ea239-01e5-4bd1-843e-e5a679dc106f">
+					<printWhenExpression><![CDATA[$P{DS_TYPE}.equals("2")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="119" width="10" height="20" uuid="30eab580-3da1-456c-8910-200b2ef2d0e0"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="568" y="100" width="10" height="20" uuid="aa721dea-0816-4214-879e-f75e5b5f6052"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="568" y="120" width="10" height="20" uuid="cf3513db-3f6b-4c51-a589-5afb74182cc6"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="120" width="137" height="20" uuid="64dad951-cf33-4440-bad1-0d47007c7676"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Policy To Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="59" width="137" height="20" uuid="eb209e6a-790d-48d1-9648-35becc18a36e"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Assured Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="79" width="137" height="20" uuid="a0122247-3483-471f-b37b-72ea199784ac"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Policy No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="99" width="137" height="20" isRemoveLineWhenBlank="true" uuid="156c758b-ad49-4fff-8988-c1ff23cb0b68">
+					<printWhenExpression><![CDATA[$P{DS_TYPE}.equals("2")?true:false]]></printWhenExpression>
+				</reportElement>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Endorsement No 	 	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="119" width="137" height="20" uuid="3250c11f-ed88-4308-8e19-0f93495299ca"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Agent code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="431" y="100" width="137" height="20" uuid="243a2c5c-a5a0-4b67-8a6a-d809c24792e9"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Policy From Date]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="288" y="139" width="135" height="24" uuid="f02d2713-ddfa-4db5-812d-cfe9291b0c4f"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Agent_name" uuid="8c13880f-2758-449c-8cd7-d23326f5be6a">
+						<datasetParameter name="POL_AGENT_CODE">
+							<datasetParameterExpression><![CDATA[$F{AGENT_CODE}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="24" width="135">
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="135" height="18" uuid="77c06368-5255-4ca2-a4a4-3b724b1987d7"/>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{CUST_NAME}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="141" y="139" width="137" height="18" uuid="e19b08dd-a4bb-4d65-87c4-99516381d847"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Agent Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="278" y="139" width="10" height="20" uuid="4da32656-0113-4696-9238-2f416031a245"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="10" splitType="Stretch">
+			<printWhenExpression><![CDATA[$F{DS_TYPE}.equals( "Y" )?false:true]]></printWhenExpression>
+			<componentElement>
+				<reportElement x="0" y="0" width="814" height="10" uuid="6f418d0f-f692-4f69-9ef5-124303ae88f7"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="DETAILS_DATASET_HEADER" uuid="2db9bf1b-896a-454a-9c91-3275662503b5">
+						<datasetParameter name="POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="10" width="814">
+						<textField>
+							<reportElement x="0" y="0" width="30" height="10" uuid="74c0dba7-bbef-4391-8472-0f03c0d94598">
+								<printWhenExpression><![CDATA[$F{RST_MONTH1} == null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{HEADER_COLUMN}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="30" y="0" width="37" height="10" uuid="489cf58c-05f2-46ff-984f-58da9cb596a4">
+								<printWhenExpression><![CDATA[$F{RST_SA1}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<text><![CDATA[DSA]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="67" y="0" width="30" height="10" uuid="ecfd9fa4-c39e-41b5-8c87-e8c3ad7061cf">
+								<printWhenExpression><![CDATA[$F{RST_MONTH2}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{HEADER_COLUMN}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="97" y="0" width="37" height="10" uuid="ee0d2c3d-1528-4b19-b8ea-d44cd61e9d2c">
+								<printWhenExpression><![CDATA[$F{RST_SA2}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<text><![CDATA[DSA]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="134" y="0" width="30" height="10" uuid="ed8231c2-4626-4ede-821a-9cc1d00465b8">
+								<printWhenExpression><![CDATA[$F{RST_MONTH3}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{HEADER_COLUMN}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="164" y="0" width="37" height="10" uuid="968b56a5-c74a-4467-9823-633e6ff6ac64">
+								<printWhenExpression><![CDATA[$F{RST_SA3}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<text><![CDATA[DSA]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="231" y="0" width="37" height="10" uuid="210d9a21-2ff7-443a-9e56-461efd9da171">
+								<printWhenExpression><![CDATA[$F{RST_SA4}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<text><![CDATA[DSA]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="201" y="0" width="30" height="10" uuid="72314972-3fe2-41ab-89b3-2331e26b40e2">
+								<printWhenExpression><![CDATA[$F{RST_MONTH4}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{HEADER_COLUMN}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="268" y="0" width="30" height="10" uuid="a73e2c11-ace5-4287-a38f-5e69cc3897ab">
+								<printWhenExpression><![CDATA[$F{RST_MONTH5}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{HEADER_COLUMN}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="298" y="0" width="37" height="10" uuid="6f0093aa-1990-4cca-831a-d25b76d8b2a9">
+								<printWhenExpression><![CDATA[$F{RST_SA5}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<text><![CDATA[DSA]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="335" y="0" width="30" height="10" uuid="33f46e10-c59a-4d6f-a334-9776d4f656cf">
+								<printWhenExpression><![CDATA[$F{RST_MONTH6}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{HEADER_COLUMN}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="365" y="0" width="37" height="10" uuid="30258661-ecd2-4c0c-ae41-8946a4c8d7de">
+								<printWhenExpression><![CDATA[$F{RST_MONTH6}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<text><![CDATA[DSA]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="402" y="0" width="30" height="10" uuid="364d6f69-caa5-418b-a7bb-b1d5df20f3e7">
+								<printWhenExpression><![CDATA[$F{RST_MONTH7}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{HEADER_COLUMN}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="432" y="0" width="37" height="10" uuid="d63a6b37-9e0b-41a5-b898-eb2058fffba0">
+								<printWhenExpression><![CDATA[$F{RST_MONTH7}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<text><![CDATA[DSA]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="469" y="0" width="30" height="10" uuid="7137cbf5-0540-4045-ad6f-6b06a0d0a1d6">
+								<printWhenExpression><![CDATA[$F{RST_MONTH8}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{HEADER_COLUMN}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="499" y="0" width="37" height="10" uuid="5cb421f5-8cad-4532-8a1b-ce315b37f77f">
+								<printWhenExpression><![CDATA[$F{RST_MONTH8}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<text><![CDATA[DSA]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="566" y="0" width="37" height="10" uuid="ae764de8-4ad4-415e-b369-d510ddae2466">
+								<printWhenExpression><![CDATA[$F{RST_MONTH9}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<text><![CDATA[DSA]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="536" y="0" width="30" height="10" uuid="ae1ada96-619f-45f3-ba57-08f9c360042a">
+								<printWhenExpression><![CDATA[$F{RST_MONTH9}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{HEADER_COLUMN}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="633" y="0" width="37" height="10" uuid="13ed860b-cd4d-4796-8ed2-8ce2cac653bd">
+								<printWhenExpression><![CDATA[$F{RST_MONTH10}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<text><![CDATA[DSA]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="603" y="0" width="30" height="10" uuid="4a1ac1b6-dac4-4f6c-b19e-0da6e5719f5e">
+								<printWhenExpression><![CDATA[$F{RST_MONTH10}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{HEADER_COLUMN}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="700" y="0" width="37" height="10" uuid="cbc6defb-0b4a-4d5a-8e30-1541d02e9ba2">
+								<printWhenExpression><![CDATA[$F{RST_MONTH11}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<text><![CDATA[DSA]]></text>
+						</staticText>
+						<textField>
+							<reportElement x="670" y="0" width="30" height="10" uuid="97403361-5248-43d6-96f0-d87b0d9fea32">
+								<printWhenExpression><![CDATA[$F{RST_MONTH11}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{HEADER_COLUMN}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="737" y="0" width="30" height="10" uuid="da2c05ff-6662-4d50-ad36-a9a7b88d4cc2">
+								<printWhenExpression><![CDATA[$F{RST_MONTH12}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{HEADER_COLUMN}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="767" y="0" width="37" height="10" uuid="c55961f5-e9a0-4e01-9907-c398288d79b6">
+								<printWhenExpression><![CDATA[$F{RST_MONTH12}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="7"/>
+							</textElement>
+							<text><![CDATA[DSA]]></text>
+						</staticText>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="10">
+			<printWhenExpression><![CDATA[$F{DS_TYPE}.equals( "Y" )?false:true]]></printWhenExpression>
+			<componentElement>
+				<reportElement x="0" y="0" width="814" height="10" uuid="480bce2f-13b7-4d2a-b0ac-5c5dd6ece6d2"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="DETAILS_DATASET" uuid="707d2999-7720-46c2-b12a-62b7000cecfb">
+						<datasetParameter name="POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="10" width="814">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="30" height="10" isPrintWhenDetailOverflows="true" uuid="d025e84d-3328-4caf-ae72-cf182b27f770">
+								<printWhenExpression><![CDATA[$F{RST_MONTH1} == null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH1}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="67" y="0" width="30" height="10" isPrintWhenDetailOverflows="true" uuid="5fc26cae-d86f-45ac-a413-10407ce32b0e">
+								<printWhenExpression><![CDATA[$F{RST_MONTH2}==null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH2}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="97" y="0" width="37" height="10" isPrintWhenDetailOverflows="true" uuid="220ff048-14a5-41b9-b2c0-26df7fe8adb3">
+								<printWhenExpression><![CDATA[$F{RST_SA2}==null?false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="0" rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA2}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="30" y="0" width="37" height="10" isPrintWhenDetailOverflows="true" uuid="8c0628fe-c444-4c13-891b-c621dca589b0">
+								<printWhenExpression><![CDATA[$F{RST_SA1} == null ? false : true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="0" rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA1}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="164" y="0" width="37" height="10" isPrintWhenDetailOverflows="true" uuid="4acbbfe8-e76e-41f4-aa0b-b600f3bd02bd">
+								<printWhenExpression><![CDATA[$F{RST_SA3} == null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="0" rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA3}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="134" y="0" width="30" height="10" isPrintWhenDetailOverflows="true" uuid="9da45cd2-b4d6-4128-b011-4675a34c307b">
+								<printWhenExpression><![CDATA[$F{RST_MONTH3} == null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH3}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="201" y="0" width="30" height="10" isPrintWhenDetailOverflows="true" uuid="33732edc-72fe-4b50-84a7-97c7d4c39cc8">
+								<printWhenExpression><![CDATA[$F{RST_MONTH4} == null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH4}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" pattern="#,##0" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="231" y="0" width="37" height="10" isPrintWhenDetailOverflows="true" uuid="95be062f-d528-436c-a133-4a86bc2c0ddf">
+								<printWhenExpression><![CDATA[$F{RST_SA4} == null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="0" rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA4}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="298" y="0" width="37" height="10" isPrintWhenDetailOverflows="true" uuid="9c3680c6-ff9f-4f2d-a8f9-cd6cf0b1f9d3">
+								<printWhenExpression><![CDATA[$F{RST_SA5} == null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box leftPadding="0" rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA5}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="335" y="0" width="30" height="10" isPrintWhenDetailOverflows="true" uuid="fd46163f-933a-4dd7-b65e-0fd6131cc03b">
+								<printWhenExpression><![CDATA[$F{RST_MONTH6} == null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH6}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="365" y="0" width="37" height="10" isPrintWhenDetailOverflows="true" uuid="a56470f1-95ea-4a9b-8673-523566d47da5">
+								<printWhenExpression><![CDATA[$F{RST_SA6} == null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA6}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="402" y="0" width="30" height="10" isPrintWhenDetailOverflows="true" uuid="82d797c5-7aad-47e8-8cc9-3618d35ae221">
+								<printWhenExpression><![CDATA[$F{RST_MONTH7}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH7}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="432" y="0" width="37" height="10" isPrintWhenDetailOverflows="true" uuid="a9f3a31b-9817-48bf-9d23-6a75c6849464">
+								<printWhenExpression><![CDATA[$F{RST_SA7}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA7}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="469" y="0" width="30" height="10" isPrintWhenDetailOverflows="true" uuid="e9f5d759-fed5-4bfd-9d25-9e899778ace7">
+								<printWhenExpression><![CDATA[$F{RST_MONTH8}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH8}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="499" y="0" width="37" height="10" isPrintWhenDetailOverflows="true" uuid="119e33f1-5d8a-4d99-9a0a-63dacae220bb">
+								<printWhenExpression><![CDATA[$F{RST_SA8}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA8}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="268" y="0" width="30" height="10" isPrintWhenDetailOverflows="true" uuid="d8261db7-8fb4-4047-ac89-dee325861b01">
+								<printWhenExpression><![CDATA[$F{RST_MONTH5} == null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH5}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="536" y="0" width="30" height="10" isPrintWhenDetailOverflows="true" uuid="49e4016e-c1f8-45a9-a630-418a1ad21a20">
+								<printWhenExpression><![CDATA[$F{RST_MONTH9}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH9}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="566" y="0" width="37" height="10" isPrintWhenDetailOverflows="true" uuid="b4be6da4-2ea2-43fa-af29-24308e8c58eb">
+								<printWhenExpression><![CDATA[$F{RST_SA9}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA9}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="603" y="0" width="30" height="10" isPrintWhenDetailOverflows="true" uuid="d2d268c1-6e49-4595-a5a8-c351a8d999ea">
+								<printWhenExpression><![CDATA[$F{RST_MONTH10}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH10}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="633" y="0" width="37" height="10" isPrintWhenDetailOverflows="true" uuid="0ec5c40e-b7ab-48cd-a158-b3984cdaa9cc">
+								<printWhenExpression><![CDATA[$F{RST_SA10}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA10}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="670" y="0" width="30" height="10" isPrintWhenDetailOverflows="true" uuid="743d5216-5d3a-489f-b626-a4e49a857ccc">
+								<printWhenExpression><![CDATA[$F{RST_MONTH11}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH11}]]></textFieldExpression>
+						</textField>
+						<textField pattern="#,##0" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="700" y="0" width="37" height="10" isPrintWhenDetailOverflows="true" uuid="9c7fb926-11d7-4d7f-ad3f-6db47a0c03f0">
+								<printWhenExpression><![CDATA[$F{RST_SA11}== null ? false:true]]></printWhenExpression>
+							</reportElement>
+							<box rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA11}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="737" y="0" width="30" height="10" isPrintWhenDetailOverflows="true" uuid="e86c8cb8-6d0c-4f2c-ae18-45dcd3878bc9">
+								<printWhenExpression><![CDATA[$F{RST_MONTH12} == null ? false : true]]></printWhenExpression>
+							</reportElement>
+							<box>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH12}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="767" y="0" width="35" height="10" isPrintWhenDetailOverflows="true" uuid="daca3da4-4616-43d3-8783-d471fb99992b">
+								<printWhenExpression><![CDATA[$F{RST_SA12} == null ? false : true]]></printWhenExpression>
+							</reportElement>
+							<box rightPadding="4">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font size="7"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA12}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="20">
+			<printWhenExpression><![CDATA[$F{DS_TYPE}.equals( "Y" )?true:false]]></printWhenExpression>
+			<staticText>
+				<reportElement x="309" y="0" width="100" height="20" uuid="05a89fd3-9797-403d-b76c-d828bdd8b886"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Years]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="0" width="100" height="20" uuid="1012d853-a8f8-47d2-8cf7-75c650554165"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DSA]]></text>
+			</staticText>
+		</band>
+		<band height="20">
+			<printWhenExpression><![CDATA[$F{DS_TYPE}.equals( "Y" )?true:false]]></printWhenExpression>
+			<componentElement>
+				<reportElement x="214" y="0" width="400" height="20" uuid="0cc03554-c456-4d15-9c32-7d481587cd59"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="DETAILS_DATASET_YEARS" uuid="98deb621-74a0-4deb-a2ce-da9d130229f6">
+						<datasetParameter name="POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="400">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="95" y="0" width="100" height="20" isPrintWhenDetailOverflows="true" uuid="598d04ce-d989-4a85-8f5a-3bde29733eac"/>
+							<box>
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_MONTH1}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="195" y="0" width="100" height="20" isPrintWhenDetailOverflows="true" uuid="36decfbd-7a9f-4a23-893e-c88a519dda48"/>
+							<box rightPadding="5">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{RST_SA1}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

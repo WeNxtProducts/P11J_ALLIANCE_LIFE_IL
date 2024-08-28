@@ -1,0 +1,643 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:w="http://3i-infotech.com/premia"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PM075_A"
+				var="message_PM075_A" />
+			<h:form id="PM_CUST_LOC">
+				<table class="noborder" width="100%" cellpadding="0px"
+					cellspacing="0px">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" width="100%">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PM075_A_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="errormsgtable" width="100%">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.errorMap['current'] !=null? PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.errorMap['current']: PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.globalMsgRender}"
+										styleClass="ErrorMessages" />
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.warningMessages}" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="15%" vAlign="top" width="100%">
+						<table class="noborder" id="globalLink" width="100%">
+							<tr>
+								<td><h:inputHidden id="myhidden"
+									value="#{PM075_A_COMPOSITE_ACTION.tabbedBar.tabClicked}" /> <h:panelGroup
+									id="TABBEDBAR_PANEL" style="border:0;height:15%;">
+									<table class="noborder" width="100%">
+										<tr>
+											<td width="90%"><a4j:repeat id="TAB_LIST"
+												value="#{PM075_A_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													action="#{PM075_A_COMPOSITE_ACTION.tabbedBar.tabAction}"
+													disabled="#{currtab.disabled}" id="TAB_PM_CUST_LOC"
+													immediate="#{currtab.immediate}"
+													onclick="document.getElementById('PM_CUST_LOC:myhidden').value='#{currtab.id}'"
+													styleClass="#{currtab.styleString}"
+													value="#{currtab.value}">
+													<f:param id="TAB_PARAM_PM_CUST_LOC" name="tabid"
+														value="#{currtab.id}" />
+												</h:commandLink>
+											</a4j:repeat></td>
+											<td width="*"><a4j:commandButton
+												action="#{PM075_A_COMPOSITE_ACTION.tabbedBar.gotoFirstTab}"
+												alt="first"
+												disabled="#{PM075_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+												id="TAB_NAV_FIRST" image="./../../images/firstrec.gif"
+												immediate="true" reRender="TABBEDBAR_PANEL" /> <a4j:commandButton
+												action="#{PM075_A_COMPOSITE_ACTION.tabbedBar.gotoPrevTab}"
+												alt="previous"
+												disabled="#{PM075_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+												id="TAB_NAV_PREVIOUS" image="./../../images/prevpage.gif"
+												immediate="true" reRender="TABBEDBAR_PANEL" /> <a4j:commandButton
+												action="#{PM075_A_COMPOSITE_ACTION.tabbedBar.gotoNextTab}"
+												alt="next"
+												disabled="#{PM075_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+												id="TAB_NAV_NEXT" image="./../../images/nextpage.gif"
+												immediate="true" reRender="TABBEDBAR_PANEL" /> <a4j:commandButton
+												action="#{PM075_A_COMPOSITE_ACTION.tabbedBar.gotoLastTab}"
+												alt="last"
+												disabled="#{PM075_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+												id="TAB_NAV_LAST" image="./../../images/lastRecord.gif"
+												immediate="true" reRender="TABBEDBAR_PANEL" /></td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td ><h:outputLabel id="FORM_CAPTION"
+									value="#{message_PM075_A.PM075_A$PM_CUST_LOC$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 500px; overflow: auto;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td vAlign="top" width="100%"><h:panelGroup
+									id="PM_CUST_LOC_PANEL" style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td><rich:panel style="width:960px;overflow:auto">
+												<rich:dataTable
+													binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.dataTable}"
+													id="PM_CUST_LOC_DATA_GRID" rows="5"
+													value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.dataList_PM_CUST_LOC}"
+													var="tableVar">
+													<rich:column filterBy="#{tableVar.LOC_FRZ_FLAG}"
+														filterEvent="onkeyup" id="COLUMN_LOC_FRZ_FLAG"
+														rendered="true" sortBy="#{tableVar.LOC_FRZ_FLAG}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_LOC_FRZ_FLAG"
+																styleClass="searchimg"
+																value=".\..\..\images\mandatory.jpg">
+																<h:outputText id="COLUMN_CAPTION_LOC_FRZ_FLAG"
+																	styleClass="label"
+																	value="#{message.PM075_A$PM_CUST_LOC$LOC_FRZ_FLAG$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<h:selectBooleanCheckbox
+															id="SEL_BOOL_CHK_BOX_LOC_FRZ_FLAG"
+															title="#{message.PM075_A$PM_CUST_BUS_TYPES$SEL_BOOL_CHK_BOX_LOC_FRZ_FLAG$tooltip}"
+															value="#{tableVar.CHECK_LOC_FRZ_FLAG}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.LOC_FAX}"
+														filterEvent="onkeyup" id="COLUMN_LOC_FAX" rendered="true"
+														sortBy="#{tableVar.LOC_FAX}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_LOC_FAX"
+																styleClass="forumRowHighlight"
+																value="#{message.PM075_A$PM_CUST_LOC$LOC_FAX$caption}" />
+														</f:facet>
+														<a4j:commandLink
+															action="#{PM075_A_PM_CUST_LOC_ACTION.displayRecords}"
+															id="GOTO_LINK_LOC_FAX" immediate="true"
+															reRender="errorPanel,PM_CUST_LOC_PANEL">
+															<h:outputText id="LINK_CAPTION_LOC_FAX"
+																value="#{tableVar.LOC_FAX}" />
+														</a4j:commandLink>
+													</rich:column>
+													<rich:column filterBy="#{tableVar.LOC_MAIL}"
+														filterEvent="onkeyup" id="COLUMN_LOC_MAIL" rendered="true"
+														sortBy="#{tableVar.LOC_MAIL}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_LOC_MAIL"
+																styleClass="forumRowHighlight"
+																value="#{message.PM075_A$PM_CUST_LOC$LOC_MAIL$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_LOC_MAIL"
+															value="#{tableVar.LOC_MAIL}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.LOC_LOCATION}"
+														filterEvent="onkeyup" id="COLUMN_LOC_LOCATION"
+														rendered="true" sortBy="#{tableVar.LOC_LOCATION}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_LOC_LOCATION"
+																styleClass="searchimg"
+																value=".\..\..\images\mandatory.jpg">
+																<h:outputText id="COLUMN_CAPTION_LOC_LOCATION"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PM075_A$PM_CUST_LOC$LOC_LOCATION$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_LOC_LOCATION"
+															value="#{tableVar.LOC_LOCATION}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.UI_M_CUT_LOC_DESC}"
+														filterEvent="onkeyup" id="COLUMN_UI_M_CUT_LOC_DESC"
+														rendered="true" sortBy="#{tableVar.UI_M_CUT_LOC_DESC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_M_CUT_LOC_DESC"
+																styleClass="forumRowHighlight"
+																value="#{message.PM075_A$PM_CUST_LOC$UI_M_CUT_LOC_DESC$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_UI_M_CUT_LOC_DESC"
+															value="#{tableVar.UI_M_CUT_LOC_DESC}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.LOC_CONTACT_PERSON}"
+														filterEvent="onkeyup" id="COLUMN_LOC_CONTACT_PERSON"
+														rendered="true" sortBy="#{tableVar.LOC_CONTACT_PERSON}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_LOC_CONTACT_PERSON"
+																styleClass="forumRowHighlight"
+																value="#{message.PM075_A$PM_CUST_LOC$LOC_CONTACT_PERSON$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_LOC_CONTACT_PERSON"
+															value="#{tableVar.LOC_CONTACT_PERSON}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.LOC_CONTACT_PURPOSE}"
+														filterEvent="onkeyup" id="COLUMN_LOC_CONTACT_PURPOSE"
+														rendered="true" sortBy="#{tableVar.LOC_CONTACT_PURPOSE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_LOC_CONTACT_PURPOSE"
+																styleClass="forumRowHighlight"
+																value="#{message.PM075_A$PM_CUST_LOC$LOC_CONTACT_PURPOSE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_LOC_CONTACT_PURPOSE"
+															value="#{tableVar.LOC_CONTACT_PURPOSE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.LOC_ADDR1}"
+														filterEvent="onkeyup" id="COLUMN_LOC_ADDR1"
+														rendered="true" sortBy="#{tableVar.LOC_ADDR1}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_LOC_ADDR1"
+																styleClass="forumRowHighlight"
+																value="#{message.PM075_A$PM_CUST_LOC$LOC_ADDR1$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_LOC_ADDR1"
+															value="#{tableVar.LOC_ADDR1}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.LOC_ADDR2}"
+														filterEvent="onkeyup" id="COLUMN_LOC_ADDR2"
+														rendered="true" sortBy="#{tableVar.LOC_ADDR2}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_LOC_ADDR2"
+																styleClass="forumRowHighlight"
+																value="#{message.PM075_A$PM_CUST_LOC$LOC_ADDR2$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_LOC_ADDR2"
+															value="#{tableVar.LOC_ADDR2}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.LOC_ADDR3}"
+														filterEvent="onkeyup" id="COLUMN_LOC_ADDR3"
+														rendered="true" sortBy="#{tableVar.LOC_ADDR3}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_LOC_ADDR3"
+																styleClass="forumRowHighlight"
+																value="#{message.PM075_A$PM_CUST_LOC$LOC_ADDR3$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_LOC_ADDR3"
+															value="#{tableVar.LOC_ADDR3}" />
+													</rich:column>
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right" id="PM_CUST_LOC_SCROLL"
+																page="1" />
+															<a4j:commandButton
+																actionListener="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.addRow}"
+																id="addRow" reRender="PM_CUST_LOC_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.deleteRow}"
+																id="deleteRow" reRender="PM_CUST_LOC_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.postRecord}"
+																id="postRecord" reRender="PM_CUST_LOC_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</rich:panel></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table class="noborder" width="100%">
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_FRZ_FLAG_LABEL}"
+														for="LOC_FRZ_FLAG" id="LOC_FRZ_FLAG_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_FRZ_FLAG$caption}" />
+													<h:graphicImage id="AUTOID_1" style=""
+														styleClass="searchimg"
+														value="./../../images/mandatory.gif" /></td>
+													<td class="oddrow"><h:selectBooleanCheckbox
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_FRZ_FLAG}"
+														disabled="false" id="LOC_FRZ_FLAG" rendered="true"
+														styleClass="checkstyleclass"
+														title="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_FRZ_FLAG$tooltip}"
+														validator="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.validateLOC_FRZ_FLAG}"
+														value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.PM_CUST_LOC_BEAN.CHECK_LOC_FRZ_FLAG}">
+														<a4j:support
+															actionListener="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.fireFieldValidation}"
+															event="onclick" id="SUPPORT_LOC_FRZ_FLAG"
+															immediate="true" reRender="errorPanel" />
+													</h:selectBooleanCheckbox></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_FAX_LABEL}"
+														for="LOC_FAX" id="LOC_FAX_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_FAX$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_FAX}"
+														disabled="false" id="LOC_FAX" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_FAX$tooltip}"
+														value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.PM_CUST_LOC_BEAN.LOC_FAX}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_MAIL_LABEL}"
+														for="LOC_MAIL" id="LOC_MAIL_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_MAIL$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_MAIL}"
+														disabled="false" id="LOC_MAIL" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_MAIL$tooltip}"
+														value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.PM_CUST_LOC_BEAN.LOC_MAIL}" />
+													</td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_LOCATION_LABEL}"
+														for="LOC_LOCATION" id="LOC_LOCATION_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_LOCATION$caption}" />
+													<h:graphicImage id="AUTOID_2" style=""
+														styleClass="searchimg"
+														value="./../../images/mandatory.gif" /></td>
+													<td class="evenrow"><h:inputText
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_LOCATION}"
+														disabled="false" id="LOC_LOCATION" maxlength="12"
+														rendered="true" required="true" styleClass="input"
+														title="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_LOCATION$tooltip}"
+														value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.PM_CUST_LOC_BEAN.LOC_LOCATION}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_UI_M_CUT_LOC_DESC_LABEL}"
+														for="UI_M_CUT_LOC_DESC" id="UI_M_CUT_LOC_DESC_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PM075_A.PM075_A$PM_CUST_LOC$UI_M_CUT_LOC_DESC$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_UI_M_CUT_LOC_DESC}"
+														disabled="false" id="UI_M_CUT_LOC_DESC" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PM075_A.PM075_A$PM_CUST_LOC$UI_M_CUT_LOC_DESC$tooltip}"
+														value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.PM_CUST_LOC_BEAN.UI_M_CUT_LOC_DESC}" />
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_CONTACT_PERSON_LABEL}"
+														for="LOC_CONTACT_PERSON" id="LOC_CONTACT_PERSON_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_CONTACT_PERSON$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_CONTACT_PERSON}"
+														disabled="false" id="LOC_CONTACT_PERSON" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_CONTACT_PERSON$tooltip}"
+														value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.PM_CUST_LOC_BEAN.LOC_CONTACT_PERSON}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_CONTACT_PURPOSE_LABEL}"
+														for="LOC_CONTACT_PURPOSE" id="LOC_CONTACT_PURPOSE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_CONTACT_PURPOSE$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_CONTACT_PURPOSE}"
+														disabled="false" id="LOC_CONTACT_PURPOSE" maxlength="240"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_CONTACT_PURPOSE$tooltip}"
+														value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.PM_CUST_LOC_BEAN.LOC_CONTACT_PURPOSE}" />
+													</td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_ADDR1_LABEL}"
+														for="LOC_ADDR1" id="LOC_ADDR1_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_ADDR1$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_ADDR1}"
+														disabled="false" id="LOC_ADDR1" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_ADDR1$tooltip}"
+														value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.PM_CUST_LOC_BEAN.LOC_ADDR1}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_ADDR2_LABEL}"
+														for="LOC_ADDR2" id="LOC_ADDR2_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_ADDR2$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_ADDR2}"
+														disabled="false" id="LOC_ADDR2" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_ADDR2$tooltip}"
+														value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.PM_CUST_LOC_BEAN.LOC_ADDR2}" />
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_ADDR3_LABEL}"
+														for="LOC_ADDR3" id="LOC_ADDR3_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_ADDR3$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.COMP_LOC_ADDR3}"
+														disabled="false" id="LOC_ADDR3" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PM075_A.PM075_A$PM_CUST_LOC$LOC_ADDR3$tooltip}"
+														value="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.PM_CUST_LOC_BEAN.LOC_ADDR3}" />
+													</td>
+												</tr>
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+								<td />
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+									action="#{PM075_A_COMPOSITE_ACTION.PM_CUST_LOC_ACTION_BEAN.saveRecord}"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+							<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM"
+								location="right">
+								<w:wizardPanelFooter
+									binding="#{PM075_A_COMPOSITE_ACTION.wizard.wizardPanelFooter}" />
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

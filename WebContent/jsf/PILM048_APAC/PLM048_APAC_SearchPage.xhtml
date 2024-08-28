@@ -1,0 +1,117 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILM048_APAC" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+		<tr>
+		</tr>
+		<h:form>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err" styleClass="#{PILM048_APAC_searchAction.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM048_APAC_searchAction.errorMap['current'] !=null? PILM048_APAC_searchAction.errorMap['current']: PILM048_APAC_searchAction.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" styleClass="ErrorMessages"
+								value="#{PILM048_APAC_searchAction.errorMessages}"
+								escape="false" />
+							<h:messages id="msg" styleClass="ErrorMessages"
+								rendered="#{PILM048_APAC_searchAction.globalMsgRender}" />
+							<h:outputText id="warningMessages" styleClass="WarningMessages"
+								value="#{PILM048_APAC_searchAction.warningMessages}"
+								escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+						<td><h:outputLabel value="#{message.PILM048_APAC$SEARCH$BCSH_BANK_CODE$caption}" /> <h:inputText
+							id="BCSH_BANK_CODE"
+							value="#{PILM048_APAC_searchAction.searchValue.BCSH_BANK_CODE}"
+							binding="#{PILM048_APAC_searchAction.COMP_BCSH_BANK_CODE}" /></td>
+						<td><h:outputLabel value="#{message.PILM048_APAC$SEARCH$BCSH_CHG_CODE$caption}" /> <h:inputText
+							id="BCSH_CHG_CODE"
+							value="#{PILM048_APAC_searchAction.searchValue.BCSH_CHG_CODE}"
+							binding="#{PILM048_APAC_searchAction.COMP_BCSH_CHG_CODE}" /></td>
+						<td><a4j:commandButton value="#{commonmsg.searchButton$caption}" id="fetch"
+							styleClass="button" immediate="true">
+							<a4j:support event="onclick" actionListener="#{PILM048_APAC_searchAction.fetchData}"
+							reRender="fetchList,errorPanel"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td><rich:dataTable id="fetchList"
+					value="#{PILM048_APAC_searchAction.searchList}"
+					binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.table}"
+					width="100%" var="colData" cellpadding="5px" rows="5" border="1">
+
+					<rich:column filterBy="#{colData.BCSH_BANK_CODE}"
+						filterValue="#{PILM048_APAC_searchAction.searchValue.filterText}"
+						sortBy="#{colData.BCSH_BANK_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILM048_APAC$SEARCH$BCSH_BANK_CODE$caption}" />
+						</f:facet>
+						<h:commandLink
+							action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.executeQuery}"
+							id="BCSH_BANK_CODE">
+								<h:outputText value="#{colData.BCSH_BANK_CODE}" />
+							<f:param name="rowID" value="#{colData.rowId}" />
+							<f:param name="BCSH_CHG_CODE" value="#{colData.BCSH_CHG_CODE}" />
+						</h:commandLink>
+					</rich:column>
+					<rich:column filterBy="#{colData.BCSH_CHG_CODE}"
+						sortBy="#{colData.BCSH_CHG_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILM048_APAC$SEARCH$BCSH_CHG_CODE$caption}" />
+						</f:facet>
+							<h:outputText value="#{colData.BCSH_CHG_CODE}" />
+					</rich:column>
+					<rich:column filterBy="#{colData.BCSH_MAIN_ACNT_CODE}"
+						sortBy="#{colData.BCSH_MAIN_ACNT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILM048_APAC$SEARCH$BCSH_MAIN_ACNT_CODE$caption}" />
+						</f:facet>
+						<f:verbatim>
+							<h:outputText value="#{colData.BCSH_MAIN_ACNT_CODE}" />
+						</f:verbatim>
+						<f:param name="pol_no" value="#{colData.BCSH_MAIN_ACNT_CODE}" />
+					</rich:column>
+					<rich:column filterBy="#{colData.BCSH_SUB_ACNT_CODE}"
+						filterEvent="onkeyup" sortBy="#{colData.BCSH_SUB_ACNT_CODE}">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILM048_APAC$SEARCH$BCSH_SUB_ACNT_CODE$caption}" />
+						</f:facet>
+						<f:verbatim>
+							<h:outputText value="#{colData.BCSH_SUB_ACNT_CODE}" />
+						</f:verbatim>
+					</rich:column>
+				</rich:dataTable> <rich:datascroller id="dsID" for="fetchList" align="right" /></td>
+			</tr>
+		<tr>
+			<td>
+			<h:commandButton id="insertLink" value="#{commonmsg.insertButton$caption}"
+				action="#{PILM048_APAC_searchAction.executeInsert}" styleClass="button"></h:commandButton></td>
+				</tr>
+		</h:form>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

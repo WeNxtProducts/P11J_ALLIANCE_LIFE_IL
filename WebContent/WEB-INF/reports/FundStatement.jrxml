@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FunDStatement" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="33a6bf02-9eca-4f8c-92cb-dcfcb23ed81a">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="97"/>
+	<parameter name="POL_SYS_ID_PARAM" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT POL_SYS_ID,POL_NO,POL_RES_ADDRESS_1,POL_RES_ADDRESS_2,POL_ISSUE_DT,POL_LC_FIRST_PREM,POL_LC_MODAL_PREM,
+POL_RES_ADDRESS_3,DECODE(POL_MODE_OF_PYMT,'H','Half Yearly','M','Monthly','Y','Yearly','Q','Quarterly',
+'S','Single')MOP,
+POL_FC_SUM_ASSURED ,DECODE(CUST_TITLE,'1','Mr','4','Mrs','3','M/s','2','Ms')||'.'|| POL_ASSURED_NAME POL_ASSURED_NAME,'We are pleased to submit hereunder details of the Policies and their Fund Values you have subscribed with us as on' Header,'We hope that the above information meets your requirements and we remain at your disposal for any additional information you may require.' Footer,
+(select F_fund_value($P{POL_SYS_ID_PARAM}) from dual) Fund_Value
+
+FROM PT_IL_POLICY A,
+PM_CUSTOMER
+WHERE  A.POL_CUST_CODE=CUST_CODE
+AND POL_SYS_ID= $P{POL_SYS_ID_PARAM}]]>
+	</queryString>
+	<field name="POL_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POL_RES_ADDRESS_1" class="java.lang.String"/>
+	<field name="POL_RES_ADDRESS_2" class="java.lang.String"/>
+	<field name="POL_ISSUE_DT" class="java.sql.Timestamp"/>
+	<field name="POL_LC_FIRST_PREM" class="java.math.BigDecimal"/>
+	<field name="POL_LC_MODAL_PREM" class="java.math.BigDecimal"/>
+	<field name="POL_RES_ADDRESS_3" class="java.lang.String"/>
+	<field name="MOP" class="java.lang.String"/>
+	<field name="POL_FC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<field name="POL_ASSURED_NAME" class="java.lang.String"/>
+	<field name="HEADER" class="java.lang.String"/>
+	<field name="FOOTER" class="java.lang.String"/>
+	<field name="FUND_VALUE" class="java.lang.Double"/>
+	<title>
+		<band height="36" splitType="Stretch">
+			<staticText>
+				<reportElement x="200" y="0" width="175" height="20" uuid="bc220328-59ca-49ed-a9de-48c10d003737"/>
+				<textElement>
+					<font fontName="Verdana-Bold" size="10" isBold="false" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[FUND VALUE STATEMENT]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="541" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="555" height="541" uuid="56acd0ab-ce4c-4938-8ceb-174c2fce21dc"/>
+				<graphicElement>
+					<pen lineWidth="0.25" lineColor="#666666"/>
+				</graphicElement>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="19" y="33" width="531" height="20" isPrintWhenDetailOverflows="true" uuid="2402bd02-f239-4291-8bda-92db9740fefe"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HEADER}+" "+
+new SimpleDateFormat("dd-MMM-yy").format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="19" y="62" width="531" height="20" isPrintWhenDetailOverflows="true" uuid="b9e21a38-16c9-4689-9bdb-013e4720c37a"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="HP-Verdana" size="10" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_ASSURED_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="19" y="84" width="531" height="20" isPrintWhenDetailOverflows="true" uuid="4c26899a-012c-426f-9b44-11be767b7a81"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_RES_ADDRESS_1}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="19" y="106" width="531" height="20" isPrintWhenDetailOverflows="true" uuid="6229a0c7-54a4-4471-b4df-a9e303a06acb"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_LC_MODAL_PREM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="208" y="138" width="187" height="20" uuid="bfe82279-f4a4-4969-958b-4c080c692411"/>
+				<textElement textAlignment="Center">
+					<font fontName="Verdana-Bold" size="10" isBold="false" isUnderline="true" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Re: Fund Value Statement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="190" width="98" height="20" uuid="31eb0b67-9a95-4458-9ee0-c03e6b8560dd"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" isBold="false" isUnderline="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Policy Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="243" width="98" height="20" uuid="a5b6de88-f91b-4043-a534-408c8bb7d119"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" isBold="false" isUnderline="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Monthly Premium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="216" width="98" height="20" uuid="fbd37ab5-3444-4bd5-844e-36926cbdad45"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" isBold="false" isUnderline="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Inception Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="273" width="98" height="20" uuid="0cf8ced3-4cbe-4e3f-a473-f8c48393479f"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" isBold="false" isUnderline="false" pdfFontName="Helvetica"/>
+				</textElement>
+				<text><![CDATA[Sum Assured]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="303" width="98" height="20" uuid="a58053c6-7157-4ed8-a714-fddfa97ecd41"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" isBold="false" isUnderline="false" pdfFontName="Courier"/>
+				</textElement>
+				<text><![CDATA[Fund Value]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="117" y="190" width="433" height="20" isPrintWhenDetailOverflows="true" uuid="48a7c5f1-1ffb-481d-9410-67bca8bc2140"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="117" y="216" width="433" height="20" isPrintWhenDetailOverflows="true" uuid="67048cbc-a81e-4768-9ba0-f0d2c9323982"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd-MMM-yy").format($F{POL_ISSUE_DT})]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="137" y="243" width="413" height="20" isPrintWhenDetailOverflows="true" uuid="1ef3f8db-b1a4-4f2a-b15e-d09a21cef2b2"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_LC_FIRST_PREM}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="137" y="273" width="413" height="20" isPrintWhenDetailOverflows="true" uuid="4d72861a-8f7a-4051-8a20-a4a3ef8e1add"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_FC_SUM_ASSURED}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToBandHeight" x="19" y="347" width="531" height="20" isPrintWhenDetailOverflows="true" uuid="f60df14f-2dc0-473a-9a34-59dd87784377"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FOOTER}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="117" y="243" width="20" height="20" uuid="a61df118-199e-48dd-980e-d534123b20e2"/>
+				<textElement>
+					<font fontName="HP-Verdana"/>
+				</textElement>
+				<text><![CDATA[Rs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="117" y="273" width="20" height="20" uuid="a5dec64b-6060-4498-9024-32d8114a8ae6"/>
+				<textElement>
+					<font fontName="HP-Verdana"/>
+				</textElement>
+				<text><![CDATA[Rs.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="117" y="303" width="20" height="20" uuid="ebf7cdef-c98c-4f49-8392-4b43bd26f5a6"/>
+				<textElement>
+					<font fontName="HP-Verdana"/>
+				</textElement>
+				<text><![CDATA[Rs.]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement stretchType="RelativeToTallestObject" x="137" y="303" width="413" height="20" isPrintWhenDetailOverflows="true" uuid="e0a8fc32-be96-439f-8b2d-47e0be75b761"/>
+				<textElement>
+					<font fontName="HP-Verdana" size="10" pdfFontName="Helvetica"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FUND_VALUE}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

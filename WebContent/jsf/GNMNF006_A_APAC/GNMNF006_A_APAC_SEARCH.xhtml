@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_GNMNF006_A_APAC"
+				var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<table width="100%" border="0">
+				<tr>
+
+				</tr>
+				<h:form id="GNMNF006_A_APAC_SEARCH">
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading} #{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.errorMap['current'] !=null? GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.errorMap['current']:GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.warningMap['current']}" />
+
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.globalMsgRender}" />
+
+									<h:outputText id="warningMessages"
+										value="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+
+								</rich:simpleTogglePanel>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<table border="0" width="100%" cellpadding="0"
+							cellspacing="0" id="masthead">
+							<tr>
+								<td><h:outputText
+									value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+								<td><h:outputText
+									value="#{message.GNMNF006_A_APAC$MENU_ENTRY_SEARCH$$SEARCH_MENU_ID$caption}" />&nbsp;
+								<h:inputText
+									value="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.MENU_ID}" /></td>
+								<td><h:outputText
+									value="#{message.GNMNF006_A_APAC$MENU_ENTRY_SEARCH$$SEARCH_GROUP_ID$caption}" />&nbsp;
+								<h:inputText
+									value="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.GROUP_ID}" /></td>
+								<td><a4j:commandButton styleClass="button"
+									value="#{commonmsg.searchButton$caption}" id="a4link">
+									<a4j:support
+										action="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.fetchMenuUserPrivilegeList}"
+										event="onclick" reRender="dataTableId,errorPanel"></a4j:support>
+								</a4j:commandButton></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<rich:dataTable id="dataTableId"
+						value="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.QUERY_DATA_LIST}"
+						var="menuUser" cellpadding="5px" rows="10" border="1" width="100%">
+						<!-- Attach scroller as footer of the table-->
+						<f:facet name="footer">
+							<rich:datascroller id="dsID" pagesVar="pages"
+								pageIndexVar="index" align="right">
+							</rich:datascroller>
+						</f:facet>
+
+						<!-- next column -->
+
+						<rich:column
+							filterValue="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.MENU_ID_FILTER}"
+							filterBy="#{menuUser.UM_MENU_ID}" sortBy="#{menuUser.UM_MENU_ID}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.GNMNF006_A_APAC$MENU_ENTRY_SEARCH$$SEARCH_MENU_ID_LABEL$caption}" />
+							</f:facet>
+							<h:commandLink
+								action="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.redirect}">
+
+								<h:outputText value="#{menuUser.UM_MENU_ID}" />
+
+								<f:param name="rowId" value="#{menuUser.ROWID}" />
+							</h:commandLink>
+						</rich:column>
+						<rich:column
+							filterValue="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.GROUP_ID_FILTER}"
+							filterBy="#{menuUser.UM_GROUP_ID}"
+							sortBy="#{menuUser.UM_GROUP_ID}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.GNMNF006_A_APAC$MENU_ENTRY_SEARCH$$SEARCH_GROUP_ID_LABEL$caption}" />
+							</f:facet>
+							<h:outputText value="#{menuUser.UM_GROUP_ID} ">
+							</h:outputText>
+						</rich:column>
+						<rich:column
+							filterValue="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.INSERT_FILTER}"
+							filterBy="#{menuUser.UM_PI}" sortBy="#{menuUser.UM_PI}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.GNMNF006_A_APAC$MENU_ENTRY_SEARCH$$SEARCH_INSERT_ALLOWED_LABEL$caption}" />
+							</f:facet>
+							<h:outputText value="#{menuUser.UM_PI} ">
+							</h:outputText>
+						</rich:column>
+						<rich:column
+							filterValue="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.UPDATE_FILTER}"
+							filterBy="#{menuUser.UM_PU}" sortBy="#{menuUser.UM_PU}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.GNMNF006_A_APAC$MENU_ENTRY_SEARCH$$SEARCH_UPDATE_ALLOWED_LABEL$caption}" />
+							</f:facet>
+							<h:outputText value="#{menuUser.UM_PU} ">
+							</h:outputText>
+						</rich:column>
+						<rich:column
+							filterValue="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.DELETE_FILTER}"
+							filterBy="#{menuUser.UM_PD}" sortBy="#{menuUser.UM_PD}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.GNMNF006_A_APAC$MENU_ENTRY_SEARCH$$SEARCH_DELETE_ALLOWED_LABEL$caption}" />
+							</f:facet>
+							<h:outputText value="#{menuUser.UM_PD} ">
+							</h:outputText>
+						</rich:column>
+					</rich:dataTable>
+
+					<h:commandButton
+						binding="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.COMP_MENU_USER_INSERT_BUTTON}"
+						disabled="false" id="UI_M_BUT_MENU_USER_INSERT" rendered="true"
+						style="" styleClass="button" title=""
+						value="#{commonmsg.insertButton$caption}"
+						action="#{GNMNF006_A_APAC_COMPOSITE_ACTION.GNMNF006_A_APAC_SEARCH_ACTION_BEAN.insertNewMenuUser}" />
+
+				</h:form>
+
+				<tr>
+
+				</tr>
+			</table>
+		</f:view>
+	</ui:define>
+</ui:composition>

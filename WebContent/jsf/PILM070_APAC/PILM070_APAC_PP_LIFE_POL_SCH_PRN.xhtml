@@ -1,0 +1,454 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM070_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PP_LIFE_POL_SCH_PRN" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.backToSearch}"
+											id="AUTOID_1" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_2" 
+											styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../resources/images/back.png" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.saveRecord}"
+											id="SELFID_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="SELFID_2"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="SELFID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="SELFID_4" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SELFID_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="SELFID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											actionListener="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.deleteRow}"
+											id="SELFID_7" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="SELFID_8"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="r"
+												image="./../../images/deleteRecord.gif" />
+											<h:outputText id="SELFID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="SELFID_10" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SELFID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="SELFID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.PREVIOUS}"
+											id="SELFID_13" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SELFID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="SELFID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="SELFID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SELFID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="SELFID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="SELFID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SELFID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="SELFID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.errorMap['current'] !=null? PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.errorMap['current']: PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><h:outputText id="SELFID_22"
+									value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PP_LIFE_POL_SCH_PRN$caption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<!--	Changes Start From Here	-->
+					<tr>
+						<td colspan="3" vAlign="top" width="100%"><h:panelGroup
+							id="sectionDtls" style="border:0;height:15%;">
+							<table align="left" class="noborder" id="bordertable"
+								width="100%">
+								<tr>
+									<td colspan="5"><rich:dataTable
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.dataTable}"
+										border="0" cellpadding="0" id="PP_LIFE_POL_SCH_PRN"
+										rendered="false" rows="5"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.preQueryResultList}"
+										var="dataTable" width="100%">
+										<!-- First column -->
+										<rich:column filterBy="#{dataTable.PLSP_DS_TYPE}"
+											filterEvent="onkeyup"
+											filterValue="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.filterByPLSP_DS_TYPE}"
+											sortBy="#{table.PLSP_DS_TYPE}"
+											styleClass="#{dataTable.rowSelected}">
+											<f:facet name="header">
+												<h:outputText id="SELFID_23" styleClass="forumRowHighlight"
+													value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_DS_TYPE$caption}" />
+											</f:facet>
+											<a4j:commandLink
+												action="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.displayRecords}"
+												immediate="true" reRender="sectionDtls">
+												<h:outputText id="SELFID_24"
+													value="#{dataTable.PLSP_DS_TYPE} " />
+											</a4j:commandLink>
+										</rich:column>
+										<!-- Next column -->
+										<rich:column filterBy="#{dataTable.PLSP_DS_CODE}"
+											filterEvent="onkeyup"
+											filterValue="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.filterByPLSP_DS_CODE}"
+											sortBy="#{dataTable.PLSP_DS_CODE}"
+											styleClass="#{dataTable.rowSelected}">
+											<f:facet name="header">
+												<h:outputText id="SELFID_25" styleClass="forumRowHighlight"
+													value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_DS_CODE$caption}" />
+											</f:facet>
+											<h:outputText id="SELFID_26"
+												value="#{dataTable.PLSP_DS_CODE} " />
+										</rich:column>
+										<!-- Next column -->
+										<rich:column filterBy="#{dataTable.PLSP_PROD_CODE}"
+											filterEvent="onkeyup"
+											filterValue="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.filterByPLSP_PROD_CODE}"
+											sortBy="#{dataTable.PLSP_PROD_CODE}"
+											styleClass="#{dataTable.rowSelected}">
+											<f:facet name="header">
+												<h:outputText id="SELFID_27" styleClass="forumRowHighlight"
+													value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_PROD_CODE$caption}" />
+											</f:facet>
+											<h:outputText id="SELFID_28"
+												value="#{dataTable.PLSP_PROD_CODE} " />
+										</rich:column>
+										<!-- Attach scroller as footer of the table-->
+										<f:facet name="footer">
+											<h:panelGroup id="footerpanel" style="border:0">
+												<rich:datascroller align="right" />
+												<a4j:commandButton
+													actionListener="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.AddRow}"
+													binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.UI_M_BUT_ADD}"
+													id="SELFID_29" immediate="true"
+													reRender="errorPanel,sectionDtls" rendered="true"
+													style="width:81px" styleClass="button"
+													value="#{commonmsg.addNewButtonCaption}" />
+												<a4j:commandButton
+													actionListener="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.deleteRow}"
+													binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.UI_M_BUT_DELETE}"
+													id="SELFID_30" immediate="true"
+													reRender="errorPanel,sectionDtls" rendered="true"
+													style="width:81px" styleClass="button"
+													value="#{commonmsg.deleteButtonCaption}" />
+												<a4j:commandButton
+													actionListener="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.post}"
+													binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.UI_M_BUT_POST}"
+													id="SELFID_31" reRender="errorPanel,sectionDtls"
+													style="width:81px" styleClass="button"
+													value="#{commonmsg.postButtonCaption}" />
+											</h:panelGroup>
+										</f:facet>
+									</rich:dataTable></td>
+								</tr>
+								<!--COMPONENTS-->
+								<tr>
+									<td class="oddrowright"><h:outputLabel styleClass="label"
+										value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$UI_M_PLSP_MODULE_ID$caption}" />
+									</td>
+									<td class="oddrow"><h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_UI_M_PLSP_MODULE_ID}"
+										disabled="true" id="UI_M_PLSP_MODULE_ID" 
+										styleClass="inputsmall"
+										title="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$UI_M_PLSP_MODULE_ID$tooltip}"
+										validator="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.validateUI_M_PLSP_MODULE_ID}"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.DUMMY_BEAN.UI_M_PLSP_MODULE_ID}">
+										<a4j:support
+											actionListener="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.fireFieldValidation}"
+											event="onblur" id="SELFID_32" immediate="true"
+											reRender="UI_M_PLSP_MODULE_ID_DESC,errorPanel" />
+									</h:inputText> <h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_UI_M_PLSP_MODULE_ID_DESC}"
+										disabled="true" id="UI_M_PLSP_MODULE_ID_DESC"
+										styleClass="input"
+										title="#{PILM070_APAC$PP_LIFE_POL_SCH_PRN$UI_M_PLSP_MODULE_ID_DESC$tooltip}"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.DUMMY_BEAN.UI_M_PLSP_MODULE_ID_DESC}">
+									</h:inputText></td>
+									<td class="oddrow">&nbsp;</td>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_PLSP_SRNO_LABEL}"
+										for="PLSP_SRNO" id="PLSP_SRNO_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_SRNO$caption}" />
+									<h:graphicImage id="SELFID_33" style="" styleClass="searchimg"
+										value=".\..\..\images\mandatory.jpg" /></td>
+									<td class="oddrow"><h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_PLSP_SRNO}"
+										disabled="false" id="PLSP_SRNO" maxlength="3" rendered="true"
+										required="true" styleClass="input"
+										validator="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.validatePLSP_SRNO}"
+										title="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_SRNO$tooltip}"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.PP_LIFE_POL_SCH_PRN_BEAN.PLSP_SRNO}">
+											<a4j:support
+											actionListener="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.fireFieldValidation}"
+											event="onblur" id="SELFID_32A" immediate="true"
+											reRender="PLSP_SRNO, errorPanel" />
+										</h:inputText>
+									</td>
+								</tr>
+								<tr>
+									<td class="evenrowright"><h:outputLabel styleClass="label"
+										value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_DS_TYPE$caption}" />
+									</td>
+									<td class="evenrow"><h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_PLSP_DS_TYPE}"
+										id="PLSP_DS_TYPE" styleClass="inputsmall"
+										title="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_DS_TYPE$tooltip}"
+										validator="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.validatePLSP_DS_TYPE}"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.PP_LIFE_POL_SCH_PRN_BEAN.PLSP_DS_TYPE}">
+										<a4j:support
+											actionListener="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.fireFieldValidation}"
+											event="onblur" id="SELFID_34" immediate="true"
+											reRender="UI_M_PLSP_DS_TYPE_DESC, errorPanel" />
+									</h:inputText> <h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_UI_M_PLSP_DS_TYPE_DESC}"
+										disabled="true" id="UI_M_PLSP_DS_TYPE_DESC" styleClass="input"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.PP_LIFE_POL_SCH_PRN_BEAN.UI_M_PLSP_DS_TYPE_DESC}">
+									</h:inputText> <rich:suggestionbox for="PLSP_DS_TYPE" height="200"
+										id="SELFID_35"
+										suggestionAction="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.lovPLSP_DS_TYPE}"
+										var="agentCode" width="600">
+										<h:column>
+											<h:outputText id="SELFID_36" value="#{agentCode.code}" />
+										</h:column>
+										<h:column>
+											<h:outputText id="SELFID_37" value="#{agentCode.name}" />
+										</h:column>
+									</rich:suggestionbox> <h:graphicImage id="SELFID_38"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/Lov.gif" /></td>
+									<td class="evenrow">&nbsp;</td>
+									<td class="evenrowright"><h:outputLabel styleClass="label"
+										value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_DS_CODE$caption}" />
+									</td>
+									<td class="evenrow"><h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_PLSP_DS_CODE}"
+										id="PLSP_DS_CODE"  styleClass="inputsmall"
+										title="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_DS_CODE$tooltip}"
+										validator="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.validatePLSP_DS_CODE}"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.PP_LIFE_POL_SCH_PRN_BEAN.PLSP_DS_CODE}">
+										<a4j:support
+											actionListener="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.fireFieldValidation}"
+											event="onblur" id="SELFID_39" immediate="true"
+											reRender="UI_M_PLSP_DS_CODE_DESC, errorPanel" />
+									</h:inputText> <rich:suggestionbox for="PLSP_DS_CODE" height="200"
+										id="SELFID_40"
+										suggestionAction="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.lovPLSP_DS_CODE}"
+										var="DS_CODE" width="600">
+										<h:column>
+											<h:outputText id="SELFID_41" value="#{DS_CODE.code}" />
+										</h:column>
+										<h:column>
+											<h:outputText id="SELFID_42" value="#{DS_CODE.name}" />
+										</h:column>
+									</rich:suggestionbox> <h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_UI_M_PLSP_DS_CODE_DESC}"
+										disabled="true" id="UI_M_PLSP_DS_CODE_DESC" styleClass="input"
+										title="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$UI_M_PLSP_DS_CODE_DESC$tooltip}"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.PP_LIFE_POL_SCH_PRN_BEAN.UI_M_PLSP_DS_CODE_DESC}">
+									</h:inputText> <h:graphicImage id="SELFID_43"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/Lov.gif" /></td>
+								</tr>
+								<tr>
+									<td class="oddrowright"><h:outputLabel styleClass="label"
+										value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_PROD_CODE$caption}" />
+									</td>
+									<td class="oddrow"><h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_PLSP_PROD_CODE}"
+										id="PLSP_PROD_CODE" styleClass="inputsmall"
+										title="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_PROD_CODE$tooltip}"
+										validator="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.validatePLSP_PROD_CODE}"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.PP_LIFE_POL_SCH_PRN_BEAN.PLSP_PROD_CODE}">
+										<a4j:support
+											actionListener="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.fireFieldValidation}"
+											event="onblur" id="SELFID_44" immediate="true"
+											reRender="UI_M_PLSP_PROD_CODE_DESC,errorPanel" />
+									</h:inputText> <rich:suggestionbox for="PLSP_PROD_CODE" height="200"
+										id="SELFID_45"
+										suggestionAction="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.lovPLSP_PROD_CODE}"
+										var="PROD_CODE" width="600">
+										<h:column>
+											<h:outputText id="SELFID_46" value="#{PROD_CODE.code}" />
+										</h:column>
+										<h:column>
+											<h:outputText id="SELFID_47" value="#{PROD_CODE.name}" />
+										</h:column>
+									</rich:suggestionbox> <h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_UI_M_PLSP_PROD_CODE_DESC}"
+										disabled="true" id="UI_M_PLSP_PROD_CODE_DESC"
+										styleClass="input"
+										title="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$UI_M_PLSP_PROD_CODE_DESC$tooltip}"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.PP_LIFE_POL_SCH_PRN_BEAN.UI_M_PLSP_PROD_CODE_DESC}">
+									</h:inputText> <h:graphicImage id="SELFID_48"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/Lov.gif" /></td>
+									<td class="oddrow">&nbsp;</td>
+									<td class="oddrowright"><h:outputLabel styleClass="label"
+										value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_REPORT_ID$caption}" />
+									</td>
+									<td class="oddrow"><h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_PLSP_REPORT_ID}"
+										id="PLSP_REPORT_ID" styleClass="input"
+										title="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_REPORT_ID$tooltip}"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.PP_LIFE_POL_SCH_PRN_BEAN.PLSP_REPORT_ID}">
+									</h:inputText></td>
+								</tr>
+								<tr>
+									<td class="evenrowright"><h:outputLabel styleClass="label"
+										value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_REPORT_NAME$caption}" /></td>
+									<td class="evenrow"><h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_PLSP_REPORT_NAME}"
+										id="PLSP_REPORT_NAME" styleClass="input"
+										title="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_REPORT_NAME$caption}"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.PP_LIFE_POL_SCH_PRN_BEAN.PLSP_REPORT_NAME}">
+									</h:inputText></td>
+									<td class="evenrow">&nbsp;</td>
+									<td class="evenrowright"><h:outputLabel styleClass="label"
+										value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_TYPE$caption}" />
+									</td>
+									<td class="evenrow" colspan="4"><h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_PLSP_TYPE}"
+										id="PLSP_TYPE" styleClass="input" maxlength="3"
+										title="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_TYPE$tooltip}"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.PP_LIFE_POL_SCH_PRN_BEAN.PLSP_TYPE}">
+									</h:inputText></td>
+								</tr>
+								<tr>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_PLSP_MODULE_NAME_LABEL}"
+										for="PLSP_MODULE_NAME" id="PLSP_MODULE_NAME_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_MODULE_NAME$caption}" />
+									</td>
+									<td class="oddrow"><h:inputText
+										binding="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.COMP_PLSP_MODULE_NAME}"
+										disabled="false" id="PLSP_MODULE_NAME" maxlength="30"
+										rendered="true" required="false" styleClass="input"
+										title="#{message.PILM070_APAC$PP_LIFE_POL_SCH_PRN$PLSP_MODULE_NAME$tooltip}"
+										value="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.PP_LIFE_POL_SCH_PRN_BEAN.PLSP_MODULE_NAME}" />
+									</td>
+									<td class="oddrow" colspan="2"></td>
+									<td class="oddrow" colspan="2"></td>
+								</tr>
+							</table>
+						</h:panelGroup></td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM070_APAC_PP_LIFE_POL_SCH_PRN_ACTION.saveRecord}"
+											id="SELFID_49" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="SELFID_50"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="SELFID_51"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

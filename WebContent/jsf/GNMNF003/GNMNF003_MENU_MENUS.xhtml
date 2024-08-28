@@ -1,0 +1,787 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.onLoad}">
+			<f:loadBundle basename="messageProperties_GNMNF003_A" var="message" />
+			<h:form id="MENU_MENUS">
+				<table cellpadding="0" cellspacing="0" width="100%" border="0">
+					<tr>
+						<td colspan="3" width="100%" vAlign="top">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle"
+											action="#{GNMNF003_COMPOSITE_ACTION.backButtonAction}"
+											immediate="true" id="commandLink_backButtonAction">
+											<h:graphicImage style="border: thin solid white"
+												value="./../../images/back.png" />
+											<h:outputText value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="false"
+											action="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.deleteRecord}"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										
+<!-- Delete Link -->
+						<a4j:commandLink id="DELETERECORD_TOOL_HEADER1"
+									styleClass="toolbarCommandLinkStyle"
+									style="text-decoration:none">
+							<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER1"
+								styleClass="toolbarImageStyle"
+								value="./../../resources/images/deleteRecord.gif" />
+							<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER1"
+								styleClass="toolbaroutputTextStyle"
+								value="#{menumessage.jsf$header$image$deleteRecord}" />
+							<rich:componentControl
+								id="DELETE_COMP_CONTROL"
+								for="DELETE_PANEL" 
+								attachTo="DELETERECORD_TOOL_HEADER1" 
+								operation="show" 
+								event="onclick"/>
+						</a4j:commandLink>
+						<!-- Delete confirmation Confirmation popup -->
+						<rich:modalPanel id="DELETE_PANEL" width="300" height="110">
+						     <f:facet name="header">
+						         <h:panelGroup>
+						              <h:outputText value="#{commonmsg.premia$broker$delete$confirmation$caption}" style="color: #FFFFFF; font-size: 14px;font-weight: bold;"></h:outputText>
+						         </h:panelGroup>
+						     </f:facet>
+						     <f:facet name="controls">
+						         <h:panelGroup>
+						              <h:graphicImage value="./../../resources/images/close.png" 
+						              		style="cursor:pointer" id="DELETE_PANEL_hidelink"/>
+						              <rich:componentControl for="DELETE_PANEL" 
+							              	attachTo="DELETE_PANEL_hidelink" 
+							              	operation="hide" event="onclick"/>
+						         </h:panelGroup>
+						     </f:facet>
+							<table align="center">
+								<tr align="center">
+									<td>
+										<h:outputText value="#{commonmsg.premia$broker$delete$confirmation$message}"/>
+									</td>
+								</tr>
+								<tr align="center">
+								<td>
+							          <h:commandButton value="#{commonmsg.premia$broker$delete$confirmation$ok}" id="DELETE_PANEL_continuebutton" 
+							          		   styleClass="button"
+							          		   style="width:65px;height:20px;"
+							                   action="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.deleteRecord}">
+							              <rich:componentControl for="DELETE_PANEL" 
+							                  attachTo="DELETE_PANEL_continuebutton" 
+							                  operation="hide" event="onclick"/>
+							          </h:commandButton>
+							          <rich:spacer width="10" height="25"></rich:spacer>
+							          <a4j:commandButton value="#{commonmsg.premia$broker$delete$confirmation$cancel}"
+							          		styleClass="button" 
+							          		style="width:65px;height:20px;"
+							          		id="DELETE_PANEL_cancelbutton" immediate="true">
+							               <rich:componentControl for="DELETE_PANEL" 
+							               			attachTo="DELETE_PANEL_cancelbutton" 
+							               			operation="hide" event="onclick"/>
+							          </a4j:commandButton>
+							          <br/>
+								</td>
+								</tr>
+							</table>
+						</rich:modalPanel>										
+
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{GNMNF003_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.errorMap['current'] !=null? GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.errorMap['current']: GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.globalMsgRender}" />
+									<h:outputText id="warningMessages"
+										value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel id="FORM_CAPTION"
+									value="#{message.GNMNF003$MENU_MENUS$displayCaption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 500px; overflow: auto;">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td width="90%" vAlign="top">
+								<table id="bordertable" align="left" width="100%">
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_ID_LABEL}"
+											for="MENU_ID" id="MENU_ID_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.GNMNF003$MENU_MENUS$MENU_ID$caption}" /> <h:graphicImage
+											style="" value="./../../images/mandatory.jpg" /></td>
+										<td align="left"><h:inputText
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_ID}"
+											disabled="false" id="MENU_ID" maxlength="10" rendered="true"
+											required="true" style="height:23px;width:96px;"
+											styleClass="forumRowHighlight"
+											title="#{message.GNMNF003$MENU_MENUS$MENU_ID$tooltip}"
+											validator="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_ID_Validator}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_ID}">
+											<a4j:support
+												actionListener="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_MENU_ID" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_SCR_NAME_LABEL}"
+											for="MENU_SCR_NAME" id="MENU_SCR_NAME_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.GNMNF003$MENU_MENUS$MENU_SCR_NAME$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td align="left"><h:inputText
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_SCR_NAME}"
+											disabled="false" id="MENU_SCR_NAME" maxlength="30"
+											rendered="true" required="true"
+											style="height:23px;width:227px;"
+											styleClass="forumRowHighlight"
+											title="#{message.GNMNF003$MENU_MENUS$MENU_SCR_NAME$tooltip}"
+											validator="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_SCR_NAME_Validator}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_SCR_NAME}">
+											<a4j:support
+												actionListener="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_MENU_SCR_NAME" immediate="true"
+												reRender="errorPanel,MENU_OPTION_DESC" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARENT_ID_LABEL}"
+											for="MENU_PARENT_ID" id="MENU_PARENT_ID_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.GNMNF003$MENU_MENUS$MENU_PARENT_ID$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td align="left"><h:inputText
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARENT_ID}"
+											disabled="false" id="MENU_PARENT_ID" maxlength="10"
+											rendered="true" required="true"
+											style="height:23px;width:96px;"
+											styleClass="forumRowHighlight"
+											title="#{message.GNMNF003$MENU_MENUS$MENU_PARENT_ID$tooltip}"
+											validator="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_PARENT_ID_Validator}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_PARENT_ID}">
+											<a4j:support
+												actionListener="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_MENU_PARENT_ID" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText> <h:inputText
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_UI_M_MENU_SCR_NAME}"
+											disabled="true" maxlength="50" rendered="true" id="UI_M_MENU_SCR_NAME"
+											required="false" style="height:23px;width:227px;"
+											styleClass="forumRowHighlight"
+											title="#{message.GNMNF003$MENU_MENUS$UI_M_MENU_SCR_NAME$tooltip}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.UI_M_MENU_SCR_NAME}" />
+											<rich:suggestionbox height="200" width="250"
+														id="GNMNF003_MENU_ID_LOV"
+														suggestionAction="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.lovParentID}"
+														for="MENU_PARENT_ID" var="lov" immediate="true">
+														<h:column id="MENU_PARENT_ID_LOV_column">
+															<h:outputText id="MENU_PARENT_ID_LOVoutputtxt_lovcode"
+																value="#{lov.lovCode}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="MENU_PARENT_ID_LOV_lovName"
+																value="#{lov.lovName}" />
+														</h:column>
+
+														<a4j:support id="MENU_PARENT_ID_name_a4j" event="onselect"
+															immediate="true" ajaxSingle="true"
+															reRender="errorPanel,UI_M_MENU_SCR_NAME">
+															<f:setPropertyActionListener value="#{lov.lovName}"
+																target="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.UI_M_MENU_SCR_NAME}" />
+														</a4j:support>
+
+													</rich:suggestionbox> <h:graphicImage id="MENU_PARENT_ID_graphicImage_Lovgif" style=""
+														value="./../../images/Lov.gif" />
+										</td>
+										
+										<td>&nbsp;</td>
+									</tr>
+									<tr>
+									<td id="td-background" align="left"><h:outputLabel
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_OPTION_LABEL}"
+											for="MENU_OPTION" id="MENU_OPTION_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.GNMNF003$MENU_MENUS$MENU_OPTION$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td align="left"><h:inputText
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_OPTION}"
+											disabled="false" id="MENU_OPTION" maxlength="4"
+											rendered="true" required="true"
+											style="height:23px;width:96px;"
+											styleClass="forumRowHighlight"
+											title="#{message.GNMNF003$MENU_MENUS$MENU_OPTION$tooltip}"
+											validator="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_OPTION_Validator}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_OPTION}">
+											<a4j:support
+												actionListener="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_MENU_OPTION" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_OPTION_DESC_LABEL}"
+											for="MENU_OPTION_DESC" id="MENU_OPTION_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.GNMNF003$MENU_MENUS$MENU_OPTION_DESC$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td align="left"><h:inputText
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_OPTION_DESC}"
+											disabled="false" id="MENU_OPTION_DESC" maxlength="50"
+											rendered="true" required="true"
+											style="height:23px;width:227px;"
+											styleClass="forumRowHighlight"
+											title="#{message.GNMNF003$MENU_MENUS$MENU_OPTION_DESC$tooltip}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_OPTION_DESC}" />
+										</td>
+										</tr>
+										<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_DISP_SEQ_NO_LABEL}"
+											for="MENU_DISP_SEQ_NO" id="MENU_DISP_SEQ_NO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.GNMNF003$MENU_MENUS$MENU_DISP_SEQ_NO$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td align="left"><h:inputText
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_DISP_SEQ_NO}"
+											disabled="false" id="MENU_DISP_SEQ_NO" maxlength="5"
+											rendered="true" required="true"
+											style="height:23px;width:96px;"
+											styleClass="forumRowHighlight"
+											title="#{message.GNMNF003$MENU_MENUS$MENU_DISP_SEQ_NO$tooltip}"
+											validator="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_DISP_SEQ_NO_Validator}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_DISP_SEQ_NO}">
+											<a4j:support
+												actionListener="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="SUPPORT_MENU_DISP_SEQ_NO"
+												immediate="true" reRender="errorPanel" />
+										</h:inputText></td>
+										<td>&nbsp;</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_HELP_TEXT1_LABEL}"
+											for="MENU_HELP_TEXT1" id="MENU_HELP_TEXT1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.GNMNF003$MENU_MENUS$MENU_HELP_TEXT1$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_HELP_TEXT1}"
+											disabled="false" id="MENU_HELP_TEXT1" maxlength="60"
+											rendered="true" required="false"
+											style="height:23px;width:323px;"
+											styleClass="forumRowHighlight"
+											title="#{message.GNMNF003$MENU_MENUS$MENU_HELP_TEXT1$tooltip}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_HELP_TEXT1}" />
+										</td>
+										<td>&nbsp;</td>
+										
+									</tr>
+									<tr>
+									<td id="td-background" align="left"><h:outputLabel
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_HELP_TEXT2_LABEL}"
+											for="MENU_HELP_TEXT2" id="MENU_HELP_TEXT2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.GNMNF003$MENU_MENUS$MENU_HELP_TEXT2$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_HELP_TEXT2}"
+											disabled="false" id="MENU_HELP_TEXT2" maxlength="60"
+											rendered="true" required="false"
+											style="height:23px;width:323px;"
+											styleClass="forumRowHighlight"
+											title="#{message.GNMNF003$MENU_MENUS$MENU_HELP_TEXT2$tooltip}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_HELP_TEXT2}" />
+										</td>
+										<td>&nbsp;</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_ACTION_TYPE_LABEL}"
+											for="MENU_ACTION_TYPE" id="MENU_ACTION_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.GNMNF003$MENU_MENUS$MENU_ACTION_TYPE$caption}" />
+										</td>
+										<td align="left"><h:selectOneMenu
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_ACTION_TYPE}"
+											disabled="false" id="MENU_ACTION_TYPE" rendered="true"
+											required="true" style="height:23px;width:110px;"
+											styleClass="combostyleclass"
+											title="#{message.GNMNF003$MENU_MENUS$MENU_ACTION_TYPE$tooltip}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_ACTION_TYPE}">
+											<f:selectItems id="SEL_ITEMS_MENU_ACTION_TYPE"
+												value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.listMENU_ACTION_TYPE}" />
+										</h:selectOneMenu></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_ACTION_LABEL}"
+											for="MENU_ACTION" id="MENU_ACTION_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.GNMNF003$MENU_MENUS$MENU_ACTION$caption}" />
+										</td>
+										<td align="left"><h:inputText
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_ACTION}"
+											disabled="false" id="MENU_ACTION" maxlength="60"
+											rendered="true" required="false"
+											style="height:23px;width:227px;"
+											styleClass="forumRowHighlight"
+											title="#{message.GNMNF003$MENU_MENUS$MENU_ACTION$tooltip}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_ACTION}" />
+										</td>
+									</tr>
+									<tr>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PASS_FLAG_LABEL}"
+											for="MENU_PASS_FLAG" id="MENU_PASS_FLAG_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.GNMNF003$MENU_MENUS$MENU_PASS_FLAG$caption}" />
+										</td>
+										<td align="left"><h:selectBooleanCheckbox
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PASS_FLAG}"
+											disabled="false" id="MENU_PASS_FLAG" rendered="true"
+											styleClass="checkstyleclass"
+											title="#{message.GNMNF003$MENU_MENUS$MENU_PASS_FLAG$tooltip}"
+											validator="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.validateMENU_PASS_FLAG}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.CHECK_MENU_PASS_FLAG}">
+											<a4j:support
+												actionListener="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.fireFieldValidation}"
+												event="onclick" id="SUPPORT_MENU_PASS_FLAG" immediate="true"
+												reRender="errorPanel" />
+										</h:selectBooleanCheckbox></td>
+										<td>&nbsp;</td>
+										<td id="td-background" align="left"><h:outputLabel
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_MODE_LABEL}"
+											for="MENU_MODE" id="MENU_MODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.GNMNF003$MENU_MENUS$MENU_MODE$caption}" /></td>
+										<td align="left"><h:inputText
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_MODE}"
+											disabled="false" id="MENU_MODE" maxlength="10"
+											rendered="true" required="false"
+											style="height:23px;width:96px;"
+											styleClass="forumRowHighlight"
+											title="#{message.GNMNF003$MENU_MENUS$MENU_MODE$tooltip}"
+											value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_MODE}" />
+										</td>
+									</tr>
+									<tr>
+										<td colspan="5">
+											<rich:spacer height="20"></rich:spacer>
+											<fieldset>
+												<legend class="label" style="font-weight: bold">#{message.GNMNF003$MENU_MENUS$ADDTN$INFO$caption}</legend>
+												<table width="100%" id="additnlInfoTable">
+													<tr>
+														<td id="td-background" align="left"><h:outputLabel
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_LABEL}"
+															for="MENU_PARAMETER" id="MENU_PARAMETER_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER$caption}" />
+														</td>
+														<td>&nbsp;</td>
+													</tr>
+													<tr>
+														<td id="td-background" align="left"><h:outputLabel
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_1_LABEL}"
+															for="MENU_PARAMETER_1" id="MENU_PARAMETER_1_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_1$caption}" />
+														</td>
+														<td align="left"><h:inputText
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_1}"
+															disabled="false" id="MENU_PARAMETER_1" maxlength="250"
+															rendered="true" required="false"
+															style="height:23px;width:96px;"
+															styleClass="forumRowHighlight"
+															title="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_1$tooltip}"
+															value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_PARAMETER_1}" />
+														</td>
+														<td>&nbsp;</td>
+														<td id="td-background" align="left"><h:outputLabel
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_2_LABEL}"
+															for="MENU_PARAMETER_2" id="MENU_PARAMETER_2_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_2$caption}" />
+														</td>
+														<td align="left"><h:inputText
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_2}"
+															disabled="false" id="MENU_PARAMETER_2" maxlength="250"
+															rendered="true" required="false"
+															style="height:23px;width:96px;"
+															styleClass="forumRowHighlight"
+															title="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_2$tooltip}"
+															value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_PARAMETER_2}" />
+														</td>
+													</tr>
+													<tr>
+														<td id="td-background" align="left"><h:outputLabel
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_3_LABEL}"
+															for="MENU_PARAMETER_3" id="MENU_PARAMETER_3_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_3$caption}" />
+														</td>
+														<td align="left"><h:inputText
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_3}"
+															disabled="false" id="MENU_PARAMETER_3" maxlength="250"
+															rendered="true" required="false"
+															style="height:23px;width:96px;"
+															styleClass="forumRowHighlight"
+															title="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_3$tooltip}"
+															value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_PARAMETER_3}" />
+														</td>
+														<td>&nbsp;</td>
+														<td id="td-background" align="left"><h:outputLabel
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_4_LABEL}"
+															for="MENU_PARAMETER_4" id="MENU_PARAMETER_4_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_4$caption}" />
+														</td>
+														<td align="left"><h:inputText
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_4}"
+															disabled="false" id="MENU_PARAMETER_4" maxlength="250"
+															rendered="true" required="false"
+															style="height:23px;width:96px;"
+															styleClass="forumRowHighlight"
+															title="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_4$tooltip}"
+															value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_PARAMETER_4}" />
+														</td>
+													</tr>
+													<tr>
+														<td id="td-background" align="left"><h:outputLabel
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_5_LABEL}"
+															for="MENU_PARAMETER_5" id="MENU_PARAMETER_5_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_5$caption}" />
+														</td>
+														<td align="left"><h:inputText
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_5}"
+															disabled="false" id="MENU_PARAMETER_5" maxlength="250"
+															rendered="true" required="false"
+															style="height:23px;width:96px;"
+															styleClass="forumRowHighlight"
+															title="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_5$tooltip}"
+															value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_PARAMETER_5}" />
+														</td>
+														<td>&nbsp;</td>
+														<td id="td-background" align="left"><h:outputLabel
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_6_LABEL}"
+															for="MENU_PARAMETER_6" id="MENU_PARAMETER_6_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_6$caption}" />
+														</td>
+														<td align="left"><h:inputText
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_6}"
+															disabled="false" id="MENU_PARAMETER_6" maxlength="250"
+															rendered="true" required="false"
+															style="height:23px;width:96px;"
+															styleClass="forumRowHighlight"
+															title="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_6$tooltip}"
+															value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_PARAMETER_6}" />
+														</td>
+													</tr>
+													<tr>
+														<td id="td-background" align="left"><h:outputLabel
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_7_LABEL}"
+															for="MENU_PARAMETER_7" id="MENU_PARAMETER_7_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_7$caption}" />
+														</td>
+														<td align="left"><h:inputText
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_7}"
+															disabled="false" id="MENU_PARAMETER_7" maxlength="250"
+															rendered="true" required="false"
+															style="height:23px;width:96px;"
+															styleClass="forumRowHighlight"
+															title="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_7$tooltip}"
+															value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_PARAMETER_7}" />
+														</td>
+														<td>&nbsp;</td>
+														<td id="td-background" align="left"><h:outputLabel
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_8_LABEL}"
+															for="MENU_PARAMETER_8" id="MENU_PARAMETER_8_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_8$caption}" />
+														</td>
+														<td align="left"><h:inputText
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_8}"
+															disabled="false" id="MENU_PARAMETER_8" maxlength="250"
+															rendered="true" required="false"
+															style="height:23px;width:96px;"
+															styleClass="forumRowHighlight"
+															title="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_8$tooltip}"
+															value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_PARAMETER_8}" />
+														</td>
+													</tr>
+													<tr>
+														<td id="td-background" align="left"><h:outputLabel
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_9_LABEL}"
+															for="MENU_PARAMETER_9" id="MENU_PARAMETER_9_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_9$caption}" />
+														</td>
+														<td align="left"><h:inputText
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_9}"
+															disabled="false" id="MENU_PARAMETER_9" maxlength="250"
+															rendered="true" required="false"
+															style="height:23px;width:96px;"
+															styleClass="forumRowHighlight"
+															title="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_9$tooltip}"
+															value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_PARAMETER_9}" />
+														</td>
+														<td>&nbsp;</td>
+														<td id="td-background" align="left"><h:outputLabel
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_10_LABEL}"
+															for="MENU_PARAMETER_10" id="MENU_PARAMETER_10_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_10$caption}" />
+														</td>
+														<td align="left"><h:inputText
+															binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_MENU_PARAMETER_10}"
+															disabled="false" id="MENU_PARAMETER_10" maxlength="250"
+															rendered="true" required="false"
+															style="height:23px;width:96px;"
+															styleClass="forumRowHighlight"
+															title="#{message.GNMNF003$MENU_MENUS$MENU_PARAMETER_10$tooltip}"
+															value="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.MENU_MENUS_BEAN.MENU_PARAMETER_10}" />
+														</td>
+													</tr>
+												</table>
+											</fieldset>
+										</td>
+									</tr>
+								</table>
+								</td>
+								<td width="10%" vAlign="top">
+								<table>
+									<tr>
+										<td><h:commandButton
+											binding="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.COMP_UI_M_BUT_MENU_LOV}"
+											disabled="false" id="UI_M_BUT_MENU_LOV" rendered="false"
+											styleClass="button"
+											title="#{message.GNMNF003$MENU_MENUS$UI_M_BUT_MENU_LOV$tooltip}"
+											value="#{message.GNMNF003$MENU_MENUS$UI_M_BUT_MENU_LOV$caption}" />
+										</td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+									action="#{GNMNF003_COMPOSITE_ACTION.MENU_MENUS_ACTION_BEAN.saveRecord}"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle" value="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,511 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+		<f:view
+			beforePhase="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PT051_A" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			<h:form id="PT_AGENT_BUDGET">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar id="serial_1" styleClass="toolBarStyle"
+									width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+
+										<h:commandLink
+											action="#{PT051_A_SEARCHACTION.backToSearch}"
+											id="serial_2" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_3"
+												styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="serial_4"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.saveRecord}"
+											id="serial_5" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_6"
+												styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="serial_7"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.saveNextRecord}"
+											id="serial_8" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_9"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="serial_10"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.deleteRecord}"
+											id="serial_11" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_12"
+												styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="serial_13"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink disabled="true" id="serial_14" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_15"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="serial_16"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.goToPT051_A_AGENT_SEARCH_PAGE}"
+											id="serial_17" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_18"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="serial_19"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.goToPT_AGENT_BUDGET_RANK}"
+											id="serial_20" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_21"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="serial_22"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.goToPT_AGENT_BUDGET_BREAKUP}"
+											id="serial_23" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_24"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="serial_25"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.errorMap['current'] !=null? PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.errorMap['current']:PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="15%" valign="top" width="100%">
+						<table class="noborder" width="100%">
+							<!-- Tab implementation -->
+							<h:inputHidden id="myhidden"
+								value="#{PT051_A_COMPOSITE_ACTION.tabbedBar.tabClicked}" />
+							<h:panelGroup id="mypanel" style="border:0">
+								<table class="noborder" id="globalLink" width="100%">
+									<tr>
+										<td width="90%"><a4j:repeat id="serial_26"
+											value="#{PT051_A_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+											var="currtab">
+
+											<h:commandLink
+												action="#{PT051_A_COMPOSITE_ACTION.tabbedBar.tabAction}"
+												disabled="#{currtab.disabled}" id="serial_27"
+												onclick="document.getElementById('PT_AGENT_BUDGET:myhidden').value='#{currtab.id}'"
+												styleClass="#{currtab.styleString}" value="#{currtab.value}" />
+
+										</a4j:repeat></td>
+									<!--  	<td width="*"><a4j:commandButton
+											action="#{PT051_A_COMPOSITE_ACTION.tabbedBar.gotoFirstTab}"
+											alt="first"
+											disabled="#{PT051_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+											id="serial_28" image="./../../images/firstrec.gif"
+											reRender="mypanel" /> <a4j:commandButton
+											action="#{PT051_A_COMPOSITE_ACTION.tabbedBar.gotoPrevTab}"
+											alt="previous"
+											disabled="#{PT051_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+											id="AUTO_ID_1" image="./../../images/prevpage.gif"
+											reRender="mypanel" /><a4j:commandButton
+											action="#{PT051_A_COMPOSITE_ACTION.tabbedBar.gotoNextTab}"
+											alt="next"
+											disabled="#{PT051_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+											id="AUTO_ID_2" image="./../../images/nextpage.gif"
+											reRender="mypanel" /> <a4j:commandButton
+											action="#{PT051_A_COMPOSITE_ACTION.tabbedBar.gotoLastTab}"
+											alt="last"
+											disabled="#{PT051_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+											id="AUTO_ID_3" image="./../../images/lastRecord.gif"
+											reRender="mypanel" /></td> -->
+									</tr>
+								</table>
+							</h:panelGroup>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 400px; overflow: auto;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+								<td valign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_ABGT_AGENT_CODE_LABEL}"
+											for="ABGT_AGENT_CODE" id="ABGT_AGENT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PT051_A$PT_AGENT_BUDGET$ABGT_AGENT_CODE$caption}" />
+										<h:graphicImage id="serial_29" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_ABGT_AGENT_CODE}"
+											disabled="false" id="ABGT_AGENT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="Enter the agency manager/ agency Code" 
+											validator="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.ABGT_AGENT_CODE_Validator}"
+											value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.PT_AGENT_BUDGET_BEAN.ABGT_AGENT_CODE}">
+
+											<a4j:support
+												actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="serial_30" immediate="true"
+												oncomplete="setFocus('PT_AGENT_BUDGET:ABGT_MODULE_ID','PT_AGENT_BUDGET:ABGT_AGENT_CODE')"
+												reRender="errorPanel,UI_M_ABGT_AGENCY_CODE,UI_M_ABGT_AGENCY_NAME,ABGT_MODULE_ID" />
+												
+										</h:inputText> <rich:suggestionbox for="ABGT_AGENT_CODE" height="200"
+											id="AUTO_ID_4"
+											suggestionAction="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.amCodeLov}"
+											var="amCode" width="400">
+											<h:column>
+												<h:outputText id="serial_31" value="#{amCode.CUST_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="serial_32" value="#{amCode.CUST_NAME}" />
+											</h:column>
+											<a4j:support event="onselect" immediate="true"
+												ajaxSingle="true" id="COMP_1_INPUT_SUGG_SUPPORT"
+												reRender="errorPanel,UI_M_ABGT_AGENT_NAME">
+												<f:setPropertyActionListener value="#{amCode.CUST_NAME}"
+													target="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.PT_AGENT_BUDGET_BEAN.UI_M_ABGT_AGENT_NAME}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText 
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_UI_M_ABGT_AGENT_NAME}"
+											disabled="true" id="UI_M_ABGT_AGENT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.PT_AGENT_BUDGET_BEAN.UI_M_ABGT_AGENT_NAME}">
+										</h:inputText> <h:graphicImage id="serial_33" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+											<td class="oddrowright"></td>
+											<td class="oddrowright"></td>
+											<td class="oddrowright"></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_UI_M_ABGT_AGENCY_CODE_LABEL}"
+											for="UI_M_ABGT_AGENCY_CODE" id="UI_M_ABGT_AGENCY_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PT051_A$PT_AGENT_BUDGET$UI_M_ABGT_AGENCY_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_UI_M_ABGT_AGENCY_CODE}"
+											disabled="true" id="UI_M_ABGT_AGENCY_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the value of Agency Code"
+											value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.PT_AGENT_BUDGET_BEAN.UI_M_ABGT_AGENCY_CODE}" />
+										<h:inputText
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_UI_M_ABGT_AGENCY_NAME}"
+											disabled="true" id="UI_M_ABGT_AGENCY_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.PT_AGENT_BUDGET_BEAN.UI_M_ABGT_AGENCY_NAME}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_ABGT_MODULE_ID_LABEL}"
+											for="ABGT_MODULE_ID" id="ABGT_MODULE_ID_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PT051_A$PT_AGENT_BUDGET$ABGT_MODULE_ID$caption}" />
+										<h:graphicImage id="serial_34" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_ABGT_MODULE_ID}"
+											disabled="false" id="ABGT_MODULE_ID" rendered="true" 
+											required="false" styleClass="input" title="Select the module id"
+											validator="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.ABGT_MODULE_ID_Validator}"
+											value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.PT_AGENT_BUDGET_BEAN.ABGT_MODULE_ID}">
+											<f:selectItems id="serial_36"
+												value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.ABGT_MODULE_ID_LIST}" />
+											<a4j:support
+												actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="serial_1230" immediate="true"
+												oncomplete="setFocus('PT_AGENT_BUDGET:ABGT_FM_DTInputDate','PT_AGENT_BUDGET:ABGT_MODULE_ID')"
+												reRender="ABGT_FM_DT,errorPanel" />
+										</h:selectOneMenu></td>
+											<td class="oddrowright"></td>
+											<td class="oddrowright"></td>
+											<td class="oddrowright"></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_ABGT_FM_DT_LABEL}"
+											for="ABGT_FM_DT" id="ABGT_FM_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PT051_A$PT_AGENT_BUDGET$ABGT_FM_DT$caption}" />
+										</td>
+										<td class="evenrow"><span title="Enter period from date" /><rich:calendar
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_ABGT_FM_DT}"
+											datePattern="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.datePattern}" disabled="false"
+											enableManualInput="true" id="ABGT_FM_DT"
+											inputClass="calendarinput" inputSize="11" rendered="true"
+											required="false" 
+											validator="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.ABGT_FM_DT_Validator}"
+											value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.PT_AGENT_BUDGET_BEAN.ABGT_FM_DT}">
+											<a4j:support
+												actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.fireFieldValidation}"
+												event="oninputblur" id="serial_412" immediate="true"
+												onsubmit="formatDate('PT_AGENT_BUDGET:ABGT_FM_DT')"
+												oncomplete="setFocus('PT_AGENT_BUDGET:ABGT_TO_DTInputDate','PT_AGENT_BUDGET:ABGT_FM_DTInputDate')"
+												reRender="ABGT_TO_DT,errorPanel" />
+											<a4j:support
+												actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="serial_411" immediate="true"
+												oncomplete="setFocus('PT_AGENT_BUDGET:ABGT_TO_DTInputDate','PT_AGENT_BUDGET:ABGT_FM_DTInputDate')"
+												reRender="ABGT_TO_DT,errorPanel" />
+											
+										</rich:calendar></td>
+
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_ABGT_TO_DT_LABEL}"
+											for="ABGT_TO_DT" id="ABGT_TO_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PT051_A$PT_AGENT_BUDGET$ABGT_TO_DT$caption}" />
+										</td>
+										<td class="evenrow"><span id="serial_42"
+											title="Enter period to date" /><rich:calendar
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_ABGT_TO_DT}"
+											datePattern="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.datePattern}" 
+											disabled="false"
+											enableManualInput="true" id="ABGT_TO_DT" 
+											inputClass="calendarinput" inputSize="11" rendered="true"
+											required="false"
+											validator="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.ABGT_TO_DT_Validator}"
+											value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.PT_AGENT_BUDGET_BEAN.ABGT_TO_DT}">
+											<a4j:support
+												actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.fireFieldValidation}"
+												event="oninputblur" id="serial_43" immediate="true"
+												onsubmit="formatDate('PT_AGENT_BUDGET:ABGT_TO_DT')"
+												reRender="errorPanel" 
+												oncomplete="setFocus('PT_AGENT_BUDGET:ABGT_NO_OF_POL','PT_AGENT_BUDGET:ABGT_TO_DTInputDate')"/>
+											<a4j:support
+												actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.fireFieldValidation}"
+												event="oninputchanged" id="serial_44" immediate="true"
+												oncomplete="setFocus('PT_AGENT_BUDGET:ABGT_NO_OF_POL','PT_AGENT_BUDGET:ABGT_TO_DTInputDate')"
+												reRender="errorPanel" />
+											
+										</rich:calendar></td>
+									</tr>
+									
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_ABGT_NO_OF_POL_LABEL}"
+											for="ABGT_NO_OF_POL" id="ABGT_NO_OF_POL_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PT051_A$PT_AGENT_BUDGET$ABGT_NO_OF_POL$caption}" />
+										<h:graphicImage id="serial_38" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_ABGT_NO_OF_POL}"
+											disabled="false" id="ABGT_NO_OF_POL" maxlength="4"
+											rendered="true" required="true" styleClass="inputNumeric"
+											title="Enter the budgeted number of policies for the agency"
+											validator="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.No_Of_POLICIES_WhenValidateItem}"
+											value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.PT_AGENT_BUDGET_BEAN.ABGT_NO_OF_POL}">
+											<f:validateDoubleRange minimum="0" maximum="9999"/>
+											<a4j:support
+												actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="serial_56122" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText></td>
+
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_ABGT_LC_PREM_LABEL}"
+											for="ABGT_LC_PREM" id="ABGT_LC_PREM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PT051_A$PT_AGENT_BUDGET$ABGT_LC_PREM$caption}" />
+										<h:graphicImage id="serial_39" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.COMP_ABGT_LC_PREM}"
+											disabled="false" id="ABGT_LC_PREM" maxlength="18"
+											rendered="true" required="true" styleClass="inputNumeric"
+											title="Enter the budgeted premium for the agency" 
+											validator="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.ABGT_LC_PREM_WhenValidateItem}"
+											value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.PT_AGENT_BUDGET_BEAN.ABGT_LC_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+											<f:validateDoubleRange minimum=".000" maximum="99999999999999.999"/>
+											<a4j:support
+												actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="serial_56" immediate="true"
+												reRender="errorPanel" 
+												oncomplete="setFocus('PT_AGENT_BUDGET:ABGT_AGENT_CODE','PT_AGENT_BUDGET:ABGT_LC_PREM')"/>
+										</h:inputText></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar id="serial_45" styleClass="toolBarStyle"
+									width="100%">
+									<rich:toolBarGroup id="serial_46" location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.goToPT051_A_AGENT_SEARCH_PAGE}"
+											id="serial_47" immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_48"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="serial_49"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.saveRecord}"
+											id="serial_50" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_52"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="serial_53"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.saveNextRecord}"
+											id="serial_54" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_55"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="serial_56341"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_ACTION_BEAN.deleteRecord}"
+											id="serial_57" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_58"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="serial_59"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink disabled="true" id="serial_60" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_61"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="serial_62"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.goToPT051_A_AGENT_SEARCH_PAGE}"
+											id="serial_63" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_64"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="serial_65"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.goToPT_AGENT_BUDGET_RANK}"
+											id="serial_66" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_67"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="serial_68"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.goToPT_AGENT_BUDGET_BREAKUP}"
+											id="serial_69" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_70"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="serial_71"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

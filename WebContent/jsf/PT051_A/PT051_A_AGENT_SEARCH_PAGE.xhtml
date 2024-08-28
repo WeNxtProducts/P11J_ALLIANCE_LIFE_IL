@@ -1,0 +1,163 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view>
+
+	<f:loadBundle basename="messageProperties" var="message" />
+	<f:loadBundle basename="messageProperties" var="menumessage" />
+
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+
+			
+		</tr>
+		<h:form id="DocumentSetup">
+
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.errorMap['current'] !=null? PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.errorMap['current']:PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" styleClass="ErrorMessages"
+								value="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.errorMessages}"
+								escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.globalMsgRender}" />
+							<h:outputText id="warningMessages" styleClass="WarningMessages"
+								value="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.warningMessages}"
+								escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+
+			<table border="0" width="100%"  cellpadding="0"
+				cellspacing="0" id="masthead">
+
+				<tr>
+					<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+					<td><h:outputLabel value="Agency Manager Code:" /> <h:inputText
+						id="ABGT_AGENT_CODE"
+						value="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.searchBean.ABGT_AGENT_CODE}"
+						binding="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.ABGT_AGENT_CODE}" /></td>
+
+					<td><h:outputLabel value="Agency Manager Name:" /> <h:inputText
+						id="UI_M_ABGT_AGENT_NAME"
+						value="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.searchBean.UI_M_ABGT_AGENT_NAME}"
+						binding="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.UI_M_ABGT_AGENT_NAME}" /></td>
+
+					<td><a4j:commandButton styleClass="button"
+						value="#{commonmsg.searchButton$caption}"
+						actionListener="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.searchButton}"
+						reRender="agentList">
+					</a4j:commandButton></td>
+				</tr>
+
+			</table>
+			<rich:dataTable id="agentList"
+				value="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.searchList}"
+				binding="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.searchDataTable}" width="100%"
+				var="colData" cellpadding="5px" rows="15" border="1">
+
+
+
+				<rich:column rendered="false">
+					<f:facet name="header">
+						<h:outputText styleClass="label" />
+					</f:facet>
+					<h:selectBooleanCheckbox value="#{colData.checkbox}" />
+				</rich:column>
+
+				<rich:column filterBy="#{colData.ABGT_AGENT_CODE}"
+					filterValue="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.searchBean.filterText}"
+					sortBy="#{colData.ABGT_AGENT_CODE}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Agency Manager Code" />
+					</f:facet>
+					<h:commandLink action="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.populateBlock}"
+						id="ABGT_AGENT_CODE">
+			
+							<h:outputText value="#{colData.ABGT_AGENT_CODE}" />
+					
+						<f:param name="rowID" value="#{colData.rowId}" />
+						<f:param name="ABGT_AGENT_CODE" value="#{colData.ABGT_AGENT_CODE}" />
+					</h:commandLink>
+				</rich:column>
+
+				<rich:column filterBy="#{colData.UI_M_ABGT_AGENT_NAME}"
+					sortBy="#{colData.UI_M_ABGT_AGENT_NAME}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Agency Manager Name" />
+					</f:facet>
+					
+						<h:outputText value="#{colData.UI_M_ABGT_AGENT_NAME}" />
+				
+					<f:param name="UI_M_ABGT_AGENT_NAME" value="#{colData.UI_M_ABGT_AGENT_NAME}" />
+				</rich:column>
+				
+				<rich:column filterBy="#{colData.ABGT_FM_DT}"
+					sortBy="#{colData.ABGT_FM_DT}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Policy From" />
+					</f:facet>
+				
+						<h:outputText value="#{colData.ABGT_FM_DT}" />
+			
+					<f:param name="ABGT_FM_DT" value="#{colData.ABGT_FM_DT}" />
+				</rich:column>
+				
+				<rich:column filterBy="#{colData.ABGT_TO_DT}"
+					sortBy="#{colData.ABGT_TO_DT}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Policy To" />
+					</f:facet>
+	
+						<h:outputText value="#{colData.ABGT_TO_DT}" />
+		
+					<f:param name="ABGT_TO_DT" value="#{colData.ABGT_TO_DT}" />
+				</rich:column>
+				
+				<f:facet name="footer">
+					<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+						align="right">
+					</rich:datascroller>
+				</f:facet>
+
+				<f:facet name="footer">
+					<a4j:commandButton value=" DELETE " rendered="false"
+						styleClass="button"
+						actionListener="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.searchPageDelete}"
+						reRender="agentList">
+					</a4j:commandButton>
+					<rich:datascroller for="agentList" align="right" />
+				</f:facet>
+			</rich:dataTable>
+			<tr>
+				<td><a4j:commandButton styleClass="button"
+					value="#{menumessage.insertButton$caption}"
+					action="#{PT051_A_COMPOSITE_ACTION.PT051_A_SEARCH_PAGE_ACTION_BEAN.insertNavigation}" /></td>
+			</tr>
+
+		</h:form>
+	</table>
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+		
+		</tr>
+
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,446 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.onLoad}">
+			<f:loadBundle basename="messageProperties_PT051_A" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			<h:form id="PT_AGENT_BUDGET_BREAKUP">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+
+					</tr>
+
+
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar id="serial_1" styleClass="toolBarStyle"
+									width="100%">
+									<rich:toolBarGroup id="serial_2" styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.doCommit}"
+											id="serial_3" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_4" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="serial_5"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.goToPT_AGENT_BUDGET}"
+											id="serial_6" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_7"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="serial_8"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.goToPT_AGENT_BUDGET_RANK}"
+											id="serial_9" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_10"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="serial_11"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink disabled="true" id="serial_12" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_13"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="serial_14"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.errorMap['current'] !=null? PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.errorMap['current']:PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="15%" valign="top" width="100%">
+						<table class="noborder" width="100%">
+							<!-- Tab implementation -->
+							<h:inputHidden id="myhidden"
+								value="#{PT051_A_COMPOSITE_ACTION.tabbedBar.tabClicked}" />
+							<h:panelGroup id="mypanel" style="border:0">
+								<table class="noborder" id="globalLink" width="100%">
+									<tr>
+										<td width="90%"><a4j:repeat id="serial_15"
+											value="#{PT051_A_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+											var="currtab">
+
+											<h:commandLink
+												action="#{PT051_A_COMPOSITE_ACTION.tabbedBar.tabAction}"
+												disabled="#{currtab.disabled}" id="serial_16"
+												onclick="document.getElementById('PT_AGENT_BUDGET_BREAKUP:myhidden').value='#{currtab.id}'"
+												styleClass="#{currtab.styleString}" value="#{currtab.value}" />
+
+										</a4j:repeat></td>
+										<!--  <td width="*"><a4j:commandButton
+											action="#{PT051_A_COMPOSITE_ACTION.tabbedBar.gotoFirstTab}"
+											alt="first"
+											disabled="#{PT051_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+											id="serial_17" image="./../../images/firstrec.gif"
+											reRender="mypanel" /> <a4j:commandButton
+											action="#{PT051_A_COMPOSITE_ACTION.tabbedBar.gotoPrevTab}"
+											alt="previous"
+											disabled="#{PT051_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+											id="serial_18" image="./../../images/prevpage.gif"
+											reRender="mypanel" /> <a4j:commandButton
+											action="#{PT051_A_COMPOSITE_ACTION.tabbedBar.gotoNextTab}"
+											alt="next"
+											disabled="#{PT051_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+											id="serial_19" image="./../../images/nextpage.gif"
+											reRender="mypanel" /> <a4j:commandButton
+											action="#{PT051_A_COMPOSITE_ACTION.tabbedBar.gotoLastTab}"
+											alt="last"
+											disabled="#{PT051_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+											id="serial_20" image="./../../images/lastRecord.gif"
+											reRender="mypanel" /></td> -->
+									</tr>
+								</table>
+							</h:panelGroup>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 400px; overflow: auto;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td />
+								<td valign="top" width="100%"><h:panelGroup id="agentDtls"
+									style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td colspan="5"><rich:dataTable
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.breakupDataTable}"
+												id="PT_AGENT_BUDGET_BREAKUP" rows="5"
+												value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.breakupList}"
+												var="breakupData" width="100%">
+												<rich:column filterBy="#{breakupData.ABGTB_AGENT_CODE}"
+													filterEvent="onkeyup" id="COLUMN_ABGTB_AGENT_CODE"
+													rendered="true" sortBy="#{breakupData.ABGTB_AGENT_CODE}"
+													styleClass="#{breakupData.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_ABGTB_AGENT_CODE_1"
+															styleClass="forumRowHighlight"
+															value="#{message.PT051_A$PT_AGENT_BUDGET_BREAKUP$ABGTB_AGENT_CODE$caption}" />
+													</f:facet>
+													<a4j:commandLink
+														action="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.displayRecords}"
+														id="serial_21" immediate="true" reRender="agentDtls">
+
+														<h:outputText id="serial_22"
+															value="#{breakupData.ABGTB_AGENT_CODE}" />
+
+													</a4j:commandLink>
+												</rich:column>
+
+												<rich:column filterBy="#{breakupData.UI_M_ABGTB_AGENT_NAME}"
+													filterEvent="onkeyup" id="COLUMN_UI_M_ABGTB_AGENT_NAME"
+													rendered="true"
+													sortBy="#{breakupData.UI_M_ABGTB_AGENT_NAME}"
+													styleClass="#{breakupData.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="serial_23"
+															styleClass="forumRowHighlight"
+															value="#{message.PT051_A$PT_AGENT_BUDGET_BREAKUP$UI_M_ABGTB_AGENT_NAME$caption}" />
+													</f:facet>
+													<h:outputText id="serial_24"
+														value="#{breakupData.UI_M_ABGTB_AGENT_NAME}" />
+												</rich:column>
+
+												<rich:column filterBy="#{breakupData.ABGTB_ACT_LC_PREM}"
+													filterEvent="onkeyup" id="COLUMN_ABGTB_ACT_LC_PREM"
+													rendered="true" sortBy="#{breakupData.ABGTB_ACT_LC_PREM}"
+													styleClass="#{breakupData.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="serial_25"
+															styleClass="forumRowHighlight"
+															value="#{message.PT051_A$PT_AGENT_BUDGET_BREAKUP$ABGTB_ACT_LC_PREM$caption}" />
+													</f:facet>
+													<h:outputText id="serial_26"
+														value="#{breakupData.ABGTB_ACT_LC_PREM}" />
+												</rich:column>
+
+												<f:facet name="footer">
+													<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+														<rich:datascroller align="right" />
+														<a4j:commandButton
+															actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.addRow}"
+															id="addRow" immediate="true"
+															reRender="agentDtls,errorPanel" rendered="true"
+															style="width:80px;" styleClass="button" value="Create" />
+														<a4j:commandButton
+															actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.deleteRow}"
+															id="deleteRow" immediate="true"
+															reRender="agentDtls,errorPanel" rendered="true"
+															style="width:80px;" styleClass="button"
+															value="#{message.PT051_A$PT_AGENT_BUDGET_RANK$UI_M_BUT_DELETE_ROW$caption}" />
+														<a4j:commandButton
+															actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.post}"
+															id="postRecord" reRender="agentDtls,errorPanel"
+															rendered="true" style="width:80px;" styleClass="button"
+															value="Post" />
+													</h:panelGroup>
+												</f:facet>
+											</rich:dataTable></td>
+										</tr>
+										<tr>
+
+
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_ABGTB_AGENT_CODE_LABEL}"
+												for="ABGTB_AGENT_CODE" id="ABGTB_AGENT_CODE_LABEL"
+												style="height:23px;width:192px;" styleClass="label"
+												value="#{message.PT051_A$PT_AGENT_BUDGET_BREAKUP$ABGTB_AGENT_CODE$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_ABGTB_AGENT_CODE}"
+												id="ABGTB_AGENT_CODE" styleClass="inputsmall"
+												immediate="true" maxlength="12"
+												title="Enter the value of Agent Code"
+												validator="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.ABGTB_AGENT_CODE_validator}"
+												value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.PT_AGENT_BUDGET_BREAKUP_BEAN.ABGTB_AGENT_CODE}">
+												<a4j:support
+													actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="serial_221" immediate="true"
+													reRender="errorPanel,UI_M_ABGTB_AGENT_NAME" />
+
+											</h:inputText> <rich:suggestionbox for="ABGTB_AGENT_CODE" height="200"
+												id="ABGTB_AGENT_CODE_11" immediate="true"
+												suggestionAction="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.agentCodeLov}"
+												var="amCode" width="200">
+												<h:column id="ABGTB_AGENT_CODE_LOV_column">
+													<h:outputText id="outputtxt_lovcode"
+														value="#{amCode.CUST_CODE}" />
+												</h:column>
+												<h:column id="ABGTB_AGENT_CODE_LOV_name">
+													<h:outputText id="outputtxt_lovName"
+														value="#{amCode.CUST_NAME}" />
+												</h:column>
+												<a4j:support event="onselect" immediate="true"
+													ajaxSingle="true" id="COMP_1_INPUT_SUGG_SUPPORT"
+													reRender="errorPanel,UI_M_ABGTB_AGENT_NAME">
+													<f:setPropertyActionListener value="#{amCode.CUST_NAME}"
+														target="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.PT_AGENT_BUDGET_BREAKUP_BEAN.UI_M_ABGTB_AGENT_NAME}" />
+												</a4j:support>
+											</rich:suggestionbox> <h:inputText
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_UI_M_ABGTB_AGENT_NAME}"
+												disabled="true" id="UI_M_ABGTB_AGENT_NAME"
+												styleClass="input"
+												value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.PT_AGENT_BUDGET_BREAKUP_BEAN.UI_M_ABGTB_AGENT_NAME}" />
+											<h:graphicImage id="ABGTB_AGENT_CODE_SUGGESTION_IMAGE12"
+												style="" styleClass="searchimg"
+												value="./../../images/Lov.gif" /></td>
+											<td class="oddrow" colspan="3">&nbsp;</td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_ABGTB_SHARE_PERC_LABEL}"
+												for="ABGTB_SHARE_PERC" id="Serial_No_2"
+												style="height:23px;width:192px;" styleClass="label"
+												value="#{message.PT051_A$PT_AGENT_BUDGET_BREAKUP$ABGTB_SHARE_PERC$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_ABGTB_SHARE_PERC}"
+												id="ABGTB_SHARE_PERC" styleClass="inputNumeric" maxlength="3"
+												title="Enter the value of Share %"
+												validator="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.ABGTB_SHARE_PERC_WhenValidateItem}"
+												value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.PT_AGENT_BUDGET_BREAKUP_BEAN.ABGTB_SHARE_PERC}">
+												<f:validateDoubleRange minimum="0" />
+												<a4j:support
+													actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="serial_27" immediate="true"
+													reRender="errorPanel,ABGTB_SHARE_PERC" />
+											</h:inputText></td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_ABGTB_NO_OF_POL_LABEL}"
+												for="ABGTB_NO_OF_POL" id="Serial_No_3"
+												style="height:23px;width:192px;" styleClass="label"
+												value="#{message.PT051_A$PT_AGENT_BUDGET_BREAKUP$ABGTB_NO_OF_POL$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												title="Enter the value of Budgeted No of Pol"
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_ABGTB_NO_OF_POL}"
+												id="ABGTB_NO_OF_POL" styleClass="inputNumeric" maxlength="4"
+												value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.PT_AGENT_BUDGET_BREAKUP_BEAN.ABGTB_NO_OF_POL}"
+												validator="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.noOfAgentPolicy_WhenValidateItem}">
+												<a4j:support
+													actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="serial_2712" immediate="true"
+													reRender="errorPanel" />
+											</h:inputText></td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_ABGTB_LC_PREM_LABEL}"
+												for="ABGTB_LC_PREM" id="Serial_No_4"
+												style="height:23px;width:192px;" styleClass="label"
+												value="#{message.PT051_A$PT_AGENT_BUDGET_BREAKUP$ABGTB_LC_PREM$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												title="Enter the value of Budgeted Premium"
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_ABGTB_LC_PREM}"
+												id="ABGTB_LC_PREM" styleClass="inputNumeric" maxlength="7"
+												immediate="true"
+												validator="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.ABGTB_LC_PREM_WhenValidateItem}"
+												value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.PT_AGENT_BUDGET_BREAKUP_BEAN.ABGTB_LC_PREM}">
+												<a4j:support
+													actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="serial_28" immediate="true"
+													reRender="errorPanel,ABGTB_LC_PREM" />
+											</h:inputText></td>
+											<td class="oddrow">&nbsp;</td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_ABGTB_ACT_NO_OF_POL_LABEL}"
+												for="ABGTB_ACT_NO_OF_POL" id="Serial_No_5"
+												style="height:23px;width:192px;" styleClass="label"
+												value="#{message.PT051_A$PT_AGENT_BUDGET_BREAKUP$ABGTB_ACT_NO_OF_POL$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												title="Enter the value of Actual No of Pol"
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_ABGTB_ACT_NO_OF_POL}"
+												id="ABGTB_ACT_NO_OF_POL" styleClass="inputNumeric" immediate="true"
+												maxlength="4"
+												validator="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.noOfACTPolicy_WhenValidateItem}"
+												value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.PT_AGENT_BUDGET_BREAKUP_BEAN.ABGTB_ACT_NO_OF_POL}">
+												<a4j:support
+													actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="serial_1290" immediate="true"
+													reRender="errorPanel" />
+											</h:inputText></td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_ABGTB_ACT_LC_PREM_LABEL}"
+												for="ABGTB_ACT_LC_PREM" id="Serial_No_6"
+												style="height:23px;width:192px;" styleClass="label"
+												value="#{message.PT051_A$PT_AGENT_BUDGET_BREAKUP$ABGTB_ACT_LC_PREM$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												title="Enter the value of Actual Premium"
+												binding="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.COMP_ABGTB_ACT_LC_PREM}"
+												id="ABGTB_ACT_LC_PREM" styleClass="inputNumeric"
+												validator="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.ABGTB_ACT_LC_PREM_WhenValidateItem}"
+												immediate="true" maxlength="7"
+												value="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.PT_AGENT_BUDGET_BREAKUP_BEAN.ABGTB_ACT_LC_PREM}">
+												<a4j:support
+													actionListener="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="serial_29" immediate="true"
+													reRender="errorPanel,ABGTB_ACT_LC_PREM"
+													oncomplete="setFocus('PT_AGENT_BUDGET_BREAKUP:ABGTB_AGENT_CODE','PT_AGENT_BUDGET_BREAKUP:ABGTB_ACT_LC_PREM')" />
+											</h:inputText></td>
+											<td class="evenrow" colspan="3"/>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar id="serial_30" styleClass="toolBarStyle"
+									width="100%">
+									<rich:toolBarGroup id="serial_31" location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.PT_AGENT_BUDGET_BREAKUP_ACTION_BEAN.doCommit}"
+											id="serial_311" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_312" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="serial_32"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.goToPT_AGENT_BUDGET}"
+											id="serial_33" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_34"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="serial_35"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PT051_A_COMPOSITE_ACTION.goToPT_AGENT_BUDGET_RANK}"
+											id="serial_36" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_37"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="serial_38"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink disabled="true" id="serial_39" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="serial_40"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="serial_41"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:a4j="http://richfaces.org/a4j" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:rich="http://richfaces.org/rich" xmlns:ui="http://java.sun.com/jsf/facelets" template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+<f:loadBundle basename="messageProperties_PM091_A" var="message"/>
+<f:loadBundle basename="menu" var="menumessage"/>
+	
+<h:form id="PM_AGENT_BENEFIT_HDR_Search"><table class="noborder" width="100%">
+		<tr>
+			
+		</tr>
+	
+		
+	
+		<tr>
+			<td>
+				<table class="noborder" id="toolbartable" width="100%">
+					<tr>
+						<h:commandButton action="#{PM091_A_Search.deleteRecords}" rendered="false" style="text-decoration:none" value="#{menumessage.jsf$header$image$deleteRecord}">
+						</h:commandButton> 
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<table class="noborder" width="100%">
+		
+				<!-- Body row -->
+				<tr>
+					<td>
+						
+						<table class="noborder" id="masthead" width="100%">
+							<tr>
+								<td><h:outputLabel value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+								<td><h:outputLabel value="#{message.PM091_A$PM_AGENT_BENEFIT_HDR$ABH_BNF_CODE$caption}"/>
+								 <h:inputText value="#{PM091_A_Search.searchBean.ABH_BNF_CODE}"/></td>
+								<td><h:commandButton action="#{PM091_A_Search.fetch}" id="fetch" styleClass="button" value="#{commonmsg.searchButton$caption}">
+		
+		
+								<f:param name="Pcode" value="#{PM091_A_Search.searchBean.ABH_BNF_CODE}"/>
+									</h:commandButton></td>
+							</tr>
+						</table>
+						
+						<!-- using rich data table -->
+						<rich:dataTable binding="#{PM091_A_Search.dataTable}" border="0" id="fetchList" rows="50" value="#{PM091_A_Search.dataTableBean}" var="colData" width="100%">
+							<!-- Attach scroller as footer of the table-->
+							<f:facet name="footer">
+								<rich:datascroller align="right" id="dsID" pageIndexVar="index" pagesVar="pages">
+								</rich:datascroller>
+							</f:facet>
+							
+							<rich:column rendered="false">
+		        <f:facet name="header">
+		            <h:outputText id="AUTOID_1" styleClass="label"/>
+		        </f:facet>
+		        <h:selectBooleanCheckbox id="checkBox" value="#{colData.selected}">
+		             
+		        </h:selectBooleanCheckbox>
+		    </rich:column>
+		
+		
+							<rich:column filterBy="#{colData.ABH_BNF_CODE}" filterEvent="onkeyup" sortBy="#{colData.ABH_BNF_CODE}">
+								<f:facet name="header">
+									<h:outputText id="AUTOID_2" value="#{message.PM091_A$PM_AGENT_BENEFIT_HDR$ABH_BNF_CODE$caption}"/>
+								</f:facet>
+								<h:commandLink action="#{PM091_A_Search.fetchMasterRecord}" id="ABH_BNF_CODE_Link">
+					
+										<h:outputText id="AUTOID_3" value="#{colData.ABH_BNF_CODE}"/>
+						
+									
+									<f:param name="ABH_BNF_CODE" value="#{colData.ABH_BNF_CODE}"/>
+										<f:param name="ABH_DESC" value="#{colData.ABH_DESC}"/>
+										<f:param name="ABH_BNF_TYPE" value="#{colData.ABH_BNF_TYPE}"/>
+									<f:param name="ROWID" value="#{colData.ROWID}"/>
+								</h:commandLink>
+							</rich:column>
+		
+						
+		
+		
+							<rich:column filterBy="#{colData.ABH_DESC}" filterEvent="onkeyup" sortBy="#{colData.ABH_DESC}">
+								<f:facet name="header">
+									<h:outputText id="AUTOID_4" value="#{message.PM091_A$PM_AGENT_BENEFIT_HDR$ABH_DESC$caption}"/>
+								</f:facet>
+								
+									<h:outputText id="AUTOID_5" value="#{colData.ABH_DESC}"/>
+								
+							</rich:column>	
+							
+							<rich:column filterBy="#{colData.ABH_BNF_TYPE}" filterEvent="onkeyup" sortBy="#{colData.ABH_BNF_TYPE}">
+							<f:facet name="header">
+								<h:outputText id="AUTOID_6" value="#{message.PM091_A$PM_AGENT_BENEFIT_HDR$ABH_BNF_TYPE$caption}"/>
+							</f:facet>
+						
+								<h:outputText id="AUTOID_7" value="#{colData.ABH_BNF_TYPE}"/>
+							
+						</rich:column>
+															
+						</rich:dataTable>
+						<h:commandButton action="#{PM091_A_Search.insert}" id="insertLink" styleClass="button" value="#{commonmsg.insertButton$caption}"/>
+					</td>
+				</tr>
+		
+				<!-- add footer to the page-->
+				<tr>
+					
+				</tr>
+			</table>
+		</td>
+	</tr>
+	</table></h:form></f:view>
+
+</ui:define>
+</ui:composition>

@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_GNMNF004_A_APAC" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" border="0">
+		<tr>
+			
+		</tr>
+		<h:form id="GNMNF004_A_APAC_SEARCH">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<table width="100%" id="errormsgtable">
+					<tr>
+						<td><rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.errorMap['current'] !=null? GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.errorMap['current']:GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.warningMap['current']}" />
+
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.globalMsgRender}" />
+
+							<h:outputText id="warningMessages"
+								value="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+
+						</rich:simpleTogglePanel></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table border="0" width="100%" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputText
+							value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+						<td><h:outputText
+							value="#{message.GNMNF004_A_APAC$MENU_ENTRY_SEARCH$$SEARCH_GROUP_ID$caption}" /><h:inputText
+							value="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.GROUP_ID}" /></td>
+						<td><h:outputText
+							value="#{message.GNMNF004_A_APAC$MENU_ENTRY_SEARCH$$SEARCH_GROUP_DESC$caption}" /><h:inputText
+							value="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.GROUP_DESC}" /></td>
+						
+						<td><a4j:commandButton styleClass="button"
+							value="#{commonmsg.searchButton$caption}"
+							id="a4link">
+							<a4j:support
+								action="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.fetchMenuParamList}"
+								event="onclick" reRender="dataTableId,errorPanel"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<rich:dataTable id="dataTableId"
+				value="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.QUERY_DATA_LIST}"
+				var="menuParameter" cellpadding="5px" rows="10" border="1"
+				width="100%">
+				<!-- Attach scroller as footer of the table-->
+				<f:facet name="footer">
+					<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+						align="right">
+					</rich:datascroller>
+				</f:facet>
+
+				<!-- next column -->
+
+				<rich:column
+					filterValue="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.GROUP_ID_FILTER}"
+					filterBy="#{menuParameter.UG_ID}"
+					sortBy="#{menuParameter.UG_ID}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Group Id " />
+					</f:facet>
+					<h:commandLink action="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.redirect}">
+							<h:outputText value="#{menuParameter.UG_ID}" />
+							<f:param name="rowId" value="#{menuParameter.ROWID}" />
+					</h:commandLink>
+				</rich:column>
+				<rich:column
+					filterValue="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.SEARCH_BEAN.GROUP_DESC_FILTER}"
+					filterBy="#{menuParameter.UG_DESC}"
+					sortBy="#{menuParameter.UG_DESC}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Screen Name " />
+					</f:facet>
+					<h:outputText value="#{menuParameter.UG_DESC} ">
+					</h:outputText>
+				</rich:column>
+
+			</rich:dataTable>
+
+			<h:commandButton
+				binding="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.COMP_MENU_USER_GROUP_INSERT_BUTTON}"
+				disabled="false" id="UI_M_BUT_MENU_USER_GROUP_INSERT" rendered="true"
+				style="" styleClass="button" title=""
+				value="#{commonmsg.insertButton$caption}"
+				action="#{GNMNF004_A_APAC_COMPOSITE_ACTION.GNMNF004_A_APAC_SEARCH_ACTION_BEAN.insertNewMenuParams}" />
+
+		</h:form>
+
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

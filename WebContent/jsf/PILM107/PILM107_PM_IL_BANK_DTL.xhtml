@@ -1,0 +1,768 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM107" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PM_BANK"
+				onkeypress="return event.keyCode != 13">
+				
+				<style>
+				.textlength {
+    width: 350px;
+}
+				
+				</style>
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+							<table class="noborder" width="100%">
+								<tr>
+									<td><rich:toolBar id="TOOLBAR_HEADER"
+											styleClass="toolBarStyle" width="100%">
+											<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+												styleClass="toolBarGroupStyle">
+												<!-- Modified by saranya for Avoidance of POST button required in all screens on 22-02-2017 -->
+												<h:commandLink
+													action="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.saveRecord}"
+													id="SAVE_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:commandButton id="SAVE_TOOL_IMAGE_HEADER"
+														styleClass="toolbarButtonStyle" accesskey="s"
+														image="./../../resources/images/save.gif" />
+													<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+												<!-- End -->
+												<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/savenext.GIF" />
+													<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$savenext}" />
+												</h:commandLink>
+												<h:commandLink id="DELETERECORD_TOOL_HEADER"
+													rendered="false" style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/deleteRecord.gif" />
+													<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$deleteRecord}" />
+												</h:commandLink>
+												<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/firstrec.gif" />
+													<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$firstrec}" />
+												</h:commandLink>
+												<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/prevpage.gif" />
+													<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$prevpage}" />
+												</h:commandLink>
+												<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/nextpage.gif" />
+													<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$nextpage}" />
+												</h:commandLink>
+												<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/lastRecord.gif" />
+													<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$lastRecord}" />
+												</h:commandLink>
+												<h:commandLink
+													action="#{PILT002_APAC_COMPOSITE_ACTION.navigationEnabled}"
+													id="NAVIGATION_TOOL_HEADER" immediate="true"
+													rendered="true" style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:commandButton id="NAVIGATION_TOOL_IMAGE_HEADER"
+														styleClass="toolbarButtonStyle" accesskey="u"
+														image="./../../resources/images/navigation.gif" />
+													<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$undo}" />
+												</h:commandLink>
+											</rich:toolBarGroup>
+											<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD"
+												location="right">
+												<w:treeWizard
+													binding="#{PILT002_APAC_COMPOSITE_ACTION.wizard}" />
+											</rich:toolBarGroup>
+											
+										</rich:toolBar></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+								id="errorPanel" opened="false" switchType="client">
+								<f:facet name="header">
+									<h:outputText id="err"
+										styleClass="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.messageStyle}"
+										value="#{commonmsg.errorPanel$heading}#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.errorMap['current'] !=null? PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.errorMap['current']: PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.warningMap['current']}" />
+								</f:facet>
+								<h:outputText escape="false" id="errorMessages"
+									styleClass="ErrorMessages"
+									value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.errorMessages}" />
+								<h:messages id="msg"
+									rendered="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.globalMsgRender}"
+									styleClass="ErrorMessages" />
+								<h:outputText escape="false" id="warningMessages"
+									styleClass="WarningMessages"
+									value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.warningMessages}" />
+							</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<div id="content" style="width: 100%;">
+								<table width="100%">
+									<tr>
+										<td>&nbsp;</td>
+										<td valign="top" width="100%"><h:panelGroup
+												id="PM_BANK_PANEL"
+												style="border:0;height:15%;">
+												<table align="left" class="noborder" id="bordertable"
+													width="100%">													
+													<tr>
+														<td><rich:panel style="width:100%;overflow:auto">
+																<rich:dataTable
+																	binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.dataTable}"
+																	id="PM_BANK_BEAN" rows="5"
+																	value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.dataTableList}"
+																	var="tableVar" width="100%">
+																	<rich:column filterBy="#{tableVar.BANK_CODE}"
+																		filterEvent="onkeyup" id="COLUMN_BANK_CODE"
+																		rendered="true" sortBy="#{tableVar.BANK_CODE}"
+																		width="50%"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_BANK_CODE"
+																				styleClass="forumRowHighlight" value="#{message.PILM107$PM_BANK$BANK_CODE$caption}" />
+																		</f:facet>
+																		<a4j:commandLink
+																			action="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.displayRecords}"
+																			id="GOTO_LINK_BANK_CODE" immediate="true"
+																			reRender="errorPanel,PM_BANK_PANEL">
+																			<h:outputText id="LINK_CAPTION_BANK_CODE"
+																				value="#{tableVar.BANK_CODE}" />
+																		</a4j:commandLink>
+																	</rich:column>
+																	<rich:column filterBy="#{tableVar.BANK_NAME}"
+																		filterEvent="onkeyup" id="COLUMN_BANK_NAME"
+																		rendered="true" sortBy="#{tableVar.BANK_NAME}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_BANK_NAME"
+																				styleClass="forumRowHighlight"
+																				value="#{message.PILM107$PM_BANK$BANK_NAME$caption}" />
+																		</f:facet>
+																		<h:outputText id="LINK_CAPTION_BANK_NAME"
+																			value="#{tableVar.BANK_NAME}" />
+																	</rich:column>
+																
+
+																	<f:facet name="footer">
+																		<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+																			<rich:datascroller align="right"
+																				id="PM_BANK_PANEL_SCROLL" page="1" />
+																			<a4j:commandButton
+																				actionListener="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.addRow}"
+																				id="addRow" immediate="true" accesskey="c"
+																				reRender="PM_BANK_PANEL,errorPanel"
+																				style="width:80px;" styleClass="button"
+																				value="#{commonmsg.addNewButtonCaption}" />
+																			<a4j:commandButton
+																				actionListener="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.deleteRow}"
+																				id="deleteRow" immediate="true" accesskey="r"
+																				reRender="PM_BANK_PANEL,errorPanel"
+																				style="width:80px;" styleClass="button"
+																				value="#{commonmsg.deleteButtonCaption}" />
+
+																			<a4j:commandButton
+																				actionListener="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.saveRecords}"
+																				id="postRecord" accesskey="p"
+																				reRender="PM_BANK_PANEL,errorPanel"
+																				style="width:80px;" styleClass="button" value="Save" />
+
+																		</h:panelGroup>
+																	</f:facet>
+																</rich:dataTable>
+															</rich:panel></td>
+													</tr>
+													<tr>
+														<td colspan="3">
+															<table class="noborder" width="100%">
+															<tr>
+													<td align="right" colspan="5">
+													
+													<h:commandButton											
+											id="UI_M_BUT_APPL_BRANCH" rendered="true" style="width:140px;"
+											styleClass="button"
+											action="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.applBranch}"											
+											value="#{message.PILM107$PM_BANK$UI_M_BUT_APPL_BRANCH$caption}" />
+													</td>
+													
+													</tr>
+															<tr>
+															<td style="text-align: center;" colspan="5">
+									
+											<h:outputText
+												value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.UI_M_FREEZE?'InActive':'Active'}"
+												style="color:blue;align:right;font-size: 20px;" rendered="true" id="polnum" />
+									</td></tr>
+															<tr>
+															<td class="oddrow"></td>
+															<td class="oddrow"></td>
+															<td class="oddrow">&nbsp;</td>
+															<td class="oddrowfreeze" colspan="3"><h:outputLabel
+																			
+																			for="BANK_FRZ_FLAG_NUM" id="BANK_FRZ_FLAG_NUM_LABEL"
+																			rendered="true"
+																			styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_FRZ_FLAG_NUM$caption}" />
+																		<h:selectBooleanCheckbox
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_FRZ_FLAG_NUM}"
+																			id="BANK_FRZ_FLAG_NUM" rendered="true"
+																			title="#{message.PM006_A_APAC$PM_CUSTOMER$CUST_FRZ_FLAG$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.UI_M_FREEZE}">
+																			<a4j:support
+																				actionListener="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.validateBANK_FRZ_FLAG_NUM}"
+																				event="onclick" id="AUTOID_31" immediate="true"
+																				reRender="errorPanel,UI_M_BUT_TRANSFER_DTLS,BANK_FRZ_FLAG_NUM,PM_BANK_PANEL" />
+																		</h:selectBooleanCheckbox></td>
+																</tr>
+															
+																<tr>
+																	<td class="oddrowright" width="20%"><h:outputLabel
+																			for="BANK_CODE" id="BANK_CODE_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_CODE$caption}" />
+																		<h:graphicImage id="BANK_CODE_TYPE1" style=""
+																			styleClass="searchimg"
+																			value="./../../images/mandatory.gif" /></td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_CODE}"
+																			id="BANK_CODE" 
+																			rendered="true" required="true" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			validator="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.validatorBANK_CODE}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_CODE}">
+																		<a4j:support
+																				actionListener="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="BANK_CODE_312K11"
+																				immediate="true" reRender="errorPanel" />
+																		</h:inputText></td>
+																	<td class="oddrow">&nbsp;</td>
+
+																	<td class="oddrowright"><h:outputLabel
+																			for="BANK_NAME" id="BANK_NAME_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_NAME$caption}" />
+																		<h:graphicImage id="AUTOID_43_TYPE2" style=""
+																			styleClass="searchimg"
+																			value="./../../images/mandatory.gif" /></td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_NAME}"
+																			id="BANK_NAME" rendered="true"
+																			required="true" styleClass="input textlength"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			validator="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.validatorBANK_NAME}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_NAME}">
+																		<a4j:support
+																				actionListener="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="BANK_NAME_312K11"
+																				immediate="true" reRender="errorPanel,BANK_SHORT_NAME" />
+																		</h:inputText></td>
+
+																</tr>
+																<tr>
+																	<td class="oddrowright" style="display:none"><h:outputLabel
+																			for="BANK_UNIVERSAL_CODE" id="BANK_UNIVERSAL_CODE_LABEL"
+																			rendered="false" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_UNIVERSAL_CODE$caption}" />
+																		</td>
+																	<td class="oddrow" style="display:none"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_UNIVERSAL_CODE}"
+																			disabled="false" id="BANK_UNIVERSAL_CODE" 
+																			rendered="false" required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			validator="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.validatorBANK_UNIVERSAL_CODE}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_UNIVERSAL_CODE}">
+																			
+																			<!-- Added by Raja on 13/04/2017 -->
+																			<a4j:support
+																				actionListener="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="BANK_UNIVERSAL_CODE_312K11"
+																				immediate="true" reRender="errorPanel" />
+																				<!-- End -->
+																				
+																		</h:inputText></td>
+																	
+
+																	
+<td class="oddrowright"><h:outputLabel
+																			for="BANK_ADDR1" id="BANK_ADDR1_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_ADDR1$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_ADDR1}"
+																			id="BANK_ADDR1" rendered="true" maxlength="60"
+																			required="false" styleClass="input textlength"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_ADDR1}">
+																		</h:inputText></td>
+																		<td class="oddrow">&nbsp;</td>
+																		<td class="oddrowright"><h:outputLabel
+																			for="BANK_ADDR2" id="BANK_ADDR2_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_ADDR2$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_ADDR2}"
+																			id="BANK_ADDR2" maxlength="60"
+																			rendered="true" required="false" styleClass="input textlength"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_ADDR2}">
+																		</h:inputText></td>
+																</tr>
+																<tr>
+																	<td class="oddrowright" style="display:none"><h:outputLabel
+																			for="BANK_SHORT_NAME" id="BANK_SHORT_NAME_LABEL"
+																			rendered="false" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_SHORT_NAME$caption}" />
+																		</td>
+																	<td class="oddrow" style="display:none"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_SHORT_NAME}"
+																			disabled="false" id="BANK_SHORT_NAME" maxlength="30"
+																			rendered="false" required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_SHORT_NAME}">
+																		</h:inputText></td>
+																	<!-- <td class="oddrow">&nbsp;</td> -->
+
+																	
+
+																</tr>
+																<tr>
+																	<td class="oddrowright" style="display:none"><h:outputLabel
+																			for="BANK_BR_CODE" id="BANK_BR_CODE_LABEL"
+																			rendered="false" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_BR_CODE$caption}" />
+																		</td>
+																	<td class="oddrow" style="display:none"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_BR_CODE}"
+																			id="BANK_BR_CODE" rendered="false"
+																			required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_BR_CODE}">
+																		</h:inputText></td>
+																	<!-- <td class="oddrow">&nbsp;</td> -->
+
+																	<td class="oddrowright"><h:outputLabel
+																			for="BANK_ADDR3" id="BANK_ADDR3_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_ADDR3$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_ADDR3}"
+																			id="BANK_ADDR3"  rendered="true" maxlength="60"
+																			required="false" styleClass="input textlength"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_ADDR3}">
+																		</h:inputText></td>
+																		<td class="oddrow">&nbsp;</td>
+																		<td class="oddrowright"><h:outputLabel
+																			for="BANK_ZIP" id="BANK_ZIP_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_ZIP$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_ZIP}"
+																			id="BANK_ZIP" 
+																			rendered="true" required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_ZIP}">
+																		</h:inputText></td>
+																	
+
+																</tr>
+																<tr>
+																	
+
+																	<td class="oddrowright"><h:outputLabel
+																			for="BANK_PHONE" id="BANK_PHONE_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_PHONE$caption}" />
+																		</td>
+																	<td class="oddrow">
+																	<h:inputText binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_PHONE_AREA_CODE}"																			
+																			id="BANK_PHONE_AREA_CODE" 
+																			rendered="true" required="false" styleClass="inputsmall"
+																			title="#{message.PILM107$PM_BANK$BANK_PHONE_AREA_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_PHONE_AREA_CODE}">
+																		</h:inputText>
+																	<h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_PHONE}"
+																			id="BANK_PHONE" rendered="true"
+																			required="false" styleClass="input"
+																			
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_PHONE}">
+																		<a4j:support
+																				actionListener="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="BANK_PHONE_312K11"
+																				immediate="true" reRender="errorPanel" />
+																		</h:inputText>
+																		
+																		</td>
+																		<td class="oddrow">&nbsp;</td>
+																		<td class="oddrowright"><h:outputLabel
+																			for="BANK_CONTACT_PERSON" id="BANK_CONTACT_PERSON_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_CONTACT_PERSON$caption}" />
+																		</td>
+																	<td class="oddrow">
+																	<h:selectOneMenu
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_CONTACT_TITLE}"
+																			id="BANK_CONTACT_TITLE" rendered="true" required="true"
+																			styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_CONTACT_TITLE$tooltip}"
+																			validator="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.validatorBANK_CONTACT_TITLE}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_CONTACT_TITLE}">
+																			<f:selectItems id="my_id5"
+																				value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.itemListName}" />
+																			<a4j:support
+																				actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUSTOMER_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="SUPPORT_CUST_NAME"
+																				focus="CUST_CR_ASSR_YN" immediate="true"
+																				reRender="errorPanel,CUST_CATG_CODE,CATG_CODE_LIST,UI_M_CUST_CATG_CODE_DESC" />
+
+																		</h:selectOneMenu>
+																	<h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_CONTACT_PERSON}"
+																			id="BANK_CONTACT_PERSON" 
+																			rendered="true" required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_CONTACT_PERSON$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_CONTACT_PERSON}">
+																		</h:inputText></td>
+																	
+																</tr>
+																
+																<tr>
+																	
+
+																	<td class="oddrowright"><h:outputLabel
+																			for="BANK_MOBILE" id="BANK_MOBILE_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_MOBILE$caption}" />
+																		</td>
+																	<td class="oddrow">
+																	<h:inputText binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_MOBILE_AREA_CODE}"																			
+																			id="BANK_MOBILE_AREA_CODE" 
+																			rendered="true" required="false" styleClass="inputsmall"
+																			title="#{message.PILM107$PM_BANK$BANK_MOBILE_AREA_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_MOBILE_AREA_CODE}">
+																		</h:inputText>
+																	<h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_MOBILE}"
+																			id="BANK_MOBILE" rendered="true"
+																			required="false" styleClass="input"																			
+																			title="#{message.PILM107$PM_BANK$BANK_MOBILE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_MOBILE}">
+																		<a4j:support
+																				actionListener="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="BANK_MOBILE_ajax"
+																				immediate="true" reRender="errorPanel" />
+																		</h:inputText>
+																		
+																		</td>
+																		<td class="oddrow">&nbsp;</td>
+																		<td class="oddrowright"><h:outputLabel
+																			for="BANK_FAX" id="BANK_FAX_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_FAX$caption}" />
+																		</td>
+																	<td class="oddrow">
+																	<h:inputText binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_FAX_AREA_CODE}"																		
+																			id="BANK_FAX_AREA_CODE" 
+																			rendered="true" required="false" styleClass="inputsmall"
+																			title="#{message.PILM107$PM_BANK$BANK_FAX_AREA_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_FAX_AREA_CODE}">
+																		</h:inputText>
+																	<h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_FAX}"
+																			id="BANK_FAX" 
+																			rendered="true" required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_FAX}">
+																		</h:inputText></td>
+																	
+
+																</tr>
+																
+																<tr>
+																	
+
+																	<td class="oddrowright"><h:outputLabel
+																			for="BANK_EMAIL" id="BANK_EMAIL_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_EMAIL$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_EMAIL}"
+																			id="BANK_EMAIL" rendered="true"
+																			required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_EMAIL}">
+																		<f:validator validatorId="emailValidator" />
+																			<a4j:support
+																				actionListener="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="style_312K11"
+																				immediate="true" reRender="errorPanel" />
+																					</h:inputText>
+																		</td>
+																		<td class="oddrow">&nbsp;</td>
+																	<td class="oddrowright"><h:outputLabel
+																			for="BANK_WEB_SITE" id="BANK_WEB_SITE_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_WEB_SITE$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_WEB_SITE}"
+																			id="BANK_WEB_SITE" 
+																			rendered="true" required="false" styleClass="input textlength"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_WEB_SITE}">
+																		</h:inputText></td>	
+																</tr>
+																<tr>
+																	<!-- <td class="oddrowright"><h:outputLabel
+																			for="BANK_WEB_SITE" id="BANK_WEB_SITE_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_WEB_SITE$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_WEB_SITE}"
+																			id="BANK_WEB_SITE" 
+																			rendered="true" required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_WEB_SITE}">
+																		</h:inputText></td>
+																	<td class="oddrow">&nbsp;</td> -->
+
+																	<td class="oddrowright" style="display:none"><h:outputLabel
+																			for="BANK_SWIFT_CODE" id="BANK_SWIFT_CODE_LABEL"
+																			rendered="false" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_SWIFT_CODE$caption}" />
+																		</td>
+																	<td class="oddrow" style="display:none"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_SWIFT_CODE}"
+																			id="BANK_SWIFT_CODE" rendered="false"
+																			required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_SWIFT_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_SWIFT_CODE}">
+																		</h:inputText></td>
+
+<!-- Added by Raja on 13/04/2017 -->
+<!-- <td class="oddrow">&nbsp;</td> -->
+																																			
+																		
+																</tr>
+																
+																
+																<tr>
+																	
+																	<td class="oddrowright" style="display:none"><h:outputLabel
+																			for="BANK_SORT_CODE" id="BANK_SORT_CODE_LABEL"
+																			rendered="false" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_SORT_CODE$caption}" />
+																		</td>
+																	<td class="oddrow" style="display:none"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_SORT_CODE}"
+																			id="BANK_SORT_CODE" rendered="false"
+																			required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_SORT_CODE$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_SORT_CODE}">
+																		</h:inputText></td>
+																		<td class="oddrowright"><h:outputLabel
+																			for="BANK_ACCOUNT_NO" id="BANK_ACCOUNT_NO_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_ACCOUNT_NO$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_ACCOUNT_NO}"
+																			id="BANK_ACCOUNT_NO" rendered="true"
+																			required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_ACCOUNT_NO$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_ACCOUNT_NO}">
+																		</h:inputText></td>
+
+<td class="oddrow">&nbsp;</td>
+																		<td class="oddrowright"><h:outputLabel
+																			for="BANK_COLLECTION_COMMSN" id="BANK_COLLECTION_COMMSN_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_COLLECTION_COMMSN$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_COLLECTION_COMMSN}"
+																			id="BANK_COLLECTION_COMMSN" rendered="true"
+																			required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_COLLECTION_COMMSN$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_COLLECTION_COMMSN}">
+																		</h:inputText></td>
+																		
+																</tr>
+																<tr>
+																<td class="oddrowright"><h:outputLabel
+																			for="BANK_LEAD_TIME" id="BANK_LEAD_TIME_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message.PILM107$PM_BANK$BANK_LEAD_TIME$caption}" />
+																		</td>
+																	<td class="oddrow"><h:inputText
+																			binding="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.COMP_BANK_LEAD_TIME}"
+																			id="BANK_LEAD_TIME" 
+																			rendered="true" required="false" styleClass="input"
+																			title="#{message.PILM107$PM_BANK$BANK_LEAD_TIME$tooltip}"
+																			value="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.PM_BANK_BEAN.BANK_LEAD_TIME}">
+																		</h:inputText></td>
+																		<!-- End -->
+																
+																
+																
+																</tr>
+																
+															</table>
+														</td>
+													</tr>
+												</table>
+											</h:panelGroup></td>
+										<td />
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+								id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+								<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+									styleClass="toolBarGroupStyle">
+									<!-- Modified by saranya for Avoidance of POST button required in all screens on 22-02-2017 -->
+									<h:commandLink id="SAVE_TOOL_FOOTER" rendered="false"
+										action="#{PILM107_COMPOSITE_ACTION.PM_BANK_ACTION_BEAN.saveRecord}"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:commandButton id="SAVE_TOOL_IMAGE_FOOTER" accesskey="s"
+											styleClass="toolbarButtonStyle"
+											image="./../../images/save.gif" />
+										<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$save}" />
+									</h:commandLink>
+									<!-- End -->
+									<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/savenext.GIF" />
+										<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$savenext}" />
+									</h:commandLink>
+									<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/firstrec.gif" />
+										<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$firstrec}" />
+									</h:commandLink>
+									<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/prevpage.gif" />
+										<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$prevpage}" />
+									</h:commandLink>
+									<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/nextpage.gif" />
+										<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$nextpage}" />
+									</h:commandLink>
+									<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/lastRecord.gif" />
+										<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$lastRecord}" />
+									</h:commandLink>
+									<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/navigation.gif" />
+										<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$navigation}" />
+									</h:commandLink>
+								</rich:toolBarGroup>
+
+								<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM"
+									location="right">
+									<w:wizardPanelFooter
+										binding="#{PILT002_APAC_COMPOSITE_ACTION.wizard.wizardPanelFooter}" />
+								</rich:toolBarGroup>
+							</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

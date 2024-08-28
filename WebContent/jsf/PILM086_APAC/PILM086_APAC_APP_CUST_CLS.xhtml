@@ -1,0 +1,435 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml"
+	xmlns:w="http://3i-infotech.com/premia">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM086_APAC"
+				var="message_PILM086_APAC" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_PLAN" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+									
+										<h:commandLink
+											action="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILM086_APAC_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD"
+										location="right">
+										<w:treeWizard
+											binding="#{PILM086_APAC_COMPOSITE_ACTION.wizard}" />
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="errormsgtable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.errorMap['current'] !=null? PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.errorMap['current']: PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.globalMsgRender}"
+										styleClass="ErrorMessages" />
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.warningMessages}" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>									
+					<tr>
+						<td valign="top">
+						<div id="container">
+						<table class="noborder" width="100%">
+							<tr>
+								<td valign="top">
+								<div id="sidebar" style="width: 21%; vertical-align: top">
+								<div id="handle" style="width: 5%">
+									<a4j:commandLink
+							actionListener="#{PILM086_APAC_COMPOSITE_ACTION.wizard.toggle}"
+							id="BACK_TOOL_FOOTER1" immediate="true" rendered="true"
+							style="text-decoration:none;align:left"
+							styleClass="toolbarCommandLinkStyle">
+							<img align="left" alt="Click to toggle the sidebar" height="123"
+								onclick="toggleSideBar();"
+								src="./../../resources/images/toggle.jpg" style="border: 0;"
+								width="14" />
+						</a4j:commandLink>
+						</div>
+
+								<div id="sbText" style="display: compact;">
+								<div id="linkstable1" style="display: compact; width: 95%">
+							<w:treeWizardPanel binding="#{PILM086_APAC_COMPOSITE_ACTION.wizard.wizardPanel}" id="wizardPanel"/>
+							 </div>
+								</div>
+								</div>
+
+								<div id="content" style="width: 79%;">
+								<table class="noborder" width="100%">
+									<tr>
+										<td>&nbsp;</td>
+										<td valign="top" width="100%">
+										<table align="left" class="noborder" id="bordertable"
+											width="100%">
+											
+											<!-- Add your Design -->
+											
+											<tr>
+								<td>&nbsp;</td>
+								<td valign="top" width="100%"><h:panelGroup
+									id="PM_IL_PLAN_MOP_PANEL" style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td><rich:panel style="overflow:auto">
+											
+											
+											
+											
+												<rich:dataTable
+													binding="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.dataTable}"
+													id="PM_IL_PLAN_MOP_DATA_GRID_SQL" rows="5"
+													value="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.dataList_PP_LIFE_POL_SCH_PRN}"
+													var="tableVar" width="100%">
+
+													<rich:column filterBy="#{tableVar.BRAC_CUST_CLASS}"
+														filterEvent="onkeyup" id="COLUMN_BRAC_CUST_CLASS_SQL"
+														rendered="true" sortBy="#{tableVar.BRAC_CUST_CLASS}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_BRAC_CUST_CLASS_SQL"
+																styleClass="forumRowHighlight"
+																value="Cust Class" />
+														</f:facet>
+														<a4j:commandLink
+															action="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.displayRecords}"
+															id="GOTO_LINK_BRAC_CUST_CLASS_SQL" immediate="true"
+															reRender="errorPanel,PM_IL_PLAN_MOP_PANEL">
+															<h:outputText id="LINK_CAPTION_BRAC_CUST_CLASS_SQL"
+																value="#{tableVar.BRAC_CUST_CLASS}" />
+														</a4j:commandLink>
+													</rich:column>
+													
+													
+													<rich:column filterBy="#{tableVar.BRAC_CUST_CLASS_DESC}"
+														filterEvent="onkeyup" id="COLUMN_BRAC_CUST_CLASS_DESCL"
+														rendered="true" sortBy="#{tableVar.BRAC_CUST_CLASS_DESC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_BRAC_CUST_CLASS_DESC"
+																styleClass="forumRowHighlight"
+																value="Cust Class Desc" />
+														</f:facet>
+														
+															
+															<h:outputText id="LINK_CAPTION_BRAC_CUST_CLASS_DESC"
+																value="#{tableVar.BRAC_CUST_CLASS_DESC}" />
+													
+													</rich:column>
+													
+
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PM_IL_PLAN_MOP_SCROLL_SQL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.addRow}"
+																id="addRow" immediate="true" accesskey="c"
+																reRender="PM_IL_PLAN_MOP_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.deleteRow}"
+																id="deleteRow" immediate="true" accesskey="r"
+																reRender="PM_IL_PLAN_MOP_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.postRecord}"
+																id="postRecord" accesskey="p"
+																reRender="PM_IL_PLAN_MOP_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</rich:panel></td>
+										</tr>
+										<tr>
+											<td colspan="5">
+											<table class="noborder" width="100%" id="bordertable" cellpadding="0" cellspacing="0">
+											
+											
+											<tr>
+													
+													<td class="oddrowright"  width="15%"><h:outputLabel
+														binding="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.COMP_BRAC_CUST_CLASS_LABEL}"
+														for="BRAC_CUST_CLASS" id="BRAC_CUST_CLASS_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILM086_APAC.PILM086_APAC$PM_IL_PLAN$BRAC_CUST_CLASS$caption}" />
+													<h:graphicImage class="searchimg" style=""
+													value="./../../images/mandatory.gif" id="GI_BUS_NATURE" />
+														</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.COMP_BRAC_CUST_CLASS}"
+														disabled="false" id="BRAC_CUST_CLASS" maxlength="12"
+														rendered="true" required="true" styleClass="input"
+														
+														
+														title="#{message_PGLM49_APAC.PGLM49_APAC$PP_LIFE_POL_SCH_PRN$PLSP_DS_CODE$tooltip}"
+														validator="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.validatorBRAC_CUST_CLASS}"
+														
+														value="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.PILM086_APAC_APP_BEAN.BRAC_CUST_CLASS}" >
+														<a4j:support
+																actionListener="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="style_20788" immediate="true"
+																reRender="errorPanel,BRAC_CUST_CLASS_DESC" />
+														</h:inputText>
+														
+														
+														<h:inputText
+														binding="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.COMP_BRAC_CUST_CLASS_DESC}"
+														disabled="true" id="BRAC_CUST_CLASS_DESC"
+														maxlength="300" rendered="true" required="false"
+														styleClass="input"
+														value="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.PILM086_APAC_APP_BEAN.BRAC_CUST_CLASS_DESC}" style=" width : 232px;"/>
+														<rich:suggestionbox for="BRAC_CUST_CLASS" height="200"
+														id="SBRAC_CUST_CLASS" immediate="true"
+														suggestionAction="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.prepareSuggestionBRAC_CUST_CLASS}"
+														var="DTLS_BRAC_CUST_CLASS" width="250">
+														<h:column>
+															<h:outputText id="AUTOID4_51"
+																value="#{DTLS_BRAC_CUST_CLASS.code}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="AUTOID5_52"
+																value="#{DTLS_BRAC_CUST_CLASS.name}" />
+														</h:column>
+													</rich:suggestionbox> 
+													<h:graphicImage id="AUTOID6_54" styleClass="searchimg"
+														value="./../../images/Lov.gif" style="height : 14px; width : 15px;"/>
+													</td>
+												</tr>
+												
+											
+											
+											
+											
+											
+													
+												
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+								<td />
+							</tr>
+											
+									
+									
+											
+											
+										</table>
+										</td>
+									</tr>
+								</table>
+								</div>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+								    action="#{PILM086_APAC_COMPOSITE_ACTION.PILM086_APP_ACTION_BEAN.saveRecord}"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+							<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM" 
+										location="right">
+							<w:wizardPanelFooter binding="#{PILM086_APAC_COMPOSITE_ACTION.wizard.wizardPanelFooter}"/>
+									</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

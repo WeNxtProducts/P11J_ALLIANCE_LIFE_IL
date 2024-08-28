@@ -1,0 +1,156 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	 xmlns:c="http://java.sun.com/jsp/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILT030_APAC" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+		<tr>
+			
+		</tr>
+		<h:form id="PT_IL_PAYVOU_SEARCH">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.errorMap['current'] !=null? PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.errorMap['current']:PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.globalMsgRender}" />
+
+							<h:outputText id="warningMessages"
+								value="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table border="0" width="100%"  cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr><td><h:outputText
+							value="#{commonmsg.intialSearchCriteria$Caption}"  /></td>
+						<td><h:outputLabel
+							binding="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.COMP_UI_M_PAH_REF_NO_LABEL}"
+							for="M_PAH_REF_NO" id="M_PAH_REF_NO_LABEL" rendered="true"
+							value="#{message.PILT030_APAC$PT_IL_PAYVOU_SEARCH$M_PAH_REF_NO$caption}" /></td>
+						<td><h:inputText
+							binding="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.COMP_UI_M_PAH_REF_NO}"
+							disabled="false" id="M_PAH_REF_NO" maxlength="40"
+							rendered="true" style="height:23px;width:202px;"
+							styleClass="forumRowHighlight"
+							title="Enter value for Claim Number"
+							value="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.PT_IL_PAYVOU_SEARCH_BEAN.PAH_REF_NO}" /></td>
+						<td><h:outputLabel
+							binding="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.COMP_UI_M_PAH_DT_LABEL}"
+							for="UI_M_PS_PROCESS_FM_DT" id="UI_M_PS_PROCESS_FM_DT_LABEL" rendered="true"
+							value="#{message.PILT030_APAC$PT_IL_PAYVOU_SEARCH$M_PAH_DT$caption}" /></td>
+						<td><rich:calendar
+								binding="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.COMP_UI_M_PAH_DT}"
+								disabled="false" enableManualInput="false"
+								id="UI_M_PS_PROCESS_FM_DT" inputSize="11" rendered="true"
+								required="false" style="height:px;width:px;"
+								styleClass="calendarstyleclass"
+								value="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.PT_IL_PAYVOU_SEARCH_BEAN.PAH_DT}">
+								<a4j:support event="oninputblur" id="date_1" 
+								onsubmit="formatDate('PT_IL_PAYVOU_SEARCH:UI_M_PS_PROCESS_FM_DT')"/>
+								</rich:calendar>
+								</td>
+						<td><h:commandButton
+							disabled="false" id="UI_M_BUT_SEARCH_CLAIM" rendered="true"
+							style="height:20px;width:95px;" styleClass="button" title=""
+							value="#{message.PILT030_APAC$PT_IL_PAYVOU_SEARCH$UI_M_SEARCH$button}"
+							action="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.fetchRecords}" /></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<rich:dataTable id="dataTableId"
+				binding="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.PT_IL_PAYVOU_SEARCH_DT}"
+				value="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.PT_IL_PAYVOU_SEARCH_LIST}"
+				var="payvoucher" cellpadding="5px" rows="10" border="1" width="100%">
+				<f:facet name="footer">
+					<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+						align="right">
+					</rich:datascroller>
+				</f:facet>
+				<rich:column filterBy="#{payvoucher.PAH_CONTROL_NO}"
+					sortBy="#{payvoucher.PAH_CONTROL_NO}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText
+							value="#{message.PILT030_APAC$PT_IL_PAYVOU_SEARCH$UI_M_SEARCH$PAH_CONTROL_NO_LABEL}" />
+					</f:facet>
+					<h:commandLink
+						action="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.clearList}">
+						
+							<h:outputText value="#{payvoucher.PAH_CONTROL_NO}" />
+					
+						<f:param name="rowId" value="#{payvoucher.ROWID}"></f:param>
+					</h:commandLink>
+				</rich:column>
+				<c:if test="${sessionScope['GLOBAL.M_PARAM_1']=='CL'}">
+					<rich:column filterBy="#{payvoucher.UI_M_CLAIM_POL_NO}"
+						sortBy="#{payvoucher.UI_M_CLAIM_POL_NO}"
+						 filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILT030_APAC$PT_IL_PAYVOU_SEARCH$UI_M_SEARCH$POLICY_NO_LABEL}" />
+						</f:facet>
+						<h:outputText value="#{payvoucher.UI_M_CLAIM_POL_NO}" />
+					</rich:column>
+				</c:if>
+				<rich:column filterBy="#{payvoucher.PAH_REF_NO}"
+					sortBy="#{payvoucher.PAH_REF_NO}"
+					 filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="#{message.PILT030_APAC$PT_IL_PAYVOU_SEARCH$UI_M_SEARCH$PAH_REF_NO_LABEL}" />
+					</f:facet>
+					<h:outputText value="#{payvoucher.PAH_REF_NO}" />
+				</rich:column>
+				<rich:column filterBy="#{payvoucher.PAH_PRO_DT}"
+					sortBy="#{payvoucher.PAH_PRO_DT}"
+					 filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="#{message.PILT030_APAC$PT_IL_PAYVOU_SEARCH$UI_M_SEARCH$PAH_PRO_DT_LABEL}" />
+					</f:facet>
+					<h:outputText value="#{payvoucher.PAH_PRO_DT}" />
+				</rich:column>
+				<rich:column filterBy="#{payvoucher.PAH_APPRV_DT}"
+					sortBy="#{payvoucher.PAH_APPRV_DT}"
+					 filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="#{message.PILT030_APAC$PT_IL_PAYVOU_SEARCH$UI_M_SEARCH$PAH_APPRV_DT_LABEL}" />
+					</f:facet>
+					<h:outputText value="#{payvoucher.PAH_APPRV_DT}" />
+				</rich:column>
+			</rich:dataTable>
+			<tr>
+				<td><h:commandButton
+					disabled="false" id="UI_M_BUT_PAYVOU_INSERT" rendered="true"
+					style="height:20px;width:95px;" styleClass="button" title=""
+					value="#{message.PILT030_APAC$PT_IL_PAYVOU_SEARCH$UI_M_INSERT$button}"
+					action="#{PILT030_APAC_PT_IL_PAYVOU_SEARCH_ACTION.insertClaim}" />
+				</td>
+			</tr>
+		</h:form>
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

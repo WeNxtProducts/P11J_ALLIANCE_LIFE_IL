@@ -1,0 +1,2145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="FalconPolicySchedule3" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="8f5f5a13-2aac-4e29-a416-161e2a363ab0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="surrender" uuid="6f720227-df8f-4eb5-857c-2f692e32a9ed">
+		<parameter name="POL_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT TD_PARA_01_FM,TD_RATE FROM PM_IL_TAR_DTL
+WHERE TD_TH_CODE =(SELECT POL_PLAN_CODE FROM PT_IL_POLICY WHERE POL_SYS_ID = $P{POL_SYS_ID})
+AND TD_PARAM_TYPE  ='S']]>
+		</queryString>
+		<field name="TD_PARA_01_FM" class="java.lang.String"/>
+		<field name="TD_RATE" class="java.math.BigDecimal"/>
+	</subDataset>
+	<parameter name="POL_SYS_ID" class="java.lang.String"/>
+	<parameter name="Intermediary" class="java.lang.String"/>
+	<parameter name="param0" class="java.lang.String"/>
+	<parameter name="param1" class="java.lang.String"/>
+	<parameter name="param2" class="java.lang.String"/>
+	<parameter name="param3" class="java.lang.String"/>
+	<parameter name="param4" class="java.lang.String"/>
+	<parameter name="param5" class="java.lang.String"/>
+	<parameter name="param6" class="java.lang.String"/>
+	<parameter name="param7" class="java.lang.String"/>
+	<parameter name="param8" class="java.lang.String"/>
+	<parameter name="param9" class="java.lang.String"/>
+	<parameter name="param10" class="java.lang.String"/>
+	<parameter name="param11" class="java.lang.String"/>
+	<parameter name="param12" class="java.lang.String"/>
+	<parameter name="param13" class="java.lang.String"/>
+	<parameter name="param14" class="java.lang.String"/>
+	<parameter name="param15" class="java.lang.String"/>
+	<parameter name="Flag_Status" class="java.lang.String"/>
+	<parameter name="PAGE_NO" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT POL_SYS_ID,
+(SELECT COUNT(*) FROM PT_IL_POLICY,PT_IL_POL_ADDL_COVER
+WHERE POL_SYS_ID = POAC_POL_SYS_ID AND POL_SYS_ID = $P{POL_SYS_ID}  AND POAC_COVER_CODE LIKE 'PPD%')PPDACOUNT,
+       POL_PROP_NO,
+       POL_NO,
+       POL_CUST_CODE,
+       ROWNUM ANNEX_NO,
+       POL_ASSURED_NAME,
+       POL_SYS_ID,
+       (POL_RES_ADDRESS_1 ||','|| POL_RES_ADDRESS_2||','|| POL_RES_ADDRESS_3) ADDRESS,
+       POL_PERIOD,
+       POAD_REF_ID1,
+       POL_CONT_CODE,
+       POL_PREM_PAY_YRS,
+       POL_START_DT,
+       POL_LC_SUM_ASSURED,
+       DECODE(POL_MODE_OF_PYMT,
+              'M',
+              'MONTHLY',
+              'Q',
+              'QUARTERLY',
+              'H',
+              'HALF-YEARLY',
+              'Y',
+              'YEARLY',
+              'SINGLE'),
+       (SELECT PROD_DESC FROM PM_IL_PRODUCT WHERE PROD_CODE = POL_PROD_CODE) PROD_NAME,
+       POL_LAST_INST_DT,
+       (POL_EXPIRY_DT) MATU_DT,
+       POL_LC_FIRST_PREM TOT_PREM,
+       POAD_DOB,
+       POAD_AGE,
+       (POL_RES_AREA_CODE || '-' || POL_RES_PHONE_NO) POL_PHONE,
+       POL_MOBILE_NO,pol_res_phone_no,
+       (SELECT CUST_NAME FROM PM_CUSTOMER WHERE CUST_CODE = POL_CUST_CODE) PROPOSER_NAME,
+       POL_MOBILE_NO,
+       (SELECT COVER_LONG_DESC
+          FROM PM_IL_COVER
+         WHERE COVER_CODE = POL_PLAN_CODE) PLAN_DESC
+  FROM PT_IL_POLICY, PT_IL_POL_ASSURED_DTLS
+ WHERE POL_SYS_ID = $P{POL_SYS_ID}
+   AND POL_SYS_ID = POAD_POL_SYS_ID
+   AND POAD_POL_SYS_ID = POL_SYS_ID
+      ---AND POBH_POL_SYS_ID= POL_SYS_ID
+      ---AND POAD_POL_SYS_ID =POBH_POL_SYS_ID
+   AND POL_SRC_OF_BUS IN ('001', '075')
+---AND POL_APPRV_STATUS ='N']]>
+	</queryString>
+	<field name="POL_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="PPDACOUNT" class="java.math.BigDecimal"/>
+	<field name="POL_PROP_NO" class="java.lang.String"/>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POL_CUST_CODE" class="java.lang.String"/>
+	<field name="ANNEX_NO" class="java.math.BigDecimal"/>
+	<field name="POL_ASSURED_NAME" class="java.lang.String"/>
+	<field name="ADDRESS" class="java.lang.String"/>
+	<field name="POL_PERIOD" class="java.math.BigDecimal"/>
+	<field name="POAD_REF_ID1" class="java.lang.String"/>
+	<field name="POL_CONT_CODE" class="java.lang.String"/>
+	<field name="POL_PREM_PAY_YRS" class="java.math.BigDecimal"/>
+	<field name="POL_START_DT" class="java.sql.Timestamp"/>
+	<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<field name="DECODE(POL_MODE_OF_PYMT,&apos;M&apos;,&apos;MONTHLY&apos;,&apos;Q&apos;,&apos;QUARTERLY&apos;,&apos;H&apos;,&apos;HALF-YEARLY&apos;,&apos;Y&apos;,&apos;YEARLY&apos;,&apos;SINGLE&apos;)" class="java.lang.String"/>
+	<field name="PROD_NAME" class="java.lang.String"/>
+	<field name="POL_LAST_INST_DT" class="java.sql.Timestamp"/>
+	<field name="MATU_DT" class="java.sql.Timestamp"/>
+	<field name="TOT_PREM" class="java.math.BigDecimal"/>
+	<field name="POAD_DOB" class="java.sql.Timestamp"/>
+	<field name="POAD_AGE" class="java.math.BigDecimal"/>
+	<field name="POL_PHONE" class="java.lang.String"/>
+	<field name="POL_MOBILE_NO" class="java.lang.String"/>
+	<field name="POL_RES_PHONE_NO" class="java.lang.String"/>
+	<field name="PROPOSER_NAME" class="java.lang.String"/>
+	<field name="PLAN_DESC" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="50">
+			<printWhenExpression><![CDATA[$F{PPDACOUNT}.intValue() == 0 ? false:true]]></printWhenExpression>
+			<textField>
+				<reportElement x="60" y="32" width="100" height="18" uuid="6a1f2ed0-ddef-4020-9b35-fac52987e4ca"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true" isUnderline="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="32" width="50" height="18" uuid="880d77e9-9fb6-4536-acd3-949a09b0c41e"/>
+				<box topPadding="5"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Policy No :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="522" y="32" width="100" height="18" uuid="cf555aed-8a80-44c1-b64d-f579dcb84b18"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}+$P{PAGE_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="492" y="32" width="50" height="18" uuid="f5897bf5-ecdd-4a0a-825a-b83430f346e0"/>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Page :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="673">
+			<printWhenExpression><![CDATA[$F{PPDACOUNT}.intValue() == 0 ? false:true]]></printWhenExpression>
+			<staticText>
+				<reportElement x="10" y="10" width="283" height="15" uuid="40395dcc-6730-452a-8645-6c08d6a3595e"/>
+				<textElement>
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERMANENT PARTIAL DISABILITY]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="184" width="71" height="15" uuid="3c62d116-228d-46e9-8bae-6d81de580661"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="124" width="71" height="15" uuid="ca3ca782-c386-4012-a74e-b232de1d4cf4"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="154" width="367" height="15" uuid="4437d04c-7665-4639-a576-3d23cc389681"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of one arm and one leg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="50" width="283" height="15" uuid="cf5208ed-4eba-40b4-9b77-44adba93a0f3"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SCALE “ A” related to Permanent Partial Disability ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="214" width="71" height="15" uuid="9d71c289-c2dc-4518-abec-5de9aa485dcd"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="229" width="71" height="15" uuid="2653dede-5acf-4087-a93c-3d9ab6e3c801"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="199" width="367" height="15" uuid="a2111bdb-3d15-4ef3-a2a6-adbc14ff6c4f"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of one hand and one leg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="79" width="367" height="15" uuid="975ba3c6-1db7-4a28-91a1-4816f7e4f794"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total and irrecoverable loss of sight of both eyes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="184" width="367" height="15" uuid="d7d59815-082b-4867-b661-f59df76c939e"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of one hand and one foot]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="109" width="367" height="15" uuid="144dd7f1-1541-41e1-8fef-d09a9f770ee3"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Complete and permanent deafness of both ears of traumatic origin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="124" width="367" height="15" uuid="610b8a12-caec-4373-afab-88233c3a75c9"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Removal of the lower jaw]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="79" width="71" height="15" uuid="6585a45c-0e95-4e68-9ab4-9291c5108556"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="94" width="367" height="15" uuid="5acc1219-62b1-421a-a09e-8460e89e6a39"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of both arms or both hands]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="139" width="367" height="15" uuid="44b93d02-0a59-4a67-88d2-ee73cf1b3041"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Permanent loss of speech of traumatic origin]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="154" width="71" height="15" uuid="b7cb092d-6840-4752-847e-3db1973edb02"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="169" width="71" height="15" uuid="55560894-0dbd-448d-b67c-b6cbf0f63e26"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="109" width="71" height="15" uuid="42d6ca76-fe51-4454-b2a2-c9cf22858931"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="139" width="71" height="15" uuid="65a5eaf7-2c33-45db-b539-4dc07c7c7b03"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="229" width="367" height="15" uuid="79bd9708-591c-4a1e-8427-f9c9922a98ed"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of both feet]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="199" width="71" height="15" uuid="5c3a8eea-7e96-4790-a5a5-b64376255340"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="94" width="71" height="15" uuid="a0c1e782-3198-4498-87ab-20b5bf030685"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[100%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="169" width="367" height="15" uuid="eea03c11-b275-4617-8f15-c86369e3605a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of one arm and one foot]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="214" width="367" height="15" uuid="d048a39f-3ac2-49cc-80ed-55048da386b1"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of both legs]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="255" width="283" height="15" uuid="27a783d7-1e43-4d2d-9135-6c19af196833"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Head]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="276" width="367" height="15" uuid="7f6a07cf-8a8f-4e65-b6be-ec9726f27552"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of osseous substance of the skull in all its thickness]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="366" width="71" height="15" uuid="0e943491-2f37-4d0e-b9a0-88af9b10cfe7"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[30%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="336" width="367" height="15" uuid="fdd45bb6-4643-499d-b59d-5cd5ea3b0014"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Partial removal of the lower jaw, rising section in its entirety or half of the maxillary bone.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="306" width="367" height="15" uuid="27a0581f-9923-484b-9cd6-706769bdc6e8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Surface of 3 to 6 sq.cm.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="366" width="367" height="15" uuid="2584f614-c64c-45e3-8a3d-183967a2a443"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Complete and permanent deafness of one ear]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="306" width="71" height="15" uuid="2e42b926-d2a4-474a-821d-47648651ec1e"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[20%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="351" width="367" height="15" uuid="9241ee19-f697-418b-9077-8aabfbba12aa"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of one eye]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="321" width="71" height="15" uuid="4656c12b-537c-409a-92b1-a70af8d4211d"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[10%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="276" width="71" height="15" uuid="ef7f85ed-dd6b-4ab1-b44d-33b67fcce581"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="321" width="367" height="15" uuid="3d165150-6ef4-4490-9096-f491f5ecae6c"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Surface of less than 3 sq.cm.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="336" width="71" height="15" uuid="f5d56da0-f44f-4331-a237-cf17ac803cc5"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[40%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="291" width="71" height="15" uuid="bdc4c1e3-c979-4053-a989-74c364c0c179"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[40%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="351" width="71" height="15" uuid="74d01a14-b3c8-4fa6-adc1-6bb5786d3caa"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[40%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="291" width="367" height="15" uuid="014885cd-e722-441c-89c3-fc0903261dbc"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Surface of at least 6 sq.cm.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="392" width="283" height="15" uuid="1fc2c5f9-127d-4bb6-bca8-8e2ea37c9aad"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[UPPER  LIMBS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="412" width="367" height="15" uuid="0a777b91-3d0e-4989-9f0b-f6297c804d08"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of one arm or one hand]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="472" width="367" height="15" uuid="f67b1f5c-45b7-4df3-885f-a3ab1e873d09"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Elbow anchylosis - in unfavorable position]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="442" width="367" height="15" uuid="f4ff78dd-da6c-4e6e-986a-7036a857b4f8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total paralysis of the circumflex nerve]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="574" width="367" height="15" uuid="bf7badc6-4b9e-4b91-8a5f-c137b319818c"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total paralysis of the forearm radial nerve]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="487" width="367" height="15" uuid="6e3a0b92-1588-4a0e-8617-7277d9f240b1"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[in favourable position (15 degrees round the right angle)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="442" width="71" height="15" uuid="fe5e06cc-531f-4f8b-bbc9-d2e4a8f67f0b"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[15%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="516" width="367" height="28" uuid="762e335c-32d8-4f16-adc2-63ccf87c0e7c"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Extensive loss of osseous substance of the two bones of the forearm (definite and incurable lesion)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="559" width="71" height="15" uuid="ab6ef5b6-3ad2-4bbb-8640-4ebc4922bb7d"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[35%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="457" width="71" height="15" uuid="62e603fd-587d-41ce-b40d-bb186b261765"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[30%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="559" width="367" height="15" uuid="a1ce4313-ea3e-473b-a32b-2cdd1bc98cb6"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total paralysis of the radial nerve at the torsion cradle]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="412" width="71" height="15" uuid="886e8772-68b6-416c-8ba6-aae20cf5405f"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[50%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="487" width="71" height="15" uuid="96088f4d-138f-439a-bcfe-3ee8bfb1f6c5"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[20%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="544" width="367" height="15" uuid="e8f2835b-2867-42c6-92b5-e0204757be19"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total paralysis of the median nerve]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="457" width="367" height="15" uuid="438c70d6-7eb2-4d4e-9f82-c97718e89e55"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Shoulder anchylosis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="574" width="71" height="15" uuid="2ded24d4-9744-4c9c-8c3d-23382932be3c"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[25%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="472" width="71" height="15" uuid="d6dfbabd-d946-43ed-8dab-ae2e2742e230"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[35%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="427" width="71" height="15" uuid="f4e155ea-fa6e-4ced-80f4-98b6648e6ac6"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[40%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="516" width="71" height="28" uuid="871593ce-692b-487c-8097-15203aff14d7"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[30%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="544" width="71" height="15" uuid="4d786d81-cf4d-43fd-806f-530e2804e975"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[35%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="427" width="367" height="15" uuid="afd8713c-0a23-4751-b336-5e38ac643185"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Considerable loss of osseous substance of the arm (definite and incurable lesion)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="502" width="367" height="15" uuid="36b94151-6e9a-4a5d-b16e-ddc2acf559e5"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total paralysis of the upper limb (incurable lesion of the nerves)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="502" width="71" height="15" uuid="617618fc-fa87-4c8a-a8c1-88b8731ac68d"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[55%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="589" width="367" height="15" uuid="bef699d1-9778-450c-b0b8-0f962f5113e8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total paralysis of the hand radial nerve]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="618" width="367" height="15" uuid="175ac90c-08ec-410f-842d-4003a805ced7"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Anchylosis of the wrist in favourable position (straight and in pronation)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="633" width="367" height="25" uuid="330f2f78-8662-4ed5-82e6-03668f46dd03"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Anchylosis of the wrist in unfavourable position flexion or strained extension or supine position)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="603" width="367" height="15" uuid="44e0ad1a-eef7-4ac4-be34-ddaa0230f272"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total paralysis of the cubital nerve]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="658" width="71" height="15" uuid="b9accebb-bcad-49a7-8063-e8a69f1bc69c"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[15%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="618" width="71" height="15" uuid="d7260991-cf2f-452c-bcfc-b83c8902ad1a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[15%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="633" width="71" height="25" uuid="405f1195-a966-47de-adb8-768ac5540e01"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[25%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="589" width="71" height="15" uuid="998be5e9-2a5f-46ad-a4dd-f2454a672945"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[15%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="604" width="71" height="15" uuid="ec139830-0a36-420d-8f71-870fe8e36476"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[25%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="658" width="367" height="15" uuid="26aa1908-6dff-4a18-aae5-3330e5601b7e"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total loss of thumb]]></text>
+			</staticText>
+		</band>
+		<band height="593">
+			<printWhenExpression><![CDATA[$F{PPDACOUNT}.intValue() == 0 ? false:true]]></printWhenExpression>
+			<staticText>
+				<reportElement x="10" y="90" width="367" height="15" uuid="488a4edf-4435-4443-a53b-6b1795ea37de"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of thumb and a finger other than forefinger]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="119" width="367" height="15" uuid="fb798132-c1aa-4d38-9121-fb1f3489b980"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of three fingers other than thumb and forefinger]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="134" width="367" height="15" uuid="fa253b67-b435-4bd3-8fdc-17e137b68f97"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of four fingers including thumb]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="0" width="71" height="15" uuid="82ed7955-e3d0-4e8d-a8b4-c51a8535b54f"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[5%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="45" width="71" height="15" uuid="44f131e2-214a-4d7e-9ff0-c7123c6486a7"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[8%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="60" width="367" height="15" uuid="bff40783-d212-42b5-84da-aef1d28dd0d3"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of the ungual phalanx of forefinger]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="164" width="367" height="15" uuid="918345b9-8429-497c-81f7-ab71b83cb391"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of the median finger]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="30" width="367" height="15" uuid="b590a0aa-297d-4b4a-9803-437c8c9a6c79"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total amputation of forefinger]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="15" width="71" height="15" uuid="bb50bc03-d5ef-418e-a3f3-da5a9d6f7873"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[15%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="178" width="367" height="15" uuid="461f0e9a-c339-4ecc-b081-260e433b8396"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of a finger other than thumb, forefinger and median]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="104" width="367" height="15" uuid="c42a82a3-3553-4f6f-9c9d-ff3b0db7e454"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of two fingers other than thumb and forefinger]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="149" width="71" height="15" uuid="83a509c8-2f0c-4c55-8bf8-d8846194ec63"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[35%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="45" width="367" height="15" uuid="105d0a33-b71b-41ff-b559-2cd0e6edc0a1"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of two phalanges of forefinger]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="0" width="367" height="15" uuid="1fc1f4ce-ee28-4565-af49-1640126bd46a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Partial loss of thumb (ungual phalanx)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="75" width="71" height="15" uuid="a3071a93-d3fb-4c87-96fc-99263d50e751"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[25%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="75" width="367" height="15" uuid="f936bd5f-32c6-46c4-aa0e-e8e2f897dfc8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Simultaneous amputation of thumb and forefinger]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="15" width="367" height="15" uuid="1afb2b99-e5f1-45e2-9c1d-71e284636be2"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total anchylosis of thumb]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="119" width="71" height="15" uuid="e2ddca0e-0302-4c8a-871b-2ff7e8ffefa9"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[15%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="104" width="71" height="15" uuid="f9e6700f-3019-457d-8f5c-8e2fd5a78824"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[8%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="30" width="71" height="15" uuid="7521575b-839a-4fd3-9cfb-7c20154dd366"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[10%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="90" width="71" height="15" uuid="ffdbfb39-e269-45e3-9557-53a5c5521b7c"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[20%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="179" width="71" height="15" uuid="c11dc759-3dee-4249-814a-063dcaa423a7"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[3%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="134" width="71" height="15" uuid="77f384ec-23d8-4ae5-9f48-213e45c1cef9"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[40%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="149" width="367" height="15" uuid="52204e2e-3b20-4e37-b1b0-33dd5e3ebafc"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of four fingers excluding thumb]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="164" width="71" height="15" uuid="0e62323c-c500-45dd-859d-6adbae5f97ea"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[8%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="60" width="71" height="15" uuid="c47604b8-0a2a-4677-bcd9-298a8696b556"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[3%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="314" width="367" height="15" uuid="5358e8e5-257c-41b6-bb48-59e59168aff8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total paralysis of lower limb (incurable nerve lesion)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="417" width="367" height="27" uuid="276b266d-7573-4057-8f27-9467fc30bd1f"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of osseous substance of the knee - pan with considerable separation of the fragments and considerable difficulty of movements in stretching the leg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="343" width="367" height="15" uuid="1fc4c3aa-3e4e-4cb5-a87e-5f22abc94c60"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Complete paralysis of the internal poplitic sciatic nerve]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="444" width="71" height="15" uuid="1c7a258b-7efe-425f-a423-0d2691619502"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[20%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="459" width="71" height="15" uuid="f1ad9dee-c03c-4ebf-9695-5ba241ffd84d"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[30%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="358" width="367" height="15" uuid="85699692-cfc2-4375-8ee4-b4ad90769e78"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Complete paralysis of two nerves (poplitic sciatic external and internal)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="269" width="71" height="15" uuid="de8a3dc0-4f90-4323-a01b-fa24c5935add"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[40%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="224" width="71" height="15" uuid="64353c77-adbe-4af1-a7b8-47aa0f0473d4"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[60%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="284" width="367" height="15" uuid="512da159-84b2-4f44-95e3-ff43de2ecb46"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Partial loss of foot (media – tarsal disarticulation)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="254" width="367" height="15" uuid="c0c71bb6-0f11-4b39-9ef5-d88af3863725"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total loss of foot (Tibio – tarsal disarticulation)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="388" width="367" height="15" uuid="52420339-27e6-4cfb-8b3a-af445266ef07"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Anchylosis of the knee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="239" width="71" height="15" uuid="6b70ae90-21f3-46a1-a872-ee38e3be9196"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[50%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="444" width="367" height="15" uuid="fb970ba9-e2a3-4e54-9433-7272a00730d3"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of osseous substance of the knee - pan while the movements are preserved]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="402" width="367" height="15" uuid="2fb1cfb8-c5c7-4c2f-93a3-d25cda943745"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Loss of osseous substance from the thigh or both bones of the leg (incurable condition)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="328" width="367" height="15" uuid="d5bd3572-eab1-43a1-8c55-6b8fb909d7b2"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Complete paralysis of the external poplitic sciatic nerve]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="373" width="71" height="15" uuid="dd21294f-96d8-4506-8f53-898da7137d06"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[40%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="269" width="367" height="15" uuid="bf7ea55c-c9d9-4565-b94f-4723d2bad41b"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Partial loss of foot (sub – ankle - bone disarticulation)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="224" width="367" height="15" uuid="c678aca6-de7f-4c9d-b006-8c4755f9a272"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of thigh (upper half)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="299" width="71" height="15" uuid="89ebd87d-c9f1-4f43-82fb-43dc93c664d2"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[30%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="299" width="367" height="15" uuid="2f82a868-c1df-450a-8c2a-f274f750c8bb"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Partial loss of foot (tarso – metatarsal disarticulation)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="459" width="367" height="15" uuid="1804186e-bbfa-4add-b814-3e6b0e05b94a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Shortening of the lower limb by at least 5 cm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="239" width="367" height="15" uuid="7337e1a5-2d52-4646-8e98-02149bab0ba5"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of thigh (lower half) and leg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="343" width="71" height="15" uuid="c1b0344e-39af-4e11-9fb5-b4c3ced70f6d"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[20%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="417" width="71" height="27" uuid="27380d12-1036-46b7-a060-577ae3e182e5"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[40%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="328" width="71" height="15" uuid="5b4756f4-e8fa-45cf-b035-15214281d89c"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[30%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="204" width="283" height="15" uuid="a992d21b-1fce-486a-b522-100a7d26c55a"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[LOWER LIMBS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="254" width="71" height="15" uuid="aa0e4817-aed0-476f-bf9c-dd308387c430"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[45%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="314" width="71" height="15" uuid="73e77184-a9b9-4170-9bad-bdf62c596e84"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[60%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="403" width="71" height="15" uuid="31e30adf-3b87-477b-9a79-bbd54f9def98"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[60%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="358" width="71" height="15" uuid="42124caa-1214-4790-9db5-0e653e9d0765"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[40%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="373" width="367" height="15" uuid="669d9b9e-89bf-4956-958c-747f5953aea1"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Anchylosis of the hip]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="388" width="71" height="15" uuid="7b1e2868-2eb9-4c12-876f-c6beb5a735d5"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[20%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="284" width="71" height="15" uuid="fd3b88d2-98ab-4acb-b345-58ac11c740b2"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[35%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="474" width="367" height="15" uuid="702b18da-271f-4508-bcec-e2c9ab050711"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Shortening of the lower limb 3 to 5 cm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="489" width="71" height="15" uuid="10617746-b989-4d68-bdba-36670bf098b6"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[10%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="519" width="367" height="15" uuid="9fed4410-615a-4b69-a343-b576d9f364c4"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of four toes including big toe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="474" width="71" height="15" uuid="0be99691-4497-4146-a6f0-8eb8e549c760"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[20%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="578" width="367" height="15" uuid="6121dab8-aeec-4568-ab46-1b67a9d87a11"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of one toe other than the big toe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="549" width="71" height="15" uuid="923a7ea8-3709-4de2-8f8a-bfe97c8966a3"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[10%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="549" width="367" height="15" uuid="9ed4b3db-1e48-4fdb-a39d-07be6ba7e717"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Anchylosis of the big toe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="564" width="367" height="15" uuid="9315f587-3a96-4e24-bcf3-a92cc0251528"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of two toes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="534" width="367" height="15" uuid="42c5f645-d310-494b-98d9-9a9d10ccebf7"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Amputation of four toes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="534" width="71" height="15" uuid="137920ac-e5bc-447e-bbe9-b315a7b2ce6d"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[10%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="578" width="71" height="15" uuid="4b70703f-dcfd-494f-9808-aea86571e7d4"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[3%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="504" width="71" height="15" uuid="568d63b5-a0d7-4e55-aa00-b1ca1b6156ac"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[25%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="504" width="367" height="15" uuid="70a4ebd6-a318-4fc5-9cf0-6ca2db05bfc0"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Total amputation of all the toes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="489" width="367" height="15" uuid="13d566d0-daaf-4702-927a-5e1378a15d49"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Shortening by 1 to 3 cm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="519" width="71" height="15" uuid="75a22dfa-8a30-423f-ad26-2bfad054d4a8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[20%]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="564" width="71" height="15" uuid="e338face-a315-4e86-b0c0-2a83fb12be96"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[5%]]></text>
+			</staticText>
+		</band>
+		<band height="114">
+			<printWhenExpression><![CDATA[$F{PPDACOUNT}.intValue() == 0 ? false:true]]></printWhenExpression>
+			<staticText>
+				<reportElement x="10" y="5" width="545" height="25" uuid="0211b731-4a95-40c8-9ac4-430247c64ea8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Anchylosis of the fingers (other than thumb and forefinger) and of the toes (other than the big toe) shall only entitle to 50% of the compensation which would be due for the loss of the said members.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="44" width="30" height="15" uuid="7c712b12-a1a0-4fab-a61d-7cd383d411cd"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Left">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Note :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="44" width="20" height="15" uuid="efa92759-7409-40d6-9bc5-012f30443f88"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="44" width="495" height="35" uuid="7f97be2c-83e2-48dd-9e2f-af455407c96d"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[The total compensation payable in respect of several disablements due to the same attack is arrived at by adding together the various sums, but shall not exceed the total sum insured under the Schedule of Compensation.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="45" y="79" width="15" height="15" uuid="5db0c146-d605-4379-a1db-76d0cd5db2ea"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="60" y="79" width="495" height="35" uuid="0833b853-fb7e-4bf0-b79b-278a9cb621aa"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[In the event of Permanent Partial Disablement by physical loss or loss of use not specified above the percentage of compensation shall be assessed in proportion to the degree of disability as compared with the cases specified above without reference to the profession or occupation of the Insured.]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

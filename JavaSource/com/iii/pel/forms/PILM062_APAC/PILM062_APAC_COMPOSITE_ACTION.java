@@ -1,0 +1,85 @@
+package com.iii.pel.forms.PILM062_APAC;
+
+import com.iii.premia.common.commonimpl.tabimpl.TabbedBar;
+
+public class PILM062_APAC_COMPOSITE_ACTION {
+	
+	private TabbedBar tabbedBar = null;
+	private BP_ACTION PILM062_APAC_BP_ACTION;
+	private BUTTON_PALETTE_ACTION PILM062_APAC_BUTTON_PALETTE_ACTION;
+	private CTRL_ACTION PILM062_APAC_CTRL_ACTION;
+	private ERROR_HELP_ACTION PILM062_APAC_ERROR_HELP_ACTION;
+	private PM_IL_PROD_GROUP_ACTION PILM062_APAC_PM_IL_PROD_GROUP_ACTION;
+	private PILM062_APAC_SEARCH_ACTION PILM062_APAC_SEARCH_ACTION_BEAN;
+	
+	public PILM062_APAC_COMPOSITE_ACTION(){
+		tabbedBar = new TabbedBar();
+		PILM062_APAC_BP_ACTION =  new BP_ACTION();
+		PILM062_APAC_BUTTON_PALETTE_ACTION = new BUTTON_PALETTE_ACTION();
+		PILM062_APAC_CTRL_ACTION = new CTRL_ACTION();
+		PILM062_APAC_ERROR_HELP_ACTION = new ERROR_HELP_ACTION();
+		PILM062_APAC_PM_IL_PROD_GROUP_ACTION = new PM_IL_PROD_GROUP_ACTION();
+		PILM062_APAC_SEARCH_ACTION_BEAN = new PILM062_APAC_SEARCH_ACTION();
+	}
+
+	public TabbedBar getTabbedBar() {
+		return tabbedBar;
+	}
+
+	public void setTabbedBar(TabbedBar tabbedBar) {
+		this.tabbedBar = tabbedBar;
+	}
+
+	public BP_ACTION getPILM062_APAC_BP_ACTION() {
+		return PILM062_APAC_BP_ACTION;
+	}
+
+	public void setPILM062_APAC_BP_ACTION(BP_ACTION pilm062_apac_bp_action) {
+		PILM062_APAC_BP_ACTION = pilm062_apac_bp_action;
+	}
+
+	public BUTTON_PALETTE_ACTION getPILM062_APAC_BUTTON_PALETTE_ACTION() {
+		return PILM062_APAC_BUTTON_PALETTE_ACTION;
+	}
+
+	public void setPILM062_APAC_BUTTON_PALETTE_ACTION(
+			BUTTON_PALETTE_ACTION pilm062_apac_button_palette_action) {
+		PILM062_APAC_BUTTON_PALETTE_ACTION = pilm062_apac_button_palette_action;
+	}
+
+	public CTRL_ACTION getPILM062_APAC_CTRL_ACTION() {
+		return PILM062_APAC_CTRL_ACTION;
+	}
+
+	public void setPILM062_APAC_CTRL_ACTION(CTRL_ACTION pilm062_apac_ctrl_action) {
+		PILM062_APAC_CTRL_ACTION = pilm062_apac_ctrl_action;
+	}
+
+	public ERROR_HELP_ACTION getPILM062_APAC_ERROR_HELP_ACTION() {
+		return PILM062_APAC_ERROR_HELP_ACTION;
+	}
+
+	public void setPILM062_APAC_ERROR_HELP_ACTION(
+			ERROR_HELP_ACTION pilm062_apac_error_help_action) {
+		PILM062_APAC_ERROR_HELP_ACTION = pilm062_apac_error_help_action;
+	}
+
+	public PM_IL_PROD_GROUP_ACTION getPILM062_APAC_PM_IL_PROD_GROUP_ACTION() {
+		return PILM062_APAC_PM_IL_PROD_GROUP_ACTION;
+	}
+
+	public void setPILM062_APAC_PM_IL_PROD_GROUP_ACTION(
+			PM_IL_PROD_GROUP_ACTION pilm062_apac_pm_il_prod_group_action) {
+		PILM062_APAC_PM_IL_PROD_GROUP_ACTION = pilm062_apac_pm_il_prod_group_action;
+	}
+
+	public PILM062_APAC_SEARCH_ACTION getPILM062_APAC_SEARCH_ACTION_BEAN() {
+		return PILM062_APAC_SEARCH_ACTION_BEAN;
+	}
+
+	public void setPILM062_APAC_SEARCH_ACTION_BEAN(
+			PILM062_APAC_SEARCH_ACTION pilm062_apac_search_action_bean) {
+		PILM062_APAC_SEARCH_ACTION_BEAN = pilm062_apac_search_action_bean;
+	}
+
+}

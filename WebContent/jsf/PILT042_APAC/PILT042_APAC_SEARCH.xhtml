@@ -1,0 +1,156 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILT042_APAC" var="message" />
+	<f:loadBundle basename="messageProperties" var="mainmessage" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			
+		</tr>
+		<h:form id="PILT042_APAC_SEARCH_ACTION">
+			<tr>
+				<td width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILT042_APAC_SEATCH_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILT042_APAC_SEATCH_ACTION.errorMap['current'] !=null? PILT042_APAC_SEATCH_ACTION.errorMap['current']:PILT042_APAC_SEATCH_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" styleClass="ErrorMessages"
+								value="#{PILT042_APAC_SEATCH_ACTION.errorMessages}"
+								escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PILT042_APAC_SEATCH_ACTION.globalMsgRender}" />	
+							<h:outputText id="warningMessages" styleClass="WarningMessages"
+								value="#{PILT042_APAC_SEATCH_ACTION.warningMessages}"
+								escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">
+				<table width="100%" id="toolbartable" height="10%" border="0" cellpadding="0" cellspacing="0">
+					<h:inputHidden id="HIDDENROWID"
+						value="#{PILT042_APAC_SEATCH_ACTION.searchClaimRowId}" />
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">
+				<table border="0" width="100%" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"  /></td>
+						<td><h:outputLabel
+							value=" #{message.PILT042_APAC$PT_IL_PRE_CLAIMS_INFO$SEARCH$POLICY_NAME} :" />
+						<h:inputText value="#{PILT042_APAC_SEATCH_ACTION.initPol_NO}" /></td>
+						<td><h:outputLabel
+							value=" #{message.PILT042_APAC$PT_IL_PRE_CLAIMS_INFO$PCI_REF_NO$caption} :" />
+						<h:inputText value="#{PILT042_APAC_SEATCH_ACTION.initREF_ID}" /></td>
+						<td><h:outputLabel rendered="false"
+							value=" #{message.PILT042_APAC$PT_IL_PRE_CLAIMS_INFO$PCI_ASSRD_REF_ID1$caption} :" />
+						<h:inputText value="#{PILT042_APAC_SEATCH_ACTION.initNew_IC_No}" rendered="false"
+							styleClass="forumRowHighlightNumeric" /> <h:outputLabel rendered="false"
+							value=" #{message.PILT042_APAC$PT_IL_PRE_CLAIMS_INFO$PCI_ASSRD_REF_ID2$caption} :" />
+						<h:inputText value="#{PILT042_APAC_SEATCH_ACTION.initOld_IC_No}"  rendered="false"
+							styleClass="forumRowHighlightNumeric" /></td>
+						<td><a4j:commandButton
+							value="#{commonmsg.searchButton$caption}" id="a4link"
+							styleClass="button">
+							<a4j:support
+								action="#{PILT042_APAC_SEATCH_ACTION.getSearchClaimlValues}"
+								event="onclick" reRender="dataTableId,errorPanel"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+				<!-- using rich data table --> <rich:dataTable id="dataTableId"
+					value="#{PILT042_APAC_SEATCH_ACTION.listValue}"
+					var="customerMatser" cellpadding="5px"
+					rows="#{PILT042_APAC_SEATCH_ACTION.rowCount}" border="1"
+					width="100%">
+
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right" page="#{getSearchClaimlValues.currPage}">
+						</rich:datascroller>
+					</f:facet>
+					<!-- next column -->
+
+					<rich:column filterBy="#{customerMatser.PCI_POL_NO}"
+						filterValue="#{PILT042_APAC_SEATCH_ACTION.filterPol_NO}"
+						sortBy="#{customerMatser.PCI_POL_NO}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILT042_APAC$PT_IL_PRE_CLAIMS_INFO$SEARCH$POLICY_NAME}" />
+						</f:facet>
+						<h:commandLink action="#{PILT042_APAC_SEATCH_ACTION.clearList}"
+							onclick="document.getElementById('PILT042_APAC_SEARCH_ACTION:HIDDENROWID').value='#{customerMatser.ROWID}';">
+						
+								<h:outputText value="#{customerMatser.PCI_POL_NO}" />
+							
+						</h:commandLink>
+
+					</rich:column>
+					<rich:column filterBy="#{customerMatser.PCI_REF_NO}"
+						filterValue="#{PILT042_APAC_SEATCH_ACTION.filterREF_ID}"
+						sortBy="#{customerMatser.PCI_REF_NO}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILT042_APAC$PT_IL_PRE_CLAIMS_INFO$PCI_REF_NO$caption}" />
+						</f:facet>
+						<h:outputText value="#{customerMatser.PCI_REF_NO}" />
+					</rich:column>
+
+					<rich:column filterBy="#{customerMatser.PCI_ASSRD_REF_ID1}"
+						filterValue="#{PILT042_APAC_SEATCH_ACTION.filterNew_IC_No}"
+						sortBy="#{customerMatser.PCI_ASSRD_REF_ID1}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILT042_APAC$PT_IL_PRE_CLAIMS_INFO$PCI_ASSRD_REF_ID1$caption}" />
+						</f:facet>
+						<h:outputText value="#{customerMatser.PCI_ASSRD_REF_ID1}"
+							styleClass="forumRowHighlightNumeric" />
+					</rich:column>
+
+					<rich:column filterBy="#{customerMatser.PCI_ASSRD_REF_ID2}"
+						filterValue="#{PILT042_APAC_SEATCH_ACTION.filterOld_IC_No}"
+						sortBy="#{customerMatser.PCI_ASSRD_REF_ID2}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILT042_APAC$PT_IL_PRE_CLAIMS_INFO$PCI_ASSRD_REF_ID2$caption}" />
+						</f:facet>
+						<h:outputText value="#{customerMatser.PCI_ASSRD_REF_ID2}"
+							styleClass="forumRowHighlightNumeric" />
+					</rich:column>
+
+
+				</rich:dataTable>
+				<h:commandButton value="#{mainmessage.insertButton$caption}"
+					action="#{PILT042_APAC_SEATCH_ACTION.newRecordAction}" styleClass="button" />
+				</td>
+			</tr>
+
+		</h:form>
+	</table>
+	<table width="100%" border="0" cellpadding="0"	cellspacing="0">
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

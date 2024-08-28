@@ -1,0 +1,1412 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.onLoad}">
+			<f:loadBundle basename="messageProperties_PILM041" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_DATA_UPLOAD_MAPPING" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+							<!-- [ BugId:PREMIAGDC_GL.10.5-00193 Changed styleClass. Added by: S.Mallika, Dated: 02-Apr-2009-->
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM041_SEARCH_ACTION.backToSearch}"
+											id="BACK_ID" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="style_201212" 
+											styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="AUTO_ID_12121"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.saveRecord}"
+											id="AUTO_ID_1" styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTO_ID_2" 
+											styleClass="toolbarButtonStyle" accesskey="s" 
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.deleteRecord}"
+											id="AUTO_ID_7" style="text-decoration:none" immediate="true"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTO_ID_8" 
+											styleClass="toolbarButtonStyle" accesskey="r"
+												image="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fetch}"
+											id="AUTO_ID_10" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="AUTO_ID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="AUTO_ID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+							<!-- [ BugId:PREMIAGDC_GL.10.5-00193 Added by: S.Mallika, Dated: 02-Apr-2009 -->
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="errormsgtable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.errorMap['current'] !=null? PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.errorMap['current']: PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.warningMap['current']}" />
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.globalMsgRender}"
+										styleClass="ErrorMessages" />
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.warningMessages}" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td>Data Upload Mapping</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table align="center" class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+								<td vAlign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									
+									<!-- /*	added by raja on 06-03-2017 for ZBILQC-1719694 */ -->
+									<tr style="height: 24px;">
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_EMPLOYER_CODE_LABEL}"
+											for="DUM_EMPLOYER_CODE" id="DUM_EMPLOYER_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_EMPLOYER_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_221" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_EMPLOYER_CODE}"
+											disabled="false" id="DUM_EMPLOYER_CODE" maxlength="12"
+											required="true" styleClass="inputsmall"
+											title="Enter the Mapping ID"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_EMPLOYER_CODE}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorDUM_EMPLOYER_CODE}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_EMPLOYER_CODE" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText>
+										
+										<rich:suggestionbox for="DUM_EMPLOYER_CODE" height="200"
+									id="UI_M_POL_EMPLOYER_CODE_LOV"
+									suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.lovPOL_EMPLOYER_CODE}"
+									var="suggest" width="400">
+									<h:column>
+										<h:outputText id="SELFID_24" value="#{suggest.code}" />
+									</h:column>
+									<h:column>
+										<h:outputText id="SELFID_25" value="#{suggest.name}" />
+									</h:column>
+									<a4j:support ajaxSingle="true" event="onselect"
+										id="POL_EMPLOYER_CODE_SUGG_SUPPORT" immediate="true"
+										reRender="errorPanel,DUM_EMPLOYER_CODE_DESC">
+										<f:setPropertyActionListener id="AUTOID_60_EMP_CODE"
+											target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_EMPLOYER_CODE_DESC}"
+											value="#{suggest.name}" />
+									</a4j:support>
+								</rich:suggestionbox> 
+										 <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_EMPLOYER_CODE_DESC}"
+											disabled="true" id="DUM_EMPLOYER_CODE_DESC" maxlength="240"
+											required="true" styleClass="input"
+											title="Enter the Mapping Code Description"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_EMPLOYER_CODE_DESC}" />
+										<h:graphicImage id="style_1141231" style="" styleClass="searchimg"
+											value="./../../images/Lov.gif" />
+										</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_PAYMENT_MODE_LABEL}"
+											for="DUM_PAYMENT_MODE" id="DUM_PAYMENT_MODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_PAYMENT_MODE$caption}" />
+										<h:graphicImage id="AUTO_ID_231" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><!-- Below required is chaged to false -->
+										<h:selectOneMenu
+									binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_PAYMENT_MODE}"
+									id="DUM_PAYMENT_MODE" rendered="true" required="false"
+									styleClass="input"
+									validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validateDUM_PAYMENT_MODE}"
+									value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_PAYMENT_MODE}">
+									<a4j:support
+										actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+										event="onblur" id="AJAX_SUPPORT11" immediate="true"
+										reRender="errorPanel"  />
+									<f:selectItems id="UI_M_PAY_MODE_AJAX1"
+										value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.listPaynemtMode}" />
+								</h:selectOneMenu></td>
+
+									</tr>
+									<!-- end -->
+									
+									
+<tr>
+<!-- added by sankara narayanan on 03/04/2017 -->
+
+<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_UPLOAD_TYPE_LABEL}"
+											for="DUM_UPLOAD_TYPE" id="DUM_UPLOAD_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_UPLOAD_TYPE$caption}" />
+										</td>
+										<td class="oddrow">
+										<h:selectOneMenu
+									binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_UPLOAD_TYPE}"
+									id="DUM_UPLOAD_TYPE" rendered="true" required="false"
+									styleClass="input"
+									validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validateDUM_UPLOAD_TYPE}"
+									value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_UPLOAD_TYPE}">
+									<a4j:support
+										actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+										event="onblur" id="DUM_UPLOAD_TYPET11" immediate="true"
+										reRender="errorPanel"  />
+									<f:selectItems id="DUM_UPLOAD_TYPE_AJAX"
+										value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.listFileType}" />
+								</h:selectOneMenu></td>
+								
+								<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_EMPLOYER_TYPE_LABEL}"
+											for="DUM_EMPLOYER_TYPE" id="DUM_EMPLOYER_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_EMPLOYER_TYPE$caption}" />
+										<h:graphicImage id="DUM_EMPLOYER_TYPEAUTO_ID_231" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><!-- Below required is chaged to false -->
+										<h:selectOneMenu
+									binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_EMPLOYER_TYPE}"
+									id="DUM_EMPLOYER_TYPE" rendered="true" required="false"
+									styleClass="input"
+									validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validateDUM_EMPLOYER_TYPE}"
+									value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_EMPLOYER_TYPE}">
+									<a4j:support
+										actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+										event="onblur" id="DUM_EMPLOYER_TYPE_SUPPORT11" immediate="true"
+										reRender="errorPanel"  />
+									<f:selectItems id="UI_M_PAY_MODE_AJAX"
+										value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.listDUM_EMPLOYER_TYPE}" />
+								</h:selectOneMenu></td>
+								
+								
+								
+</tr>
+
+<tr>
+<td class="oddrowright"><h:outputLabel
+																					binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_EFF_FM_DT_LABEL}"
+																					for="DUM_EFF_FM_DT" id="DUM_EFF_FM_DT_LABEL" rendered="true"
+																					styleClass="label"
+																					value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_EFF_FM_DT$caption}" />
+																				
+																			</td>
+
+<td class="oddrow"><rich:calendar
+																					binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_EFF_FM_DT}"
+																					datePattern="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.datePattern}"
+																					enableManualInput="true" id="DUM_EFF_FM_DT"
+																					inputClass="calendarinput" inputSize="11"
+																					rendered="true" required="false"
+																					validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorDUM_EFF_FM_DT}"
+																					value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_EFF_FM_DT}">
+																					<a4j:support
+																						actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+																						event="oninputchanged" id="DUM_EFF_FM_DTstyle_46"
+																						immediate="true" reRender="errorPanel" />
+																					<a4j:support
+																						actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+																						event="oninputblur" id="DUM_EFF_FM_DTserial_CUST_DOB"
+																						immediate="true"
+																						onsubmit="formatDate('PM_CUSTOMER:CUST_DOB')"
+																						reRender="errorPanel">
+																					</a4j:support>
+																				</rich:calendar></td>
+																				
+																				<td class="oddrowright"><h:outputLabel
+																					binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_EFF_TO_DT_LABEL}"
+																					for="DUM_EFF_TO_DT" id="DUM_EFF_TO_DT_LABEL" rendered="true"
+																					styleClass="label"
+																					value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_EFF_TO_DT$caption}" />
+																				
+																			</td>
+
+<td class="oddrow"><rich:calendar
+																					binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_EFF_TO_DT}"
+																					datePattern="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.datePattern}"
+																					enableManualInput="true" id="DUM_EFF_TO_DT"
+																					inputClass="calendarinput" inputSize="11"
+																					rendered="true" required="false"
+																					validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorDUM_EFF_TO_DT}"
+																					value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_EFF_TO_DT}">
+																					<a4j:support
+																						actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+																						event="oninputchanged" id="DUM_EFF_TO_DTstyle_46"
+																						immediate="true" reRender="errorPanel" />
+																					<a4j:support
+																						actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+																						event="oninputblur" id="DUM_EFF_TO_DTserial_CUST_DOB"
+																						immediate="true"
+																						onsubmit="formatDate('PM_CUSTOMER:CUST_DOB')"
+																						reRender="errorPanel">
+																					</a4j:support>
+																				</rich:calendar></td>
+</tr>
+<!-- end -->
+
+<tr>
+
+<td class="oddrowright"><h:outputLabel
+																					binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_DUE_DT_LABEL}"
+																					for="DUM_DUE_DT" id="DUM_DUE_DT_LABEL" rendered="true"
+																					styleClass="label"
+																					value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_DUE_DT$caption}" />
+																				
+																			</td>
+
+<td class="oddrow"><rich:calendar
+																					binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_DUE_DT}"
+																					datePattern="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.datePattern}"
+																					enableManualInput="true" id="DUM_DUE_DT"
+																					inputClass="calendarinput" inputSize="11"
+																					rendered="true" required="false"
+																					validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorDUM_DUE_DT}"
+																					value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_DUE_DT}">
+																					<a4j:support
+																						actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+																						event="oninputchanged" id="DUM_DUE_DTstyle_46"
+																						immediate="true" reRender="errorPanel" />
+																					<a4j:support
+																						actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+																						event="oninputblur" id="DUM_DUE_DTserial_CUST_DOB"
+																						immediate="true"
+																						onsubmit="formatDate('PM_CUSTOMER:CUST_DOB')"
+																						reRender="errorPanel">
+																					</a4j:support>
+																				</rich:calendar></td>
+
+</tr>
+
+									
+									<tr style="height: 24px;">
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_MAP_CODE_LABEL}"
+											for="DUM_MAP_CODE" id="DUM_MAP_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_MAP_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_22" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_MAP_CODE}"
+											disabled="false" id="DUM_MAP_CODE" maxlength="12"
+											required="true" styleClass="inputsmall"
+											title="Enter the Mapping ID"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_MAP_CODE}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorMapCode}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_MAP_CODE" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText> <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_MAP_CODE_DESC}"
+											disabled="false" id="DUM_MAP_CODE_DESC" maxlength="240"
+											required="true" styleClass="input"
+											title="Enter the Mapping Code Description"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_MAP_CODE_DESC}" />
+										</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_DEF_CODE_LABEL}"
+											for="DUM_DEF_CODE" id="DUM_DEF_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_DEF_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_23" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><!-- Below required is chaged to false -->
+										<h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_DEF_CODE}"
+											disabled="false" id="DUM_DEF_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="Enter the Definition id"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_DEF_CODE}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorDefCode}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												oncomplete="setFocus('PM_IL_DATA_UPLOAD_MAPPING:DUM_FIELD_01','PM_IL_DATA_UPLOAD_MAPPING:DUM_DEF_CODE')"
+												event="onblur" id="ON_BLUR_DUM_DEF_CODE" immediate="true"
+												reRender="UI_M_DEF_CODE_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_DEF_CODE" height="200"
+											id="UI_M_DEF_CODE_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.defCodeSuggestion}"
+											var="defCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_43" value="#{defCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_44" value="#{defCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_DUM_DEF_CODE" immediate="true"
+												reRender="errorPanel,UI_M_DEF_CODE_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_PIFH_DEF_CODE"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DEF_CODE_DESC}"
+													value="#{defCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DEF_CODE_DESC}"
+											disabled="true" id="UI_M_DEF_CODE_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="Definition description"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DEF_CODE_DESC}" />
+										<h:graphicImage id="style_114" style="" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_01_LABEL}"
+											for="DUM_FIELD_01" id="DUM_FIELD_01_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_01$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_01}"
+											disabled="false" id="DUM_FIELD_01" maxlength="4"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 1" immediate="true"
+											tabindex="1"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_01}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField1}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_01" immediate="true"
+												reRender="UI_M_DUM_FIELD_01_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_01" height="200"
+											id="UI_M_DUM_FIELD_01_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="field_1Code" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_43" value="#{field_1Code.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_44" value="#{field_1Code.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_01_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_01_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_1"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_01_DESC}"
+													value="#{field_1Code.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_01_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_01_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_01_DESC}" />
+										<h:graphicImage id="style_1141" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_11_LABEL}"
+											for="DUM_FIELD_11" id="DUM_FIELD_11_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_11$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_11}"
+											disabled="false" id="DUM_FIELD_11" maxlength="4"
+											tabindex="11" rendered="true" required="false"
+											styleClass="inputsmall"
+											title="Enter the Serial No for Field 11" immediate="true"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_11}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField11}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_11" immediate="true"
+												reRender="UI_M_DUM_FIELD_11_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_11" height="200"
+											id="UI_M_DUM_FIELD_11_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="field_11Code" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_11_CODE"
+													value="#{field_11Code.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_11_NAME"
+													value="#{field_11Code.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_11_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_11_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_11"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_11_DESC}"
+													value="#{field_11Code.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_11_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_11_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_11_DESC}" />
+										<h:graphicImage id="style_1142" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_02_LABEL}"
+											for="DUM_FIELD_02" id="DUM_FIELD_02_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_02$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_02}"
+											disabled="false" id="DUM_FIELD_02" maxlength="4" tabindex="2"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 2"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_02}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField2}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_02" immediate="true"
+												reRender="UI_M_DUM_FIELD_02_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_02" height="200"
+											id="UI_M_DUM_FIELD_02_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_02_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_02_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_02_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_02_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_02"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_02_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_02_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_02_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="Enter the value of Desc 2"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_02_DESC}" />
+										<h:graphicImage id="style_1143" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_12_LABEL}"
+											for="DUM_FIELD_12" id="DUM_FIELD_12_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_12$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_12}"
+											disabled="false" id="DUM_FIELD_12" maxlength="4"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 12" tabindex="12"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_12}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField12}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_12" immediate="true"
+												reRender="UI_M_DUM_FIELD_12_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_12" height="200"
+											id="UI_M_DUM_FIELD_12_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_12_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_12_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_12_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_12_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_12"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_12_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_12_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_12_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_12_DESC}" />
+										<h:graphicImage id="style_1144" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_03_LABEL}"
+											for="DUM_FIELD_03" id="DUM_FIELD_03_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_03$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_03}"
+											disabled="false" id="DUM_FIELD_03" maxlength="4" tabindex="3"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 3"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_03}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField3}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_03" immediate="true"
+												reRender="UI_M_DUM_FIELD_03_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_03" height="200"
+											id="UI_M_DUM_FIELD_03_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_03_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_03_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_03_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_03_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_03"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_03_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_03_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_03_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_03_DESC}" />
+										<h:graphicImage id="style_1145" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_13_LABEL}"
+											for="DUM_FIELD_13" id="DUM_FIELD_13_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_13$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_13}"
+											disabled="false" id="DUM_FIELD_13" maxlength="4"
+											tabindex="13" rendered="true" required="false"
+											styleClass="inputsmall"
+											title="Enter the Serial No for Field 13"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_13}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField13}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_13" immediate="true"
+												reRender="UI_M_DUM_FIELD_13_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_13" height="200"
+											id="UI_M_DUM_FIELD_13_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_13_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_13_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_13_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_13_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_13"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_13_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_13_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_13_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_13_DESC}" />
+										<h:graphicImage id="style_1146" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_04_LABEL}"
+											for="DUM_FIELD_04" id="DUM_FIELD_04_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_04$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_04}"
+											disabled="false" id="DUM_FIELD_04" maxlength="4" tabindex="4"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 4"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_04}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField4}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_04" immediate="true"
+												reRender="UI_M_DUM_FIELD_04_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_04" height="200"
+											id="UI_M_DUM_FIELD_04_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_04_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_04_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_04_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_04_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_04"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_04_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_04_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_04_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_04_DESC}" />
+										<h:graphicImage id="style_1147" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_14_LABEL}"
+											for="DUM_FIELD_14" id="DUM_FIELD_14_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_14$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_14}"
+											disabled="false" id="DUM_FIELD_14" maxlength="4"
+											tabindex="14" rendered="true" required="false"
+											styleClass="inputsmall"
+											title="Enter the Serial No for Field 14"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_14}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField14}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_14" immediate="true"
+												reRender="UI_M_DUM_FIELD_14_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_14" height="200"
+											id="UI_M_DUM_FIELD_14_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_14_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_14_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_14_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_14_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_14"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_14_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_14_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_14_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_14_DESC}" />
+										<h:graphicImage id="style_1148" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_05_LABEL}"
+											for="DUM_FIELD_05" id="DUM_FIELD_05_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_05$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_05}"
+											disabled="false" id="DUM_FIELD_05" maxlength="4"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 5" tabindex="5"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_05}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField5}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_05" immediate="true"
+												reRender="UI_M_DUM_FIELD_05_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_05" height="200"
+											id="UI_M_DUM_FIELD_05_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_05_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_05_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_05_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_05_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_05"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_05_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_05_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_05_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_05_DESC}" />
+										<h:graphicImage id="style_1149" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_15_LABEL}"
+											for="DUM_FIELD_15" id="DUM_FIELD_15_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_15$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_15}"
+											disabled="false" id="DUM_FIELD_15" maxlength="4"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 15" tabindex="15"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_15}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField5}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_15" immediate="true"
+												reRender="UI_M_DUM_FIELD_15_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_15" height="200"
+											id="UI_M_DUM_FIELD_15_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_15_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_15_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_15_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_15_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_15"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_15_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_15_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_15_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_15_DESC}" />
+										<h:graphicImage id="style_11410" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_06_LABEL}"
+											for="DUM_FIELD_06" id="DUM_FIELD_06_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_06$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_06}"
+											disabled="false" id="DUM_FIELD_06" maxlength="4"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 6" tabindex="6"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_06}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField6}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_06" immediate="true"
+												reRender="UI_M_DUM_FIELD_06_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_06" height="200"
+											id="UI_M_DUM_FIELD_06_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_06_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_06_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_06_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_06_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_06"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_06_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_06_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_06_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_06_DESC}" />
+										<h:graphicImage id="style_11411" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_16_LABEL}"
+											for="DUM_FIELD_16" id="DUM_FIELD_16_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_16$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_16}"
+											disabled="false" id="DUM_FIELD_16" maxlength="4"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 16" tabindex="16"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_16}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField16}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_16" immediate="true"
+												reRender="UI_M_DUM_FIELD_16_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_16" height="200"
+											id="UI_M_DUM_FIELD_16_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_16_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_16_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_16_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_16_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_16"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_16_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_16_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_16_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_16_DESC}" />
+										<h:graphicImage id="style_11412" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_07_LABEL}"
+											for="DUM_FIELD_07" id="DUM_FIELD_07_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_07$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_07}"
+											disabled="false" id="DUM_FIELD_07" maxlength="4" tabindex="7"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 7"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_07}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField7}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_07" immediate="true"
+												reRender="UI_M_DUM_FIELD_07_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_07" height="200"
+											id="UI_M_DUM_FIELD_07_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_07_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_07_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_07_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_07_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_07"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_07_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_07_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_07_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_07_DESC}" />
+										<h:graphicImage id="style_11413" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_17_LABEL}"
+											for="DUM_FIELD_17" id="DUM_FIELD_17_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_17$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_17}"
+											disabled="false" id="DUM_FIELD_17" maxlength="4"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 17" tabindex="17"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_17}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField17}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_17" immediate="true"
+												reRender="UI_M_DUM_FIELD_17_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_17" height="200"
+											id="UI_M_DUM_FIELD_17_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_17_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_17_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_17_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_17_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_17"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_17_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_17_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_17_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_17_DESC}" />
+										<h:graphicImage id="style_11414" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_08_LABEL}"
+											for="DUM_FIELD_08" id="DUM_FIELD_08_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_08$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_08}"
+											disabled="false" id="DUM_FIELD_08" maxlength="4" tabindex="8"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 8"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_08}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField8}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_08" immediate="true"
+												reRender="UI_M_DUM_FIELD_08_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_08" height="200"
+											id="UI_M_DUM_FIELD_08_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_08_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_08_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_08_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_08_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_08"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_08_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_08_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_08_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_08_DESC}" />
+										<h:graphicImage id="style_11415" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_18_LABEL}"
+											for="DUM_FIELD_18" id="DUM_FIELD_18_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_18$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_18}"
+											disabled="false" id="DUM_FIELD_18" maxlength="4"
+											tabindex="18" rendered="true" required="false"
+											styleClass="inputsmall"
+											title="Enter the Serial No for Field 18"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_18}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField18}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_18" immediate="true"
+												reRender="UI_M_DUM_FIELD_18_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_18" height="200"
+											id="UI_M_DUM_FIELD_18_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_18_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_18_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_18_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_18_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_18"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_18_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_18_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_18_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_18_DESC}" />
+										<h:graphicImage id="style_11416" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_09_LABEL}"
+											for="DUM_FIELD_09" id="DUM_FIELD_09_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_09$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_09}"
+											disabled="false" id="DUM_FIELD_09" maxlength="4"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 9" tabindex="9"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_09}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField9}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_09" immediate="true"
+												reRender="UI_M_DUM_FIELD_09_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_09" height="200"
+											id="UI_M_DUM_FIELD_09_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_09_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_09_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_09_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_09_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_09"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_09_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_09_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_09_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_09_DESC}" />
+										<h:graphicImage id="style_11417" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_19_LABEL}"
+											for="DUM_FIELD_19" id="DUM_FIELD_19_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_19$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_19}"
+											disabled="false" id="DUM_FIELD_19" maxlength="4"
+											tabindex="19" rendered="true" required="false"
+											styleClass="inputsmall"
+											title="Enter the Serial No for Field 19"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_19}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField19}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_19" immediate="true"
+												reRender="UI_M_DUM_FIELD_19_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_19" height="200"
+											id="UI_M_DUM_FIELD_19_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_19_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_19_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_19_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_19_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_19"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_19_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_19_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_19_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_19_DESC}" />
+										<h:graphicImage id="style_11418" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_10_LABEL}"
+											for="DUM_FIELD_10" id="DUM_FIELD_10_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_10$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_10}"
+											disabled="false" id="DUM_FIELD_10" maxlength="4"
+											rendered="true" required="false" styleClass="inputsmall"
+											tabindex="10" title="Enter the Serial No for Field 10"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_10}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField10}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_10" immediate="true"
+												reRender="UI_M_DUM_FIELD_10_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_10" height="200"
+											id="UI_M_DUM_FIELD_10_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_10_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_10_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_10_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_10_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_10"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_10_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_10_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_10_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_10_DESC}" />
+										<h:graphicImage id="style_11419" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_20_LABEL}"
+											for="DUM_FIELD_20" id="DUM_FIELD_20_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM041$PM_IL_DATA_UPLOAD_MAPPING$DUM_FIELD_20$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_DUM_FIELD_20}"
+											disabled="false" id="DUM_FIELD_20" maxlength="4"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the Serial No for Field 20" tabindex="20"
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.DUM_FIELD_20}"
+											validator="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.validatorField20}">
+											<a4j:support
+												actionListener="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fireFieldValidation}"
+												event="onblur" id="ON_BLUR_DUM_FIELD_20" immediate="true"
+												reRender="UI_M_DUM_FIELD_20_DESC,errorPanel"
+												oncomplete="setFocus('PM_IL_DATA_UPLOAD_MAPPING:DUM_MAP_CODE','PM_IL_DATA_UPLOAD_MAPPING:DUM_FIELD_20')" />
+										</h:inputText> <rich:suggestionbox for="DUM_FIELD_20" height="200"
+											id="UI_M_DUM_FIELD_20_DESC_SUGG"
+											suggestionAction="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.field_LOV}"
+											var="fieldCode" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_20_CODE" value="#{fieldCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_20_NAME" value="#{fieldCode.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_UI_M_DUM_FIELD_20_DESC" immediate="true"
+												reRender="errorPanel,UI_M_DUM_FIELD_20_DESC">
+												<f:setPropertyActionListener id="UI_PIFH_FIELD_CODE_20"
+													target="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_20_DESC}"
+													value="#{fieldCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> &nbsp;&nbsp; <h:inputText
+											binding="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.COMP_UI_M_DUM_FIELD_20_DESC}"
+											disabled="true" id="UI_M_DUM_FIELD_20_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.PM_IL_DATA_UPLOAD_MAPPING_BEAN.UI_M_DUM_FIELD_20_DESC}" />
+										<h:graphicImage id="style_11420" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+								</table>
+								</td>
+								<td vAlign="top" width="10%">
+								<table class="noborder">
+									<tr>
+										<td />
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<!-- [ BugId:PREMIAGDC_GL.10.5-00193 Changed styleClass. Added by: S.Mallika, Dated: 02-Apr-2009-->
+							<tr>
+								<td colspan="3" vAlign="top" width="100%">
+								<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+									<tr>
+										<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+											<rich:toolBarGroup location="right"
+												styleClass="toolBarGroupStyle">
+												<h:commandLink
+													action="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.saveRecord}"
+													id="AUTO_ID_24" rendered="true"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="AUTO_ID_25" styleClass="searchimg"
+														value="./../../images/save.gif" />
+													<h:outputText id="AUTO_ID_26"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+												<h:commandLink
+													action="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.saveRecord}"
+													id="AUTO_ID_27" rendered="false"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="AUTO_ID_28"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/savenext.GIF" />
+													<h:outputText id="AUTO_ID_29"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$savenext}" />
+												</h:commandLink>
+												<h:commandLink
+													action="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.commit_Delete}"
+													id="AUTO_ID_30" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="AUTO_ID_31"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/deleteRecord.gif" />
+													<h:outputText id="AUTO_ID_32"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$deleteRecord}" />
+												</h:commandLink>
+
+												<h:commandLink
+													action="#{PILM041_PM_IL_DATA_UPLOAD_MAPPING_ACTION.fetch}"
+													id="AUTO_ID_33" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="AUTO_ID_34"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/firstrec.gif" />
+													<h:outputText id="AUTO_ID_35"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$firstrec}" />
+												</h:commandLink>
+												<h:commandLink id="AUTO_ID_36" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="AUTO_ID_37"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/prevpage.gif" />
+													<h:outputText id="AUTO_ID_38"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$prevpage}" />
+												</h:commandLink>
+
+												<h:commandLink id="AUTO_ID_39" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="AUTO_ID_40"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/nextpage.gif" />
+													<h:outputText id="AUTO_ID_41"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$nextpage}" />
+												</h:commandLink>
+
+												<h:commandLink id="AUTO_ID_42" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="AUTO_ID_43"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/lastRecord.gif" />
+													<h:outputText id="AUTO_ID_44"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$lastRecord}" />
+												</h:commandLink>
+											</rich:toolBarGroup>
+										</rich:toolBar></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+							<!-- [ BugId:PREMIAGDC_GL.10.5-00193 Added by: S.Mallika, Dated: 02-Apr-2009 -->
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

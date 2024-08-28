@@ -1,0 +1,176 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}" >
+<f:loadBundle basename="messageProperties_PM101_A_TISB" var="message" />
+<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+	<tr>
+			
+		</tr>
+	
+<h:form id="PM100_A_TISB_PM_AGENT_PF_COMP_CON">
+	<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM101_A_TISB_search.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM101_A_TISB_search.errorMap['current'] !=null? 
+ 										PM101_A_TISB_search.errorMap['current']: 
+										 PM101_A_TISB_search.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PM101_A_TISB_search.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PM101_A_TISB_search.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PM101_A_TISB_search.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+		<!-- Body row -->
+		<tr>
+			<td>
+				
+				<table border="0" width="100%"  cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td><h:outputLabel value="Market Code"/>
+						 <h:inputText
+							value="#{PM101_A_TISB_search.searchBean.APCC_MKT_CODE}"/></td>
+						<td><h:commandButton styleClass="button" value="#{commonmsg.searchButton$caption}" id="fetch"
+						action="#{PM101_A_TISB_search.fetch}">
+
+
+						<f:param name="Mcode"
+							value="#{PM101_A_TISB_search.searchBean.APCC_MKT_CODE}" />
+							</h:commandButton></td>
+					</tr>
+				</table>
+				
+				<table width="100%" id="toolbartable" cellpadding="0" cellspacing="0"	border="0">
+					<tr>
+						<td>
+						<h:commandButton  style="text-decoration:none" 
+						action="#{PM101_A_TISB_search.deleteRow}"  
+						value="#{menumessage.jsf$header$image$deleteRecord}" rendered="false">
+							
+							
+						</h:commandButton> 
+						
+						</td>
+					</tr>
+				</table>
+				
+				<!-- using rich data table -->
+				<rich:dataTable id="fetchList" value="#{PM101_A_TISB_search.dataTableBean}"
+					var="colData" cellpadding="5px" rows="50" border="1"
+					width="100%" binding="#{PM101_A_TISB_search.dataTable}">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+					
+					<rich:column rendered="false">
+											<f:facet name="header">
+												<h:outputText styleClass="label" value="" />
+											</f:facet>
+											<h:selectBooleanCheckbox id="checkBox"
+												value="#{colData.selected}">
+												</h:selectBooleanCheckbox>
+										</rich:column>
+					
+					
+					<rich:column filterBy="#{colData.APCC_MKT_CODE}" 
+					filterValue="#{PM101_A_TISB_search.searchBean.searchText}"					
+						sortBy="#{colData.APCC_MKT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Market Code"/>
+						</f:facet>
+						<h:commandLink action="#{PM101_A_TISB_search.fetchMasterRecord}" id="APCC_MKT_CODE_Link">
+							
+								<h:outputText value="#{colData.APCC_MKT_CODE}" />
+							
+							<f:param name="APCC_MKT_CODE"
+							value="#{colData.APCC_MKT_CODE}"/>
+							<f:param name="APCC_PROD_TYPE"
+								value="#{colData.APCC_PROD_TYPE}" />
+								<f:param name="APCC_CONT_FM"
+								value="#{colData.APCC_CONT_FM}" />
+								<f:param name="APCC_RATE"
+								value="#{colData.APCC_RATE}" />
+							<f:param name="ROWID" value="#{colData.ROWID}" />
+						</h:commandLink>
+					</rich:column>
+
+
+					<rich:column filterBy="#{colData.APCC_RATE}" 
+										
+						sortBy="#{colData.APCC_RATE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Contribution Rate"/>
+						</f:facet>
+						
+						
+								<h:outputText value="#{colData.APCC_RATE}" />
+					
+							
+					</rich:column>
+
+					<rich:column filterBy="#{colData.APCC_PROD_TYPE}"
+						sortBy="#{colData.APCC_PROD_TYPE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Production Type"/>
+						</f:facet>
+						
+							<h:outputText value="#{colData.APCC_PROD_TYPE}" />
+					
+					</rich:column>	
+					
+					<rich:column filterBy="#{colData.APCC_CONT_FM}"
+					sortBy="#{colData.APCC_CONT_FM}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Contribution From" />
+					</f:facet>
+					
+						<h:outputText value="#{colData.APCC_CONT_FM}" />
+				
+				</rich:column>
+				
+				<rich:column filterBy="#{colData.APCC_CONT_TO}"
+					sortBy="#{colData.APCC_CONT_TO}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Contribution To" />
+					</f:facet>
+					
+						<h:outputText value="#{colData.APCC_CONT_TO}" />
+				
+				</rich:column>
+													
+				</rich:dataTable>
+				<h:commandButton styleClass="button" id="insertLink" value="Insert" action="#{PM101_A_TISB_search.insert}"/>
+			</td>
+		</tr>
+
+	</h:form>
+		<!-- add footer to the page-->
+		<tr>
+		
+		</tr>
+	</table>
+</f:view>
+
+</ui:define>
+</ui:composition>

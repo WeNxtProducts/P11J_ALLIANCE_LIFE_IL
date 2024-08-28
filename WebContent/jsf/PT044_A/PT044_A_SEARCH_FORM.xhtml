@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"	
+    xmlns:c="http://java.sun.com/jsp/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PT044_A" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0" >
+		<tr>
+			
+		</tr>
+		<h:form id="PT_AGENT_SEARCH">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PT044_A_SEARCH_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PT044_A_SEARCH_ACTION.errorMap['current'] !=null? PT044_A_SEARCH_ACTION.errorMap['current']:PT044_A_SEARCH_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PT044_A_SEARCH_ACTION.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PT044_A_SEARCH_ACTION.globalMsgRender}" />
+
+							<h:outputText id="warningMessages"
+								value="#{PT044_A_SEARCH_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">
+				<table width="100%" id="toolbartable" height="10%" cellpadding="0" cellspacing="0"	border="0" >
+					<h:inputHidden id="HIDDENROWID"
+						value="#{PT044_A_SEARCH_ACTION.searchAgentRowId}" />
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">
+				<table border="0" width="100%"  cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+						<td><h:outputLabel
+							value=" #{message.PT044_A$PT_AGENT_TRAN_HDR$ATH_AGENT_CODE$caption} :" />
+						<h:inputText value="#{PT044_A_SEARCH_ACTION.initAgent_Code}" /></td>
+						<td><h:outputLabel value=" #{message.PT044_A$PARENT_CODE} :" />
+						<h:inputText value="#{PT044_A_SEARCH_ACTION.initpParent_Code}" /></td>
+
+						<td><a4j:commandButton value="#{commonmsg.searchButton$caption}" id="a4link"
+							styleClass="button">
+							<a4j:support action="#{PT044_A_SEARCH_ACTION.getAgentDetails}"
+								event="onclick" reRender="dataTableId,errorPanel"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<!-- using rich data table -->
+			<tr>
+				<td><rich:dataTable id="dataTableId"
+					value="#{PT044_A_SEARCH_ACTION.listValue}" var="agentMaster"
+					cellpadding="5px" rows="#{PT044_A_SEARCH_ACTION.rowCount}"
+					border="1" width="100%">
+
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right" page="#{PT044_A_SEARCH_ACTION.currPage}">
+						</rich:datascroller>
+					</f:facet>
+					<!-- next column -->
+
+					<rich:column filterBy="#{agentMaster.ATH_AGENT_CODE}"
+						filterValue="#{PT044_A_SEARCH_ACTION.filterAgent_Code}"
+						sortBy="#{agentMaster.ATH_AGENT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PT044_A$PT_AGENT_TRAN_HDR$ATH_AGENT_CODE$caption}" />
+						</f:facet>
+						<h:commandLink action="#{PT044_A_SEARCH_ACTION.clearList}"
+							onclick="document.getElementById('PT_AGENT_SEARCH:HIDDENROWID').value='#{agentMaster.ROWID}';">
+						
+								<h:outputText value="#{agentMaster.ATH_AGENT_CODE} " />
+							
+						</h:commandLink>
+					</rich:column>
+					<c:if test="${sessionScope['GLOBAL.M_PARAM_1']=='A'}">
+						<rich:column filterBy="#{agentMaster.ATH_PARENT_CODE}"
+							filterValue="#{PT044_A_SEARCH_ACTION.filterParent_Code}"
+							sortBy="#{agentMaster.ATH_PARENT_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.PT044_A$PT_AGENT_TRAN_HDR$ATH_PARENT_CODE$caption}" />
+							</f:facet>
+							<h:outputText value="#{agentMaster.ATH_PARENT_CODE} " />
+						</rich:column>
+					</c:if>
+
+					<c:if test="${sessionScope['GLOBAL.M_PARAM_1']=='U'}">
+						<rich:column filterBy="#{agentMaster.ATH_PARENT_CODE}" rendered="#{sessionScope['GLOBAL.M_PARAM_1']=='U'}"
+							filterValue="#{PT044_A_SEARCH_ACTION.filterParent_Code}"
+							sortBy="#{agentMaster.ATH_PARENT_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Parent Code" />
+							</f:facet>
+							<h:outputText value="#{agentMaster.ATH_PARENT_CODE} " />
+						</rich:column>
+					</c:if>
+					<c:if test="${sessionScope['GLOBAL.M_PARAM_1']=='T'}">
+						<rich:column filterBy="#{agentMaster.ATH_PARENT_CODE}" rendered="#{sessionScope['GLOBAL.M_PARAM_1']=='T'}"
+							filterValue="#{PT044_A_SEARCH_ACTION.filterParent_Code}"
+							sortBy="#{agentMaster.ATH_PARENT_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Terminated Agent's Parent Code" />
+							</f:facet>
+							<h:outputText value="#{agentMaster.ATH_PARENT_CODE} " />
+						</rich:column>
+
+						<rich:column filterBy="#{agentMaster.ATH_TERMINATION_TYPE}" rendered="#{sessionScope['GLOBAL.M_PARAM_1']=='T'}"
+							filterValue="#{PT044_A_SEARCH_ACTION.filterTERMINATION_TYPE}"
+							sortBy="#{agentMaster.ATH_TERMINATION_TYPE}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Type of Termination" />
+							</f:facet>
+							<h:outputText value="#{agentMaster.ATH_TERMINATION_TYPE} " />
+						</rich:column>
+					</c:if>
+					<c:if test="${sessionScope['GLOBAL.M_PARAM_1']=='M'}">
+						<rich:column filterBy="#{agentMaster.ATH_PARENT_CODE}" rendered="#{sessionScope['GLOBAL.M_PARAM_1']=='M'}"
+							filterValue="#{PT044_A_SEARCH_ACTION.filterParent_Code}"
+							sortBy="#{agentMaster.ATH_PARENT_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Agent''s Old Parent Code" />
+							</f:facet>
+							<h:outputText value="#{agentMaster.ATH_PARENT_CODE} " />
+						</rich:column>
+
+						<rich:column filterBy="#{agentMaster.ATH_AGENT_NEW_RANK_CODE}" rendered="#{sessionScope['GLOBAL.M_PARAM_1']=='M'}"
+							filterValue="#{PT044_A_SEARCH_ACTION.filterAgentRank}"
+							sortBy="#{agentMaster.ATH_AGENT_NEW_RANK_CODE}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Agents Rank Code" />
+							</f:facet>
+							<h:outputText value="#{agentMaster.ATH_AGENT_NEW_RANK_CODE} " />
+						</rich:column>
+					</c:if>
+
+					<c:if test="${sessionScope['GLOBAL.M_PARAM_1']=='R'}">
+						<rich:column filterBy="#{agentMaster.ATH_PARENT_CODE}" rendered="#{sessionScope['GLOBAL.M_PARAM_1']=='R'}"
+							filterValue="#{PT044_A_SEARCH_ACTION.filterParent_Code}"
+							sortBy="#{agentMaster.ATH_PARENT_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Terminated Agent's Parent Code" />
+							</f:facet>
+							<h:outputText value="#{agentMaster.ATH_PARENT_CODE} " />
+						</rich:column>
+						<rich:column filterBy="#{agentMaster.ATH_TERMINATION_TYPE}" rendered="#{sessionScope['GLOBAL.M_PARAM_1']=='R'}"
+							filterValue="#{PT044_A_SEARCH_ACTION.filterTERMINATION_TYPE}"
+							sortBy="#{agentMaster.ATH_TERMINATION_TYPE}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="Type of Terimination" />
+							</f:facet>
+							<h:outputText value="#{agentMaster.ATH_TERMINATION_TYPE} " />
+						</rich:column>
+						<rich:column filterBy="#{agentMaster.ATH_NEW_AGENT_CODE}" rendered="#{sessionScope['GLOBAL.M_PARAM_1']=='R'}"
+							filterValue="#{PT044_A_SEARCH_ACTION.filterNewAgentCode}"
+							sortBy="#{agentMaster.ATH_NEW_AGENT_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText value="New Servicing Agent" />
+							</f:facet>
+							<h:outputText value="#{agentMaster.ATH_NEW_AGENT_CODE} " />
+						</rich:column>
+					</c:if>
+				</rich:dataTable> 
+				<h:commandButton value="Insert" styleClass="button"
+					action="#{PT044_A_SEARCH_ACTION.newRecordAction}" /></td>
+			</tr>
+		</h:form>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

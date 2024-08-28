@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="MaturityNoticeTest" pageWidth="595" pageHeight="842" columnWidth="515" leftMargin="60" rightMargin="20" topMargin="20" bottomMargin="20" uuid="637c8282-50fe-4b0d-9b69-a25200f02cfa">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="366"/>
+	<subDataset name="SA_DS" uuid="41f749fb-e54a-4db8-9e57-bc3c78fda7ab">
+		<parameter name="SUB_POL_SYS_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT POL_NO,
+       POL_SYS_ID,
+       DECODE(POL_MODE_OF_PYMT,
+              'M',
+              'MONTHLY',
+              'Q',
+              'QUARTERLY',
+              'H',
+              'HALF-YEARLY',
+              'YEARLY') PAYMETHOD,
+       POL_START_DT,
+       SMV_DATE,
+       POL_LC_SUM_ASSURED,
+       SMV_LC_GROSS_VALUE,
+       SMV_LC_OS_LOAN,
+       SMV_LC_LOAN_INT,
+       (SMV_LC_UNPAID_PREM + SMV_LC_CHARGE_AMT + SMV_LC_UNPAID_PREM_INT) OTHERS,
+       SMV_LC_NET_PAID_AMT PAYABLE_AMT
+  FROM PT_IL_SURR_MAT_VALUES, PT_IL_POLICY
+ WHERE SMV_TYPE = 'M'
+   AND SMV_POL_SYS_ID = POL_SYS_ID
+   AND POL_SYS_ID = $P{SUB_POL_SYS_ID}]]>
+		</queryString>
+		<field name="POL_NO" class="java.lang.String"/>
+		<field name="POL_SYS_ID" class="java.math.BigDecimal"/>
+		<field name="PAYMETHOD" class="java.lang.String"/>
+		<field name="POL_START_DT" class="java.sql.Timestamp"/>
+		<field name="SMV_DATE" class="java.sql.Timestamp"/>
+		<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+		<field name="SMV_LC_GROSS_VALUE" class="java.math.BigDecimal"/>
+		<field name="SMV_LC_OS_LOAN" class="java.math.BigDecimal"/>
+		<field name="SMV_LC_LOAN_INT" class="java.math.BigDecimal"/>
+		<field name="OTHERS" class="java.math.BigDecimal"/>
+		<field name="PAYABLE_AMT" class="java.math.BigDecimal"/>
+	</subDataset>
+	<parameter name="POL_SYS_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT CUST_TITLE, cust_name, cust_addr1, cust_addr2, cust_addr3, cust_phone,POL_NO,POL_SYS_ID,POL_NO
+FROM PM_CUSTOMER, PT_IL_POLICY
+WHERE CUST_CODE = POL_CUST_CODE
+AND POL_NO = POL_NO
+AND POL_SYS_ID=$P{POL_SYS_ID}]]>
+	</queryString>
+	<field name="CUST_TITLE" class="java.lang.String"/>
+	<field name="CUST_NAME" class="java.lang.String"/>
+	<field name="CUST_ADDR1" class="java.lang.String"/>
+	<field name="CUST_ADDR2" class="java.lang.String"/>
+	<field name="CUST_ADDR3" class="java.lang.String"/>
+	<field name="CUST_PHONE" class="java.lang.String"/>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POL_SYS_ID" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="130" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="45" y="50" width="100" height="20" uuid="c50aa0f8-5376-4184-8b7f-0cd66cd76b95"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_ADDR1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="389" y="10" width="100" height="20" uuid="f07cd0a3-3038-4a7b-ad85-8c9da2b50053"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format(new Date())]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="45" y="90" width="100" height="20" uuid="da6e218a-41d7-4e7b-9f86-b7c787b719fc"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_ADDR3}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="45" y="110" width="100" height="20" uuid="52a6f7f0-3ffb-4b3d-859a-1e4507f59cf5"/>
+				<textElement>
+					<font fontName="Times New Roman" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_PHONE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="45" y="70" width="100" height="20" uuid="abf62154-ce9d-4f78-91eb-9ec222fff330"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_ADDR2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="10" width="35" height="20" uuid="26add1ef-758c-4111-86e7-0a81520a88fc"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="45" y="30" width="100" height="20" uuid="01176038-5879-4640-89e2-a20e73eefa8d"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="102" splitType="Stretch">
+			<staticText>
+				<reportElement x="15" y="0" width="379" height="20" uuid="717b09c3-ce7a-415d-b9d1-13824e97cb04"/>
+				<textElement>
+					<font fontName="Calibri" size="16" isBold="true" isItalic="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Reg : Maturity Claim payable on Life Insurance Policy.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="62" width="386" height="40" uuid="88e3e4d3-c441-4f83-a887-d8d8f2219ca5"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[We are happy to inform you that the following Life Insurance Policy is maturing
+ on the date given below.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="16" y="31" width="100" height="20" uuid="715f48b8-4ce2-4a2e-a61f-c891fe0ec9aa"/>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dear Sir,]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="336" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="166" y="42" width="229" height="26" uuid="17d3da0c-80fb-41af-9b00-8b256dd0e090"/>
+				<box leftPadding="6">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_NAME}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="166" y="67" width="232" height="249" uuid="00d5b5d1-029f-49c4-996a-c473ec9d53c6"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="SA_DS" uuid="2676bbb9-443a-4588-a334-1550323d8f3e">
+						<datasetParameter name="SUB_POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="249" width="232">
+						<textField isBlankWhenNull="true">
+							<reportElement x="1" y="25" width="228" height="25" uuid="ec4eed3f-8319-457e-b57c-7d56b6da0183"/>
+							<box leftPadding="6">
+								<topPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POL_START_DT}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="1" y="75" width="228" height="25" uuid="32cfe921-4805-4225-9826-1345947863a0"/>
+							<box leftPadding="6">
+								<topPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POL_LC_SUM_ASSURED}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="1" y="50" width="228" height="25" uuid="28722239-e18d-4dea-8bf1-cd073cd52594"/>
+							<box leftPadding="6">
+								<pen lineWidth="0.5"/>
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{SMV_DATE}]]></textFieldExpression>
+						</textField>
+						<staticText>
+							<reportElement x="1" y="190" width="111" height="33" uuid="08365ab3-2100-43d4-bf1b-4e53c90edfdc"/>
+							<box leftPadding="6">
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="12"/>
+							</textElement>
+							<text><![CDATA[Others]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="1" y="163" width="111" height="27" uuid="0722007a-114d-444d-a244-6845c5242697"/>
+							<box leftPadding="6">
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="12"/>
+							</textElement>
+							<text><![CDATA[Loan Interest]]></text>
+						</staticText>
+						<staticText>
+							<reportElement x="1" y="125" width="111" height="38" uuid="7b92274f-e599-4d12-b744-521be4024778"/>
+							<box leftPadding="6">
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" size="12"/>
+							</textElement>
+							<text><![CDATA[Loan Amount]]></text>
+						</staticText>
+						<textField isBlankWhenNull="true">
+							<reportElement x="114" y="162" width="115" height="28" uuid="b1bfcb34-bbda-43b3-b1bb-43f97ca7fb4d"/>
+							<box leftPadding="6">
+								<topPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{SMV_LC_LOAN_INT}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="223" width="229" height="26" uuid="1870943c-fed8-4d8f-9c9e-a7c029315978"/>
+							<box leftPadding="6">
+								<topPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PAYABLE_AMT}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="110" y="190" width="119" height="33" uuid="b3cb546c-6a02-4435-a9e5-bfbd9a377c59"/>
+							<box leftPadding="6">
+								<topPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{OTHERS}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="1" y="1" width="228" height="24" uuid="6995c12e-094e-42c1-b6e6-0a714a398ebd"/>
+							<box leftPadding="6">
+								<topPen lineWidth="1.0"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PAYMETHOD}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="1" y="100" width="228" height="25" uuid="f6b3ee65-8ee4-43a2-9cb8-8a42ab159d7e"/>
+							<box leftPadding="6">
+								<topPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{SMV_LC_OS_LOAN}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="112" y="125" width="117" height="37" uuid="03c2f9f6-6353-4ff7-b6e5-96f996eaa174"/>
+							<box leftPadding="6">
+								<topPen lineWidth="1.0"/>
+								<bottomPen lineWidth="1.0"/>
+								<rightPen lineWidth="1.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{SMV_LC_GROSS_VALUE}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="21" y="290" width="145" height="26" uuid="d3655062-c961-48c7-88c5-19588305755a"/>
+				<box leftPadding="6">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payable Amount OMR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="167" width="145" height="25" uuid="11f44fcb-d9e4-49ae-a453-240ae0355992"/>
+				<box leftPadding="6">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Maturity Value OMR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="43" width="145" height="24" uuid="bde36fa0-d6ee-41e7-b8e2-ff3a2b8ca5be"/>
+				<box leftPadding="6">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name of the Insured           ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="192" width="145" height="98" uuid="27933323-eccf-4e26-99fa-93192abf8415"/>
+				<box leftPadding="6">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Deductions OMR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="142" width="145" height="25" uuid="ad0032cf-194e-484b-b5f7-5b9c9552c6e9"/>
+				<box leftPadding="6">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sum Assured OMR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="117" width="145" height="25" uuid="228af4a3-6ffd-476a-9629-d013475d14ec"/>
+				<box leftPadding="6">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date of Maturity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="92" width="145" height="25" uuid="7269893b-30a9-47ee-a511-a1fb7e0f53f4"/>
+				<box leftPadding="6">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date of Commencement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="18" width="145" height="25" uuid="0110909b-49cd-4b57-bd4f-1177e5271888"/>
+				<box leftPadding="6">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Policy number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="67" width="145" height="25" uuid="06b402a3-a556-4079-8405-a272bb4d5d55"/>
+				<box leftPadding="6">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Frequency of Payment]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="166" y="18" width="229" height="24" uuid="53e0f68e-e26f-4c18-8007-18acba5c5771"/>
+				<box leftPadding="6">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="167">
+			<staticText>
+				<reportElement x="21" y="111" width="381" height="20" uuid="2459a275-2d8b-4f17-a02b-e528a4321e3b"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[For Falcon Insurance Company S.A.O.C]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="20" width="413" height="20" uuid="dd080426-720f-46a0-80cf-e68cc9f8d367"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[Please submit the following documents to process and pay the claim amount.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="147" width="152" height="20" uuid="e1a4b1fe-3208-454d-9ac6-167dbda60041"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[Authorised Signatory]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="54" y="53" width="260" height="58" uuid="ae9d6df2-f0c7-4505-9e0d-871fc4dd520c"/>
+				<textElement>
+					<font fontName="Calibri" size="12"/>
+				</textElement>
+				<text><![CDATA[1)   Original Policy Document
+2)   Maturity Discharge Form
+3)   ID  Card Copy
+4)   Details of Assignment/ loans, if any.]]></text>
+			</staticText>
+		</band>
+	</detail>
+</jasperReport>

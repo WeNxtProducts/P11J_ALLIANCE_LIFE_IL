@@ -1,0 +1,507 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILQ003"
+				var="message_PILQ003" />
+			<h:form id="PT_IL_POL_DEDUCTIBLE">
+				<table class="noborder" width="100%">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" width="100%">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILQ003_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="errormsgtable" width="100%">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.errorMap['current'] !=null? PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.errorMap['current']: PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.globalMsgRender}"
+										styleClass="ErrorMessages" />
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.warningMessages}" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td class="oddrowright"><h:outputLabel id="FORM_CAPTION"
+									value="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 500px; overflow: auto;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td vAlign="top" width="90%"><h:panelGroup
+									id="PT_IL_POL_DEDUCTIBLE_PANEL" style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td><rich:panel style="width:960px;overflow:auto">
+												<rich:dataTable
+													binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.dataTable}"
+													id="PT_IL_POL_DEDUCTIBLE_DATA_GRID" rows="5"
+													value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.dataList_PT_IL_POL_DEDUCTIBLE}"
+													var="tableVar">
+													<rich:column filterBy="#{tableVar.PD_BNF_CODE}"
+														filterEvent="onkeyup" id="COLUMN_PD_BNF_CODE"
+														rendered="true" sortBy="#{tableVar.PD_BNF_CODE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_BNF_CODE"
+																styleClass="forumRowHighlight"
+																value="#{message.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_BNF_CODE$caption}" />
+														</f:facet>
+														<a4j:commandLink
+															action="#{PILQ003_PT_IL_POL_DEDUCTIBLE_ACTION.displayRecords}"
+															id="GOTO_LINK_PD_BNF_CODE" immediate="true"
+															reRender="errorPanel,PT_IL_POL_DEDUCTIBLE_PANEL">
+															<h:outputText id="LINK_CAPTION_PD_BNF_CODE"
+																value="#{tableVar.PD_BNF_CODE}" />
+														</a4j:commandLink>
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_CODE}"
+														filterEvent="onkeyup" id="COLUMN_PD_CODE" rendered="true"
+														sortBy="#{tableVar.PD_CODE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_CODE"
+																styleClass="forumRowHighlight"
+																value="#{message.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_CODE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_CODE"
+															value="#{tableVar.PD_CODE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_NO_OF_DAYS}"
+														filterEvent="onkeyup" id="COLUMN_PD_NO_OF_DAYS"
+														rendered="true" sortBy="#{tableVar.PD_NO_OF_DAYS}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_NO_OF_DAYS"
+																styleClass="forumRowHighlight"
+																value="#{message.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_NO_OF_DAYS$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_NO_OF_DAYS"
+															value="#{tableVar.PD_NO_OF_DAYS}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_PERC}"
+														filterEvent="onkeyup" id="COLUMN_PD_PERC" rendered="true"
+														sortBy="#{tableVar.PD_PERC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_PERC"
+																styleClass="forumRowHighlight"
+																value="#{message.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_PERC$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_PERC"
+															value="#{tableVar.PD_PERC}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_MIN_LC_VAL}"
+														filterEvent="onkeyup" id="COLUMN_PD_MIN_LC_VAL"
+														rendered="true" sortBy="#{tableVar.PD_MIN_LC_VAL}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_MIN_LC_VAL"
+																styleClass="forumRowHighlight"
+																value="#{message.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_MIN_LC_VAL$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_MIN_LC_VAL"
+															value="#{tableVar.PD_MIN_LC_VAL}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.UI_M_PD_CODE_DESC}"
+														filterEvent="onkeyup" id="COLUMN_UI_M_PD_CODE_DESC"
+														rendered="true" sortBy="#{tableVar.UI_M_PD_CODE_DESC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_M_PD_CODE_DESC"
+																styleClass="forumRowHighlight"
+																value="#{message.PILQ003$PT_IL_POL_DEDUCTIBLE$UI_M_PD_CODE_DESC$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_UI_M_PD_CODE_DESC"
+															value="#{tableVar.UI_M_PD_CODE_DESC}" />
+													</rich:column>
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PT_IL_POL_DEDUCTIBLE_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.addRow}"
+																id="addRow"
+																reRender="PT_IL_POL_DEDUCTIBLE_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.deleteRow}"
+																id="deleteRow"
+																reRender="PT_IL_POL_DEDUCTIBLE_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.postRecord}"
+																id="postRecord"
+																reRender="PT_IL_POL_DEDUCTIBLE_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</rich:panel></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table class="noborder" width="100%">
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_PD_BNF_CODE_LABEL}"
+														for="PD_BNF_CODE" id="PD_BNF_CODE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_BNF_CODE$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_PD_BNF_CODE}"
+														disabled="true" id="PD_BNF_CODE" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_BNF_CODE$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.PT_IL_POL_DEDUCTIBLE_BEAN.PD_BNF_CODE}" />
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_PD_CODE_LABEL}"
+														for="PD_CODE" id="PD_CODE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_CODE$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_PD_CODE}"
+														disabled="true" id="PD_CODE" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_CODE$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.PT_IL_POL_DEDUCTIBLE_BEAN.PD_CODE}">
+														<a4j:support
+															actionListener="#{lovGenerator.getComponentID}"
+															event="onkeypress" id="SUPPORT_SUGG_PD_CODE"
+															immediate="true" />
+													</h:inputText> <h:graphicImage id="GRAPH_IMG_SUGG_PD_CODE" style=""
+														styleClass="searchimg" value="./../../images/Lov.gif" /> <rich:suggestionbox
+														for="PD_CODE" height="200" id="PD_CODE_SUGGESTION_BOX"
+														immediate="true"
+														suggestionAction="#{lovGenerator.getListOfValues}"
+														var="PD_CODE_LOV" width="200">
+														<h:column>
+															<h:outputText id="SUGG_COL_0_PD_CODE"
+																value="#{PD_CODE_LOV.param1}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="SUGG_COL_1_PD_CODE"
+																value="#{PD_CODE_LOV.param2}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="SUGG_COL_2_PD_CODE"
+																value="#{PD_CODE_LOV.param3}" />
+														</h:column>
+													</rich:suggestionbox></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_PD_NO_OF_DAYS_LABEL}"
+														for="PD_NO_OF_DAYS" id="PD_NO_OF_DAYS_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_NO_OF_DAYS$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_PD_NO_OF_DAYS}"
+														disabled="true" id="PD_NO_OF_DAYS" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_NO_OF_DAYS$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.PT_IL_POL_DEDUCTIBLE_BEAN.PD_NO_OF_DAYS}" />
+													</td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_PD_PERC_LABEL}"
+														for="PD_PERC" id="PD_PERC_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_PERC$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_PD_PERC}"
+														disabled="true" id="PD_PERC" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_PERC$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.PT_IL_POL_DEDUCTIBLE_BEAN.PD_PERC}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_PD_MIN_LC_VAL_LABEL}"
+														for="PD_MIN_LC_VAL" id="PD_MIN_LC_VAL_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_MIN_LC_VAL$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_PD_MIN_LC_VAL}"
+														disabled="true" id="PD_MIN_LC_VAL" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$PD_MIN_LC_VAL$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.PT_IL_POL_DEDUCTIBLE_BEAN.PD_MIN_LC_VAL}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_UI_M_PD_CODE_DESC_LABEL}"
+														for="UI_M_PD_CODE_DESC" id="UI_M_PD_CODE_DESC_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$UI_M_PD_CODE_DESC$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_UI_M_PD_CODE_DESC}"
+														disabled="true" id="UI_M_PD_CODE_DESC" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$UI_M_PD_CODE_DESC$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.PT_IL_POL_DEDUCTIBLE_BEAN.UI_M_PD_CODE_DESC}" />
+													</td>
+												</tr>
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+								<td vAlign="top" width="10%">
+								<table class="noborder">
+									<tr>
+										<td><h:commandButton
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_UI_M_BTN_MAIN_BENEFIT_DTLS_1}"
+											id="UI_M_BTN_MAIN_BENEFIT_DTLS_1"
+											rendered="true" styleClass="button"
+											title="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$UI_M_BTN_MAIN_BENEFIT_DTLS_1$tooltip}"
+											value="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$UI_M_BTN_MAIN_BENEFIT_DTLS_1$caption}" />
+										</td>
+									</tr>
+									<tr>
+										<td><h:commandButton
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_DEDUCTIBLE_ACTION_BEAN.COMP_PB_BNF_CODE_LOV_BTN}"
+											id="PB_BNF_CODE_LOV_BTN" rendered="true"
+											styleClass="button"
+											title="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$PB_BNF_CODE_LOV_BTN$tooltip}"
+											value="#{message_PILQ003.PILQ003$PT_IL_POL_DEDUCTIBLE$PB_BNF_CODE_LOV_BTN$caption}" />
+										</td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

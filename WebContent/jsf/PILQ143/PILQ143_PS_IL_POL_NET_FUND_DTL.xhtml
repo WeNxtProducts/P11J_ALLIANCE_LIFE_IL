@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="header">
+	<ui:include src="/jsf/include/menu.xhtml" />
+	
+	</ui:define>
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<h:form id="PS_IL_POL_NET_FUND_DTL">
+				<table border="0" width="100%" cellpadding="0" cellspacing="0" >
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText escape="true" id="err"
+									styleClass="#{PS_IL_POL_NET_FUND_DTL_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PS_IL_POL_NET_FUND_DTL_ACTION.errorMap['current'] !=null? PS_IL_POL_NET_FUND_DTL_ACTION.errorMap['current']: PS_IL_POL_NET_FUND_DTL_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PS_IL_POL_NET_FUND_DTL_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PS_IL_POL_NET_FUND_DTL_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PS_IL_POL_NET_FUND_DTL_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					
+					<tr>
+						<td colspan="3">
+							<table border="0"   width="100%" cellpadding="0" cellspacing="0" class="rich-mpnl-text rich-mpnl-header">
+								<tr>
+								
+									<td>
+										<h:outputLabel 
+										binding="#{PS_IL_POL_NET_FUND_DTL_ACTION.COMP_UI_M_POL_NO_LABEL}"
+										for="UI_M_POL_NO" id="UI_M_POL_NO_LABEL" style=""
+										value="Policy No." />
+									</td>
+									<td>
+										<h:inputText 
+											binding="#{PS_IL_POL_NET_FUND_DTL_ACTION.COMP_UI_M_POL_NO}"
+											id="UI_M_POL_NO" 
+											title="#{message.PT005_A$PS_IL_DRCR_SEARCH_PAGE$POL_CUST_CODE$tooltip}"
+											value="#{PS_IL_POL_NET_FUND_DTL_ACTION.PS_IL_POL_NET_FUND_DTL_BEAN.UI_M_POL_NO}">
+											<a4j:support
+												actionListener="#{PS_IL_POL_NET_FUND_DTL_ACTION.fireFieldValidation}"
+												event="onblur" id="SELF_ID_22" immediate="true"
+												reRender="errorPanel" />
+											</h:inputText>
+											<rich:suggestionbox
+											for="UI_M_POL_NO" height="200" id="UI_M_POL_NO_LOV"
+											suggestionAction="#{PS_IL_POL_NET_FUND_DTL_ACTION.lovPOL_NO}"
+											var="suggest" width="400">
+											<h:column>
+												<h:outputText id="AUTOID_24" value="#{suggest.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_24_A" value="#{suggest.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+															id="POL_NO_SUGG_SUPPORT" immediate="true"
+															reRender="errorPanel">
+														</a4j:support>
+										</rich:suggestionbox> <h:graphicImage id="SELF_ID_25" styleClass="searchimg"
+											value="./../../images/Lov16x16.gif" />
+									</td>
+									
+									<td><a4j:commandButton
+										binding="#{PS_IL_POL_NET_FUND_DTL_ACTION.COMP_UI_M_OK_BTN}"
+										action="#{PS_IL_POL_NET_FUND_DTL_ACTION.fetchDataBaseDetails}"
+										id="fetch" reRender="PolicyLedgerQuery,errorPanel"
+										styleClass="button" value="#{commonmsg.searchButton$caption}">
+									</a4j:commandButton></td>
+								 </tr> 
+							</table>
+						</td>
+					</tr>
+					<tr><td>&nbsp;</td></tr>
+					<tr><td>&nbsp;</td></tr>
+					<tr>
+						<td colspan="3">
+							<rich:dataTable
+								binding="#{PS_IL_POL_NET_FUND_DTL_ACTION.dataTable}"
+								border="1" cellpadding="5px" id="PolicyLedgerQuery" rows="20"
+								value="#{PS_IL_POL_NET_FUND_DTL_ACTION.PS_IL_POL_NET_FUND_DTL_list}"
+								var="colData" width="100%">
+		
+								<rich:column filterBy="#{colData.UI_M_PNFD_DT}"
+									id="COLUMN_UI_M_PNFD_DT" rendered="true" 
+									filterEvent="onkeyup"
+									sortBy="#{colData.UI_M_PNFD_DT}"
+									styleClass="#{tableVar.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_UI_M_PNFD_DT"
+											value="Date" />
+									</f:facet>
+									<h:outputText id="AUTOID_2" value="#{colData.UI_M_PNFD_DT}" />
+								</rich:column>
+								<rich:column filterBy="#{colData.PNFD_LC_PREM}" filterEvent="onkeyup"
+									sortBy="#{colData.PNFD_LC_PREM}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_PNFD_LC_PREM"
+											value="Contribution" />
+									</f:facet>
+		
+									<h:outputText id="AUTOID_04_PC" value="#{colData.PNFD_LC_PREM}" />
+		
+								</rich:column>
+		
+								<rich:column filterBy="#{colData.PNFD_COI_VAL}" filterEvent="onkeyup"
+									sortBy="#{colData.PNFD_COI_VAL}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_PNFD_COI_VAL"
+											value="COI" />
+									</f:facet>
+		
+									<h:outputText id="AUTOID_4_PC" value="#{colData.PNFD_COI_VAL}" />
+		
+								</rich:column>
+		
+								<rich:column filterBy="#{colData.PNFD_GROSS_CF_VAL}"
+									filterEvent="onkeyup" sortBy="#{colData.PNFD_GROSS_CF_VAL}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_PNFD_GROSS_CF_VAL"
+											value="Gross Client Fund" />
+									</f:facet>
+									<h:outputText id="AUTOID_6" value="#{colData.PNFD_GROSS_CF_VAL}" />
+								</rich:column>
+		
+								<rich:column filterBy="#{colData.PFND_NEW_LC_SA}"
+									filterEvent="onkeyup" sortBy="#{colData.PFND_NEW_LC_SA}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_PFND_NEW_LC_SA"
+											value="SI" />
+									</f:facet>
+		
+									<h:outputText id="AUTOID_8" value="#{colData.PFND_NEW_LC_SA}" />
+								</rich:column>
+		
+								<rich:column filterBy="#{colData.PNFD_NEW_COI_VAL}"
+									filterEvent="onkeyup" sortBy="#{colData.PNFD_NEW_COI_VAL}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_PNFD_NEW_COI_VAL"
+											value="COST of Extra Insurance" />
+									</f:facet>
+									<h:outputText id="AUTOID_10" value="#{colData.PNFD_NEW_COI_VAL}" />
+								</rich:column>
+		
+								<rich:column filterBy="#{colData.PNFD_NET_CF_VAL}"
+									filterEvent="onkeyup" sortBy="#{colData.PNFD_NET_CF_VAL}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_PNFD_NET_CF_VAL"
+											value="Net Client Fund" />
+									</f:facet>
+		
+									<h:outputText id="AUTOID_12" value="#{colData.PNFD_NET_CF_VAL}" />
+								</rich:column>
+								
+								<f:facet name="footer">
+									<rich:datascroller align="right" for="PolicyLedgerQuery" />
+								</f:facet>
+							</rich:dataTable>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Group_Credit_Policy_Schedule" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="7be0cb80-8f21-4649-bbd3-bf29a2de2aff">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="224"/>
+	<subDataset name="Branch_Dataset" uuid="0a281e84-2737-4569-b8aa-7d6c5a6e76e2">
+		<queryString language="SQL">
+			<![CDATA[select divn_name from fm_division where DIVN_CODE = 'YHW04']]>
+		</queryString>
+		<field name="DIVN_NAME" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="AssuredName_Dataset" uuid="45753097-131e-4332-9ad1-15576802b719">
+		<queryString language="SQL">
+			<![CDATA[select cust_name,CUST_ADDR1||','||CUST_ADDR2||','||CUST_ADdr3 Address
+   from pm_customer where cust_code =  'CAGT0000406']]>
+		</queryString>
+		<field name="CUST_NAME" class="java.lang.String"/>
+		<field name="ADDRESS" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="Currency_Dataset" uuid="6c231af2-d7c9-4cdd-8d01-c1af25109f90">
+		<parameter name="POL_CUST_CURR_CODE_SUB_PARAM" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT CURR_NAME
+   FROM   PM_CURRENCY
+   WHERE  CURR_CODE = $P{POL_CUST_CURR_CODE_SUB_PARAM}]]>
+		</queryString>
+		<field name="CURR_NAME" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="Persons_Dataset" uuid="db7de3ec-8e33-422d-856c-43824814ba39">
+		<parameter name="POL_SYS_ID_SUB_PARAM" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT COUNT( PEMP_POL_SYS_ID) EMP_COUNT
+	FROM PT_GL_POL_EMPLOYEE
+	WHERE PEMP_POL_SYS_ID = $P{POL_SYS_ID_SUB_PARAM}]]>
+		</queryString>
+		<field name="EMP_COUNT" class="java.math.BigDecimal"/>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT POL_SYS_ID                                                    Q2_POL_SYS_ID,
+               POL_NO                                                           Q2_POL_NO,
+               (SELECT DISTINCT (MP_MAX_AGE)  FROM  PM_GL_MASTER_POLICY     WHERE    MP_POL_NO=POL_MASTER_POLICY_NO  AND ROWNUM<2)        Q2_MAX_AGE,
+               POL_DIVN_CODE                                            Q2_POL_DIVN_CODE,
+               POL_PROD_CODE                                          Q2_POL_PROD_CODE,
+               PROD_DESC                                                   Q2_PROD_NAME,
+               POL_FM_DT                                                    Q2_POL_FM_DT,
+               POL_TO_DT                                                    Q2_POL_TO_DT,
+               POL_CUST_CURR_CODE                              Q2_POL_CUST_CURR_CODE,
+               DECODE (POL_END_NO_IDX,0,NULL,POL_END_NO_IDX||'('||POL_END_NO||')')             Q2_END_NO,
+
+             (SELECT SUM(PR_GROSS_FC_PREM) FROM PS_GL_PREM_REG WHERE PR_POL_NO = POL_NO)                              Q2_CONTR_MADE,
+             POL_FC_EXTRA_PREM                                  Q2_POL_FC_EXTRA_PREM,
+               POL_FC_PREM                                              Q2_POL_FC_PREM,
+               NVL(POL_FC_CHARGE,0)                             Q2_POL_SERV_TAX,
+
+               NVL(POL_LC_COMM,0)                                    Q2_ADMIN_CHARGE,
+                POL_CUST_NAME                                          Q2_CUST_NAME,
+               POL_CUST_ADDRESS_1                                Q2_CUST_ADDR1,
+               POL_CUST_ADDRESS_2                                Q2_CUST_ADDR2,
+               POL_CUST_ADDRESS_3                                Q2_CUST_ADDR3,
+                POL_CITY_CODE                                            Q2_CUST_CITY,
+               POL_POSTAL_CODE                                       Q2_CUST_POSTAL_CODE,
+               POL_STATE_CODE                                         Q2_CUST_STATE,
+               (POL_TO_DT + 1)                                             Q2_CERT_ANIV_DT,
+               PROD_MAX_AGE                                            Q2_PROD_MAX_AGE,
+               PROD_LC_FCL                                                Q2_PROD_LC_FCL  ,
+               (SELECT COUNT(PEMP_NAME)
+               FROM PT_GL_POL_EMPLOYEE
+               WHERE PEMP_POL_SYS_ID = POL_SYS_ID
+               )                                                                        Q2_PERSON_COVERED,
+               POL_STATUS Q2_POL_STATUS,
+               POL_REMARKS Q2_POL_REMARKS,
+               CUST_ROC_NO     Q2_CUST_ROC_NO,
+               POL_BASIS_OF_COVER    Q2_POL_BASIS_OF_COVER,
+               POL_FC_PREM                    Q2_POL_FC_FREE_COVER_LIMIT,
+              TRUNC( POL_APPRV_DT)                                           Q2_POL_APPRV_DT,
+              POL_FC_EXTRA_PREM  Q2_POL_FC_EXTRA_PREM,
+(SELECT ROUND( SUM ( PDL_FC_DISC_LOAD_VALUE),2 ) FROM PT_GL_POL_DISC_LOAD
+WHERE PDL_POL_SYS_ID = POL_SYS_ID
+AND PDL_DISC_LOAD_TYPE ='D'
+AND PDL_PEC_SYS_ID IS NULL ) Q2_POL_DISCOUNT ,
+POL_FC_CHARGE Q2_POL_FC_CHARGE
+
+
+
+FROM PT_GL_POLICY,PM_CUSTOMER,PM_GL_PRODUCT
+WHERE  POL_SYS_ID = '74493'
+AND     PROD_CODE = POL_PROD_CODE
+AND     CUST_CODE  = POL_CUST_CODE
+AND POL_END_NO_IDX = 0
+AND NVL(POL_STATUS,'N') = 'N'
+UNION
+SELECT POLH_SYS_ID                     Q2_POL_SYS_ID,
+               POLH_NO                            Q2_POL_NO,
+               (SELECT DISTINCT  MP_MAX_AGE FROM PM_GL_MASTER_POLICY WHERE MP_POL_NO=POLH_MASTER_POLICY_NO AND ROWNUM<2)             Q2_MAX_AGE,
+               POLH_DIVN_CODE                           Q2_POL_DIVN_CODE,
+               POLH_PROD_CODE            Q2_POL_PROD_CODE,
+               PROD_DESC                        Q2_PROD_NAME,
+               POLH_FM_DT                      Q2_POL_FM_DT,
+               POLH_TO_DT                       Q2_POL_TO_DT,
+               POLH_CUST_CURR_CODE Q2_POL_CUST_CURR_CODE,
+               DECODE (POLH_END_NO_IDX,0,NULL,POLH_END_NO_IDX||'('||POLH_END_NO||')')                                               Q2_END_NO,
+
+               (SELECT SUM(PR_GROSS_FC_PREM) FROM PS_GL_PREM_REG WHERE PR_POL_NO = POLH_NO)                 Q2_CONTR_MADE,
+               POLH_FC_EXTRA_PREM                           Q2_POL_FC_EXTRA_PREM,
+               POLH_FC_PREM                                         Q2_POL_FC_PREM,
+               NVL(POLH_FC_CHARGE,0)                        Q2_POL_SERV_TAX,
+
+               NVL(POLH_LC_COMM,0)                             Q2_ADMIN_CHARGE,
+               POLh_CUST_NAME                                     Q2_CUST_NAME,
+               POLH_CUST_ADDRESS_1                         Q2_CUST_ADDR1,
+               POLH_CUST_ADDRESS_2                         Q2_CUST_ADDR2,
+               POLH_CUST_ADDRESS_3                         Q2_CUST_ADDR3,
+                POLH_CITY_CODE                                     Q2_CUST_CITY,
+               POLH_POSTAL_CODE                                Q2_CUST_POSTAL_CODE,
+               POLH_STATE_CODE                                  Q2_CUST_STATE,
+               (POLH_TO_DT + 1)                                      Q2_CERT_ANIV_DT,
+               PROD_MAX_AGE                                        Q2_PROD_MAX_AGE,
+               PROD_LC_FCL                                            Q2_PROD_LC_FCL,
+               (SELECT COUNT(PEMPH_NAME)
+               FROM PH_GL_POL_EMPLOYEE
+               WHERE PEMPH_POL_SYS_ID = POLH_SYS_ID
+               AND   PEMPH_END_NO_IDX = 0 )           Q2_PERSON_COVERED  ,
+               POLH_STATUS Q2_POL_STATUS,
+               POLH_REMARKS Q2_POL_REMARKS,
+               CUST_ROC_NO     Q2_CUST_ROC_NO,
+               POLH_BASIS_OF_COVER                         Q2_POL_BASIS_OF_COVER,
+
+               POLH_FC_FREE_COVER_LIMIT            Q2_POL_FC_FREE_COVER_LIMIT,
+              TRUNC( POLH_APPRV_DT)                                      Q2_POL_APPRV_DT,
+           POLH_FC_EXTRA_PREM  ,
+
+(SELECT ROUND( SUM ( PDLH_FC_DISC_LOAD_VALUE),2 ) FROM PH_GL_POL_DISC_LOAD
+WHERE PDLH_POL_SYS_ID = POLH_SYS_ID
+AND PDLH_DISC_LOAD_TYPE ='D'
+AND PDLH_PEC_SYS_ID IS NULL )  ,
+POLH_FC_CHARGE
+
+FROM PH_GL_POLICY,PM_CUSTOMER,PM_GL_PRODUCT
+WHERE  POLH_SYS_ID = '74493'
+AND     PROD_CODE = POLH_PROD_CODE
+AND     CUST_CODE  = POLH_CUST_CODE
+AND     (POLH_END_NO_IDX = 0 or POLh_END_TYPE='003')
+AND NVL(POLH_STATUS,'N') IN ('A','R','E')]]>
+	</queryString>
+	<field name="Q2_POL_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="Q2_POL_NO" class="java.lang.String"/>
+	<field name="Q2_MAX_AGE" class="java.math.BigDecimal"/>
+	<field name="Q2_POL_DIVN_CODE" class="java.lang.String"/>
+	<field name="Q2_POL_PROD_CODE" class="java.lang.String"/>
+	<field name="Q2_PROD_NAME" class="java.lang.String"/>
+	<field name="Q2_POL_FM_DT" class="java.sql.Timestamp"/>
+	<field name="Q2_POL_TO_DT" class="java.sql.Timestamp"/>
+	<field name="Q2_POL_CUST_CURR_CODE" class="java.lang.String"/>
+	<field name="Q2_END_NO" class="java.lang.String"/>
+	<field name="Q2_CONTR_MADE" class="java.math.BigDecimal"/>
+	<field name="Q2_POL_FC_EXTRA_PREM" class="java.lang.Double"/>
+	<field name="Q2_POL_FC_PREM" class="java.lang.Double"/>
+	<field name="Q2_POL_SERV_TAX" class="java.math.BigDecimal"/>
+	<field name="Q2_ADMIN_CHARGE" class="java.math.BigDecimal"/>
+	<field name="Q2_CUST_NAME" class="java.lang.String"/>
+	<field name="Q2_CUST_ADDR1" class="java.lang.String"/>
+	<field name="Q2_CUST_ADDR2" class="java.lang.String"/>
+	<field name="Q2_CUST_ADDR3" class="java.lang.String"/>
+	<field name="Q2_CUST_CITY" class="java.lang.String"/>
+	<field name="Q2_CUST_POSTAL_CODE" class="java.lang.String"/>
+	<field name="Q2_CUST_STATE" class="java.lang.String"/>
+	<field name="Q2_CERT_ANIV_DT" class="java.sql.Timestamp"/>
+	<field name="Q2_PROD_MAX_AGE" class="java.math.BigDecimal"/>
+	<field name="Q2_PROD_LC_FCL" class="java.math.BigDecimal"/>
+	<field name="Q2_PERSON_COVERED" class="java.math.BigDecimal"/>
+	<field name="Q2_POL_STATUS" class="java.lang.String"/>
+	<field name="Q2_POL_REMARKS" class="java.lang.String"/>
+	<field name="Q2_CUST_ROC_NO" class="java.lang.String"/>
+	<field name="Q2_POL_BASIS_OF_COVER" class="java.lang.String"/>
+	<field name="Q2_POL_FC_FREE_COVER_LIMIT" class="java.math.BigDecimal"/>
+	<field name="Q2_POL_APPRV_DT" class="java.sql.Timestamp"/>
+	<field name="Q2_POL_DISCOUNT" class="java.lang.Double"/>
+	<field name="Q2_POL_FC_CHARGE" class="java.lang.Double"/>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="205" y="47" width="157" height="20" uuid="cbeb4632-add2-4b6a-b3b7-cab5a77382ba"/>
+				<text><![CDATA[POLICY INFORMATION PAGE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="610" splitType="Stretch">
+			<rectangle>
+				<reportElement x="8" y="324" width="542" height="140" backcolor="#FFFFFF" uuid="71a656f5-5e9b-4201-8277-26593c09138d"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="9" y="225" width="541" height="59" backcolor="#CCCCCC" uuid="31009861-9265-4a39-81df-48fcf020bc84"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<rectangle>
+				<reportElement x="9" y="40" width="541" height="60" backcolor="#CCCCCC" uuid="039a8072-95f6-40f9-8cb7-0f23095d9417"/>
+				<graphicElement>
+					<pen lineWidth="0.25"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="9" y="4" width="100" height="20" uuid="f86f0051-0ab7-4683-af27-155d16fe5746"/>
+				<text><![CDATA[Schedule]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="40" width="133" height="20" backcolor="#CCCCCC" uuid="cf9eaf08-4879-40dd-a590-e04746550195"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Product Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="40" width="10" height="20" uuid="6fba89d3-8ae1-4807-8fcf-69a815bea631"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="151" y="40" width="191" height="20" isPrintWhenDetailOverflows="true" uuid="4ed5a64d-fecb-4514-93ed-1a0b8f493f24"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{Q2_PROD_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="342" y="40" width="77" height="20" uuid="86b932d1-5c6d-4191-949e-3df1a03ea333"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Branch Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="40" width="12" height="20" uuid="81a07c21-eb06-4d80-9e01-5cc3ff997245"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="60" width="133" height="20" uuid="e5053261-03d0-4b46-89e4-27cd71dbec53"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Policy Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="60" width="10" height="20" uuid="c147fdcc-e9c8-49cb-aef3-5a3249691725"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="151" y="60" width="191" height="20" isPrintWhenDetailOverflows="true" uuid="b88e7787-43f1-4b64-b08a-d89dd9b61a98"/>
+				<textFieldExpression><![CDATA[$F{Q2_POL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="80" width="133" height="20" uuid="ab9f2c0f-d7fe-49d9-a4eb-7c043bb2f2d0"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Policy Anniversary]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="141" y="80" width="10" height="20" uuid="2ecec56f-7382-4104-8941-20063cc8998c"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="151" y="80" width="191" height="20" isPrintWhenDetailOverflows="true" uuid="d512b78b-e704-43e0-9bb1-1f55cdef576c"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{Q2_CERT_ANIV_DT})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="101" width="100" height="20" uuid="f44d9fda-c28c-4166-b817-8bf9d58c506d"/>
+				<text><![CDATA[Policy Period]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="126" width="100" height="20" uuid="02798b50-40f5-4e03-b7ff-57a49a1cdd32"/>
+				<box leftPadding="3"/>
+				<text><![CDATA[From midnight on ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="295" y="126" width="108" height="20" uuid="7a35c183-fcf2-4c6f-8afa-43240e3e996b"/>
+				<text><![CDATA[(both dates inclusive).]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="157" width="537" height="30" uuid="f80cf2f5-3337-42cd-9a49-dfb03dfbd6d7"/>
+				<box leftPadding="3"/>
+				<text><![CDATA[Any subsequent period for which the Policy Owner shall pay and the Company shall agree to accept a renewal of Premium contibution for this Policy.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="197" width="100" height="20" uuid="2fa4770c-4f4f-437f-a218-692c8baa4a97"/>
+				<box leftPadding="3"/>
+				<text><![CDATA[Policy Owner]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="224" width="153" height="20" uuid="6cc8fc89-e2e6-4a27-9bd0-269d93c479a5"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="224" width="10" height="20" uuid="046a85b1-0f6b-45cb-b465-b9fa38a01573"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="244" width="153" height="20" uuid="300ec485-041f-4115-b3e4-29eff0bfdf77"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Company Registration Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="244" width="10" height="20" uuid="56552cda-12ff-48ef-888f-0b6c8cc02a03"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="264" width="153" height="20" uuid="88661023-4b2c-401b-8cd5-a50144786a70"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="264" width="10" height="20" uuid="a021f40f-ea6d-45d0-b33f-8c2945b0e416"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="171" y="244" width="379" height="20" isPrintWhenDetailOverflows="true" uuid="a617368c-9dca-44a1-b416-4e7efe39ab0e"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{Q2_CUST_ROC_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="292" width="100" height="20" uuid="464752e4-f40b-43ba-9d74-e771be18125b"/>
+				<box leftPadding="3"/>
+				<text><![CDATA[Details of Risk]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="324" width="153" height="20" uuid="4c362bab-73b1-4891-857a-62a0f8f8b26d"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Person(s) Covered]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="324" width="10" height="20" uuid="cdd1abc5-79e0-4f56-8d01-fea65dbb7d97"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="171" y="264" width="379" height="20" uuid="670a324e-3760-4b9c-9a98-9412297d85c3"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textFieldExpression><![CDATA[($F{Q2_CUST_ADDR1} == null ? " " : $F{Q2_CUST_ADDR1}
++" , ").concat(($F{Q2_CUST_ADDR2} == null ? " " : $F{Q2_CUST_ADDR2}
++" , ")).concat(($F{Q2_CUST_ADDR3} == null ? " " : $F{Q2_CUST_ADDR3}
++" , ")).concat(($F{Q2_CUST_POSTAL_CODE} == null ? " " : $F{Q2_CUST_POSTAL_CODE}
++" , "))]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="171" y="344" width="73" height="20" isPrintWhenDetailOverflows="true" uuid="2f7f079d-57ef-4deb-8045-a3274af62bad"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+				</box>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{Q2_POL_APPRV_DT})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="364" width="153" height="20" uuid="dc628332-0efc-4be1-89a1-cdac38abe149"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Free Cover Limit]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="364" width="10" height="20" uuid="561986e5-5e35-45ea-92fb-4ac2b2026ba5"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="171" y="364" width="379" height="20" uuid="a4a98698-e911-46cb-a226-a3c306c5c2a0"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{Q2_POL_FC_FREE_COVER_LIMIT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="384" width="153" height="20" uuid="02ea86e0-362b-4c94-a257-0a51ae00bd0b"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Total Premium Contribution /]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="384" width="10" height="20" uuid="9c00961b-2ead-4e6d-b417-5595383a42a4"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="171" y="384" width="379" height="20" uuid="258eadf1-cefa-4232-b407-029bb3191eba"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{Q2_POL_FC_PREM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="404" width="153" height="20" uuid="a7855a09-1685-4506-9b9c-c4735b1b0690"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[5% Government Tax]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="404" width="10" height="20" uuid="4146407d-3e42-422e-b8fa-ccd8c7a00e33"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="171" y="404" width="379" height="20" uuid="83431807-7dc4-4553-b4f1-5bdd1d4a4a72"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{Q2_POL_DISCOUNT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="424" width="153" height="20" uuid="eaa1dc68-0760-4aae-baf6-3f37131c7e41"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Stamp Duty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="161" y="424" width="10" height="20" uuid="1b4ad3e4-071f-4dac-b6f2-37512a8b8e03"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="171" y="424" width="226" height="20" uuid="138992e0-3917-4eda-b10b-e4f8b1b01cb5"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{Q2_POL_FC_CHARGE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="8" y="444" width="152" height="20" uuid="8c25aa6a-6e9a-456e-b0e9-b13e42530de0"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[Total Amount Payable]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="444" width="10" height="20" uuid="be178d9e-4af4-4612-bd32-39a955d8856d"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField pattern="#,##0.00;(#,##0.00)">
+				<reportElement x="170" y="444" width="144" height="20" uuid="2a44a5eb-75cb-4cf3-854b-49490ae0229d"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textFieldExpression><![CDATA[$F{Q2_POL_FC_PREM} + $F{Q2_POL_FC_EXTRA_PREM} - $F{Q2_POL_DISCOUNT} + $F{Q2_POL_FC_CHARGE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="314" y="444" width="83" height="20" uuid="7e5ed1d9-ef3d-4c57-a4c6-e91bc19a358f"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[Currency]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="397" y="444" width="10" height="20" uuid="d5480311-0bf2-4e83-bf81-f56bf3813c59"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="480" width="181" height="20" uuid="6a2e990c-c9fb-4587-85cf-6f87b9fe1e5b"/>
+				<box leftPadding="3"/>
+				<text><![CDATA[Clauses / Endorsement / Warranty]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="507" width="525" height="29" uuid="74dc6dfc-5778-4fdb-b8f2-817ea821998b"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[Insurance comp will pay the amount of Insurance for participants in the event of Death and Permanent Total Disability due to any cause.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="507" width="17" height="29" uuid="2de087bf-db02-4b6a-98d2-47ae4ff997ed"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[1]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="555" width="100" height="20" uuid="027178dd-019e-40ae-adbd-14842c2ea443"/>
+				<box leftPadding="3"/>
+				<text><![CDATA[Issue Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="108" y="555" width="10" height="20" uuid="fe035283-4062-4ed7-b5d1-90fa5cdacd2c"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="590" width="110" height="20" uuid="299859ca-8d0a-4309-8de0-43205807b3c6"/>
+				<box leftPadding="3"/>
+				<text><![CDATA[Authorised Signatory /]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="108" y="126" width="63" height="20" uuid="54d628d4-2bda-4f3f-81f3-8238458298d0"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy").format($F{Q2_POL_FM_DT})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="170" y="126" width="19" height="20" uuid="f2ecaee6-8556-475b-9e08-03f16c659108"/>
+				<text><![CDATA[ to]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="189" y="126" width="75" height="20" uuid="ea4b1fa0-c751-43f3-b0e7-905cad4d9b0e"/>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd MMMM yyyy").format($F{Q2_POL_TO_DT})]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="431" y="40" width="119" height="20" uuid="5d2894ab-54a8-4a34-b105-18f9e4737888"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Branch_Dataset" uuid="ece9c9af-a0f8-4a67-84cd-0dff0b456139"/>
+					<jr:listContents height="20" width="119">
+						<textField>
+							<reportElement x="0" y="0" width="119" height="20" uuid="6f4a8b33-2536-42a2-9470-86c50090603e"/>
+							<textFieldExpression><![CDATA[$F{DIVN_NAME}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="171" y="225" width="379" height="20" isPrintWhenDetailOverflows="true" uuid="a428e6c3-6550-493d-8bb1-a3073129c4c5"/>
+				<textFieldExpression><![CDATA[$F{Q2_CUST_NAME}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="406" y="444" width="145" height="20" uuid="7c3645b3-63dc-4f79-ad2a-7e8cbaecdeab"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Currency_Dataset" uuid="dbf33bc4-f046-402e-9775-22eaf70d4f6c">
+						<datasetParameter name="POL_CUST_CURR_CODE_SUB_PARAM">
+							<datasetParameterExpression><![CDATA[$F{Q2_POL_CUST_CURR_CODE}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="145">
+						<textField>
+							<reportElement x="0" y="0" width="145" height="20" uuid="17a7abb7-b417-475f-9c2a-0bffd3f4b081"/>
+							<textFieldExpression><![CDATA[$F{CURR_NAME}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="170" y="324" width="320" height="20" uuid="af70f2da-e026-4a40-b90c-b4e1f1bc0d25"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Persons_Dataset" uuid="f0f3c3b8-d109-439b-8f62-fb16ffd1fce3">
+						<datasetParameter name="POL_SYS_ID_SUB_PARAM">
+							<datasetParameterExpression><![CDATA[$F{Q2_POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="320">
+						<textField>
+							<reportElement x="0" y="0" width="320" height="20" uuid="cc647410-a758-46c1-b110-bcc70cb9b47a"/>
+							<textFieldExpression><![CDATA["On "+$F{EMP_COUNT}+" Members and dependent ( If applicable ) as per list lodged with company on"]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="82">
+			<rectangle>
+				<reportElement x="8" y="62" width="542" height="20" backcolor="#CCCCCC" uuid="665b8e58-79f1-44f2-a407-c6cb352f2bf6"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="8" y="14" width="141" height="20" uuid="e5a49601-33bf-444f-8339-545ff7763e71"/>
+				<box leftPadding="3"/>
+				<text><![CDATA[List Of Person Covered]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="8" y="62" width="67" height="20" uuid="fd29af91-3740-46f9-88d8-e792551b06dd"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[Borrower ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="75" y="62" width="75" height="20" uuid="34cfc036-5f67-4e04-a9cf-f7e9e6146ba1"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[Member Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="150" y="62" width="75" height="20" uuid="7467a03a-58fa-4cbb-a845-cee351829238"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[I/C No /]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="225" y="62" width="75" height="20" uuid="be1faf19-e8e2-4519-90b2-1bde3598ff2d"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[Person Covered /]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="62" width="75" height="20" uuid="bedb92b5-e70a-43af-a743-b8b6d0deca8b"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[Cover /]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="375" y="62" width="100" height="20" uuid="feb1af57-309f-4b96-9798-4a0644b831ea"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[Sum Covered]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="475" y="62" width="75" height="20" uuid="8340b914-b382-4c16-866b-898b22b672d7"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<text><![CDATA[Premium]]></text>
+			</staticText>
+		</band>
+		<band height="20">
+			<rectangle>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="8" y="0" width="542" height="20" isPrintWhenDetailOverflows="true" backcolor="#CCCCCC" uuid="f5ce8606-3f3e-434d-94b3-f906b38493e4"/>
+			</rectangle>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="9" y="0" width="66" height="20" isPrintWhenDetailOverflows="true" uuid="8f4a8de0-6ba0-44ff-b444-5e76e1eb80f6"/>
+				<textFieldExpression><![CDATA[$F{Q2_POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="75" y="0" width="75" height="20" isPrintWhenDetailOverflows="true" uuid="434dbc75-0385-4f1c-a9b2-1d58ce98850c"/>
+				<textFieldExpression><![CDATA[$F{Q2_POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="150" y="0" width="75" height="20" isPrintWhenDetailOverflows="true" uuid="f7f48911-7012-410d-94bd-1bb6161f0d85"/>
+				<textFieldExpression><![CDATA[$F{Q2_POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="225" y="0" width="75" height="20" isPrintWhenDetailOverflows="true" uuid="6b53a757-3a30-43b4-881e-70127d1a4011"/>
+				<textFieldExpression><![CDATA[$F{Q2_POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="300" y="0" width="75" height="20" isPrintWhenDetailOverflows="true" uuid="be42eec0-9172-4231-80c7-91722a99223e"/>
+				<textFieldExpression><![CDATA[$F{Q2_POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="375" y="0" width="100" height="20" isPrintWhenDetailOverflows="true" uuid="15ef15c3-7a1e-47ed-b79f-f3347890c95a"/>
+				<textFieldExpression><![CDATA[$F{Q2_POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="475" y="0" width="75" height="20" isPrintWhenDetailOverflows="true" uuid="b8d76454-d351-459c-bb6c-85f4f2ee0c65"/>
+				<textFieldExpression><![CDATA[$F{Q2_POL_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

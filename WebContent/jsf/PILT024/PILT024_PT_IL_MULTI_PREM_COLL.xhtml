@@ -1,0 +1,703 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.onLoad}">
+			<f:loadBundle basename="messageProperties_PILT024" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<table cellpadding="0" cellspacing="0" width="100%" border="0">
+				<h:form id="PT_IL_MULTI_PREM_COLL">
+					<tr>
+						<td colspan="3" width="100%" vAlign="top">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILT024_COMPOSITE_ACTION.navigationEnabled}"
+											rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td width="100%" vAlign="top"><h:panelGroup
+									id="PT_IL_MULTI_PREM_COLL_PANEL" style="border:0;height:15%;">
+									<table id="bordertable" align="left" width="100%">
+										<tr>
+											<td><rich:panel style="width:960px;overflow:auto">
+												<rich:dataTable
+													binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.dataTable}"
+													id="PT_IL_MULTI_PREM_COLL_DATA_GRID" rows="5"
+													value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.dataList_PT_IL_MULTI_PREM_COLL}"
+													var="tableVar">
+													
+													<rich:column filterBy="#{tableVar.PMPC_CHARGE_FC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_CHARGE_FC_AMT"
+														rendered="false" sortBy="#{tableVar.PMPC_CHARGE_FC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PMPC_CHARGE_FC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_CHARGE_FC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PMPC_CHARGE_FC_AMT"
+															value="#{tableVar.PMPC_CHARGE_FC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PMPC_CHARGE_LC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_CHARGE_LC_AMT"
+														rendered="false" sortBy="#{tableVar.PMPC_CHARGE_LC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PMPC_CHARGE_LC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_CHARGE_LC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PMPC_CHARGE_LC_AMT"
+															value="#{tableVar.PMPC_CHARGE_LC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PMPC_COLL_COUNT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_COLL_COUNT"
+														rendered="true" sortBy="#{tableVar.PMPC_COLL_COUNT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PMPC_COLL_COUNT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_COLL_COUNT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PMPC_COLL_COUNT"
+															value="#{tableVar.PMPC_COLL_COUNT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PMPC_PAID_DT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_PAID_DT"
+														rendered="true" sortBy="#{tableVar.PMPC_PAID_DT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PMPC_PAID_DT"
+																styleClass="label"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_PAID_DT$caption}" />
+														</f:facet>
+														<rich:calendar
+															datePattern="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.datePattern}"
+															id="COLUMN_CAL_PMPC_PAID_DT" inputSize="11"
+															value="#{tableVar.PMPC_PAID_DT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PMPC_APPRV_DT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_APPRV_DT"
+														rendered="true" sortBy="#{tableVar.PMPC_APPRV_DT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PMPC_APPRV_DT"
+																styleClass="label"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_APPRV_DT$caption}" />
+														</f:facet>
+														<rich:calendar
+															datePattern="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.datePattern}"
+															id="COLUMN_CAL_PMPC_APPRV_DT" inputSize="11"
+															value="#{tableVar.PMPC_APPRV_DT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PMPC_PAID_FLAG}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_PAID_FLAG"
+														rendered="true" sortBy="#{tableVar.PMPC_PAID_FLAG}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_PMPC_PAID_FLAG"
+																value=".\..\..\images\mandatory.jpg">
+																<h:outputText id="COLUMN_CAPTION_PMPC_PAID_FLAG"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_PAID_FLAG$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PMPC_PAID_FLAG"
+															value="#{tableVar.PMPC_PAID_FLAG}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PMPC_FC_PAID_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_FC_PAID_AMT"
+														rendered="true" sortBy="#{tableVar.PMPC_FC_PAID_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PMPC_FC_PAID_AMT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_FC_PAID_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PMPC_FC_PAID_AMT"
+															value="#{tableVar.PMPC_FC_PAID_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PMPC_LC_PAID_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_LC_PAID_AMT"
+														rendered="true" sortBy="#{tableVar.PMPC_LC_PAID_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PMPC_LC_PAID_AMT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_LC_PAID_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PMPC_LC_PAID_AMT"
+															value="#{tableVar.PMPC_LC_PAID_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PMPC_RISK_FC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_RISK_FC_AMT"
+														rendered="true" sortBy="#{tableVar.PMPC_RISK_FC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PMPC_RISK_FC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_RISK_FC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PMPC_RISK_FC_AMT"
+															value="#{tableVar.PMPC_RISK_FC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PMPC_RISK_LC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_RISK_LC_AMT"
+														rendered="true" sortBy="#{tableVar.PMPC_RISK_LC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PMPC_RISK_LC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_RISK_LC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PMPC_RISK_LC_AMT"
+															value="#{tableVar.PMPC_RISK_LC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.UI_M_CHARGE_FC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_UI_M_CHARGE_FC_AMT"
+														rendered="true" sortBy="#{tableVar.UI_M_CHARGE_FC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_M_CHARGE_FC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$UI_M_CHARGE_FC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_UI_M_CHARGE_FC_AMT"
+															value="#{tableVar.UI_M_CHARGE_FC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.UI_M_CHARGE_LC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_UI_M_CHARGE_LC_AMT"
+														rendered="true" sortBy="#{tableVar.UI_M_CHARGE_LC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_M_CHARGE_LC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$UI_M_CHARGE_LC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_UI_M_CHARGE_LC_AMT"
+															value="#{tableVar.UI_M_CHARGE_LC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PMPC_PREM_CONTRI_FC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_PREM_CONTRI_FC_AMT"
+														rendered="true"
+														sortBy="#{tableVar.PMPC_PREM_CONTRI_FC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PMPC_PREM_CONTRI_FC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_PREM_CONTRI_FC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PMPC_PREM_CONTRI_FC_AMT"
+															value="#{tableVar.PMPC_PREM_CONTRI_FC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PMPC_PREM_CONTRI_LC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_PREM_CONTRI_LC_AMT"
+														rendered="true"
+														sortBy="#{tableVar.PMPC_PREM_CONTRI_LC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PMPC_PREM_CONTRI_LC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_PREM_CONTRI_LC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PMPC_PREM_CONTRI_LC_AMT"
+															value="#{tableVar.PMPC_PREM_CONTRI_LC_AMT}" />
+													</rich:column>
+													<rich:column
+														filterBy="#{tableVar.PMPC_TOPUP_CONTRI_FC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_TOPUP_CONTRI_FC_AMT"
+														rendered="true"
+														sortBy="#{tableVar.PMPC_TOPUP_CONTRI_FC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText
+																id="COLUMN_CAPTION_PMPC_TOPUP_CONTRI_FC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_TOPUP_CONTRI_FC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PMPC_TOPUP_CONTRI_FC_AMT"
+															value="#{tableVar.PMPC_TOPUP_CONTRI_FC_AMT}" />
+													</rich:column>
+													<rich:column
+														filterBy="#{tableVar.PMPC_TOPUP_CONTRI_LC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PMPC_TOPUP_CONTRI_LC_AMT"
+														rendered="true"
+														sortBy="#{tableVar.PMPC_TOPUP_CONTRI_LC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText
+																id="COLUMN_CAPTION_PMPC_TOPUP_CONTRI_LC_AMT"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_TOPUP_CONTRI_LC_AMT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PMPC_TOPUP_CONTRI_LC_AMT"
+															value="#{tableVar.PMPC_TOPUP_CONTRI_LC_AMT}" />
+													</rich:column>
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PT_IL_MULTI_PREM_COLL_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.addRow}"
+																id="addRow"
+																reRender="PT_IL_MULTI_PREM_COLL_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.deleteRow}"
+																id="deleteRow"
+																reRender="PT_IL_MULTI_PREM_COLL_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.postRecord}"
+																id="postRecord"
+																reRender="PT_IL_MULTI_PREM_COLL_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</rich:panel></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table width="100%">
+												
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_CHARGE_FC_AMT_LABEL}"
+														for="PMPC_CHARGE_FC_AMT" id="PMPC_CHARGE_FC_AMT_LABEL"
+														rendered="false" styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_CHARGE_FC_AMT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_CHARGE_FC_AMT}"
+														disabled="false" id="PMPC_CHARGE_FC_AMT" maxlength="16"
+														rendered="false" required="false"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_CHARGE_FC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_CHARGE_FC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_CHARGE_LC_AMT_LABEL}"
+														for="PMPC_CHARGE_LC_AMT" id="PMPC_CHARGE_LC_AMT_LABEL"
+														rendered="false" styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_CHARGE_LC_AMT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_CHARGE_LC_AMT}"
+														disabled="false" id="PMPC_CHARGE_LC_AMT" maxlength="16"
+														rendered="false" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_CHARGE_LC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_CHARGE_LC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_COLL_COUNT_LABEL}"
+														for="PMPC_COLL_COUNT" id="PMPC_COLL_COUNT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_COLL_COUNT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_COLL_COUNT}"
+														disabled="false" id="PMPC_COLL_COUNT" maxlength="11"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_COLL_COUNT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_COLL_COUNT}" />
+													</td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_PAID_DT_LABEL}"
+														for="PMPC_PAID_DT" id="PMPC_PAID_DT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_PAID_DT$caption}" />
+													</td>
+													<td class="evenrow"><rich:calendar
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_PAID_DT}"
+														datePattern="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.datePattern}"
+														disabled="false" enableManualInput="true"
+														id="PMPC_PAID_DT" inputSize="11" rendered="true"
+														required="false" 
+														styleClass="calendarstyleclass"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_PAID_DT}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_APPRV_DT_LABEL}"
+														for="PMPC_APPRV_DT" id="PMPC_APPRV_DT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_APPRV_DT$caption}" />
+													</td>
+													<td class="oddrow"><rich:calendar
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_APPRV_DT}"
+														datePattern="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.datePattern}"
+														disabled="false" enableManualInput="true"
+														id="PMPC_APPRV_DT" inputSize="11" rendered="true"
+														required="false" 
+														styleClass="calendarstyleclass"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_APPRV_DT}" />
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_PAID_FLAG_LABEL}"
+														for="PMPC_PAID_FLAG" id="PMPC_PAID_FLAG_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_PAID_FLAG$caption}" />
+													<h:graphicImage style=""
+														value=".\..\..\images\mandatory.jpg" /></td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_PAID_FLAG}"
+														disabled="false" id="PMPC_PAID_FLAG" maxlength="1"
+														rendered="true" required="true"
+														styleClass="input"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_PAID_FLAG$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_PAID_FLAG}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_FC_PAID_AMT_LABEL}"
+														for="PMPC_FC_PAID_AMT" id="PMPC_FC_PAID_AMT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_FC_PAID_AMT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_FC_PAID_AMT}"
+														disabled="false" id="PMPC_FC_PAID_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_FC_PAID_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_FC_PAID_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_LC_PAID_AMT_LABEL}"
+														for="PMPC_LC_PAID_AMT" id="PMPC_LC_PAID_AMT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_LC_PAID_AMT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_LC_PAID_AMT}"
+														disabled="false" id="PMPC_LC_PAID_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_LC_PAID_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_LC_PAID_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_RISK_FC_AMT_LABEL}"
+														for="PMPC_RISK_FC_AMT" id="PMPC_RISK_FC_AMT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_RISK_FC_AMT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_RISK_FC_AMT}"
+														disabled="false" id="PMPC_RISK_FC_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_RISK_FC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_RISK_FC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_RISK_LC_AMT_LABEL}"
+														for="PMPC_RISK_LC_AMT" id="PMPC_RISK_LC_AMT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_RISK_LC_AMT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_RISK_LC_AMT}"
+														disabled="false" id="PMPC_RISK_LC_AMT" maxlength="16"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_RISK_LC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_RISK_LC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_UI_M_CHARGE_FC_AMT_LABEL}"
+														for="UI_M_CHARGE_FC_AMT" id="UI_M_CHARGE_FC_AMT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$UI_M_CHARGE_FC_AMT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_UI_M_CHARGE_FC_AMT}"
+														disabled="false" id="UI_M_CHARGE_FC_AMT" maxlength="30"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$UI_M_CHARGE_FC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.UI_M_CHARGE_FC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_UI_M_CHARGE_LC_AMT_LABEL}"
+														for="UI_M_CHARGE_LC_AMT" id="UI_M_CHARGE_LC_AMT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$UI_M_CHARGE_LC_AMT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_UI_M_CHARGE_LC_AMT}"
+														disabled="false" id="UI_M_CHARGE_LC_AMT" maxlength="30"
+														rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$UI_M_CHARGE_LC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.UI_M_CHARGE_LC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_PREM_CONTRI_FC_AMT_LABEL}"
+														for="PMPC_PREM_CONTRI_FC_AMT"
+														id="PMPC_PREM_CONTRI_FC_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_PREM_CONTRI_FC_AMT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_PREM_CONTRI_FC_AMT}"
+														disabled="false" id="PMPC_PREM_CONTRI_FC_AMT"
+														maxlength="16" rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_PREM_CONTRI_FC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_PREM_CONTRI_FC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_PREM_CONTRI_LC_AMT_LABEL}"
+														for="PMPC_PREM_CONTRI_LC_AMT"
+														id="PMPC_PREM_CONTRI_LC_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_PREM_CONTRI_LC_AMT$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_PREM_CONTRI_LC_AMT}"
+														disabled="false" id="PMPC_PREM_CONTRI_LC_AMT"
+														maxlength="16" rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_PREM_CONTRI_LC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_PREM_CONTRI_LC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_TOPUP_CONTRI_FC_AMT_LABEL}"
+														for="PMPC_TOPUP_CONTRI_FC_AMT"
+														id="PMPC_TOPUP_CONTRI_FC_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_TOPUP_CONTRI_FC_AMT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_TOPUP_CONTRI_FC_AMT}"
+														disabled="false" id="PMPC_TOPUP_CONTRI_FC_AMT"
+														maxlength="16" rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_TOPUP_CONTRI_FC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_TOPUP_CONTRI_FC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_TOPUP_CONTRI_LC_AMT_LABEL}"
+														for="PMPC_TOPUP_CONTRI_LC_AMT"
+														id="PMPC_TOPUP_CONTRI_LC_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_TOPUP_CONTRI_LC_AMT$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.COMP_PMPC_TOPUP_CONTRI_LC_AMT}"
+														disabled="false" id="PMPC_TOPUP_CONTRI_LC_AMT"
+														maxlength="16" rendered="true" required="false"
+														styleClass="inputNumeric"
+														title="#{message.PILT024$PT_IL_MULTI_PREM_COLL$PMPC_TOPUP_CONTRI_LC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_MULTI_PREM_COLL_ACTION_BEAN.PT_IL_MULTI_PREM_COLL_BEAN.PMPC_TOPUP_CONTRI_LC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+								<td></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\save.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\savenext.GIF" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\firstrec.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\prevpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\nextpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\lastRecord.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\navigation.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</h:form>
+			</table>
+		</f:view>
+	</ui:define>
+</ui:composition>

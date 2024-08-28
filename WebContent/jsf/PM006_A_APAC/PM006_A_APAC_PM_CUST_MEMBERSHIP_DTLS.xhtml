@@ -1,0 +1,443 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PM006_A_APAC"
+				var="message_PM006_A_APAC" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PM_CUST_MEMBERSHIP_DTLS">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.saveRecord}"
+											id="AUTOID_1" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="AUTOID_2" accesskey="s"
+												styleClass="toolbarButtonStyle"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.saveAndNext}"
+											id="AUTOID_4" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_5" styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_8" styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_10" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_11" styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="AUTOID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_14" styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_17" styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="AUTOID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_20" styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="AUTOID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD"
+										location="right">
+										<w:treeWizard
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.wizard}" />
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.errorMap['current'] !=null? PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.errorMap['current']:PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+					<tr>
+						<td colspan="3">
+						<div id="tablecontainer">
+						<div id="sidebar" style="width: 21%; vertical-align: top">
+						<div id="handle" style="width: 5%"><a4j:commandLink
+							actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.wizard.toggle}"
+							id="BACK_TOOL_FOOTER1" immediate="true" rendered="true"
+							style="text-decoration:none;align:left"
+							styleClass="toolbarCommandLinkStyle">
+							<img align="left" alt="Click to toggle the sidebar" height="123"
+								onclick="toggleSideBar();"
+								src="./../../resources/images/toggle.jpg" style="border: 0;"
+								width="14" />
+						</a4j:commandLink></div>
+
+						<div id="sbText" style="display: compact;">
+						<div id="linkstable1" style="display: compact; width: 95%">
+						<w:treeWizardPanel
+							binding="#{PM006_A_APAC_COMPOSITE_ACTION.wizard.wizardPanel}"
+							id="wizardPanel" /></div>
+						</div>
+						</div>
+						<div id="content" style="width: 79%;">
+						<table width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td vAlign="top" width="100%"><h:panelGroup
+									id="PM_CUST_COMM" style="border:0;height:15%;width:100%">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td width="100%"><rich:panel
+												style="width:100%;overflow:auto">
+												<rich:dataTable
+													binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.dataTable}"
+													id="PM_CUST_MEMBERSHIP_DTLS_DATA_GRID" rows="5"
+													value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.dataList_PM_CUST_MEMBERSHIP_DTLS}"
+													var="tableVar" width="100%">
+													<rich:column filterBy="#{tableVar.CMD_MEM_NO}"
+														filterEvent="onkeyup" id="COLUMN_CMD_MEM_NO"
+														rendered="true" sortBy="#{tableVar.CMD_MEM_NO}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CMD_MEM_NO"
+																styleClass="forumRowHighlight"
+																value="#{message_PM006_A_APAC.PM006_A_APAC$PM_CUST_MEMBERSHIP_DTLS$CMD_MEM_NO$caption}" />
+														</f:facet>
+														<a4j:commandLink
+															action="#{PM006_A_APAC_PM_CUST_MEMBERSHIP_DTLS_ACTION.displayRecords}"
+															id="GOTO_LINK_CMD_MEM_NO" immediate="true"
+															reRender="errorPanel,PM_CUST_MEMBERSHIP_DTLS_PANEL">
+															<h:outputText id="LINK_CAPTION_CMD_MEM_NO"
+																value="#{tableVar.CMD_MEM_NO}" />
+														</a4j:commandLink>
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CMD_MEM_TYPE}"
+														filterEvent="onkeyup" id="COLUMN_CMD_MEM_TYPE"
+														rendered="true" sortBy="#{tableVar.CMD_MEM_TYPE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_CMD_MEM_TYPE"
+																styleClass="searchimg"
+																value=".\..\..\images\mandatory.gif">
+																<h:outputText id="COLUMN_CAPTION_CMD_MEM_TYPE"
+																	styleClass="label"
+																	value="#{message_PM006_A_APAC.PM006_A_APAC$PM_CUST_MEMBERSHIP_DTLS$CMD_MEM_TYPE$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<h:selectOneMenu id="SEL_ONE_MENU_CMD_MEM_TYPE"
+														title="#{message.PM006_A_APAC$PM_CUST_MEMBERSHIP_DTLS$SEL_ONE_MENU_CMD_MEM_TYPE$tooltip}"
+														value="#{tableVar.CMD_MEM_TYPE}" />
+													</rich:column>
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PM_CUST_MEMBERSHIP_DTLS_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.addRow}"
+																id="addRow" accesskey="c"
+																reRender="PM_CUST_MEMBERSHIP_DTLS_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.deleteRow}"
+																id="deleteRow" accesskey="r"
+																reRender="PM_CUST_MEMBERSHIP_DTLS_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.postRecord}"
+																id="postRecord" accesskey="p"
+																reRender="PM_CUST_MEMBERSHIP_DTLS_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+
+												</rich:dataTable>
+											</rich:panel></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table class="noborder" width="100%">
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.COMP_CMD_MEM_TYPE_LABEL}"
+														for="CMD_MEM_TYPE" id="CMD_MEM_TYPE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PM006_A_APAC.PM006_A_APAC$PM_CUST_MEMBERSHIP_DTLS$CMD_MEM_TYPE$caption}" />
+													</td>
+													<td class="oddrow"><h:selectOneMenu
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.COMP_CMD_MEM_TYPE}"
+														disabled="false" id="CMD_MEM_TYPE" rendered="true"
+														required="true" styleClass="input"
+														title="#{message_PM006_A_APAC.PM006_A_APAC$PM_CUST_MEMBERSHIP_DTLS$CMD_MEM_TYPE$tooltip}"
+														validator="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.validateCMD_MEM_TYPE}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.PM_CUST_MEMBERSHIP_DTLS_BEAN.CMD_MEM_TYPE}">
+														<f:selectItems
+															value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.itemCMD_MEM_TYPE}" />
+														<a4j:support
+															actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="style_3" immediate="true"
+															reRender="errorPanel" />
+													</h:selectOneMenu></td>
+													<td class="oddrow"></td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.COMP_CMD_MEM_NO_LABEL}"
+														for="CMD_MEM_NO" id="CMD_MEM_NO_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PM006_A_APAC.PM006_A_APAC$PM_CUST_MEMBERSHIP_DTLS$CMD_MEM_NO$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.COMP_CMD_MEM_NO}"
+														disabled="false" id="CMD_MEM_NO" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PM006_A_APAC.PM006_A_APAC$PM_CUST_MEMBERSHIP_DTLS$CMD_MEM_NO$tooltip}"
+														validator="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.validateCMD_MEM_NO}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.PM_CUST_MEMBERSHIP_DTLS_BEAN.CMD_MEM_NO}">
+														<a4j:support
+															actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.CMD_MEM_NO}"
+															event="onblur" id="style_4" immediate="true"
+															reRender="errorPanel" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.COMP_CMD_VALID_FM_DT_LABEL}"
+														for="CMD_VALID_FM_DT" id="CMD_VALID_FM_DT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PM006_A_APAC.PM006_A_APAC$PM_CUST_MEMBERSHIP_DTLS$CMD_VALID_FM_DT$caption}" />
+													</td>
+													<td class="evenrow"><rich:calendar
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.COMP_CMD_VALID_FM_DT}"
+														datePattern="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.datePattern}"
+														enableManualInput="true" id="CMD_VALID_FM_DT"
+														immediate="true" inputClass="calendarinput" inputSize="11"
+														validator="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.validateCMD_VALID_FM_DT}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.PM_CUST_MEMBERSHIP_DTLS_BEAN.CMD_VALID_FM_DT}">
+														<a4j:support
+															actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.fireFieldValidation}"
+															event="oninputblur" id="style_5" immediate="true"
+															reRender="errorPanel" />
+													</rich:calendar></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.COMP_CMD_VALID_TO_DT_LABEL}"
+														for="CMD_VALID_TO_DT" id="CMD_VALID_TO_DT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PM006_A_APAC.PM006_A_APAC$PM_CUST_MEMBERSHIP_DTLS$CMD_VALID_TO_DT$caption}" />
+													</td>
+													<td class="evenrow"><rich:calendar
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.COMP_CMD_VALID_TO_DT}"
+														datePattern="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.datePattern}"
+														enableManualInput="true" id="CMD_VALID_TO_DT"
+														immediate="true" inputClass="calendarinput" inputSize="11"
+														validator="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.validateCMD_VALID_TO_DT}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.PM_CUST_MEMBERSHIP_DTLS_BEAN.CMD_VALID_FM_DT}">
+														<a4j:support
+															actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.fireFieldValidation}"
+															event="oninputblur" id="style_6" immediate="true"
+															reRender="errorPanel" />
+													</rich:calendar></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.COMP_CMD_MEB_REG_DT_LABEL}"
+														for="CMD_MEB_REG_DT" id="CMD_MEB_REG_DT_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PM006_A_APAC.PM006_A_APAC$PM_CUST_MEMBERSHIP_DTLS$CMD_MEB_REG_DT$caption}" />
+													</td>
+													<td class="oddrow"><rich:calendar
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.COMP_CMD_MEB_REG_DT}"
+														datePattern="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.datePattern}"
+														enableManualInput="true" id="CMD_MEB_REG_DT"
+														immediate="true" inputClass="calendarinput" inputSize="11"
+														validator="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.validateCMD_MEB_REG_DT}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.PM_CUST_MEMBERSHIP_DTLS_BEAN.CMD_VALID_FM_DT}">
+														<a4j:support
+															actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.fireFieldValidation}"
+															event="oninputblur" id="style_7" immediate="true"
+															reRender="errorPanel" />
+													</rich:calendar></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.COMP_CMD_MEB_STATUS_LABEL}"
+														for="CMD_MEB_STATUS" id="CMD_MEB_STATUS_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PM006_A_APAC.PM006_A_APAC$PM_CUST_MEMBERSHIP_DTLS$CMD_MEB_STATUS$caption}" />
+													</td>
+													<td class="oddrow"><h:selectOneMenu
+														id="CMD_MEB_STATUS" styleClass="input"
+														title="#{message.PM006_A_APAC$PM_CUST_MEMBERSHIP_DTLS$CMD_MEB_STATUS$tooltip}"
+														value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.PM_CUST_MEMBERSHIP_DTLS_BEAN.CMD_MEB_STATUS}">
+														<f:selectItems
+															value="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.itemCMD_MEB_STATUS}" />
+														<a4j:support
+															actionListener="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.CMD_MEB_STATUS}"
+															event="onblur" id="style_8" immediate="true"
+															reRender="errorPanel" />
+													</h:selectOneMenu></td>
+												</tr>
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</div>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.saveAndCommit}"
+											id="AUTOID_42" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="AUTOID_43" accesskey="s"
+												styleClass="toolbarButtonStyle"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="AUTOID_44"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM006_A_APAC_COMPOSITE_ACTION.PM_CUST_MEMBERSHIP_DTLS_ACTION_BEAN.saveAndNext}"
+											id="AUTOID_45" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_46" styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="AUTOID_47"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_48" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_49" styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_50"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_51" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_52" styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="AUTOID_53"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_54" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_55" styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="AUTOID_56"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_57" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_58" styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="AUTOID_59"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_60" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_61" styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="AUTOID_62"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM"
+										location="right">
+										<w:wizardPanelFooter
+											binding="#{PM006_A_APAC_COMPOSITE_ACTION.wizard.wizardPanelFooter}" />
+									</rich:toolBarGroup>
+
+
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

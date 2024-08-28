@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PILT006_APAC_PT_IL_POL_CLAIM_SEARCH_ACTION.onLoad}">
+			<f:loadBundle basename="messageProperties_PILT006_APAC" var="message" />
+			<!-- onkeypress Added by saritha on 24-Feb-2017 for ssp call id ZBILQC-1718596 Handson  On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PT_IL_CLAIM_SEARCH" onkeypress="return event.keyCode != 13">
+				<table cellpadding="0" cellspacing="0" width="100%" border="0">
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20"><rich:simpleTogglePanel
+							id="errorPanel" switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILT006_APAC_PT_IL_POL_CLAIM_SEARCH_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM036_PM_IL_BONUS_QUERY_ACTION.errorMap['current'] !=null? PILM036_PM_IL_BONUS_QUERY_ACTION.errorMap['current']:PILM036_PM_IL_BONUS_QUERY_ACTION.warningMap['current']}" />
+
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PILT006_APAC_PT_IL_POL_CLAIM_SEARCH_ACTION.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PILT006_APAC_PT_IL_POL_CLAIM_SEARCH_ACTION.globalMsgRender}" />
+
+							<h:outputText id="warningMessages"
+								value="#{PILT006_APAC_PT_IL_POL_CLAIM_SEARCH_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td>
+						<table width="100%" border="0" cellpadding="0" cellspacing="0"
+							id="masthead">
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="3" valign="top"><h:commandButton
+							binding="#{PILT006_APAC_PT_IL_POL_CLAIM_SEARCH_ACTION.COMP_UI_M_BUT_BACK}"
+							action="#{PILT006_APAC_PT_IL_POL_CLAIM_SEARCH_ACTION.backToPolicy}"
+							id="UI_M_BUT_BACK" rendered="true"
+							style="width:96px" styleClass="button"
+							value="BackToPolicy" />
+							</td>
+							</tr>
+					 
+					<rich:dataTable id="dataTableId"
+						binding="#{PILT006_APAC_PT_IL_POL_CLAIM_SEARCH_ACTION.COMP_PT_IL_CLAIM_SEARCH_DATATABLE}"
+						value="#{PILT006_APAC_PT_IL_POL_CLAIM_SEARCH_ACTION.PT_IL_CLAIM_BEAN_LIST}"
+						var="claimEntry" cellpadding="5px" rows="10" border="1"
+						width="100%">
+						<f:facet name="footer">
+							<rich:datascroller id="dsID" pagesVar="pages"
+								pageIndexVar="index" align="right">
+							</rich:datascroller>
+						</f:facet>
+						<rich:column filterBy="#{claimEntry.CLAIM_POL_NO}"
+							sortBy="#{claimEntry.CLAIM_POL_NO}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_SEARCH$POLICY_NO_LABEL}" />
+							</f:facet>
+
+							<h:commandLink
+								action="#{PILT006_APAC_PT_IL_POL_CLAIM_SEARCH_ACTION.clearList}">
+								<h:outputText value="#{claimEntry.CLAIM_POL_NO}" />
+								<f:param name="claimsysid" value="#{claimEntry.CLAIM_SYS_ID}" />
+							</h:commandLink>
+
+						</rich:column>
+						<rich:column filterBy="#{claimEntry.CLAIM_NO}"
+							sortBy="#{claimEntry.CLAIM_NO}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_SEARCH$CLAIM_NO_LABEL}" />
+							</f:facet>
+							<h:outputText value="#{claimEntry.CLAIM_NO}" />
+						</rich:column>
+
+						<rich:column filterBy="#{claimEntry.CLAIM_CUST_CODE}"
+							sortBy="#{claimEntry.CLAIM_CUST_CODE}" filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_SEARCH$CLAIM_CUST_CODE_LABEL}" />
+							</f:facet>
+							<h:outputText value="#{claimEntry.CLAIM_CUST_CODE}" />
+						</rich:column>
+
+						<rich:column filterBy="#{claimEntry.UI_M_CLAIM_ADDL_STATUS}"
+							sortBy="#{claimEntry.UI_M_CLAIM_ADDL_STATUS}"
+							filterEvent="onkeyup">
+							<f:facet name="header">
+								<h:outputText
+									value="#{message.PILT006_APAC$PT_IL_CLAIM$UI_M_SEARCH$UI_M_CLAIM_ADDL_STATUS_LABEL}" />
+							</f:facet>
+							<h:outputText value="#{claimEntry.UI_M_CLAIM_ADDL_STATUS}" />
+						</rich:column>
+
+					</rich:dataTable>
+
+
+				</table>
+				<table cellpadding="0" cellspacing="0" width="100%">
+
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

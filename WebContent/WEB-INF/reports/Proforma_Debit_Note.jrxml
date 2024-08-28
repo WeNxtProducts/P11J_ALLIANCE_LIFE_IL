@@ -1,0 +1,718 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Proforma_Debit_Note" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="34ae41fe-551c-4ced-b212-24af9bb47640">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="Dept_Dataset" uuid="ed239053-8756-46bc-9e09-cfd8626cd9eb">
+		<parameter name="DEPT_CODE" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[select DEPT_NAME from fm_department WHERE DEPT_CODE= $P{DEPT_CODE}]]>
+		</queryString>
+		<field name="DEPT_NAME" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="Branch_Dataset" uuid="c6c1b563-555e-4bd4-9e02-bdddce6767d4">
+		<parameter name="DRCR_DIVN_CODE_PARAM" class="java.lang.String"/>
+		<queryString language="SQL">
+			<![CDATA[select divn_name from fm_division where DIVN_CODE ='YHW04']]>
+		</queryString>
+		<field name="DIVN_NAME" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="Total_Sum_assured_Dataset" uuid="4e12848c-fe06-4dbf-908f-06a0bdae0c5c">
+		<queryString language="SQL">
+			<![CDATA[select F_LC_SUMM_ASSURED (74912)  total_sum_assured from dual]]>
+		</queryString>
+		<field name="TOTAL_SUM_ASSURED" class="java.lang.Double"/>
+	</subDataset>
+	<queryString>
+		<![CDATA[SELECT  UNIQUE  POL_SYS_ID         Q1_DRCR_POL_SYS_ID,
+             POL_END_NO_IDX        Q1_DRCR_END_NO_IDX,
+             POL_NO            Q1_DRCR_POL_NO ,
+             POL_END_NO                 Q1_DRCR_END_NO,
+             POL_DIVN_CODE           Q1_DRCR_DIVN_CODE,
+             POL_DEPT_CODE            Q1_POL_DEPT_CODE,
+             POL_DS_CODE           Q1_POL_PDS_CODE,
+             POL_SA_CURR_CODE  Q1_CURR_CODE,
+--             PDS_CERTIFICATE_YN    Q1_PDS_CERTIFICATE_YN,
+             --POL_DOC_NO               Q1_DRCR_DOC_NO,
+             --DRCR_TXN_CODE           Q1_DRCR_TXN_CODE,
+             '001'         Q1_DRCR_CURR_CODE,
+             'Being Premium due on the Policy No.'         Q1_DRCR_NARRATION,
+             POL_ISSUE_DT               Q1_DRCR_DOC_DT,
+--             DRCR_SUB_ACNT_CODE  Q1_DRCR_SUB_ACNT_CODE,
+             CCLAS_CTL_ACNT_CODE Q1_DRCR_MAIN_ACNT_cODE,
+             POL_CUST_CODE         Q1_DRCR_CUST_CODE,
+             ABS(POL_FC_SA)                  Q1_POL_FC_SA,
+             POL_FC_FIRST_PREM        Q1_POL_FC_FIRST_PREM,
+             --NVL(POL_FC_PREM,0)+(NVL(POL_LC_EXTRA_PREM,0)-NVL(POL_LC_DISC,0))*NVL(CD_CONT_PERC/100,0)                 Q1_DRCR_FC_AMT,
+
+             'Being Premium due on the Policy No.'         Q1_DRCR_NARRATION,
+             DECODE(SUBSTR(POL_FC_PREM,0,1),'-','C','D')        Q1_DRCR_DRCR_FLAG,
+             POL_ASSURED_NAME   Q1_POL_ASSURED_NAME,
+            POL_SRC_OF_BUS          Q1_SRC_BUS,
+            POL_ASSR_CODE   Q1_DRCR_ASSR_CODE,
+           POL_COINS_YN        Q1_POL_COINS_YN,
+           POL_END_NO_IDX    Q1_POL_END_NO_IDX,
+             CUST_CITY    Q1_CUST_CITY,
+            CUST_STATE       Q1_CUST_STATE,
+          CUST_COUNTRY  Q1_CUST_COUNTRY,
+(to_char(to_date(ROUND(POL_FC_FIRST_PREM),'J'), 'JSP')) || ' ONLY ' as amount_in_words,
+          POL_FM_DT Q1_POL_FM_DT,TO_dATE(POL_TO_DT,'DD/MM/RRRR') Q1_POL_TO_DT
+FROM    PT_GL_POLICY,PM_LIFE_DOC_SETUP,PM_CUSTOMER,PM_CUST_CLASS
+WHERE POL_SYS_ID = '74912'
+AND      DS_CODE   = POL_DS_CODE
+AND    CUST_CODE=POL_CUST_CODE
+AND CCLAS_CODE=CUST_CLASS]]>
+	</queryString>
+	<field name="Q1_DRCR_POL_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="Q1_DRCR_END_NO_IDX" class="java.math.BigDecimal"/>
+	<field name="Q1_DRCR_POL_NO" class="java.lang.String"/>
+	<field name="Q1_DRCR_END_NO" class="java.lang.String"/>
+	<field name="Q1_DRCR_DIVN_CODE" class="java.lang.String"/>
+	<field name="Q1_POL_DEPT_CODE" class="java.lang.String"/>
+	<field name="Q1_POL_PDS_CODE" class="java.lang.String"/>
+	<field name="Q1_CURR_CODE" class="java.lang.String"/>
+	<field name="Q1_DRCR_CURR_CODE" class="java.lang.String"/>
+	<field name="Q1_DRCR_NARRATION" class="java.lang.String"/>
+	<field name="Q1_DRCR_DOC_DT" class="java.sql.Timestamp"/>
+	<field name="Q1_DRCR_MAIN_ACNT_CODE" class="java.lang.String"/>
+	<field name="Q1_DRCR_CUST_CODE" class="java.lang.String"/>
+	<field name="Q1_POL_FC_SA" class="java.math.BigDecimal"/>
+	<field name="Q1_POL_FC_FIRST_PREM" class="java.math.BigDecimal"/>
+	<field name="Q1_DRCR_DRCR_FLAG" class="java.lang.String"/>
+	<field name="Q1_POL_ASSURED_NAME" class="java.lang.String"/>
+	<field name="Q1_SRC_BUS" class="java.lang.String"/>
+	<field name="Q1_DRCR_ASSR_CODE" class="java.lang.String"/>
+	<field name="Q1_POL_COINS_YN" class="java.lang.String"/>
+	<field name="Q1_POL_END_NO_IDX" class="java.math.BigDecimal"/>
+	<field name="Q1_CUST_CITY" class="java.lang.String"/>
+	<field name="Q1_CUST_STATE" class="java.lang.String"/>
+	<field name="Q1_CUST_COUNTRY" class="java.lang.String"/>
+	<field name="AMOUNT_IN_WORDS" class="java.lang.String"/>
+	<field name="Q1_POL_FM_DT" class="java.util.Date"/>
+	<field name="Q1_POL_TO_DT" class="java.util.Date"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="20" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="448eab45-1bf6-454b-a9d8-74a6fb25f188"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial MT Bold" size="13"/>
+				</textElement>
+				<text><![CDATA[DEBIT NOTE]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="160" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="07c94abf-3d9d-4bcc-b88e-3584931770c8"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="100" height="100" uuid="ab269678-0b3a-46ed-8d74-2803200dfcfa"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[Address]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="0" width="5" height="20" uuid="247c82ec-f59d-45d1-96d1-760199c5ff8f"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="20" width="5" height="100" uuid="74c31213-08a3-4d4e-bfe5-c54013154954"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="105" y="0" width="164" height="20" isPrintWhenDetailOverflows="true" uuid="b42021b7-e57b-45de-a018-cb4844e8a2e6"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DRCR_CUST_CODE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="269" y="0" width="105" height="20" uuid="9cb95037-9a19-4bb4-85d0-46d38bdd43c3"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[Debit Note No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="0" width="5" height="20" uuid="cd2057ef-0130-478d-ba55-202b354d63db"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="379" y="0" width="176" height="20" isPrintWhenDetailOverflows="true" uuid="abd7c23b-7f73-471d-855b-d5feaf45d8ab"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DRCR_POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="105" y="20" width="164" height="100" isPrintWhenDetailOverflows="true" uuid="e2b27328-138e-49dd-8060-7acf28249b2f"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_CUST_CITY}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="269" y="20" width="105" height="20" uuid="82accb09-238b-4d6d-a647-c88afd34452c"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[Main A/C Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="40" width="105" height="20" uuid="902bb2c9-a9a7-4cc5-8d28-c6bfe56f30ad"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[Invoicing Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="60" width="105" height="20" uuid="84730e96-e9a5-4a31-abd1-e96f84e83d65"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[Issue Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="80" width="105" height="20" uuid="66e4a83f-cde7-45b2-a5ba-aeb9b15c70cf"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[Branch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="269" y="100" width="105" height="20" uuid="47bf3386-29c8-4a82-9ade-27582d99eb24"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[Department]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="20" width="5" height="20" uuid="ae4c63e7-5a08-40a8-8900-534dfeb94d33"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="40" width="5" height="20" uuid="e8f54d1f-f78f-497b-907f-1244965bff4f"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="60" width="5" height="20" uuid="86146e14-1336-4dc1-86d4-81fac82d7e10"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="80" width="5" height="20" uuid="84d8c3b0-195d-4562-ac34-a0ffdff00f4f"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="374" y="100" width="5" height="20" uuid="1bc53280-1204-4f7d-99bc-5cca677e717f"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="379" y="20" width="176" height="20" isPrintWhenDetailOverflows="true" uuid="f82660fb-8846-4c46-a399-1a5c5bc8ebbf"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DRCR_MAIN_ACNT_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="379" y="40" width="176" height="20" isPrintWhenDetailOverflows="true" uuid="1a5054c8-f37e-4bce-a176-8d58ba4c69c2"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DRCR_ASSR_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="379" y="60" width="176" height="20" isPrintWhenDetailOverflows="true" uuid="bab63e9f-4140-4642-9369-d0362fa3b289"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{Q1_DRCR_DOC_DT})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="120" width="100" height="20" uuid="f1d9e2c3-606e-4fff-8d71-4e90a0ce9ed2"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial MT Bold" size="9" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Assured Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="120" width="5" height="20" uuid="ebe9c2f0-f14e-4818-9c25-b40253ccc439"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial MT Bold" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="105" y="120" width="450" height="20" isPrintWhenDetailOverflows="true" uuid="a2ca5123-c57f-46ce-a5ea-dc892451cafd"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_POL_ASSURED_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="140" width="555" height="20" uuid="33d0252e-a02c-4bf6-bea5-39e34e27b75a"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[Please note that we have DEBITED/CREDITED your account as follows :]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="379" y="80" width="176" height="20" uuid="1f3efabf-9fa5-4d11-8ab3-8517797a4eda"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Branch_Dataset" uuid="43c09d04-50b5-4516-a5ed-2e255d9fb3ad">
+						<datasetParameter name="DRCR_DIVN_CODE_PARAM">
+							<datasetParameterExpression><![CDATA[$F{Q1_DRCR_DIVN_CODE}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="176">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="176" height="20" isPrintWhenDetailOverflows="true" uuid="c3bc3d8e-6db0-4118-915a-49879dfb4e1e"/>
+							<box leftPadding="3">
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Arial MT" size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{DIVN_NAME}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="379" y="100" width="176" height="20" uuid="1b1860c1-a989-49a9-b579-958a1afa720b"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Dept_Dataset" uuid="35c37f33-c264-4ee3-80c8-1070c03fed9b">
+						<datasetParameter name="DEPT_CODE">
+							<datasetParameterExpression><![CDATA[$F{Q1_POL_DEPT_CODE}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="176">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToBandHeight" x="0" y="0" width="176" height="20" isPrintWhenDetailOverflows="true" uuid="f5ab223c-219a-4a37-8f30-3d679fa29587"/>
+							<box leftPadding="3">
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Arial MT" size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{DEPT_NAME}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement x="300" y="0" width="85" height="27" uuid="d0b1840b-5835-4d27-9aa7-be1c6ed5af31"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[DR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="0" width="85" height="27" uuid="a41b9afd-7530-4614-8ddb-0f79dcd65873"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[CR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="470" y="0" width="85" height="27" uuid="686c2617-7b1f-40a8-815b-8075133ef30d"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[NET PREMIUM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="0" width="300" height="27" uuid="289e17d8-426c-4d22-b221-b46ef775ba55"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[Description]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="68" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="300" y="0" width="85" height="68" isPrintWhenDetailOverflows="true" uuid="f8868661-4341-43a8-b987-2b0e584c6370"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DRCR_DRCR_FLAG}.equals( "D" ) ? $F{Q1_POL_FC_FIRST_PREM} : 0.00]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="385" y="0" width="85" height="68" isPrintWhenDetailOverflows="true" uuid="0efe3156-33e9-4af5-9196-c632667c1f19"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DRCR_DRCR_FLAG}.equals( "C" ) ? $F{Q1_POL_FC_FIRST_PREM} : 0.00]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" pattern="#,##0.00;(#,##0.00)" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="470" y="0" width="85" height="68" isPrintWhenDetailOverflows="true" uuid="29789ddb-e05b-4402-a4dd-4f0ca23508b0"/>
+				<box>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_POL_FC_FIRST_PREM}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="300" height="48" uuid="7e87aa33-df10-44b7-8842-9e3dc6f1bd8f"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_DRCR_NARRATION}+"\n"+" "+$F{Q1_DRCR_POL_NO}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="48" width="100" height="20" uuid="780383b0-3ed1-441c-aeba-fd7d7a761167"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[Period of Policy From]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="48" width="55" height="20" uuid="0dcca730-ca27-45dd-92fa-671855089e8e"/>
+				<box>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{Q1_POL_FM_DT})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="173" y="48" width="127" height="20" uuid="2f1b849f-3f6e-4591-9808-1048c96d65ac"/>
+				<box>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new SimpleDateFormat("dd/MM/yyyy").format($F{Q1_POL_FM_DT})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="155" y="48" width="18" height="20" uuid="ab2b5eb1-b6e5-404f-829a-8a4e315f4e3f"/>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<summary>
+		<band height="125" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="300" height="20" uuid="46bfa684-036f-4c10-a9f1-6983b5023ace"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="300" y="0" width="85" height="20" uuid="1ec82c9d-3d47-43fa-823d-c9abb36fd57e"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="385" y="0" width="85" height="20" uuid="764003be-91dc-4df4-b034-fd5459a6e5cf"/>
+				<box rightPadding="3">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right"/>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="#,##0.00;(#,##0.00)">
+				<reportElement x="470" y="0" width="85" height="20" uuid="ecc43948-597f-4e6f-89d9-4adf3b21cd73"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Q1_POL_FC_FIRST_PREM}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="20" width="55" height="20" uuid="0560e1ff-3a38-49d7-83a4-15483fb49b64"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[AMOUNT]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="55" y="20" width="500" height="20" isPrintWhenDetailOverflows="true" uuid="e5aeddd9-93fc-4c85-b4fe-423f0062e10f"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{AMOUNT_IN_WORDS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="40" width="124" height="40" uuid="e4e962ed-a2a8-43d3-b8bc-ea85bd6a49b6"/>
+				<box topPadding="3" leftPadding="3">
+					<leftPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[TOTAL SUM ASSURED]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="40" width="5" height="40" uuid="afe00447-501d-48da-93f9-359f9042fa04"/>
+				<box topPadding="3">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT Bold" size="9"/>
+				</textElement>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="80" width="455" height="45" uuid="7136e923-26b8-4a1b-9c88-ab438c6b2773"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<text><![CDATA[Prepared By:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="455" y="80" width="100" height="45" uuid="473c38bb-1da0-4f72-898c-bf37d45742c1"/>
+				<box rightPadding="9">
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Arial MT" size="9"/>
+				</textElement>
+				<text><![CDATA[Signature]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="129" y="40" width="426" height="40" uuid="f0a70210-e0c3-4a3c-bed6-13435142abb9"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="Total_Sum_assured_Dataset" uuid="03f44149-8f04-45bf-aaf3-e77cc20a75e0"/>
+					<jr:listContents height="40" width="426">
+						<textField pattern="#,##0.00;(#,##0.00)">
+							<reportElement x="0" y="0" width="426" height="40" uuid="1e8aa38a-dc59-4f4f-bb61-48087019d4dd"/>
+							<box topPadding="3" leftPadding="3">
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Arial MT" size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{TOTAL_SUM_ASSURED}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</summary>
+</jasperReport>

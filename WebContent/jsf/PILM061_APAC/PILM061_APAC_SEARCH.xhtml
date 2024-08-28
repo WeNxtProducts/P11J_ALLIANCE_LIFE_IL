@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILM061_APAC" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" cellpadding="0" cellspacing="0" border="0">
+		<tr>
+		</tr>
+		<h:form id="PILM061_APAC_SEARCH">
+			<!-- Body row -->
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.errorMap['current'] !=null? PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.errorMap['current']:PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td>
+				<table border="0" width="100%" cellpadding="0" cellspacing="0"
+					id="masthead">
+					<tr>
+						<td><h:outputText
+							value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+						<td><h:outputLabel
+							value="#{message.PILM061_APAC$SEARCH$FAS_MAIN_ACNT_CODE$caption}" />
+						<h:inputText
+							binding="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.COMP_UI_M_MAIN_ACNT_NAME}"
+							value="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.searchBean.FAS_MAIN_ACNT_CODE}" /></td>
+						<td><h:outputLabel
+							value="#{message.PILM061_APAC$SEARCH$FAS_SUB_ACNT_CODE$caption}" />
+						<h:inputText
+							binding="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.COMP_UI_M_SUB_ACNT_NAME}"
+							value="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.searchBean.FAS_SUB_ACNT_CODE}" /></td>
+						<td><a4j:commandButton styleClass="button"
+							value="#{commonmsg.searchButton$caption}"
+							id="fetch"
+							action="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.fetch}"
+							reRender="fetchList">
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table --> <rich:dataTable id="fetchList"
+					value="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.dataTableBean}"
+					var="colData" cellpadding="5px" rows="15" border="1" width="100%"
+					binding="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.dataTable}">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+					<rich:column filterBy="#{colData.FAS_MAIN_ACNT_CODE}"
+						filterValue="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.searchBean.searchText}"
+						sortBy="#{colData.POL_NO}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM061_APAC$SEARCH$FAS_MAIN_ACNT_CODE$caption}" />
+						</f:facet>
+						<h:commandLink
+							action="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.fetchMasterRecord}"
+							id="POL_NO_Link">
+								<h:outputText value="#{colData.FAS_MAIN_ACNT_CODE}" />
+
+							<f:param name="FAS_MAIN_ACNT_CODE"
+								value="#{colData.FAS_MAIN_ACNT_CODE}" />
+							<f:param name="FAS_SUB_ACNT_CODE"
+								value="#{colData.FAS_SUB_ACNT_CODE}" />
+							<f:param name="FAS_DIVN_CODE" value="#{colData.FAS_DIVN_CODE}" />
+							<f:param name="ROWID" value="#{colData.ROWID}" />
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column filterBy="#{colData.FAS_SUB_ACNT_CODE}"
+						sortBy="#{colData.FAS_SUB_ACNT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM061_APAC$SEARCH$FAS_SUB_ACNT_CODE$caption}" />
+						</f:facet>
+						
+							<h:outputText value="#{colData.FAS_SUB_ACNT_CODE}" />
+						
+					</rich:column>
+
+					<rich:column filterBy="#{colData.FAS_DIVN_CODE}"
+						sortBy="#{colData.FAS_DIVN_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM061_APAC$SEARCH$FAS_DIVN_CODE$caption}" />
+						</f:facet>
+							<h:outputText value="#{colData.FAS_DIVN_CODE}" />
+					</rich:column>
+
+				</rich:dataTable> <h:commandButton id="insertLink"
+					value="#{commonmsg.insertButton$caption}" styleClass="button"
+					action="#{PILM061_APAC_FUND_ACCOUNT_SEARCH_ACTION.insert}" /></td>
+			</tr>
+		</h:form>
+
+		<!-- add footer to the page-->
+		<tr>
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,536 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PT_IL_SUB_STD_REG_ACTION_BEAN.onLoad}">
+			<f:loadBundle basename="messageProperties_PILP232"
+				var="message_PILP232" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="excelUpload" ENCTYPE="multipart/form-data">
+				<table class="noborder" width="100%" border="0" cellpadding="0"
+					cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink id="AUTOID_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="true">
+											<h:graphicImage id="AUTOID_2" styleClass="searchimg"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage id="AUTOID_5" styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_7" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage id="AUTOID_8" styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_10" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage id="AUTOID_11" styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="AUTOID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_13" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage id="AUTOID_14" styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_16" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage id="AUTOID_17" styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="AUTOID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_19" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage id="AUTOID_20" styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="AUTOID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="errormsgtable" width="100%">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PT_IL_SUB_STD_REG_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PT_IL_SUB_STD_REG_ACTION_BEAN.errorMap['current'] !=null? PT_IL_SUB_STD_REG_ACTION_BEAN.errorMap['current']: PT_IL_SUB_STD_REG_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{PT_IL_SUB_STD_REG_ACTION_BEAN.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{PT_IL_SUB_STD_REG_ACTION_BEAN.globalMsgRender}"
+										styleClass="ErrorMessages" />
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{PT_IL_SUB_STD_REG_ACTION_BEAN.warningMessages}" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><h:outputLabel
+									value="#{message_PILP232.PILP232$PT_IL_SUB_STD_REG$displayCaption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table align="left" class="noborder" id="bordertable" width="100%"
+							style="height: 150px">
+							<tr>
+								<td width="20%"></td>
+								<td align="left" width="60%"><h:outputLabel
+									binding="#{PT_IL_SUB_STD_REG_ACTION_BEAN.COMP_FILE_PATH_LABEL}"
+									for="FILE_PATH" id="FILE_PATH_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message_PILP232.PILP232$FILE_PATH$caption}" /></td>
+								<td width="20%"></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td style="color: black"><rich:fileUpload id="FILE_PATH" 
+								binding="#{DUMMY_ACTION_BEAN.COMP_UI_FILE_BUT_UPLOAD}"
+									clearAllControlLabel="Clear All" disabled="false"
+									immediateUpload="false" autoclear="false" 
+									ontyperejected="alert('Only Excel(.xls and .csv) files are accepted');"
+									fileUploadListener="#{PT_IL_SUB_STD_REG_ACTION_BEAN.uploadListener}"
+									listHeight="60px" listWidth="90%"
+									reRender="FILE_UPLOAD_PANEL_1,FILE_INFO_PANEL"
+									acceptedTypes="xls,csv" immediate="true">
+									<a4j:support event="onuploadcomplete"
+										reRender="FILE_UPLOAD_PANEL_1,fileName,FILE_INFO_PANEL"
+										immediate="true" />
+										
+										<!-- Added PW_GL_EMP_UPLOAD_DATA_GRIDin rerender by Janani on 27.06.2017 for ZBILQC-1730077 -->
+									<a4j:support event="onclear"
+										reRender="FILE_UPLOAD_PANEL_1,FILE_PATH,fileName,FILE_INFO_PANEL,PW_GL_EMP_UPLOAD_DATA_GRID"
+										actionListener="#{PT_IL_SUB_STD_REG_ACTION_BEAN.clearUploadData}"
+										immediate="true" />
+										
+										<!-- End -->
+
+								</rich:fileUpload></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><h:panelGroup id="FILE_INFO_PANEL" rendered="true"
+									style="width:60%;">
+									<rich:panel bodyClass="info" styleClass="label"
+										style="width:90%;overflow:auto;">
+										<f:facet name="header">
+											<h:outputText value="Uploaded Files Info" />
+										</f:facet>
+										<h:outputText
+											value="#{PT_IL_SUB_STD_REG_ACTION_BEAN.PT_IL_SUB_STD_REG_DTLS_BEAN.FILE_NAME}"
+											styleClass="label" style="width:60%" />
+									</rich:panel>
+									<br />
+									<a4j:commandButton
+										action="#{PT_IL_SUB_STD_REG_ACTION_BEAN.clearUploadData}"
+										reRender="FILE_INFO_PANEL,FILE_PATH, upload"
+										value="Clear Uploaded Data" rendered="false" />
+									<!--  rendered="#{PP_UPLOAD_FILE_DTLS_ACTION_BEAN.PP_UPLOAD_FILE_DTLS_BEAN.FILE_NAME!=null}" />  -->
+								</h:panelGroup></td>
+								<td></td>
+							</tr>
+
+							<tr>
+								<td><h:panelGroup id="FILE_UPLOAD_PANEL_1" rendered="true">
+								<!-- binding="#{PT_IL_SUB_STD_REG_ACTION_BEAN.COMP_UI_M_BUT_EMP_UPLOAD}" -->
+								
+								<!-- Changed to a4j button by Janani on 27.06.2017 for ZBILQC-1730077 -->
+								
+									<!-- <h:commandButton
+										
+										disabled="#{PT_IL_SUB_STD_REG_ACTION_BEAN.UPLOAD_DISABLE}"
+										id="UI_M_BUT_EMP_UPLOAD" rendered="true" style="width:90px"
+										styleClass="button"
+										action="#{PT_IL_SUB_STD_REG_ACTION_BEAN.uploadButtonAction}"
+										value="#{message_PILP232.PILP232$PT_IL_SUB_STD_REG$UI_M_BUT_EMP_UPLOAD$caption}">
+										
+									</h:commandButton> -->
+									<a4j:commandButton
+										
+										disabled="#{PT_IL_SUB_STD_REG_ACTION_BEAN.UPLOAD_DISABLE}"
+										id="UI_M_BUT_EMP_UPLOAD" rendered="true" style="width:90px"
+										styleClass="button"
+										actionListener="#{PT_IL_SUB_STD_REG_ACTION_BEAN.uploadButtonAction}"
+										value="#{message_PILP232.PILP232$PT_IL_SUB_STD_REG$UI_M_BUT_EMP_UPLOAD$caption}"
+										reRender="errorPanel,PW_GL_EMP_UPLOAD_DATA_GRID"
+										>
+										
+									</a4j:commandButton>
+									End
+									
+									<rich:spacer id="COMM_1" width="5px"> </rich:spacer>
+									<!-- <h:commandButton
+										binding="#{DUMMY_ACTION_BEAN.COMP_UI_M_BUT_MAIN}"
+										id="UI_M_BUT_MAIN" rendered="true" style="width:90px"
+										styleClass="button" value="Main"
+										action="#{DUMMY_ACTION_BEAN.mainButtonAction}">
+									</h:commandButton> -->
+								</h:panelGroup></td>
+								<td></td>
+							</tr>
+							<!-- Added by Janani on 27.06.2017 for ZBILQC-1730077 -->
+							
+							<tr>
+									<td></td>
+									<td valign="top"   >
+									<rich:separator width="99%" height="1px"/>
+										<rich:spacer height="20px"/>
+										<h:panelGroup id="FILE_UPLOAD_PANEL_2" rendered="true">
+										
+										<div id="progressbaree" class="loding_popup" style="position: fixed;
+    									background: rgba(255, 255, 255, 0.64);width: 100%;height: 100%;z-index: 999;top: 0;left: 0;display:none;">
+    												<img src="./../../resources/images/newloader.gif" width="4%" style="position: absolute;top: 50%;left: 50%;width:4%" />
+    									</div>
+										<!-- <rich:spacer height="20px" width="10px"/> -->
+								
+										<rich:spacer height="20px" width="200px"/>	
+										<h:panelGroup id="TOTAL_RECORDS" binding="#{PT_IL_SUB_STD_REG_ACTION_BEAN.COMP_TOTAL_RECORDS}" rendered="#{(PT_IL_SUB_STD_REG_ACTION_BEAN.subStdDataList!=null and PT_IL_SUB_STD_REG_ACTION_BEAN.subStdDataList.size()>0)?true:false}">								
+										<h:outputText id="TOTAL_NO_OF_RECORDS_LABEL" 
+										value="Total Uploaded Records : " styleClass="label" style="font-weight:bold;text-align:right"/>
+										<h:outputText id="TOTAL_NO_OF_RECORDS"
+											value="#{PT_IL_SUB_STD_REG_ACTION_BEAN.subStdDataList!=null?PT_IL_SUB_STD_REG_ACTION_BEAN.subStdDataList.size():0}"  styleClass="label" style="text-align:right"/>
+										</h:panelGroup>
+									
+										<rich:modalPanel id="BUT_EMPLOYEE_UPLOAD_modalPanel"
+											height="100" width="350">
+											<f:facet name="header">
+												<h:panelGroup id="BUT_EMPLOYEE_UPLOAD_MODALPANEL_HEADER_PANEL">
+													<!-- The Header for alert box -->
+													<h:outputText id="BUT_EMPLOYEE_UPLOAD_DIALOG_CAPTION"
+														value="#{message.EMPUPLOAD$MODAL_PANEL$USER_CONFIRMATION$EMPLOYEE_UPLOAD$title}" />
+												</h:panelGroup>
+											</f:facet>
+											<f:facet name="controls">
+												<h:panelGroup id="BUT_EMPLOYEE_UPLOAD_MODALPANEL_HEADER_CONTROL_PANEL">
+													<h:graphicImage value="./../../resources/images/close.png"
+														style="cursor:pointer" id="BUT_EMPLOYEE_UPLOAD_confirmationhidelink" />
+													<!--Hiding alert box on clicking close image-->
+													<rich:componentControl id="BUT_EMPLOYEE_UPLOAD_COMP_CNTRL"
+														for="BUT_EMPLOYEE_UPLOAD_modalPanel"
+														attachTo="BUT_EMPLOYEE_UPLOAD_confirmationhidelink"
+														operation="hide" event="onclick" />
+												</h:panelGroup>
+											</f:facet>
+											<!-- Message to be shown in the alert box -->
+											<table align="center">
+												<tr align="center">
+													<td><h:outputText
+														id="COMP_BUT_EMPLOYEE_UPLOAD_DIALOG_CAPTION"
+														value="#{message.EMPUPLOAD$MODAL_PANEL$USER_CONFIRMATION$EMPLOYEE_UPLOAD}" />
+													</td>
+												</tr>
+												<tr align="center">
+													<td>
+													<!-- The method to be called while clicking "Yes Button" and rerendering the required components-->
+													<h:commandButton
+														value="#{message.EMPUPLOAD$$MODAL_PANEL$USER_CONFIRMATION$BUTTON$YES$VALUE}"
+														id="BUT_EMPLOYEE_UPLOAD_confirmationYesButton"
+														styleClass="button" style="width:35px"
+														action="#{PT_IL_SUB_STD_REG_ACTION_BEAN.empUploadButtonAction}" 
+														onclick="document.getElementById('progressbaree').style.display='block'" >
+														<rich:componentControl
+															id="BUT_EMPLOYEE_UPLOAD_YESBUTTON_CONTROL"
+															for="BUT_EMPLOYEE_UPLOAD_modalPanel"
+															attachTo="BUT_EMPLOYEE_UPLOAD_confirmationYesButton"
+															operation="hide" event="onclick" />
+													</h:commandButton>
+													<rich:spacer width="10" height="25"></rich:spacer>
+													<!--The method to be called while clicking "NO Button" and rerendering the required components -->
+													<a4j:commandButton immediate="true" 
+														value="#{message.EMPUPLOAD$$MODAL_PANEL$USER_CONFIRMATION$BUTTON$NO$VALUE}"
+														id="BUT_EMPLOYEE_UPLOAD_confirmationNoButton"
+														styleClass="button" style="width:35px"
+														reRender="errorPanel">
+														<rich:componentControl
+															id="BUT_EMPLOYEE_UPLOAD_NOBUTTON_CONTROL"
+															for="BUT_EMPLOYEE_UPLOAD_modalPanel"
+															attachTo="BUT_EMPLOYEE_UPLOAD_confirmationNoButton"
+															operation="hide" event="onclick" />
+													</a4j:commandButton></td>
+												</tr>
+											</table>
+										</rich:modalPanel>
+										</h:panelGroup>
+										
+									</td>
+									<td></td>
+								</tr>
+							
+							<tr>
+							
+							
+							<td style=" width : 68px;"></td>
+							<td><!-- headers renamed by Ameen on 04-07-2017 for ZBILQC-1730634 -->
+							<rich:panel id="PT_IL_SUB_STD_REG_DATA_GRID_PANEL" style="width:99%">
+								<!-- <a4j:outputPanel id="myPanel" ajaxRendered="true"> -->
+												<rich:scrollableDataTable height="300px" width="800px" frozenColCount="1"
+													binding="#{PT_IL_SUB_STD_REG_ACTION_BEAN.dataTable}"
+													id="PW_GL_EMP_UPLOAD_DATA_GRID" rows="15"
+													value="#{PT_IL_SUB_STD_REG_ACTION_BEAN.subStdDataList}"
+													var="tableVar">
+													<!-- <rich:column 
+														id="STATUS_IMG">
+														<f:facet name="header">
+															<h:outputText
+																styleClass="forumRowHighlight"
+																value="STATUS" />
+														</f:facet>
+
+														<h:commandLink style="text-align: center;width: 100%;display: inline-block;"
+															action="#{PT_IL_SUB_STD_REG_ACTION_BEAN.getRowDetails}"															
+															id="GOTO_LINK_ERROR_FILES" immediate="true" rerender="errortable"  oncomplete="javascript:Richfaces.showModalPanel('panel');">
+															<h:graphicImage id="ERROR_LINK_IMG" styleClass="searchimg" 
+															binding="#{PT_IL_SUB_STD_REG_ACTION_BEAN.COMP_ERROR_IMG}"
+															rendered = "true"
+															value="#{tableVar.statusFlag == 'N' ? './../../resources/images/incorrect.png' : tableVar.statusFlag == 'X' ?'./../../resources/images/caution.gif':'./../../resources/images/correct.png'}"/>
+														</h:commandLink>
+													
+													</rich:column> -->
+													<rich:column filterBy="#{tableVar.PSSR_SURNAME}"
+														filterEvent="onkeyup" id="PSSR_SURNAME" rendered="true"
+														sortBy="#{tableVar.PSSR_SURNAME}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PSSR_SURNAME"
+																styleClass="forumRowHighlight"
+																value="SURNAME" />
+														</f:facet>
+
+															<h:outputText id="LINK_CAPTION_PSSR_SURNAME"
+																value="#{tableVar.PSSR_SURNAME}" />
+
+													</rich:column>
+													
+													<rich:column filterBy="#{tableVar.PSSR_FIRST_NAME}"
+														filterEvent="onkeyup" id="PSSR_FIRST_NAME"
+														rendered="true" sortBy="#{tableVar.PSSR_FIRST_NAME}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PSSR_FIRST_NAME"
+																styleClass="forumRowHighlight"
+																value="FIRST NAME" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PSSR_FIRST_NAME"
+															value="#{tableVar.PSSR_FIRST_NAME}" />
+													</rich:column>
+													
+													
+													<rich:column filterBy="#{tableVar.PSSR_NATIONAL_ID}"
+														filterEvent="onkeyup" id="PSSR_NATIONAL_ID"
+														rendered="true" sortBy="#{tableVar.PSSR_NATIONAL_ID}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PSSR_NATIONAL_ID"
+																styleClass="forumRowHighlight"
+																value="NATIONAL ID" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PSSR_NATIONAL_ID"
+															value="#{tableVar.PSSR_NATIONAL_ID}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PSSR_DOB}"
+														filterEvent="onkeyup" id="PSSR_DOB"
+														rendered="true" sortBy="#{tableVar.PSSR_DOB}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PSSR_DOB"
+																styleClass="forumRowHighlight"
+																value="DOB" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PSSR_DOB"
+															value="#{tableVar.PSSR_DOB}" >
+															<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+															</h:outputText>
+													</rich:column>
+													
+													<rich:column filterBy="#{tableVar.PSSR_OFCO}"
+														filterEvent="onkeyup" id="PSSR_OFCO"
+														rendered="true" sortBy="#{tableVar.PSSR_OFCO}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PSSR_OFCO"
+																styleClass="forumRowHighlight"
+																value="OFC0" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PSSR_OFCO"
+															value="#{tableVar.PSSR_OFCO}" />
+													</rich:column>
+													
+													<rich:column filterBy="#{tableVar.PSSR_DEC_DATE}"
+														filterEvent="onkeyup" id="PSSR_DEC_DATE"
+														rendered="true" sortBy="#{tableVar.PSSR_DEC_DATE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PSSR_DEC_DATE"
+																styleClass="forumRowHighlight"
+																value="DATE DECLARED" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PSSR_DEC_DATE"
+															value="#{tableVar.PSSR_DEC_DATE}" >
+															<f:convertDateTime type="date" pattern="dd/MM/yyyy"/>
+															</h:outputText>
+													</rich:column>
+													
+																						
+													
+													<rich:column filterBy="#{tableVar.PSSR_REFNO}"
+														filterEvent="onkeyup" id="PSSR_REFNO"
+														rendered="true" sortBy="#{tableVar.PSSR_REFNO}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PSSR_REFNO"
+															styleClass="forumRowHighlight"
+																value="REFNO" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PSSR_REFNO"
+															value="#{tableVar.PSSR_REFNO}" />
+													</rich:column>
+													
+													<rich:column filterBy="#{tableVar.PSSR_MEM_DTLS}"
+														filterEvent="onkeyup" id="PSSR_MEM_DTLS"
+														rendered="true" sortBy="#{tableVar.PSSR_MEM_DTLS}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PSSR_MEM_DTLS"
+																styleClass="forumRowHighlight"
+																value="MEMBER`S DETAILS" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PSSR_MEM_DTLS"
+															value="#{tableVar.PSSR_MEM_DTLS}" />
+													</rich:column>
+													
+													
+													<!--CHECKING  -->
+													
+													
+													
+													
+													
+												</rich:scrollableDataTable>
+												<!-- </a4j:outputPanel> -->
+											</rich:panel>
+							
+							
+							</td>
+							
+							
+							</tr>
+							
+							<!-- End -->
+							
+							
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="AUTOID_22" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_23" styleClass="searchimg"
+										value="./../../resources/images/save.gif" />
+									<h:outputText id="AUTOID_24"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink id="AUTOID_25" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage id="AUTOID_26" styleClass="searchimg"
+										value="./../../resources/images/savenext.GIF" />
+									<h:outputText id="AUTOID_27"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink id="AUTOID_28" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage id="AUTOID_29" styleClass="searchimg"
+										value="./../../resources/images/firstrec.gif" />
+									<h:outputText id="AUTOID_30"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink id="AUTOID_31" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage id="AUTOID_32" styleClass="searchimg"
+										value="./../../resources/images/prevpage.gif" />
+									<h:outputText id="AUTOID_33"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink id="AUTOID_34" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage id="AUTOID_35" styleClass="searchimg"
+										value="./../../resources/images/nextpage.gif" />
+									<h:outputText id="AUTOID_36"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink id="AUTOID_37" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage id="AUTOID_38" styleClass="searchimg"
+										value="./../../resources/images/lastRecord.gif" />
+									<h:outputText id="AUTOID_39"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

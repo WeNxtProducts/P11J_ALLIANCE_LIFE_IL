@@ -1,0 +1,1543 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Policy_review_sheet" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="40" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4c0780ae-ff27-481d-b15d-1047750f3923">
+	<property name="ireport.zoom" value="1.1269722013523664"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="122"/>
+	<subDataset name="COVER_CODE" uuid="90e899b6-9b3b-4660-8a7d-0faa84dbea02">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT COVER_DESC,
+       ROWNUM ANNEX_NO,
+       POAC_LC_SA,
+       BASIC_RATE,
+       POAC_PERIOD,
+       POAC_LC_PREM,
+       NVL(EMR_RATE,0) EMR_RATE,
+       PAY_YRS
+  FROM (SELECT COVER_DESC COVER_DESC,
+               QUOT_LC_SA POAC_LC_SA,
+               QUOT_BASIC_RATE BASIC_RATE,
+               QUOT_PERIOD POAC_PERIOD,
+               (QUOT_LC_PREM * (PMOP_RATE / PMOP_RATE_PER)) POAC_LC_PREM,
+               QUOT_EMR_RATE EMR_RATE,
+               QUOT_PREM_PAY_YRS PAY_YRS
+          FROM PW_IL_QUICK_QUOTE, PM_IL_COVER, PM_IL_PLAN_MOP
+         WHERE QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND COVER_CODE = QUOT_PLAN_CODE
+           AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+           AND PMOP_TYPE = QUOT_MOP
+        UNION ALL
+        SELECT COVER_DESC COVER_DESC,
+               QQAC_LC_SA POAC_LC_SA,
+               QQAC_RATE BASIC_RATE,
+               QQAC_PERIOD POAC_PERIOD,
+               (QQAC_PREM_LC * (PMOP_RATE / PMOP_RATE_PER)) POAC_LC_PREM,
+               QQAC_EMR_RATE EMR_RATE,
+               QQAC_PREM_PAY_YRS PAY_YRS
+          FROM PW_IL_QQUOT_APPL_COVER,
+               PM_IL_COVER,
+               PW_IL_QUICK_QUOTE,
+               PM_IL_PLAN_MOP
+         WHERE QQAC_QUOT_SYS_ID = QUOT_SYS_ID
+           AND QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND COVER_CODE = QQAC_COVER_CODE
+           AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+           AND PMOP_TYPE = QUOT_MOP)]]>
+		</queryString>
+		<field name="COVER_DESC" class="java.lang.String"/>
+		<field name="ANNEX_NO" class="java.math.BigDecimal"/>
+		<field name="POAC_LC_SA" class="java.math.BigDecimal"/>
+		<field name="BASIC_RATE" class="java.math.BigDecimal"/>
+		<field name="POAC_PERIOD" class="java.math.BigDecimal"/>
+		<field name="POAC_LC_PREM" class="java.math.BigDecimal"/>
+		<field name="EMR_RATE" class="java.math.BigDecimal"/>
+		<field name="PAY_YRS" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="TOTAL" uuid="9f49e0b5-e973-4467-b101-5131f9dcae03">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT SUM(POAC_LC_PREM) TOTAL_AMT
+  FROM (SELECT COVER_DESC,
+               ROWNUM ANNEX_NO,
+               POAC_LC_SA,
+               BASIC_RATE,
+               POAC_PERIOD,
+               NVL(POAC_LC_PREM,0)  POAC_LC_PREM
+          FROM (SELECT COVER_DESC      COVER_DESC,
+                       QUOT_LC_SA      POAC_LC_SA,
+                       QUOT_BASIC_RATE BASIC_RATE,
+                       QUOT_PERIOD     POAC_PERIOD,
+                       (QUOT_LC_PREM*(PMOP_RATE/PMOP_RATE_PER))    POAC_LC_PREM
+                  FROM PW_IL_QUICK_QUOTE, PM_IL_COVER, PM_IL_PLAN_MOP
+                 WHERE QUOT_SYS_ID = $P{QUOT_SYS_ID}
+                   AND COVER_CODE = QUOT_PLAN_CODE
+                   AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+                   AND PMOP_TYPE = QUOT_MOP
+                UNION ALL
+                SELECT COVER_DESC   COVER_DESC,
+                       QQAC_LC_SA   POAC_LC_SA,
+                       QQAC_RATE    BASIC_RATE,
+                       QQAC_PERIOD  POAC_PERIOD,
+                       (QQAC_PREM_LC*(PMOP_RATE/PMOP_RATE_PER)) POAC_LC_PREM
+                  FROM PW_IL_QQUOT_APPL_COVER, PM_IL_COVER, PW_IL_QUICK_QUOTE, PM_IL_PLAN_MOP
+                 WHERE QQAC_QUOT_SYS_ID = QUOT_SYS_ID
+                   AND QUOT_SYS_ID =$P{QUOT_SYS_ID}
+                   AND COVER_CODE = QQAC_COVER_CODE
+                   AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+                   AND PMOP_TYPE = QUOT_MOP))]]>
+		</queryString>
+		<field name="TOTAL_AMT" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset1" uuid="4099de20-0def-4577-a9d1-8f1432ae57b4"/>
+	<subDataset name="dataset2" uuid="ff20fe28-f49c-4d17-961c-2d1185e5b2f3"/>
+	<subDataset name="dataset3" uuid="fa41492c-0812-4abf-bf7f-064bf19ccfe8"/>
+	<subDataset name="dataset4" uuid="03c7eb90-e1d4-417a-9acf-4e54baedc70c"/>
+	<subDataset name="INST_PREMIUM" uuid="dbe10151-b016-44d9-a9e7-a4c819d61800">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT SUM(TOT_PREM)
+  FROM (SELECT SUM(ROUND(NVL(QUOT_LC_PREM, 0) * (PMOP_RATE / PMOP_RATE_PER),
+                         CURR_DECIMAL)) TOT_PREM
+          FROM PW_IL_QUICK_QUOTE, PM_IL_PLAN_MOP, PM_CURRENCY
+         WHERE QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+           AND PMOP_TYPE = QUOT_MOP
+           AND NVL(QUOT_CUST_CURR_CODE, '001') = CURR_CODE
+        UNION ALL
+        SELECT SUM(ROUND(NVL(QQAC_PREM_LC, 0) * (PMOP_RATE / PMOP_RATE_PER),
+                         CURR_DECIMAL)) TOT_PREM
+          FROM PW_IL_QQUOT_APPL_COVER,
+               PW_IL_QUICK_QUOTE,
+               PM_IL_PLAN_MOP,
+               PM_CURRENCY
+         WHERE QQAC_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND QUOT_SYS_ID = QQAC_QUOT_SYS_ID
+           AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+           AND PMOP_TYPE = QUOT_MOP
+           AND NVL(QUOT_CUST_CURR_CODE, '001') = CURR_CODE
+        UNION ALL
+        SELECT SUM(ROUND(NVL(QQAC_FC_CHRG_AMT, 0), CURR_DECIMAL)) TOT_PREM
+          FROM PW_IL_QQUOT_APPL_CHARGE, PW_IL_QUICK_QUOTE, PM_CURRENCY
+         WHERE QQAC_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND QQAC_QUOT_SYS_ID = QUOT_SYS_ID
+           AND QQAC_APPLIED_ON = '5'
+           AND QQAC_APPLY_PERIOD = 'P'
+           AND NVL(QUOT_CUST_CURR_CODE, '001') = CURR_CODE
+        UNION ALL
+        SELECT SUM(ROUND(NVL(QQAC_FC_CHRG_AMT, 0) *
+                         (PMOP_RATE / PMOP_RATE_PER),
+                         CURR_DECIMAL)) TOT_PREM
+          FROM PW_IL_QQUOT_APPL_CHARGE,
+               PW_IL_QUICK_QUOTE,
+               PM_IL_PLAN_MOP,
+               PM_CURRENCY
+         WHERE QQAC_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND QQAC_QUOT_SYS_ID = QUOT_SYS_ID
+           AND QQAC_APPLIED_ON <> '5'
+           AND QQAC_APPLY_PERIOD = 'P'
+           AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+           AND PMOP_TYPE = QUOT_MOP
+           AND NVL(QUOT_CUST_CURR_CODE, '001') = CURR_CODE
+        UNION ALL
+        SELECT SUM(ROUND(NVL(QQDL_LC_DISC_LOAD_AMT, 0) *
+                         (PMOP_RATE / PMOP_RATE_PER),
+                         CURR_DECIMAL)) TOT_PREM
+          FROM PW_IL_QQUOT_DISC_LOAD,
+               PW_IL_QUICK_QUOTE,
+               PM_IL_PLAN_MOP,
+               PM_CURRENCY
+         WHERE QQDL_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND QQDL_DISC_LOAD_TYPE = 'L'
+           AND QQDL_QUOT_SYS_ID = QUOT_SYS_ID
+           AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+           AND PMOP_TYPE = QUOT_MOP
+           AND NVL(QUOT_CUST_CURR_CODE, '001') = CURR_CODE
+        UNION ALL
+        SELECT SUM(ROUND(NVL(QQAC_FC_CHRG_AMT, 0), CURR_DECIMAL)) TOT_PREM
+          FROM PW_IL_QQUOT_APPL_CHARGE,
+               PW_IL_QUICK_QUOTE,
+               PM_IL_PLAN_MOP,
+               PM_CURRENCY
+         WHERE QQAC_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND QQAC_QUOT_SYS_ID = QUOT_SYS_ID
+           AND QQAC_APPLY_PERIOD = 'S'
+           AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+           AND PMOP_TYPE = QUOT_MOP
+           AND NVL(QUOT_CUST_CURR_CODE, '001') = CURR_CODE)
+MINUS
+SELECT SUM(NVL(QQDL_LC_DISC_LOAD_AMT, 0) * (PMOP_RATE / PMOP_RATE_PER)) DISC_AMT
+  FROM PW_IL_QQUOT_DISC_LOAD,
+       PW_IL_QUICK_QUOTE,
+       PM_IL_PLAN_MOP,
+       PM_CURRENCY
+ WHERE QQDL_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+   AND QQDL_QUOT_SYS_ID = QUOT_SYS_ID
+   AND QQDL_DISC_LOAD_TYPE = 'D'
+   AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+   AND PMOP_TYPE = QUOT_MOP
+   AND NVL(QUOT_CUST_CURR_CODE, '001') = CURR_CODE]]>
+		</queryString>
+		<field name="SUM(TOT_PREM)" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset5" uuid="efd07989-bdaa-4e5d-9cfe-9e1bfd496f1a"/>
+	<subDataset name="dataset6" uuid="68639180-ebc9-4cf6-9e0f-a4dc61ec3b74"/>
+	<subDataset name="dataset7" uuid="017c9c2b-ebf5-46aa-a98f-0e17abfc4d85"/>
+	<subDataset name="dataset8" uuid="75efca48-12df-4fd3-a348-9cb52cab6bb2"/>
+	<subDataset name="dataset9" uuid="0ba6c4cf-3b04-4c13-b273-6feb54fa48d6"/>
+	<subDataset name="dataset10" uuid="25c1a716-ce02-4dc3-a3e2-cf27084883d8"/>
+	<subDataset name="EMR DEATH" uuid="bb17c57d-4119-43ed-8e4f-775f45257bd0">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT QQDL_RATE
+  FROM PW_IL_QQUOT_DISC_LOAD,PW_IL_QUICK_QUOTE
+ WHERE QQDL_QUOT_SYS_ID = $P{QUOT_SYS_ID} AND QUOT_SYS_ID = QQDL_QUOT_SYS_ID
+   AND QQDL_DISC_LOAD_CODE = 'EMR-DEATH'
+   AND QQDL_COVER_CODE = QUOT_PLAN_CODE]]>
+		</queryString>
+		<field name="QQDL_RATE" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset11" uuid="d783df70-6e8c-45f6-9fd5-08277b98f1fb"/>
+	<subDataset name="dataset12" uuid="b9a4f1b8-095b-435a-8d80-35abe5968a85"/>
+	<subDataset name="EMR_PTD" uuid="46b6191a-542a-46fa-920d-baa1c617ea9a">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT QQDL_RATE
+  FROM PW_IL_QQUOT_DISC_LOAD
+ WHERE QQDL_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+   AND QQDL_DISC_LOAD_CODE = 'EMR-PTD']]>
+		</queryString>
+		<field name="QQDL_RATE" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset13" uuid="e3f38379-b466-4d68-a4b5-9be776574a6e"/>
+	<subDataset name="EMR_PPD" uuid="af2ea96f-1715-40e8-afb1-2d3821bbdac1">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT QQDL_RATE
+          FROM PW_IL_QQUOT_DISC_LOAD
+         WHERE QQDL_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND QQDL_DISC_LOAD_CODE = 'EMR-PPD']]>
+		</queryString>
+		<field name="QQDL_RATE" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset14" uuid="b6ef1a61-3013-488a-86b5-f9c71f9ceb85"/>
+	<subDataset name="COM_REDUCED" uuid="4d448c7d-b0e7-48a4-b9a4-b132e48012e3">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT NVL(QQDL_RATE,0)
+          FROM PW_IL_QQUOT_DISC_LOAD
+         WHERE QQDL_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND QQDL_DISC_LOAD_CODE = 'DIS-COMM']]>
+		</queryString>
+		<field name="NVL(QQDL_RATE,0)" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset15" uuid="122ffba0-5e67-499c-988d-68b3e29af5a7"/>
+	<subDataset name="dataset16" uuid="50831335-e416-4d40-8280-d76844e63d8b"/>
+	<subDataset name="dataset17" uuid="71cde504-52c1-4e97-9171-bc3e351cf7a6"/>
+	<subDataset name="dataset18" uuid="dafe2640-df7f-4419-bd78-243d66737750"/>
+	<subDataset name="dataset19" uuid="97f14b27-1b10-465b-9cb1-7c18953ea209"/>
+	<subDataset name="MIN_PREMIUM" uuid="2497ba70-0cd6-40d2-87b7-2a481fa8d71c">
+		<parameter name="PROD_CODE" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="QUOT_MOP" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="TERM" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT LENGTH(PPL_LC_MIN_PREM) LEN,nvl(PPL_LC_MIN_PREM,0) PPL_LC_MIN_PREM
+  FROM PM_IL_PROD_PREM_LIMIT
+ WHERE PPL_PROD_CODE = $P{PROD_CODE}
+  AND PPL_MODE_OF_PYMT =$P{QUOT_MOP}
+  AND $P{TERM} BETWEEN PPL_FM_TERM AND PPL_TO_TERM]]>
+		</queryString>
+		<field name="LEN" class="java.math.BigDecimal"/>
+		<field name="PPL_LC_MIN_PREM" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset20" uuid="36bbe93b-399e-4ca3-978b-2602dc11be1f"/>
+	<subDataset name="FIC_CHARGE_CODE" uuid="40dc5776-6afb-4814-a0fc-49c829c38478">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT QQDL_RATE
+          FROM PW_IL_QQUOT_DISC_LOAD
+         WHERE QQDL_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+           AND QQDL_DISC_LOAD_CODE = 'FIC-LOAD']]>
+		</queryString>
+		<field name="QQDL_RATE" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset21" uuid="178a4e0f-2b4a-426f-b6bb-78233a78185a"/>
+	<subDataset name="dataset22" uuid="634f861f-4d1b-42ea-8b5f-6a12b698c4d1"/>
+	<subDataset name="dataset23" uuid="83e3155b-71ee-46da-96e4-2a561f9d7a84"/>
+	<parameter name="QUOT_IDX_NO" class="java.lang.String"/>
+	<parameter name="QUOT_SYS_ID" class="java.lang.String"/>
+	<parameter name="PROD_CODE" class="java.lang.String"/>
+	<parameter name="USERNAME" class="java.lang.String"/>
+	<parameter name="COMMVALUE" class="java.lang.Double"/>
+	<parameter name="QUOT_MOP" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT TERM,
+       FREQUENCY,
+       QUOT_NO,
+       RISK_DATE,
+       QUOT_FM_DT,
+       PROD_NAME,
+       PROPOSER_NAME,
+       QQAD_HEIGHT,
+       QQAD_WEIGHT,
+       QQAD_BMI,
+       QQAD_ASSR_DOB,
+       concat(QQAD_AGE,' Years') QQAD_AGE,
+       QQAD_CATG_CODE,
+       ASSIGNEE_NAME,
+       BANK_BRANCH,
+       NVL(BASIC_SA, 0) BASIC_SA,
+       NVL(BASIC_PREM, 0) BASIC_PREM,
+       NVL(BASIC_RATE, 0) BASIC_RATE,
+       NVL(QUOT_FEES, 0) QUOT_FEES,
+       NVL(INSU_FEES, 0) INSU_FEES,
+       NVL(TOT_LOAD, 0) TOT_LOAD,
+       NVL(TOT_DISC, 0) TOT_DISC,
+       QUOT_CR_UID,
+       QUOT_UPD_UID,
+       QUOT_AGENT_CODE,
+       QUOT_SO_CODE,
+       QUOT_SM_CODE,
+       QUOT_CR_UID,
+       QUOT_MOP,
+       QUOT_PROD_CODE,
+       DECODE(QUOT_MED_YN, 'Y', 'Yes', 'No') QUOT_MED_YN,
+       NVL(QUOT_COMM_RATE, 0) QUOT_COMM_RATE,
+       NVL(QUOT_COMM_VALUE, 0) QUOT_COMM_VALUE
+  FROM (SELECT QUOT_PERIOD TERM,
+               DECODE(QUOT_MOP,
+                      'M',
+                      'MONTHLY',
+                      'Q',
+                      'QUARTERLY',
+                      'H',
+                      'HALF-YEARLY',
+                      'Y',
+                      'YEARLY',
+                      'SINGLE') FREQUENCY,
+               QUOT_NO,
+               QUOT_ISS_DT RISK_DATE,
+               QUOT_FM_DT,
+               (SELECT PROD_DESC
+                  FROM PM_IL_PRODUCT
+                 WHERE PROD_CODE = QUOT_PROD_CODE) PROD_NAME,
+               (QUOT_CUST_NAME||' '||QUOT_CUST_SURNAME) PROPOSER_NAME,
+               QQAD_HEIGHT,
+               QQAD_WEIGHT,
+               QQAD_BMI,
+               QQAD_ASSR_DOB,
+               QQAD_AGE,
+               QQAD_CATG_CODE,
+               QUOT_BANK_DIVN BANK_BRANCH,
+               QUOT_FC_SA BASIC_SA,
+               QUOT_LC_PREM BASIC_PREM,
+               QUOT_BASIC_RATE BASIC_RATE,
+               (SELECT SUM(QQAC_LC_CHRG_AMT)
+                  FROM PW_IL_QQUOT_APPL_CHARGE, PM_IL_PLAN_MOP
+                 WHERE QQAC_QUOT_SYS_ID = QUOT_SYS_ID
+                   AND QQAC_APPLIED_ON = '5'
+                   AND QQAC_APPLY_PERIOD = 'P'
+                   AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+                   AND PMOP_TYPE = QUOT_MOP) QUOT_FEES,
+               (SELECT SUM(QQAC_FC_CHRG_AMT * (PMOP_RATE / PMOP_RATE_PER))
+                  FROM PW_IL_QQUOT_APPL_CHARGE, PM_IL_PLAN_MOP
+                 WHERE QQAC_QUOT_SYS_ID = QUOT_SYS_ID
+                   AND QQAC_APPLIED_ON <> '5'
+                   AND QQAC_APPLY_PERIOD = 'P'
+                   AND PMOP_PLAN_CODE = QUOT_PLAN_CODE
+                   AND PMOP_TYPE = QUOT_MOP)  INSU_FEES,
+               (SELECT SUM(QQDL_LC_DISC_LOAD_AMT)
+                  FROM PW_IL_QQUOT_DISC_LOAD
+                 WHERE QQDL_QUOT_SYS_ID = QUOT_SYS_ID
+                   AND QQDL_DISC_LOAD_TYPE = 'L') TOT_LOAD,
+               (SELECT SUM(QQDL_LC_DISC_LOAD_AMT)
+                  FROM PW_IL_QQUOT_DISC_LOAD
+                 WHERE QQDL_QUOT_SYS_ID = QUOT_SYS_ID
+                   AND QQDL_DISC_LOAD_TYPE = 'D') TOT_DISC,
+               QUOT_BANK_CODE ASSIGNEE_NAME,
+               (SELECT BAD_ACNT_NO
+                  FROM FM_BANK_ACNT_DETAIL
+                 WHERE BAD_BANK_CODE = QUOT_BANK_CODE
+                   AND BAD_CURR_CODE = '001') ACNT_NO,
+               QUOT_CR_UID,
+               QUOT_UPD_UID,
+               (SELECT QUOT_SRC_CODE
+                  FROM PW_IL_QUICK_QUOTE
+                 WHERE QUOT_SYS_ID = QQAD_QUOT_SYS_ID) QUOT_AGENT_CODE,
+               QUOT_SO_CODE,
+               QUOT_SM_CODE,
+               QUOT_MOP,
+               QUOT_PROD_CODE,
+               QUOT_MED_YN,
+               QUOT_COMM_RATE,
+               (SELECT (QUOT_COMM_VALUE * (PMOP_RATE / PMOP_RATE_PER))
+                  FROM PM_IL_PLAN_MOP
+                 WHERE PMOP_PLAN_CODE = QUOT_PLAN_CODE
+                   AND PMOP_TYPE = QUOT_MOP) QUOT_COMM_VALUE
+          FROM PW_IL_QUICK_QUOTE, PW_IL_QQUOT_ASSURED_DTLS
+         WHERE QQAD_QUOT_SYS_ID = QUOT_SYS_ID
+          AND QUOT_IDX_NO = $P{QUOT_IDX_NO}
+           AND QUOT_SYS_ID = $P{QUOT_SYS_ID})
+ WHERE 1 = 1]]>
+	</queryString>
+	<field name="TERM" class="java.math.BigDecimal"/>
+	<field name="FREQUENCY" class="java.lang.String"/>
+	<field name="QUOT_NO" class="java.lang.String"/>
+	<field name="RISK_DATE" class="java.sql.Timestamp"/>
+	<field name="QUOT_FM_DT" class="java.sql.Timestamp"/>
+	<field name="PROD_NAME" class="java.lang.String"/>
+	<field name="PROPOSER_NAME" class="java.lang.String"/>
+	<field name="QQAD_HEIGHT" class="java.math.BigDecimal"/>
+	<field name="QQAD_WEIGHT" class="java.math.BigDecimal"/>
+	<field name="QQAD_BMI" class="java.math.BigDecimal"/>
+	<field name="QQAD_ASSR_DOB" class="java.sql.Timestamp"/>
+	<field name="QQAD_AGE" class="java.lang.String"/>
+	<field name="QQAD_CATG_CODE" class="java.lang.String"/>
+	<field name="ASSIGNEE_NAME" class="java.lang.String"/>
+	<field name="BANK_BRANCH" class="java.lang.String"/>
+	<field name="BASIC_SA" class="java.math.BigDecimal"/>
+	<field name="BASIC_PREM" class="java.math.BigDecimal"/>
+	<field name="BASIC_RATE" class="java.math.BigDecimal"/>
+	<field name="QUOT_FEES" class="java.math.BigDecimal"/>
+	<field name="INSU_FEES" class="java.math.BigDecimal"/>
+	<field name="TOT_LOAD" class="java.math.BigDecimal"/>
+	<field name="TOT_DISC" class="java.math.BigDecimal"/>
+	<field name="QUOT_CR_UID" class="java.lang.String"/>
+	<field name="QUOT_UPD_UID" class="java.lang.String"/>
+	<field name="QUOT_AGENT_CODE" class="java.lang.String"/>
+	<field name="QUOT_SO_CODE" class="java.lang.String"/>
+	<field name="QUOT_SM_CODE" class="java.lang.String"/>
+	<field name="QUOT_MOP" class="java.lang.String"/>
+	<field name="QUOT_PROD_CODE" class="java.lang.String"/>
+	<field name="QUOT_MED_YN" class="java.lang.String"/>
+	<field name="QUOT_COMM_RATE" class="java.math.BigDecimal"/>
+	<field name="QUOT_COMM_VALUE" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="70">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 ? false:true]]></printWhenExpression>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="214" splitType="Stretch">
+			<staticText>
+				<reportElement x="9" y="1" width="230" height="18" uuid="140f8150-8d98-4c8b-8a5d-250519ad07d5"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Calibri" size="13" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Life Division: Quick Quote Review Slip]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="0" width="38" height="18" uuid="b38d7f4b-4668-4b17-912a-567192991c28"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Calibri" size="13" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="20" width="89" height="18" uuid="c17cae97-f6f1-4101-be21-08183bee27b5"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Agent Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="38" width="89" height="18" uuid="41098a60-3ab3-4c4b-989c-f26c125bb79e"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[SO Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="56" width="89" height="17" uuid="225d2b94-4dda-4e1d-b69e-738cf1795f19"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[SM Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="74" width="89" height="18" uuid="3295e671-40e8-4ae9-8dbb-27400d763787"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Proposer Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="92" width="89" height="18" uuid="22983926-48d6-4213-affe-39a97f96440d"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Life Proposed]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="110" width="89" height="18" uuid="6e359dde-6850-4431-8b5b-df97e56063e0"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Date of Birth]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="128" width="89" height="18" uuid="cfda62cd-7b33-4ff1-b29d-0bd47dae2c32"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Age(NBD)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="20" width="89" height="18" uuid="a5965dc5-c250-48c4-97d0-a84a1bf928a7"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Product]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="38" width="89" height="18" uuid="e6b65811-1bd5-48b6-953e-8751e8b961b7"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Quote No.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="56" width="90" height="17" uuid="9199d8f0-ac7f-4ac0-a271-4a7f3b86bbb8"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Quote Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="73" width="89" height="19" uuid="efa460ab-34c1-4cfd-b916-a12611aac4b7"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Risk Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="92" width="89" height="18" uuid="ec5b87ef-902b-49b4-a449-42008ebdd305"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Term]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="146" width="89" height="17" uuid="9e999c42-2bd1-4b4e-9869-9cfa449c43db"/>
+				<box leftPadding="3">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Bank]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="110" width="89" height="18" uuid="4e92a79f-9d06-4991-9076-efaf3c266ea2"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Frequency]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="176" width="99" height="18" uuid="f64a526e-5e56-4153-8705-f7f99a74bd96"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Annual Gross Rate]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="464" y="176" width="64" height="18" uuid="0d1ec80f-a431-4e80-8caf-aa61351683af"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Premium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="128" width="89" height="18" uuid="71b14a32-be51-4900-8311-df20711054d8"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Branch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="176" width="117" height="18" uuid="4cc2b2af-3af3-4b2d-a049-636fe075f652"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Cover Description]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="128" y="176" width="83" height="18" uuid="a839d764-cfa9-40dd-b8cb-867a42c587ce"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Sum Assured]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="363" y="176" width="55" height="18" uuid="bd32ed1f-ea49-49a3-a1c1-f49e01897839"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Term]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="270" y="146" width="89" height="17" uuid="11674015-3872-4d42-9d1d-66fb77c20016"/>
+				<box leftPadding="3">
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Category]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="146" width="167" height="17" uuid="11f48f1e-2b15-4566-bcf7-669a1414008d"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="474" y="2" width="65" height="18" uuid="9e5a737c-5ec3-406b-a8a4-9e12f4307bbb"/>
+				<textElement>
+					<font fontName="Calibri" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="38" width="170" height="18" uuid="bb8c527c-fe2f-4f02-9db7-432c4d6e77b6"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_SO_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="56" width="170" height="17" uuid="953b0b15-b5b8-4ecf-9f5e-34bf75e71be7"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_SM_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="73" width="170" height="19" uuid="16a1b9a5-a2c8-4c8a-bfd6-4d9b97e2c4f4"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROPOSER_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="92" width="170" height="18" uuid="684f061f-0a0e-477c-86d3-6673ca0982ca"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROPOSER_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="128" width="170" height="18" uuid="d5a33e34-2079-4d30-8f7e-7ac481bfc1a6"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QQAD_AGE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="360" y="38" width="167" height="18" uuid="92e90daf-0e8a-4d2b-b99f-3127c661c55d"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_NO}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="360" y="73" width="167" height="19" uuid="e3d3b4ef-757c-4697-9e72-a2d20f91a850"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{RISK_DATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="360" y="92" width="167" height="18" uuid="f60e1f0d-a5b6-43d2-938b-cdab5a5640a5"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TERM}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="360" y="128" width="167" height="18" uuid="c2b85826-76e2-442a-935d-eacedcb5c2ed"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BANK_BRANCH}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="10" y="194" width="519" height="20" uuid="1090a8a8-2355-443a-a496-02e72ac9e5af"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="COVER_CODE" uuid="fa6d6d86-3a68-46a4-aca1-71436b9a89f7">
+						<datasetParameter name="QUOT_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{QUOT_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="519">
+						<textField isBlankWhenNull="true">
+							<reportElement x="1" y="0" width="117" height="20" uuid="cceca274-29bd-4914-a95d-ee194c9291ac"/>
+							<box leftPadding="2">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri" isBold="false"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{COVER_DESC}]]></textFieldExpression>
+						</textField>
+						<textField pattern="" isBlankWhenNull="true">
+							<reportElement x="118" y="0" width="83" height="20" uuid="c721fb7e-fdb6-4e01-afc2-c07fca0d66a2"/>
+							<box leftPadding="0" rightPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri" isBold="false"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POAC_LC_SA}]]></textFieldExpression>
+						</textField>
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="201" y="0" width="99" height="20" uuid="0965d562-2834-4a1b-b1f0-16a2223e2ff5"/>
+							<box leftPadding="0" rightPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri" isBold="false"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{BASIC_RATE}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="353" y="0" width="55" height="20" uuid="f20f688c-db4a-48c2-a071-fdc44ef677d6"/>
+							<box leftPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font fontName="Calibri" isBold="false"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POAC_PERIOD}]]></textFieldExpression>
+						</textField>
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="454" y="0" width="64" height="20" uuid="77b30fc8-624d-405f-985b-22d5a41cfc8d"/>
+							<box leftPadding="0" rightPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri" isBold="false"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POAC_LC_PREM}]]></textFieldExpression>
+						</textField>
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="409" y="0" width="45" height="20" uuid="4f654b9b-1144-4038-bf68-441e030cdb7a"/>
+							<box leftPadding="10" rightPadding="4">
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{EMR_RATE}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="301" y="0" width="53" height="20" uuid="ed79caf6-d490-40a7-817e-1419f84287bd"/>
+							<box>
+								<bottomPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Top">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PAY_YRS}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField isBlankWhenNull="true">
+				<reportElement x="360" y="110" width="167" height="18" uuid="f039c4ec-5b89-4edb-8807-95d717048d8b"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FREQUENCY}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="146" width="170" height="17" uuid="b810bb61-af38-442c-859a-30c7734ac9ee"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ASSIGNEE_NAME}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="100" y="110" width="170" height="18" uuid="3cf9d441-8fc7-45c7-ae62-7811022546ae"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QQAD_ASSR_DOB}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="360" y="56" width="167" height="17" uuid="a1011290-07da-49db-aaac-b6ed0c439ec2"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_FM_DT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="360" y="20" width="167" height="18" uuid="0b989622-e202-494e-82eb-c694ff5362ff"/>
+				<box leftPadding="4" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROD_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="100" y="20" width="170" height="18" uuid="fd744f93-92ad-42a5-a8da-6065ad9db3f3"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_AGENT_CODE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="176" width="53" height="18" uuid="bb460a90-e658-499b-8296-56393ee3f685"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Paying Yrs]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="418" y="176" width="46" height="18" uuid="f6373e02-47a2-4081-b062-fde72b0285e1"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EMR %]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="360" y="146" width="167" height="17" uuid="b96b950b-efd3-46e9-b1cd-59e08267f96d"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QQAD_CATG_CODE}.equals("1")?"Male":"Female"]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="207">
+			<staticText>
+				<reportElement x="15" y="101" width="106" height="17" uuid="162799d6-45c9-4e2a-94aa-338057da75a7"/>
+				<box topPadding="0" leftPadding="3" bottomPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Calibri" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Height:in Cm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="447" y="171" width="89" height="21" uuid="3a4d36d0-b9bb-4030-8b5f-8bcc2003b11f"/>
+				<box leftPadding="3" rightPadding="3"/>
+				<textElement>
+					<font fontName="Calibri" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Approved by,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="246" y="101" width="89" height="17" uuid="eaba7641-7560-4f39-a052-63e62c6b2438"/>
+				<box leftPadding="3" bottomPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[BMI]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="171" width="91" height="21" uuid="487d13ef-1bad-40be-ac8a-92bc4854cc14"/>
+				<box leftPadding="3" rightPadding="3">
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Prepared by]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="101" width="52" height="17" uuid="16f63516-8721-42df-b5e7-5e82170fc763"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Calibri" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Weight:Kg]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="15" y="118" width="106" height="20" uuid="d256a540-d7e9-4b15-906d-de5489678d60"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Commission reduced %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="153" width="91" height="18" uuid="e1a7c43e-f924-4bf4-a567-487976a65b0e"/>
+				<box leftPadding="3" rightPadding="3">
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Underwriter]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="101" width="80" height="17" uuid="adb08f55-4dac-4612-8228-14e4593c37e5"/>
+				<box leftPadding="2">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Medical Reports]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="159" y="118" width="52" height="20" uuid="120e6902-325e-400e-be38-fc0dbc761969"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[FIC Charges add]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="121" y="101" width="38" height="17" uuid="9ddbe442-526e-40fa-bc55-28a447b85048"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QQAD_HEIGHT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="211" y="101" width="35" height="17" uuid="4b10d9e8-33ce-497e-9c5e-d5041be439d2"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QQAD_WEIGHT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="335" y="101" width="44" height="17" uuid="03865deb-1e37-4604-a51c-04fe22206c76"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QQAD_BMI}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="310" y="18" width="108" height="18" uuid="5d466a89-ebe9-480d-881a-abeab200f9ef"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Insurance Fee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="72" width="108" height="19" uuid="546aedc8-b597-48a6-9c4d-19844b7a1c4a"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Minimum premium RO ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="36" width="108" height="18" uuid="64939e00-509a-4828-9cb0-590d526df3ba"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Policy fee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="54" width="108" height="18" uuid="11eb1555-c912-4607-aef9-5475de969eba"/>
+				<box leftPadding="2">
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Installment Premium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="310" y="0" width="108" height="18" uuid="38dd8ed3-5d53-4a64-b4d5-4dba00774c64"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10" isBold="false" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Total Premium]]></text>
+			</staticText>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="418" y="18" width="110" height="18" uuid="a113a24d-1cb5-4b0c-ae3f-1b9ad36606bf"/>
+				<box rightPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{INSU_FEES}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="418" y="0" width="121" height="18" uuid="39a770f1-f452-4715-9764-bd77c38971bf"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="TOTAL" uuid="42cd7c70-8e2a-4292-80d6-d6674d33ca18">
+						<datasetParameter name="QUOT_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{QUOT_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="18" width="121">
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="110" height="18" uuid="a62ced7f-7ac6-4786-806d-6ca9c5fe8c0d"/>
+							<box rightPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri" isBold="false"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{TOTAL_AMT}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField isBlankWhenNull="true">
+				<reportElement x="21" y="188" width="104" height="19" uuid="5aad09f0-48bd-4f5c-ac13-ebf33ed25abe"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_CR_UID}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="447" y="190" width="94" height="17" uuid="4beded27-5e0a-4dea-a169-a7d5b5f02e49"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{USERNAME}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="121" y="118" width="38" height="20" uuid="128d9039-1ea7-4ccc-9637-3dafc69c72a6"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="COM_REDUCED" uuid="e2784c74-32c8-45f7-b722-ca39c20ddfc5">
+						<datasetParameter name="QUOT_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{QUOT_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="38">
+						<textField>
+							<reportElement x="0" y="0" width="38" height="20" uuid="71671885-7a9a-44a9-a229-b2e9a0359e31"/>
+							<box leftPadding="3">
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{NVL(QQDL_RATE,0)}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="211" y="118" width="38" height="20" uuid="14294cff-678f-495a-9d1a-48e526a4fabb"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="FIC_CHARGE_CODE" uuid="fbcdcbd7-76dc-436a-92c0-ff5338bd9a9b">
+						<datasetParameter name="QUOT_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{QUOT_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="20" width="38">
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="35" height="20" uuid="969d8834-224a-41ad-92c2-3e115c8e4fe4"/>
+							<box leftPadding="3">
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement verticalAlignment="Middle">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{QQDL_RATE}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="418" y="54" width="114" height="18" uuid="278392b2-9de1-4efb-80d3-2e54c0ad90e2"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="INST_PREMIUM" uuid="78cecce2-2cd7-4734-825c-979334e9df86">
+						<datasetParameter name="QUOT_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{QUOT_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="18" width="114">
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="110" height="18" uuid="ea06fe13-1293-486a-ba99-c1d8d66f0411"/>
+							<box rightPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{SUM(TOT_PREM)}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="246" y="118" width="89" height="20" uuid="52288ed1-2d3e-47f1-8734-bc8ebc332c24"/>
+				<box leftPadding="3" rightPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Commission Rate %]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="379" y="118" width="80" height="20" uuid="8da7137c-1ee8-4ff5-876b-ca754fbf6271"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Commission value]]></text>
+			</staticText>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="459" y="118" width="73" height="20" uuid="399d2912-624b-47b1-a9e3-d346b5e74c12"/>
+				<box leftPadding="10" rightPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_COMM_VALUE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.0" isBlankWhenNull="true">
+				<reportElement x="335" y="118" width="44" height="20" uuid="8d08df41-b056-41f5-be3c-24f08581cf46"/>
+				<box leftPadding="10" rightPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_COMM_RATE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="459" y="101" width="73" height="17" uuid="ff396627-5dab-4361-b1c3-8745b86068b1"/>
+				<box leftPadding="3">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_MED_YN}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="418" y="72" width="114" height="19" uuid="567e0bd9-05d2-4a54-8d08-c72299a2c075"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="MIN_PREMIUM" uuid="5dfec042-22e8-4e03-b948-2ed7c9d579b2">
+						<datasetParameter name="PROD_CODE">
+							<datasetParameterExpression><![CDATA[$P{PROD_CODE}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="QUOT_MOP">
+							<datasetParameterExpression><![CDATA[$P{QUOT_MOP}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="TERM">
+							<datasetParameterExpression><![CDATA[$F{TERM}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="19" width="114">
+						<textField pattern="###0.000;###0.000-" isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="110" height="19" uuid="feffaea3-0b34-491e-95a4-c2378832c78f"/>
+							<box rightPadding="5">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PPL_LC_MIN_PREM}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField pattern="###0.000;###0.000" isBlankWhenNull="true">
+				<reportElement x="418" y="36" width="110" height="18" uuid="20fae3b3-9462-429b-9dec-5e29d068a4c5"/>
+				<box rightPadding="5">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_FEES}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="121" y="118" width="38" height="20" uuid="0f3a2880-a66b-4873-b249-3cffc33f1945"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="211" y="118" width="35" height="20" uuid="3d28e4a3-13bf-497c-92d9-df5ac76d0d74"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="120"/>
+	</pageFooter>
+</jasperReport>

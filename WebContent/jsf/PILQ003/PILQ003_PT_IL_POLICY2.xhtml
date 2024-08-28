@@ -1,0 +1,876 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILQ003"
+				var="message_PILQ003" />
+			<h:form id="PT_IL_POLICY2">
+				<table class="noborder" width="100%">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" width="100%">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILQ003_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.errorMap['current'] !=null? PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.errorMap['current']: PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+					<tr>
+						<td align="right" colspan="3" valign="top" width="10%"><h:commandButton
+							action="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.goToMainScreen}"
+							binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_MAIN_SCREEN}"
+							id="UI_M_MAIN_SCREEN" rendered="true"
+							styleClass="button"
+							title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_MAIN_SCREEN$tooltip}"
+							value="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_MAIN_SCREEN$caption}" />
+						<rich:spacer id="AUTOID_1" width="5px" /> <h:commandButton
+							binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_MAIN_SCREEN}"
+							id="UI_M_MAIN_SCREEN" rendered="true"
+							styleClass="button"
+							title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_MAIN_SCREEN$tooltip}"
+							value="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_MAIN_SCREEN$caption}" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td class="oddrowright"><h:outputLabel id="FORM_CAPTION"
+									value="#{message_PILQ003.PILQ003$PT_IL_POLICY2$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 500px; overflow: auto;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td valign="top" width="100%">
+
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowright" />
+										<td class="oddrow"><h:outputLabel styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_ORG_PREM_DTLS$caption}" />
+										</td>
+										<td class="oddrowright"><h:outputLabel styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_ENDT_DTLS$caption}" />
+										</td>
+										<td class="oddrow"><h:outputLabel styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_SUMARY_DTLS$caption}" />
+										</td>
+									</tr>
+
+									<tr>
+										<td class="evenrowright" />
+										<td class="evenrow"><h:outputLabel styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_PROP_RATE1$caption}" />
+										</td>
+										<td class="evenrow"><h:outputLabel styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_PROP_LC_VALUE1$caption}" />
+										</td>
+										<td class="evenrowright"><h:outputLabel
+											styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_PROP_RATE1$caption}" />
+										</td>
+										<td class="evenrow"><h:outputLabel styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_PROP_LC_VALUE1$caption}" />
+										</td>
+										<td class="evenrow"><h:outputLabel styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_PROP_RATE1$caption}" />
+										</td>
+										<td class="evenrowright"><h:outputLabel
+											styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_PROP_LC_VALUE1$caption}" />
+										</td>
+									</tr>
+
+
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_PAYABLE_AMT_LABEL}"
+											for="UI_M_PAYABLE_AMT" id="UI_M_PAYABLE_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_PAYABLE_AMT$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_PAYABLE_AMT}"
+											disabled="true" id="UI_M_PAYABLE_AMT" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_PAYABLE_AMT$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_PAYABLE_AMT}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_SA_LABEL}"
+											for="UI_M_POL_LC_SA" id="UI_M_POL_LC_SA_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_SA$caption}" />
+										</td>
+										<td class="evenrow" />
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_SA}"
+											disabled="true" id="UI_M_POL_LC_SA" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_SA$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_SA}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrowright" />
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_SA1}"
+											disabled="true" id="UI_M_POL_LC_SA1" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_SA1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.UI_M_POL_LC_SA1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrow" />
+										<td class="evenrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_SA_DIFF}"
+											disabled="true" id="UI_M_POL_LC_SA_DIFF" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_SA_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_SA_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_BASIC_PREM_LABEL}"
+											for="UI_M_POL_LC_BASIC_PREM"
+											id="UI_M_POL_LC_BASIC_PREM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_BASIC_PREM$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_BASIC_RATE}"
+											disabled="true" id="UI_M_POL_BASIC_RATE" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_BASIC_RATE$tooltip}"
+											validator="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.validateUI_M_POL_BASIC_RATE}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_BASIC_RATE}">
+											<a4j:support
+												actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="UI_M_POL_BASIC_RATE_AJAX_SUPPORT"
+												immediate="true" reRender="UI_M_POL_BASIC_RATE" />
+										</h:inputText></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_BASIC_PREM}"
+											disabled="true" id="UI_M_POL_LC_BASIC_PREM" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_BASIC_PREM$tooltip}"
+											validator="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.validatePOL_FC_BASIC_PREM}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_BASIC_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_POL_BASIC_RATE1}"
+											disabled="true" id="POL_BASIC_RATE1" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$POL_BASIC_RATE1$tooltip}"
+											validator="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.validatePOL_BASIC_RATE1}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.POL_BASIC_RATE1}">
+											<a4j:support
+												actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="POL_BASIC_RATE1_AJAX_SUPPORT"
+												immediate="true" reRender="errorPanel,POL_BASIC_RATE1" />
+										</h:inputText></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_POL_LC_BASIC_PREM1}"
+											disabled="true" id="POL_LC_BASIC_PREM1" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$POL_LC_BASIC_PREM1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.POL_LC_BASIC_PREM1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_POL_BASIC_RATE2}"
+											disabled="true" id="POL_BASIC_RATE2" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$POL_BASIC_RATE2$tooltip}"
+											validator="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.validatePOL_BASIC_RATE2}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.POL_BASIC_RATE2}">
+											<a4j:support
+												actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="POL_BASIC_RATE2_AJAX_SUPPORT"
+												immediate="true" reRender="errorPanel,POL_BASIC_RATE2" />
+										</h:inputText></td>
+										<td class="oddrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_BASIC_PREM_DIFF}"
+											disabled="true" id="UI_M_POL_LC_BASIC_PREM_DIFF"
+											maxlength="16" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_BASIC_PREM_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_BASIC_PREM_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_POL_LC_ADDL_PREM1_LABEL}"
+											for="POL_LC_ADDL_PREM1" id="POL_LC_ADDL_PREM1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$POL_LC_ADDL_PREM1$caption}" />
+										</td>
+										<td class="evenrow" />
+										<td class="evenrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_ADDL_PREM}"
+											disabled="true" id="UI_M_POL_LC_ADDL_PREM" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_ADDL_PREM$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_ADDL_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_POL_LC_ADDL_PREM1}"
+											disabled="true" id="POL_LC_ADDL_PREM1" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$POL_LC_ADDL_PREM1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.POL_LC_ADDL_PREM1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrowright" />
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_ADDL_PREM_DIFF}"
+											disabled="true" id="UI_M_POL_LC_ADDL_PREM_DIFF"
+											maxlength="16" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_ADDL_PREM_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_ADDL_PREM_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_TOT_PREM1_LABEL}"
+											for="UI_M_POL_LC_TOT_PREM1" id="UI_M_POL_LC_TOT_PREM1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_TOT_PREM1$caption}" />
+										</td>
+										<td class="oddrow" />
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_TOT_PREM}"
+											disabled="true" id="UI_M_POL_LC_TOT_PREM" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_TOT_PREM$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_TOT_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrowright" />
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_TOT_PREM1}"
+											disabled="true" id="UI_M_POL_LC_TOT_PREM1" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_TOT_PREM1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.UI_M_POL_LC_TOT_PREM1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrow" />
+										<td class="oddrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_TOT_PREM_DIFF}"
+											disabled="true" id="UI_M_POL_LC_TOT_PREM_DIFF"
+											maxlength="16" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_TOT_PREM_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_TOT_PREM_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_TOT_LOADING1_LABEL}"
+											for="UI_M_POL_LC_TOT_LOADING1"
+											id="UI_M_POL_LC_TOT_LOADING1_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_TOT_LOADING1$caption}" />
+										</td>
+										<td class="evenrow" />
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_TOT_LOADING}"
+											disabled="true" id="UI_M_POL_LC_TOT_LOADING" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_TOT_LOADING$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_TOT_LOADING}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrowright" />
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_TOT_LOADING1}"
+											disabled="true" id="UI_M_POL_LC_TOT_LOADING1" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_TOT_LOADING1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.UI_M_POL_LC_TOT_LOADING1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrow" />
+										<td class="evenrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_TOT_LOADING_DIFF}"
+											disabled="true" id="UI_M_POL_LC_TOT_LOADING_DIFF"
+											maxlength="16" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_TOT_LOADING_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_TOT_LOADING_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_TOT_DISCOUNT1_LABEL}"
+											for="UI_M_POL_LC_TOT_DISCOUNT1"
+											id="UI_M_POL_LC_TOT_DISCOUNT1_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_TOT_DISCOUNT1$caption}" />
+										</td>
+										<td class="oddrow" />
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_TOT_DISCOUNT}"
+											disabled="true" id="UI_M_POL_LC_TOT_DISCOUNT" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_TOT_DISCOUNT$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_TOT_DISCOUNT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrowright" />
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_TOT_DISCOUNT1}"
+											disabled="true" id="UI_M_POL_LC_TOT_DISCOUNT1"
+											maxlength="16" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_TOT_DISCOUNT1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.UI_M_POL_LC_TOT_DISCOUNT1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrow" />
+										<td class="oddrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_TOT_DISCOUNT_DIFF}"
+											disabled="true" id="UI_M_POL_LC_TOT_DISCOUNT_DIFF"
+											maxlength="16" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_TOT_DISCOUNT_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_TOT_DISCOUNT_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_LC_PCHARGES_BORNE_CUST1_LABEL}"
+											for="UI_M_LC_PCHARGES_BORNE_CUST1"
+											id="UI_M_LC_PCHARGES_BORNE_CUST1_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_LC_PCHARGES_BORNE_CUST1$caption}" />
+										</td>
+										<td class="evenrow" />
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_LC_PCHARGES_BORNE_CUST}"
+											disabled="true" id="UI_M_LC_PCHARGES_BORNE_CUST"
+											maxlength="15" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_LC_PCHARGES_BORNE_CUST$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_LC_PCHARGES_BORNE_CUST}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrowright" />
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_LC_PCHARGES_BORNE_CUST1}"
+											disabled="true" id="UI_M_LC_PCHARGES_BORNE_CUST1"
+											maxlength="15" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_LC_PCHARGES_BORNE_CUST1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.UI_M_LC_PCHARGES_BORNE_CUST1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrow" />
+										<td class="evenrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_LC_PCHARGES_BORNE_CUST_DIFF}"
+											disabled="true" id="UI_M_LC_PCHARGES_BORNE_CUST_DIFF"
+											maxlength="15" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_LC_PCHARGES_BORNE_CUST_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_LC_PCHARGES_BORNE_CUST_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_NET_PREM1_LABEL}"
+											for="UI_M_POL_LC_NET_PREM1" id="UI_M_POL_LC_NET_PREM1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_NET_PREM1$caption}" />
+										</td>
+										<td class="oddrow" />
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_NET_PREM}"
+											disabled="true" id="UI_M_POL_LC_NET_PREM" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_NET_PREM$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_NET_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrowright" />
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_NET_PREM1}"
+											disabled="true" id="UI_M_POL_LC_NET_PREM1" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_NET_PREM1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.UI_M_POL_LC_NET_PREM1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrow" />
+										<td class="oddrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_NET_PREM_DIFF}"
+											disabled="true" id="UI_M_POL_LC_NET_PREM_DIFF"
+											maxlength="16" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_NET_PREM_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_NET_PREM_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_MOP1_LABEL}"
+											for="UI_M_POL_LC_MOP1" id="UI_M_POL_LC_MOP1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_MOP1$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_MODE_OF_PYMT_RATE}"
+											disabled="true" id="UI_M_POL_MODE_OF_PYMT_RATE"
+											maxlength="16" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_MODE_OF_PYMT_RATE$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_MODE_OF_PYMT_RATE}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_MOP}"
+											disabled="true" id="UI_M_POL_LC_MOP" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_MOP$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_MOP}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_MODE_OF_PYMT_RATE1}"
+											disabled="true" id="UI_M_POL_MODE_OF_PYMT_RATE1"
+											maxlength="16" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_MODE_OF_PYMT_RATE1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.UI_M_POL_MODE_OF_PYMT_RATE1}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_MOP1}"
+											disabled="true" id="UI_M_POL_LC_MOP1" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_MOP1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.UI_M_POL_LC_MOP1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_MODE_OF_PYMT_RATE2}"
+											disabled="true" id="UI_M_POL_MODE_OF_PYMT_RATE2"
+											maxlength="16" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_MODE_OF_PYMT_RATE2$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_MODE_OF_PYMT_RATE2}" />
+										</td>
+										<td class="evenrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_MOP_DIFF}"
+											disabled="true" id="UI_M_POL_LC_MOP_DIFF" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_MOP_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_MOP_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_GR_ANN_PREM1_LABEL}"
+											for="UI_M_POL_LC_GR_ANN_PREM1"
+											id="UI_M_POL_LC_GR_ANN_PREM1_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_GR_ANN_PREM1$caption}" />
+										</td>
+										<td class="oddrow" />
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_GR_ANN_PREM}"
+											disabled="true" id="UI_M_POL_LC_GR_ANN_PREM" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_GR_ANN_PREM$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_GR_ANN_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrowright" />
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_LC_GR_ANN_PREM1}"
+											disabled="true" id="UI_M_POL_LC_GR_ANN_PREM1" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_LC_GR_ANN_PREM1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.UI_M_POL_LC_GR_ANN_PREM1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrow" />
+										<td class="oddrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_GR_ANN_PREM_DIFF}"
+											disabled="true" id="UI_M_POL_LC_GR_ANN_PREM_DIFF"
+											maxlength="16" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_GR_ANN_PREM_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_GR_ANN_PREM_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_INST_LC_PREM1_LABEL}"
+											for="UI_M_POL_INST_LC_PREM1"
+											id="UI_M_POL_INST_LC_PREM1_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_INST_LC_PREM1$caption}" />
+										</td>
+										<td class="evenrow" />
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_INST_LC_PREM}"
+											disabled="true" id="UI_M_POL_INST_LC_PREM" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_INST_LC_PREM$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_INST_LC_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrowright" />
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_POL_INST_LC_PREM1}"
+											disabled="true" id="UI_M_POL_INST_LC_PREM1" maxlength="16"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_POL_INST_LC_PREM1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.UI_M_POL_INST_LC_PREM1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrow" />
+										<td class="evenrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_INST_LC_PREM_DIFF}"
+											disabled="true" id="UI_M_POL_INST_LC_PREM_DIFF"
+											maxlength="16" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_INST_LC_PREM_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_INST_LC_PREM_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_POL_LC_DISC_AMT1_LABEL}"
+											for="POL_LC_DISC_AMT1" id="POL_LC_DISC_AMT1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$POL_LC_DISC_AMT1$caption}" />
+										</td>
+										<td class="oddrow" />
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_DISC_AMT}"
+											disabled="true" id="UI_M_POL_LC_DISC_AMT" maxlength="15"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_DISC_AMT$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_DISC_AMT}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrowright" />
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_POL_LC_DISC_AMT1}"
+											disabled="true" id="POL_LC_DISC_AMT1" maxlength="15"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$POL_LC_DISC_AMT1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.POL_LC_DISC_AMT1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrow" />
+										<td class="oddrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_DISC_AMT_DIFF}"
+											disabled="true" id="UI_M_POL_LC_DISC_AMT_DIFF"
+											maxlength="15" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_DISC_AMT_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_DISC_AMT_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_LC_SCHARGES_BORNE_CUST1_LABEL}"
+											for="UI_M_LC_SCHARGES_BORNE_CUST1"
+											id="UI_M_LC_SCHARGES_BORNE_CUST1_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_LC_SCHARGES_BORNE_CUST1$caption}" />
+										</td>
+										<td class="evenrow" />
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_LC_SCHARGES_BORNE_CUST}"
+											disabled="true" id="UI_M_LC_SCHARGES_BORNE_CUST"
+											maxlength="15" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_LC_SCHARGES_BORNE_CUST$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_LC_SCHARGES_BORNE_CUST}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrowright" />
+										<td class="evenrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_UI_M_LC_SCHARGES_BORNE_CUST1}"
+											disabled="true" id="UI_M_LC_SCHARGES_BORNE_CUST1"
+											maxlength="15" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$UI_M_LC_SCHARGES_BORNE_CUST1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.UI_M_LC_SCHARGES_BORNE_CUST1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="evenrow" />
+										<td class="evenrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_LC_SCHARGES_BORNE_CUST_DIFF}"
+											disabled="true" id="UI_M_LC_SCHARGES_BORNE_CUST_DIFF"
+											maxlength="15" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_LC_SCHARGES_BORNE_CUST_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_LC_SCHARGES_BORNE_CUST_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_POL_LC_FIRST_PREM1_LABEL}"
+											for="POL_LC_FIRST_PREM1" id="POL_LC_FIRST_PREM1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message_PILQ003.PILQ003$PT_IL_POLICY$POL_LC_FIRST_PREM1$caption}" />
+										</td>
+										<td class="oddrow" />
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_FIRST_PREM}"
+											disabled="true" id="UI_M_POL_LC_FIRST_PREM" maxlength="15"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_FIRST_PREM$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_FIRST_PREM}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrowright" />
+										<td class="oddrow"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.COMP_POL_LC_FIRST_PREM1}"
+											disabled="true" id="POL_LC_FIRST_PREM1" maxlength="15"
+											rendered="true" required="false" styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY$POL_LC_FIRST_PREM1$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.POL_LC_FIRST_PREM1}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+										<td class="oddrow" />
+										<td class="oddrowright"><h:inputText
+											binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.COMP_UI_M_POL_LC_FIRST_PREM_DIFF}"
+											disabled="true" id="UI_M_POL_LC_FIRST_PREM_DIFF"
+											maxlength="15" rendered="true" required="false"
+											styleClass="input"
+											title="#{message_PILQ003.PILQ003$PT_IL_POLICY2$UI_M_POL_LC_FIRST_PREM_DIFF$tooltip}"
+											value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POLICY2_ACTION_BEAN.PT_IL_POLICY2_BEAN.UI_M_POL_LC_FIRST_PREM_DIFF}">
+											<f:converter converterId="PELNumberFormatter" />
+										</h:inputText></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

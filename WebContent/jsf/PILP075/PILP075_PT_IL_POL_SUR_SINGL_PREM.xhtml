@@ -1,0 +1,588 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.onLoad}">
+			<f:loadBundle basename="messageProperties_PILP075" var="message" />
+			<!-- onkeypress Added by saritha on 24-Feb-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PT_IL_POL_CANC_REFN" onkeypress="return event.keyCode != 13">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+							<table class="noborder" id="toolbartable" width="100%"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td><rich:toolBar id="serial_2" styleClass="toolBarStyle"
+											width="100%">
+											<rich:toolBarGroup id="serial_3"
+												styleClass="toolBarGroupStyle">
+												<h:commandLink rendered="true"
+													action="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.backToSearch}"
+													id="serial_15" immediate="true"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="serial_16"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/back.png" />
+													<h:outputText id="serial_17"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$back}" />
+												</h:commandLink>
+												<h:commandLink   
+												binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_SAVE_BTN}"
+													action="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.saveformsAction}"
+													id="serial_4" styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="serial_5"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/save.gif" />
+													<h:outputText id="serial_6"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+
+											</rich:toolBarGroup>
+										</rich:toolBar></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+							<table class="noborder" id="errormsgtable" width="100%"
+								cellpadding="0" cellspacing="0">
+								<tr>
+									<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+											switchType="client">
+											<f:facet name="header">
+												<h:outputText id="err"
+													styleClass="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.messageStyle}"
+													value="#{commonmsg.errorPanel$heading} #{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.errorMap['current'] !=null? PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.errorMap['current']: PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.warningMap['current']}" />
+											</f:facet>
+											<h:outputText escape="false" id="errorMessages"
+												styleClass="ErrorMessages"
+												value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.errorMessages}" />
+											<h:messages id="msg"
+												rendered="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.globalMsgRender}"
+												styleClass="ErrorMessages" />
+											<h:outputText escape="false" id="warningMessages"
+												styleClass="WarningMessages"
+												value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.warningMessages}" />
+										</rich:simpleTogglePanel></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" valign="top" width="100%">
+					<!-- Added by Dhiesh on 28/11/2016 for Enabling Print button -->
+						<!-- Modified MethodName from callReportModalPanel to callPrint by Ram on 05/02/2017 -->
+						<h:commandButton
+								action="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.callPrint}"
+								disabled="false" id="UI_M_BUT_PRINT" rendered="TRUE" 
+								style="width:80px" styleClass="button" value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_PRINT$caption}" />
+								<!-- End -->
+						<!-- End -->
+							<!-- Added by Dhinesh on 04/02/2017 for Credit Note Report -->	 	
+<h:commandButton
+	binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_CREDIT_PRINT_BTN}"
+	action="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.callCreditPrint}"
+	disabled="true" id="UI_M_CREDIT_PRINT_BTN" rendered="TRUE" 
+	style="width:80px" styleClass="button" value="#{message.PILP075$PT_IL_POL_CANC_REFN$CREDIT_PRINT$caption}" />
+	 
+	<!-- End -->	
+						<h:commandButton
+						binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_CANCL_BTN}"
+								action="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PolicyCancelBtn}"
+								disabled="false" id="UI_M_BUT_DETAIL" rendered="TRUE" 
+								style="width:80px" styleClass="button" value="PolicyCancel" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<div style="width: 100%; height: 600px; overflow: auto;">
+								<table align="left" class="noborder" width="100%"
+									cellpadding="0" cellspacing="0">
+									<tr>
+										<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+										<td valign="top" width="100%">
+											<table align="left" class="noborder" id="bordertable"
+												width="100%">
+
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_POL_NO_LABEL}"
+															id="PCF_POL_NO_LABEL" rendered="true" styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_POL_NO$caption}" />
+														<h:graphicImage id="serial_ag" style=""
+															styleClass="searchimg"
+															value="./../../images/mandatory.jpg" /></td>
+													<td class="oddrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_POL_NO}"
+															id="PCF_POL_NO" maxlength="24" rendered="true"
+															required="true" styleClass="input"
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_POL_NO$tooltip}"
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_POL_NO}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_POL_NO}">
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="serial_aj" immediate="true"
+																reRender="errorPanel,PCF_FLEX_07,PCF_POL_CONT_CODE,PCF_FLEX_08,PCF_FLEX_12,PCF_PAID_PREM_LC,PCF_MED_FEE_LC,PCF_DOC_FEE_LC,PCF_FLEX_09,PCF_POL_ISSUE_DT,PCF_FLEX_11">
+															</a4j:support>
+														</h:inputText> <rich:suggestionbox for="PCF_POL_NO" height="200"
+															id="AUTO_ID_6"
+															suggestionAction="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.LovPCF_POLICY_NO}"
+															var="suggest" width="250">
+															<h:column id="COLUMN_SUGG_1">
+																<h:outputText id="serial_24" value="#{suggest.code}" />
+															</h:column>
+															<h:column id="COLUMN_SUGG_2">
+																<h:outputText id="serial_25" value="#{suggest.name}" />
+															</h:column>
+														</rich:suggestionbox></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_REFUND_DT_LABEL}"
+															id="PCF_REFUND_DT_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_REFUND_DATE$caption}" />
+														<h:graphicImage id="serial_ag_NEW" style=""
+															styleClass="searchimg"
+															value="./../../images/mandatory.jpg" /></td>
+													<td class="oddrow"><rich:calendar
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_REFUND_DT}"
+															datePattern="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.datePattern}"
+															enableManualInput="true" id="PCF_REFUND_DATE"
+															rendered="true" required="false"
+															inputClass="calendarinput" 
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_REFUND_DATE}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_REFUND_DATE}">
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="oninputblur" id="serial_32_5" immediate="true" 
+																onsubmit="formatDate('PT_IL_POL_CANC_REFN:PCF_REFUND_DATE')"
+																reRender="errorPanel,PCF_MONT_ELAP,PCF_MEI_REF_FC,PCF_MONT_ELAP,PCF_COMM_LC_RFND" />
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="oninputchanged" id="serial_32_1" immediate="true"
+																reRender="errorPanel,PCF_MONT_ELAP,PCF_MEI_REF_FC" />
+																</rich:calendar></td>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_FLEX_07_LABEL}"
+															id="PCF_FLEX_07_LABEL" rendered="true" styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_FLEX_07$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_FLEX_07}"
+															id="PCF_FLEX_07" maxlength="40" rendered="true" disabled="true"
+															required="true" styleClass="input"
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_FLEX_07}"
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_FLEX_07$tooltip}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_FLEX_07}">
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="serial_27" immediate="true"
+																reRender="errorPanel">
+															</a4j:support>
+
+														</h:inputText></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_POL_ISSUE_DT_LABEL}"
+															id="PCF_POL_ISSUE_DT_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_POL_ISSUE_DT$caption}" />
+														<h:graphicImage id="serial_ag_N" style=""
+															styleClass="searchimg"
+															value="./../../images/mandatory.jpg" /></td>
+													<td class="evenrow"><rich:calendar
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_POL_ISSUE_DT}"
+															datePattern="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.datePattern}"
+															enableManualInput="true" id="PCF_POL_ISSUE_DT"
+															rendered="true" required="false" disabled="true"
+															inputClass="calendarinput"
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_POL_ISSUE_DT}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_POL_ISSUE_DT}">
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="oninputchanged" id="serial_32" immediate="true"
+																reRender="errorPanel" />
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="oninputblur" id="serial_34" immediate="true"
+																reRender="errorPanel" />
+
+														</rich:calendar></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_POL_CONT_CODE_LABEL}"
+															id="PCF_POL_CONT_CODE_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_POL_CONT_CODE$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_POL_CONT_CODE}"
+															disabled="true" id="PCF_POL_CONT_CODE" maxlength="12"
+															rendered="true" required="false" styleClass="input"
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_POL_CONT_CODE$tooltip}"
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_POL_CONT_CODE}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_POL_CONT_CODE}" />
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_FLEX_08_LABEL}"
+															id="PCF_FLEX_08_LABEL" rendered="true" styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_FLEX_08$caption}" /></td>
+													<td class="oddrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_FLEX_08}"
+															disabled="true" id="PCF_FLEX_08" maxlength="14"
+															rendered="true" required="true" styleClass="input"
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_FLEX_08$toltip}"
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_FLEX_08}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_FLEX_08}">
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="serial_35" immediate="true"
+																reRender="errorPanel">
+															</a4j:support>
+														</h:inputText></td>
+
+												</tr>
+
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_FLEX_12_LABEL}"
+															id="PCF_FLEX_12_LABEL" rendered="true" styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_FLEX_12$caption}" /></td>
+													<td class="evenrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_FLEX_12}"
+															id="PCF_FLEX_12" maxlength="7" rendered="true"
+															required="true"  styleClass="input" disabled="true"
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_FLEX_12$tooltip}"
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_FLEX_12}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_FLEX_12}">
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="serial_37_1" immediate="true"
+																reRender="errorPanel">
+															</a4j:support>
+														</h:inputText></td>
+													<td class="evenrowright">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_PAID_PREM_LC_LABEL}"
+															id="PCF_PAID_PREM_LC_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_PAID_PREM_LC$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_PAID_PREM_LC}"
+															disabled="true" id="PCF_PAID_PREM_LC" maxlength="30"
+															rendered="true" required="true" styleClass="input" 
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_PAID_PREM_LC$tooltip}"
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_PAID_PREM_LC}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_PAID_PREM_LC}">
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="serial_39" immediate="true"
+																reRender="errorPanel">
+															</a4j:support>
+														</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_MED_FEE_LC_LABEL}"
+															id="PCF_MED_FEE_LC_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_MED_FEE_LC$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_MED_FEE_LC}"
+															id="PCF_MED_FEE_LC" maxlength="16" 
+															rendered="true" required="false"
+															styleClass="input" disabled="true"
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_MED_FEE_LC$tooltip}"
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_MED_FEE_LC}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_MED_FEE_LC}">
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="serial_40" immediate="true"
+																reRender="errorPanel" />
+														</h:inputText></td>
+													<td class="oddrowright">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_DOC_FEE_LC_LABEL}"
+															id="PCF_DOC_FEE_LC_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_DOC_FEE_LC$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_DOC_FEE_LC}"
+															id="PCF_DOC_FEE_LC" maxlength="16" 
+															rendered="true" required="false"
+															styleClass="input" disabled="true"
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_DOC_FEE_LC$tooltip}"
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_DOC_FEE_LC}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_DOC_FEE_LC}">
+															<a4j:support event="onblur" id="serial_a1"
+																immediate="true" reRender="LOAN_LC_PERM_AMT" />
+														</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_FLEX_09_LABEL}"
+															id="PCF_FLEX_09_LABEL" rendered="true" styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_FLEX_09$caption}" />
+
+													</td>
+													<td class="evenrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_FLEX_09}"
+															id="PCF_FLEX_09" maxlength="7" rendered="true"
+															required="true" styleClass="input" disabled="true"
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_FLEX_09$tooltip}"
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_FLEX_09}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_FLEX_09}">
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="serial_37_2" immediate="true"
+																reRender="errorPanel">
+															</a4j:support>
+														</h:inputText></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel 
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_MONT_ELAP_LABEL}"
+															id="PCF_MONT_ELAP_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_MONT_ELAP$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_MONT_ELAP}"
+															id="PCF_MONT_ELAP" maxlength="7" rendered="true"
+															required="true" styleClass="input" disabled="true"
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_MONT_ELAP$tooltip}"
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_MONT_ELAP}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_MONT_ELAP}">
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="onblur" id="serial_37" immediate="true"
+																reRender="errorPanel">
+															</a4j:support>
+														</h:inputText></td>
+
+												</tr>
+
+												<tr>
+													<td class="oddrowright"></td>
+													<td class="oddrow"></td>
+													<td class="oddrowright">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_COMM_LC_RFND_LABEL}"
+															id="PCF_COMM_LC_RFND_LABEL" rendered="true" styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_FLEX_10$caption}" /></td>
+													<td class="oddrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_MEI_REF_FC}"
+															disabled="true" id="PCF_MEI_REF_FC" maxlength="16"
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_FLEX_10$tooltip}"
+															rendered="true" required="true" styleClass="input"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_MEI_REF_FC}">
+															<f:converter converterId="PELNumberFormatter" />
+															<a4j:support event="onblur" id="a_2" immediate="true"
+																reRender="LOAN_LC_AMOUNT">
+															</a4j:support>
+
+														</h:inputText></td>
+													
+													
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_FLEX_11_LABEL}"
+															id="PCF_FLEX_11_LABEL" rendered="true" styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_FLEX_11$caption}" /></td>
+													<td class="evenrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_FLEX_11}"
+															id="PCF_FLEX_11" maxlength="10" rendered="true"
+															required="true" styleClass="input" disabled="true"
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_FLEX_11$tooltip}"
+															validator="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.validatePCF_FLEX_11}"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_FLEX_11}">
+															<a4j:support
+																actionListener="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.fireFieldValidation}"
+																event="onchange" id="serial_48" immediate="true"
+																reRender="errorPanel">
+															</a4j:support>
+														</h:inputText></td>
+													<td class="evenrowright">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_MEI_REF_FC_LABEL}"
+															id="PCF_MEI_REF_FC_LABEL" rendered="true"
+															styleClass="label"
+															value="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_COMM_LC_RFND$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+															binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_PCF_COMM_LC_RFND}"
+															id="PCF_COMM_LC_RFND" maxlength="10" rendered="true"
+															title="#{message.PILP075$PT_IL_POL_CANC_REFN$PCF_COMM_LC_RFND$tooltip}"
+															required="true" styleClass="input" disabled="true"
+															value="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.PT_IL_POL_CANC_REFN_BEAN.PCF_COMM_LC_RFND}">
+														</h:inputText> </td>
+												</tr>
+
+									</table>
+
+										</td>
+
+
+									</tr>
+									<tr>
+										<td align="right" colspan="3" width="100%"><rich:toolBar
+												id="serial_66" styleClass="toolBarStyle" width="100%">
+												<rich:toolBarGroup id="serial_67" location="right"
+													styleClass="toolBarGroupStyle">
+													<h:commandLink
+														action="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.saveFormDetails}"
+														disabled="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.LOANSTATUS}"
+														id="serial_68" rendered="false"
+														styleClass="toolbarCommandLinkStyle">
+														<h:graphicImage id="serial_69"
+															style="border: thin solid white" styleClass="searchimg"
+															value="./../../images/save.gif" />
+														<h:outputText id="serial_70"
+															styleClass="toolbaroutputTextStyle"
+															value="#{menumessage.jsf$header$image$save}" />
+													</h:commandLink>
+													<h:commandLink id="serial_71" rendered="false"
+														styleClass="toolbarCommandLinkStyle">
+														<h:graphicImage id="serial_72"
+															style="border: thin solid white" styleClass="searchimg"
+															value="./../../images/savenext.GIF" />
+														<h:outputText id="serial_73"
+															styleClass="toolbaroutputTextStyle"
+															value="#{menumessage.jsf$header$image$savenext}" />
+													</h:commandLink>
+													<h:commandLink
+														action="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.deleteFormDetails}"
+														disabled="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.LOANSTATUS}"
+														id="serial_74" rendered="false"
+														styleClass="toolbarCommandLinkStyle">
+														<h:graphicImage id="serial_75"
+															style="border: thin solid white" styleClass="searchimg"
+															value="./../../images/deleteRecord.gif" />
+														<h:outputText id="serial_76"
+															styleClass="toolbaroutputTextStyle"
+															value="#{menumessage.jsf$header$image$deleteRecord}" />
+													</h:commandLink>
+													<h:commandLink id="serial_77" rendered="false"
+														styleClass="toolbarCommandLinkStyle">
+														<h:graphicImage id="serial_78"
+															style="border: thin solid white" styleClass="searchimg"
+															value="./../../images/firstrec.gif" />
+														<h:outputText id="serial_79"
+															styleClass="toolbaroutputTextStyle"
+															value="#{menumessage.jsf$header$image$firstrec}" />
+													</h:commandLink>
+													<h:commandLink
+														action="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.prevFormDetails}"
+														id="serial_80" immediate="true" rendered="false"
+														styleClass="toolbarCommandLinkStyle">
+														<h:graphicImage id="serial_81"
+															style="border: thin solid white" styleClass="searchimg"
+															value="./../../images/prevpage.gif" />
+														<h:outputText id="serial_82"
+															styleClass="toolbaroutputTextStyle"
+															value="#{menumessage.jsf$header$image$prevpage}" />
+													</h:commandLink>
+													<h:commandLink id="serial_83" rendered="false"
+														styleClass="toolbarCommandLinkStyle">
+														<h:graphicImage id="serial_84"
+															style="border: thin solid white" styleClass="searchimg"
+															value="./../../images/nextpage.gif" />
+														<h:outputText id="serial_85"
+															styleClass="toolbaroutputTextStyle"
+															value="#{menumessage.jsf$header$image$nextpage}" />
+													</h:commandLink>
+													<h:commandLink id="serial_86" rendered="false"
+														styleClass="toolbarCommandLinkStyle">
+														<h:graphicImage id="serial_87"
+															style="border: thin solid white" styleClass="searchimg"
+															value="./../../images/lastRecord.gif" />
+														<h:outputText id="serial_88"
+															styleClass="toolbaroutputTextStyle"
+															value="#{menumessage.jsf$header$image$lastRecord}" />
+													</h:commandLink>
+												</rich:toolBarGroup>
+											</rich:toolBar></td>
+									</tr>
+
+								</table>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+			
+			<!-- Added by Dhiesh on 28/11/2016 for Enabling Print button -->
+			<rich:modalPanel id="REPORT_MODAL_PANEL" height="110" width="300"
+				binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_REPORT_MODAL_PANEL}">
+				<f:facet name="header">
+					<h:panelGroup>
+						<h:outputText
+							value="#{commonmsg.IP_REP_INFO$DOCUMENT_PRINT$caption}" />
+					</h:panelGroup>
+				</f:facet>
+				<f:facet name="controls">
+					<h:panelGroup>
+						<h:form id="FT_REPORT_MODAL_PANEL_1">
+							<h:commandLink immediate="true" id="CLOSE_LINK"
+								action="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.cancelModalPanel}">
+								<h:graphicImage value="./../../resources/images/close.png"
+									styleClass="toolbarImageStyle" style="cursor:pointer"
+									id="REPORT_MODAL_PANEL_hidelink" />
+							</h:commandLink>
+						</h:form>
+					</h:panelGroup>
+				</f:facet>
+				<h:form id="FT_REPORT_MODAL_PANEL_2">
+					<table width="100%">
+						<tr>
+							<td align="center"><h:outputText id="CONFIRMATION_MSG"
+								style="font-size: 14px;"
+								value="#{commonmsg.IP_REP_INFO$CONFIRMATION_MSG$caption}" /></td>
+						</tr>
+						<tr>
+							<td><rich:spacer id="SPACER_MODAL_1" width="100%;"
+								height="18px" /> <rich:separator id="SEPARATOR" width="100%"
+								height="1px" /></td>
+						</tr>
+						<tr>
+							<td align="center"><h:panelGroup>
+								<h:commandLink immediate="true" id="PRINT_LINK" target="_blank"
+									action="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.runActionAfterValidate}">
+									<a4j:commandButton reRender="REPORT_MODAL_PANEL"
+										action="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.cancelModalPanel}"
+										id="OK_BUTTON" styleClass="button" style="width:70px;"
+										value="#{commonmsg.IP_REP_INFO$OK_BUTTON$caption}" />
+
+								</h:commandLink>
+							</h:panelGroup> <rich:spacer id="SPACER_MODAL_2" width="5px;" /> <a4j:commandButton
+								binding="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.COMP_CANCEL_BUTTON}"
+								id="CANCEL_BUTTON" styleClass="button" style="width:70px;"
+								action="#{PILP075_COMPOSITE_ACTION.PT_IL_POL_CANC_REFN_ACTION_BEAN.cancelModalPanel}"
+								reRender="REPORT_MODAL_PANEL"
+								value="#{commonmsg.IP_REP_INFO$CANCEL_BUTTON$caption}" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</rich:modalPanel>
+			<!-- End -->
+		</f:view>
+	</ui:define>
+</ui:composition>

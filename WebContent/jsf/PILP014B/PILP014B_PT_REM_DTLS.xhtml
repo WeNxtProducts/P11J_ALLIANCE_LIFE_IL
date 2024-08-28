@@ -1,0 +1,175 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="MessageProperties_PILP014B" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PT_REM_DTLS">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.errorMap['current'] !=null?         PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.errorMap['current']:PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td align="right" valign="top"><h:commandButton
+							action="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.okButAction}"
+							disabled="false" id="UI_M_BTN_OK" reRender="errorPanel"
+							rendered="true" styleClass="button" title="" style="width:80px"
+							value="#{message.PILP014B$PT_REM_DTLS$UI_M_BTN_OK$caption}">
+						</h:commandButton> <rich:spacer width="5" /> <a4j:commandButton
+							action="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.cancelButAction}"
+							disabled="false" id="UI_M_BTN_CANCEL" reRender="errorPanel" immediate="true"
+							rendered="true" styleClass="button" title="" style="width:80px"
+							value="#{message.PILP014B$PT_REM_DTLS$UI_M_BTN_CANCEL$caption}">
+						</a4j:commandButton></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%"
+							cellpadding="0" cellspacing="0">
+							<tr>
+								<td><h:outputText id="AUTOID_22"
+									value="#{message.PILP014B$PT_REM_DTLS$PT_REM_DTLS$caption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td><rich:panel>
+							<rich:dataTable
+								binding="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.dataTable}"
+								id="PT_REM_DTLS_GRID" rows="5"
+								value="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.dataList_PT_REM_DTLS}"
+								var="tableVar" width="100%">
+
+
+								<rich:column filterBy="#{tableVar.UI_M_SELECT}"
+									filterEvent="onkeyup" id="COLUMN_UI_M_SELECT" rendered="true"
+									sortBy="#{tableVar.UI_M_SELECT}"
+									styleClass="#{tableVar.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="COLUMN_CAPTION_UI_M_SELECT"
+											styleClass="forumRowHighlight"
+											value="#{message.PILP014B$PT_REM_DTLS$UI_M_SELECT$caption}" />
+									</f:facet>
+									<h:selectBooleanCheckbox id="UI_M_SELECT" 
+										binding="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.COMP_UI_M_SELECT}"
+										validator="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.validate_UI_M_SELECT}"
+										value="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.PT_REM_DTLS_BEAN.UI_M_SELECT}">
+										<a4j:support
+											actionListener="#{PILP014B_COMPOSITE_ACTION.PT_REM_DTLS_ACTION_BEAN.fireFieldValidation}"
+											id="UI_M_SELECT_support" event="onclick" immediate="true"
+											reRender="errorPanel">
+										</a4j:support>
+										
+									</h:selectBooleanCheckbox>
+								</rich:column>
+
+								<rich:column filterBy="#{tableVar.RLD_POL_NO}"
+									filterEvent="onkeyup" id="COLUMN_RLD_POL_NO" rendered="true"
+									sortBy="#{tableVar.RLD_POL_NO}"
+									styleClass="#{tableVar.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="COLUMN_CAPTION_RLD_POL_NO"
+											styleClass="forumRowHighlight"
+											value="#{message.PILP014B$PT_REM_DTLS$RLD_POL_NO$caption}" />
+									</f:facet>
+									<h:outputText id="LINK_CAPTION_RLD_POL_NO"
+										value="#{tableVar.RLD_POL_NO}" />
+								</rich:column>
+
+								<rich:column filterBy="#{tableVar.RLD_ASSURED_NAME}"
+									filterEvent="onkeyup" id="COLUMN_RLD_ASSURED_NAME"
+									rendered="true" sortBy="#{tableVar.RLD_ASSURED_NAME}"
+									styleClass="#{tableVar.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="COLUMN_CAPTION_RLD_ASSURED_NAME"
+											styleClass="forumRowHighlight"
+											value="#{message.PILP014B$PT_REM_DTLS$RLD_ASSURED_NAME$caption}" />
+									</f:facet>
+									<h:outputText id="LINK_CAPTION_RLD_ASSURED_NAME"
+										value="#{tableVar.RLD_ASSURED_NAME}" />
+
+								</rich:column>
+								<rich:column filterBy="#{tableVar.RLD_FC_SUM_ASSURED}"
+									filterEvent="onkeyup" id="COLUMN_RLD_FC_SUM_ASSURED"
+									rendered="true" sortBy="#{tableVar.RLD_FC_SUM_ASSURED}"
+									styleClass="#{tableVar.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="COLUMN_CAPTION_RLD_FC_SUM_ASSURED"
+											styleClass="forumRowHighlight"
+											value="#{message.PILP014B$PT_REM_DTLS$RLD_FC_SUM_ASSURED$caption}" />
+									</f:facet>
+									<h:outputText id="LINK_CAPTION_RLD_FC_SUM_ASSURED"
+										value="#{tableVar.RLD_FC_SUM_ASSURED}" />
+								</rich:column>
+								<rich:column filterBy="#{tableVar.RLD_MODE_OF_PYMT}"
+									filterEvent="onkeyup" id="COLUMN_RLD_MODE_OF_PYMT"
+									rendered="true" sortBy="#{tableVar.RLD_MODE_OF_PYMT}"
+									styleClass="#{tableVar.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="COLUMN_CAPTION_RLD_MODE_OF_PYMT"
+											styleClass="forumRowHighlight"
+											value="#{message.PILP014B$PT_REM_DTLS$RLD_MODE_OF_PYMT$caption}" />
+									</f:facet>
+									<h:outputText id="LINK_CAPTION_RLD_MODE_OF_PYMT"
+										value="#{tableVar.RLD_MODE_OF_PYMT}" />
+								</rich:column>
+								<rich:column filterBy="#{tableVar.RLD_ISSUE_DT}"
+									filterEvent="onkeyup" id="COLUMN_RLD_ISSUE_DT" rendered="true"
+									sortBy="#{tableVar.RLD_ISSUE_DT}"
+									styleClass="#{tableVar.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="COLUMN_CAPTION_RLD_ISSUE_DT"
+											styleClass="forumRowHighlight"
+											value="#{message.PILP014B$PT_REM_DTLS$RLD_ISSUE_DT$caption}" />
+									</f:facet>
+									<h:outputText id="LINK_CAPTION_RLD_ISSUE_DT"
+										value="#{tableVar.RLD_ISSUE_DT}" />
+								</rich:column>
+								<rich:column filterBy="#{tableVar.RLD_PREM_FC}"
+									filterEvent="onkeyup" id="COLUMN_RLD_PREM_FC" rendered="true"
+									sortBy="#{tableVar.RLD_PREM_FC}"
+									styleClass="#{tableVar.rowSelected}">
+									<f:facet name="header">
+										<h:outputText id="COLUMN_CAPTION_RLD_PREM_FC"
+											styleClass="forumRowHighlight"
+											value="#{message.PILP014B$PT_REM_DTLS$RLD_PREM_FC$caption}" />
+									</f:facet>
+									<h:outputText id="LINK_CAPTION_RLD_PREM_FC"
+										value="#{tableVar.RLD_PREM_FC}" />
+								</rich:column>
+							</rich:dataTable>
+						</rich:panel></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

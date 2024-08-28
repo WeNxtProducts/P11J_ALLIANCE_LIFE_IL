@@ -1,0 +1,35 @@
+package com.iii.pel.forms.PILM013_APAC;
+
+
+public interface PM_IL_DOC_SETUP_GLOBALVARIABLE_CONSTANTS {
+	
+	String GLOBAL_M_PARA_1 = "TS";
+	String GLOBAL_M_PARA_2="10";
+	String GLOBAL_M_PARA_3="250920081114";
+	String GLOBAL_M_PARA_4=null;
+	String GLOBAL_M_PARA_5="S";
+	String GLOBAL_M_PARA_6="FP";
+	String GLOBAL_M_PARA_7="C";
+	String GLOBAL_M_PARA_8 = "Y";
+	String GLOBAL_M_PARA_9 = null;
+	String GLOBAL_M_PARA_10 = "I";
+	String GLOBAL_M_PARA_11 = "1";
+	String GLOBAL_M_PARA_13 = "P";
+	String GLOBAL_M_PARA_18 = "Q";
+	String GLOBAL_M_PRIVILEGE="YYY";
+	String GLOBAL_M_FAILURE ="FALSE";
+	String GLOBAL_M_USER_ID ="PREMIA";
+	String GLOBAL_M_NAME = "COMPANY NAME..................PROGRAM NAME";
+	String GLOBAL_M_LANG_CODE = "ENG";
+	String GLOBAL_M_DFLT_VALUES ="001HO       ADM";
+	String GLOBAL_M_FOR_LANG_CODE = "ARBR1";
+	String GLOBAL_M_MODULE_NAME = "PILM013_APAC";
+	String PM_IL_CONTRACTOR_COMP_CODE = "001";
+	String M_CURR_CODE="INR";
+	String GLOBAL_M_RSA_POL_SYS_ID=null;
+	String GLOBAL_M_LC_CHECK ="N";
+	String GLOBAL_M_PLAN_CHNG = "N";
+	String GLOBAL_M_PROG_NAME = "PILM013_APAC";
+	String GLOBAL_M_DIVN_CODE ="HO";
+	
+}

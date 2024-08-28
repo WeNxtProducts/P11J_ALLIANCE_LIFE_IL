@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><ui:composition xmlns="http://www.w3.org/1999/xhtml" xmlns:a4j="http://richfaces.org/a4j" xmlns:f="http://java.sun.com/jsf/core" xmlns:h="http://java.sun.com/jsf/html" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:rich="http://richfaces.org/rich" xmlns:ui="http://java.sun.com/jsf/facelets" template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties" var="searchmessage"/>
+	<table class="noborder" width="100%">
+		
+		<tr>
+				<td colspan="3" height="20" vAlign="top" width="100%">
+				<table class="noborder" id="errormsgtable" width="100%">
+					<tr>
+						<td><rich:simpleTogglePanel id="errorPanel" opened="false" switchType="client">			
+							<f:facet name="header">				
+								<h:outputText id="err" styleClass="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.messageStyle}" value=" #{commonmsg.errorPanel$heading} #{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.errorMap['current'] !=null? PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.errorMap['current']:PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.warningMap['current']}"/>
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages" styleClass="ErrorMessages" value="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.errorMessages}"/>
+							<h:messages id="msg" rendered="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.globalMsgRender}" styleClass="ErrorMessages"/>
+				
+							<h:outputText escape="false" id="warningMessages" styleClass="WarningMessages" value="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.warningMessages}"/>		
+						</rich:simpleTogglePanel></td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+		<!-- Body row -->
+		<tr>
+		<td>
+			<h:form id="coverSearchPage">
+
+				<!-- initial filter to search and list -->
+				<table class="noborder" id="masthead" width="100%">
+					<tr>
+						<td><h:outputLabel value="#{commonmsg.intialSearchCriteria$Caption}"/>
+						</td>
+						<td>
+							 Cover Code
+							<br/><h:inputText value="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.PM_IL_COVER_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE1}"/>
+						</td>
+						<td>
+							 Cover Type
+							<br/><h:inputText value="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.PM_IL_COVER_SEARCH_PAGE_BEAN.SEARCH_BY_VALUE2}"/>
+						</td>
+						<td>
+							<a4j:commandButton actionListener="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.fetchButtonClick}" id="a4link" reRender="dataTableId" styleClass="button" value="#{searchmessage.searchButton$caption}">
+								
+							</a4j:commandButton>
+						</td>
+					</tr>
+				</table>
+				
+				<!-- using rich data table -->
+				<rich:dataTable border="1" cellpadding="5px" id="dataTableId" rows="10" value="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.recordList}" var="PM_IL_COVER_BEAN" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller align="right" id="dsID" pageIndexVar="index" pagesVar="pages">
+						</rich:datascroller>
+					</f:facet>
+			
+					<!-- next column -->
+					<rich:column filterBy="#{PM_IL_COVER_BEAN.COVER_CODE}" filterEvent="onkeyup" filterValue="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.PM_IL_COVER_SEARCH_PAGE_BEAN.FILTER_BY_VALUE1}" sortBy="#{PM_IL_COVER_BEAN.COVER_CODE}">
+						<f:facet name="header">
+							<h:outputText id="AUTOID_1" value="Cover Code"/>
+						</f:facet> 
+					 <h:commandLink action="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.updateRecordLinkClicked}" id="AUTOID_2"> 
+						 	<h:outputText id="AUTOID_3" value="#{PM_IL_COVER_BEAN.COVER_CODE}"/>
+						 	<f:param name="CURRENT_ROWID" value="#{PM_IL_COVER_BEAN.ROWID}"/>
+					 </h:commandLink>
+					</rich:column>
+					
+					<rich:column filterBy="#{PM_IL_COVER_BEAN.COVER_TYPE}" filterEvent="onkeyup" filterValue="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.PM_IL_COVER_SEARCH_PAGE_BEAN.FILTER_BY_VALUE2}" sortBy="#{PM_IL_COVER_BEAN.COVER_TYPE}">
+						<f:facet name="header">
+							<h:outputText id="AUTOID_4" value="Cover Type"/>
+						</f:facet>
+						<h:outputText id="AUTOID_5" value="#{PM_IL_COVER_BEAN.COVER_TYPE} "/>
+					</rich:column>
+					
+					<rich:column filterBy="#{PM_IL_COVER_BEAN.COVER_DESC}" filterEvent="onkeyup" filterValue="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.PM_IL_COVER_SEARCH_PAGE_BEAN.FILTER_BY_VALUE3}" sortBy="#{PM_IL_COVER_BEAN.COVER_DESC}">
+						<f:facet name="header">
+							<h:outputText id="AUTOID_6" value="Description"/>
+						</f:facet>
+						<h:outputText id="AUTOID_7" value="#{PM_IL_COVER_BEAN.COVER_DESC} "/>
+					</rich:column>
+					
+					<rich:column filterBy="#{PM_IL_COVER_BEAN.COVER_LONG_DESC}" filterEvent="onkeyup" filterValue="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.PM_IL_COVER_SEARCH_PAGE_BEAN.FILTER_BY_VALUE4}" sortBy="#{PM_IL_COVER_BEAN.COVER_LONG_DESC}">
+						<f:facet name="header">
+							<h:outputText id="AUTOID_8" value="Long Desc"/>
+						</f:facet>
+						<h:outputText id="AUTOID_9" value="#{PM_IL_COVER_BEAN.COVER_LONG_DESC} "/>
+					</rich:column>
+					
+				</rich:dataTable>
+				<table class="noborder" width="100%">
+					<tr>
+						<td align="left">
+							<h:commandButton action="#{PILM002_APAC_PM_IL_COVER_SEARCH_PAGE_ACTION.insertRecordLinkClicked}" styleClass="button" value="#{searchmessage.insertButton$caption}">
+							</h:commandButton>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</td>
+		</tr>
+
+		
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,17 @@
+package com.iii.pel.forms.PILP028_APAC;
+
+public class RI_CLOSING_COMPOSITE_BEAN {
+
+	RI_CLOSING_ACTION RI_CLOSING_ACTION;
+
+	
+
+	public RI_CLOSING_COMPOSITE_BEAN() {
+
+		RI_CLOSING_ACTION = new RI_CLOSING_ACTION();
+
+	
+
+	}
+
+}

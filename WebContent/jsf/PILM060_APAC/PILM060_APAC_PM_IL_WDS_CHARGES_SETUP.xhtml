@@ -1,0 +1,880 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+		 beforePhase="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.onLoad}"
+		 locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM060_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PM_IL_WDS_CHARGES_SETUP">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink action="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.backToSearch}"
+											id="AUTOID_1" style="text-decoration:none" immediate="true"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_2"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.combinedSave}"
+											id="AUTOID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_5"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.deleteRow}"
+											id="AUTOID_10" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="errormsgtable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.errorMap['current'] !=null? PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.errorMap['current']: PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.warningMap['current']}" />
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.globalMsgRender}"
+										styleClass="ErrorMessages" />
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.warningMessages}" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><h:outputText id="AUTOID_22"
+									value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$title$caption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table class="noborder" width="100%">
+							<tr>
+								<td class="oddrowright"><h:outputLabel
+									for="UI_M_PROD_CODE" styleClass="label"
+									value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$UI_M_PROD_CODE$caption}" />
+								<h:graphicImage id="AUTOID_23" style="" styleClass="searchimg"
+									value="./../../images/mandatory.jpg" /></td>
+								<td class="oddrowright"><h:inputText
+									binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_UI_M_PROD_CODE}"
+									disabled="false" id="UI_M_PROD_CODE" required="true"
+									styleClass="inputsmall"
+									title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$UI_M_PROD_CODE$tooltip}"
+									
+									value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.UI_M_PROD_CODE}">
+									<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.fireFieldValidation}"
+													event="onclick" id="TEST_CODE" immediate="true"
+													reRender="errorPanel,forumal_code_label,WCS_FORUMULA_CODE_SELECT_ONE_MENU">
+												</a4j:support>
+									<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.callRowChangeListener}"
+													event="onblur" id="AUTOID_PROD_CODE" immediate="true"
+													reRender="errorPanel,forumal_code_label,WCS_FORUMULA_CODE_SELECT_ONE_MENU">
+												</a4j:support>
+								</h:inputText> <rich:suggestionbox for="UI_M_PROD_CODE" height="200"
+									id="sugprodcode"
+									suggestionAction="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.lovM_PROD_CODE}"
+									var="lov" width="200">
+									<h:column>
+										<h:outputText id="AUTOID_24" value="#{lov.code}" />
+									</h:column>
+									<h:column>
+										<h:outputText id="AUTOID_25"
+											value="#{lov.name}" />
+									</h:column>
+									<a4j:support 
+										event="onselect" id="AUTOID_26" immediate="true"
+										reRender="UI_M_PROD_CODE_DESC">
+										<f:setPropertyActionListener value="#{lov.name}" target="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.UI_M_PROD_CODE_DESC}" />
+									</a4j:support>
+
+								</rich:suggestionbox><h:inputText
+									binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_UI_M_PROD_CODE_DESC}"
+									disabled="true" id="UI_M_PROD_CODE_DESC" styleClass="input"
+									title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$UI_M_PROD_CODE_DESC$tooltip}"
+									value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.UI_M_PROD_CODE_DESC}" />
+								<h:graphicImage id="AUTOID_42_PROD" styleClass="searchimg"
+												value="./../../images/Lov.gif" />
+									</td>
+									<td class="oddrowright" colspan="3"></td>
+							</tr>
+							<tr>
+								<td colspan="2" vAlign="top" width="100%"><h:panelGroup
+									id="sectionDtls">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td colspan="7"><rich:dataTable
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.dataTable}"
+												border="0" cellpadding="0"
+												id="PM_IL_WDS_CHARGES_SETUP_DATA_TABLE" rows="5"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.gridValueList}"
+												var="table" width="100%">
+
+												<!-- next column -->
+												<rich:column filterBy="#{table.WCS_CHARGE_CODE}"
+													filterEvent="onkeyup"
+													filterValue="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.filterByWCS_CHARGE_CODE}"
+													sortBy="#{table.WCS_CHARGE_CODE}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_28"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_CHARGE_CODE$caption}" />
+													</f:facet>
+													<a4j:commandLink
+														action="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.getDetails}"
+														immediate="true" reRender="sectionDtls">
+														<h:outputText id="AUTOID_29"
+															value="#{table.WCS_CHARGE_CODE} " />
+													</a4j:commandLink>
+												</rich:column>
+												<!-- next column -->
+
+												<!-- next column -->
+												<rich:column filterBy="#{table.WCS_SETUP_TYPE}"
+													filterEvent="onkeyup"
+													filterValue="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.filterByWCS_SETUP_TYPE}"
+													sortBy="#{table.WCS_SETUP_TYPE}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_30"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_SETUP_TYPE$caption}" />
+													</f:facet>
+													<h:outputText id="AUTOID_31"
+														value="#{table.WCS_SETUP_TYPE} " />
+												</rich:column>
+
+												<!-- next column -->
+												<rich:column filterBy="#{table.WCS_YRS_FM}"
+													filterEvent="onkeyup"
+													filterValue="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.filterByWCS_YRS_FM}"
+													sortBy="#{table.WCS_YRS_FM}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_32"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_YRS_FM$caption}" />
+													</f:facet>
+													<h:outputText id="AUTOID_33" value="#{table.WCS_YRS_FM} " />
+												</rich:column>
+
+												<!-- Attach scroller as footer of the table-->
+												<f:facet name="footer">
+													<h:panelGroup id="footerpanel" style="border:0">
+														<rich:datascroller align="right" id="myscr"
+															page="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.currPage}" />
+														<a4j:commandButton
+															actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.addNewRow}"
+															binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.UI_M_BUT_ADD}"
+															id="AUTOID_34" immediate="true"
+															reRender="errorPanel,sectionDtls" rendered="true"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.addNewButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.deleteRow}"
+															binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.UI_M_BUT_DELETE}"
+															id="AUTOID_35" immediate="true"
+															reRender="errorPanel,sectionDtls" rendered="false"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.deleteButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.post}"
+															binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.UI_M_BUT_POST}"
+															id="AUTOID_36" reRender="errorPanel,sectionDtls"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.postButtonCaption}" />
+													</h:panelGroup>
+												</f:facet>
+											</rich:dataTable></td>
+										</tr>
+										<tr>
+										<td class="oddrowfreeze" colspan="5"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_FRZ_FLAG$caption}" />
+												<h:selectBooleanCheckbox
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_FRZ_FLAG}"
+												id="WCS_FRZ_FLAG" 	disabled="false" rendered="true"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_FRZ_FLAG$tooltip}"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateCGH_FRZ_FLAG}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.CHECK_CGH_FRZ_FLAG}" >
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.fireFieldValidation}"
+													event="onclick" id="TEST_1" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+												</h:selectBooleanCheckbox>
+												</td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_CHARGE_CODE$caption}" />
+											<h:graphicImage id="AUTOID_37" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_CHARGE_CODE}"
+												id="WCS_CHARGE_CODE" required="true" styleClass="inputsmall"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_CHARGE_CODE$tooltip}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_CHARGE_CODE}">
+												<!-- <a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.callRowChangeListener}"
+													event="onblur" id="AUTOID_38" immediate="true"
+													reRender="errorPanel">
+												</a4j:support> -->
+												<rich:suggestionbox for="WCS_CHARGE_CODE" height="200"
+													id="sugchargecode"
+													suggestionAction="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.popLov4ChargeCode}"
+													var="lovchrg" width="200">
+													<h:column>
+														<h:outputText id="AUTOID_39"
+															value="#{lovchrg.LOV_WCS_CHARGE_CODE}" />
+													</h:column>
+													<h:column>
+														<h:outputText id="AUTOID_40"
+															value="#{lovchrg.LOV_UI_M_CHARGE_CODE_DESC}" />
+													</h:column>
+													<a4j:support
+														action="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.popChargeCodeDesc}"
+														event="onselect" id="AUTOID_41" immediate="true"
+														reRender="errorPanel,UI_M_CHARGE_CODE_DESC">
+													</a4j:support>
+												</rich:suggestionbox>
+											</h:inputText> <h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_UI_M_CHARGE_CODE_DESC}"
+												disabled="true" id="UI_M_CHARGE_CODE_DESC"
+												styleClass="input"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$UI_M_CHARGE_CODE_DESC$tooltip}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.UI_M_CHARGE_CODE_DESC}" />
+											<h:graphicImage id="AUTOID_42" styleClass="searchimg"
+												value="./../../images/Lov.gif" /></td>
+												<td class="evenrowright"></td>
+											<td class="evenrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_SETUP_TYPE$caption}" />
+											<h:graphicImage id="AUTOID_43" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="evenrow">
+											
+											<!-- Added WCS_YRS_TO_LABEL,WCS_YRS_FM_LABEL in rerender by Janani on 14.07.2017 for ZBILQC-1724475 -->
+											<h:selectOneMenu
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_SETUP_TYPE}"
+												id="WCS_SETUP_TYPE" required="true" styleClass="input"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_SETUP_TYPE$tooltip}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_SETUP_TYPE}">
+												<f:selectItems
+													value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.LIST_WCS_SETUP_TYPE}" />
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.callWCS_SETUP_TYPE}"
+													event="onchange" id="AUTOID_44" immediate="true"
+													reRender="errorPanel,WCS_RATE_PER,WCS_MIN_VALUE,WCS_MAX_VALUE,WCS_YRS_TO_LABEL,WCS_YRS_FM_LABEL">
+												</a4j:support>
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.callWCS_SETUP_TYPE}"
+													event="onblur" id="AUTOID_45" immediate="true" reRender="errorPanel,WCS_RATE_PER,WCS_MIN_VALUE,WCS_MAX_VALUE,
+													WCS_YRS_TO_LABEL,WCS_YRS_FM_LABEL">
+												</a4j:support>
+											</h:selectOneMenu></td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_EFF_FM_DT$caption}" />
+											<h:graphicImage id="AUTOID_46" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="oddrow"><span
+												title="Enter Withdrawal Effective Date From"> <rich:calendar
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_EFF_FM_DT}"
+												datePattern="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.datePattern}"
+												enableManualInput="true" id="WCS_EFF_FM_DT" inputSize="12"
+												inputClass="calendarinput"
+												required="true" toolTipMode="single"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateFromDate}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_EFF_FM_DT}">
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateFromDateAction}"
+													event="oninputchanged" id="AUTOID_47" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateFromDateAction}"
+													event="ondateselected" id="AUTOID_48" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateFromDateAction}"
+													event="oninputblur" id="AUTOID_49" immediate="true"
+													onsubmit="formatDate('PM_IL_WDS_CHARGES_SETUP:WCS_EFF_FM_DT')"
+													reRender="errorPanel">
+												</a4j:support>
+											</rich:calendar> </span></td>
+											<td class="oddrowright"></td>
+											<td class="oddrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_EFF_TO_DT$caption}" />
+											<h:graphicImage id="AUTOID_50" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="oddrow"><span
+												title="Enter Withdrawal Effective Date To">
+											 <rich:calendar
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_EFF_TO_DT}"
+												datePattern="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.datePattern}"
+												enableManualInput="true" id="WCS_EFF_TO_DT" inputSize="12"
+												required="true"
+												inputClass="calendarinput"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateToDate}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_EFF_TO_DT}">
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateToDateAction}"
+													event="oninputchanged" id="AUTOID_51" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateToDateAction}"
+													event="ondateselected" id="AUTOID_52" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateToDateAction}"
+													event="oninputblur" id="AUTOID_53" immediate="true"
+													onsubmit="formatDate('PM_IL_WDS_CHARGES_SETUP:WCS_EFF_TO_DT')"
+													reRender="errorPanel">
+												</a4j:support>
+											</rich:calendar> </span></td>
+										</tr>
+										<tr>
+										
+										<!-- Added binding for label by Janani on 14.07.2017 for ZBILQC-1724475 -->
+											<td class="evenrowright"><h:outputLabel
+												styleClass="label" for="WCS_YRS_FM" id="WCS_YRS_FM_LABEL"
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_YRS_FM_LABEL}"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_YRS_FM$caption}" />
+											<h:graphicImage id="AUTOID_54" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_YRS_FM}"
+												id="WCS_YRS_FM" required="true" styleClass="inputNumeric" maxlength="3"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_YRS_FM$tooltip}"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateYearFrom}" 
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_YRS_FM}"> 
+												<f:validateDoubleRange minimum="0"/>
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateYearsFrom}"
+													event="onblur" id="AUTOID_55" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+											</h:inputText></td>
+											<td class="evenrowright"></td>
+											<td class="evenrowright"><h:outputLabel
+												styleClass="label" for="WCS_YRS_TO" id="WCS_YRS_TO_LABEL"
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_YRS_TO_LABEL}"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_YRS_TO$caption}" />
+											<h:graphicImage id="AUTOID_56" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_YRS_TO}"
+												id="WCS_YRS_TO" required="true" styleClass="inputNumeric" maxlength="3"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_YRS_TO$tooltip}"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateYearTo}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_YRS_TO}">
+												<f:validateDoubleRange minimum="0" />
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateYearsTo}"
+													event="onblur" id="AUTOID_57" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+											</h:inputText></td>
+											
+											<!-- End -->
+											
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_RATE$caption}" />
+											<h:graphicImage id="AUTOID_58" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_RATE}"
+												id="WCS_RATE" required="true" styleClass="inputNumeric" maxlength="15"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_RATE$tooltip}"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validatorRate}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_RATE}">
+												<f:converter converterId="PELNumberFormatter" />
+												<f:validateDoubleRange maximum="999999999" 
+												minimum="0" />
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateRate}"
+													event="onblur" id="AUTOID_59" immediate="true"
+													reRender="errorPanel,WCS_AGE_FM,WCS_AGE_TO">
+												</a4j:support>
+											</h:inputText></td>
+											<td class="oddrowright"></td>
+											<td class="oddrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_RATE_PER$caption}" />
+											<h:graphicImage id="AUTOID_60" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_RATE_PER}"
+												id="WCS_RATE_PER" required="true" styleClass="inputNumeric" maxlength="10"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_RATE_PER$tooltip}"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validatorRatePer}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_RATE_PER}">
+												<f:converter converterId="PELNumberFormatter" />
+												<f:validateDoubleRange maximum="9999999999" 
+												minimum="0" />
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateRatePer}"
+													event="onblur" id="AUTOID_61" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+											</h:inputText></td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_MIN_VALUE$caption}" />
+											<h:graphicImage id="AUTOID_62" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="evenrow">
+											<!-- COMMENTED BY DHINESH ON 06-04-2018  
+												<h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_MIN_VALUE}"
+												id="WCS_MIN_VALUE" required="true" styleClass="inputNumeric"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_MIN_VALUE$tooltip}"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateMin}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_MIN_VALUE}">
+												<f:validateLongRange minimum="0" maximum="999999999"/>
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateMinValue}"
+													event="onblur" id="AUTOID_63" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+											</h:inputText> -->
+											<h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_MIN_VALUE}"
+												id="WCS_MIN_VALUE" required="true" styleClass="inputNumeric"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_MIN_VALUE$tooltip}"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateMin}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_MIN_VALUE}">
+												<f:converter converterId="PELNumberFormatter" />
+												<f:validateDoubleRange maximum="999999999" 
+												minimum="0" />
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateMinValue}"
+													event="onblur" id="AUTOID_63" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+											</h:inputText></td>
+											<td class="evenrowright"></td>
+											<td class="evenrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_MAX_VALUE$caption}" />
+											<h:graphicImage id="AUTOID_64" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="evenrow"><!-- <h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_MAX_VALUE}"
+												id="WCS_MAX_VALUE" required="true" styleClass="inputNumeric"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_MAX_VALUE$tooltip}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_MAX_VALUE}">
+												<f:validateLongRange minimum="0" maximum="999999999"/>
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateMaxValue}"
+													event="onblur" id="AUTOID_65" immediate="true"
+													reRender="errorPanel,WCS_AGE_FM,WCS_AGE_TO">
+												</a4j:support>
+											</h:inputText> -->
+											<h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_MAX_VALUE}"
+												id="WCS_MAX_VALUE" required="true" styleClass="inputNumeric"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_MAX_VALUE$tooltip}"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateMax}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_MAX_VALUE}">
+												<f:converter converterId="PELNumberFormatter" />
+												<f:validateDoubleRange maximum="999999999" 
+												minimum="0" />
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.fireFieldValidation}"
+													event="onblur" id="WCS_AGE_FM_WCS_MAX_VALUE" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateMaxValue}"
+													event="onblur" id="AUTOID_65" immediate="true"
+													reRender="errorPanel,WCS_AGE_FM,WCS_AGE_TO">
+												</a4j:support>
+											</h:inputText>
+											</td>
+										</tr>
+										
+										<!-- Age from and age to uncommented by Janani on 14.07.2017 for ZBILQC-1724475 -->
+										 <tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_AGE_FM_LABEL}"
+												styleClass="label" for="WCS_AGE_FM" rendered="true"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_AGE_FM$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_AGE_FM}"
+												id="WCS_AGE_FM"  styleClass="inputNumeric" maxlength="2"
+												rendered="true"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_AGE_FM$tooltip}"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateWCS_AGE_FM}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_AGE_FM}">
+												<f:validateDoubleRange minimum="0" />
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.fireFieldValidation}"
+													event="onblur" id="WCS_AGE_FM_AZ" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+											</h:inputText>
+											</td>
+											<td class="evenrow"></td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_AGE_TO_LABEL}"
+												styleClass="label" for="WCS_AGE_TO" rendered="true"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_AGE_TO$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_AGE_TO}"
+												id="WCS_AGE_TO"  styleClass="inputNumeric" maxlength="2"
+												rendered="true"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_AGE_TO$tooltip}"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateWCS_AGE_To}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_AGE_TO}">
+												<f:validateDoubleRange minimum="0" />
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.fireFieldValidation}"
+													event="onblur" id="WCS_AGE_TO_AZ" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+											</h:inputText>
+											</td>
+										</tr>   
+										
+										<!-- End -->
+										
+										<!-- Position changed by Janani on 14.07.2017 for ZBILQC-1724475 -->
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_NO_OF_TRANS$caption}" />
+											<h:graphicImage id="AUTOID_66" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_NO_OF_TRANS}"
+												id="WCS_NO_OF_TRANS" required="true" styleClass="inputNumeric"
+												title="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_NO_OF_TRANS$tooltip}"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validatorNoOfChargeLess}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_NO_OF_TRANS}">
+												<f:validateLongRange minimum="0" />
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION. validateNoOfChargeLess}"
+													event="onblur" id="AUTOID_67" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+											</h:inputText>
+											</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+															styleClass="label"
+															value="#{message.PILM060_APAC$PM_IL_WDS_CHARGES_SETUP$WCS_APPLIED_ON$caption}" />
+													</td>
+													<td class="oddrow"><!--Commented by pidugu raj dt: 22-10-2018 <h:selectOneMenu
+															binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_APPLIED_ON}"
+															disabled="false" id="WCS_APPLIED_ON" rendered="true"
+															required="false" styleClass="input"
+															validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateWCS_APPLIED_ON}"
+															value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_APPLIED_ON}">
+															<f:selectItems id="style_71"
+																value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.WCS_APPLIED_ON_ARRAYLIST}" />
+															<a4j:support
+																actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.fireFieldValidation}"
+																event="onblur" id="ListChanged" immediate="true"
+																reRender="errorPanel,FLEX_01" />
+														</h:selectOneMenu> -->
+														<!-- Newly added by pidugu raj as suggested by rakesh dt: 22-10-2018 -->
+														<h:selectOneMenu
+															binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_APPLIED_ON}"
+															disabled="false" id="WCS_APPLIED_ON" rendered="true"
+															required="false" styleClass="input"
+															validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateWCS_APPLIED_ON}"
+															value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_APPLIED_ON}">
+															<f:selectItems id="style_71"
+																value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.WCS_APPLIED_ON_ARRAYLIST}" />
+																<a4j:support
+																	actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.fireFieldValidation}"
+																	event="onchange" id="SUPPORT_1" immediate="true"
+																	reRender="errorPanel,FLEX_01,FORMULA_CODE_LOV,UI_M_FORMULA_CODE_DESC" />
+															<a4j:support
+																actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.fireFieldValidation}"
+																event="onblur" id="ListChanged" immediate="true"
+																reRender="errorPanel,FLEX_01,FORMULA_CODE_LOV,UI_M_FORMULA_CODE_DESC" />
+														</h:selectOneMenu>
+														<!-- Newly added by pidugu raj as suggested by rakesh dt: 22-10-2018 -->
+														</td>
+												</tr>
+												
+												
+												<!-- Newly added by pidugu raj dt: 12-10-2018 as suggested by srinivas reddy and sivaraman for surrender value -->
+												<tr>
+											<td class="oddrowright"><h:outputLabel id="forumal_code_label" rendered="true"
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_FORMULA_CODE_LABEL}"
+												styleClass="label" 
+												value="Formula Code" />
+											
+											</td>
+											<td class="oddrow">
+											<!-- <h:selectOneMenu
+															binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_WCS_FORMULA_CODE}"
+															disabled="false" id="WCS_FORUMULA_CODE_SELECT_ONE_MENU" 
+															required="false" styleClass="input" rendered="true"
+															validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateWCS_FORMULA_CODE}"
+															value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_FORMULA_CODE}">
+															<f:selectItems id="WCS_FORUMULA_CODE_ARRAYLIST"
+																value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.WCS_FORUMULACODE_ARRAYLIST}" />
+															<a4j:support
+																actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.fireFieldValidation}"
+																event="onblur" id="ListChanged_WCS_FORUMULA_CODE_ARRAYLIST" immediate="true"
+																reRender="errorPanel" />
+														</h:selectOneMenu> -->
+														<h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_PCC_FLEX_01}"
+												disabled="false" id="FLEX_01" maxlength="12" rendered="true"
+												styleClass="inputsmall"
+												validator="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.validateFormulaCode}"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.WCS_FORMULA_CODE}">
+												<a4j:support
+													actionListener="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.fireFieldValidation}"
+													event="onblur" id="FORMULA_1" immediate="true"
+													reRender="errorPanel,UI_M_FORMULA_CODE_DESC,FORMULA_CODE_LOV" />
+											</h:inputText> <h:inputText
+												binding="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.COMP_UI_M_FORMULA_CODE_DESC}"
+												disabled="true" id="UI_M_FORMULA_CODE_DESC" maxlength="240"
+												rendered="true" required="false" styleClass="input"
+												value="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.UI_M_FORMULA_CODE_DESC}" />
+											<rich:suggestionbox for="FLEX_01" height="300"
+												id="FORMULA_CODE_LOV"
+												suggestionAction="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.lovUI_M_FORMULA_CODE}"
+												var="panelCode" width="250">
+												<h:column id="COLUMN_SUGG_1">
+													<h:outputText id="AUTOID_52" value="#{panelCode.lovCode}" />
+												</h:column>
+												<h:column id="COLUMN_SUGG_2">
+													<h:outputText id="AUTOID_53" value="#{panelCode.lovName}" />
+												</h:column>
+												<a4j:support ajaxSingle="true" event="onselect"
+													id="FORMULA_CODE_SUGG_SUPPORT" immediate="true"
+													reRender="errorPanel,UI_M_FORMULA_CODE_DESC">
+													<f:setPropertyActionListener id="AUTOID_50"
+														target="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.PM_IL_WDS_CHARGES_SETUP_BEAN.UI_M_FORMULA_CODE_DESC}"
+														value="#{panelCode.lovName}" />
+												</a4j:support>
+											</rich:suggestionbox><h:graphicImage id="IMAGE_SUGG_45A" styleClass="searchimg"
+												value="./../../images/Lov.gif" />
+											</td>
+											</tr>
+										<!--END  Newly added by pidugu raj dt: 12-10-2018 as suggested by srinivas reddy and sivaraman for surrender value -->
+										
+										<!-- End -->
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.combinedSave}"
+											id="AUTOID_68" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_69"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTOID_70"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_71" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_72"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_73"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM060_APAC_PM_IL_WDS_CHARGES_SETUP_ACTION.deleteRow}"
+											id="AUTOID_74" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_75"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_76"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_77" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_78"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTOID_79"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink action="#{PILM060_APAC_utility.preBack}"
+											id="AUTOID_80" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_81"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTOID_82"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_83" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_84"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_85"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_86" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_87"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_88"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

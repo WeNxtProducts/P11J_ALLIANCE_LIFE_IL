@@ -1,0 +1,719 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml"
+	xmlns:w="http://3i-infotech.com/premia">
+	<ui:define name="body">
+
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM013_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_DOC_NO_SETUP" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%">
+					<tr>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink rendered="false"
+											action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.previousIconAction}"
+											id="AUTOID_1" style="text-decoration:none"
+											styleClass="toolbarImageStyle">
+											<h:graphicImage id="AUTOID_2"
+												styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.insertData}"
+											id="AUTOID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_5"
+												styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.saveNextAction}"
+											id="AUTOID_7" rendered="false" style="text-decoration:none"
+											styleClass="toolbarImageStyle">
+											<h:graphicImage id="AUTOID_8"
+												styleClass="searchimg"
+												value=".\..\..\images\savenext.GIF" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+											<h:commandLink
+											action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="searchimg" accesskey="u"
+												image="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.firstIconAction}"
+											id="AUTOID_10" rendered="false" style="text-decoration:none"
+											styleClass="toolbarImageStyle">
+											<h:graphicImage id="AUTOID_11"
+												styleClass="searchimg"
+												value=".\..\..\images\firstrec.gif" />
+											<h:outputText id="AUTOID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.nextIconAction}"
+											id="AUTOID_13" rendered="false" style="text-decoration:none"
+											styleClass="toolbarImageStyle">
+											<h:graphicImage id="AUTOID_14"
+												styleClass="searchimg"
+												value=".\..\..\images\nextpage.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.lastIconAction}"
+											id="AUTOID_16" rendered="false" style="text-decoration:none"
+											styleClass="toolbarImageStyle">
+											<h:graphicImage id="AUTOID_17"
+												styleClass="searchimg"
+												value=".\..\..\images\lastRecord.gif" />
+											<h:outputText id="AUTOID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD" location="right">
+										<w:treeWizard id="wizard" binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.wizard}"/>	
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+							<rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading} #{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.errorMap['current'] !=null? PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.errorMap['current']:PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										style="color: red; font-style: italic;font-weight:bold;"
+										styleClass="ErrorMessages"
+										value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.errorMessages}" />
+									<h:messages id="msg"
+										rendered="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.globalMsgRender}"
+										styleClass="ErrorMessages" />
+									<h:outputText escape="false" id="warningMessages"
+										style="color: green; font-style: italic;font-weight:bold;"
+										styleClass="WarningMessages"
+										value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.warningMessages}" />
+								</rich:simpleTogglePanel>
+						</td>
+					</tr>
+
+
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table  id="linkstable" width="100%">
+							<tr>
+								<td ><h:outputLabel
+									value="#{message.PILM013_APAC$PM_IL_DOC_SETUP$DOC_NO$TAB}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div id="tablecontainer">
+							<div id="sidebar" style="width:21%;vertical-align:top">
+								<div id="handle" align="center" style="width:5%;"><a4j:commandLink
+													actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.wizard.toggle}"
+													id="BACK_TOOL_FOOTER1" immediate="true" rendered="true"
+													style="text-decoration:none;align:left" 
+													styleClass="toolbarCommandLinkStyle">
+														<img align="left"
+																alt="Click to toggle the sidebar" height="123"
+																onclick="toggleSideBar();"
+																src="./../../resources/images/toggle.jpg" style="border: 0;"
+														width="14" />
+												</a4j:commandLink></div>
+								
+								<div id="sbText" style="display:compact;" >
+									<div id="linkstable1" style="vertical-align:top; width:95%">
+										<w:treeWizardPanel binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.wizard.wizardPanel}" id="wizardPanel"/>		
+						  	  		</div>
+					  	  		</div>
+					  	  		</div>
+						
+						<div id="content" style="width:79%;">
+						<table width="100%">
+							<tr>
+
+								<td valign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrow" align="right"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_FRZ_FLAG_LABEL}"
+											for="DNS_FRZ_FLAG" id="DNS_FRZ_FLAG_LABEL" rendered="true"
+											styleClass="label"
+											
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_FRZ_FLAG$caption}" /><h:selectBooleanCheckbox
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_FRZ_FLAG}"
+											id="DNS_FRZ_FLAG" rendered="true"
+											title="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_FRZ_FLAG$tooltip}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_FS_LABEL}"
+											for="DNS_FS" id="DNS_FS_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_FS$caption}" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_FS}"
+											id="DNS_FS" maxlength="1" rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_FS$prompt}"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_FS}" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+									</tr>
+
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_LEVEL_1_LABEL}"
+											for="DNS_LEVEL_1" id="DNS_LEVEL_1_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_LEVEL_1$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_LEVEL_1}"
+											id="DNS_LEVEL_1" rendered="true" required="false"
+											styleClass="input"
+											validator="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_LEVEL_1}"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_LEVEL_1}">
+											<f:selectItem id="SEL_1" itemLabel="--Select--" itemValue="" />
+											<f:selectItems id="SEL_14"
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_LEVEL_1_ARRAYLIST}" />
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onchange" id="AUTOID_19" immediate="true"
+												reRender="errorPanel,DNS_L1_ATTACH_YN,DNS_LEVEL_2,DNS_LEVEL_3,DNS_LEVEL_4,DNS_LEVEL_5,DNS_L2_ATTACH_YN,DNS_L3_ATTACH_YN,DNS_L4_ATTACH_YN,DNS_L5_ATTACH_YN,mypanel">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_L1_ATTACH_YN_LABEL}"
+											for="DNS_L1_ATTACH_YN" id="DNS_L1_ATTACH_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_L1_ATTACH_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_L1_ATTACH_YN}"
+											disabled="false" id="DNS_L1_ATTACH_YN" rendered="true"
+											required="true" styleClass="input"
+											validator="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_L1_ATTACH_YN}"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_L1_ATTACH_YN}">
+											<f:selectItem id="SEL_2" itemLabel="--Select--" itemValue="" />
+											<f:selectItems id="SEL_13"
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_L1_ATTACH_YN_ARRAYLIST}" />
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onchange" id="AUTOID_21" immediate="true"
+												reRender="errorPanel,DNS_L2_ATTACH_YN">
+											</a4j:support>
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onblur" id="AUTOID_22" immediate="true"
+												reRender="errorPanel,DNS_L2_ATTACH_YN">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+									</tr>
+
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_LEVEL_2_LABEL}"
+											for="DNS_LEVEL_2" id="DNS_LEVEL_2_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_LEVEL_2$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_LEVEL_2}"
+											id="DNS_LEVEL_2" rendered="true" required="false"
+											styleClass="input"
+											validator="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_LEVEL_2}"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_LEVEL_2}">
+											<f:selectItem id="SEL_3" itemLabel="--Select--" itemValue="" />
+											<f:selectItems id="SEL_12"
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_LEVEL_2_ARRAYLIST}" />
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onchange" id="AUTOID_23" immediate="true"
+												reRender="errorPanel,DNS_LEVEL_2,DNS_LEVEL_3,DNS_LEVEL_4,DNS_LEVEL_5,DNS_L2_ATTACH_YN,DNS_L3_ATTACH_YN,DNS_L4_ATTACH_YN,DNS_L5_ATTACH_YN">
+											</a4j:support>
+											<a4j:support
+												focus="DNS_L2_ATTACH_YN" event="onblur" id="AUTOID_231" 
+												immediate="true" reRender="errorPanel">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_L2_ATTACH_YN_LABEL}"
+											for="DNS_L2_ATTACH_YN" id="DNS_L2_ATTACH_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_L2_ATTACH_YN$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_L2_ATTACH_YN}"
+											id="DNS_L2_ATTACH_YN" rendered="true" required="true"
+											styleClass="input"
+											validator="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_L2_ATTACH_YN}"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_L2_ATTACH_YN}">
+											<f:selectItem id="SEL_4" itemLabel="--Select--" itemValue="" />
+											<f:selectItems id="SEL_11"
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_L2_ATTACH_YN_ARRAYLIST}" />
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onchange" id="AUTOID_25" immediate="true"
+												reRender="errorPanel,DNS_L3_ATTACH_YN">
+											</a4j:support>
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onblur" id="AUTOID_26" immediate="true"
+												reRender="errorPanel,DNS_L3_ATTACH_YN">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+									</tr>
+
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_LEVEL_3_LABEL}"
+											for="DNS_LEVEL_3" id="DNS_LEVEL_3_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_LEVEL_3$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_LEVEL_3}"
+											id="DNS_LEVEL_3" rendered="true" required="false"
+											styleClass="input"
+											validator="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_LEVEL_3}"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_LEVEL_3}">
+											<f:selectItem id="SEL_5" itemLabel="--Select--" itemValue="" />
+											<f:selectItems
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_LEVEL_3_ARRAYLIST}" />
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onchange" id="AUTOID_27" immediate="true"
+												reRender="errorPanel,DNS_LEVEL_3,DNS_LEVEL_4,DNS_LEVEL_5,DNS_L3_ATTACH_YN,DNS_L4_ATTACH_YN,DNS_L5_ATTACH_YN">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_L3_ATTACH_YN_LABEL}"
+											for="DNS_L3_ATTACH_YN" id="DNS_L3_ATTACH_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_L3_ATTACH_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_L3_ATTACH_YN}"
+											id="DNS_L3_ATTACH_YN" rendered="true" required="true"
+											styleClass="input"
+											validator="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_L3_ATTACH_YN}"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_L3_ATTACH_YN}">
+											<f:selectItem  id="SEL_6" itemLabel="--Select--" itemValue="" />
+											<f:selectItems id="SEL_7"
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_L3_ATTACH_YN_ARRAYLIST}" />
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onchange" id="AUTOID_29" immediate="true"
+												reRender="errorPanel,DNS_L4_ATTACH_YN">
+											</a4j:support>
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onblur" id="AUTOID_30" immediate="true"
+												reRender="errorPanel,DNS_L4_ATTACH_YN">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+									</tr>
+
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_LEVEL_4_LABEL}"
+											for="DNS_LEVEL_4" id="DNS_LEVEL_4_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_LEVEL_4$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_LEVEL_4}"
+											id="DNS_LEVEL_4" rendered="true" required="false"
+											styleClass="input"
+											validator="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_LEVEL_4}"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_LEVEL_4}">
+											<f:selectItem itemLabel="--Select--" itemValue="" />
+											<f:selectItems
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_LEVEL_4_ARRAYLIST}" />
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onchange" id="AUTOID_31" immediate="true"
+												reRender="errorPanel,DNS_LEVEL_4,DNS_LEVEL_5,DNS_L4_ATTACH_YN,DNS_L5_ATTACH_YN">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_L4_ATTACH_YN_LABEL}"
+											for="DNS_L4_ATTACH_YN" id="DNS_L4_ATTACH_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_L4_ATTACH_YN$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_L4_ATTACH_YN}"
+											id="DNS_L4_ATTACH_YN" rendered="true" required="true"
+											styleClass="input"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_L4_ATTACH_YN}">
+											<f:selectItem itemLabel="--Select--" itemValue="" />
+											<f:selectItems
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_L4_ATTACH_YN_ARRAYLIST}" />
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+									</tr>
+
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM013_APAC_PM_IL_DOC_NO_SETUP_ACTION.COMP_DNS_LEVEL_5_LABEL}"
+											for="DNS_LEVEL_5" id="DNS_LEVEL_5_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_LEVEL_5$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_LEVEL_5}"
+											id="DNS_LEVEL_5" rendered="true" required="false"
+											styleClass="input"
+											validator="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_LEVEL_5}"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_LEVEL_5}">
+											<f:selectItem itemLabel="--Select--" itemValue="" />
+											<f:selectItems
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_LEVEL_5_ARRAYLIST}" />
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onchange" id="AUTOID_33" immediate="true"
+												reRender="errorPanel,DNS_LEVEL_5,DNS_L5_ATTACH_YN">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_L5_ATTACH_YN_LABEL}"
+											for="DNS_L5_ATTACH_YN" id="DNS_L5_ATTACH_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_L5_ATTACH_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_L5_ATTACH_YN}"
+											id="DNS_L5_ATTACH_YN" rendered="true" required="true"
+											styleClass="input"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_L5_ATTACH_YN}">
+											<f:selectItem itemLabel="--Select--" itemValue="" />
+											<f:selectItems
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_L5_ATTACH_YN_ARRAYLIST}" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+									</tr>
+
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_PREFIX_YN_LABEL}"
+											for="DNS_PREFIX_YN" id="DNS_PREFIX_YN_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_PREFIX_YN$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_PREFIX_YN}"
+											id="DNS_PREFIX_YN" rendered="true" required="true"
+											styleClass="input"
+											validator="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_PREFIX_YN}"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_PREFIX_YN}">
+											<f:selectItem itemLabel="--Select--" itemValue="" />
+											<f:selectItems
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_PREFIX_YN_ARRAYLIST}" />
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onchange" id="AUTOID_36" immediate="true"
+												reRender="errorPanel,DNS_PREFIX">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_PREFIX_LABEL}"
+											for="DNS_PREFIX" id="DNS_PREFIX_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_PREFIX$caption}" />
+										<h:graphicImage id="AUTOID_37" style="" styleClass="searchimg"
+											value=".\..\..\images\mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_PREFIX}"
+											id="DNS_PREFIX" maxlength="12" rendered="true"
+											required="false" styleClass="input"
+											title="Enter the Prefix Value"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_PREFIX}">
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onblur" id="AUTOID_38" immediate="true"
+												reRender="errorPanel">
+											</a4j:support>
+										</h:inputText></td>
+										<td class="evenrow">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_PAD_YN_LABEL}"
+											for="DNS_PAD_YN" id="DNS_PAD_YN_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_PAD_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_PAD_YN}"
+											id="DNS_PAD_YN" rendered="true" required="false"
+											styleClass="input"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_PAD_YN}">
+											<f:selectItem itemLabel="--Select--" itemValue="" />
+											<f:selectItems
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_PAD_YN_ARRAYLIST}" />
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_PAD_YN}"
+												event="onchange" id="AUTOID_40" immediate="true"
+												reRender="errorPanel,DNS_PAD_LENGTH">
+											</a4j:support>
+											<a4j:support
+												focus="DNS_PAD_LENGTH"
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_PAD_YN}"
+												event="onblur" id="AUTOID_41" immediate="true"
+												reRender="errorPanel,DNS_PAD_LENGTH">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_PAD_LENGTH_LABEL}"
+											for="DNS_PAD_LENGTH" id="DNS_PAD_LENGTH_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_PAD_LENGTH$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											onfocus="currFocus('PM_IL_DOC_NO_SETUP:DNS_PAD_LENGTH')"
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_PAD_LENGTH}"
+											id="DNS_PAD_LENGTH" maxlength="2" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_PAD_LENGTH$prompt}"
+											validator="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_PAD_LENGTH}"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_PAD_LENGTH}">
+											<a4j:support
+												focus="DNS_CHK_DIGIT_YN"
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onblur" id="AUTOID_42" immediate="true"
+												reRender="errorPanel">
+											</a4j:support>
+										</h:inputText></td>
+										<td class="oddrow">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_CHK_DIGIT_YN_LABEL}"
+											for="DNS_CHK_DIGIT_YN" id="DNS_CHK_DIGIT_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_CHK_DIGIT_YN$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											onfocus="currFocus('PM_IL_DOC_NO_SETUP:DNS_CHK_DIGIT_YN')"
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_CHK_DIGIT_YN}"
+											id="DNS_CHK_DIGIT_YN" rendered="true" required="true"
+											styleClass="input"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_CHK_DIGIT_YN}">
+											<f:selectItem itemLabel="--Select--" itemValue="" />
+											<f:selectItems
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_CHK_DIGIT_YN_ARRAYLIST}" />
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_YEAR_NUM_LABEL}"
+											for="DNS_YEAR_NUM" id="DNS_YEAR_NUM_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_YEAR_NUM$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_YEAR_NUM}"
+											id="DNS_YEAR_NUM" rendered="true" required="true"
+											styleClass="input"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_YEAR_NUM}">
+											<f:selectItem itemLabel="--Select--" itemValue="" />
+											<f:selectItems
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_YEAR_NUM_ARRAYLIST}" />
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_ATTACH_SEQ_LEVEL_LABEL}"
+											for="DNS_ATTACH_SEQ_LEVEL" id="DNS_ATTACH_SEQ_LEVEL_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM013_APAC$PM_IL_DOC_NO_SETUP$DNS_ATTACH_SEQ_LEVEL$caption}" />
+										</td>
+										<td class="oddrow">
+										
+										<!-- Commented onchange by Janani on 16.05.2018 for validating seq level -->
+										<h:selectOneMenu
+											binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.COMP_DNS_ATTACH_SEQ_LEVEL}"
+											id="DNS_ATTACH_SEQ_LEVEL" rendered="true" required="true"
+											styleClass="input" disabled="false"
+											validator="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_ATTACH_SEQ_LEVEL}"
+											value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.PM_IL_DOC_NO_SETUP_BEAN.DNS_ATTACH_SEQ_LEVEL}">
+											<f:selectItem itemLabel="--Select--" itemValue="" />
+											<f:selectItems
+												value="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.DNS_ATTACH_SEQ_LEVEL_ARRAYLIST}" />
+											<!--  <a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onchange" id="AUTOID_46" immediate="true"
+												reRender="errorPanel,DNS_ATTACH_SEQ_LEVEL">
+											</a4j:support>  -->
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.setErrorMessagesInMap}"
+												event="onblur" id="AUTOID_47" immediate="true"
+												reRender="errorPanel,DNS_ATTACH_SEQ_LEVEL">
+											</a4j:support>
+
+											<a4j:support
+												actionListener="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.validateDNS_ATTACH_SEQ_LEVEL_WHEN_NEW_ITEM_INSTANCE}"
+												event="onfocus" id="AUTOID_48" immediate="true"
+												reRender="errorPanel" />
+										</h:selectOneMenu>
+										
+										<!-- End -->
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrow">&nbsp;</td>
+									</tr>
+								</table>
+								</td>
+								<td />
+							</tr>
+						</table>
+						</div>
+						</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.insertData}"
+									id="AUTOID_49" rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_50"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="AUTOID_51"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.saveNextAction}"
+									id="AUTOID_52" rendered="false" style="text-decoration:none"
+									styleClass="toolbarImageStyle">
+									<h:graphicImage id="AUTOID_53"
+										styleClass="searchimg" value=".\..\..\images\savenext.GIF" />
+									<h:outputText id="AUTOID_54"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.firstIconAction}"
+									id="AUTOID_55" rendered="false" style="text-decoration:none"
+									styleClass="toolbarImageStyle">
+									<h:graphicImage id="AUTOID_56"
+										styleClass="searchimg" value=".\..\..\images\firstrec.gif" />
+									<h:outputText id="AUTOID_57"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.previousIconAction}"
+									id="AUTOID_58" rendered="false" style="text-decoration:none"
+									styleClass="toolbarImageStyle">
+									<h:graphicImage id="AUTOID_59"
+										styleClass="searchimg" value=".\..\..\images\prevpage.gif" />
+									<h:outputText id="AUTOID_60"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.nextIconAction}"
+									id="AUTOID_61" rendered="false" style="text-decoration:none"
+									styleClass="toolbarImageStyle">
+									<h:graphicImage id="AUTOID_62"
+										styleClass="searchimg" value=".\..\..\images\nextpage.gif" />
+									<h:outputText id="AUTOID_63"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.PM_IL_DOC_NO_SETUP_ACTION_BEAN.lastIconAction}"
+									id="AUTOID_64" rendered="false" style="text-decoration:none"
+									styleClass="toolbarImageStyle">
+									<h:graphicImage id="AUTOID_65"
+										styleClass="searchimg" value=".\..\..\images\lastRecord.gif" />
+									<h:outputText id="AUTOID_66"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+							<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM" 
+										location="right">
+										<w:wizardPanelFooter binding="#{PM_IL_DOC_SETUP_COMPOSITE_ACTION.wizard.wizardPanelFooter}"/>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

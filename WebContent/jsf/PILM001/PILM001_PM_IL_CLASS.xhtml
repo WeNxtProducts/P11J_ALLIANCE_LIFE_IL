@@ -1,0 +1,294 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PM_IL_CLASS_ACTION.beforePhase}">
+			<f:loadBundle basename="messageProperties_PILM001" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PM_IL_CLASS" onkeypress="return event.keyCode != 13">
+			<table width="100%" border="0" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" width="100%" valign="top">&nbsp;&nbsp;
+						<table width="100%" id="toolbartable" cellpadding="0"
+							cellspacing="0" border="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink style="text-decoration:none"
+											action="#{PM_IL_CLASS_ACTION.backAction}"
+											styleClass="toolbarCommandLinkStyle" immediate="true">
+											<h:commandButton style="border: thin solid white"
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText value="#{menumessage.jsf$header$image$back}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink action="#{PM_IL_CLASS_ACTION.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20"><rich:simpleTogglePanel
+							id="errorPanel" switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM_IL_CLASS_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM_IL_CLASS_ACTION.errorMap['current'] !=null? PM_IL_CLASS_ACTION.errorMap['current']: PM_IL_CLASS_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PM_IL_CLASS_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PM_IL_CLASS_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PM_IL_CLASS_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" id="linkstable" cellpadding="0"
+							cellspacing="0" border="0">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PILM001$PM_IL_CLASS$heading}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="5">
+
+						<table width="100%" cellpadding="0" cellspacing="0" border="0"
+							align="center">
+							<tr>
+								<td width="100%" valign="top">
+								<table id="bordertable" align="left" width="100%"
+									cellpadding="0" cellspacing="0" border="0">
+									<tr>
+										<td class="oddrowfreeze" colspan="5"><h:outputLabel
+											binding="#{PM_IL_CLASS_ACTION.COMP_CLASS_FRZ_FLAG_LABEL}"
+											for="CLASS_FRZ_FLAG" id="CLASS_FRZ_FLAG_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM001$PM_IL_CLASS$CLASS_FRZ_FLAG$caption}" />
+										<h:selectBooleanCheckbox
+											title="#{message.PILM001$PM_IL_CLASS$CLASS_FRZ_FLAG$tooltip}"
+											id="CLASS_FRZ_FLAG" rendered="true"
+											value="#{PM_IL_CLASS_ACTION.PM_IL_CLASS_BEAN.UI_CLASS_FRZ_FLAG}" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PM_IL_CLASS_ACTION.COMP_CLASS_CODE_LABEL}"
+											for="CLASS_CODE" id="CLASS_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM001$PM_IL_CLASS$CLASS_CODE$caption}" />
+											<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PM_IL_CLASS_ACTION.COMP_CLASS_CODE}"
+											disabled="#{!PM_IL_CLASS_ACTION.PM_IL_CLASS_BEAN.insertMode}"
+											id="CLASS_CODE" maxlength="12" rendered="true"
+											required="true" styleClass="input"
+											validator="#{PM_IL_CLASS_ACTION.classCodeValidator}"
+											title="#{message.PILM001$PM_IL_CLASS$CLASS_CODE$tooltip}"
+											value="#{PM_IL_CLASS_ACTION.PM_IL_CLASS_BEAN.CLASS_CODE}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PM_IL_CLASS_ACTION.validateNullValues}"
+												reRender="errorMessages,err,warningMessages" />
+
+										</h:inputText></td>
+										<td class="evenrowright" width="4%">&nbsp;</td>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PM_IL_CLASS_ACTION.COMP_CLASS_NAME_LABEL}"
+											for="CLASS_NAME" id="CLASS_NAME_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM001$PM_IL_CLASS$CLASS_NAME$caption}" />
+											<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PM_IL_CLASS_ACTION.COMP_CLASS_NAME}"
+											disabled="false" id="CLASS_NAME" maxlength="30"
+											rendered="true" required="true"
+											validator="#{PM_IL_CLASS_ACTION.validateCLASS_NAME}"
+											styleClass="input" title="Enter the Class Name"
+											value="#{PM_IL_CLASS_ACTION.PM_IL_CLASS_BEAN.CLASS_NAME}">
+											<a4j:support event="onblur" immediate="true"
+												focus="CLASS_SHORT_NAME"
+												actionListener="#{PM_IL_CLASS_ACTION.shortName}"
+												reRender="errorMessages,err,CLASS_SHORT_NAME,CLASS_NAME,CLASS_FACIN_YN" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PM_IL_CLASS_ACTION.COMP_CLASS_SHORT_NAME_LABEL}"
+											for="CLASS_SHORT_NAME" id="CLASS_SHORT_NAME_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM001$PM_IL_CLASS$CLASS_SHORT_NAME$caption}" />
+										</td>
+										<td class="oddrow" width="28%"><h:inputText
+											binding="#{PM_IL_CLASS_ACTION.COMP_CLASS_SHORT_NAME}"
+											disabled="false" id="CLASS_SHORT_NAME" maxlength="15"
+											rendered="true" required="false" styleClass="input"
+											title="Enter the Class Short Name"
+											value="#{PM_IL_CLASS_ACTION.PM_IL_CLASS_BEAN.CLASS_SHORT_NAME}" />
+										</td>
+
+										<td class="oddrowright" width="4%">&nbsp;</td>
+										<td class="oddrowright" width="20%"><h:outputLabel
+											binding="#{PM_IL_CLASS_ACTION.COMP_CLASS_FACIN_YN_LABEL}"
+											for="CLASS_FACIN_YN" id="CLASS_FACIN_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM001$PM_IL_CLASS$CLASS_FACIN_YN$caption}" />
+										</td>
+										<td class="oddrow" width="28%"><h:selectOneMenu
+											binding="#{PM_IL_CLASS_ACTION.COMP_CLASS_FACIN_YN}"
+											id="CLASS_FACIN_YN" rendered="true" required="false"
+											styleClass="input" title="Select the Inward Business"
+											value="#{PM_IL_CLASS_ACTION.PM_IL_CLASS_BEAN.CLASS_FACIN_YN}">
+											<f:selectItems
+												value="#{PM_IL_CLASS_ACTION.CLASS_FACIN_YN_LIST}" />
+										</h:selectOneMenu></td>
+									</tr>
+
+									<tr>
+										<td colspan="5" width="100%"><rich:simpleTogglePanel
+											width="100%" id="bilingualPanel"
+											label="#{message.PILM001$BILINGUAL$label}"
+											switchType="client" value="BilswitchType=" height="100">
+
+											<table id="Bil" align="left" width="100%" cellpadding="0"
+												cellspacing="0" border="0">
+
+												<tr>
+													<td class="oddrowright" width="20%"><h:outputLabel
+														binding="#{PM_IL_CLASS_ACTION.COMP_CLASS_BL_NAME_LABEL}"
+														for="CLASS_BL_NAME" id="CLASS_BL_NAME_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILM001$PM_IL_CLASS_BL$CLASS_BL_NAME$caption}" />
+													</td>
+													<td class="oddrow" width="28%"><h:inputText
+														binding="#{PM_IL_CLASS_ACTION.COMP_CLASS_BL_NAME}"
+														disabled="false" id="CLASS_BL_NAME" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="Enter the Billingual Name"
+														value="#{PM_IL_CLASS_ACTION.PM_IL_CLASS_BEAN.CLASS_BL_NAME}">
+														<a4j:support event="onblur" immediate="true"
+															focus="BL_SHORT_NAME"
+															oncomplete="setFocus('PM_IL_CLASS:CLASS_BL_SHORT_NAME','PM_IL_CLASS:CLASS_BL_NAME')"
+															actionListener="#{PM_IL_CLASS_ACTION.prepareClassName}"
+															reRender="CLASS_BL_SHORT_NAME" />
+													</h:inputText></td>
+													<td class="oddrow" width="4%">&nbsp;</td>
+													<td class="oddrowright" width="20%"><h:outputLabel
+														binding="#{PM_IL_CLASS_BL_ACTION.COMP_CLASS_BL_SHORT_NAME_LABEL}"
+														for="CLASS_BL_SHORT_NAME" id="CLASS_BL_SHORT_NAME_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILM001$PM_IL_CLASS_BL$CLASS_BL_SHORT_NAME$caption}" />
+													</td>
+													<td class="oddrow" width="28%"><h:inputText
+														binding="#{PM_IL_CLASS_ACTION.COMP_CLASS_BL_SHORT_NAME}"
+														disabled="false" id="CLASS_BL_SHORT_NAME" maxlength="15"
+														rendered="true" required="false" styleClass="input"
+														title="Enter the Billingual Short Name"
+														onfocus="currFocus('PM_IL_CLASS:CLASS_BL_SHORT_NAME')"
+														value="#{PM_IL_CLASS_ACTION.PM_IL_CLASS_BEAN.CLASS_BL_SHORT_NAME}" />
+													</td>
+												</tr>
+
+											</table>
+										</rich:simpleTogglePanel></td>
+									</tr>
+
+
+								</table>
+								</td>
+								<td width="20%" valign="top">
+								<table cellpadding="0" cellspacing="0" border="0">
+									<!-- <tr>
+						<td>
+						<h:commandButton
+							binding="#{PM_IL_CLASS_ACTION.COMP_UI_M_BUT_BL}" disabled="false"
+							id="UI_M_BUT_BL" rendered="true" style="height:16px;width:54px;"
+							styleClass="button" title=""
+							value="#{message.PILM001$PM_IL_CLASS$UI_M_BUT_BL$caption}" /></td>
+					</tr>-->
+								</table>
+								</td>
+							</tr>
+						</table>
+
+
+
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3" width="100%" valign="top">&nbsp;&nbsp;
+						<table width="100%" id="toolbartable" cellpadding="0"
+							cellspacing="0" border="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+
+										<h:commandLink style="text-decoration:none" rendered="true"
+											styleClass="toolbarCommandLinkStyle"
+											action="#{PM_IL_CLASS_ACTION.saveRecord}">
+											<h:commandButton style="border: thin solid white"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText value="#{menumessage.jsf$header$image$save}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<!--<h:commandLink styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage style="border: thin solid white" styleClass="toolbarImageStyle"
+										value="./../../images/savenext.GIF" />
+									<h:outputText value="#{menumessage.jsf$header$image$saveinsert}" />
+								</h:commandLink>-->
+										<h:commandLink style="text-decoration:none" rendered="false"
+											styleClass="toolbarCommandLinkStyle"
+											action="#{ClassmasterUtility.preBack}" immediate="true">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/back.png" />
+											<h:outputText value="#{menumessage.jsf$header$image$back}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+			</table>
+			</h:form>
+			<table width="100%">
+				<tr>
+
+				</tr>
+			</table>
+
+		</f:view>
+	</ui:define>
+</ui:composition>

@@ -1,0 +1,124 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+<f:view>
+<f:loadBundle basename="messageProperties_PILM038" var="message" />
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0"> 
+		
+		
+		<!-- Body row -->
+		<tr>
+		<td>
+			<h:form id="classmaster">
+				<!-- hidden value for navigating to next screen -->
+				
+
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+								value="#{commonmsg.intialSearchCriteria$Caption}"/>
+						</td>
+						<td>
+							Claim Type: 
+							<h:selectOneMenu  
+                             disabled="false" id="CLAIM_TYPE" rendered="true" 
+                             required="false" style="height:23px;width:100px;" styleClass=""
+                             value="#{PILM038_ClassMasterSearch.initClasscode}"
+                             title="Claim Type">
+                              <f:selectItems 
+	                               value="#{PILM038_ClassMasterSearch.claim_Type_List}"/>
+	                               <a4j:support event="onchange"
+	                               					immediate="true"
+	                               					reRender="CLAIM_TYPE_DESC"
+	                               					actionListener="#{PILM038_ClassMasterSearch.setDescription}"/>
+                            </h:selectOneMenu>
+                            
+						</td>
+						<td>
+							Claim Type Desc: <h:inputText id="CLAIM_TYPE_DESC"
+													binding="#{PILM038_ClassMasterSearch.CLAIM_TYPE_DESC}" 
+													title="Claim Type Desc" 
+													value="#{PILM038_ClassMasterSearch.initClassname}"/>
+						</td>
+						<td>
+							<h:commandButton value="#{commonmsg.searchButton$caption}" id="a4link" 
+									action="#{PILM038_ClassMasterSearch.fetchClassDetails}" styleClass="button">
+							</h:commandButton>
+						</td>
+					</tr>
+				</table>
+				
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId" value="#{PILM038_ClassMasterSearch.nameList}"
+				binding="#{PILM038_PM_IL_CLAIM_COVER_ACTION.datatable}"
+					var="classmaster" cellpadding="5px" rows="10" border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index" align="right">
+						</rich:datascroller>
+					</f:facet>
+			
+					<!-- next column 
+					<rich:column width="5">
+						<f:facet name="header">
+								</f:facet>
+						<h:selectBooleanCheckbox rendered="false" value="#{classmaster.CHECK_BOX}" >
+						<a4j:support event="onclick" actionListener="#{PILM038_PM_IL_CLAIM_COVER_ACTION.checkBoxStatus}">
+						</a4j:support>
+						<a4j:support event="onblur" immediate="true"
+											actionListener="#{PILM038_PM_IL_CLAIM_COVER_ACTION.checkBoxValidation}"></a4j:support>
+						</h:selectBooleanCheckbox>
+						
+					</rich:column> -->
+					
+					<rich:column filterBy="#{classmaster.CC_COVER_CODE}" sortBy="#{classmaster.CC_COVER_CODE}" filterEvent="onkeyup" >
+						<f:facet name="header">
+							<h:outputText value="COVER CODE" >
+							</h:outputText>
+						</f:facet>
+					 <h:commandLink action="#{PILM038_PM_IL_CLAIM_COVER_ACTION.update}" >
+						 	<h:outputText value="#{classmaster.CC_COVER_CODE}" />
+						 	<f:param name="CoverCode" value="#{classmaster.CC_COVER_CODE}"/>
+							<f:param name="claimType" value="#{classmaster.CC_CLAIM_TYPE}"/>
+					 </h:commandLink>
+				</rich:column>
+			<rich:column filterBy="#{classmaster.CC_PROD_CODE}" sortBy="#{classmaster.CC_PROD_CODE}" filterEvent="onkeyup" >
+					<f:facet name="header">
+						<h:outputText value="PRODUCT CODE" />
+					</f:facet>
+						<h:outputText value="#{classmaster.CC_PROD_CODE} " />
+				</rich:column>
+				<rich:column filterBy="#{classmaster.CC_CLAIM_TYPE}" sortBy="#{classmaster.CC_CLAIM_TYPE}" filterEvent="onkeyup">
+				
+						<f:facet name="header">
+							<h:outputText value="CLAIM TYPE" />
+						</f:facet>
+						<h:outputText value="#{classmaster.CC_CLAIM_TYPE}" >
+						</h:outputText>
+				</rich:column>
+				</rich:dataTable>
+				<tr><td><h:commandButton value="#{message.PILM038$PM_IL_CLASS$insertclick}" 
+					action="#{PILM038_ClassMasterSearch.clearSession}" styleClass="button"/></td>
+			<td>
+			<h:commandButton id="delete" value="Delete" rendered="false" styleClass="button"
+				actionListener="#{PILM038_ClassMasterSearch.deleteRow}"/>
+			</td></tr>
+			</h:form>
+		</td>
+		</tr>
+
+		
+	</table>	
+</f:view>
+</ui:define>
+</ui:composition>

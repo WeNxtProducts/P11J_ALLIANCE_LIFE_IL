@@ -1,0 +1,132 @@
+package com.iii.pel.forms.PILT020;
+
+import com.iii.apps.persistence.Column;
+import com.iii.apps.persistence.Table;
+import com.iii.premia.common.bean.BaseValueBean;
+@Table(name="PT_IL_BROKER_VALUES")
+public class PT_IL_BROKER_VALUES extends BaseValueBean {
+
+	@Column(name="BV_BROKER_CODE")
+	private String BV_BROKER_CODE;
+	
+	
+	@Column(name="BV_POL_SYS_ID")
+	private Double BV_POL_SYS_ID;
+	
+	@Column(name="BV_COVER_CODE")
+	private String BV_COVER_CODE;
+
+	@Column(name="BV_COMM_CODE")
+	private String BV_COMM_CODE;
+
+	@Column(name="BV_YEAR")
+	private Double BV_YEAR;
+
+	@Column(name="BV_RATE")
+	private Double BV_RATE;
+
+	@Column(name="BV_RATE_PER")
+	private Double BV_RATE_PER;
+
+	@Column(name="BV_FC_VALUE")
+	private Double BV_FC_VALUE;
+
+	private String UI_M_BROKER_DESC;
+
+	private String UI_M_COVER_DESC;
+
+	@Column(name="BV_LC_VALUE")
+	private Double BV_LC_VALUE;
+
+
+
+	public String getBV_BROKER_CODE() {
+		return BV_BROKER_CODE;
+	}
+
+	public void setBV_BROKER_CODE(String BV_BROKER_CODE) {
+		this.BV_BROKER_CODE = BV_BROKER_CODE;
+	}
+
+	public String getBV_COVER_CODE() {
+		return BV_COVER_CODE;
+	}
+
+	public void setBV_COVER_CODE(String BV_COVER_CODE) {
+		this.BV_COVER_CODE = BV_COVER_CODE;
+	}
+
+	public String getBV_COMM_CODE() {
+		return BV_COMM_CODE;
+	}
+
+	public void setBV_COMM_CODE(String BV_COMM_CODE) {
+		this.BV_COMM_CODE = BV_COMM_CODE;
+	}
+
+	public Double getBV_YEAR() {
+		return BV_YEAR;
+	}
+
+	public void setBV_YEAR(Double BV_YEAR) {
+		this.BV_YEAR = BV_YEAR;
+	}
+
+	public Double getBV_RATE() {
+		return BV_RATE;
+	}
+
+	public void setBV_RATE(Double BV_RATE) {
+		this.BV_RATE = BV_RATE;
+	}
+
+	public Double getBV_RATE_PER() {
+		return BV_RATE_PER;
+	}
+
+	public void setBV_RATE_PER(Double BV_RATE_PER) {
+		this.BV_RATE_PER = BV_RATE_PER;
+	}
+
+	public Double getBV_FC_VALUE() {
+		return BV_FC_VALUE;
+	}
+
+	public void setBV_FC_VALUE(Double BV_FC_VALUE) {
+		this.BV_FC_VALUE = BV_FC_VALUE;
+	}
+
+	public String getUI_M_BROKER_DESC() {
+		return UI_M_BROKER_DESC;
+	}
+
+	public void setUI_M_BROKER_DESC(String UI_M_BROKER_DESC) {
+		this.UI_M_BROKER_DESC = UI_M_BROKER_DESC;
+	}
+
+	public String getUI_M_COVER_DESC() {
+		return UI_M_COVER_DESC;
+	}
+
+	public void setUI_M_COVER_DESC(String UI_M_COVER_DESC) {
+		this.UI_M_COVER_DESC = UI_M_COVER_DESC;
+	}
+
+	public Double getBV_LC_VALUE() {
+		return BV_LC_VALUE;
+	}
+
+	public void setBV_LC_VALUE(Double BV_LC_VALUE) {
+		this.BV_LC_VALUE = BV_LC_VALUE;
+	}
+
+	public Double getBV_POL_SYS_ID() {
+		return BV_POL_SYS_ID;
+	}
+
+	public void setBV_POL_SYS_ID(Double bv_pol_sys_id) {
+		BV_POL_SYS_ID = bv_pol_sys_id;
+	}
+
+
+}

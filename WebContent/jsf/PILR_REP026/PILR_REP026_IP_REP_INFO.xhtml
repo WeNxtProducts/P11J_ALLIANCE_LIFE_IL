@@ -1,0 +1,426 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILR_REP026" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<title><h:outputText
+		value="#{message.PILR_REP026$IP_REP_INFO$IP_REP_INFO$pagetitle}" /></title>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			
+		</tr>
+		<h:form id="IP_REP_INFO">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{IP_REP_INFO_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{IP_REP_INFO_ACTION.errorMap['current'] !=null? IP_REP_INFO_ACTION.errorMap['current']:IP_REP_INFO_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{IP_REP_INFO_ACTION.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{IP_REP_INFO_ACTION.globalMsgRender}" />
+
+							<h:outputText id="warningMessages"
+								value="#{IP_REP_INFO_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<table width="100%" id="linkstable">
+					<tr>
+						<td><h:outputText styleClass="forumRowHighlight"
+							value="#{message.PILR_REP026$IP_REP_INFO$IP_REP_INFO$pagetitle}" /></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+				<div style="height: 500px; overflow: auto;">
+				<table width="70%" align="center">
+					<tr>
+
+						<td width="90%" vAlign="top">
+						<table id="bordertable" align="left" width="100%">
+							<tr>
+								<td width="20%" align="left" id="td-background"><h:outputLabel
+									binding="#{IP_REP_INFO_ACTION.COMP_FROM_DT_LABEL}"
+									for="FROM_DT" id="FROM_DT_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILR_REP026$IP_REP_INFO$FROM_DATE$caption}" />
+								<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+								<td width="20%" align="left">
+								<h:outputLabel title="#{message.PILR_REP026$IP_REP_INFO$FROM_DATE$title}">
+								<rich:calendar
+									binding="#{IP_REP_INFO_ACTION.COMP_FROM_DT}"
+									datePattern="#{IP_REP_INFO_ACTION.datePattern}"
+									disabled="false" enableManualInput="true" id="FROM_DT"
+									inputSize="11" rendered="true" required="true"
+									validator="#{IP_REP_INFO_ACTION.validateCOMP_FROM_DT}"
+									style="height:px;width:100px;" styleClass="calendarstyleclass"
+									value="#{IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.FROM_DATE}">
+
+									<a4j:support event="oninputchanged" id="date_1" immediate="true"
+										actionListener="#{IP_REP_INFO_ACTION.submitFromDate}"
+										reRender="errorPanel,FROM_DT" />
+									<a4j:support event="oninputblur" id="date_2" 
+										onsubmit="formatDate('IP_REP_INFO:FROM_DT')" 
+									immediate="true"
+										actionListener="#{IP_REP_INFO_ACTION.submitFromDate}"
+										reRender="errorPanel,FROM_DT" />
+								</rich:calendar></h:outputLabel></td>
+								<td width="20%">&nbsp;</td>
+
+								<td width="20%" id="td-background"><h:outputLabel
+									binding="#{IP_REP_INFO_ACTION.COMP_TO_DT_LABEL}" for="TO_DATE"
+									id="TO_DT_LABEL" rendered="true" styleClass="label"
+									value="#{message.PILR_REP026$IP_REP_INFO$TO_DATE$caption}" />
+								<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+								<td width="20%">
+								<h:outputLabel title="#{message.PILR_REP026$IP_REP_INFO$TO_DATE$title}">
+								<rich:calendar
+									binding="#{IP_REP_INFO_ACTION.COMP_TO_DT}" disabled="false"
+									enableManualInput="true" id="TO_DATE"
+									datePattern="#{IP_REP_INFO_ACTION.datePattern}" inputSize="11"
+									rendered="true" required="true"
+									requiredMessage="End Date is Mandatory.Enter End Date!!!"
+									style="height:px;width:px;" styleClass="calendarstyleclass"
+									validator="#{IP_REP_INFO_ACTION.validateCOMP_TO_DT}"
+									value="#{IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.TO_DATE}">
+									<a4j:support event="oninputchanged" immediate="true" id="date_3"
+										actionListener="#{IP_REP_INFO_ACTION.submitToDate}"
+										reRender="errorPanel,TO_DATE" />
+								<a4j:support event="oninputblur" id="date_4" 
+										onsubmit="formatDate('IP_REP_INFO:TO_DATE')" 
+									 immediate="true"
+										actionListener="#{IP_REP_INFO_ACTION.submitToDate}"
+										reRender="errorPanel,TO_DATE" />
+								</rich:calendar></h:outputLabel></td>
+							</tr>
+							<tr>
+								<td width="20%" id="td-background"><h:outputLabel
+									binding="#{IP_REP_INFO_ACTION.COMP_FROM_DIVN_LABEL}"
+									for="FROM_DIVN" id="FROM_DIVN_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILR_REP026$IP_REP_INFO$FROM_DIVN$caption}" />
+								<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+								</td>
+								<td width="20%"><h:inputText
+									binding="#{IP_REP_INFO_ACTION.COMP_FROM_DIVN}" disabled="false"
+									id="FROM_DIVN" maxlength="12" rendered="true" required="true"
+									style="height:23px;width:111px;" styleClass="forumRowHighlight"
+									validator="#{IP_REP_INFO_ACTION.validateCOMP_FROM_DIVN}"
+									title="#{message.PILR_REP026$IP_REP_INFO$FROM_DIVN$title}"
+									value="#{IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.REP_VALUE_3}">
+									<a4j:support event="onblur" immediate="true"
+										actionListener="#{IP_REP_INFO_ACTION.submitFromDivn}"
+										reRender="errorPanel,FROM_DIVN,FROM_DIVN_SUGG" />
+								</h:inputText> <rich:suggestionbox height="200" width="250"
+									id="FROM_DIVN_SUGG" value="#{IP_REP_INFO_ACTION.lov_List}"
+									suggestionAction="#{IP_REP_INFO_ACTION.suggestionActionDivn}"
+									for="FROM_DIVN" var="fromDivn">
+									<h:column>
+										<h:outputText value="#{fromDivn.code}" />
+									</h:column>
+									<h:column>
+										<h:outputText value="#{fromDivn.name}" />
+									</h:column>
+								</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+								<td width="20%">&nbsp;</td>
+								<td width="20%" id="td-background"><h:outputLabel
+									binding="#{IP_REP_INFO_ACTION.COMP_TO_DIVN_LABEL}"
+									for="TO_DIVN" id="TO_DIVN_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILR_REP026$IP_REP_INFO$TO_DIVN$caption}" />
+								<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+								</td>
+								<td width="20%"><h:inputText
+									binding="#{IP_REP_INFO_ACTION.COMP_TO_DIVN}" disabled="false"
+									id="TO_DIVN" maxlength="12" rendered="true" required="true"
+									style="height:23px;width:110px;" styleClass="forumRowHighlight"
+									validator="#{IP_REP_INFO_ACTION.validateCOMP_TO_DIVN}"
+									title="#{message.PILR_REP026$IP_REP_INFO$TO_DIVN$title}"
+									value="#{IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.REP_VALUE_4}">
+
+									<a4j:support event="onblur" immediate="true"
+										actionListener="#{IP_REP_INFO_ACTION.submitToDivn}"
+										reRender="errorPanel,TO_DIVN,TO_DIVN_SUGG" />
+								</h:inputText> <rich:suggestionbox height="200" width="250" id="TO_DIVN_SUGG"
+									value="#{IP_REP_INFO_ACTION.lov_List}"
+									suggestionAction="#{IP_REP_INFO_ACTION.suggestionActionDivn}"
+									for="TO_DIVN" var="toDivn">
+									<h:column>
+										<h:outputText value="#{toDivn.code}" />
+									</h:column>
+									<h:column>
+										<h:outputText value="#{toDivn.name}" />
+									</h:column>
+								</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+							</tr>
+							<tr>
+								<td width="20%" id="td-background"><h:outputLabel
+									binding="#{IP_REP_INFO_ACTION.COMP_FROM_DEPT_LABEL}"
+									for="FROM_DEPT" id="FROM_DEPT_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILR_REP026$IP_REP_INFO$FROM_DEPT$caption}" />
+								<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+								</td>
+								<td width="20%"><h:inputText
+									binding="#{IP_REP_INFO_ACTION.COMP_FROM_DEPT}" disabled="false"
+									id="FROM_DEPT" maxlength="12" rendered="true" required="true"
+									style="height:23px;width:111px;" styleClass="forumRowHighlight"
+									validator="#{IP_REP_INFO_ACTION.validateCOMP_FROM_DEPT}"
+									title="#{message.PILR_REP026$IP_REP_INFO$FROM_DEPT$title}"
+									value="#{IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.REP_VALUE_5}">
+									<a4j:support event="onblur" immediate="true"
+										actionListener="#{IP_REP_INFO_ACTION.submitFromDept}"
+										reRender="errorPanel,FROM_DEPT,FROM_DEPT_SUGG" />
+								</h:inputText> <rich:suggestionbox height="200" width="250"
+									id="FROM_DEPT_SUGG" value="#{IP_REP_INFO_ACTION.lov_List}"
+									suggestionAction="#{IP_REP_INFO_ACTION.suggestionActionDept}"
+									for="FROM_DEPT" var="forDept">
+									<h:column>
+										<h:outputText value="#{forDept.code}" />
+									</h:column>
+									<h:column>
+										<h:outputText value="#{forDept.name}" />
+									</h:column>
+								</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+								<td width="20%">&nbsp;</td>
+								<td width="20%" id="td-background"><h:outputLabel
+									binding="#{IP_REP_INFO_ACTION.COMP_TO_DEPT_LABEL}"
+									for="TO_DEPT" id="TO_DEPT_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILR_REP026$IP_REP_INFO$TO_DEPT$caption}" />
+								<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+								<td width="20%"><h:inputText
+									binding="#{IP_REP_INFO_ACTION.COMP_TO_DEPT}" disabled="false"
+									id="TO_DEPT" maxlength="12" rendered="true" required="true"
+									style="height:23px;width:110px;" styleClass="forumRowHighlight"
+									validator="#{IP_REP_INFO_ACTION.validateCOMP_TO_DEPT}"
+									title="#{message.PILR_REP026$IP_REP_INFO$TO_DEPT$title}"
+									value="#{IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.REP_VALUE_6}">
+									<a4j:support event="onblur" immediate="true"
+										actionListener="#{IP_REP_INFO_ACTION.submitToDept}"
+										reRender="errorPanel,TO_DEPT,TO_DEPT_SUGG" />
+								</h:inputText> <rich:suggestionbox height="200" width="250" id="TO_DEPT_SUGG"
+									value="#{IP_REP_INFO_ACTION.lov_List}"
+									suggestionAction="#{IP_REP_INFO_ACTION.suggestionActionDept}"
+									for="TO_DEPT" var="todept">
+									<h:column>
+										<h:outputText value="#{todept.code}" />
+									</h:column>
+									<h:column>
+										<h:outputText value="#{todept.name}" />
+									</h:column>
+								</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+							</tr>
+							<tr>
+								<td width="20%" id="td-background"><h:outputLabel
+									binding="#{IP_REP_INFO_ACTION.COMP_FROM_CLASS_LABEL}"
+									for="FROM_CLASS" id="FROM_CLASS_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILR_REP026$IP_REP_INFO$FROM_CLASS$caption}" />
+								<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+								<td width="20%"><h:inputText
+									binding="#{IP_REP_INFO_ACTION.COMP_FROM_CLASS}"
+									disabled="false" id="FROM_CLASS" maxlength="12" rendered="true"
+									required="true" style="height:23px;width:111px;"
+									styleClass="forumRowHighlight"
+									validator="#{IP_REP_INFO_ACTION.validateCOMP_FROM_CLASS}"
+									title="#{message.PILR_REP026$IP_REP_INFO$FROM_CLASS$title}"
+									value="#{IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.REP_VALUE_7}">
+
+									<a4j:support event="onblur" immediate="true"
+										actionListener="#{IP_REP_INFO_ACTION.submitFromClass}"
+										reRender="errorPanel,FROM_CLASS,FROM_CLASS_SUGG" />
+								</h:inputText> <rich:suggestionbox height="200" width="250"
+									id="FROM_CLASS_SUGG"
+									value="#{IP_REP_INFO_ACTION.lov_List}"
+									suggestionAction="#{IP_REP_INFO_ACTION.suggestionActionClass}"
+									for="FROM_CLASS" var="fromClass">
+									<h:column>
+										<h:outputText value="#{fromClass.code}" />
+									</h:column>
+									<h:column>
+										<h:outputText value="#{fromClass.name}" />
+									</h:column>
+								</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+								<td width="20%">&nbsp;</td>
+								<td width="20%" id="td-background"><h:outputLabel
+									binding="#{IP_REP_INFO_ACTION.COMP_TO_CLASS_LABEL}"
+									for="TO_CLASS" id="TO_CLASS_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILR_REP026$IP_REP_INFO$TO_CLASS$caption}" />
+								<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+								</td>
+								<td width="20%"><h:inputText
+									binding="#{IP_REP_INFO_ACTION.COMP_TO_CLASS}" disabled="false"
+									id="TO_CLASS" maxlength="12" rendered="true" required="true"
+									style="height:23px;width:110px;" styleClass="forumRowHighlight"
+									validator="#{IP_REP_INFO_ACTION.validateCOMP_TO_CLASS}"
+									title="#{message.PILR_REP026$IP_REP_INFO$TO_CLASS$title}"
+									value="#{IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.REP_VALUE_8}">
+
+									<a4j:support event="onblur" immediate="true"
+										actionListener="#{IP_REP_INFO_ACTION.submitToClass}"
+										reRender="errorPanel,TO_CLASS,TO_CLASS_SUGG" />
+								</h:inputText> <h:graphicImage value="./../../images/Lov.gif" /> <rich:suggestionbox
+									height="200" width="250" id="TO_CLASS_SUGG"
+									value="#{IP_REP_INFO_ACTION.lov_List}"
+									suggestionAction="#{IP_REP_INFO_ACTION.suggestionActionClass}"
+									for="TO_CLASS" var="toClass">
+									<h:column>
+										<h:outputText value="#{toClass.code}" />
+									</h:column>
+									<h:column>
+										<h:outputText value="#{toClass.name}" />
+									</h:column>
+								</rich:suggestionbox></td>
+
+							</tr>
+							<tr>
+								<td width="20%" id="td-background"><h:outputLabel
+									binding="#{IP_REP_INFO_ACTION.COMP_FROM_PLAN_LABEL}"
+									for="FROM_PLAN" id="FROM_PLAN_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILR_REP026$IP_REP_INFO$FROM_PLAN$caption}" />
+								<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+								</td>
+								<td width="20%"><h:inputText
+									binding="#{IP_REP_INFO_ACTION.COMP_FROM_PLAN}" disabled="false"
+									id="FROM_PLAN" maxlength="12" rendered="true" required="true"
+									style="height:23px;width:111px;" styleClass="forumRowHighlight"
+									validator="#{IP_REP_INFO_ACTION.validateCOMP_FROM_PLAN}"
+									title="#{message.PILR_REP026$IP_REP_INFO$FROM_PLAN$title}"
+									value="#{IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.REP_VALUE_9}">
+
+									<a4j:support event="onblur" immediate="true"
+										actionListener="#{IP_REP_INFO_ACTION.submitFromPlan}"
+										reRender="errorPanel,FROM_PLAN,FROM_PLAN_SUGG" />
+								</h:inputText> <rich:suggestionbox height="200" width="250"
+									id="FROM_PLAN_SUGG" value="#{IP_REP_INFO_ACTION.lov_List}"
+									suggestionAction="#{IP_REP_INFO_ACTION.suggestionActionPlan}"
+									for="FROM_PLAN" var="fromPlan">
+									<h:column>
+										<h:outputText value="#{fromPlan.code}" />
+									</h:column>
+									<h:column>
+										<h:outputText value="#{fromPlan.name}" />
+									</h:column>
+								</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+								<td width="20%">&nbsp;</td>
+								<td width="20%" id="td-background"><h:outputLabel
+									binding="#{IP_REP_INFO_ACTION.COMP_TO_PLAN_LABEL}"
+									for="TO_PLAN" id="TO_PLAN_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILR_REP026$IP_REP_INFO$TO_PLAN$caption}" />
+								<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+								</td>
+								<td width="20%"><h:inputText
+									binding="#{IP_REP_INFO_ACTION.COMP_TO_PLAN}" disabled="false"
+									id="TO_PLAN" maxlength="12" rendered="true" required="true"
+									style="height:23px;width:110px;" styleClass="forumRowHighlight"
+									validator="#{IP_REP_INFO_ACTION.validateCOMP_TO_PLAN}"
+									title="#{message.PILR_REP026$IP_REP_INFO$TO_PLAN$title}"
+									value="#{IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.REP_VALUE_10}">
+
+									<a4j:support event="onblur" immediate="true"
+										actionListener="#{IP_REP_INFO_ACTION.submitToPlan}"
+										reRender="errorPanel,TO_PLAN,TO_PLAN_SUGG" />
+								</h:inputText> <rich:suggestionbox height="200" width="250" id="TO_PLAN_SUGG"
+									value="#{IP_REP_INFO_ACTION.lov_List}"
+									suggestionAction="#{IP_REP_INFO_ACTION.suggestionActionPlan}"
+									for="TO_PLAN" var="toPlan">
+									<h:column>
+										<h:outputText value="#{toPlan.code}" />
+									</h:column>
+									<h:column>
+										<h:outputText value="#{toPlan.name}" />
+									</h:column>
+								</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+							</tr>
+
+							<tr>
+								<td colspan="5" height="75px"></td>
+							</tr>
+							<tr>
+								<td colspan="5">
+								<hr color="black" />
+								</td>
+							</tr>
+							<tr>
+								<td width="20%">
+								<table width="100%" border="0" height="100%" bordercolor="blue">
+									<tr>
+										<td><h:selectOneRadio id="SELECT_FILE_TYPE"
+											rendered="true" styleClass="label"
+											binding="#{IP_REP_INFO_ACTION.COMP_SELECT_FILE_TYPE}"
+											value="#{IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.selectedFileType}"
+											layout="pageDirection">
+
+											<f:selectItem itemValue="pdf"
+												itemLabel="#{commonmsg.PILR_REP$IP_REP_INFO$SELECT_PDF$caption}" />
+											<f:selectItem itemValue="excel"
+												itemLabel="#{commonmsg.PILR_REP$IP_REP_INFO$SELECT_EXCEL$caption}" />
+											<f:selectItem itemValue="html"
+												itemLabel="#{commonmsg.PILR_REP$IP_REP_INFO$SELECT_HTML$caption}" />
+											<f:selectItem itemValue="csv"
+												itemLabel="#{commonmsg.PILR_REP$IP_REP_INFO$SELECT_CVS$caption}" />
+											<a4j:support event="onclick" immediate="true"
+												reRender="errorPanel,TargetCheking,SELECT_FILE_TYPE"
+												actionListener="#{IP_REP_INFO_ACTION.getSelectedFileType}" />
+										</h:selectOneRadio></td>
+
+									</tr>
+								</table>
+								</td>
+								<td width="20%">&nbsp;</td>
+								<td width="20%">&nbsp;</td>
+
+								<td width="20%"><h:commandLink id="TargetCheking"
+									action="#{IP_REP_INFO_ACTION.runAction}"
+									target="#{IP_REP_INFO_ACTION.IP_REP_INFO_BEAN.targetValue}">
+									<h:graphicImage value="./../../images/RUN.gif" />
+								</h:commandLink></td>
+								<td width="20%">&nbsp;</td>
+							</tr>
+							<tr>
+								<td colspan="5" align="right"></td>
+							</tr>
+						</table>
+						</td>
+
+					</tr>
+
+				</table>
+				</div>
+				</td>
+			</tr>
+
+		</h:form>
+	</table>
+	<table width="100%">
+		<tr>
+			
+		</tr>
+
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

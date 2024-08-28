@@ -1,0 +1,755 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILT006_APAC"
+				var="message" />
+			<h:form id="PT_IL_CLAIM_CHARGES">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILT006_APAC_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="toolbarButtonStyle" accesskey="u"
+												image="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+					<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="errormsgtable" width="100%">
+						<tr>
+						<td><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.errorMap['current'] !=null? PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.errorMap['current']: PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					</table>
+					</td>
+				</tr>
+						
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table id="linkstable" width="100%">
+							<tr>
+								 <td><h:outputLabel id="FORM_CAPTION"
+									value="#{message_PILT013.PILT013$PT_IL_SURR_CHRG$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div id="tablecontainer">
+							<div id="sidebar" style="width: 21%; vertical-align: top">
+						<div align="center" id="handle" style="width: 5%;"><a4j:commandLink
+							actionListener="#{PILT006_APAC_COMPOSITE_ACTION.wizard.toggle}"
+							id="BACK_TOOL_FOOTER1" immediate="true" rendered="true"
+							style="text-decoration:none;align:left"
+							styleClass="toolbarCommandLinkStyle">
+							<img align="left" alt="Click to toggle the sidebar" height="123"
+								onclick="toggleSideBar();"
+								src="./../../resources/images/toggle.jpg" style="border: 0;"
+								width="14" />
+						</a4j:commandLink></div>
+
+						<div id="sbText" style="display: compact;">
+						<div id="linkstable1" style="vertical-align: top; width: 95%">
+						<w:summary binding="#{PILT006_APAC_COMPOSITE_ACTION.comp}" id="s1" />
+						<w:treeWizardPanel
+						binding="#{PILT006_APAC_COMPOSITE_ACTION.wizard.wizardPanel}"
+						id="wizardPanel" /></div>		
+						</div>
+						</div>
+						<div id="content" style="width: 79%;">
+						<table width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td valign="top" width="100%"><h:panelGroup
+									id="PT_IL_CLAIM_CHARGES_PANEL" style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td><rich:panel style="width:100%;overflow:auto">
+												<rich:dataTable
+													binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.dataTable}"
+													id="PT_IL_SURR_CHRG_DATA_GRID" rows="5"
+													value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.dataList_PT_IL_SURR_CHRG}"
+													var="tableVar" width="100%">
+													<rich:column filterBy="#{tableVar.CC_CHRG_CODE}"
+														filterEvent="onkeyup" id="COLUMN_CC_CHRG_CODE"
+														rendered="true" sortBy="#{tableVar.CC_CHRG_CODE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CC_CHRG_CODE"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_CHRG_CODE$caption}" />
+														</f:facet>
+														<a4j:commandLink
+															action="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.displayRecords}"
+															id="GOTO_LINK_CC_CHRG_CODE" immediate="true"
+															reRender="errorPanel,PT_IL_CLAIM_CHARGES_PANEL">
+															<h:outputText id="LINK_CAPTION_CC_CHRG_CODE"
+																value="#{tableVar.CC_CHRG_CODE}" />
+														</a4j:commandLink>
+													</rich:column>
+													
+													<!-- added  by raja on 20-04-2017 -->
+													<rich:column filterBy="#{tableVar.UI_M_CC_CHRG_CODE_DESC}"
+														filterEvent="onkeyup" id="COLUMN_UI_M_CC_CHRG_CODE_DESC" rendered="true"
+														sortBy="#{tableVar.UI_M_CC_CHRG_CODE_DESC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_M_CC_CHRG_CODE_DESC"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$UI_M_CC_CHRG_CODE_DESC$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_UI_M_CC_CHRG_CODE_DESC"
+															value="#{tableVar.UI_M_CC_CHRG_CODE_DESC}" />
+													</rich:column>
+													<!-- end -->
+													
+													<rich:column filterBy="#{tableVar.CC_RATE}"
+														filterEvent="onkeyup" id="COLUMN_CC_RATE" rendered="true"
+														sortBy="#{tableVar.CC_RATE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CC_RATE"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_RATE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CC_RATE"
+															value="#{tableVar.CC_RATE}" >
+															<f:converter converterId="PELNumberFormatter" />
+															</h:outputText>
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CC_RATE_PER}"
+														filterEvent="onkeyup" id="COLUMN_CC_RATE_PER"
+														rendered="true" sortBy="#{tableVar.CC_RATE_PER}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CC_RATE_PER"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_RATE_PER$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CC_RATE_PER"
+															value="#{tableVar.CC_RATE_PER}" >
+															<f:converter converterId="PELNumberFormatter" />
+															</h:outputText>
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CC_REMARKS}"
+														filterEvent="onkeyup" id="COLUMN_CC_REMARKS"
+														rendered="true" sortBy="#{tableVar.CC_REMARKS}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CC_REMARKS"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_REMARKS$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CC_REMARKS"
+															value="#{tableVar.CC_REMARKS}" />
+														<!-- <f:facet name="footer">
+															<h:outputText id="COLUMN_CC_REMARKS_SHARE_PERC1"
+																styleClass="forumRowHighlight" value="Total" />
+														</f:facet> -->
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CC_CHRG_FC_VALUE}"
+														filterEvent="onkeyup" id="COLUMN_CC_CHRG_FC_VALUE"
+														rendered="true" sortBy="#{tableVar.CC_CHRG_FC_VALUE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CC_CHRG_FC_VALUE"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_CHRG_FC_VALUE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CC_CHRG_FC_VALUE"
+															value="#{tableVar.CC_CHRG_FC_VALUE}" >
+															<f:converter converterId="PELNumberFormatter" />
+															</h:outputText>
+														<!-- <f:facet name="footer">
+															<h:panelGroup id="TOTAL_PANEL_GROUP_SRC_SMV_FC_VALUE">
+																<h:outputLabel
+																	binding="#{PILT013_COMPOSITE_ACTION.PT_IL_SURR_CHRG_ACTION_BEAN.COMP_UI_M_TOTAL_SRC_SMV_FC_VALUE_LABEL}"
+																	for="SRC_SMV_FC_VALUE"
+																	id="UI_M_TOTAL_SRC_SMV_FC_VALUE_LABEL" rendered="false"
+																	styleClass="label" value="Total" />
+																<h:outputText disabled="true" id="UI_M_TOTAL_LC_VALUE"
+																	maxlength="15" rendered="true" required="false"
+																	style="width:120px;"
+																	styleClass="forumRowHighlightNumeric" title="total"
+																	value="#{PILT013_COMPOSITE_ACTION.PT_IL_SURR_CHRG_ACTION_BEAN.PT_IL_SURR_CHRG_BEAN.SRC_CHG_SUM_FC}">
+																	<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+															</h:panelGroup>
+														</f:facet> -->
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CC_CHRG_LC_VALUE}"
+														filterEvent="onkeyup" id="COLUMN_CC_CHRG_LC_VALUE"
+														rendered="true" sortBy="#{tableVar.CC_CHRG_LC_VALUE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CC_CHRG_LC_VALUE"
+																styleClass="forumRowHighlight"
+															value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_CHRG_LC_VALUE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CC_CHRG_LC_VALUE"
+															value="#{tableVar.CC_CHRG_LC_VALUE}" >
+															<f:converter converterId="PELNumberFormatter" />
+															</h:outputText>
+														<!-- <f:facet name="footer">
+															<h:panelGroup id="TOTAL_PANEL_GROUP_SRC_SMV_LC_VALUE">
+																<h:outputLabel
+																	binding="#{PILT013_COMPOSITE_ACTION.PT_IL_SURR_CHRG_ACTION_BEAN.COMP_UI_M_TOTAL_SRC_SMV_LC_VALUE_LABEL}"
+																	for="UI_M_TOTAL_SRC_SMV_LC_VALUE"
+																	id="UI_M_TOTAL_SRC_SMV_LC_VALUE_LABEL" rendered="false"
+																	styleClass="label" value="Total" />
+																<h:outputText disabled="true"
+																	id="UI_M_TOTAL_SRC_SMV_LC_VALUE" maxlength="15"
+																	rendered="true" required="false" style="width:120px;"
+																	styleClass="forumRowHighlightNumeric" title="total"
+																	value="#{PILT013_COMPOSITE_ACTION.PT_IL_SURR_CHRG_ACTION_BEAN.PT_IL_SURR_CHRG_BEAN.SRC_SUM_CHG}">
+																	<f:converter converterId="PELNumberFormatter" />
+																</h:outputText>
+															</h:panelGroup>
+														</f:facet> -->
+													</rich:column>
+													<!-- <rich:column filterBy="#{tableVar.SRC_SMV_FC_VALUE}"
+														filterEvent="onkeyup" id="COLUMN_SRC_SMV_FC_VALUE"
+														rendered="false" sortBy="#{tableVar.SRC_SMV_FC_VALUE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_SRC_SMV_FC_VALUE"
+																styleClass="forumRowHighlight"
+																value="#{message_PILT013.PILT013$PT_IL_SURR_CHRG$SRC_SMV_FC_VALUE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_SRC_SMV_FC_VALUE"
+															value="#{tableVar.SRC_SMV_FC_VALUE}" />
+
+
+													</rich:column> -->
+													<!-- <rich:column filterBy="#{tableVar.SRC_SMV_LC_VALUE}"
+														filterEvent="onkeyup" id="COLUMN_SRC_SMV_LC_VALUE"
+														rendered="false" sortBy="#{tableVar.SRC_SMV_LC_VALUE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_SRC_SMV_LC_VALUE"
+																styleClass="forumRowHighlight"
+																value="#{message_PILT013.PILT013$PT_IL_SURR_CHRG$SRC_SMV_LC_VALUE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_SRC_SMV_LC_VALUE"
+															value="#{tableVar.SRC_SMV_LC_VALUE}" />
+
+
+													</rich:column> -->
+													<!-- <rich:column filterBy="#{tableVar.SRC_CHG_SUM_FC}"
+														filterEvent="onkeyup" id="COLUMN_SRC_CHG_SUM_FC"
+														rendered="false" sortBy="#{tableVar.SRC_CHG_SUM_FC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_SRC_CHG_SUM_FC"
+																styleClass="forumRowHighlight"
+																value="#{message_PILT013.PILT013$PT_IL_SURR_CHRG$SRC_CHG_SUM_FC$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_SRC_CHG_SUM_FC"
+															value="#{tableVar.SRC_CHG_SUM_FC}" />
+													</rich:column> -->
+													<!-- <rich:column filterBy="#{tableVar.SRC_SUM_CHG}"
+														filterEvent="onkeyup" id="COLUMN_SRC_SUM_CHG"
+														rendered="false" sortBy="#{tableVar.SRC_SUM_CHG}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_SRC_SUM_CHG"
+																styleClass="forumRowHighlight"
+																value="#{message_PILT013_PILT013.PILT013$PT_IL_SURR_CHRG$SRC_SUM_CHG$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_SRC_SUM_CHG"
+															value="#{tableVar.SRC_SUM_CHG}" />
+													</rich:column> -->
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PT_IL_SURR_CHRG_SCROLL" page="1" />
+															<a4j:commandButton
+															binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.UI_CHA_BUT_ADD}"
+																actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.addRow}"
+																 id="addRow" rendered="true"
+																reRender="PT_IL_CLAIM_CHARGES_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.UI_CHA_BUT_DEL}"
+																actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.deleteRow}"
+																 id="deleteRow" rendered="true"
+																reRender="PT_IL_CLAIM_CHARGES_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+																<!-- value="#{commonmsg.postButtonCaption}" -->
+														<!-- changed by raja on 10-07-2017 for ZBILQC-1731018-->
+															<h:commandButton
+															binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.UI_CHA_BUT_POST}"
+																actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.postRecord}"
+																 id="postRecord"  rendered="true"
+																reRender="PT_IL_CLAIM_CHARGES_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="Save" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</rich:panel></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table class="noborder" width="100%">
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_CHRG_CODE_LABEL}"
+														for="CC_CHRG_CODE" id="CC_CHRG_CODE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_CHRG_CODE$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_CHRG_CODE}"
+														disabled="false" id="CC_CHRG_CODE" maxlength="12"
+														rendered="true" required="false" styleClass="input"
+														title="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_CHRG_CODE$tooltip}"
+														validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.validateDDCHG_CODE}"
+														value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.PT_IL_CLAIM_CHRG_BEAN.CC_CHRG_CODE}">
+           												<a4j:support
+															actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="SUPPORT_CC_CHRG_CODE" immediate="true"
+															reRender="errorPanel" />
+													<!-- nothingLabel added by Janani on 06.09.2017 for ZBILQC-1732454 -->
+													<rich:suggestionbox for="CC_CHRG_CODE" height="200"
+													id="SUGG_DDCHG_CODE" nothingLabel="No Charge code avialable for this product"
+													suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.suggestionActionCatgCode}"
+													var="charge_code" width="250">
+													<h:column>
+														<h:outputText id="AUTOID_31"
+															value="#{charge_code.CC_CHRG_CODE}" />
+													</h:column>
+													<h:column>
+														<h:outputText id="AUTOID_32"
+															value="#{charge_code.UI_M_CC_CHRG_CODE_DESC}" />
+													</h:column>
+													<a4j:support
+														actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.getCatgCodeDesc}"
+														event="onselect" id="style_3" immediate="true"
+														reRender="errorPanel,UI_M_DDCHG_CODE_DESC" />
+												</rich:suggestionbox>
+												
+												<!-- End of ZBILQC-1732454 -->
+												
+												<a4j:support
+													actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.fireFieldValidation}"
+													event="onblur" id="stye_4" immediate="true"
+													reRender="errorPanel,UI_M_DDCHG_CODE_DESC">
+												</a4j:support>
+											</h:inputText>
+											<h:inputText
+												binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_UI_M_CC_CHRG_CODE_DESC}"
+												disabled="true" id="UI_M_DDCHG_CODE_DESC" styleClass="input"
+												title="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$UI_M_DDCHG_CODE_DESC$tooltip}"
+												value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.PT_IL_CLAIM_CHRG_BEAN.UI_M_CC_CHRG_CODE_DESC}" />
+											<h:graphicImage id="AUTOID_33" styleClass="searchimg"
+												value=".\..\..\images\Lov.gif" /></td>
+								
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_RATE_LABEL}"
+														for="CC_RATE" id="CC_RATE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_RATE$caption}" />
+													</td>
+													
+													<td class="oddrow"><h:inputText
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_RATE}"
+														disabled="false" id="CC_RATE" maxlength="16"
+														rendered="true" required="false" styleClass="inputNumeric"
+														title=" "
+														validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.validatorCC_RATE}"
+														value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.PT_IL_CLAIM_CHRG_BEAN.CC_RATE}">
+														<a4j:support
+															actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="SUPPORT_CC_RATE" immediate="true"
+															reRender="errorPanel" />
+															<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_RATE_PER_LABEL}"
+														for="CC_RATE_PER" id="CC_RATE_PER_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_RATE_PER$caption}" />
+													</td>
+													
+													<td class="evenrow"><h:inputText
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_RATE_PER}"
+														disabled="false" id="CC_RATE_PER" maxlength="11"
+														rendered="true" required="false" styleClass="inputNumeric"
+														title=" "
+														validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.validateCC_RATE_PER}"
+														value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.PT_IL_CLAIM_CHRG_BEAN.CC_RATE_PER}">
+														<f:converter converterId="PELNumberFormatter" />
+														<a4j:support
+															actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="SUPPORT_CC_RATE_PER" immediate="true"
+															reRender="errorPanel,CC_CHRG_FC_VALUE,CC_CHRG_LC_VALUE" />
+													</h:inputText></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_REMARKS_LABEL}"
+														for="CC_REMARKS" id="CC_REMARKS_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_REMARKS$caption}" />
+													</td>
+													<!-- validator="#{PILT013_COMPOSITE_ACTION.PT_IL_SURR_CHRG_ACTION_BEAN.SRC_CUST_SHARE_PERC_Validator}" -->
+													<td class="evenrow"><h:inputText
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_REMARKS}"
+														disabled="false" id="CC_REMARKS" 
+														rendered="true" required="false" styleClass="inputNumeric"
+														title=" "
+														
+														value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.PT_IL_CLAIM_CHRG_BEAN.CC_REMARKS}">
+														<a4j:support
+															actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="SUPPORT_CC_REMARK"
+															immediate="true" reRender="errorPanel" />
+															
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_CHRG_FC_VALUE_LABEL}"
+														for="CC_CHRG_FC_VALUE" id="CC_CHRG_FC_VALUE_LABEL_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_CHRG_FC_VALUE$caption}" />
+													</td>
+													<td class="oddrow">
+													<!--/*added by raja on 14-08-2017 for ZBILQC-1726834*/-->
+													<h:inputText
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_CHRG_FC_VALUE}"
+														disabled="false" id="CC_CHRG_FC_VALUE" maxlength="16"
+														rendered="true" required="false" styleClass="inputNumeric"
+														title=" "
+														validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.validateCC_CHRG_FC_VALUE}"
+														value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.PT_IL_CLAIM_CHRG_BEAN.CC_CHRG_FC_VALUE}">
+														<f:converter converterId="PELNumberFormatter" />
+														<a4j:support
+															actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="SUPPORT_CC_REMARK1"
+															immediate="true" reRender="errorPanel,CC_CHRG_LC_VALUE" />
+													</h:inputText></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_CHRG_LC_VALUE_LABEL}"
+														for="CC_CHRG_LC_VALUE" id="CC_CHRG_LC_VALUE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_CHRG_LC_VALUE$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_CHRG_LC_VALUE}"
+														disabled="false" id="CC_CHRG_LC_VALUE" maxlength="16"
+														rendered="true" required="false" styleClass="inputNumeric"
+														title=" "
+														value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.PT_IL_CLAIM_CHRG_BEAN.CC_CHRG_LC_VALUE}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												
+												<!-- Added by Raja -->
+												
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_PAID_TO_LABEL}"
+														for="CC_PAID_TO" id="CC_PAID_TO_LABEL_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_PAID_TO$caption}" />
+													</td>
+													<td class="evenrow"><h:selectOneMenu
+													binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_PAID_TO}"
+													id="CC_PAID_TO" rendered="true" 
+													styleClass="input"
+													title="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_PAID_TO$tooltip}"
+													validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.validateCC_PAID_TO}"
+													value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.PT_IL_CLAIM_CHRG_BEAN.CC_PAID_TO}">
+													<a4j:support
+														actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.fireFieldValidation}"
+														event="onblur" id="CC_PAID_TO_AJAX_SUPPORT"
+														immediate="true" reRender="errorPanel,CC_BENF_CODE,UI_M_ASH_CC_BENF_CODE_LOV" />
+													<f:selectItems id="SEL_ITEMS_CC_PAID_TO"
+														value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.listCC_PAID_TO}" />
+												</h:selectOneMenu></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_BENF_CODE_LABEL}"
+														for="CC_BENF_CODE" id="CC_BENF_CODE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_BENF_CODE$caption}" />
+													</td>
+													<!-- changed by raja on 10-07-2017 for ZBILQC-1731018-->
+													<td class="evenrow"><h:inputText
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_BENF_CODE}"
+														disabled="true" id="CC_BENF_CODE" maxlength="16"
+														rendered="true" required="false" styleClass="input"
+														title="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_BENF_CODE$tooltip}"
+														validator="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.validateCC_BENF_CODE}"
+														value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.PT_IL_CLAIM_CHRG_BEAN.CC_BENF_CODE}">
+													<a4j:support
+														actionListener="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.fireFieldValidation}"
+														event="onblur" id="CC_BENF_CODE_AJAX_SUPPORT"
+														immediate="true" reRender="errorPanel" />
+													</h:inputText>
+													
+													<h:inputText
+														binding="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.COMP_CC_BENF_CODE_DESC}"
+														disabled="true" id="CC_BENF_CODE_DESC" maxlength="16"
+														rendered="true" required="false" styleClass="input"
+														title="#{message.PILT006_APAC$PT_IL_CLAIM_CHARGES$CC_BENF_CODE_DESC$tooltip}"
+														value="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.PT_IL_CLAIM_CHRG_BEAN.CC_BENF_CODE_DESC}">
+													
+													</h:inputText>
+													<h:graphicImage id="AUTOID_33_1" styleClass="searchimg"
+												value=".\..\..\images\Lov.gif" />
+													
+													<rich:suggestionbox for="CC_BENF_CODE" height="200"
+														id="UI_M_ASH_CC_BENF_CODE_LOV"
+														suggestionAction="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.lovCC_BENF_CODE}"
+														var="panelCode" width="250">
+														<h:column id="COLUMN_SUGG_1">
+															<h:outputText id="AUTOID_321" 
+															value="#{panelCode.code}" />
+														</h:column>
+														<h:column id="COLUMN_SUGG_2">
+															<h:outputText id="AUTOID_332" 
+															value="#{panelCode.name}" />
+														</h:column>
+														<a4j:support ajaxSingle="true"
+																											event="onselect"
+																											id="PFMD_CUST_CODE_DESC_SUGG_SUPPORT"
+																											immediate="true"
+																											reRender="errorPanel,CC_BENF_CODE_DESC">
+																											<f:setPropertyActionListener id="CC_BENF_CODE_AUTOIDC_8C71"
+																												target="#{PILT006_APAC_COMPOSITE_ACTION.PT_IL_CLAIM_CHRG_ACTION_BEAN.PT_IL_CLAIM_CHRG_BEAN.CC_BENF_CODE_DESC}"
+																												value="#{panelCode.name}" />
+																										</a4j:support>
+													</rich:suggestionbox> 		
+													</td>
+												</tr>
+												
+												<!-- End -->
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+								<td />
+							</tr>
+						</table>
+						</div>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:commandButton  id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarButtonStyle" accesskey="s" 
+										image="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

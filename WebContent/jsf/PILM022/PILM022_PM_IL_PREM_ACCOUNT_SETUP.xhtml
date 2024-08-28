@@ -1,0 +1,1385 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.beforePhase}">
+			<f:loadBundle basename="messageProperties_PILM022" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_PREM_ACCOUNT_SETUP" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+			<table width="100%" cellpadding="0" cellspacing="0" border="0">
+				
+					<tr>
+						<td colspan="3" width="100%" vAlign="top">
+						<table width="100%" id="toolbartable" cellpadding="0"
+							cellspacing="0" border="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle"
+											action="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.backToSearch}"
+											immediate="true">
+											<h:commandButton 	
+											styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText value="#{menumessage.jsf$header$image$back}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle"
+											action="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.executeInsertion}">
+											<h:commandButton  
+											styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText value="#{menumessage.jsf$header$image$save}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/savenext.GIF" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$savenext}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												rendered="false" styleClass="toolbarImageStyle"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$deleteRecord}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/firstrec.gif" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/prevpage.gif" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$prevpage}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/nextpage.gif" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$nextpage}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage style="border: thin solid white"
+												styleClass="toolbarImageStyle"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText
+												value="#{menumessage.jsf$header$image$lastRecord}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.errorMap['current'] !=null? PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.errorMap['current']: PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" id="linkstable" cellpadding="0"
+							cellspacing="0" border="0">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$BLOCK_HEADING}"></h:outputLabel>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="width: 100%; height: 700px; overflow: auto;">
+						<table width="100%" align="center" cellpadding="0" cellspacing="0"
+							border="0">
+							<tr>
+
+								<td width="100%" vAlign="top">
+								<table id="bordertable" align="left" width="100%" border="0"
+									cellpadding="0" cellspacing="0">
+									<tr>
+										<td colspan="4" class="oddrowfreeze" />
+										<td class="oddrowfreeze"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_FRZ_FLAG_LABEL}"
+											for="PAS_FRZ_FLAG" id="PAS_FRZ_FLAG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_FRZ_FLAG$caption}" />
+										<h:selectBooleanCheckbox
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_FRZ_FLAG}"
+											id="PAS_FRZ_FLAG"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_FRZ_FLAG$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.FRZ_FLAG}"
+											rendered="true" /></td>
+									</tr>
+
+									<tr>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_SRC_BUS_FM_LABEL}"
+											for="PAS_SRC_BUS_FM" id="PAS_SRC_BUS_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_SRC_BUS_FM$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_SRC_BUS_FM}"
+											disabled="false" id="PAS_SRC_BUS_FM" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_BUS_FM_CODE$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_SRC_BUS_FM}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_SRC_BUS_FM}"
+												reRender="err, errorMessages, PAS_SRC_BUS_FM,PAS_SRC_BUS_FM_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_SRC_BUS_FM_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.sourceBusinessRangeSuggestionAction}"
+											for="PAS_SRC_BUS_FM" var="sourceBusinessRange">
+											<h:column>
+												<h:outputText value="#{sourceBusinessRange.PAS_SRC_BUS_FM}" />
+											</h:column>
+											<h:column>
+												<h:outputText
+													value="#{sourceBusinessRange.PAS_SRC_BUS_FM_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" width="4%" />
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_SRC_BUS_TO_LABEL}"
+											for="PAS_SRC_BUS_TO" id="PAS_SRC_BUS_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_SRC_BUS_TO$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_SRC_BUS_TO}"
+											disabled="false" id="PAS_SRC_BUS_TO" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_SRC_BUS_TO$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_SRC_BUS_TO}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_SRC_BUS_TO}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_SRC_BUS_TO}"
+												reRender="err, errorMessages,PAS_SRC_BUS_TO,PAS_SRC_BUS_TO_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_SRC_BUS_TO_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.sourceBusinessRangeUptoSuggestionAction}"
+											for="PAS_SRC_BUS_TO" var="sourceBusinessRangeUpto">
+											<h:column>
+												<h:outputText
+													value="#{sourceBusinessRangeUpto.PAS_SRC_BUS_TO}" />
+											</h:column>
+											<h:column>
+												<h:outputText
+													value="#{sourceBusinessRangeUpto.PAS_SRC_BUS_TO_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_BUS_FM_CODE_LABEL}"
+											for="PAS_BUS_FM_CODE" id="PAS_BUS_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_BUS_FM_CODE$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_BUS_FM_CODE}"
+											disabled="false" id="PAS_BUS_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_SRC_BUS_FM$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_BUS_FM_CODE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_BUS_FM_CODE}"
+												reRender="err, errorMessages, PAS_BUS_FM_CODE,PAS_BUS_FM_CODE_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_BUS_FM_CODE_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.businessRangeSuggestionAction}"
+											for="PAS_BUS_FM_CODE" var="businessRange">
+											<h:column>
+												<h:outputText value="#{businessRange.PAS_BUS_FM_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{businessRange.PAS_BUS_FM_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="oddrow"/>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_BUS_TO_CODE_LABEL}"
+											for="PAS_BUS_TO_CODE" id="PAS_BUS_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_BUS_TO_CODE$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_BUS_TO_CODE}"
+											disabled="false" id="PAS_BUS_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_BUS_TO_CODE$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_BUS_TO_CODE}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_BUS_TO_CODE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_BUS_TO_CODE}"
+												reRender="err, errorMessages, PAS_BUS_TO_CODE,PAS_BUS_TO_CODE_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_BUS_TO_CODE_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.businessRangeUptoSuggestionAction}"
+											for="PAS_BUS_TO_CODE" var="businessRangeUpto">
+											<h:column>
+												<h:outputText value="#{businessRangeUpto.PAS_BUS_TO_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText
+													value="#{businessRangeUpto.PAS_BUS_TO_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DIVN_FM_CODE_LABEL}"
+											for="PAS_DIVN_FM_CODE" id="PAS_DIVN_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DIVN_FM_CODE$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DIVN_FM_CODE}"
+											disabled="false" id="PAS_DIVN_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DIVN_FM_CODE$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_DIVN_FM_CODE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_DIVN_FM_CODE}"
+												reRender="err, errorMessages, PAS_DIVN_FM_CODE,PAS_DIVN_FM_CODE_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_DIVN_FM_CODE_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.branchRangeSuggestionAction}"
+											for="PAS_DIVN_FM_CODE" var="branchRange"
+											fetchValue="#{branchRange.PAS_DIVN_FM_CODE}">
+											<h:column>
+												<h:outputText value="#{branchRange.PAS_DIVN_FM_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{branchRange.PAS_DIVN_FM_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright"/>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DIVN_TO_CODE_LABEL}"
+											for="PAS_DIVN_TO_CODE" id="PAS_DIVN_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DIVN_TO_CODE$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DIVN_TO_CODE}"
+											disabled="false" id="PAS_DIVN_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DIVN_TO_CODE$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_DIVN_TO_CODE}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_DIVN_TO_CODE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_DIVN_TO_CODE}"
+												reRender="err, errorMessages, PAS_DIVN_TO_CODE,PAS_DIVN_TO_CODE_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_DIVN_TO_CODE_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.branchRangeUptoSuggestionAction}"
+											for="PAS_DIVN_TO_CODE" var="branchRangeUpto">
+											<h:column>
+												<h:outputText value="#{branchRangeUpto.PAS_DIVN_TO_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText
+													value="#{branchRangeUpto.PAS_DIVN_TO_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+										
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DEPT_FM_CODE_LABEL}"
+											for="PAS_DEPT_FM_CODE" id="PAS_DEPT_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DEPT_FM_CODE$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DEPT_FM_CODE}"
+											disabled="false" id="PAS_DEPT_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DEPT_FM_CODE$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_DEPT_FM_CODE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_DEPT_FM_CODE}"
+												reRender="err, errorMessages, PAS_DEPT_FM_CODE,PAS_DEPT_FM_CODE_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_DEPT_FM_CODE_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.deptRangeSuggestionAction}"
+											for="PAS_DEPT_FM_CODE" var="deptRange">
+											<h:column>
+												<h:outputText value="#{deptRange.PAS_DEPT_FM_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{deptRange.PAS_DEPT_FM_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="oddrowright"/>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DEPT_TO_CODE_LABEL}"
+											for="PAS_DEPT_TO_CODE" id="PAS_DEPT_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DEPT_TO_CODE$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DEPT_TO_CODE}"
+											disabled="false" id="PAS_DEPT_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DEPT_TO_CODE$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_DEPT_TO_CODE}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_DEPT_TO_CODE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_DEPT_TO_CODE}"
+												reRender="err, errorMessages, PAS_DEPT_TO_CODE,PAS_DEPT_TO_CODE_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_DEPT_TO_CODE_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.deptRangeUptoSuggestionAction}"
+											for="PAS_DEPT_TO_CODE" var="deptRangeUpto">
+											<h:column>
+												<h:outputText value="#{deptRangeUpto.PAS_DEPT_TO_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{deptRangeUpto.PAS_DEPT_TO_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DOC_FM_TYPE_LABEL}"
+											for="PAS_DOC_FM_TYPE" id="PAS_DOC_FM_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DOC_FM_TYPE$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DOC_FM_TYPE}"
+											disabled="false" id="PAS_DOC_FM_TYPE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DOC_FM_TYPE$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_DOC_FM_TYPE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_DOC_FM_TYPE}"
+												reRender="err, errorMessages, PAS_DOC_FM_TYPE,PAS_DOC_FM_TYPE_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_DOC_FM_TYPE_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.docTypeRangeSuggestionAction}"
+											for="PAS_DOC_FM_TYPE" var="docTypeRange">
+											<h:column>
+												<h:outputText value="#{docTypeRange.PAS_DOC_FM_TYPE}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{docTypeRange.PAS_DOC_FM_TYPE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright"/><td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DOC_TO_TYPE_LABEL}"
+											for="PAS_DOC_TO_TYPE" id="PAS_DOC_TO_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DOC_TO_TYPE$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DOC_TO_TYPE}"
+											disabled="false" id="PAS_DOC_TO_TYPE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DOC_TO_TYPE$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_DOC_TO_TYPE}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_DOC_TO_TYPE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_DOC_TO_TYPE}"
+												reRender="err, errorMessages, PAS_DOC_TO_TYPE,PAS_DOC_TO_TYPE_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_DOC_TO_TYPE_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.docTypeRangeUptoSuggestionAction}"
+											for="PAS_DOC_TO_TYPE" var="docTypeRangeUpto">
+											<h:column>
+												<h:outputText value="#{docTypeRangeUpto.PAS_DOC_TO_TYPE}" />
+											</h:column>
+											<h:column>
+												<h:outputText
+													value="#{docTypeRangeUpto.PAS_DOC_TO_TYPE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PROD_CODE_FM_LABEL}"
+											for="PAS_PROD_CODE_FM" id="PAS_PROD_CODE_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PROD_CODE_FM$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PROD_CODE_FM}"
+											disabled="false" id="PAS_PROD_CODE_FM" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PROD_CODE_TO$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_PROD_CODE_FM}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_PROD_CODE_FM}"
+												reRender="err, errorMessages, PAS_PROD_CODE_FM,PAS_PROD_CODE_FM_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_PROD_CODE_FM_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.productRangeSuggestionAction}"
+											for="PAS_PROD_CODE_FM" var="productRange">
+											<h:column>
+												<h:outputText value="#{productRange.PAS_PROD_CODE_FM}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{productRange.PAS_PROD_CODE_FM_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="oddrowright"/>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PROD_CODE_TO_LABEL}"
+											for="PAS_PROD_CODE_TO" id="PAS_PROD_CODE_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PROD_CODE_TO$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PROD_CODE_TO}"
+											disabled="false" id="PAS_PROD_CODE_TO" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PROD_CODE_TO$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_PROD_CODE_TO}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_PROD_CODE_TO}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_PROD_CODE_TO}"
+												reRender="err, errorMessages, PAS_PROD_CODE_TO,PAS_PROD_CODE_TO_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_PROD_CODE_TO_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.productRangeUptoSuggestionAction}"
+											for="PAS_PROD_CODE_TO" var="productRangeUpto">
+											<h:column>
+												<h:outputText value="#{productRangeUpto.PAS_PROD_CODE_TO}" />
+											</h:column>
+											<h:column>
+												<h:outputText
+													value="#{productRangeUpto.PAS_PROD_CODE_TO_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PLAN_CODE_FM_LABEL}"
+											for="PAS_PLAN_CODE_FM" id="PAS_PLAN_CODE_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PLAN_CODE_FM$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PLAN_CODE_FM}"
+											disabled="false" id="PAS_PLAN_CODE_FM" rendered="true"
+											required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_CUST_CLS_FM_CODE$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_PLAN_CODE_FM}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_PLAN_CODE_FM}"
+												reRender="err, errorMessages, PAS_PLAN_CODE_FM,PAS_PLAN_CODE_FM_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_PLAN_CODE_FM_SUG" height="200"
+											nothingLabel="No Value Available" width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.planCodeSuggestionAction}"
+											for="PAS_PLAN_CODE_FM" var="planCode">
+											<h:column>
+												<h:outputText value="#{planCode.PAS_PLAN_CODE_FM}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{planCode.PAS_PLAN_CODE_FM_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright"/><td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PLAN_CODE_TO_LABEL}"
+											for="PAS_PLAN_CODE_TO" id="PAS_PLAN_CODE_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PLAN_CODE_TO$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PLAN_CODE_TO}"
+											disabled="false" id="PAS_PLAN_CODE_TO" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_END_TO_CODE$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_PLAN_CODE_TO}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_PLAN_CODE_TO}"
+												reRender="err, errorMessages,PAS_PLAN_CODE_TO,PAS_PLAN_CODE_TO_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_PLAN_CODE_TO_SUG" height="200"
+											nothingLabel="No Value Available" width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.planCodeUptoSuggestionAction}"
+											for="PAS_PLAN_CODE_TO" var="planCodeUpto">
+											<h:column>
+												<h:outputText value="#{planCodeUpto.PAS_PLAN_CODE_TO}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{planCodeUpto.PAS_PLAN_CODE_TO_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_CUST_CLS_FM_CODE_LABEL}"
+											for="PAS_CUST_CLS_FM_CODE" id="PAS_CUST_CLS_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_CUST_CLS_FM_CODE$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_CUST_CLS_FM_CODE}"
+											disabled="false" id="PAS_CUST_CLS_FM_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_CUST_CLS_FM_CODE$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_CUST_CLS_FM_CODE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_CUST_CLS_FM_CODE}"
+												reRender="err, errorMessages, PAS_CUST_CLS_FM_CODE,PAS_CUST_CLS_FM_CODE_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_CUST_CLS_FM_CODE_SUG"
+											height="200" width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.classRangeSuggestionAction}"
+											for="PAS_CUST_CLS_FM_CODE" var="classRange">
+											<h:column>
+												<h:outputText value="#{classRange.PAS_CUST_CLS_FM_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText
+													value="#{classRange.PAS_CUST_CLS_FM_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="oddrowright"/>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_CUST_CLS_TO_CODE_LABEL}"
+											for="PAS_CUST_CLS_TO_CODE" id="PAS_CUST_CLS_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_CUST_CLS_TO_CODE$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_CUST_CLS_TO_CODE}"
+											disabled="false" id="PAS_CUST_CLS_TO_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="input"
+											onfocus="currFocus('PM_IL_PREM_ACCOUNT_SETUP:PAS_CUST_CLS_TO_CODE')"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_CUST_CLS_TO_CODE$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_CUST_CLS_TO_CODE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_CUST_CLS_TO_CODE}"
+												oncomplete="setFocus('PM_IL_PREM_ACCOUNT_SETUP:PAS_FIRST_PREM_YN','PM_IL_PREM_ACCOUNT_SETUP:PAS_CUST_CLS_TO_CODE')"
+												reRender="PAS_CUST_CLS_TO_CODE,PAS_CUST_CLS_TO_CODE_SUG,PAS_PLAN_YRS_FM">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_CUST_CLS_TO_CODE_SUG"
+											height="200" width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.classRangeUptoSuggestionAction}"
+											for="PAS_CUST_CLS_TO_CODE" var="classRangeUpto">
+											<h:column>
+												<h:outputText value="#{classRangeUpto.PAS_CUST_CLS_TO_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText
+													value="#{classRangeUpto.PAS_CUST_CLS_TO_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_FIRST_PREM_YN_LABEL}"
+											for="PAS_FIRST_PREM_YN" id="PAS_FIRST_PREM_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_FIRST_PREM_YN$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_FIRST_PREM_YN}"
+											disabled="false" id="PAS_FIRST_PREM_YN" rendered="true"
+											required="true" styleClass="input"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_FIRST_PREM_YN}">
+											<f:selectItems id="FIRST_PREMIUM_DROP"
+												value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PAS_FIRST_PREM_YN_ARRAYLIST}" />
+											<a4j:support event="onchange" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_FIRST_PREM_YN}"
+												reRender="err, errorMessages, errorPanel, PAS_PLAN_YRS_FM, PAS_PLAN_YRS_TO">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="evenrow" colspan="3"/>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_NB_END_FLAG_LABEL}"
+											for="PAS_NB_END_FLAG" id="PAS_NB_END_FLAG_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_NB_END_FLAG$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_NB_END_FLAG}"
+											disabled="false" id="PAS_NB_END_FLAG" rendered="true"
+											required="true" styleClass="input"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_NB_END_FLAG}">
+											<f:selectItem itemValue="" itemLabel="--Select--" />
+											<f:selectItems
+												value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PAS_NB_END_FLAG_ARRAYLIST}" />
+											<a4j:support event="onchange" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_NB_END_FLAG}"
+												reRender="errorPanel, PAS_END_FM_CODE,END_FM_CODE_SUG, PAS_END_TO_CODE,END_TO_CODE_SUG">
+											</a4j:support>
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_NB_END_FLAG}"
+												reRender="errorPanel, PAS_END_FM_CODE, END_FM_CODE_SUG,PAS_END_TO_CODE,END_TO_CODE_SUG">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="oddrow" colspan="3"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_END_FM_CODE_LABEL}"
+											for="PAS_END_FM_CODE" id="PAS_END_FM_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_END_FM_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_END_FM_CODE}"
+											id="PAS_END_FM_CODE" maxlength="12" rendered="true"
+											required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_END_FM_CODE$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_END_FM_CODE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_END_FM_CODE}"
+												reRender="err, errorMessages,PAS_END_FM_CODE,END_FM_CODE_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="END_FM_CODE_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.endorsementCodeSuggestionAction}"
+											for="PAS_END_FM_CODE" var="endorsementCode">
+											<h:column>
+												<h:outputText value="#{endorsementCode.PAS_END_FM_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText
+													value="#{endorsementCode.PAS_END_FM_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="evenrowright"/>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_END_TO_CODE_LABEL}"
+											for="PAS_END_TO_CODE" id="PAS_END_TO_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_END_TO_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_END_TO_CODE}"
+											id="PAS_END_TO_CODE" maxlength="12" rendered="true"
+											required="true" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PLAN_CODE_TO$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_END_TO_CODE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_END_TO_CODE}"
+												reRender="err, errorMessages,PAS_END_TO_CODE,END_TO_CODE_SUG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="END_TO_CODE_SUG" height="200"
+											width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.endorsementCodeUptoSuggestionAction}"
+											for="PAS_END_TO_CODE" var="endorsementCodeUpto">
+											<h:column>
+												<h:outputText value="#{endorsementCodeUpto.PAS_END_TO_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText
+													value="#{endorsementCodeUpto.PAS_END_TO_CODE_DESC}" />
+											</h:column>
+										</rich:suggestionbox> <h:graphicImage value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PLAN_YRS_FM_LABEL}"
+											for="PAS_PLAN_YRS_FM" id="PAS_PLAN_YRS_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PLAN_YRS_FM$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PLAN_YRS_FM}"
+											disabled="false" id="PAS_PLAN_YRS_FM" maxlength="4"
+											rendered="true" required="true" styleClass="inoutNumeric"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PLAN_YRS_FM$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_PLAN_YRS_FM}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_PLAN_YRS_FM}"
+												reRender="err, errorMessages,errorPanel,PAS_PLAN_YRS_FM">
+											</a4j:support>
+										</h:inputText></td>
+										<td class="oddrowright"/>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PLAN_YRS_TO_LABEL}"
+											for="PAS_PLAN_YRS_TO" id="PAS_PLAN_YRS_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PLAN_YRS_TO$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PLAN_YRS_TO}"
+											disabled="false" id="PAS_PLAN_YRS_TO" maxlength="4"
+											rendered="true" required="true" styleClass="inputNumeric"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PLAN_YRS_TO$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_PLAN_YRS_TO}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_PLAN_YRS_TO}"
+												reRender="err, errorMessages,errorPanel,PAS_PLAN_YRS_TO">
+											</a4j:support>
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_ASSURED_TYPE_LABEL}"
+											for="PAS_ASSURED_TYPE" id="PAS_ASSURED_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_ASSURED_TYPE$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_ASSURED_TYPE}"
+											disabled="false" id="PAS_ASSURED_TYPE" rendered="true"
+											required="true" styleClass="input"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_ASSURED_TYPE}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_ASSURED_TYPE}">
+											<f:selectItem itemValue="" itemLabel="--Select--" />
+											<f:selectItems
+												value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PAS_ASSURED_TYPE_ARRAYLIST}" />
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.setErrorMessagesInMap}"
+												reRender="err, errorMessages">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="evenrow" colspan="3"/>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_FORCE_DIVN_YN_LABEL}"
+											for="PAS_FORCE_DIVN_YN" id="PAS_FORCE_DIVN_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_FORCE_DIVN_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_FORCE_DIVN_YN}"
+											disabled="false" id="PAS_FORCE_DIVN_YN" rendered="true"
+											required="false" styleClass="input"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_FORCE_DIVN_YN}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_FORCE_DIVN_YN}">
+											<f:selectItem itemValue="" itemLabel="--Select--" />
+											<f:selectItems
+												value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PAS_FORCE_DIVN_YN_ARRAYLIST}" />
+											<a4j:support event="onchange" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.setErrorMessagesInMap}"
+												reRender="errorPanel,PAS_DIVN_CODE,PAS_FORCE_DEPT_YN,PAS_DIVN_CODE_MANDATORY,DIVISION_LOV">
+									</a4j:support>
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.setErrorMessagesInMap}"
+												reRender="errorPanel,PAS_DIVN_CODE,PAS_FORCE_DEPT_YN,PAS_DIVN_CODE_MANDATORY,DIVISION_LOV">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="oddrowright"/>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PLAN_TYPE_LABEL}"
+											for="PAS_PLAN_TYPE" id="PAS_PLAN_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PLAN_TYPE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_PLAN_TYPE}"
+											disabled="false" id="PAS_PLAN_TYPE" maxlength="1"
+											rendered="true" required="false" styleClass="inputsmall"
+											onfocus="currFocus('PM_IL_PREM_ACCOUNT_SETUP:PAS_PLAN_TYPE')"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_PLAN_TYPE$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_PLAN_TYPE}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePlanType}"
+												reRender="UI_M_PAS_PLAN_TYPE_DESC,errorPanel"
+												oncomplete="setFocus('PM_IL_PREM_ACCOUNT_SETUP:PAS_FORCE_DEPT_YN','PM_IL_PREM_ACCOUNT_SETUP:PAS_PLAN_TYPE')">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox height="200" width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.planTypeSuggestionAction}"
+											for="PAS_PLAN_TYPE" var="planType">
+											<h:column>
+												<h:outputText value="#{planType.PAS_PLAN_TYPE}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{planType.UI_M_PAS_PLAN_TYPE_DESC}" />
+											</h:column>
+											<a4j:support event="onselect" immediate="true"
+												reRender="UI_M_PAS_PLAN_TYPE_DESC,errorPanel">
+												<f:setPropertyActionListener id="AUTOID_70345"
+													target="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_PAS_PLAN_TYPE_DESC}"
+													value="#{planType.UI_M_PAS_PLAN_TYPE_DESC}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_PAS_PLAN_TYPE_DESC}"
+											disabled="true" id="UI_M_PAS_PLAN_TYPE_DESC" maxlength="30"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_PAS_PLAN_TYPE_DESC}" />
+										<h:graphicImage value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_FORCE_DEPT_YN_LABEL}"
+											for="PAS_FORCE_DEPT_YN" id="PAS_FORCE_DEPT_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_FORCE_DEPT_YN$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_FORCE_DEPT_YN}"
+											disabled="false" id="PAS_FORCE_DEPT_YN" rendered="true"
+											required="false" styleClass="input"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_FORCE_DEPT_YN}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_FORCE_DEPT_YN}">
+											<f:selectItem itemValue="" itemLabel="--Select--" />
+											<f:selectItems
+												value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PAS_FORCE_DEPT_YN_ARRAYLIST}" />
+											<a4j:support event="onchange" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.setErrorMessagesInMap}"
+												reRender="errorPanel, PAS_DEPT_CODE,PAS_DEPT_CODE_MANDATORY">
+											</a4j:support>
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.setErrorMessagesInMap}"
+												reRender="errorPanel, PAS_DEPT_CODE,PAS_DEPT_CODE_MANDATORY">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="evenrow" colspan="3"/>
+										
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_MAIN_ACNT_NAME_LABEL}"
+											for="PAS_MAIN_ACNT_CODE" id="UI_M_MAIN_ACNT_NAME_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_MAIN_ACNT_CODE$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.jpg" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_MAIN_ACNT_CODE}"
+											disabled="false" id="PAS_MAIN_ACNT_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_MAIN_ACNT_CODE$prompt}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_MAIN_ACNT_CODE}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_MAIN_ACNT_CODE}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_MAIN_ACNT_CODE_HELPER}"
+												reRender="errorPanel,UI_M_MAIN_ACNT_NAME">
+											</a4j:support>
+
+										</h:inputText> <rich:suggestionbox height="200" width="250"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.mainAccountCodeSuggestionAction}"
+											for="PAS_MAIN_ACNT_CODE" var="mainAccountCode">
+											<h:column>
+												<h:outputText value="#{mainAccountCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{mainAccountCode.name}" />
+											</h:column>
+											<a4j:support event="onselect" immediate="true"
+												reRender="UI_M_MAIN_ACNT_NAME,errorPanel">
+												<f:setPropertyActionListener id="AUTOID_703"
+													target="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_MAIN_ACNT_NAME}"
+													value="#{mainAccountCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_MAIN_ACNT_NAME}"
+											disabled="true" id="UI_M_MAIN_ACNT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$UI_M_MAIN_ACNT_NAME$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_MAIN_ACNT_NAME}" />
+										<h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="oddrow" colspan="3"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_SUB_ACNT_NAME_LABEL}"
+											for="PAS_SUB_ACNT_CODE" id="UI_M_SUB_ACNT_NAME_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_SUB_ACNT_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_SUB_ACNT_CODE}"
+											disabled="false" id="PAS_SUB_ACNT_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_SUB_ACNT_CODE}"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_SUB_ACNT_CODE$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_SUB_ACNT_CODE}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_SUB_ACNT_CODE_HELPER}"
+												reRender="UI_M_SUB_ACNT_NAME,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox id="PAS_SUB_ACNT_CODE_SUG" height="200"
+											width="250" immediate="true"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.subAccountCodeSuggestionAction}"
+											for="PAS_SUB_ACNT_CODE" var="subAccountCode">
+											<h:column>
+												<h:outputText value="#{subAccountCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{subAccountCode.name}" />
+											</h:column>
+											<a4j:support event="onselect" immediate="true"
+												reRender="UI_M_SUB_ACNT_NAME,errorPanel ">
+												<f:setPropertyActionListener id="AUTOID_709"
+													target="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_SUB_ACNT_NAME}"
+													value="#{subAccountCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_SUB_ACNT_NAME}"
+											disabled="true" id="UI_M_SUB_ACNT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$UI_M_SUB_ACNT_NAME$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_SUB_ACNT_NAME}" />
+										<h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" colspan="3"/>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_DIVN_NAME_LABEL}"
+											for="PAS_DIVN_CODE" id="UI_M_DIVN_NAME_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DIVN_CODE$caption}" />
+										<h:outputText id="PAS_DIVN_CODE_MANDATORY"
+											styleClass="searchimg"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DIVN_CODE.required?'*':''}"
+											style="color:red;font-size:16px" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DIVN_CODE}"
+											disabled="false" id="PAS_DIVN_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DIVN_CODE$tooltip}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_DIVN_CODE}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_DIVN_CODE}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_DIVN_CODE}"
+												reRender="UI_M_DIVN_NAME,errorPanel">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox height="200" width="250"
+											id="DIVISION_LOV" immediate="true"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.divisionCodeSuggestionAction}"
+											for="PAS_DIVN_CODE" var="divisionCode">
+											<h:column>
+												<h:outputText value="#{divisionCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{divisionCode.name}" />
+											</h:column>
+											<a4j:support event="onselect" immediate="true"
+												reRender="errorPanel,UI_M_DIVN_NAME">
+												<f:setPropertyActionListener id="AUTOID_7093"
+													target="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_DIVN_NAME}"
+													value="#{divisionCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_DIVN_NAME}"
+											disabled="true" id="UI_M_DIVN_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$UI_M_DIVN_NAME$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_DIVN_NAME}" />
+										<h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="oddrow" colspan="3"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_DEPT_NAME_LABEL}"
+											for="PAS_DEPT_CODE" id="UI_M_DEPT_NAME_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DEPT_CODE$caption}" />
+										<h:outputText id="PAS_DEPT_CODE_MANDATORY"
+											styleClass="searchimg"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DEPT_CODE.required?'*':''}"
+											style="color:red;font-size:16px" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_DEPT_CODE}"
+											id="PAS_DEPT_CODE" maxlength="12" rendered="true"
+											required="false" styleClass="inputsmall"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_DEPT_CODE$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_DEPT_CODE}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_DEPT_CODE}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_DEPT_CODE}"
+												reRender="errorPanel,UI_M_DEPT_NAME">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox height="200" width="250"
+											id="DEPT_CODE_LOV" immediate="true"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.deptCodeSuggestionAction}"
+											for="PAS_DEPT_CODE" var="deptCode">
+											<h:column>
+												<h:outputText value="#{deptCode.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{deptCode.name}" />
+											</h:column>
+											<a4j:support event="onselect" immediate="true"
+												reRender="UI_M_DEPT_NAME">
+												<f:setPropertyActionListener id="AUTOID_70933"
+													target="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_DEPT_NAME}"
+													value="#{deptCode.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_DEPT_NAME}"
+											disabled="true" id="UI_M_DEPT_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$UI_M_DEPT_NAME$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_DEPT_NAME}" />
+										<h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" colspan="3"/>
+									</tr>
+
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_ANLY_NAME_LABEL}"
+											for="PAS_ANLY_CODE_1" id="UI_M_ANLY_NAME_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_ANLY_CODE_1$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_ANLY_CODE_1}"
+											disabled="false" id="PAS_ANLY_CODE_1" maxlength="12"
+											rendered="true" required="false"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_ANLY_CODE_1}"
+											styleClass="inputsmall"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_ANLY_CODE_1$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_ANLY_CODE_1}">
+
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.actionListenerPAS_ANLY_CODE_1}"
+												reRender="errorPanel, UI_M_ANLY_NAME">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox height="200" width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.analysisCode1SuggestionAction}"
+											for="PAS_ANLY_CODE_1" var="analysisCode1">
+											<h:column>
+												<h:outputText value="#{analysisCode1.PAS_ANLY_CODE_1}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{analysisCode1.UI_M_ANLY_NAME}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_16578_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,UI_M_ANLY_NAME">
+												<f:setPropertyActionListener id="AUTOID_856"
+													target="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME}"
+													value="#{analysisCode1.UI_M_ANLY_NAME}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_ANLY_NAME}"
+											disabled="true" id="UI_M_ANLY_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$UI_M_ANLY_NAME_1$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME}" />
+										<h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="oddrow" colspan="3"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_ANLY_NAME_1_LABEL}"
+											for="PAS_ANLY_CODE_2" id="UI_M_ANLY_NAME_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_ANLY_CODE_2$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_ANLY_CODE_2}"
+											disabled="false" id="PAS_ANLY_CODE_2" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_ANLY_CODE_2$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_ANLY_CODE_2}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_ANLY_CODE_2}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_ANLY_CODE_2}"
+												reRender="errorPanel, UI_M_ANLY_NAME_1">
+											</a4j:support>
+
+										</h:inputText> <rich:suggestionbox height="200" width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.analysisCode2SuggestionAction}"
+											for="PAS_ANLY_CODE_2" var="analysisCode2">
+											<h:column>
+												<h:outputText value="#{analysisCode2.PAS_ANLY_CODE_2}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{analysisCode2.UI_M_ANLY_NAME_1}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_ANLY_1_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,UI_M_ANLY_NAME_1">
+												<f:setPropertyActionListener id="AUTOID_8561"
+													target="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME_1}"
+													value="#{analysisCode2.UI_M_ANLY_NAME_1}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_ANLY_NAME_1}"
+											disabled="true" id="UI_M_ANLY_NAME_1" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$UI_M_ANLY_NAME_1$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_ANLY_NAME_1}" />
+										<h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" colspan="3"/>
+									</tr>
+
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_ACTY_NAME_LABEL}"
+											for="PAS_ACTY_CODE_1" id="UI_M_ACTY_NAME_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_ACTY_CODE_1$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_ACTY_CODE_1}"
+											disabled="false" id="PAS_ACTY_CODE_1" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_ACTY_CODE_1$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_ACTY_CODE_1}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_ACTY_CODE_1}">
+											<a4j:support event="onblur" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_ACTY_CODE_1}"
+												reRender="errorPanel, UI_M_ACTY_NAME">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox height="200" width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.activityCode1SuggestionAction}"
+											for="PAS_ACTY_CODE_1" var="activityCode1">
+											<h:column>
+												<h:outputText value="#{activityCode1.PAS_ACTY_CODE_1}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{activityCode1.UI_M_ACTY_NAME}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_ANTY_1_INPUT_SUGG_SUPPORT" immediate="true"
+												reRender="errorPanel,UI_M_ACTY_NAME">
+												<f:setPropertyActionListener id="AUTOID_ACTY_8561"
+													target="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME}"
+													value="#{activityCode1.UI_M_ACTY_NAME}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_ACTY_NAME}"
+											disabled="true" id="UI_M_ACTY_NAME" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$UI_M_ACTY_NAME$prompt}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME}" />
+										<h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="oddrow" colspan="3"/>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_ACTY_NAME_1_LABEL}"
+											for="PAS_ACTY_CODE_2" id="UI_M_ACTY_NAME_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_ACTY_CODE_2$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_PAS_ACTY_CODE_2}"
+											disabled="false" id="PAS_ACTY_CODE_2" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$PAS_ACTY_CODE_2$prompt}"
+											validator="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_ACTY_CODE_2}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.PAS_ACTY_CODE_2}">
+											<a4j:support event="onblur" immediate="true"
+												id="ACTIVITY_CODE_2_ONBLUR"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.validatePAS_ACTY_CODE_2}"
+												reRender="errorPanel, UI_M_ACTY_NAME_1">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox height="200" width="250"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_LIST}"
+											suggestionAction="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.activityCode2SuggestionAction}"
+											for="PAS_ACTY_CODE_2" var="activityCode2">
+											<h:column>
+												<h:outputText value="#{activityCode2.PAS_ACTY_CODE_2}" />
+											</h:column>
+											<h:column>
+												<h:outputText value="#{activityCode2.UI_M_ACTY_NAME_1}" />
+											</h:column>
+											<a4j:support event="onselect" immediate="true"
+												actionListener="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.getActivityCode2Desc}"
+												reRender="UI_M_ACTY_NAME_1" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.COMP_UI_M_ACTY_NAME_1}"
+											disabled="true" id="UI_M_ACTY_NAME_1" maxlength="240"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM022$PM_IL_PREM_ACCOUNT_SETUP$UI_M_ACTY_NAME_1$tooltip}"
+											value="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.PM_IL_PREM_ACCOUNT_SETUP_BEAN.UI_M_ACTY_NAME_1}" />
+										<h:graphicImage value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" colspan="3"/>
+									</tr>
+
+
+								</table>
+								</td>
+
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false"
+									action="#{PM_IL_PREM_ACCOUNT_SETUP_SEARCH_PAGE.preBack}"
+									immediate="true">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle" value="./../../images/back.png" />
+									<h:outputText value="#{menumessage.jsf$header$image$back}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="true"
+									action="#{PILM022_PM_IL_PREM_ACCOUNT_SETUP_ACTION.executeInsertion}">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../images/save.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$save}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/savenext.GIF" />
+									<h:outputText value="#{menumessage.jsf$header$image$savenext}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										rendered="false" styleClass="toolbarImageStyle"
+										value="./../../images/deleteRecord.gif" />
+									<h:outputText
+										value="#{menumessage.jsf$header$image$deleteRecord}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/firstrec.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/prevpage.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$prevpage}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/nextpage.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$nextpage}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+								<h:commandLink style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle" rendered="false">
+									<h:graphicImage style="border: thin solid white"
+										styleClass="toolbarImageStyle"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText
+										value="#{menumessage.jsf$header$image$lastRecord}"
+										styleClass="toolbaroutputTextStyle" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				
+			</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

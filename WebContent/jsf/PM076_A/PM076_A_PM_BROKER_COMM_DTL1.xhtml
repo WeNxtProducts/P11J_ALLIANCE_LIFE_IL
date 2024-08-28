@@ -1,0 +1,469 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PM076_A" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" border="0">
+		<tr>
+			
+		</tr>
+		<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+		<h:form id="PM_BROKER_COMM_DTL" onkeypress="return event.keyCode != 13">
+		<!-- End -->
+			<tr>
+				<td colspan="3" width="100%" vAlign="top">&nbsp;&nbsp;
+				<table width="100%" id="toolbartable">
+					<tr>
+						<td><h:commandLink style="text-decoration:none"
+							action="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.saveDetailRecord}">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/save.gif" />
+							<h:outputText value="#{menumessage.jsf$header$image$save}" />
+						</h:commandLink> <h:commandLink style="text-decoration:none">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/savenext.GIF" />
+							<h:outputText value="#{menumessage.jsf$header$image$savenext}" />
+						</h:commandLink> <h:commandLink style="text-decoration:none">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/deleteRecord.gif" />
+							<h:outputText
+								value="#{menumessage.jsf$header$image$deleteRecord}" />
+						</h:commandLink> <h:commandLink style="text-decoration:none">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/firstrec.gif" />
+							<h:outputText value="#{menumessage.jsf$header$image$firstrec}" />
+						</h:commandLink> <h:commandLink style="text-decoration:none">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/prevpage.gif" />
+							<h:outputText value="#{menumessage.jsf$header$image$prevpage}" />
+						</h:commandLink> <h:commandLink style="text-decoration:none">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/nextpage.gif" />
+							<h:outputText value="#{menumessage.jsf$header$image$nextpage}" />
+						</h:commandLink> <h:commandLink style="text-decoration:none">
+							<h:graphicImage style="border: thin solid white"
+								value="./../../images/lastRecord.gif" />
+							<h:outputText value="#{menumessage.jsf$header$image$lastRecord}" />
+						</h:commandLink></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.errorMap['current'] !=null? PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.errorMap['current']:PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" styleClass="ErrorMessages"
+								value="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.errorMessages}"
+								style="color: red; font-style: italic;font-weight:bold;"
+								escape="false" />
+							<h:messages
+								style="color: red;font-style: italic;font-weight:bold;" id="msg"
+								rendered="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.globalMsgRender}" />
+							<h:outputText id="warningMessages" styleClass="WarningMessages"
+								value="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.warningMessages}"
+								style="color: green; font-style: italic;font-weight:bold;"
+								escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td width="100%" vAlign="top" height="15%">
+				<table width="100%" id="globalLink">
+					<tr>
+						<td><!-- Tab implementation --> <h:inputHidden
+							value="#{PM076_A_COMPOSITE_ACTION.tabbedBar.tabClicked}"
+							id="myhidden" /> <h:panelGroup id="mypanel" style="border:0">
+							<table width="90%">
+								<tr>
+									<td width="90%"><a4j:repeat
+										value="#{PM076_A_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+										var="currtab">
+										<h:commandLink
+											onclick="document.getElementById('PM_BROKER_COMM_DTL:myhidden').value='#{currtab.id}'"
+											value="#{currtab.value}" disabled="#{currtab.disabled}"
+											action="#{PM076_A_COMPOSITE_ACTION.tabbedBar.tabAction}"
+											styleClass="#{currtab.styleString}" />
+
+									</a4j:repeat></td>
+									<td width="*"><a4j:commandButton immediate="true"
+										disabled="#{PM076_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+										alt="first" image="./../../images/firstrec.gif"
+										action="#{PM076_A_COMPOSITE_ACTION.tabbedBar.gotoFirstTab}"
+										reRender="mypanel" /> <a4j:commandButton immediate="true"
+										disabled="#{PM076_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+										alt="previous" image="./../../images/prevpage.gif"
+										action="#{PM076_A_COMPOSITE_ACTION.tabbedBar.gotoPrevTab}"
+										reRender="mypanel" /> <a4j:commandButton immediate="true"
+										disabled="#{PM076_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+										alt="next" image="./../../images/nextpage.gif"
+										action="#{PM076_A_COMPOSITE_ACTION.tabbedBar.gotoNextTab}"
+										reRender="mypanel" /> <a4j:commandButton immediate="true"
+										disabled="#{PM076_A_COMPOSITE_ACTION.tabbedBar.navigable}"
+										alt="last" image="./../../images/lastRecord.gif"
+										action="#{PM076_A_COMPOSITE_ACTION.tabbedBar.gotoLastTab}"
+										reRender="mypanel" /></td>
+								</tr>
+							</table>
+						</h:panelGroup></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<table width="100%" id="linkstable">
+					<tr>
+						<td><h:outputLabel
+							value="#{message.PM076_A$PM_BROKER_COMM_DTL$FORM$CAPTION}" /></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3">
+				<div style="height: 500px; overflow: auto;">
+				<table width="100%">
+					<tr>
+						<td width="100%" vAlign="top">
+						<table id="bordertable" align="left" width="100%">
+							<tr>
+								<td><rich:panel style="width:960px;overflow:auto">
+									<a4j:commandButton value="#{commonmsg.addNewButtonCaption}"
+										reRender="PM_BROKER_COMM_DTL_TABLE" styleClass="button"
+										action="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.addNew}" />
+									<a4j:commandButton value=" #{commonmsg.deleteButtonCaption} "
+										styleClass="button"
+										action="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.deleteRow}"
+										reRender="errorPanel,PM_BROKER_COMM_DTL_TABLE" />
+									<rich:dataTable id="PM_BROKER_COMM_DTL_TABLE"
+										value="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.list}"
+										binding="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.dataTable}"
+										var="listValue"
+										rows="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.recordsPerPage}">
+										<f:facet name="footer">
+											<rich:datascroller id="dsID" pagesVar="pages"
+												pageIndexVar="index" align="right"
+												page="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.currPage}">
+											</rich:datascroller>
+										</f:facet>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="label" value="" />
+											</f:facet>
+											<h:selectBooleanCheckbox value="#{listValue.CHECK_BOX}">
+												<a4j:support event="onclick" immediate="true"
+													actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.checkBoxStatus}"></a4j:support>
+												<a4j:support event="onblur" immediate="true"
+													actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.checkBoxValidation}"></a4j:support>
+											</h:selectBooleanCheckbox>
+
+										</rich:column>
+										<!-- [ Added for grid implementation change, Added by:Rajesh Kundala, Dated: 17-Feb-2009 -->
+										<rich:column rendered="true" styleClass="gridsaveColoumn">
+											<f:facet name="header">
+												<h:outputText styleClass="label"
+													value="#{commonmsg.IL_GRID$SAVE_COLUMN_HEADER$caption}" />
+											</f:facet>
+											<a4j:commandLink style="text-decoration:none"
+												disabled="false" immediate="true" reRender="errorPanel"
+												title="#{commonmsg.IL_GRID$UI_M_BUT_RECORD_SAVE$title}"
+												action="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.saveCurrentRecord}">
+												<h:graphicImage style="border: thin solid white"
+													value="./../../images/insupd.gif" />
+												<h:outputText
+													value="#{commonmsg.IL_GRID$UI_M_BUT_RECORD_SAVE$caption}" />
+											</a4j:commandLink>
+										</rich:column>
+										<!-- Added for grid implementation change, Added by: Rajesh Kundala, Dated: 17-Feb-2009 ] -->
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_LEVEL$caption}" />
+											</f:facet>
+											<h:inputText styleClass="forumRowHighlightNumeric"
+												id="BCD_LEVEL" style="width:34px;"
+												title="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_LEVEL$tooltip}"
+												value="#{listValue.BCD_LEVEL}">
+												<rich:suggestionbox width="300" height="200" for="BCD_LEVEL"
+													fetchValue="#{bcdCode.BCD_LEVEL}" var="bcdCode"
+													suggestionAction="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.detailLevelList}">
+													<h:column>
+														<h:outputText value="#{bcdCode.BCD_LEVEL}" />
+													</h:column>
+													<h:column>
+														<h:outputText value="#{bcdCode.UI_M_RANK_CODE_LEVEL}" />
+													</h:column>
+													<a4j:support event="onselect" immediate="true"
+														actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.detailLevelDesc}"
+														reRender="PM_BROKER_COMM_DTL_TABLE,errorPanel" />
+												</rich:suggestionbox>
+											</h:inputText>
+										</rich:column>
+
+
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="label"
+													value="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_APPLY_ON$caption}" />
+											</f:facet>
+											<h:selectOneMenu id="BCD_APPLY_ON" style="width:100;"
+												title="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_APPLY_ON$tooltip}"
+												value="#{listValue.BCD_APPLY_ON}">
+												<f:selectItems
+													value="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.itemApplyOn}" />
+												<a4j:support event="onblur" immediate="true"
+													actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validateBcdApplyOn}"
+													rendered="PM_BROKER_COMM_DTL_TABLE" />
+											</h:selectOneMenu>
+										</rich:column>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_COMM_RATE$caption}" />
+											</f:facet>
+											<h:inputText styleClass="forumRowHighlightNumeric"
+												id="BCD_COMM_RATE" style="width:85px;"
+												title="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_RANK_CODE$tooltip}"
+												value="#{listValue.BCD_COMM_RATE}"
+												validator="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validationCommRate}">
+												<a4j:support event="onblur" reRender="errorPanel"
+													actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validateIdField}"
+													immediate="true" />
+											</h:inputText>
+										</rich:column>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_RATE_PER$caption}" />
+											</f:facet>
+											<h:inputText styleClass="forumRowHighlightNumeric"
+												id="BCD_RATE_PER" style="width:80px;"
+												title="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_RATE_PER$tooltip}"
+												value="#{listValue.BCD_RATE_PER}"
+												validator="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validationRatePer}">
+												<a4j:support event="onblur" reRender="errorPanel"
+													actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validateIdField}"
+													immediate="true" />
+											</h:inputText>
+										</rich:column>
+
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_RANK_CODE$caption}" />
+											</f:facet>
+											<h:inputText styleClass="forumRowHighlightNumeric"
+												id="BCD_RANK_CODE" style="width:88px;"
+												value="#{listValue.BCD_RANK_CODE}"
+												title="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_RANK_CODE$tooltip}"
+												validator="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validationRankCode}">
+												<rich:suggestionbox width="300" height="300"
+													for="BCD_RANK_CODE" fetchValue="#{rnkCode.BCD_RANK_CODE}"
+													var="rnkCode"
+													suggestionAction="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.rankCodeList}">
+													<h:column>
+														<h:outputText value="#{rnkCode.BCD_RANK_CODE}" />
+													</h:column>
+													<h:column>
+														<h:outputText value="#{rnkCode.UI_M_BCD_RANK_CODE_DESC}" />
+													</h:column>
+													<a4j:support event="onselect" immediate="true"
+														actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.rankCodeDesc}"
+														reRender="PM_BROKER_COMM_DTL_TABLE,errorPanel"
+														focus="BCD_RANK_CODE" />
+												</rich:suggestionbox>
+												<a4j:support event="onblur" reRender="errorPanel"
+													actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validateIdField}"
+													immediate="true" rendered="PM_BROKER_COMM_DTL_TABLE" />
+											</h:inputText>
+										</rich:column>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM076_A$PM_BROKER_COMM_DTL$UI_M_BCD_RANK_CODE_DESC$caption}" />
+											</f:facet>
+											<h:inputText id="UI_M_BCD_RANK_CODE_DESC" readonly="true"
+												style="width:250px;"
+												title="#{message.PM076_A$PM_BROKER_COMM_DTL$UI_M_BCD_RANK_CODE_DESC$tooltip}"
+												value="#{listValue.UI_M_BCD_RANK_CODE_DESC}" />
+										</rich:column>
+
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_YEAR_FM$caption}" />
+											</f:facet>
+											<h:inputText styleClass="forumRowHighlightNumeric"
+												id="BCD_YEAR_FM" style="width:50px;"
+												title="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_YEAR_FM$tooltip}"
+												value="#{listValue.BCD_YEAR_FM}"
+												validator="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validationYearFrom}">
+												<a4j:support event="onblur" reRender="errorPanel"
+													actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validateIdField}"
+													immediate="true" />
+											</h:inputText>
+										</rich:column>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_YEAR_TO$caption}" />
+											</f:facet>
+											<h:inputText styleClass="forumRowHighlightNumeric"
+												id="BCD_YEAR_TO" style="width:50px;"
+												title="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_YEAR_TO$tooltip}"
+												value="#{listValue.BCD_YEAR_TO}"
+												validator="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validationYearTo}">
+												<a4j:support event="onblur" reRender="errorPanel"
+													actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validateIdField}"
+													immediate="true" />
+											</h:inputText>
+										</rich:column>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_TERM_FM$caption}" />
+											</f:facet>
+											<h:inputText styleClass="forumRowHighlightNumeric"
+												id="BCD_TERM_FM" style="width:50px;"
+												title="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_TERM_FM$tooltip}"
+												value="#{listValue.BCD_TERM_FM}"
+												validator="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validationTermFrom}">
+												<a4j:support event="onblur" reRender="errorPanel"
+													actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validateIdField}"
+													immediate="true" />
+											</h:inputText>
+										</rich:column>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_TERM_TO$caption}" />
+											</f:facet>
+											<h:inputText styleClass="forumRowHighlightNumeric"
+												id="BCD_TERM_TO" style="width:50px;"
+												title="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_TERM_TO$tooltip}"
+												value="#{listValue.BCD_TERM_TO}"
+												validator="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validationTermTo}">
+												<a4j:support event="onblur" reRender="errorPanel"
+													actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validateIdField}"
+													immediate="true" />
+											</h:inputText>
+										</rich:column>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_SA_FM$caption}" />
+											</f:facet>
+											<h:inputText id="BCD_SA_FM" style="width:135px;"
+												title="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_SA_FM$tooltip}"
+												value="#{listValue.BCD_SA_FM}"
+												validator="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validationSaFm}">
+												<a4j:support event="onblur" reRender="errorPanel"
+													actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validateIdField}"
+													immediate="true" />
+											</h:inputText>
+										</rich:column>
+										<rich:column rendered="true">
+											<f:facet name="header">
+												<h:outputText styleClass="forumRowHighlight"
+													value="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_SA_TO$caption}" />
+											</f:facet>
+											<h:inputText styleClass="forumRowHighlightNumeric"
+												id="BCD_SA_TO" style="width:135px;"
+												title="#{message.PM076_A$PM_BROKER_COMM_DTL$BCD_SA_TO$tooltip}"
+												value="#{listValue.BCD_SA_TO}"
+												validator="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validationSaTo}">
+												<a4j:support event="onblur" reRender="errorPanel"
+													actionListener="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.validateIdField}"
+													immediate="true" />
+											</h:inputText>
+										</rich:column>
+										<!-- [ Added for grid implementation change, Added by:Rajesh Kundala, Dated: 17-Feb-2009 -->
+										<rich:column rendered="true" styleClass="gridsaveColoumn">
+											<f:facet name="header">
+												<h:outputText styleClass="label"
+													value="#{commonmsg.IL_GRID$SAVE_COLUMN_HEADER$caption}" />
+											</f:facet>
+											<a4j:commandLink style="text-decoration:none"
+												disabled="false" immediate="true" reRender="errorPanel"
+												title="#{commonmsg.IL_GRID$UI_M_BUT_RECORD_SAVE$title}"
+												action="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.saveCurrentRecord}">
+												<h:graphicImage style="border: thin solid white"
+													value="./../../images/insupd.gif" />
+												<h:outputText
+													value="#{commonmsg.IL_GRID$UI_M_BUT_RECORD_SAVE$caption}" />
+											</a4j:commandLink>
+										</rich:column>
+										<!-- Added for grid implementation change, Added by: Rajesh Kundala, Dated: 17-Feb-2009 ] -->
+									</rich:dataTable>
+								</rich:panel></td>
+							</tr>
+							<tr>
+								<td colspan="5" width="100%">
+								<hr color="black" />
+								</td>
+							</tr>
+							<tr>
+								<td colspan="5" width="100%" align="right"><h:commandLink
+									style="text-decoration:none"
+									action="#{PM076_A_COMPOSITE_ACTION.PM_BROKER_COMM_DTL_ACTION_BEAN.saveDetailRecord}">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/save.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink> <h:commandLink style="text-decoration:none">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/savenext.GIF" />
+									<h:outputText value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink> <h:commandLink style="text-decoration:none">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/firstrec.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink> <h:commandLink style="text-decoration:none">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/prevpage.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink> <h:commandLink style="text-decoration:none">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/nextpage.gif" />
+									<h:outputText value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink> <h:commandLink style="text-decoration:none">
+									<h:graphicImage style="border: thin solid white"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink></td>
+							</tr>
+						</table>
+						</td>
+						<td></td>
+					</tr>
+				</table>
+				</div>
+				</td>
+			</tr>
+		</h:form>
+	</table>
+	<table width="100%">
+		<tr>
+		</tr>
+	</table>
+</f:view>
+
+
+</ui:define>
+</ui:composition>

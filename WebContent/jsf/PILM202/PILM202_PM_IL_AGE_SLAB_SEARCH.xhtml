@@ -1,0 +1,144 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+
+	<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILM202" var="message" />
+	<f:loadBundle basename="messageProperties" var="msg" />
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		
+		<h:form id="PILM202_SEARCH">
+		<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err" escape="true"
+									styleClass="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.errorMap['current'] !=null? PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.errorMap['current']: PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" styleClass="ErrorMessages"
+								value="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.errorMessages}" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<!-- Body row -->
+			<tr>
+				<table border="0" width="100%" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+								value="#{commonmsg.intialSearchCriteria$Caption}"/> </td>
+						<td><h:outputLabel
+							binding="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.COMP_AS_CODE_LABEL}"
+							for="ASS_CODE" id="AS_CODE_LABEL" rendered="true"
+							value="#{message.PILM202$PM_IL_AGE_SLAB$AS_CODE$caption} " /> <h:inputText
+							binding="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.COMP_AS_CODE}"
+							disabled="false" id="ASS_CODE" maxlength="12" rendered="true"
+							title="Enter Age Slap Code "
+							value="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.bean.ASS_CODE}" /></td>
+						<td><a4j:commandButton
+							value="#{commonmsg.searchButton$caption}" styleClass="button" id="a4link">
+							<a4j:support
+								action="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.fetchDetails}"
+								event="onclick" reRender="errorPanel,dataTableId"></a4j:support>
+						</a4j:commandButton></td>
+						<td><h:commandButton rendered="false" value="Delete">
+							<a4j:support immediate="true"
+								actionListener="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.delete}"
+								event="onclick" reRender="dataTableId"></a4j:support>
+						</h:commandButton></td>
+					</tr>
+				</table>
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId" rows="25"
+					value="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.classMasterList}"
+					var="age" cellpadding="5px" border="1" width="100%">
+					<!-- DATA SCROLLER -->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+					
+					<rich:column rendered="false" sortable="true" width="40px">
+						<f:facet name="header">
+							<h:outputLabel styleClass="label" />
+						</f:facet>
+						<h:selectBooleanCheckbox value="#{age.CHECK_BOX}">
+							<a4j:support event="onclick"
+								actionListener="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.checkBoxStatus}"></a4j:support>
+						</h:selectBooleanCheckbox>
+
+					</rich:column>
+					<rich:column filterBy="#{age.ASS_CODE}" sortBy="#{age.ASS_CODE}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM202$PM_IL_AGE_SLAB$AS_CODE$caption}" />
+						</f:facet>
+						<h:commandLink
+							action="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.showDetails}"
+							id="searchLink">
+								<h:outputText value="#{age.ASS_CODE}"  />
+							<f:param name="code" value="#{age.ASS_CODE}" />
+							<f:param name="Rowid" value="#{age.ROWID}" />
+						</h:commandLink>
+					</rich:column>
+					<rich:column filterBy="#{age.ASS_DESC}"
+						sortBy="#{age.ASS_DESC}" filterEvent="onkeyup" >
+						<f:facet name="header">
+							<h:outputText
+								value="Description" />
+						</f:facet>
+						<h:outputText styleClass="forumRowHighlight" value="#{age.ASS_DESC}"  />
+					</rich:column>
+					<rich:column filterBy="#{age.ASS_MIN_AGE}"
+						sortBy="#{age.ASS_MIN_AGE}" filterEvent="onkeyup" >
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PILM202$PM_IL_AGE_SLAB$AS_MIN_AGE$caption}" />
+						</f:facet>
+						<h:outputText styleClass="forumRowHighlightNumeric" value="#{age.ASS_MIN_AGE}"  />
+					</rich:column>
+					<rich:column filterBy="#{age.ASS_MAX_AGE}"
+						sortBy="#{age.ASS_MAX_AGE}" filterEvent="onkeyup" >
+						<f:facet name="header">
+							<h:outputText
+								value="Maximum Age" />
+						</f:facet>
+						<h:outputText styleClass="forumRowHighlightNumeric" value="#{age.ASS_MAX_AGE}"  />
+					</rich:column>
+					
+				</rich:dataTable>
+				
+			</tr>
+			
+			<tr>
+				<td>
+				<h:commandButton 
+					value="#{commonmsg.insertButton$caption}"
+					styleClass="button"
+					action="#{PILM202_PM_IL_AGE_SLAB_SEARCH_ACTION.forInsertion}" />
+				</td>
+			</tr>
+		</h:form>
+	</table>
+	
+</f:view>
+
+</ui:define>
+</ui:composition>

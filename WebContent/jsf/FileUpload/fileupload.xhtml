@@ -1,0 +1,298 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="menu" var="menumessage" />
+			<f:loadBundle basename="messageProperties_fileUpload"
+				var="fileuploadmessage" />
+
+			<h:form id="COPY">
+				<table cellpadding="0" cellspacing="0" width="100%" border="0">
+					<tr>
+						<td colspan="3" width="100%" vAlign="top">
+						<table width="100%" cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle"
+											action="#{FileUploadActionBean.goBack}" immediate="true">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/back.png" />
+											<h:outputText value="#{menumessage.jsf$header$image$back}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+										<h:commandLink style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle"
+											action="#{FileUploadActionBean.saveButtonClickAction}">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText value="#{menumessage.jsf$header$image$save}"
+												styleClass="toolbaroutputTextStyle" />
+										</h:commandLink>
+
+										<!-- [ Delete confirmation implementation -->
+										<!-- Delete Link -->
+										<a4j:commandLink id="DELETERECORD_TOOL_HEADER"
+											styleClass="toolbarCommandLinkStyle"
+											style="text-decoration:none">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+											<rich:componentControl id="DELETE_COMP_CONTROL"
+												for="DELETE_PANEL" attachTo="DELETERECORD_TOOL_HEADER"
+												operation="show" event="onclick" />
+										</a4j:commandLink>
+										<!-- Delete confirmation Confirmation popup -->
+										<rich:modalPanel id="DELETE_PANEL" width="300" height="110">
+											<f:facet name="header">
+												<h:panelGroup>
+													<h:outputText
+														value="#{commonmsg.premia$broker$delete$confirmation$caption}"
+														style="color: #FFFFFF; font-size: 14px;font-weight: bold;"></h:outputText>
+												</h:panelGroup>
+											</f:facet>
+											<f:facet name="controls">
+												<h:panelGroup>
+													<h:graphicImage value="./../../resources/images/close.png"
+														style="cursor:pointer" id="DELETE_PANEL_hidelink" />
+													<rich:componentControl for="DELETE_PANEL"
+														attachTo="DELETE_PANEL_hidelink" operation="hide"
+														event="onclick" />
+												</h:panelGroup>
+											</f:facet>
+											<table align="center">
+												<tr align="center">
+													<td><h:outputText
+														value="#{commonmsg.premia$broker$delete$confirmation$message}" />
+													</td>
+												</tr>
+												<tr align="center">
+													<td><h:commandButton
+														value="#{commonmsg.premia$broker$delete$confirmation$ok}"
+														id="DELETE_PANEL_continuebutton" styleClass="button"
+														style="width:65px;height:20px;"
+														action="#{FileUploadActionBean.deleteButtonAction}">
+														<rich:componentControl for="DELETE_PANEL"
+															attachTo="DELETE_PANEL_continuebutton" operation="hide"
+															event="onclick" />
+													</h:commandButton> <rich:spacer width="10" height="25"></rich:spacer> <a4j:commandButton
+														value="#{commonmsg.premia$broker$delete$confirmation$cancel}"
+														styleClass="button" style="width:65px;height:20px;"
+														id="DELETE_PANEL_cancelbutton" immediate="true">
+														<rich:componentControl for="DELETE_PANEL"
+															attachTo="DELETE_PANEL_cancelbutton" operation="hide"
+															event="onclick" />
+													</a4j:commandButton> <br />
+													</td>
+												</tr>
+											</table>
+										</rich:modalPanel>
+										<!-- Delete confirmation implementation ] -->
+
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" id="errormsgtable" cellspacing="0">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{FileUploadActionBean.messageStyle}"
+											value="#{commonmsg.errorPanel$heading} #{FileUploadActionBean.errorMap['current'] !=null? FileUploadActionBean.errorMap['current']:FileUploadActionBean.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{FileUploadActionBean.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{FileUploadActionBean.globalMsgRender}" />
+									<h:outputText id="warningMessages"
+										value="#{FileUploadActionBean.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" id="linkstable" cellpadding="0"
+							cellspacing="0" border="0">
+							<tr>
+								<td><h:outputLabel id="pagecaption"
+									value="#{fileuploadmessage.fileupload$pagetitle$displayCaption} #{fileuploadmessage.FILE_UPLOAD$SUPPORTED_FILE_EXTENSIONS$caption} #{fileuploadmessage.FILE_UPLOAD$IMAGES$SUPPORTED_FILE_EXTENSIONS},#{fileuploadmessage.FILE_UPLOAD$DOCUMENTS$SUPPORTED_FILE_EXTENSIONS}"></h:outputLabel>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" align="center">
+						<table width="100%">
+							<tr>
+								<td width="90%" vAlign="top">
+								<table align="left" width="100%">
+									<tr>
+										<td width="100%" align="center"><rich:dataTable
+											id="uploadTable"
+											value="#{FileUploadActionBean.dataTableList}" var="valueBean"
+											rows="4" binding="#{FileUploadActionBean.dataTableComponent}"
+											width="100%">
+											<rich:column>
+												<f:facet name="Select">
+													<h:outputText styleClass="forumRowHighlight" value="Select" />
+												</f:facet>
+												<h:selectBooleanCheckbox id="checkBox"
+													value="#{valueBean.checkBox}">
+													<a4j:support event="onclick"
+														actionListener="#{FileUploadActionBean.checkBoxClickAction}"
+														immediate="true">
+													</a4j:support>
+												</h:selectBooleanCheckbox>
+											</rich:column>
+											
+
+											<rich:column width="100px" id="col">
+											<f:facet name="Documnet Type">
+													<h:outputText styleClass="forumRowHighlight" value="Select" />
+												</f:facet>
+												<h:commandLink id="DOC_LINK"
+													action="#{FileUploadActionBean.downloadDocument}"
+													value = "Download File"
+													immediate="true" rendered="true">
+													
+												</h:commandLink>
+						
+												
+											</rich:column>
+
+											<rich:column>
+												<f:facet name="header">
+													<h:outputText styleClass="forumRowHighlight"
+														value="#{fileuploadmessage.fileupload$LIMG_REMARKS$caption}" />
+												</f:facet>
+												<h:inputTextarea id="remarks" styleClass="forumRowHighlight"
+													value="#{valueBean.LIMG_REMARKS}" title="Enter Remarks"
+													cols="100" rows="3">
+													<a4j:support event="onblur" immediate="true"
+														reRender="errorPanel"
+														actionListener="#{FileUploadActionBean.setRemark}">
+													</a4j:support>
+												</h:inputTextarea>
+											</rich:column>
+
+											<rich:column>
+												<f:facet name="header">
+													<h:outputText styleClass="forumRowHighlight"
+														value="#{fileuploadmessage.fileupload$LIMG_DOC_TYPE$caption}" />
+												</f:facet>
+												<h:selectOneMenu id="LIMG_DOC_TYPE"
+													value="#{valueBean.LIMG_DOC_TYPE}">
+													<f:selectItems id="SEL_ITEMS_LIMG_DOC_TYPE"
+													value="#{FileUploadActionBean.listLIMG_DOC_TYPE}" />
+													<a4j:support event="onblur" immediate="true"
+														reRender="errorPanel"
+														actionListener="#{FileUploadActionBean.setDOC_TYPE}">
+													</a4j:support>
+												</h:selectOneMenu> 
+											</rich:column>
+											
+											<rich:column>
+												<f:facet name="header">
+													<h:outputText styleClass="forumRowHighlight"
+														value="#{fileuploadmessage.fileupload$updatedbyS$caption}" />
+												</f:facet>
+												<h:outputText id="updatedby"
+													value="#{valueBean.LIMG_UPD_UID}">
+												</h:outputText>
+											</rich:column>
+											<rich:column>
+												<f:facet name="header">
+													<h:outputText styleClass="forumRowHighlight"
+														value="#{fileuploadmessage.fileupload$updateddateS$caption}" />
+												</f:facet>
+												<h:outputText id="updateddate"
+													value="#{valueBean.LIMG_UPD_DT_STRING}">
+												</h:outputText>
+											</rich:column>
+
+											<!-- [ Added for grid implementation change, Added by: Ashutosh 	Sharma, Dated: 17-Feb-2009 -->
+											<rich:column rendered="true" styleClass="gridsaveColoumn">
+												<f:facet name="header">
+													<h:outputText styleClass="label"
+														value="#{fileuploadmessage.GRID$SAVE_COLUMN_HEADER$caption}" />
+												</f:facet>
+												<a4j:commandLink style="text-decoration:none"
+													disabled="false" immediate="true" reRender="errorPanel"
+													title="#{fileuploadmessage.GRID$UI_M_BUT_RECORD_SAVE$title}"
+													action="#{FileUploadActionBean.saveCurrentRecord}">
+													<h:graphicImage style="border: thin solid white"
+														value="./../../images/insupd.gif" />
+													<h:outputText
+														value="#{fileuploadmessage.GRID$UI_M_BUT_RECORD_SAVE$caption}" />
+												</a4j:commandLink>
+											</rich:column>
+											<!-- Added for grid implementation change, Added by: Ashutosh 	Sharma, Dated: 17-Feb-2009 ] -->
+
+											<f:facet name="footer">
+												<rich:datascroller id="FILE_UPLOAD_SCROLL" align="right"
+													page="#{FileUploadActionBean.currPage}">
+												</rich:datascroller>
+											</f:facet>
+										</rich:dataTable></td>
+									</tr>
+									<tr>
+										<td colspan="5" align="left" width="100%">
+										<table width="100%" id="globalLink" cellpadding="0"
+											cellspacing="0">
+											<tr>
+												<td><h:panelGroup id="mypanel" style="border:0">
+													<h:outputText styleClass="forumRowHighlight"
+														value="#{fileuploadmessage.FILE_UPLOAD$SUPPORTED_FILE_EXTENSIONS$caption} #{fileuploadmessage.FILE_UPLOAD$IMAGES$SUPPORTED_FILE_EXTENSIONS},#{fileuploadmessage.FILE_UPLOAD$DOCUMENTS$SUPPORTED_FILE_EXTENSIONS}" />
+												</h:panelGroup></td>
+											</tr>
+										</table>
+										</td>
+									</tr>
+									<tr>
+										<td align="left" width="100%"><rich:fileUpload
+											acceptedTypes="#{fileuploadmessage.FILE_UPLOAD$IMAGES$SUPPORTED_FILE_EXTENSIONS},#{fileuploadmessage.FILE_UPLOAD$DOCUMENTS$SUPPORTED_FILE_EXTENSIONS}"
+											maxFilesQuantity="#{FileUploadActionBean.maxUploadsAllowed}"
+											binding="#{FileUploadActionBean.fileUploadComponent}"
+											autoclear="false" listHeight="100px" listWidth="100%"
+											id="fileupload"
+											fileUploadListener="#{FileUploadActionBean.uploadAction}">
+											<f:facet name="label">
+												<h:outputText
+													value="{_KB}KB from {KB}KB uploaded --- {mm}:{ss}" />
+											</f:facet>
+											<a4j:support event="onuploadcomplete" reRender="uploadTable" />
+										</rich:fileUpload></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

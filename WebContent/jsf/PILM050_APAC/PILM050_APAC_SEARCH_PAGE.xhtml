@@ -1,0 +1,154 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILM050_APAC" var="message" />
+		<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+		<!-- add header row -->
+		<tr>
+		</tr>
+
+		<!-- Body row -->
+		<tr>
+			<td><h:form id="bankform">
+
+				<tr>
+					<td colspan="3" width="100%" vAlign="top" height="20">
+					<table width="100%" id="errormsgtable" cellspacing="0">
+						<tr>
+
+							<rich:simpleTogglePanel id="errorPanel" switchType="client"
+								opened="false">
+								<f:facet name="header">
+									<h:outputText id="err"
+										value="#{commonmsg.errorPanel$heading} #{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.errorMap['current'] !=null? PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.errorMap['current']: PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.warningMap['current']}" />
+								</f:facet>
+
+								<h:outputText id="errorMessages"
+									value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.errorMessages}"
+									style="color: red; font-style: italic;font-weight:bold;"
+									escape="false" />
+								<h:messages
+									style="color: red;font-style: italic;font-weight:bold;"
+									id="msg" rendered="#{errorDemoAction.globalMsgRender}" />
+								<h:outputText id="warningMessages"
+									value="#{PILM050_APAC_PM_IL_BANK_ACCOUNT_SETUP_ACTION.warningMessages}"
+									style="color: green; font-style: italic;font-weight:bold;"
+									escape="false" />
+							</rich:simpleTogglePanel>
+						</tr>
+					</table>
+					</td>
+				</tr>
+
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%" cellpadding="0" cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputText
+							value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP_SEARCH$SEARCH_CRITERIA$caption}" /></td>
+						<td><h:outputText
+							value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP_SEARCH$DIVISION_CODE$caption}" /><h:inputText
+							value="#{PILM_050_APAC_SEARCH_PAGE_DETAILS_ACTION.initBasDivnCode}" />
+						</td>
+						<td><h:outputText
+							value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP_SEARCH$MAIN_ACC$caption}" /><h:inputText
+							value="#{PILM_050_APAC_SEARCH_PAGE_DETAILS_ACTION.initMainaccountcode}" />
+						</td>
+						<td><a4j:commandButton styleClass="button"
+							value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP_SEARCH$SEARCH_ACC$caption}"
+							id="a4link">
+							<a4j:support
+								action="#{PILM_050_APAC_SEARCH_PAGE_DETAILS_ACTION.fetchPolicyDetails}"
+								event="onclick" reRender="dataTableId,errorPanel"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{PILM_050_APAC_SEARCH_PAGE_DETAILS_ACTION.policyList}"
+					var="policy" cellpadding="5px" rows="10" border="1" width="100%">
+
+					<rich:column rendered="false">
+						<f:facet name="header">
+							<h:outputText styleClass="label" value="" />
+						</f:facet>
+						<h:selectBooleanCheckbox id="checkBox" value="#{policy.CHECK_BOX}">
+							<a4j:support event="onclick"
+								actionListener="#{PILM_050_APAC_SEARCH_PAGE_DETAILS_ACTION.checkBoxStatus}">
+							</a4j:support>
+						</h:selectBooleanCheckbox>
+					</rich:column>
+
+
+
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+
+					<rich:column filterBy="#{policy.BAS_MAIN_ACNT_CODE}"
+						sortBy="#{policy.BAS_MAIN_ACNT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP_SEARCH$MAIN_ACC$caption}" />
+						</f:facet>
+							<h:commandLink
+							action="#{PILM_050_APAC_SEARCH_PAGE_DETAILS_ACTION.clearList}">
+							<f:param name="ROWID" value="#{policy.ROWID}" />
+								<h:outputText value="#{policy.BAS_MAIN_ACNT_CODE}" />
+						</h:commandLink>
+					</rich:column>
+
+					
+					<rich:column filterBy="#{policy.BAS_DIVN_CODE}"
+						sortBy="#{policy.BAS_DIVN_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP_SEARCH$DIVISION_CODE$caption}" />
+						</f:facet>
+						<h:outputText value="#{policy.BAS_DIVN_CODE}" />
+					</rich:column>
+
+
+				</rich:dataTable>
+				<tr>
+					<td><h:commandButton id="InsertLink" styleClass="button"
+						value="#{message.PILM050_APAC$PM_IL_BANK_ACCOUNT_SETUP_SEARCH$INSERT_ACC$caption}"
+						action="#{PILM_050_APAC_SEARCH_PAGE_DETAILS_ACTION.clearSession}" />
+
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<h:commandButton rendered="false" id="DeleteButton" value="Delete"
+						actionListener="#{PILM_050_APAC_SEARCH_PAGE_DETAILS_ACTION.DeleteRow}" /></td>
+				</tr>
+			</h:form></td>
+		</tr>
+
+		<!-- add footer to the page-->
+		<tr>
+		</tr>
+	</table>
+	</f:view>
+	</ui:define>
+</ui:composition>

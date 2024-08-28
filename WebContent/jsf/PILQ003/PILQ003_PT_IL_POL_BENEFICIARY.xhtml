@@ -1,0 +1,802 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+	<!-- 	/* changed by R. Raja on 02-12-2016 for RM018T - FSD_IL_ZB Life_020-Beneficiary and Assignee*/ -->
+<style>
+	.policycontrolinput input{
+	    width: 100%;
+    max-width: 80px;
+}
+	</style>
+	
+	<!-- 	/* End*/ -->
+		<f:view
+			beforePhase="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILQ003"
+				var="message_PILQ003" />
+			<h:form id="PT_IL_POL_BENEFICIARY">
+				<table class="noborder" width="100%">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" width="100%">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILQ003_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD"
+										location="right">
+										<w:treeWizard binding="#{PILQ003_COMPOSITE_ACTION.wizard}" />
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.errorMap['current'] !=null? PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.errorMap['current']: PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td class="oddrowright"><h:outputLabel id="FORM_CAPTION"
+									value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 815px;">
+						<div id="sidebar" style="width: 21%; vertical-align: top">
+						<div align="center" id="handle" style="width: 5%;"><img
+							align="middle" alt="Click to toggle the sidebar" height="123"
+							onclick="toggleSideBar()"
+							src="./../../resources/images/toggle.jpg" style="border: 0;"
+							width="14" /></div>
+						<div id="sbText" style="display: compact;">
+						<div id="linkstable1" style="vertical-align: top; width: 95%">
+						<w:summary binding="#{PILQ003_COMPOSITE_ACTION.comp}" id="summary" />
+						<w:treeWizardPanel
+							binding="#{PILQ003_COMPOSITE_ACTION.wizard.wizardPanel}"
+							id="wizardPanel" /></div>
+						</div>
+						</div>
+						<div id="content" style="display: compact; width: 75%;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td valign="top" width="100%"><h:panelGroup
+									id="PT_IL_POL_BENEFICIARY_PANEL" style="border:0;height:15%;">
+									
+									<!-- 	/* changed by R. Raja on 02-12-2016 for RM018T - FSD_IL_ZB Life_020-Beneficiary and Assignee*/ -->
+
+<!-- class="noborder policycontrolinput"  -->
+
+<!-- 	/* End*/ -->
+									<table align="left" class="noborder policycontrolinput" id="bordertable"
+										width="100%">
+										<tr>
+											<td><rich:panel style="width:100%;overflow:auto">
+												<rich:dataTable
+													binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.dataTable}"
+													id="PT_IL_POL_BENEFICIARY_DATA_GRID" rows="5"
+													value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.dataList_PT_IL_POL_BENEFICIARY}"
+													var="tableVar" width="100%">
+													<rich:column filterBy="#{tableVar.PBEN_SR_NO}"
+														filterEvent="onkeyup" id="COLUMN_PBEN_SR_NO"
+														rendered="true" sortBy="#{tableVar.PBEN_SR_NO}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PBEN_SR_NO"
+																styleClass="forumRowHighlight"
+																value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_SR_NO$caption}" />
+														</f:facet>
+														<a4j:commandLink
+															action="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.displayRecords}"
+															id="GOTO_LINK_PBEN_SR_NO" immediate="true"
+															reRender="errorPanel,PT_IL_POL_BENEFICIARY_PANEL">
+															<h:outputText id="LINK_CAPTION_PBEN_SR_NO"
+																value="#{tableVar.PBEN_SR_NO}" />
+														</a4j:commandLink>
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PBEN_BNF_TYPE}"
+														filterEvent="onkeyup" id="COLUMN_PBEN_BNF_TYPE"
+														rendered="true" sortBy="#{tableVar.PBEN_BNF_TYPE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PBEN_BNF_TYPE"
+																styleClass="forumRowHighlight"
+																value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_BNF_TYPE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PBEN_BNF_TYPE"
+															value="#{tableVar.PBEN_BNF_TYPE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PBEN_REF_ID1}"
+														filterEvent="onkeyup" id="COLUMN_PBEN_REF_ID1"
+														rendered="true" sortBy="#{tableVar.PBEN_REF_ID1}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PBEN_REF_ID1"
+																styleClass="forumRowHighlight"
+																value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_REF_ID1$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PBEN_REF_ID1"
+															value="#{tableVar.PBEN_REF_ID1}" />
+													</rich:column>
+											<!-- 	/* Added by R. Raja on 02-12-2016 for RM018T - FSD_IL_ZB Life_020-Beneficiary and Assignee*/ -->				
+													
+													<rich:column filterBy="#{tableVar.PBEN_BNF_NAME}"
+														filterEvent="onkeyup" id="COLUMN_PBEN_BNF_NAME"
+														rendered="true" sortBy="#{tableVar.PBEN_BNF_NAME}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PBEN_BNF_NAME"
+																styleClass="forumRowHighlight"
+																value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_BNF_NAME$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PBEN_BNF_NAME"
+															value="#{tableVar.PBEN_BNF_NAME}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PBEN_DOB}"
+														filterEvent="onkeyup" id="COLUMN_PBEN_DOB"
+														rendered="true" sortBy="#{tableVar.PBEN_DOB}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PBEN_DOB"
+																styleClass="forumRowHighlight"
+																value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_DOB$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PBEN_DOB"
+															value="#{tableVar.PBEN_DOB}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PBEN_AGE}"
+														filterEvent="onkeyup" id="COLUMN_PBEN_AGE"
+														rendered="true" sortBy="#{tableVar.PBEN_AGE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PBEN_AGE"
+																styleClass="forumRowHighlight"
+																value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_AGE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PBEN_AGE"
+															value="#{tableVar.PBEN_AGE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.UI_M_PBEN_RELATION_DESC}"
+														filterEvent="onkeyup" id="COLUMN_UI_M_PBEN_RELATION_DESC"
+														rendered="true" sortBy="#{tableVar.UI_M_PBEN_RELATION_DESC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_M_PBEN_RELATION_DESC"
+																styleClass="forumRowHighlight"
+																value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$UI_M_PBEN_RELATION_DESC$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_UI_M_PBEN_RELATION_DESC"
+															value="#{tableVar.UI_M_PBEN_RELATION_DESC}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PBEN_PERC}"
+														filterEvent="onkeyup" id="COLUMN_PBEN_PERC"
+														rendered="true" sortBy="#{tableVar.PBEN_PERC1}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PBEN_PERC"
+																styleClass="forumRowHighlight"
+																value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_SHARE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PBEN_PERC"
+															value="#{tableVar.PBEN_PERC}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PBEN_EFF_FM_DT}"
+														filterEvent="onkeyup" id="COLUMN_PBEN_EFF_FM_DT"
+														rendered="true" sortBy="#{tableVar.PBEN_EFF_FM_DT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PBEN_EFF_FM_DT"
+																styleClass="forumRowHighlight"
+																value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_EFF_FM_DT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PBEN_EFF_FM_DT"
+															value="#{tableVar.PBEN_EFF_FM_DT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PBEN_EFF_TO_DT}"
+														filterEvent="onkeyup" id="COLUMN_PBEN_EFF_TO_DT"
+														rendered="true" sortBy="#{tableVar.PBEN_EFF_TO_DT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PBEN_EFF_TO_DT"
+																styleClass="forumRowHighlight"
+																value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_EFF_TO_DT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PBEN_EFF_TO_DT"
+															value="#{tableVar.PBEN_EFF_TO_DT}" />
+													</rich:column>
+													
+													
+					<!-- 	/* End */ --> 
+													
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PT_IL_POL_BENEFICIARY_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.addRow}"
+																id="addRow" immediate="true"
+																reRender="PT_IL_POL_BENEFICIARY_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.deleteRow}"
+																id="deleteRow"
+																reRender="PT_IL_POL_BENEFICIARY_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.postRecord}"
+																id="postRecord"
+																reRender="PT_IL_POL_BENEFICIARY_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</rich:panel></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table class="noborder" width="100%">
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_SR_NO_LABEL}"
+														for="PBEN_SR_NO" id="PBEN_SR_NO_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_SR_NO$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_SR_NO}"
+														disabled="true" id="PBEN_SR_NO" maxlength="6"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_SR_NO$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_SR_NO}" />
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_BNF_TYPE_LABEL}"
+														for="PBEN_BNF_TYPE" id="PBEN_BNF_TYPE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_BNF_TYPE$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_BNF_TYPE}"
+														disabled="true" id="PBEN_BNF_TYPE" maxlength="1"
+														rendered="true" required="false" styleClass="inputsmall"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_BNF_TYPE$tooltip}"
+														validator="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_BNF_TYPE_WHEN_VALIDATE_ITEM}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_BNF_TYPE}">
+														<a4j:support
+															actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="PBEN_BNF_TYPE_a4jSupport"
+															immediate="true"
+															reRender="errorPanel,UI_M_PBEN_TYPE_DESC">
+														</a4j:support>
+													</h:inputText> <h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_PBEN_TYPE_DESC}"
+														disabled="true" id="UI_M_PBEN_TYPE_DESC" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$UI_M_PBEN_TYPE_DESC$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_PBEN_TYPE_DESC}">
+													</h:inputText><h:graphicImage id="GRAPH_IMG_SUGG_PBEN_BNF_TYPE" style=""
+														styleClass="searchimg" value="./../../images/Lov.gif" />
+													<rich:suggestionbox for="PBEN_BNF_TYPE" height="300"
+														id="PBEN_BNF_TYPE_SUGGESTION_BOX" immediate="true"
+														suggestionAction="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.prepareSuggestionList_PBEN_BNF_TYPE}"
+														var="PBEN_BNF_TYPE_LOV" width="250">
+														<h:column>
+															<h:outputText id="SUGG_COL_0_PBEN_BNF_TYPE"
+																value="#{PBEN_BNF_TYPE_LOV.code}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="SUGG_COL_1_PBEN_BNF_TYPE"
+																value="#{PBEN_BNF_TYPE_LOV.name}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="SUGG_COL_2_PBEN_BNF_TYPE"
+																value="#{PBEN_BNF_TYPE_LOV.name1}" />
+														</h:column>
+													</rich:suggestionbox></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REF_ID1_LABEL}"
+														for="PBEN_REF_ID1" id="PBEN_REF_ID1_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_REF_ID1$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REF_ID1}"
+														disabled="true" id="PBEN_REF_ID1" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_REF_ID1$tooltip}"
+														validator="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_REF_ID1_WHEN_VALIDATE_ITEM}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_REF_ID1}">
+														<a4j:support
+															actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="PBEN_REF_ID1_a4jSupport"
+															immediate="true" reRender="errorPanel">
+														</a4j:support>
+													</h:inputText></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REF_ID2_LABEL}"
+														for="PBEN_REF_ID2" id="PBEN_REF_ID2_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_REF_ID2$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REF_ID2}"
+														disabled="true" id="PBEN_REF_ID2" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_REF_ID2$tooltip}"
+														validator="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_REF_ID2_WHEN_VALIDATE_ITEM}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_REF_ID2}">
+														<a4j:support
+															actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="PBEN_REF_ID2_a4jSupport"
+															immediate="true" reRender="errorPanel">
+														</a4j:support>
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_CATG_CODE_LABEL}"
+														for="PBEN_CATG_CODE" id="PBEN_CATG_CODE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_CATG_CODE$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_CATG_CODE}"
+														disabled="true" id="PBEN_CATG_CODE" maxlength="12"
+														rendered="true" required="false" styleClass="inputsmall"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_CATG_CODE$tooltip}"
+														validator="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_CATG_CODE_WHEN_VALIDATE_ITEM}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_CATG_CODE}">
+														<a4j:support
+															actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="PBEN_CATG_CODE_a4jSupport"
+															immediate="true" reRender="errorPanel,UI_M_CATG_DESC">
+														</a4j:support>
+													</h:inputText> <h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_CATG_DESC}"
+														disabled="true" id="UI_M_CATG_DESC" maxlength="30"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$UI_M_CATG_DESC$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_CATG_DESC}">
+													</h:inputText> <h:graphicImage id="GRAPH_IMG_SUGG_PBEN_CATG_CODE"
+														style="" styleClass="searchimg"
+														value="./../../images/Lov.gif" /> <rich:suggestionbox
+														for="PBEN_CATG_CODE" height="300"
+														id="PBEN_CATG_CODE_SUGGESTION_BOX" immediate="true"
+														suggestionAction="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.prepareSuggestionList_PBEN_CATG_CODE}"
+														var="PBEN_CATG_CODE_LOV" width="250">
+														<h:column>
+															<h:outputText id="SUGG_COL_0_PBEN_CATG_CODE"
+																value="#{PBEN_CATG_CODE_LOV.code}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="SUGG_COL_1_PBEN_CATG_CODE"
+																value="#{PBEN_CATG_CODE_LOV.name}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="SUGG_COL_2_PBEN_CATG_CODE"
+																value="#{PBEN_CATG_CODE_LOV.name1}" />
+														</h:column>
+													</rich:suggestionbox></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_AGE_LABEL}"
+														for="PBEN_AGE" id="PBEN_AGE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_AGE$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_AGE}"
+														disabled="true" id="PBEN_AGE" maxlength="3"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_AGE$tooltip}"
+														validator="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_AGE_WHEN_VALIDATE_ITEM}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_AGE}">
+														<a4j:support
+															actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="PBEN_AGE_a4jSupport" immediate="true"
+															reRender="errorPanel,PBEN_GUARDIAN_NAME">
+														</a4j:support>
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_RELATION_CODE_LABEL}"
+														for="PBEN_RELATION_CODE" id="PBEN_RELATION_CODE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_RELATION_CODE$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_RELATION_CODE}"
+														disabled="true" id="PBEN_RELATION_CODE" maxlength="12"
+														rendered="true" required="false" styleClass="inputsmall"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_RELATION_CODE$tooltip}"
+														validator="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_RELATION_CODE_WHEN_VALIDATE_ITEM}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_RELATION_CODE}">
+														<a4j:support
+															actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="PBEN_RELATION_CODE_a4jSupport"
+															immediate="true"
+															reRender="errorPanel,UI_M_PBEN_RELATION_DESC">
+														</a4j:support>
+													</h:inputText> <h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_PBEN_RELATION_DESC}"
+														disabled="true" id="UI_M_PBEN_RELATION_DESC"
+														maxlength="30" rendered="true" required="false"
+														styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$UI_M_PBEN_RELATION_DESC$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_PBEN_RELATION_DESC}">
+													</h:inputText> <h:graphicImage id="GRAPH_IMG_SUGG_PBEN_RELATION_CODE"
+														style="" styleClass="searchimg"
+														value="./../../images/Lov.gif" /> <rich:suggestionbox
+														for="PBEN_RELATION_CODE" height="300"
+														id="PBEN_RELATION_CODE_SUGGESTION_BOX" immediate="true"
+														suggestionAction="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.prepareSuggestionList_PBEN_RELATION_CODE}"
+														var="PBEN_RELATION_CODE_LOV" width="250">
+														<h:column>
+															<h:outputText id="SUGG_COL_0_PBEN_RELATION_CODE"
+																value="#{PBEN_RELATION_CODE_LOV.code}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="SUGG_COL_1_PBEN_RELATION_CODE"
+																value="#{PBEN_RELATION_CODE_LOV.name}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="SUGG_COL_2_PBEN_RELATION_CODE"
+																value="#{PBEN_RELATION_CODE_LOV.name1}" />
+														</h:column>
+													</rich:suggestionbox></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_PERC_LABEL}"
+														for="PBEN_PERC" id="PBEN_PERC_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_PERC$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_PERC}"
+														disabled="true" id="PBEN_PERC" maxlength="7"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_PERC$tooltip}"
+														validator="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_PERC_WHEN_VALIDATE_ITEM}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_PERC}">
+														<a4j:support
+															actionListener="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="PBEN_PERC_a4jSupport" immediate="true"
+															reRender="errorPanel">
+														</a4j:support>
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_GUARDIAN_NAME_LABEL}"
+														for="PBEN_GUARDIAN_NAME" id="PBEN_GUARDIAN_NAME_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_GUARDIAN_NAME$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_GUARDIAN_NAME}"
+														disabled="true" id="PBEN_GUARDIAN_NAME" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_GUARDIAN_NAME$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_GUARDIAN_NAME}" />
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_BNF_NAME_LABEL}"
+														for="PBEN_BNF_NAME" id="PBEN_BNF_NAME_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_BNF_NAME$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_BNF_NAME}"
+														disabled="true" id="PBEN_BNF_NAME" maxlength="240"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_BNF_NAME$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_BNF_NAME}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_1_LABEL}"
+														for="PBEN_ADDRESS_1" id="PBEN_ADDRESS_1_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_1$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_1}"
+														disabled="true" id="PBEN_ADDRESS_1" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_1$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_ADDRESS_1}" />
+													</td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_2_LABEL}"
+														for="PBEN_ADDRESS_2" id="PBEN_ADDRESS_2_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_2$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_2}"
+														disabled="true" id="PBEN_ADDRESS_2" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_2$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_ADDRESS_2}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_3_LABEL}"
+														for="PBEN_ADDRESS_3" id="PBEN_ADDRESS_3_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_3$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_3}"
+														disabled="true" id="PBEN_ADDRESS_3" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_3$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_ADDRESS_3}" />
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_4_LABEL}"
+														for="PBEN_ADDRESS_4" id="PBEN_ADDRESS_4_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_4$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_4}"
+														disabled="true" id="PBEN_ADDRESS_4" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_4$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_ADDRESS_4}" />
+													</td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_5_LABEL}"
+														for="PBEN_ADDRESS_5" id="PBEN_ADDRESS_5_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_5$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_5}"
+														disabled="true" id="PBEN_ADDRESS_5" maxlength="60"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_5$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_ADDRESS_5}" />
+													</td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REMARKS_LABEL}"
+														for="PBEN_REMARKS" id="PBEN_REMARKS_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_REMARKS$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REMARKS}"
+														disabled="true" id="PBEN_REMARKS" maxlength="2000"
+														rendered="true" required="false" styleClass="input"
+														title="#{message_PILQ003.PILQ003$PT_IL_POL_BENEFICIARY$PBEN_REMARKS$tooltip}"
+														value="#{PILQ003_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_REMARKS}" />
+													</td>
+												</tr>
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+								<td />
+							</tr>
+						</table>
+						</div>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+							<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM"
+								location="right">
+								<w:wizardPanelFooter
+									binding="#{PILQ003_COMPOSITE_ACTION.wizard.wizardPanelFooter}" />
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

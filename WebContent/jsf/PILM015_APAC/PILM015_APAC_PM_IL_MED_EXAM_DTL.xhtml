@@ -1,0 +1,253 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+		<f:view
+			beforePhase="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM015_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_MED_EXAM_DTL" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.saveData}"
+											id="SELF_ID_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SELF_ID_2"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="SELF_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.errorMap['current'] !=null? PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.errorMap['current']:PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								style="color: red; font-style: italic;font-weight:bold;"
+								styleClass="ErrorMessages"
+								value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.errorMessages}" />
+
+							<h:messages id="msg"
+								rendered="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								style="color: green; font-style: italic;font-weight:bold;"
+								styleClass="WarningMessages"
+								value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><h:outputText id="SELF_ID_4"
+									value="#{message.medicalExamDetails}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right"><h:commandButton
+							action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.backMedExamHead}"
+							id="MED_HEAD" immediate="true" style="width:80px;"
+							styleClass="button" value="MAIN" /></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+
+						<table class="noborder" width="100%">
+							<tr>
+								<td vAlign="top" width="100%"><h:panelGroup
+									id="sectionDtls">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td colspan="7"><rich:dataTable
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.dataTable}"
+												border="0" cellpadding="0" id="PM_IL_MED_EXAM_DTL"
+												rows="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.recordsperPage}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.medicalExamDtlsList}"
+												var="table" width="100%">
+
+												<!-- next column -->
+												<rich:column filterBy="#{table.MED_EXAM_CODE}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.filterByMED_EXAM_CODE}"
+													sortBy="#{table.MED_EXAM_CODE}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="SELF_ID_5"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM015_APAC$PM_IL_MED_EXAM_DTL$MED_EXAM_CODE$caption}" />
+													</f:facet>
+													<a4j:commandLink
+														action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.getDetails}"
+														immediate="true" reRender="sectionDtls">
+														<h:outputText id="SELF_ID_6"
+															value="#{table.MED_EXAM_CODE} " />
+													</a4j:commandLink>
+												</rich:column>
+												<!-- next column -->
+
+												<!-- next column -->
+												<rich:column filterBy="#{table.UI_M_MED_EXAM_CODE_DESC}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.filterByMED_EXAM_CODE_DESC}"
+													sortBy="#{table.UI_M_MED_EXAM_CODE_DESC}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="SELF_ID_7"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM015_APAC$PM_IL_MED_EXAM_DTL$UI_M_MED_EXAM_CODE_DESC$caption}" />
+													</f:facet>
+													<h:outputText id="SELF_ID_8"
+														value="#{table.UI_M_MED_EXAM_CODE_DESC} " />
+												</rich:column>
+
+												<!-- Attach scroller as footer of the table-->
+												<f:facet name="footer">
+													<h:panelGroup id="footerpanel" style="border:0">
+														<rich:datascroller align="right" id="myscr"
+															page="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.currentpage}" />
+														<a4j:commandButton
+															actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.addNew}"
+															binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.UI_M_BUT_ADD}"
+															id="SELF_ID_9" immediate="true"
+															reRender="errorPanel,sectionDtls" rendered="true"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.addNewButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.deleteRow}"
+															binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.UI_M_BUT_DELETE}"
+															id="SELF_ID_10" immediate="true"
+															reRender="errorPanel,sectionDtls" rendered="true"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.deleteButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.post}"
+															binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.UI_M_BUT_POST}"
+															id="SELF_ID_11" reRender="errorPanel,sectionDtls"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.postButtonCaption}" />
+													</h:panelGroup>
+												</f:facet>
+
+											</rich:dataTable></td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_MED_EXAM_DTL$MED_EXAM_CODE$caption}" />
+											<h:graphicImage id="SELF_ID_12" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_MED_EXAM_CODE}"
+												id="MED_EXAM_CODE" required="true" styleClass="inputsmall"
+												title="#{message.PILM015_APAC$PM_IL_MED_EXAM_DTL$MED_EXAM_CODE$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.codeValidations}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.PM_IL_MED_EXAM_DTL_BEAN.MED_EXAM_CODE}">
+												<rich:suggestionbox for="MED_EXAM_CODE" height="250"
+													id="SELF_ID_13"
+													suggestionAction="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.suggestionActionForMedDtl}"
+													value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.codeList}"
+													var="code" width="250">
+													<h:column>
+														<h:outputText id="SELF_ID_14"
+															value="#{code.MED_EXAM_CODE}" />
+													</h:column>
+													<h:column>
+														<h:outputText id="SELF_ID_15"
+															value="#{code.UI_M_MED_EXAM_CODE_DESC}" />
+													</h:column>
+													<a4j:support
+														actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.getCodeDesc}"
+														event="onselect" id="SELF_ID_16" immediate="true"
+														reRender="UI_M_MED_EXAM_CODE_DESC" />
+												</rich:suggestionbox>
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.medExamCodeActionListener}"
+													event="onblur" id="SELF_ID_17" immediate="true"
+													reRender="err,errorMessages,warningMessages" />
+											</h:inputText> <h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.COMP_UI_M_MED_EXAM_CODE_DESC}"
+												disabled="true" id="UI_M_MED_EXAM_CODE_DESC"
+												styleClass="input"
+												title="#{message.PILM015_APAC$PM_IL_MED_EXAM_DTL$MED_EXAM_CODE$tooltip}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.PM_IL_MED_EXAM_DTL_BEAN.UI_M_MED_EXAM_CODE_DESC}">
+											</h:inputText> <h:graphicImage id="SELF_ID_18" styleClass="searchimg"
+												value="./../../images/Lov.gif" /></td>
+											<td class="oddrow" />
+											<td class="oddrowright" />
+											<td class="oddrow" />
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+
+						</td>
+					</tr>
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_MED_EXAM_DTL_ACTION.saveData}"
+									id="SELF_ID_19" rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SELF_ID_20"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/save.gif" />
+									<h:outputText id="SELF_ID_21"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

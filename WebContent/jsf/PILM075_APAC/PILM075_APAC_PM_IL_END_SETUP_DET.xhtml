@@ -1,0 +1,376 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+			<f:view
+			beforePhase="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM075_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_END_SETUP_DET" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.save}"
+											id="AUTOID_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_2"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_4" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_10" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTOID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.errorMap['current'] !=null? PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.errorMap['current']: PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="15%" vAlign="top" width="100%">
+						<table class="noborder" id="globalLink" width="100%">
+							<tr>
+								<td><!-- Tab implementation --> <h:inputHidden
+									id="myhidden"
+									value="#{PILM075_APAC_PM_IL_END_APPR_SETUP_ACTION.tabbedBar.tabClicked}" />
+								<h:panelGroup id="mypanel" style="border:0;height:15%;">
+									<table class="noborder" width="100%">
+										<tr>
+											<td width="90%"><a4j:repeat
+												value="#{PILM075_APAC_PM_IL_END_APPR_SETUP_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													action="#{PILM075_APAC_PM_IL_END_APPR_SETUP_ACTION.tabbedBar.tabAction}"
+													disabled="#{currtab.disabled}" id="AUTOID_22"
+													onclick="document.getElementById('PM_IL_END_SETUP_DET:myhidden').value='#{currtab.id}'"
+													styleClass="#{currtab.styleString}"
+													value="#{currtab.value}" />
+											</a4j:repeat></td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<rich:panel
+							id="sectionDtls" style="overflow:auto">
+							<table align="center" class="noborder" width="100%">
+								<tr>
+									<td />
+									<td vAlign="top" width="100%">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td colspan="4"><!-- Convert into panelgroup done by Kavitha 24.6.2011 !-->
+											<rich:dataTable
+												binding="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.dataTable}"
+												id="PM_IL_END_SETUP_DET" rows="10"
+												value="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.dataList_PM_IL_END_SETUP_DET}"
+												var="tableVar" width="100%">
+												<rich:column filterBy="#{tableVar.ESD_CODE}"
+													filterEvent="onkeyup"
+													filterValue="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.filterByESD_CODE}"
+													rendered="true" sortBy="#{tableVar.ESD_CODE}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_23"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM075_APAC$PM_IL_END_SETUP_DET$ESD_CODE$caption}" />
+													</f:facet>
+													<h:outputText id="AUTOID_126"
+														value="#{tableVar.ESD_CODE}" />
+												</rich:column>
+												<!--		next col		-->
+												<rich:column filterBy="#{tableVar.UI_M_ESD_CODE_DESC}"
+													filterEvent="onkeyup"
+													filterValue="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.filterByUI_M_ESD_CODE_DESC}"
+													rendered="true" 
+													sortBy="#{tableVar.UI_M_ESD_CODE_DESC}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_25"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM075_APAC$PM_IL_END_SETUP_DET$UI_M_ESD_CODE_DESC$caption}" />
+													</f:facet>
+													<h:outputText id="AUTOID_26"
+														value="#{tableVar.UI_M_ESD_CODE_DESC}" />
+												</rich:column>
+												
+												<rich:column filterBy="#{tableVar.ESD_NUM_VALUE}"
+													filterEvent="onkeyup"
+													rendered="true" 
+													sortBy="#{tableVar.ESD_NUM_VALUE}">
+													<f:facet name="header">
+														<h:outputText id="AUTOID_251"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM075_APAC$PM_IL_END_SETUP_DET$ESD_NUM_VALUE$caption}" />
+													</f:facet>
+													<h:inputText
+														id="ESD_NUM_VALUE" styleClass="inputNumeric" maxlength="14"
+														title="#{message.PILM075_APAC$PM_IL_END_SETUP_DET$ESD_NUM_VALUE$tooltip}"
+														value="#{tableVar.ESD_NUM_VALUE}">
+														<f:validateDoubleRange maximum="999999999.99999"/>
+														
+												<a4j:support
+													actionListener="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.onBlurESD_NUM_VALUE}"
+													event="onblur" id="AUTOID_281" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+												<f:converter converterId="PELNumberFormatter" />	
+											</h:inputText>
+												</rich:column>
+												
+												<!-- Attach scroller as footer of the table-->
+												<f:facet name="footer">
+													<h:panelGroup id="footerpanel" style="border:0">
+														<rich:datascroller align="right" />
+													<!-- 	<a4j:commandButton
+															actionListener="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.post}"
+															binding="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.UI_M_BUT_POST}"
+															id="AUTOID_27" reRender="errorPanel,sectionDtls"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.postButtonCaption}" /> -->
+													</h:panelGroup>
+												</f:facet>
+											</rich:dataTable></td>
+										</tr>
+									<!-- 	<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.COMP_ESD_CODE_LABEL}"
+												for="ESD_CODE" id="ESD_CODE_LABEL" styleClass="label"
+												value="#{message.PILM075_APAC$PM_IL_END_SETUP_DET$ESD_CODE$caption}" />
+
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.COMP_ESD_CODE}"
+												disabled="true" id="ESD_CODE" styleClass="input"
+												title="#{message.PILM075_APAC$PM_IL_END_SETUP_DET$ESD_CODE$tooltip}"
+												value="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.PM_IL_END_SETUP_DET_BEAN.ESD_CODE}" />
+											</td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.COMP_UI_M_ESD_CODE_DESC_LABEL}"
+												for="UI_M_ESD_CODE_DESC" id="UI_M_ESD_CODE_DESC_LABEL"
+												styleClass="label"
+												value="#{message.PILM075_APAC$PM_IL_END_SETUP_DET$ESD_COD_DESCE$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.COMP_UI_M_ESD_CODE_DESC}"
+												disabled="true" id="UI_M_ESD_CODE_DESC" styleClass="input"
+												title="#{message.PILM075_APAC$PM_IL_END_SETUP_DET$UI_M_ESD_CODE_DESC$tooltip}"
+												value="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.PM_IL_END_SETUP_DET_BEAN.UI_M_ESD_CODE_DESC}" />
+											</td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.COMP_ESD_NUM_VALUE_LABEL}"
+												for="ESD_CHAR_VALUE" id="ESD_CHAR_VALUE_LABEL"
+												styleClass="label"
+												value="#{message.PILM075_APAC$PM_IL_END_SETUP_DET$ESD_NUM_VALUE$caption}" />
+
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.COMP_ESD_NUM_VALUE}"
+												id="ESD_NUM_VALUE" styleClass="inputNumeric" maxlength="15"
+												title="#{message.PILM075_APAC$PM_IL_END_SETUP_DET$ESD_NUM_VALUE$tooltip}"
+												validator="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.validateESD_NUM_VALUE}"
+												value="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.PM_IL_END_SETUP_DET_BEAN.ESD_NUM_VALUE}">
+												<f:validateDoubleRange maximum="999999999.99999"/>
+												
+												<a4j:support
+													actionListener="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.setErrorMessagesInMap}"
+													event="onblur" id="AUTOID_28" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+											</h:inputText></td>
+										</tr> -->
+									</table>
+									</td>
+									<td />
+								</tr>
+							</table>
+						</rich:panel>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM075_APAC_PM_IL_END_SETUP_DET_ACTION.save}"
+											id="AUTOID_29" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_30"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTOID_31"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_32" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_33"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_34"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_35" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_36"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_37"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_38" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_39"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTOID_40"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_41" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_42"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTOID_43"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_44" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_45"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_46"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_47" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_48"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_49"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

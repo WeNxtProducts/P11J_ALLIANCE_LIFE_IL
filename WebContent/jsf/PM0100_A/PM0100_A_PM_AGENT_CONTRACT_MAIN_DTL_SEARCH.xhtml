@@ -1,0 +1,151 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PM0100_A" var="message" />
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+		<!-- add header row -->
+		<tr>
+			
+		</tr>
+		<h:form id="PM0100_A_QueryForm">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err" escape="true"
+									styleClass="#{PM0100_A_Search.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM0100_A_Search.errorMap['current'] !=null? PM0100_A_Search.errorMap['current']: PM0100_A_Search.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" styleClass="ErrorMessages"
+								value="#{PM0100_A_Search.errorMessages}" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PM0100_A_Search.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PM0100_A_Search.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+
+
+			<!-- Body row -->
+			<tr>
+				<td><!-- hidden value for navigating to next screen --> <h:inputHidden
+					id="ACMD_RANK_CODE"
+					value="#{PM0100_A_PM_AGENT_CONTRACT_MAINT_DTL_ACTION.PM_AGENT_CONTRACT_MAINT_DTL_BEAN.ACMD_RANK_CODE}" />
+
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%"  cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td><h:outputLabel value="Rank Code" /> <h:inputText
+							title="Enter the Rank code"
+							value="#{PM0100_A_Search.ACMD_RANK_CODE}" /></td>
+						<td><a4j:commandButton styleClass="button"
+							value="#{message.searchButton$caption}" id="a4link">
+							<a4j:support immediate="true"
+								action="#{PM0100_A_Search.fetchClassDetails}" event="onclick"
+								reRender="errorPanel,dataTableId"></a4j:support>
+						</a4j:commandButton></td>
+						<td><h:commandButton styleClass="button" rendered="false" value="Delete">
+							<a4j:support immediate="true"
+								actionListener="#{commonmsg.searchButton$caption}" event="onclick"
+								reRender="dataTableId"></a4j:support>
+						</h:commandButton></td>
+					</tr>
+				</table>
+				<!-- using rich data table --> <rich:dataTable id="dataTableId"
+					value="#{PM0100_A_Search.classMasterList}" var="assuredCode"
+					cellpadding="5px" rows="10" border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<rich:column rendered="false" sortable="true" width="40px">
+						<f:facet name="header">
+							<h:outputLabel styleClass="label" />
+						</f:facet>
+						<h:selectBooleanCheckbox value="#{assuredCode.CHECK_BOX}">
+							<a4j:support event="onclick"
+								actionListener="#{PM0100_A_Search.checkBoxStatus}"></a4j:support>
+						</h:selectBooleanCheckbox>
+
+					</rich:column>
+					<rich:column filterBy="#{assuredCode.ACMD_RANK_CODE}"
+						sortBy="#{assuredCode.ACMD_RANK_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Rank Code" />
+						</f:facet>
+						<h:commandLink action="#{PM0100_A_Search.clearList}"
+							id="searchLink">
+						
+								<h:outputText value="#{assuredCode.ACMD_RANK_CODE}" />
+							
+							<f:param name="RankCode" value="#{assuredCode.ACMD_RANK_CODE}" />
+							<f:param name="ProdType" value="#{assuredCode.ACMD_PROD_TYPE}" />
+							<f:param name="FromDate" value="#{assuredCode.ACMD_FM_DT}" />
+							<f:param name="ToDate" value="#{assuredCode.ACMD_TO_DT}" />
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column filterBy="#{assuredCode.ACMD_PROD_TYPE}"
+						sortBy="#{assuredCode.ACMD_PROD_TYPE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="Production Type" />
+						</f:facet>
+						<h:outputText value="#{assuredCode.ACMD_PROD_TYPE}" />
+					</rich:column>
+					<rich:column filterBy="#{assuredCode.ACMD_FM_DT}"
+						sortBy="#{assuredCode.ACMD_FM_DT}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="From Date" />
+						</f:facet>
+						<h:outputText value="#{assuredCode.ACMD_FM_DT}">
+							<f:convertDateTime pattern="dd-MMM-yyyy" />
+						</h:outputText>
+					</rich:column>
+					<rich:column filterBy="#{assuredCode.ACMD_TO_DT}"
+						sortBy="#{assuredCode.ACMD_TO_DT}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="To Date" />
+						</f:facet>
+						<h:outputText value="#{assuredCode.ACMD_TO_DT}">
+							<f:convertDateTime pattern="dd-MMM-yyyy" />
+						</h:outputText>
+					</rich:column>
+				</rich:dataTable> </td>
+			</tr>
+			<tr>
+			<td>
+			<h:commandButton value="#{message.insertButton$caption}"
+					styleClass="button" action="#{PM0100_A_Search.clearSession}" />
+			</td>
+			</tr>
+
+			<!-- add footer to the page-->
+			<tr>
+				
+			</tr>
+		</h:form>
+	</table>
+</f:view>
+
+
+</ui:define>
+</ui:composition>

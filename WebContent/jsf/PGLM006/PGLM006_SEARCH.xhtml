@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PGLM006" var="message" />
+			<f:loadBundle basename="messageProperties" var="mainmessage" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			<h:form id="PM_CUSTOMER">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.errorMap['current'] !=null? PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.errorMap['current']:PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" height="10%" id="toolbartable"
+							width="100%">
+							<h:inputHidden id="HIDDENROWID"
+								value="#{PGLM006_COMPOSITE_ACTION.PM_CUSTOMER_ACTION_BEAN.PM_CUSTOMER_BEAN.ROWID}" />
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="masthead" width="100%">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PGLM006$PM_CUSTOMER$ERROR_MESSAGE$INITIALCRITERIA$caption}" /></td>
+								<td><h:outputLabel
+									value=" #{message.PGLM006$PM_CUSTOMER_SEARCH$CUST_CONTACT$CustNo$caption} :" />
+								<h:inputText
+									value="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.initCust_Code}" /></td>
+								<td><h:outputLabel
+									value=" #{message.PGLM006$PM_CUSTOMER_SEARCH$CUST_CONTACT$CustName$caption} :" />
+								<h:inputText
+									value="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.initCust_Name}" /></td>
+								<td><h:outputLabel
+									value=" #{message.PGLM006$PM_CUSTOMER_SEARCH$CUST_CONTACT$CustPhone$caption} :" /><h:inputText
+									styleClass="forumRowHighlightNumeric"
+									value="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.initCust_Phone}" /></td>
+								<td><a4j:commandButton id="a4link" styleClass="button"
+									value="#{mainmessage.searchButton$caption}">
+									<a4j:support
+										action="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.getSearchCustomer_Values}"
+										event="onclick" id="AUTOID_1"
+										reRender="dataTableId,errorPanel" />
+								</a4j:commandButton></td>
+							</tr>
+						</table>
+						<!-- using rich data table --> <rich:dataTable border="1"
+							cellpadding="5px" id="dataTableId"
+							rows="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.rowCount}"
+							value="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.listValue}"
+							var="customerMatser" width="100%">
+
+							<!-- Attach scroller as footer of the table-->
+							<f:facet name="footer">
+								<rich:datascroller align="right" id="dsID"
+									page="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.currPage}"
+									pageIndexVar="index" pagesVar="pages">
+								</rich:datascroller>
+							</f:facet>
+							<!-- next column -->
+
+							<rich:column filterBy="#{customerMatser.CUST_CODE}"
+								filterEvent="onkeyup"
+								filterValue="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.filterCust_Code}"
+								sortBy="#{customerMatser.CUST_CODE}">
+								<f:facet name="header">
+									<h:outputText id="AUTOID_2"
+										value="#{message.PGLM006$PM_CUSTOMER_SEARCH$CUST_CONTACT$CustNo$caption}" />
+								</f:facet>
+								<h:commandLink
+									action="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.clearList}"
+									id="AUTOID_3"
+									onclick="document.getElementById('PM_CUSTOMER:HIDDENROWID').value='#{customerMatser.ROWID}';">
+									<f:verbatim>
+										<h:outputText id="AUTOID_4"
+											value="#{customerMatser.CUST_CODE} " />
+
+									</f:verbatim>
+								</h:commandLink>
+							</rich:column>
+
+							<rich:column filterBy="#{customerMatser.CUST_NAME}"
+								filterEvent="onkeyup"
+								filterValue="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.filterCust_Name}"
+								sortBy="#{customerMatser.CUST_NAME}">
+								<f:facet name="header">
+									<h:outputText id="AUTOID_5"
+										value="#{message.PGLM006$PM_CUSTOMER_SEARCH$CUST_CONTACT$CustName$caption}" />
+								</f:facet>
+								<h:outputText id="AUTOID_6" value="#{customerMatser.CUST_NAME}" />
+							</rich:column>
+
+							<rich:column filterBy="#{customerMatser.CUST_PHONE}"
+								filterEvent="onkeyup"
+								filterValue="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.filterCust_Phone}"
+								sortBy="#{customerMatser.CUST_PHONE}">
+								<f:facet name="header">
+									<h:outputText id="AUTOID_7"
+										value="#{message.PGLM006$PM_CUSTOMER_SEARCH$CUST_CONTACT$CustPhone$caption}" />
+								</f:facet>
+								<h:outputText id="AUTOID_8"
+									styleClass="forumRowHighlightNumeric"
+									value="#{customerMatser.CUST_PHONE}" />
+							</rich:column>
+
+							<rich:column filterBy="#{customerMatser.CUST_REF_ID1}"
+								filterEvent="onkeyup"
+								filterValue="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.filterCust_ref_id1}"
+								sortBy="#{customerMatser.CUST_REF_ID1}">
+								<f:facet name="header">
+									<h:outputText id="AUTOID_9"
+										value="#{message.PGLM006$PM_CUSTOMER_SEARCH$CUST_REF_ID1$CustPhone$caption}" />
+								</f:facet>
+								<h:outputText id="AUTOID_10"
+									styleClass="forumRowHighlightNumeric"
+									value="#{customerMatser.CUST_REF_ID1}" />
+							</rich:column>
+
+							<rich:column filterBy="#{customerMatser.CUST_REF_ID2}"
+								filterEvent="onkeyup"
+								filterValue="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.filterCust_ref_id2}"
+								sortBy="#{customerMatser.CUST_REF_ID2}">
+								<f:facet name="header">
+									<h:outputText id="AUTOID_11"
+										value="#{message.PGLM006$PM_CUSTOMER_SEARCH$CUST_REF_ID2$CustPhone$caption}" />
+								</f:facet>
+								<h:outputText id="AUTOID_12"
+									styleClass="forumRowHighlightNumeric"
+									value="#{customerMatser.CUST_REF_ID2}" />
+							</rich:column>
+
+						</rich:dataTable> <h:commandButton
+							action="#{PGLM006_COMPOSITE_ACTION.PGLM006_SEARCH_ACTION_BEAN.newRecordAction}"
+							styleClass="button" value="#{mainmessage.insertButton$caption}" />
+						</td>
+					</tr>
+
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

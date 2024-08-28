@@ -1,0 +1,804 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="quotation letter" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="40" rightMargin="20" topMargin="20" bottomMargin="20" uuid="10db1549-ea3b-49f3-8cb2-dabb66d2a072">
+	<property name="ireport.zoom" value="1.1"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="305"/>
+	<subDataset name="COVER_CODE" uuid="a128b439-2c02-437b-b336-39ff12febe29">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT COVER_DESC, POAC_LC_SA, POAC_PERIOD,COVER_LONG_DESC ,COVER_DISP_SEQ
+FROM (
+SELECT COVER_DESC         COVER_DESC,
+       QUOT_LC_SA POAC_LC_SA,
+       QUOT_PERIOD POAC_PERIOD,COVER_LONG_DESC , 0 "COVER_DISP_SEQ"
+
+  FROM PW_IL_QUICK_QUOTE, PM_IL_COVER
+ WHERE QUOT_SYS_ID = $P{QUOT_SYS_ID}
+   AND COVER_CODE = QUOT_PLAN_CODE
+UNION ALL
+SELECT COVER_DESC, QQAC_LC_SA, QQAC_PERIOD,COVER_LONG_DESC ,PAC_CVR_SR_NO "COVER_DISP_SEQ"
+  FROM PW_IL_QQUOT_APPL_COVER, PM_IL_COVER,PW_IL_QUICK_QUOTE, PM_IL_PROD_APPL_COVER
+ WHERE QUOT_SYS_ID = QQAC_QUOT_SYS_ID
+   AND QUOT_PROD_CODE = PAC_PROD_CODE
+   AND QQAC_COVER_CODE = PAC_COVER_CODE
+   AND QQAC_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+   AND COVER_CODE = QQAC_COVER_CODE
+    ) ORDER BY COVER_DISP_SEQ]]>
+		</queryString>
+		<field name="COVER_DESC" class="java.lang.String"/>
+		<field name="POAC_LC_SA" class="java.math.BigDecimal"/>
+		<field name="POAC_PERIOD" class="java.math.BigDecimal"/>
+		<field name="COVER_LONG_DESC" class="java.lang.String"/>
+		<field name="COVER_DISP_SEQ" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="TOTAL" uuid="a57a8148-7454-49cf-9644-b793da7ba705">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT F_GET_QUOT_PREM($P{QUOT_SYS_ID}) TOT_PREM FROM DUAL]]>
+		</queryString>
+		<field name="TOT_PREM" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="CONDITIONS_DS" uuid="7441c01a-121f-4278-bcfe-707ca15299ad">
+		<parameter name="QUOT_SYS_ID" class="java.lang.String"/>
+		<parameter name="QUOT_IDX_NO" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT QQCOND_DESC FROM PW_IL_QQUOT_CONDITION  WHERE QQCOND_QUOT_SYS_ID = $P{QUOT_SYS_ID}
+AND QQCOND_COND_TYP IN('1','3','4') ORDER BY QQCOND_DISP_SEQ_NO]]>
+		</queryString>
+		<field name="QQCOND_DESC" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataset2" uuid="e4aa95a5-36cf-46ae-8271-3fea73a56845"/>
+	<subDataset name="dataset3" uuid="8f554550-358e-4fba-a553-b6229a125edd"/>
+	<subDataset name="dataset4" uuid="2df44f10-53bb-4399-9d80-580157942dab"/>
+	<subDataset name="dataset5" uuid="0631950a-2c03-4b54-82da-96a31f0fc4d6"/>
+	<subDataset name="dataset6" uuid="ce20a9c1-6dd9-4c91-9753-2be015ffa804"/>
+	<subDataset name="dataset7" uuid="ba974d84-43e5-4143-ad22-347fad6bcbd6"/>
+	<subDataset name="dataset8" uuid="20a42170-a3f5-4aaa-b144-92e60e3d1bb9"/>
+	<subDataset name="dataset9" uuid="46adb46a-9965-41f3-b1a5-911633f56ad4"/>
+	<subDataset name="dataset10" uuid="40dd68c6-a248-427e-be08-20618a0618c4"/>
+	<subDataset name="dataset11" uuid="c56817dd-b405-49d0-aa35-8cde0a54abf9"/>
+	<subDataset name="PTDA_AGE" uuid="6e8544e8-2ed2-4d9a-b34a-10b6a79478ae">
+		<parameter name="QUOT_NO" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="PTDA_COVER" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="QUOT_IDX_NO" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT PAC_MAX_AGE_ON_MAT
+FROM PW_IL_QQUOT_APPL_COVER,PW_IL_QUICK_QUOTE,PM_IL_PROD_APPL_COVER
+WHERE PAC_COVER_CODE = QQAC_COVER_CODE
+AND QUOT_NO = $P{QUOT_NO}
+AND PAC_COVER_CODE = 'PTDA'
+AND QQAC_QUOT_SYS_ID = QUOT_SYS_ID
+AND PAC_PROD_CODE = QUOT_PROD_CODE AND QUOT_IDX_NO = $P{QUOT_IDX_NO}]]>
+		</queryString>
+		<field name="PAC_MAX_AGE_ON_MAT" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset12" uuid="6a9e9920-aaec-4d7e-8faa-20dc59b0aff9"/>
+	<subDataset name="PTDS_AGE" uuid="8fe82cbe-4571-436f-9fde-72c0258955f4">
+		<parameter name="QUOT_NO" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="PTDS_COVER" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="QUOT_IDX_NO" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT PAC_MAX_AGE_ON_MAT
+FROM PW_IL_QQUOT_APPL_COVER,PW_IL_QUICK_QUOTE,PM_IL_PROD_APPL_COVER
+WHERE PAC_COVER_CODE = QQAC_COVER_CODE
+AND QUOT_NO = $P{QUOT_NO}
+AND PAC_COVER_CODE = 'PTDS'
+AND QQAC_QUOT_SYS_ID = QUOT_SYS_ID
+AND PAC_PROD_CODE = QUOT_PROD_CODE AND QUOT_IDX_NO = $P{QUOT_IDX_NO}]]>
+		</queryString>
+		<field name="PAC_MAX_AGE_ON_MAT" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset13" uuid="4d75d921-4667-4f70-a8e7-175a087c3c93"/>
+	<subDataset name="dataset1" uuid="4c299365-b933-4e2b-916c-147c5fcddda1"/>
+	<parameter name="QUOT_NO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="QUOT_IDX_NO" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="PROD_CODE" class="java.lang.String"/>
+	<parameter name="PTDA_COVER" class="java.lang.String"/>
+	<parameter name="PPD_COVER" class="java.lang.String"/>
+	<parameter name="MOP_FREQ" class="java.lang.String"/>
+	<parameter name="PTDS_COVER" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT (SELECT LIV_CODE_DESC
+          FROM PP_LIST_ITEM_VALUES
+         WHERE LIV_SYS_PARAM = 'TITLE'
+           AND LIV_CODE = QUOT_CUST_TITLE) TITLE,
+       INITCAP(QUOT_CUST_NAME||' '||QUOT_CUST_SURNAME)CUS_NAME,
+       QUOT_CUST_ADDR1,
+       QUOT_CUST_ADDR2,
+       QUOT_CUST_ADDR3,
+       QQAD_ASSR_REF_ID1,QUOT_IDX_NO,
+       (SELECT BANK_NAME FROM FM_BANK WHERE BANK_CODE = QUOT_BANK_CODE) BANK_NAME,
+QUOT_PROD_CODE,
+       QUOT_BANK_DIVN,
+QUOT_BANK_ACNT,
+       (SELECT BAD_ACNT_NO
+        FROM FM_BANK_ACNT_DETAIL, FM_BANK
+        WHERE BANK_CODE = BAD_BANK_CODE
+        AND BANK_CODE = (SELECT BANK_UNIVERSAL_CODE FROM FM_BANK WHERE BANK_CODE = QUOT_BANK_CODE)) FC_BANK_ACC,
+       QUOT_NO,
+      concat(QQAD_AGE, ' Years') QQAD_AGE,
+       QUOT_LC_SA,
+       QUOT_PERIOD,
+       (SELECT PROD_DESC
+          FROM PM_IL_PRODUCT
+         WHERE PROD_CODE = QUOT_PROD_CODE) PLAN_TYPE,
+              DECODE(QUOT_MOP,
+                      'M',
+                      'MONTHLY',
+                      'Q',
+                      'QUARTERLY',
+                      'H',
+                      'HALF-YEARLY',
+                      'Y','YEARLY','S','SINGLE') PAYMETHOD,
+       QUOT_SYS_ID,QUOT_ASSRD_REF_ID1,QUOT_PROD_CODE,
+(SELECT BANK_NAME FROM FM_BANK WHERE BANK_CODE =(
+  SELECT BANK_UNIVERSAL_CODE FROM FM_BANK WHERE BANK_CODE = QUOT_BANK_CODE))FAL_BANK_NAME,QUOT_APPR_STS,
+(SELECT DIVN_NAME FROM PW_IL_QUICK_QUOTE,PM_DIVISION WHERE QUOT_DIVN_CODE = DIVN_CODE  AND QUOT_NO = $P{QUOT_NO}
+   AND QUOT_IDX_NO = $P{QUOT_IDX_NO})DIVN_NAME,
+NVL((   SELECT CUST_NAME FROM PW_IL_QUICK_QUOTE,PM_CUSTOMER WHERE QUOT_SRC_CODE = CUST_CODE  AND QUOT_NO = $P{QUOT_NO}
+   AND QUOT_IDX_NO = $P{QUOT_IDX_NO}),' Direct ')AGEN_NAME,
+(SELECT F_GET_REF_DETAIL($P{QUOT_NO},$P{QUOT_IDX_NO},'Q') FROM DUAL)HEADER_DTLS
+  FROM PW_IL_QUICK_QUOTE, PW_IL_QQUOT_ASSURED_DTLS
+ WHERE QUOT_SYS_ID = QQAD_QUOT_SYS_ID
+   AND QUOT_NO = $P{QUOT_NO}
+   AND QUOT_IDX_NO = $P{QUOT_IDX_NO}]]>
+	</queryString>
+	<field name="TITLE" class="java.lang.String"/>
+	<field name="CUS_NAME" class="java.lang.String"/>
+	<field name="QUOT_CUST_ADDR1" class="java.lang.String"/>
+	<field name="QUOT_CUST_ADDR2" class="java.lang.String"/>
+	<field name="QUOT_CUST_ADDR3" class="java.lang.String"/>
+	<field name="QQAD_ASSR_REF_ID1" class="java.lang.String"/>
+	<field name="QUOT_IDX_NO" class="java.math.BigDecimal"/>
+	<field name="BANK_NAME" class="java.lang.String"/>
+	<field name="QUOT_PROD_CODE" class="java.lang.String"/>
+	<field name="QUOT_BANK_DIVN" class="java.lang.String"/>
+	<field name="QUOT_BANK_ACNT" class="java.lang.String"/>
+	<field name="FC_BANK_ACC" class="java.lang.String"/>
+	<field name="QUOT_NO" class="java.lang.String"/>
+	<field name="QQAD_AGE" class="java.lang.String"/>
+	<field name="QUOT_LC_SA" class="java.math.BigDecimal"/>
+	<field name="QUOT_PERIOD" class="java.math.BigDecimal"/>
+	<field name="PLAN_TYPE" class="java.lang.String"/>
+	<field name="PAYMETHOD" class="java.lang.String"/>
+	<field name="QUOT_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="QUOT_ASSRD_REF_ID1" class="java.lang.String"/>
+	<field name="FAL_BANK_NAME" class="java.lang.String"/>
+	<field name="QUOT_APPR_STS" class="java.lang.String"/>
+	<field name="DIVN_NAME" class="java.lang.String"/>
+	<field name="AGEN_NAME" class="java.lang.String"/>
+	<field name="HEADER_DTLS" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="90"/>
+	</title>
+	<pageHeader>
+		<band height="40">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 ? false:true]]></printWhenExpression>
+			<staticText>
+				<reportElement x="2" y="25" width="63" height="15" uuid="e3913506-0301-489a-a369-1a11d5364c8d"/>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Continued...]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="332" y="22" width="205" height="18" uuid="463a10c3-c40b-492e-bf2d-0ba74478d968"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="117" splitType="Stretch">
+			<staticText>
+				<reportElement x="43" y="20" width="22" height="15" uuid="f008a405-67b8-4794-a974-69dd105eded7"/>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[To]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="360" y="20" width="30" height="15" uuid="79c3f7e0-df69-4836-846f-e4ec309ebbf7"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="68" width="49" height="15" uuid="71f1da0c-82ab-43d5-ab2e-09b8059885bd"/>
+				<textElement>
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Dear Sir,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="100" width="475" height="15" uuid="6f651af3-1639-43b3-ae18-e0aefadd94be"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[With reference to your request we are pleased to quote our premium rates as below]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="390" y="20" width="128" height="15" uuid="c3d6c34e-6d1b-4d2a-adb3-e0cbf3ae74c9"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="163" y="83" width="280" height="15" uuid="c6eec979-cc40-40b6-9b87-6ba8d6aff965"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font fontName="Calibri" isBold="true" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_NO}+" - "+($F{QUOT_IDX_NO} == null ? "":$F{QUOT_IDX_NO})]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="42" y="35" width="477" height="15" uuid="289aa39b-8cba-4954-81c4-344f0b768468"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{TITLE} == null ? "" : $F{TITLE})+
+"."+$F{CUS_NAME}+
+($F{QUOT_ASSRD_REF_ID1} == null ? "" :
+    ("   ( ID NO: "+$F{QUOT_ASSRD_REF_ID1}+" )"))]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement positionType="Float" x="43" y="50" width="477" height="15" isPrintWhenDetailOverflows="true" uuid="4961a5bf-ab15-453e-8c5b-25aab9c8ccb3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_CUST_ADDR1} != null ? ($F{QUOT_CUST_ADDR1}+" , "):""+
+($F{QUOT_CUST_ADDR2} == null ? "" : $F{QUOT_CUST_ADDR2})+
+($F{QUOT_CUST_ADDR3} == null ? "" : $F{QUOT_CUST_ADDR3})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="43" y="82" width="132" height="15" uuid="a6155e8c-6a53-4595-aae4-44c52d69c58c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="11" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Life Insurance Quotation :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="62" y="4" width="307" height="15" uuid="cad6b412-4517-44ad-9192-7ba3e8e9a6d7"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle" markup="html">
+					<font fontName="Calibri" size="7" isBold="false" isUnderline="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{HEADER_DTLS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="43" y="4" width="25" height="15" uuid="05a9ac2f-f253-4cb7-bac4-d461163c565b"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ref .]]></text>
+			</staticText>
+		</band>
+		<band height="45">
+			<printWhenExpression><![CDATA[$F{QUOT_PROD_CODE}.equals( "100" ) ? false:true]]></printWhenExpression>
+			<staticText>
+				<reportElement x="43" y="0" width="219" height="15" uuid="aebc0510-4abc-47cb-92f4-e2f70e1de073">
+					<printWhenExpression><![CDATA[$F{QUOT_PROD_CODE}.equals( "100" ) ? false:true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Bank]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="15" width="219" height="15" uuid="b0eeca20-8b0b-4d3e-8b2f-12865b71f691">
+					<printWhenExpression><![CDATA[$F{QUOT_PROD_CODE}.equals( "100" ) ? false:true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Branch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="30" width="219" height="15" uuid="0e13bcd8-f009-4dca-adee-94df3aa43c8c">
+					<printWhenExpression><![CDATA[$F{QUOT_PROD_CODE}.equals( "100" ) ? false:true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Account number]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="262" y="0" width="190" height="15" uuid="718ed51e-a7e1-42a2-a68f-a8e2274b046a">
+					<printWhenExpression><![CDATA[$F{QUOT_PROD_CODE}.equals( "100" ) ? false:true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BANK_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="262" y="30" width="190" height="15" uuid="3f00a9eb-34c3-4f30-ac66-714d7bed4e8c">
+					<printWhenExpression><![CDATA[$F{QUOT_PROD_CODE}.equals( "100" ) ? false:true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_BANK_ACNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="262" y="15" width="190" height="15" uuid="755be742-46bc-45a4-93b1-2c3d3f093114">
+					<printWhenExpression><![CDATA[$F{QUOT_PROD_CODE}.equals( "100" ) ? false:true]]></printWhenExpression>
+				</reportElement>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_BANK_DIVN}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="105">
+			<staticText>
+				<reportElement x="43" y="0" width="219" height="15" uuid="3d217a70-e01b-4506-9094-09f5db879f46"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="15" width="219" height="15" uuid="71d4f05d-a8a0-4735-9140-4cd6f062e652"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Age]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="30" width="219" height="15" uuid="976f2b8e-873b-4782-8983-da7b84a2970e"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Sum Assured/ Loan Amount RO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="45" width="219" height="15" uuid="eab78d39-2f45-4f6b-85b9-1950a7940a9a"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Policy Term Years]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="90" width="103" height="15" uuid="49124f9d-3db9-4886-8687-bd890a06d828"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Term of Cover-Years
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="60" width="219" height="15" uuid="9ffc3d90-55bd-451a-944c-bb14e75b2c78"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Type of Plan]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="75" width="219" height="15" uuid="cb37dac9-ca38-4321-9b3e-93fa38337d88"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Frequency of Premium]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="43" y="90" width="219" height="15" uuid="0bb72608-a777-4b20-a12b-16d607ac4bd9"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Benefits covered]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="262" y="90" width="87" height="15" uuid="d70cc6a2-be1c-4884-874d-c706497470cd"/>
+				<box leftPadding="0" rightPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Sum Assured RO]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="262" y="15" width="190" height="15" uuid="c4b0f3ef-310e-4079-80bc-431d3fdfb5af"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QQAD_AGE}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0" isBlankWhenNull="true">
+				<reportElement x="262" y="30" width="190" height="15" uuid="2f44e1a1-a5cc-44c6-b9c0-21de942e6544"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_LC_SA}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="262" y="45" width="190" height="15" uuid="3a055c80-4b15-4d9a-acb2-bd4e1ae34b73"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{QUOT_PERIOD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="262" y="60" width="190" height="15" uuid="78e2bc26-e9a5-4f3f-bcb3-4d9fd8c1a9c2"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLAN_TYPE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="262" y="75" width="190" height="15" uuid="55624895-ddc3-47ee-8b68-3869c3bafccc"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PAYMETHOD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="262" y="0" width="190" height="15" uuid="58dd4759-8ce9-4109-b43e-ee5de743cae8"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUS_NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="15">
+			<componentElement>
+				<reportElement x="43" y="0" width="424" height="15" uuid="92b5f6d4-96c0-4f66-84e3-111dde64b347"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="COVER_CODE" uuid="6a1e0268-7dd2-4ce6-a7f1-2b98ee56e742">
+						<datasetParameter name="QUOT_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{QUOT_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="15" width="424">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="219" height="15" isPrintWhenDetailOverflows="true" uuid="770a31a2-7fc2-4566-bd5e-4c7a3c9d83ec"/>
+							<box leftPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{COVER_LONG_DESC}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" pattern="#,##0;(#,##0)" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="219" y="0" width="87" height="15" isPrintWhenDetailOverflows="true" uuid="909b4f9e-3c4f-4395-a435-30bd51497573"/>
+							<box rightPadding="2">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.0"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POAC_LC_SA}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="306" y="0" width="103" height="15" isPrintWhenDetailOverflows="true" uuid="a26f14c2-a134-422c-83dc-56c933640e8d"/>
+							<box rightPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POAC_PERIOD}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="21">
+			<staticText>
+				<reportElement x="43" y="4" width="219" height="15" uuid="69205aef-f52e-4acd-9f8e-a445141dfc0f"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Total  Premium including Govt fees
+]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="262" y="4" width="194" height="15" uuid="13968dc5-54f7-4332-ad4e-427cf84c6bb3"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="TOTAL" uuid="0bb59590-13c1-4c54-ab6d-677caeed72db">
+						<datasetParameter name="QUOT_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{QUOT_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="15" width="194">
+						<textField pattern="#,##0.000" isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="87" height="15" uuid="f8b440fb-ce7e-4b41-b89b-190ea805bb5c"/>
+							<box rightPadding="4">
+								<topPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="Calibri" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{TOT_PREM}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="14">
+			<componentElement>
+				<reportElement x="42" y="0" width="493" height="14" uuid="c7ad6484-da27-4ec0-9ea9-70bd8237e7e7"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="CONDITIONS_DS" uuid="cbdf8d32-78c3-455b-93db-ab325e07e750">
+						<datasetParameter name="QUOT_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{QUOT_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+						<datasetParameter name="QUOT_IDX_NO">
+							<datasetParameterExpression><![CDATA[$P{QUOT_IDX_NO}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="14" width="493">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="0" y="0" width="410" height="13" isPrintWhenDetailOverflows="true" uuid="6ead0d53-b0d1-4edf-877f-faa6652960b7"/>
+							<textElement textAlignment="Justified">
+								<font fontName="Calibri" size="9"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{QQCOND_DESC}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="32">
+			<printWhenExpression><![CDATA[(($F{QUOT_PROD_CODE}.equals( "121" )) ||
+    ($F{QUOT_PROD_CODE}.equals( "122" )) ||
+    ($F{QUOT_PROD_CODE}.equals( "123" )) ||
+    ($F{QUOT_PROD_CODE}.equals( "130" )) ||
+    ($F{QUOT_PROD_CODE}.equals( "131" )) ) ? true:false]]></printWhenExpression>
+			<textField isBlankWhenNull="true">
+				<reportElement x="244" y="2" width="208" height="15" uuid="bc51473a-17ce-40ab-b6b7-bd4aba8ec213"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FC_BANK_ACC}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="42" y="17" width="202" height="15" uuid="835c109d-fdd9-48e2-b184-40e3d6629159"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Bank Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="2" width="202" height="15" uuid="90f23481-1957-4378-bf16-833d5e3fc69a"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Account No :]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="244" y="17" width="208" height="15" uuid="c468e0b6-1bdb-4711-acd3-dbda0923308c"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{FAL_BANK_NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="44">
+			<staticText>
+				<reportElement x="42" y="1" width="100" height="13" uuid="4cd71a0a-2f35-401f-9dce-33c74775dc6e"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Yours Sincerely,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="42" y="30" width="100" height="14" uuid="8085d3af-7f7b-4e10-8c66-004a1b1973a5"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Authorised Signatory]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="80">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER} == 1 ? true:false]]></printWhenExpression>
+		</band>
+	</pageFooter>
+</jasperReport>

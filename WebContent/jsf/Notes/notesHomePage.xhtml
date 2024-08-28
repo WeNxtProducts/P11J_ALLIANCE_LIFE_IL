@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}" beforePhase="#{NotesHomeAction.onLoad}">
+	<f:loadBundle basename="menu" var="menumessage" />
+	<f:loadBundle basename="messageProperties_notes" var="notesmessage" />
+	<h:form id="NOTES">
+		<table cellpadding="0" cellspacing="0" width="100%" border="0">
+			
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<table width="100%" id="errormsgtable" cellspacing="0">
+					<tr>
+						<td>
+							<rich:simpleTogglePanel id="errorPanel"
+								switchType="client" opened="false">
+								<f:facet name="header">
+									<h:outputText id="err"
+										styleClass="#{NotesHomeAction.messageStyle}"
+										value="#{commonmsg.errorPanel$heading} #{NotesHomeAction.errorMap['current'] !=null? NotesHomeAction.errorMap['current']:NotesHomeAction.warningMap['current']}" />
+								</f:facet>
+								<h:outputText id="errorMessages"
+									value="#{NotesHomeAction.errorMessages}"
+									styleClass="ErrorMessages" escape="false" />
+								<h:messages styleClass="ErrorMessages" id="msg"
+									rendered="#{NotesHomeAction.globalMsgRender}" />
+								<h:outputText id="warningMessages"
+									value="#{NotesHomeAction.warningMessages}"
+									styleClass="WarningMessages" escape="false" />
+							</rich:simpleTogglePanel>
+						</td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<table width="100%" id="linkstable" cellpadding="0" cellspacing="0"	border="0">
+					<tr>
+						<td><h:outputLabel id="pagecaption" value="#{notesmessage.notes$Homepagetitle$displayCaption}"></h:outputLabel> </td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="3" width="100%" align="center">
+					<rich:panel id="NOTES_TABLE_AREA" style="height: 500px; width: 100%; overflow:auto;" >
+					<rich:dataTable
+						id="NOTES_TABLE" 
+						value="#{NotesHomeAction.dataTableList}"
+						var="currNotes"
+						binding="#{NotesHomeAction.dataTableComponent}"
+						width="100%">
+						<rich:column id="COLUMN1">
+							<h:panelGroup>
+								<table width="100%">
+									<tr>
+										<td width="100%">
+											<h:outputText id="remarks"
+												value="#{currNotes.PNM_NOTES_CONTENT}" 
+												title="Notes" 
+												escape="false" styleClass="label">
+											</h:outputText>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputLabel id="TAGGED_USERS" value="Tagged Users: " styleClass="label" style="color: blue"></h:outputLabel>
+											<a4j:repeat id="TAGGED_LIST" 
+												value="#{currNotes.taggedUsersList}"
+												var="currentTag"
+												rowKeyVar="rownum">
+												<h:outputLabel id="CURR_TAG_ID" value="#{currentTag.PNTU_TAGGED_USER}" styleClass="label"></h:outputLabel>
+												<h:outputLabel id="CURR_TAG_SEPARATOR" value="," styleClass="label" rendered="#{!((currNotes.tagListSize-1) == rownum)}"></h:outputLabel>
+											</a4j:repeat>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<h:outputLabel id="CR_UID_LABEL" value="Posted By:" styleClass="label" style="color: blue"></h:outputLabel>
+											<h:outputLabel id="CR_UID" value="#{currNotes.PNM_CR_UID}" styleClass="label"></h:outputLabel>
+											<rich:spacer width="25px"></rich:spacer>
+											<h:outputLabel id="CR_DATE_LABEL" value="Create Date:" styleClass="label" style="color: blue"></h:outputLabel>
+											<h:outputLabel id="CR_DATE" value="#{currNotes.PNM_CR_TIMESTAMP}" styleClass="label"></h:outputLabel>
+										</td>
+									</tr>
+									
+								</table>
+							</h:panelGroup>
+						</rich:column>
+					</rich:dataTable>
+					</rich:panel>
+				</td>
+			</tr>
+		</table>
+	</h:form>
+</f:view>
+</ui:define>
+</ui:composition>

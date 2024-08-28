@@ -1,0 +1,37 @@
+package com.iii.pel.forms.PILP022;
+/**
+ * 
+ * @author 52017
+ * Created Newly For PREMIAGDC-327842
+ *
+ */
+public class PILP022_COMPOSITE_ACTION {
+private PT_AGENT_ACTION PT_AGENT_ACTION_BEAN;
+private PS_AGENT_COMM_VALUES_ACTION PS_AGENT_COMM_VALUES_ACTION_BEAN; 
+	
+public PILP022_COMPOSITE_ACTION(){
+	PT_AGENT_ACTION_BEAN = new PT_AGENT_ACTION();
+	PS_AGENT_COMM_VALUES_ACTION_BEAN = new PS_AGENT_COMM_VALUES_ACTION();
+	PT_AGENT_ACTION_BEAN.compositeAction = this;
+	PS_AGENT_COMM_VALUES_ACTION_BEAN.compositeAction = this;
+	}
+
+public PT_AGENT_ACTION getPT_AGENT_ACTION_BEAN() {
+	return PT_AGENT_ACTION_BEAN;
+}
+
+public void setPT_AGENT_ACTION_BEAN(PT_AGENT_ACTION pt_agent_action_bean) {
+	PT_AGENT_ACTION_BEAN = pt_agent_action_bean;
+}
+
+public PS_AGENT_COMM_VALUES_ACTION getPS_AGENT_COMM_VALUES_ACTION_BEAN() {
+	return PS_AGENT_COMM_VALUES_ACTION_BEAN;
+}
+
+public void setPS_AGENT_COMM_VALUES_ACTION_BEAN(
+		PS_AGENT_COMM_VALUES_ACTION ps_agent_comm_values_action_bean) {
+	PS_AGENT_COMM_VALUES_ACTION_BEAN = ps_agent_comm_values_action_bean;
+}
+	
+
+}

@@ -1,0 +1,358 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+
+		<f:view beforePhase="#{PILP014_CTRL1_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILP014" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 24-Feb-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="DUMMY" onkeypress="return event.keyCode != 13">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0" >
+					<tr>
+						<td colspan="4" height="20" vAlign="top"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup styleClass="toolBarGroupStyle">
+								<h:commandLink action="#{PILP014_CTRL1_ACTION.backButton}"
+									id="SELFID_1" immediate="true" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SELFID_2" styleClass="searchimg"
+										value="./../../resources/images/back.png" />
+									<h:outputText id="SELFID_3" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$back}" />
+								</h:commandLink>
+								<h:commandLink action="#{PILP014_CTRL1_ACTION.saveRecord}"
+									id="SELFID_4" rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:commandButton id="SELFID_5" style="border: thin solid white"
+										styleClass="toolbarButtonStyle" accesskey="s"
+										image="./../../resources/images/save.gif" />
+									<h:outputText id="SELFID_6" styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar> <rich:simpleTogglePanel id="errorPanel" opened="false"
+							switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILP014_CTRL1_ACTION.messageStyle}"
+									value="Notification:#{PILP014_CTRL1_ACTION.errorMap['current'] !=null? PILP014_CTRL1_ACTION.errorMap['current']:PILP014_CTRL1_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILP014_CTRL1_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILP014_CTRL1_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILP014_CTRL1_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td valign="top" align="right" width="100%" colspan="5">
+						<h:commandButton
+							binding="#{PILP014_CTRL1_ACTION.COMP_BUTTON_CLEAR}"
+							id="UI_M_BUT_CLEAR" rendered="true" style="width:90px"
+							styleClass="button" value="Clear Month Data"
+							action="#{PILP014_CTRL1_ACTION.clearButtonAction}">
+						</h:commandButton><rich:spacer id="COMM_0" width="5px">
+						</rich:spacer><h:commandButton
+							binding="#{PILP014_CTRL1_ACTION.COMP_BUTTON_FETCH}"
+							id="UI_M_BUT_UPLOAD" rendered="true" style="width:90px"
+							styleClass="button" value="Fetch"
+							action="#{PILP014_CTRL1_ACTION.fetchButtonAction}">
+						</h:commandButton> <rich:spacer id="COMM_1" width="5px">
+						</rich:spacer> <h:commandButton
+							binding="#{PILP014_CTRL1_ACTION.COMP_BUTTON_PROCESS}"
+							id="UI_M_BUTTON_PROCESS" rendered="true" style="width:90px"
+							styleClass="button" value="Process"
+							action="#{PILP014_CTRL1_ACTION.processButtonAction}">
+						</h:commandButton> <rich:spacer id="COMM_2" width="5px">
+						</rich:spacer><h:commandButton
+							binding="#{PILP014_CTRL1_ACTION.COMP_BUTTON_VIEW_LOG}"
+							id="UI_M_VIEW_LOG" rendered="true" style="width:90px"
+							styleClass="button" value="StatusLog" immediate="true"
+							action="#{PILP014_CTRL1_ACTION.viewLog}">
+						</h:commandButton></td>
+					</tr>
+					<tr>
+						<td class="oddrowright" width="10%"><h:outputLabel
+							binding="#{PILP014_CTRL1_ACTION.COMP_UI_M_PROCESS_DT_LABEL}"
+							for="UI_M_PROCESS_DT" id="UI_M_PROCESS_DT_LABEL" rendered="true"
+							styleClass="label"
+							value="#{message.PILP014$DUMMY$UI_M_PROCESS_DT$caption}" /> <h:graphicImage
+							id="AUTOID_15QW" 
+							value="./../../resources/images/mandatory.jpg" /></td>
+						<td class="oddrow" width="30%"><rich:calendar
+							binding="#{PILP014_CTRL1_ACTION.COMP_UI_M_PROCESS_DT}"
+							datePattern="#{PILP014_CTRL1_ACTION.datePattern}"
+							disabled="false" enableManualInput="true" id="UI_M_PROCESS_DT"
+							inputClass="calendarinput" inputSize="11" rendered="true"
+							required="true"
+							title="#{message.PILP014$DUMMY$UI_M_PROCESS_DT$tooltip}"
+							onsubmit="formatDate('DUMMY:UI_M_PROCESS_DT')"
+							validator="#{PILP014_CTRL1_ACTION.dateValidate}"
+							value="#{PILP014_CTRL1_ACTION.CTRL1_BEAN.UI_M_PROCESS_DT}">
+							<a4j:support 
+								actionListener="#{PILP014_CTRL1_ACTION.fireFieldValidation}"
+								event="oninputblur" id="date_1"
+								reRender="errorPanel"/>
+						</rich:calendar></td>
+						<td class="oddrowright" width="10%"><h:outputLabel
+							binding="#{PILP014_CTRL1_ACTION.COMP_GROUP_ID_LABEL}"
+							for="COMP_GROUP_ID" id="COMP_GROUP_ID_LABEL" rendered="true"
+							styleClass="label"
+							value="#{message.PILP014$DUMMY$COMP_GROUP_ID$caption}" /></td>
+						<td class="oddrow" width="50%"><h:selectOneMenu
+							binding="#{PILP014_CTRL1_ACTION.COMP_GROUP_ID}"
+							disabled="false" id="COMP_GROUP_ID" rendered="true"
+							required="false" styleClass="input"
+							title="#{PILP014$DUMMY$COMP_GROUP_ID$caption}"
+							value="#{PILP014_CTRL1_ACTION.CTRL1_BEAN.UI_M_GROUP_ID}">
+							<f:selectItems id="SEL_ITEMS_GROUP_ID"
+								value="#{PILP014_CTRL1_ACTION.listGROUP_ID}" />
+						</h:selectOneMenu></td>
+						 
+					
+					</tr>
+					<tr>
+						<td colspan="5"><rich:dataTable
+							binding="#{PILP014_CTRL1_ACTION.dataTable}" border="0"
+							cellpadding="0" id="PILP014_CTRL1_ACTION_GRID" rows="5"
+							value="#{PILP014_CTRL1_ACTION.dataList_CTRL1}" var="tableVar"
+							width="100%">
+							<!-- next column -->
+							<rich:column filterBy="#{tableVar.BD_BM_SL_NO}" filterEvent="onkeyup"
+								id="COLUMN_BD_BM_SLNO" rendered="true" sortBy="#{tableVar.BD_BM_SL_NO}"
+								styleClass="#{tableVar.rowSelected}">
+								<f:facet name="header">
+									<h:outputText id="COLUMN_CAPTION_BD_BM_SLNO"
+										styleClass="forumRowHighlight"
+										value="#{message.PILP014$DUMMY$BD_BM_SLNO$caption}" />
+								</f:facet>
+								<a4j:commandLink action="#{PILP014_CTRL1_ACTION.displayRecords}"
+									id="GOTO_LINK_BD_BM_SLNO" immediate="true"
+									reRender="errorPanel,PILP014_CTRL1_ACTION_GRID,BD_STATUS,UI_M_BD_PROC_DESC,BD_BM_EXEC_SEQ,BD_BM_SLNO">
+									<h:outputText id="LINK_CAPTION_BD_BM_SL_NO"
+										value="#{tableVar.BD_BM_SL_NO}" />
+								</a4j:commandLink>
+							</rich:column>
+							<!-- next column -->
+							<!-- next column -->
+							<rich:column filterBy="#{tableVar.BD_BM_EXEC_SEQ}"
+								filterEvent="onkeyup" id="COLUMN_BD_BM_EXEC_SEQ" rendered="true"
+								sortBy="#{tableVar.BD_BM_EXEC_SEQ}"
+								styleClass="#{tableVar.rowSelected}">
+								<f:facet name="header">
+									<h:outputText id="COLUMN_CAPTION_BD_BM_EXEC_SEQ"
+										styleClass="forumRowHighlight"
+										value="#{message.PILP014$DUMMY$BD_BM_EXEC_SEQ$caption}" />
+								</f:facet>
+								<h:outputText id="LINK_CAPTION_BD_BM_EXEC_SEQ"
+									value="#{tableVar.BD_BM_EXEC_SEQ}" />
+							</rich:column>
+							<!-- next column -->
+							<rich:column filterBy="#{tableVar.UI_M_BD_PROC_DESC}"
+								filterEvent="onkeyup" id="COLUMN_UI_M_BD_PROC_DESC" rendered="true"
+								sortBy="#{tableVar.UI_M_BD_PROC_DESC}"
+								styleClass="#{tableVar.rowSelected}">
+								<f:facet name="header">
+									<h:outputText id="COLUMN_CAPTION_UI_M_BD_PROC_DESC"
+										styleClass="forumRowHighlight"
+										value="#{message.PILP014$DUMMY$UI_M_BD_PROC_DESC$caption}" />
+								</f:facet>
+								<h:outputText id="LINK_CAPTION_UI_M_BD_PROC_DESC"
+									value="#{tableVar.UI_M_BD_PROC_DESC}" />
+							</rich:column>
+							<!-- next column -->
+							<rich:column filterBy="#{tableVar.BD_STATUS}"
+								filterEvent="onkeyup" id="COLUMN_BD_STATUS" rendered="true"
+								sortBy="#{tableVar.BD_STATUS}"
+								styleClass="#{tableVar.rowSelected}">
+								<f:facet name="header">
+									<h:outputText id="COLUMN_CAPTION_BD_STATUS"
+										styleClass="forumRowHighlight"
+										value="#{message.PILP014$DUMMY$BD_STATUS$caption}" />
+								</f:facet>
+								<h:outputText id="LINK_CAPTION_BM_STATUS"
+									value="#{tableVar.BD_STATUS}" />
+							</rich:column>
+							<f:facet name="footer">
+								<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+									<rich:datascroller align="right" id="PILP014_SCROLL" page="1" />
+									<a4j:commandButton
+										actionListener="#{PILP014_CTRL1_ACTION.postRecord}"
+										id="postRecord"
+										reRender="PILP014_CTRL1_ACTION_GRID,errorPanel"
+										style="width:80px;" styleClass="button"
+										value="#{commonmsg.postButtonCaption}" />
+								</h:panelGroup>
+							</f:facet>
+						</rich:dataTable></td>
+					</tr>
+					<tr>
+						<td colspan="4">
+						<table width="100%">
+							<tr>
+								<td class="oddrowright"><h:outputLabel
+									binding="#{PILP014_CTRL1_ACTION.COMP_BD_BM_SLNO_LABEL}"
+									for="BD_BM_SLNO" id="BD_BM_SLNO_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILP014$DUMMY$BD_BM_SLNO$caption}" /></td>
+								<td class="oddrow"><h:inputText
+									binding="#{PILP014_CTRL1_ACTION.COMP_BD_BM_SLNO}" disabled="true"
+									id="BD_BM_SLNO" maxlength="60" rendered="true" required="false"
+									styleClass="input"
+									title="#{message.PILP014$DUMMY$BD_BM_SLNO$caption}"
+									value="#{PILP014_CTRL1_ACTION.CTRL1_BEAN.BD_BM_SL_NO}" /></td>
+								
+								<td class="oddrow"><h:outputLabel
+									binding="#{PILP014_CTRL1_ACTION.COMP_BD_BM_EXEC_SEQ_LABEL}"
+									for="BD_BM_EXEC_SEQ" id="BM_EXEC_SEQ_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILP014$DUMMY$BD_BM_EXEC_SEQ$caption}" /></td>
+								<td class="oddrow"><h:inputText
+									binding="#{PILP014_CTRL1_ACTION.COMP_BD_BM_EXEC_SEQ}"
+									disabled="false" id="BD_BM_EXEC_SEQ" maxlength="60"
+									rendered="true" required="false" styleClass="input"
+									title="#{message.PILP014$DUMMY$BD_BM_EXEC_SEQ$caption}"
+									validator="#{PILP014_CTRL1_ACTION.validateExecSeq}"
+									value="#{PILP014_CTRL1_ACTION.CTRL1_BEAN.BD_BM_EXEC_SEQ}" >
+									<a4j:support
+													actionListener="#{PILP014_CTRL1_ACTION.fireFieldValidation}"
+													event="onblur" id="style_3" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+									</h:inputText>
+								</td>
+							</tr>
+							<tr>
+								<td class="evenrowright"><h:outputLabel
+									binding="#{PILP014_CTRL1_ACTION.COMP_UI_M_BD_PROC_DESC_LABEL}"
+									for="UI_M_BD_PROC_DESC" id="BM_PROC_DESC_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILP014$DUMMY$UI_M_BD_PROC_DESC$caption}" /></td>
+								<td class="evenrow"><h:inputText
+									binding="#{PILP014_CTRL1_ACTION.COMP_UI_M_BD_PROC_DESC}"
+									disabled="true" id="UI_M_BD_PROC_DESC" maxlength="60"
+									rendered="true" required="false" styleClass="input"
+									title="#{message.PILP014$DUMMY$UI_M_BD_PROC_DESC$caption}"
+									value="#{PILP014_CTRL1_ACTION.CTRL1_BEAN.UI_M_BD_PROC_DESC}" /></td>
+								
+								<td class="evenrow"><h:outputLabel
+									binding="#{PILP014_CTRL1_ACTION.COMP_BD_STATUS_LABEL}"
+									for="BD_STATUS" id="COMP_BD_STATUS_LABEL" rendered="true"
+									styleClass="label"
+									value="#{message.PILP014$DUMMY$BD_STATUS$caption}" /></td>
+								<td class="oddrow"><h:selectOneMenu
+									binding="#{PILP014_CTRL1_ACTION.COMP_BD_STATUS}"
+									disabled="false" id="BD_STATUS" rendered="true"
+									required="false" styleClass="input"
+									title="#{message.PILP014$DUMMY$BD_STATUS$caption}"
+									value="#{PILP014_CTRL1_ACTION.CTRL1_BEAN.BD_STATUS}">
+									<f:selectItems id="SEL_ITEMS_BD_STATUS"
+										value="#{PILP014_CTRL1_ACTION.listBD_STATUS}" />
+								</h:selectOneMenu></td>
+							</tr>
+							<tr>
+								<td colspan="4" valign="top" width="100%">
+								<table class="noborder" id="toolbartable" width="100%">
+									<tr>
+										<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+											<rich:toolBarGroup location="right"
+												styleClass="toolBarGroupStyle">
+												<h:commandLink id="SELF_ID_30" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_31"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/save.gif" />
+													<h:outputText id="SELF_ID_32"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_33" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_34"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/savenext.GIF" />
+													<h:outputText id="SELF_ID_35"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$savenext}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_36" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_37"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/deleteRecord.gif" />
+													<h:outputText id="SELF_ID_38"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$deleteRecord}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_39" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_40"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/firstrec.gif" />
+													<h:outputText id="SELF_ID_41"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$firstrec}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_42" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_43"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/prevpage.gif" />
+													<h:outputText id="SELF_ID_44"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$prevpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_45" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_46"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/nextpage.gif" />
+													<h:outputText id="SELF_ID_47"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$nextpage}" />
+												</h:commandLink>
+												<h:commandLink id="SELF_ID_48" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SELF_ID_49"
+														style="border: thin solid white" styleClass="searchimg"
+														value="./../../images/lastRecord.gif" />
+													<h:outputText id="SELF_ID_50"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$lastRecord}" />
+												</h:commandLink>
+											</rich:toolBarGroup>
+										</rich:toolBar></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

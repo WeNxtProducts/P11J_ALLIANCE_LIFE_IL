@@ -1,0 +1,542 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM048_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_BANK_CHARGE_SETUP_DTL" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" id="TABLE_ID_1" width="100%" cellpadding="0"
+					cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.goHDRBlock}"
+											id="AUTO_ID_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTO_ID_2" 
+											styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.saveRecord}"
+											id="AUTO_ID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTO_ID_5" 
+											styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_10" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="AUTO_ID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.errorMap['current'] !=null? PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.errorMap['current']: PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%">
+						<table class="noborder" id="globalLink" width="100%">
+							<tr>
+								<td><!-- Tab implementation --> <h:inputHidden
+									id="myhidden"
+									value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.tabbedBar.tabClicked}" /><h:panelGroup
+									id="mypanel">
+									<table class="noborder" width="100%" id="MAIN_TABLE_23">
+										<tr>
+											<td width="90%"><a4j:repeat id="REPEAT_TABLE_13"
+												value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.tabbedBar.tabAction}"
+													disabled="#{currtab.disabled}" id="AUTO_ID_13"
+													onclick="document.getElementById('PM_BANK_CHARGE_SETUP_DTL:myhidden').value='#{currtab.id}'"
+													styleClass="#{currtab.styleString}"
+													value="#{currtab.value}" />
+											</a4j:repeat></td>
+											<td width="*" />
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 400px; overflow: auto;">
+						<table class="noborder" width="100%">
+							<tr>
+
+								<td vAlign="top" width="90%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+
+									<tr>
+										<td colspan="3">
+										<table width="100%" align="center" cellpadding="0"
+											cellspacing="0" id="bordertable">
+											<tr>
+												<td>&nbsp;</td>
+												<td width="100%" vAlign="top"><h:panelGroup
+													id="sectionDtls" style="border:0;height:15%;">
+													<h:inputHidden
+														value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.PM_BANK_CHARGE_SETUP_DTL_BEAN.BCSD_SYS_ID}"
+														id="BCSD_SYS_ID"
+														binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.BCSD_SYS_ID}" />
+													<h:inputHidden
+														value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.PM_BANK_CHARGE_SETUP_DTL_BEAN.BCSD_BCSH_SYS_ID}"
+														id="BCSD_BCSH_SYS_ID"
+														binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.BCSD_BCSH_SYS_ID}" />
+													<table class="noborder" id="bordertable" align="left" width="100%">
+
+														<tr>
+															<td colspan="5"><rich:dataTable
+																id="PM_BANK_CHARGE_SETUP_DTL_TABLE"
+																value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.dataList}"
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.dataTable}"
+																var="table" cellpadding="0" rows="5" width="100%">
+
+																<rich:column filterBy="#{table.BCSD_AMT_LC_FM}"
+																	styleClass="#{table.rowSelected}" id="FILTER_1"
+																	sortBy="#{table.BCSD_AMT_LC_FM}" filterEvent="onkeyup"
+																	filterValue="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.filterByBCSD_AMT_LC_FM}">
+																	<f:facet name="header">
+																		<h:outputText styleClass="forumRowHighlight"
+																			id="UOUPUT_TEXT_1"
+																			value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_DTL$BCSD_AMT_LC_TO$caption}" />
+																	</f:facet>
+
+																	<a4j:commandLink reRender="sectionDtls"
+																		immediate="true"
+																		action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.getDetails}">
+																		<h:outputText value="#{table.BCSD_AMT_LC_FM} "
+																			id="UOUPUT_TEXT_2" />
+																	</a4j:commandLink>
+
+																</rich:column>
+
+																<rich:column filterBy="#{table.BCSD_RATE}"
+																	styleClass="#{table.rowSelected}" id="FILTER_2"
+																	sortBy="#{table.BCSD_RATE}" filterEvent="onkeyup"
+																	filterValue="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.filterByBCSD_RATE}">
+																	<f:facet name="header">
+																		<h:outputText styleClass="forumRowHighlight"
+																			id="UOUPUT_TEXT_3"
+																			value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_DTL$BCSD_RATE$caption}" />
+																	</f:facet>
+
+																	<h:outputText id="BCSD_RATE" style="width:89px;"
+																		title="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_DTL$BCSD_RATE$caption}"
+																		rendered="true" value="#{table.BCSD_RATE}">
+																	</h:outputText>
+																</rich:column>
+
+
+																<!-- Attach scroller as footer of the table-->
+																<f:facet name="footer">
+																	<h:panelGroup id="PANEL_GROUP_2">
+																		<rich:datascroller align="right" id="FILTER_4" />
+																		<a4j:commandButton id="ADD_BUTTON"
+																			binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.UI_M_BUT_ADD}"
+																			rendered="true" styleClass="button"
+																			reRender="errorPanel,sectionDtls" immediate="true"
+																			value="#{commonmsg.addNewButtonCaption}"
+																			style="width:81px"
+																			actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.AddRow}"
+																			disabled="false" />
+																		<a4j:commandButton id="DELETE_BUTTON"
+																			binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.UI_M_BUT_DEL}"
+																			rendered="true" styleClass="button"
+																			reRender="errorPanel,sectionDtls" immediate="true"
+																			value="#{commonmsg.deleteButtonCaption}"
+																			style="width:81px"
+																			actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.deleteRow}"
+																			disabled="false" />
+																		<a4j:commandButton
+																			binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.UI_M_BUT_POST}"
+																			styleClass="button" reRender="errorPanel,sectionDtls"
+																			immediate="false" rendered="true" id="POST_BUTTON"
+																			value="#{commonmsg.postButtonCaption}"
+																			style="width:81px"
+																			actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.post}" />
+
+																	</h:panelGroup>
+																</f:facet>
+
+															</rich:dataTable></td>
+														</tr>
+														<tr>
+															<td class="oddrowright" width="20%"><h:outputLabel
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_AMT_LC_FM_LABEL}"
+																for="BCSD_AMT_LC_FM" id="BCSD_AMT_LC_FM_LABEL"
+																value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_DTL$BCSD_AMT_LC_FM$caption}"
+																styleClass="label" /></td>
+															<td class="oddrow" width="28%" ><h:inputText id="BCSD_AMT_LC_FM"
+																maxlength="14"
+																value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.PM_BANK_CHARGE_SETUP_DTL_BEAN.BCSD_AMT_LC_FM}"
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_AMT_LC_FM}"
+																styleClass="inputNumeric"
+																title="Enter the value of Amount From">
+																<f:converter converterId="PELNumberFormatter" />
+																<f:validateDoubleRange maximum="999999999.99"
+																	minimum=".00" />
+																<a4j:support event="onblur" immediate="true"
+																	id="ON_BLUR_1"
+																	actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.column1}"
+																	reRender="errorMessages,err"></a4j:support>
+															</h:inputText></td>
+															<td class="oddrowright" width="4%"/>
+															<td class="oddrowright" width="20%"><h:outputLabel
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_AMT_LC_TO_LABEL}"
+																for="BCSD_AMT_LC_TO" id="BCSD_AMT_LC_TO_LABEL"
+																value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_DTL$BCSD_AMT_LC_TO$caption}"
+																styleClass="label" /></td>
+															<td class="oddrow" width="28%"><h:inputText id="BCSD_AMT_LC_TO"
+																maxlength="14"
+																value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.PM_BANK_CHARGE_SETUP_DTL_BEAN.BCSD_AMT_LC_TO}"
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_AMT_LC_TO}"
+																validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.BCSD_AMT_LC_TOValidate}"
+																styleClass="inputNumeric"
+																title="Enter the value of Amount To">
+																<f:converter converterId="PELNumberFormatter" />
+																<f:validateDoubleRange maximum="999999999.99"
+																	minimum=".00" />
+																<a4j:support event="onblur" id="ON_BLUR_2"
+																	immediate="true"
+																	actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.fireFieldValidation}"
+																	reRender="errorMessages,err,BCSD_AMT_LC_TO"></a4j:support>
+															</h:inputText></td>
+														</tr>
+
+														<tr>
+															<td class="evenrowright"><h:outputLabel
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_RATE_LABEL}"
+																for="BCSD_RATE" id="BCSD_RATE_LABEL"
+																value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_DTL$BCSD_RATE$caption}"
+																styleClass="label" /></td>
+
+															<td class="evenrow"><h:inputText id="BCSD_RATE"
+																styleClass="inputNumeric"
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_RATE}"
+																value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.PM_BANK_CHARGE_SETUP_DTL_BEAN.BCSD_RATE}"
+																required="false" rendered="true" maxlength="14"
+																title="Enter the value of Rate">
+																<f:converter converterId="PELNumberFormatter" />
+																<f:validateDoubleRange maximum="999999999.99"
+																	minimum=".00" />
+																<a4j:support event="onblur" immediate="true"
+																	id="style_4"
+																	actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.column3}"
+																	reRender="errorMessages,err"></a4j:support>
+															</h:inputText></td>
+															<td class="evenrow"/>
+															<td class="evenrowright"><h:outputLabel
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_RATE_PER_LABEL}"
+																for="BCSD_RATE_PER" id="BCSD_RATE_PER_LABEL"
+																value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_DTL$BCSD_RATE_PER$caption}"
+																styleClass="label" /></td>
+
+															<td class="evenrow"><h:inputText id="BCSD_RATE_PER"
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_RATE_PER}"
+																value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.PM_BANK_CHARGE_SETUP_DTL_BEAN.BCSD_RATE_PER}"
+																required="false" styleClass="inputNumeric"
+																rendered="true" readonly="false"
+																title="Enter the value of Rate Per" maxlength="14">
+																<f:converter converterId="PELNumberFormatter" />
+																<f:validateDoubleRange maximum="999999999.99"
+																	minimum=".00" />
+																<a4j:support event="onblur" immediate="true"
+																	id="style_5"
+																	actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.column4}"
+																	reRender="errorMessages,err">
+																</a4j:support>
+															</h:inputText></td>
+														</tr>
+
+														<tr>
+															<td class="oddrowright"><h:outputLabel
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_MIN_CHG_LC_LABEL}"
+																for="BCSD_MIN_CHG_LC" id="BCSD_MIN_CHG_LC_LABEL"
+																value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_DTL$BCSD_MIN_CHG_LC$caption}"
+																styleClass="label" /></td>
+
+															<td class="oddrow"><h:inputText id="BCSD_MIN_CHG_LC"
+																maxlength="14"
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_MIN_CHG_LC}"
+																value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.PM_BANK_CHARGE_SETUP_DTL_BEAN.BCSD_MIN_CHG_LC}"
+																required="false" styleClass="inputNumeric"
+																rendered="true" readonly="false"
+																title="Enter the value of Min Charge">
+																<f:converter converterId="PELNumberFormatter" />
+																<f:validateDoubleRange maximum="999999999.99"
+																	minimum=".00" />
+																<a4j:support event="onblur" immediate="true"
+																	id="style_1"
+																	actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.column5}"
+																	reRender="errorMessages,err">
+																</a4j:support>
+															</h:inputText></td>
+															<td class="oddrow"/>
+															<td class="oddrowright"><h:outputLabel
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_MAX_CHG_LC_LABEL}"
+																for="BCSD_MAX_CHG_LC" id="BCSD_MAX_CHG_LC_LABEL"
+																value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_DTL$BCSD_MAX_CHG_LC$caption}"
+																styleClass="label" /></td>
+
+															<td class="oddrow"><h:inputText id="BCSD_MAX_CHG_LC"
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_MAX_CHG_LC}"
+																value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.PM_BANK_CHARGE_SETUP_DTL_BEAN.BCSD_MAX_CHG_LC}"
+																required="false" styleClass="inputNumeric"
+																rendered="true"
+																validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.validateMaxCharge}"
+																readonly="false" maxlength="14"
+																title="Enter the value of Max Charge">
+																<f:converter converterId="PELNumberFormatter" />
+																<f:validateDoubleRange maximum="999999999.99"
+																	minimum=".00" />
+																<a4j:support event="onblur" immediate="true"
+																	id="style_2"
+																	actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.validateMaxCharge}"
+																	reRender="errorMessages,err"></a4j:support>
+															</h:inputText></td>
+														</tr>
+														<tr>
+															<td class="evenrowright"><h:outputLabel
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_EFF_FM_DT_LABEL}"
+																for="BCSD_EFF_FM_DT" id="BCSD_EFF_FM_DT_LABEL"
+																value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_DTL$BCSD_EFF_FM_DT$caption}"
+																styleClass="label" style=""/></td>
+
+															<td class="evenrow"><rich:calendar
+																id="BCSD_EFF_FM_DT" inputSize="12"
+																value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.PM_BANK_CHARGE_SETUP_DTL_BEAN.BCSD_EFF_FM_DT}"
+																styleClass="calendarinput"
+																datePattern="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.datePattern}"
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_EFF_FM_DT}"
+																validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.validateEff_FROM_DATE}"
+																rendered="true" required="false"
+																enableManualInput="true"
+																title="Enter the value of Eff.From Date">
+																<a4j:support event="oninputblur"
+																	onsubmit="formatDate('PM_BANK_CHARGE_SETUP_DTL:BCSD_EFF_FM_DT')"
+																	immediate="true" id="style_30"
+																	actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.column7}"
+																	reRender="errorMessages,err,BCSD_EFF_FM_DT"></a4j:support>
+															</rich:calendar></td>
+															<td class="evenrow"/>
+															<td class="evenrowright"><h:outputLabel
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_EFF_TO_DT_LABEL}"
+																for="BCSD_EFF_TO_DT" id="BCSD_EFF_TO_DT_LABEL"
+																value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_DTL$BCSD_EFF_TO_DT$caption}"
+																styleClass="label" /></td>
+
+															<td class="evenrow"><rich:calendar
+																id="BCSD_EFF_TO_DT" inputSize="12"
+																value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.PM_BANK_CHARGE_SETUP_DTL_BEAN.BCSD_EFF_TO_DT}"
+																styleClass="calendarinput" enableManualInput="true"
+																datePattern="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.datePattern}"
+																binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.COMP_BCSD_EFF_TO_DT}"
+																validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.validateEff_To_DATE}"
+																title="Enter the value of Eff.To Date">
+																<a4j:support event="oninputblur"
+																	onsubmit="formatDate('PM_BANK_CHARGE_SETUP_DTL:BCSD_EFF_TO_DT')"
+																	immediate="true" id="ON_BLUR_5"
+																	actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.column8}"
+																	reRender="errorMessages,err"></a4j:support>
+															</rich:calendar></td>
+						
+														</tr>
+
+													</table>
+												</h:panelGroup></td>
+												<td></td>
+											</tr>
+										</table>
+										</td>
+									</tr>
+
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">&nbsp;&nbsp;
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink id="AUTO_ID_23" rendered="true"
+											action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.saveRecord}"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_24" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_25"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_26" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_27"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_28"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_29" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_30"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_31"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_32" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_33"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_34"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_DTL_ACTION.goHDRBlock}"
+											id="AUTO_ID_35" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_36"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_37"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_38" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_39"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_40"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_41" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_42"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_43"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+				
+			</h:form>
+		
+		</f:view>
+	</ui:define>
+</ui:composition>

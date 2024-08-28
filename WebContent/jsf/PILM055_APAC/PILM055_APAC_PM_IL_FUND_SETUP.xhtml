@@ -1,0 +1,822 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM055_APAC_CompositeAction.parentAction.beforePhase}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM055_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+				</tr>
+			</table>
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_FUND_SETUP" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+					</tr>
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM055_APAC_CompositeAction.parentAction.backToSearch}"
+											id="AUTO_ID_1" style="text-decoration:none" immediate="true"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTO_ID_2" 
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.saveRecord}"
+											id="AUTO_ID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTO_ID_5"
+												style="border: thin solid white" 
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM055_APAC_CompositeAction.parentAction.SaveAndNext}"
+											id="AUTO_ID_7" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<!-- commanted by gopi for kic on 02/04/2019 -->
+										<!-- <a4j:commandLink rendered="true"
+											id="AUTOID_7" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+											<rich:componentControl attachTo="AUTOID_7"
+												event="onclick" for="DELETE_PANEL" id="DELETE_COMP_CONTROL"
+												operation="show" />
+										</a4j:commandLink> -->
+										<!-- end -->
+										<!-- Delete confirmation Confirmation popup -->
+										<rich:modalPanel height="110" id="DELETE_PANEL" width="300">
+											<f:facet name="header">
+												<h:panelGroup>
+													<h:outputText id="AUTOID_1M"
+														style="color: #FFFFFF; font-size: 14px;font-weight: bold;"
+														value="#{commonmsg.premia$broker$delete$confirmation$caption}" />
+												</h:panelGroup>
+											</f:facet>
+											<f:facet name="controls">
+												<h:panelGroup>
+													<h:graphicImage id="DELETE_PANEL_hidelink"
+														style="cursor:pointer" styleClass="searchimg"
+														value="./../../resources/images/close.png" />
+													<rich:componentControl attachTo="DELETE_PANEL_hidelink"
+														event="onclick" for="DELETE_PANEL" operation="hide" />
+												</h:panelGroup>
+											</f:facet>
+											<table align="center" class="noborder" cellpadding="0" cellspacing="0">
+												<tr align="center">
+													<td><h:outputText id="AUTOID_2M"
+														value="#{commonmsg.premia$broker$delete$confirmation$message}" />
+													</td>
+												</tr>
+												<tr align="center">
+													<td><h:commandButton
+														action="#{PILM055_APAC_CompositeAction.parentAction.deleteRecord}"
+														id="DELETE_PANEL_continuebutton"
+														style="width:65px;height:20px;" styleClass="button"
+														value="#{commonmsg.premia$broker$delete$confirmation$ok}">
+														<rich:componentControl
+															attachTo="DELETE_PANEL_continuebutton" event="onclick"
+															for="DELETE_PANEL" operation="hide" />
+													</h:commandButton> <rich:spacer height="25" id="AUTOID_3M" width="10" /> <a4j:commandButton
+														id="DELETE_PANEL_cancelbutton" immediate="true"
+														style="width:65px;height:20px;" styleClass="button"
+														value="#{commonmsg.premia$broker$delete$confirmation$cancel}">
+														<rich:componentControl
+															attachTo="DELETE_PANEL_cancelbutton" event="onclick"
+															for="DELETE_PANEL" operation="hide" />
+													</a4j:commandButton> <br />
+													</td>
+												</tr>
+											</table>
+										</rich:modalPanel>
+										<h:commandLink id="AUTO_ID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILM055_APAC_CompositeAction.parentAction.goto_PM_IL_PRICE_DTL}"
+											id="AUTO_ID_16" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM055_APAC_CompositeAction.parentAction.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM055_APAC_CompositeAction.parentAction.errorMap['current'] !=null? PILM055_APAC_CompositeAction.parentAction.errorMap['current']:PILM055_APAC_CompositeAction.parentAction.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM055_APAC_CompositeAction.parentAction.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM055_APAC_CompositeAction.parentAction.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM055_APAC_CompositeAction.parentAction.warningMessages}" />
+
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="globalLink" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><!-- Tab implementation --> <h:inputHidden
+									id="myhidden"
+									value="#{PILM055_APAC_CompositeAction.tabbedBar.tabClicked}" />
+								<h:panelGroup id="mypanel" style="border:0">
+									<table class="noborder" width="100%">
+										<tr>
+											<td width="90%"><a4j:repeat
+												value="#{PILM055_APAC_CompositeAction.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													action="#{PILM055_APAC_CompositeAction.tabbedBar.tabAction}"
+													disabled="#{currtab.disabled}" id="AUTO_ID_22"
+													onclick="document.getElementById('PM_IL_FUND_SETUP:myhidden').value='#{currtab.id}'"
+													styleClass="#{currtab.styleString}"
+													value="#{currtab.value}" />
+
+											</a4j:repeat></td>
+											<!--  <td width="*"><a4j:commanadButton
+												action="#{PILM055_APAC_CompositeAction.tabbedBar.gotoFirstTab}"
+												alt="first"
+												disabled="#{PILM055_APAC_CompositeAction.tabbedBar.navigable}"
+												id="AUTO_ID_23" image="./../../images/firstrec.gif"
+												reRender="mypanel" /> <a4j:commandButton
+												action="#{PILM055_APAC_CompositeAction.tabbedBar.gotoPrevTab}"
+												alt="previous"
+												disabled="#{PILM055_APAC_CompositeAction.tabbedBar.navigable}"
+												id="AUTO_ID_24" image="./../../images/prevpage.gif"
+												reRender="mypanel" /> <a4j:commandButton
+												action="#{PILM055_APAC_CompositeAction.tabbedBar.gotoNextTab}"
+												alt="next"
+												disabled="#{PILM055_APAC_CompositeAction.tabbedBar.navigable}"
+												id="AUTO_ID_25" image="./../../images/nextpage.gif"
+												reRender="mypanel" /> <a4j:commandButton
+												action="#{PILM055_APAC_CompositeAction.tabbedBar.gotoLastTab}"
+												alt="last"
+												disabled="#{PILM055_APAC_CompositeAction.tabbedBar.navigable}"
+												id="AUTO_ID_26" image="./../../images/lastRecord.gif"
+												reRender="mypanel" /></td>-->
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="width: 100%; height: 420px; overflow: auto;">
+						<table align="center" class="noborder" width="100%">
+						<tr>
+							<td valign="top" width="100%">
+							<table align="left" class="noborder" id="bordertable"
+								width="100%">
+								<tr>
+									<td class="oddrow" colspan="5"></td>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_FRZ_YN_LABEL}"
+										for="FS_FRZ_YN" id="FS_FRZ_YN_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_FRZ_YN$caption}" />
+									<h:selectBooleanCheckbox
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_FRZ_YN}"
+										id="FS_FRZ_YN" rendered="true"
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_FRZ_YN$tooltip}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_FRZ_YN_VALUE}">
+										<a4j:support
+												actionListener="#{PILM055_APAC_CompositeAction.parentAction.CheckFreeze}"
+												event="onclick" id="AUTO_ID_FRZ" immediate="true" />
+												</h:selectBooleanCheckbox>
+									</td>
+								</tr>
+								<tr>
+									<td class="evenrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_CODE_LABEL}"
+										for="FS_CODE" id="FS_CODE_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_CODE$caption}" />
+									<h:graphicImage id="AUTO_ID_27" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" /></td>
+									<td class="evenrow">
+									<h:inputText
+									    onfocus="currFocus('PM_IL_FUND_SETUP:FS_CODE')"
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_CODE}"
+										disabled="false" id="FS_CODE" maxlength="12" rendered="true"
+										required="true" styleClass="input" 
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_CODE$tooltip}"
+										validator="#{PILM055_APAC_CompositeAction.parentAction.FS_CODE_validator}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_CODE}">
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.fireFieldValidation}"
+											event="onblur" id="AUTO_ID_28" immediate="true"
+											oncomplete="setFocus('PM_IL_FUND_SETUP:FS_DESC','PM_IL_FUND_SETUP:FS_CODE')"
+											reRender="errorPanel">
+										</a4j:support>
+									</h:inputText></td>
+									<td class="evenrow">&nbsp;</td>
+									<td class="evenrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_DESC_LABEL}"
+										for="FS_DESC" id="FS_DESC_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_DESC$caption}" />
+									<h:graphicImage id="AUTO_ID_29" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" /></td>
+									<td class="evenrow">
+									
+									<!-- change by raja for fund discription on 17-12-2016 -->
+										<!-- validator="#{PILM055_APAC_CompositeAction.parentAction.FS_DESC_validator}" -->
+									<h:inputText
+									    onfocus="currFocus('PM_IL_FUND_SETUP:FS_DESC')"
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_DESC}"
+										disabled="false" id="FS_DESC" maxlength="60" rendered="true"
+										required="true" styleClass="input" 
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_DESC$tooltip}"
+							
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_DESC}">
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.FS_DESC_validator}"
+											oncomplete="setFocus('PM_IL_FUND_SETUP:FS_SHORT_DESC','PM_IL_FUND_SETUP:FS_DESC')"
+											event="onblur" id="AUTO_ID_30" 
+											immediate="true" reRender="errorPanel,FS_SHORT_DESC,FS_LONG_DESC">
+										</a4j:support>
+									</h:inputText></td>
+									<td class="evenrow">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_SHORT_DESC_LABEL}"
+										for="FS_SHORT_DESC" id="FS_SHORT_DESC_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_SHORT_DESC$caption}" />
+									</td>
+									<td class="oddrow"><h:inputText
+									    onfocus="currFocus('PM_IL_FUND_SETUP:FS_SHORT_DESC')"
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_SHORT_DESC}"
+										disabled="false" id="FS_SHORT_DESC" maxlength="30"
+										rendered="true" required="false" styleClass="input"
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_SHORT_DESC$tooltip}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_SHORT_DESC}" >
+										<a4j:support
+											
+											 actionListener="#{PILM055_APAC_CompositeAction.parentAction.fireFieldValidation}"
+											oncomplete="setFocus('PM_IL_FUND_SETUP:FS_LONG_DESC','PM_IL_FUND_SETUP:FS_SHORT_DESC')"
+											event="onblur" id="AUTO_ID_SHORT_DESC" 
+											immediate="true" reRender="errorPanel,FS_SHORT_DESC,FS_LONG_DESC">
+										</a4j:support>
+										<!--actionListener="#{PILM055_APAC_CompositeAction.parentAction.FS_DESC_WHEN_VALIDATE_ITEM}" -->
+										</h:inputText>
+									</td>
+									<td class="oddrow">&nbsp;</td>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_LONG_DESC_LABEL}"
+										for="FS_LONG_DESC" id="FS_LONG_DESC_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_LONG_DESC$caption}" />
+									</td>
+									<td class="oddrow"><h:inputText
+									    onfocus="currFocus('PM_IL_FUND_SETUP:FS_LONG_DESC')"
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_LONG_DESC}"
+										disabled="false" id="FS_LONG_DESC" maxlength="240"
+										rendered="true" required="false" styleClass="input" 
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_LONG_DESC$tooltip}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_LONG_DESC}" />
+									</td>
+									<td class="oddrow">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="evenrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_BL_DESC_LABEL}"
+										for="FS_BL_DESC" id="FS_BL_DESC_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_BL_DESC$caption}" />
+									</td>
+									<td class="evenrow"><h:inputText
+									    onfocus="currFocus('PM_IL_FUND_SETUP:FS_BL_DESC')"
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_BL_DESC}"
+										disabled="false" id="FS_BL_DESC" maxlength="240"
+										rendered="true" required="false" styleClass="input"
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_BL_DESC$tooltip}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_BL_DESC}">
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.FS_BL_DESC_WHEN_VALIDATE_ITEM}"
+											event="onblur" id="AUTO_ID_31" immediate="true"
+											oncomplete="setFocus('PM_IL_FUND_SETUP:FS_BL_SHORT_DES','PM_IL_FUND_SETUP:FS_BL_DESC')"
+											reRender="FS_BL_SHORT_DESC">
+										</a4j:support>
+									</h:inputText></td>
+									<td class="evenrow">&nbsp;</td>
+									<td class="evenrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_BL_SHORT_DESC_LABEL}"
+										for="FS_BL_SHORT_DESC" id="FS_BL_SHORT_DESC_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_BL_SHORT_DESC$caption}" />
+									</td>
+									<td class="evenrow"><h:inputText
+									    onfocus="currFocus('PM_IL_FUND_SETUP:FS_BL_SHORT_DESC')"
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_BL_SHORT_DESC}"
+										disabled="false" id="FS_BL_SHORT_DESC" maxlength="30"
+										rendered="true" required="false" styleClass="input" 
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_BL_SHORT_DESC$tooltip}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_BL_SHORT_DESC}" />
+									</td>
+									<td class="evenrow">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_FUND_TYPE_LABEL}"
+										for="FS_FUND_TYPE" id="FS_FUND_TYPE_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_FUND_TYPE$caption}" />
+									</td>
+									<td class="oddrow"><h:selectOneMenu
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_FUND_TYPE}"
+										disabled="false" id="FS_FUND_TYPE" rendered="true"
+										required="false" styleClass="input"
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_FUND_TYPE$tooltip}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_FUND_TYPE}">
+										<f:selectItem id="style_3" itemLabel="--Select--" itemValue="" />
+										<f:selectItems id="AUTO_ID_32"
+											value="#{PILM055_APAC_CompositeAction.parentAction.FS_FUND_TYPE_LIST}" />
+									</h:selectOneMenu></td>
+									<td class="oddrow">&nbsp;</td>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_FRAC_UNIT_YN_LABEL}"
+										for="FS_FRAC_UNIT_YN" id="FS_FRAC_UNIT_YN_LABEL"
+										rendered="false" styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_FRAC_UNIT_YN$caption}" />
+									</td>
+									<td class="oddrow"><h:selectOneMenu
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_FRAC_UNIT_YN}"
+										disabled="false" id="FS_FRAC_UNIT_YN" rendered="false"
+										required="false" styleClass="input"
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_FRAC_UNIT_YN$tooltip}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_FRAC_UNIT_YN}">
+										<f:selectItem id="AUTO_ID_33" itemLabel="--Select--"
+											itemValue="" />
+										<f:selectItems id="style_4"
+											value="#{PILM055_APAC_CompositeAction.parentAction.FS_FRAC_UNIT_YN_LIST}" />
+									</h:selectOneMenu></td>
+									<td class="oddrow">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="evenrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_ROUND_OPTION_LABEL}"
+										for="FS_ROUND_OPTION" id="FS_ROUND_OPTION_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_ROUND_OPTION$caption}" />
+									</td>
+									<td class="evenrow"><h:selectOneMenu
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_ROUND_OPTION}"
+										disabled="false" id="FS_ROUND_OPTION" rendered="true"
+										required="false" styleClass="input"
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_ROUND_OPTION$tooltip}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_ROUND_OPTION}">
+										<f:selectItem id="style_5" itemLabel="-Select-" itemValue="" />
+										<f:selectItems id="style_6"
+											value="#{PILM055_APAC_CompositeAction.parentAction.FS_ROUND_OPTION_LIST}" />
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.FS_ROUND_OPTION_WHEN_VALIDATE_ITEM}"
+											event="onblur" id="style_7" immediate="true"
+											reRender="FS_ROUND_VALUE">
+										</a4j:support>
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.FS_ROUND_OPTION_WHEN_LIST_CHANGED}"
+											event="onchange" id="style_8" immediate="true" focus="FS_MIN_WD_LC_AMT"
+											reRender="FS_ROUND_VALUE">
+										</a4j:support>
+									</h:selectOneMenu></td>
+									<td class="evenrow">&nbsp;</td>
+									<td class="evenrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_ROUND_VALUE_LABEL}"
+										for="FS_ROUND_VALUE" id="FS_ROUND_VALUE_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_ROUND_VALUE$caption}"/>
+									</td>
+									<td class="evenrow"><h:inputText
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_ROUND_VALUE}"
+										disabled="true" id="FS_ROUND_VALUE" maxlength="2"
+										rendered="true" required="false" styleClass="inputNumeric" 
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_ROUND_VALUE$tooltip}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_ROUND_VALUE}">
+										<f:validateDoubleRange minimum="0" maximum="99"/>
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.fireFieldValidation}"
+											event="onblur" id="style_ROUND_VALUE" immediate="true" 
+											reRender="errorPanel">
+										</a4j:support>
+										</h:inputText>
+									</td>
+									<td class="evenrow">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_MIN_WD_LC_AMT_LABEL}"
+										for="FS_MIN_WD_LC_AMT" id="FS_MIN_WD_LC_AMT_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_MIN_WD_LC_AMT$caption}" />
+									<h:graphicImage id="AUTO_ID_35" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" /></td>
+									<td class="oddrow"><h:inputText
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_MIN_WD_LC_AMT}"
+										disabled="false" id="FS_MIN_WD_LC_AMT" maxlength="16"
+										rendered="true" required="true" styleClass="inputNumeric"
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_MIN_WD_LC_AMT$tooltip}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_MIN_WD_LC_AMT}">
+										<f:validateDoubleRange minimum="0" maximum="99999999999999.999"/>
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.fireFieldValidation}"
+											event="onblur" id="style_2" immediate="true"
+											reRender="errorPanel">
+										</a4j:support>
+									</h:inputText></td>
+									<td class="oddrow">&nbsp;</td>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_MIN_DAY_WD_LABEL}"
+										for="FS_MIN_DAY_WD" id="FS_MIN_DAY_WD_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_MIN_DAY_WD$caption}" />
+									<h:graphicImage id="AUTO_ID_36" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" /></td>
+									<td class="oddrow"><h:inputText
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_MIN_DAY_WD}"
+										disabled="false" id="FS_MIN_DAY_WD" maxlength="5"
+										rendered="true" required="true" styleClass="inputNumeric" 
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_MIN_DAY_WD$tooltip}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_MIN_DAY_WD}">
+                                        <f:validateDoubleRange minimum="0" maximum="99999999999999.999"/>
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.fireFieldValidation}"
+											event="onblur" id="AUTO_ID_37" immediate="true"
+											reRender="errorPanel">
+										</a4j:support>
+									</h:inputText></td>
+									<td class="oddrow">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="evenrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_MIN_WD_BAL_LC_AMT_LABEL}"
+										for="FS_MIN_WD_BAL_LC_AMT" id="FS_MIN_WD_BAL_LC_AMT_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_MIN_WD_BAL_LC_AMT$caption}" />
+									<h:graphicImage id="AUTO_ID_39" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" /></td>
+									<td class="evenrow"><h:inputText
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_MIN_WD_BAL_LC_AMT}"
+										disabled="false" id="FS_MIN_WD_BAL_LC_AMT" maxlength="16"
+										rendered="true" required="true" styleClass="inputNumeric"
+										title="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_MIN_WD_BAL_LC_AMT$tooltip}"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_MIN_WD_BAL_LC_AMT}">
+										<f:validateDoubleRange minimum="0" maximum="99999999999999.999"/>
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.fireFieldValidation}"
+											event="onblur" id="style_9" immediate="true"
+											reRender="errorPanel">
+										</a4j:support>
+									</h:inputText></td>
+									<td class="evenrow">&nbsp;</td>
+									<td class="evenrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_DUR_FOR_WD_LABEL}"
+										for="FS_DUR_FOR_WD" id="FS_DUR_FOR_WD_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_DUR_FOR_WD$caption}" />
+									<h:graphicImage id="AUTO_ID_40" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" /></td>
+									<td class="evenrow"><h:inputText
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_DUR_FOR_WD}"
+										disabled="false" id="FS_DUR_FOR_WD" maxlength="5"
+										rendered="true" required="true" styleClass="inputNumeric" 
+										title="Enter Days For Duration After Switching"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_DUR_FOR_WD}">
+										<f:validateDoubleRange minimum="0" maximum="99999999999999.999"/>
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.fireFieldValidation}"
+											event="onblur" id="style_11" immediate="true"
+											reRender="errorPanel">
+										</a4j:support>
+									</h:inputText></td>
+									<td class="evenrow">&nbsp;</td>
+								</tr>
+
+								<tr>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_SW_MAX_NO_LABEL}"
+										for="FS_SW_MAX_NO" id="FS_SW_MAX_NO_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_SW_MAX_NO$caption}" />
+									<h:graphicImage id="AUTO_ID_41" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" /></td>
+									<td class="oddrow"><h:inputText
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_SW_MAX_NO}"
+										disabled="false" id="FS_SW_MAX_NO" maxlength="5"
+										rendered="true" required="true" styleClass="inputNumeric"
+										title="Maximum No Of Switching"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_SW_MAX_NO}">
+										<f:validateDoubleRange minimum="0" maximum="99999999999999.999"/>
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.fireFieldValidation}"
+											event="onblur" id="style_13" immediate="true"
+											reRender="errorPanel">
+										</a4j:support>
+									</h:inputText></td>
+									<td class="oddrow">&nbsp;</td>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_SW_WAIT_PERIOD_LABEL}"
+										for="FS_SW_WAIT_PERIOD" id="FS_SW_WAIT_PERIOD_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_SW_WAIT_PERIOD$caption}" />
+									<h:graphicImage id="AUTO_ID_42" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" /></td>
+									<td class="oddrow"><h:inputText
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_SW_WAIT_PERIOD}"
+										disabled="false" id="FS_SW_WAIT_PERIOD" maxlength="5"
+										rendered="true" required="true" styleClass="inputNumeric"
+										title="Minimum Balance After Switching"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_SW_WAIT_PERIOD}">
+										<f:validateDoubleRange minimum="0" maximum="99999999999999.999"/>
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.fireFieldValidation}"
+											event="onblur" id="style_15" immediate="true"
+											reRender="errorPanel">
+										</a4j:support>
+									</h:inputText></td>
+									<td class="oddrow">&nbsp;</td>
+								</tr>
+
+								<tr>
+									<td class="evenrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_SW_MIN_BAL_LC_AMT_LABEL}"
+										for="FS_SW_MIN_BAL_LC_AMT" id="FS_SW_MIN_BAL_LC_AMT_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_SW_MIN_BAL_LC_AMT$caption}" />
+									<h:graphicImage id="AUTO_ID_43" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" /></td>
+									<td class="evenrow"><h:inputText
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_SW_MIN_BAL_LC_AMT}"
+										disabled="false" id="FS_SW_MIN_BAL_LC_AMT" maxlength="18"
+										rendered="true" required="true" styleClass="inputNumeric"
+										title="Minimum Balance After Switching"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_SW_MIN_BAL_LC_AMT}">
+										<f:validateDoubleRange minimum="0" maximum="99999999999999.999"/>
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.fireFieldValidation}"
+											event="onblur" id="style_17" immediate="true"
+											reRender="errorPanel">
+										</a4j:support>
+									</h:inputText></td>
+									<td class="evenrow">&nbsp;</td>
+									<td class="evenrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_DUR_FOR_SW_LABEL}"
+										for="FS_DUR_FOR_SW" id="FS_DUR_FOR_SW_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_DUR_FOR_SW$caption}" />
+									<h:graphicImage id="AUTO_ID_44" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" /></td>
+									<td class="evenrow"><h:inputText
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_DUR_FOR_SW}"
+										disabled="false" id="FS_DUR_FOR_SW" maxlength="5"
+										rendered="true" required="true" styleClass="inputNumeric"
+										title="Minimum Balance After Switching"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_DUR_FOR_SW}">
+										<f:validateDoubleRange minimum="0" maximum="99999999999999.999"/>
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.fireFieldValidation}"
+											event="onblur" id="style_19" immediate="true"
+											reRender="errorPanel">
+										</a4j:support>
+									</h:inputText></td>
+									<td class="evenrow">&nbsp;</td>
+								</tr>
+								<tr>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_EFF_FM_DT_LABEL}"
+										for="FS_EFF_FM_DT" id="FS_EFF_FM_DT_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_EFF_FM_DT$caption}" />
+										<h:graphicImage id="AUTO_ID_403" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" />
+									</td>
+									<td class="oddrow"><span title="Effective From Date">
+									<rich:calendar
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_EFF_FM_DT}"
+										datePattern="#{PILM055_APAC_CompositeAction.parentAction.datePattern}"
+										disabled="false" enableManualInput="true" id="FS_EFF_FM_DT"
+										inputSize="11" rendered="true" required="false" inputClass="calendarinput"
+										style="height:px;width:px;" styleClass="calendarstyleclass"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_EFF_FM_DT}">
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.FS_EFF_FM_DT_WHEN_VALIDATE_ITEM}"
+											event="oninputblur" id="style_21" immediate="true"
+											onsubmit="formatDate('PM_IL_FUND_SETUP:FS_EFF_FM_DT')"
+											reRender="FS_EFF_FM_DT,errorPanel">
+										</a4j:support>
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.FS_EFF_FM_DT_WHEN_VALIDATE_ITEM}"
+											event="oninputchanged" id="style_22" immediate="true"
+											reRender="FS_EFF_FM_DT,errorPanel">
+										</a4j:support>
+									</rich:calendar></span></td>
+									<td class="oddrow">&nbsp;</td>
+									<td class="oddrowright"><h:outputLabel
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_EFF_TO_DT_LABEL}"
+										for="FS_EFF_TO_DT" id="FS_EFF_TO_DT_LABEL" rendered="true"
+										styleClass="label"
+										value="#{message.PILM055_APAC$PM_IL_FUND_SETUP$FS_EFF_TO_DT$caption}" />
+										<h:graphicImage id="AUTO_ID_4003" style="" styleClass="searchimg"
+										value="./../../images/mandatory.jpg" />
+									</td>
+									<td class="oddrow"><span title="Effective To Date">
+									<rich:calendar
+										binding="#{PILM055_APAC_CompositeAction.parentAction.COMP_FS_EFF_TO_DT}"
+										datePattern="#{PILM055_APAC_CompositeAction.parentAction.datePattern}"
+										disabled="false" enableManualInput="true" id="FS_EFF_TO_DT"
+										inputSize="11" rendered="true" required="false" inputClass="calendarinput"
+										style="height:px;width:px;" styleClass="calendarstyleclass"
+										value="#{PILM055_APAC_CompositeAction.parentAction.PM_IL_FUND_SETUP_BEAN.FS_EFF_TO_DT}">
+
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.FS_EFF_TO_DT_WHEN_VALIDATE_ITEM}"
+											event="oninputblur" id="style_23" immediate="true"
+											onsubmit="formatDate('PM_IL_FUND_SETUP:FS_EFF_TO_DT')"
+											reRender="FS_EFF_TO_DT,errorPanel">
+										</a4j:support>
+										<a4j:support
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.FS_EFF_TO_DT_WHEN_VALIDATE_ITEM}"
+											event="onchanged" id="style_24" immediate="true"
+											reRender="FS_EFF_TO_DT,errorPanel">
+										</a4j:support>
+									</rich:calendar></span></td>
+									<td class="oddrow">&nbsp;</td>
+								</tr>
+							</table>
+							</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											actionListener="#{PILM055_APAC_CompositeAction.parentAction.saveRecord}"
+											id="AUTO_ID_45" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_46"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_47"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM055_APAC_CompositeAction.parentAction.SaveAndNext}"
+											id="AUTO_ID_48" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_49"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_50"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<a4j:commandLink
+											id="AUTOID_DEL_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle" rendered="false">
+											<h:graphicImage id="AUTOID_GI_DEL_1"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_OT_DEL_1"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+											<rich:componentControl attachTo="AUTOID_DEL_1"
+												event="onclick" for="DELETE_PANEL" id="DELETE_COMP_CONTROL_1"
+												operation="show" />
+										</a4j:commandLink>
+										
+										<h:commandLink id="AUTO_ID_54" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_55"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_56"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM055_APAC_CompositeAction.parentAction.goto_SEARCH_PAGE}"
+											id="AUTO_ID_57" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_58"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_59"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM055_APAC_CompositeAction.parentAction.goto_PM_IL_PRICE_DTL}"
+											id="AUTO_ID_60" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_61"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_62"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_63" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_64"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_65"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

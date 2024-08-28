@@ -1,0 +1,891 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM048_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_BANK_CHARGE_SETUP_HDR" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" id="MAIN_TABLE" cellpadding="0" cellspacing="0">
+					<tr>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%" id="TOOL_BAR_STYLE">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle" id="TOOL_BAR_GROUP_1">
+										<h:commandLink
+											action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.backToSearch}"
+											id="BACK_ID" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="style_20" 
+											styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="AUTO_ID_1"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.saveRecord}"
+											id="SAVE_ID" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="style_16" 
+											styleClass="toolbarButtonStyle" accesskey="s" 
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_2"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_Insert}"
+											id="AUTO_ID_3" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="style_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_4"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_Delete}"
+											id="AUTO_ID_5" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="style_18"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="style_19"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_8"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_DTLInsert}"
+											id="AUTO_ID_9" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="style_21"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_10"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_11" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="style_22"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.errorMap['current'] !=null? PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.errorMap['current']: PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%">
+						<table class="noborder" id="globalLink" width="100%">
+							<tr>
+								<td><!-- Tab implementation --> <h:inputHidden
+									id="myhidden"
+									value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.tabbedBar.tabClicked}" /><h:panelGroup
+									id="mypanel">
+									<table class="noborder" width="100%" id="MAIN_TABLE_2">
+										<tr>
+											<td width="90%"><a4j:repeat id="REPEAT_TABLE_1"
+												value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.tabbedBar.tabAction}"
+													disabled="#{currtab.disabled}" id="AUTO_ID_13"
+													onclick="document.getElementById('PM_BANK_CHARGE_SETUP_HDR:myhidden').value='#{currtab.id}'"
+													styleClass="#{currtab.styleString}"
+													value="#{currtab.value}" />
+											</a4j:repeat></td>
+											<td width="*" />
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table class="noborder" width="100%" id="TABLE_1">
+							<tr>
+								<td />
+								<td vAlign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowfreeze" colspan="5"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_FRZ_FLAG_LABEL}"
+											for="BCSH_FRZ_FLAG" id="BCSH_FRZ_FLAG_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_FRZ_FLAG_LABEL$caption}" />
+										<h:selectBooleanCheckbox
+										    binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_FRZ_FLAG}"
+											id="BCSH_FRZ_FLAG" rendered="true" 
+											title="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_FRZ_FLAG$tooltip}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.FS_FRZ_YN_VALUE}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.CheckFreeze}"
+												event="onclick" id="AUTO_ID_FRZ" immediate="true" />
+												</h:selectBooleanCheckbox>
+											</td>
+									</tr>
+									<tr>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_BANK_CODE_LABEL}"
+											for="BCSH_BANK_CODE" id="BCSH_BANK_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_BANK_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_14" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_BANK_CODE}"
+											disabled="false" id="BCSH_BANK_CODE" maxlength="12"
+											rendered="true" required="true" styleClass="inputsmall"
+											title="Enter the value of Bank Code"
+											validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateBankCode}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_BANK_CODE}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateBankCode}"
+												event="onblur" id="style_1" immediate="true"
+												oncomplete="setFocus('PM_BANK_CHARGE_SETUP_HDR:BCSH_PAY_MODE','PM_BANK_CHARGE_SETUP_HDR:BCSH_BANK_CODE')"
+												reRender="errorPanel,BANK_CODE_DESC" />
+										</h:inputText> <rich:suggestionbox for="BCSH_BANK_CODE" height="200"
+											id="AUTO_ID_15" nothingLabel="#{message.PILM048_APAC$NOTHINGLABEL}"
+											suggestionAction="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.suggesion1}"
+											var="suggest" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_16" value="#{suggest.bankCode}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_17" value="#{suggest.bankName}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_BCSH_BANK_CODE" immediate="true"
+												reRender="errorPanel,BANK_CODE_DESC">
+												<f:setPropertyActionListener id="UI_M_SC_NAME_12"
+													target="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BANK_CODE_DESC}"
+													value="#{suggest.bankName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BANK_CODE_DESC}"
+											disabled="true" id="BANK_CODE_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BANK_CODE_DESC}">
+										</h:inputText> <h:graphicImage id="style_11" style="" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" width="4%"/>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_PAY_MODE_LABEL}"
+											for="BCSH_PAY_MODE" id="BCSH_PAY_MODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_PAY_MODE$caption}" />
+										</td>
+										<td class="evenrow" width="28%"><h:selectOneMenu
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_PAY_MODE}"
+											disabled="false" id="BCSH_PAY_MODE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_PAY_MODE$tooltip}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_PAY_MODE}">
+											<f:selectItems id="style_2"
+												value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.payModeList}" />
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.listChangePayMode}"
+												event="onchange" id="SUPPORT_POL_PAY_MODE" immediate="true"
+												reRender="errorPanel,BCSH_TRAN_TYPE">
+											</a4j:support>
+											<a4j:support
+												focus="BCSH_PAY_FOR" event="onblur" id="SUPPORT_POL_PAY_MODE_1"
+												reRender="errorPanel,BCSH_TRAN_TYPE">
+											</a4j:support>
+										</h:selectOneMenu></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_PAY_FOR_LABEL}"
+											for="BCSH_PAY_FOR" id="BCSH_PAY_FOR_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_PAY_FOR$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_PAY_FOR}"
+											disabled="false" id="BCSH_PAY_FOR" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_PAY_FOR$tooltip}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_PAY_FOR}">
+											<f:selectItems id="style_12"
+												value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.payForList}" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_CHG_CODE_LABEL}"
+											for="BCSH_CHG_CODE" id="BCSH_CHG_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_CHG_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_CHG_CODE}"
+											disabled="false" id="BCSH_CHG_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the value of Charge Code"
+											validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateChargeCode}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_CHG_CODE}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateChargeCode}"
+												event="onblur" id="style_charge_1" immediate="true"
+												oncomplete="setFocus('PM_BANK_CHARGE_SETUP_HDR:BCSH_CHG_APPLIED_ON','PM_BANK_CHARGE_SETUP_HDR:BCSH_CHG_CODE')"
+												reRender="errorPanel,BCSH_CHG_CODE_DESC" />
+										</h:inputText> <rich:suggestionbox for="BCSH_CHG_CODE" height="200"
+											id="AUTO_ID_18" nothingLabel="#{message.PILM048_APAC$NOTHINGLABEL}"
+											suggestionAction="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.chargeCodeLOV}"
+											var="suggest" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_19" value="#{suggest.chargeCode}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_20" value="#{suggest.chargeName}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_BCSH_CHAR_CODE" immediate="true"
+												reRender="errorPanel,BCSH_CHG_CODE_DESC">
+												<f:setPropertyActionListener id="UI_M_SC_CHARGE_CODE"
+													target="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_CHG_CODE_DESC}"
+													value="#{suggest.chargeName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_CHG_CODE_DESC}"
+											disabled="true" id="BCSH_CHG_CODE_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_CHG_CODE_DESC}">
+										</h:inputText> <h:graphicImage id="AUTO_ID_21" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_CHG_APPLIED_ON_LABEL}"
+											for="BCSH_CHG_APPLIED_ON" id="BCSH_CHG_APPLIED_ON_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_CHG_APPLIED_ON$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_CHG_APPLIED_ON}"
+											disabled="false" id="BCSH_CHG_APPLIED_ON" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_CHG_APPLIED_ON$tooltip}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_CHG_APPLIED_ON}">
+											<f:selectItems id="style_13"
+												value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.chrgAppOn}" />
+											<a4j:support
+												focus="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_TRAN_TYPE.disabled?'BCSH_CHG_AC_DOC_MODE':'BCSH_TRAN_TYPE'}"
+												event="onblur" id="SUPPORT_BCSH_CHG_APPLIED_ON"
+												reRender="errorPanel">
+											</a4j:support>
+										</h:selectOneMenu></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_TRAN_TYPE_LABEL}"
+											for="BCSH_TRAN_TYPE" id="BCSH_TRAN_TYPE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_TRAN_TYPE$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_TRAN_TYPE}"
+											id="BCSH_TRAN_TYPE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_TRAN_TYPE$tooltip}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_TRAN_TYPE}">
+											<f:selectItems id="style_15"
+												value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.transType}" />
+										</h:selectOneMenu></td>
+										</tr>
+										<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_CHG_AC_DOC_MODE_LABEL}"
+											for="BCSH_CHG_AC_DOC_MODE" id="BCSH_CHG_AC_DOC_MODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_CHG_AC_DOC_MODE$caption}" />
+										</td>
+										<td class="oddrow"><h:selectOneMenu
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_CHG_AC_DOC_MODE}"
+											disabled="false" id="BCSH_CHG_AC_DOC_MODE" rendered="true"
+											required="false" styleClass="input"
+											title="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_CHG_AC_DOC_MODE$tooltip}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_CHG_AC_DOC_MODE}">
+											<f:selectItems id="style_14"
+												value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.acDocGen}" />
+										</h:selectOneMenu></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_CUST_SHARE_PERC_LABEL}"
+											for="BCSH_CUST_SHARE_PERC" id="BCSH_CUST_SHARE_PERC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_CUST_SHARE_PERC$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_CUST_SHARE_PERC}"
+											disabled="false" id="BCSH_CUST_SHARE_PERC" maxlength="8"
+											rendered="true" required="false" styleClass="inputNumeric"
+											 title="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_CUST_SHARE_PERC$tooltip}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_CUST_SHARE_PERC}" >
+											<a4j:support
+												event="onblur" id="ON_BLUR_BCSH_CUST_SHARE_PERC" immediate="true"
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.fireFieldValidation}"
+												oncomplete="setFocus('PM_BANK_CHARGE_SETUP_HDR:BCSH_PROD_CODE_FM','PM_BANK_CHARGE_SETUP_HDR:BCSH_CUST_SHARE_PERC')"
+												reRender="errorPanel" />
+												<f:validateLongRange maximum="100" minimum="0" />											</h:inputText>
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_PROD_CODE_FM_LABEL}"
+											for="BCSH_PROD_CODE_FM" id="BCSH_PROD_CODE_FM_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_PROD_CODE_FM$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_PROD_CODE_FM}"
+											disabled="false" id="BCSH_PROD_CODE_FM" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="Enter the value of Product Code From"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_PROD_CODE_FM}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.listenerBCSH_PROD_CODE_FM}"
+												event="onblur" id="PROD_CODE_FROM_ONBLUR" immediate="true"
+												oncomplete="setFocus('PM_BANK_CHARGE_SETUP_HDR:BCSH_PROD_CODE_TO','PM_BANK_CHARGE_SETUP_HDR:BCSH_PROD_CODE_FM')"
+												reRender="errorPanel,BCSH_PROD_CODE_FM,BCSH_PROD_CODE_FM_SUG,BCSH_PROD_CODE_TO" />
+										</h:inputText> <h:graphicImage id="AUTO_ID_22" style="PROD_FROM_SUG"
+											styleClass="searchimg" value="./../../images/Lov.gif" /> <rich:suggestionbox
+											for="BCSH_PROD_CODE_FM" height="200" id="BCSH_PROD_CODE_FM_SUG"
+											suggestionAction="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.productCodeFromSuggestion}"
+											var="prodFrom" width="400" nothingLabel="#{message.PILM048_APAC$NOTHINGLABEL}">
+											<h:column>
+												<h:outputText id="AUTO_ID_24" value="#{prodFrom.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_25" value="#{prodFrom.name}" />
+											</h:column>
+
+										</rich:suggestionbox></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_PROD_CODE_TO_LABEL}"
+											for="BCSH_PROD_CODE_TO" id="BCSH_PROD_CODE_TO_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_PROD_CODE_TO$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_PROD_CODE_TO}"
+											disabled="false" id="BCSH_PROD_CODE_TO" maxlength="12"
+											rendered="true" required="false" styleClass="input"
+											title="Enter the value of Product To"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_PROD_CODE_TO}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.listenerBCSH_PROD_CODE_TO}"
+												event="onblur" id="PROD_CODE_TOM_ONBLUR" immediate="true"
+												reRender="errorPanel,BCSH_PROD_CODE_TO,BCSH_PROD_CODE_TO_SUG" />
+										</h:inputText> <h:graphicImage id="AUTO_ID_26" style="PROD_TO_SUG"
+											styleClass="searchimg" value="./../../images/Lov.gif" /> <rich:suggestionbox
+											for="BCSH_PROD_CODE_TO" height="200" id="BCSH_PROD_CODE_TO_SUG"
+											suggestionAction="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.productCodeToSuggestion}"
+											var="prodTo" width="400" nothingLabel="#{message.PILM048_APAC$NOTHINGLABEL}">
+											<h:column>
+												<h:outputText id="AUTO_ID_28" value="#{prodTo.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_29" value="#{prodTo.name}" />
+											</h:column>
+
+										</rich:suggestionbox></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_MAIN_ACNT_CODE_LABEL}"
+											for="BCSH_MAIN_ACNT_CODE" id="BCSH_MAIN_ACNT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_MAIN_ACNT_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_MAIN_ACNT_CODE}"
+											disabled="false" id="BCSH_MAIN_ACNT_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the value of Main Account Code"
+											validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateMainAcctCode}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_MAIN_ACNT_CODE}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateMainAcctCode}"
+												event="onblur" id="style_4" immediate="true"
+												reRender="AUTO_ID_34,
+												BCSH_ACTY_CODE_1,
+												BCSH_ACTY_CODE_2,BCSH_ACTY_CODE_2_LABEL,
+												BCSH_ACTY_CODE_1_LABEL, errorPanel" />
+										</h:inputText> <rich:suggestionbox for="BCSH_MAIN_ACNT_CODE" height="200"
+											id="AUTO_ID_30" nothingLabel="#{message.PILM048_APAC$NOTHINGLABEL}"
+											suggestionAction="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.mainAccLovCode}"
+											var="suggest" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_31" value="#{suggest.mainAccCode}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_32" value="#{suggest.mainAccName}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_BCSH_MAIN_CODE" immediate="true"
+												oncomplete="setFocusforDisble('PM_BANK_CHARGE_SETUP_HDR:BCSH_DIVN_CODE','PM_BANK_CHARGE_SETUP_HDR:BCSH_MAIN_ACNT_CODE','PM_BANK_CHARGE_SETUP_HDR:BCSH_SUB_ACNT_CODE')"
+												reRender="errorPanel,MAIN_ACNT_DESC">
+												<f:setPropertyActionListener id="UI_M_SC_MAIN_ACCT_CODE"
+													target="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.MAIN_ACNT_DESC}"
+													value="#{suggest.mainAccName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_MAIN_ACNT_DESC}"
+											disabled="true" id="MAIN_ACNT_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.MAIN_ACNT_DESC}" />
+										<h:graphicImage id="AUTO_ID_33" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_SUB_ACNT_CODE_LABEL}"
+											for="BCSH_SUB_ACNT_CODE" id="BCSH_SUB_ACNT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_SUB_ACNT_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_SUB_ACNT_CODE}"
+											 id="BCSH_SUB_ACNT_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the value of Sub Account Code"
+											validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateSubAcctCode}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_SUB_ACNT_CODE}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateSubAcctCode}"
+												event="onblur" id="ON_BLUR_SUB_ACCT_CODE" immediate="true"
+												reRender="errorPanel,SUB_ACNT_DESC" />
+										</h:inputText> <rich:suggestionbox for="BCSH_SUB_ACNT_CODE" height="200"
+											id="AUTO_ID_34" nothingLabel="#{message.PILM048_APAC$NOTHINGLABEL}"
+											suggestionAction="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.subAccLovCode}"
+											var="suggest" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_35" value="#{suggest.subAccCode}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_36" value="#{suggest.subAccName}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_BCSH_SUB_CODE" immediate="true"
+												reRender="SUB_ACNT_DESC,errorPanel">
+												<f:setPropertyActionListener id="UI_M_SC_SUB_ACCT_CODE"
+													target="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.SUB_ACNT_DESC}"
+													value="#{suggest.subAccName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_SUB_ACNT_DESC}"
+											disabled="true" id="SUB_ACNT_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.SUB_ACNT_DESC}" />
+										<h:graphicImage id="AUTO_ID_37" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_DIVN_CODE_LABEL}"
+											for="BCSH_DIVN_CODE" id="BCSH_DIVN_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_DIVN_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_DIVN_CODE}"
+											disabled="false" id="BCSH_DIVN_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the value of Branch Code"
+											validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateDivnCode}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_DIVN_CODE}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateDivnCode}"
+												event="onblur" id="ON_BLUR_DIVN_CODE" immediate="true"
+												reRender="DIVN_CODE_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="BCSH_DIVN_CODE" height="200"
+											id="AUTO_ID_38" nothingLabel="#{message.PILM048_APAC$NOTHINGLABEL}"
+											suggestionAction="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.branchLovCode}"
+											var="suggest" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_39" value="#{suggest.branchCode}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_40" value="#{suggest.branchName}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_BCSH_DIVN_CODE" immediate="true"
+												reRender="errorPanel,DIVN_CODE_DESC">
+												<f:setPropertyActionListener id="UI_M_SC_DIVN_CODE"
+													target="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.DIVN_CODE_DESC}"
+													value="#{suggest.branchName}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_DIVN_CODE_DESC}"
+											disabled="true" id="DIVN_CODE_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.DIVN_CODE_DESC}" />
+										<h:graphicImage id="AUTO_ID_41" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_DEPT_CODE_LABEL}"
+											for="BCSH_DEPT_CODE" id="BCSH_DEPT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_DEPT_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_DEPT_CODE}"
+											disabled="false" id="BCSH_DEPT_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the value Department Code"
+											validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateDeptCode}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_DEPT_CODE}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateDeptCode}"
+												event="onblur" id="ON_BLUR_DEPT_CODE" immediate="true"
+												reRender="DEPT_CODE_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="BCSH_DEPT_CODE" height="200"
+											id="AUTO_ID_42" nothingLabel="#{message.PILM048_APAC$NOTHINGLABEL}"
+											suggestionAction="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.departmentSuggestion}"
+											var="depart" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_43" value="#{depart.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_44" value="#{depart.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_BCSH_DEPT_CODE" immediate="true"
+												reRender="errorPanel,DEPT_CODE_DESC">
+												<f:setPropertyActionListener id="UI_M_SC_DEPT_CODE"
+													target="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.DEPT_CODE_DESC}"
+													value="#{depart.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_DEPT_CODE_DESC}"
+											disabled="true" id="DEPT_CODE_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.DEPT_CODE_DESC}" />
+										<h:graphicImage id="AUTO_ID_45" style="DEPT_CODE_1"
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_ANLY_CODE_1_LABEL}"
+											for="BCSH_ANLY_CODE_1" id="BCSH_ANLY_CODE_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_ANLY_CODE_1$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_ANLY_CODE_1}"
+											disabled="false" id="BCSH_ANLY_CODE_1" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the value of Analysis Code1"
+											validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateAnly_1Code}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_ANLY_CODE_1}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateAnly_1Code}"
+												event="onblur" id="ON_BLUR_ANLY_CODE_1" immediate="true"
+												reRender="errorPanel,ANLY_CODE_1_DESC" />
+										</h:inputText> <rich:suggestionbox for="BCSH_ANLY_CODE_1" height="200"
+											id="style_25" nothingLabel="#{message.PILM048_APAC$NOTHINGLABEL}"
+											suggestionAction="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.analysis1LOV}"
+											var="suggest" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_46" value="#{suggest.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_47" value="#{suggest.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_BCSH_ANLY_CODE_1" immediate="true"
+												reRender="errorPanel,ANLY_CODE_1_DESC">
+												<f:setPropertyActionListener id="UI_M_SC_ANLY_CODE_1"
+													target="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.ANLY_CODE_1_DESC}"
+													value="#{suggest.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_ANLY_CODE_1_DESC}"
+											disabled="true" id="ANLY_CODE_1_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.ANLY_CODE_1_DESC}" />
+										<h:graphicImage id="AUTO_ID_48" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_ANLY_CODE_2_LABEL}"
+											for="BCSH_ANLY_CODE_2" id="BCSH_ANLY_CODE_2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_ANLY_CODE_2$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_ANLY_CODE_2}"
+											disabled="false" id="BCSH_ANLY_CODE_2" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the value of Analysis Code 2"
+											validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateAnly_2Code}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_ANLY_CODE_2}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateAnly_2Code}"
+												event="onblur" id="ON_BLUR_ANLY_CODE_2" immediate="true"
+												reRender="errorPanel,ANLY_CODE_2_DESC" />
+										</h:inputText> <rich:suggestionbox for="BCSH_ANLY_CODE_2" height="200"
+											id="style_23" nothingLabel="#{message.PILM048_APAC$NOTHINGLABEL}"
+											suggestionAction="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.analysis2LOV}"
+											var="suggest" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_49" value="#{suggest.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_50" value="#{suggest.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_BCSH_ANLY_CODE_2" immediate="true"
+												reRender="errorPanel,ANLY_CODE_2_DESC">
+												<f:setPropertyActionListener id="UI_M_SC_ANLY_CODE_2_DESC"
+													target="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.ANLY_CODE_2_DESC}"
+													value="#{suggest.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_ANLY_CODE_2_DESC}"
+											disabled="true" id="ANLY_CODE_2_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.ANLY_CODE_2_DESC}" />
+										<h:graphicImage id="AUTO_ID_51" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_ACTY_CODE_1_LABEL}"
+											for="BCSH_ACTY_CODE_1" id="BCSH_ACTY_CODE_1_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_ACTY_CODE_1$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_ACTY_CODE_1}"
+											disabled="false" id="BCSH_ACTY_CODE_1" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the value of Activity 1"
+											validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateACTY_1Code}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_ACTY_CODE_1}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateACTY_1Code}"
+												event="onblur" id="ON_BLUR_ACTY_CODE_1" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText> <rich:suggestionbox for="BCSH_ACTY_CODE_1" height="200"
+											id="style_26" nothingLabel="#{message.PILM048_APAC$NOTHINGLABEL}"
+											suggestionAction="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.activity1LOV}"
+											var="suggest" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_52" value="#{suggest.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_53" value="#{suggest.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_ACTY_CODE_1_DESC" immediate="true"
+												reRender="errorPanel,ACTY_CODE_1_DESC">
+												<f:setPropertyActionListener
+													id="UI_M_SC_ACTY_CODE_1_DESC_DESC"
+													target="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.ACTY_CODE_1_DESC}"
+													value="#{suggest.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_ACTY_CODE_1_DESC}"
+											disabled="true" id="ACTY_CODE_1_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.ACTY_CODE_1_DESC}" />
+										<h:graphicImage id="AUTO_ID_54" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_ACTY_CODE_2_LABEL}"
+											for="BCSH_ACTY_CODE_2" id="BCSH_ACTY_CODE_2_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM048_APAC$PM_BANK_CHARGE_SETUP_HDR$BCSH_ACTY_CODE_2$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_BCSH_ACTY_CODE_2}"
+											disabled="false" id="BCSH_ACTY_CODE_2" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the value of Activity Code 2"
+											validator="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateACTY_2Code}"
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.BCSH_ACTY_CODE_2}">
+											<a4j:support
+												actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.validateACTY_2Code}"
+												event="onblur" id="ON_BLUR_ACTY_CODE_2" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText> <rich:suggestionbox for="BCSH_ACTY_CODE_2" height="200"
+											id="style_27" nothingLabel="#{message.PILM048_APAC$NOTHINGLABEL}"
+											suggestionAction="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.activity2LOV}"
+											var="suggest" width="400">
+											<h:column>
+												<h:outputText id="AUTO_ID_55" value="#{suggest.code}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_56" value="#{suggest.name}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+												id="COMP_1_ACTY_CODE_2_DESC" immediate="true"
+												reRender="ACTY_CODE_2_DESC">
+												<f:setPropertyActionListener
+													id="UI_M_SC_ACTY_CODE_2_DESC_DESC"
+													target="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.ACTY_CODE_1_DESC}"
+													value="#{suggest.name}" />
+											</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.COMP_ACTY_CODE_2_DESC}"
+											disabled="true" id="ACTY_CODE_2_DESC" maxlength="240"
+											rendered="true" required="false" styleClass="input" title=""
+											value="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_BEAN.ACTY_CODE_2_DESC}" />
+										<h:graphicImage id="AUTO_ID_57" style=""
+											styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.saveRecord}"
+											id="AUTO_ID_58" rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="style_24" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_59"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.saveRecord}"
+											id="AUTO_ID_60" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVE_ID_1" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_61"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											actionListener="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_HDR_Delete}"
+											id="AUTO_ID_62" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_63"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_64"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_65" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_66"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_67"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.preButtonPressed}"
+											id="AUTO_ID_68" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_69"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_70"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM048_APAC_PM_BANK_CHARGE_SETUP_HDR_ACTION.PM_BANK_CHARGE_SETUP_DTLInsert}"
+											id="AUTO_ID_71" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_72"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_73"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_74" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_75"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_76"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

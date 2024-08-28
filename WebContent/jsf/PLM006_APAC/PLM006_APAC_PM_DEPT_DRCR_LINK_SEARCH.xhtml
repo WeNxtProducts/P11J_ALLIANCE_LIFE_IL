@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view>
+	<f:loadBundle basename="messageProperties_PLM006_APAC" var="message" />
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tr>
+			
+		</tr>
+		<!-- Body row -->
+		<h:form id="PLM006_APAC_SEARCH">
+			<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.errorMap['current'] !=null? PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.errorMap['current']:PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.warningMap['current']}" />
+
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.errorMessages}"
+								styleClass="ErrorMessages" escape="false" />
+							<h:messages styleClass="ErrorMessages" id="msg"
+								rendered="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.globalMsgRender}" />
+
+							<h:outputText id="warningMessages"
+								value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.warningMessages}"
+								styleClass="WarningMessages" escape="false" />
+
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>
+			<tr>
+				<td>
+
+				<table border="0" width="100%" cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}" /></td>
+						<td><h:outputLabel
+							value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_DIVN_CODE$caption}" />
+						<h:inputText
+							binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.COMP_UI_M_BRANCH_CODE}"
+							value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.searchBean.DDL_DIVN_CODE}" /></td>
+						<td><h:outputLabel
+							value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_DEPT_CODE$caption}" />
+						<h:inputText
+							binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.COMP_UI_M_DEPT_CODE}"
+							value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.searchBean.DDL_DEPT_CODE}" /></td>
+						<td><h:commandButton
+							value="#{commonmsg.searchButton$caption}" id="fetch"
+							action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.fetch}" styleClass="button">
+
+						</h:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table --> <rich:dataTable id="fetchList"
+					value="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.dataTableBean}"
+					var="colData" cellpadding="5px" rows="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.rowCount}" border="1" width="100%"
+					binding="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.dataTable}">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+					<rich:column filterBy="#{colData.DDL_DIVN_CODE}"
+						filterValue="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.searchBean.searchText}"
+						sortBy="#{colData.POL_NO}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_DIVN_CODE$caption}" />
+						</f:facet>
+						<h:commandLink
+							action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.fetchMasterRecord}"
+							id="POL_NO_Link">
+							
+								<h:outputText value="#{colData.DDL_DIVN_CODE}" />
+							
+
+							<f:param name="DDL_DIVN_CODE" value="#{colData.DDL_DIVN_CODE}" />
+							<f:param name="DDL_DEPT_CODE" value="#{colData.DDL_DEPT_CODE}" />
+							<f:param name="DDL_TXN_TYPE_FM"
+								value="#{colData.DDL_TXN_TYPE_FM}" />
+							<f:param name="DDL_TXN_TYPE_TO"
+								value="#{colData.DDL_TXN_TYPE_TO}" />
+							<f:param name="ROWID" value="#{colData.ROWID}" />
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column filterBy="#{colData.DDL_DEPT_CODE}"
+						sortBy="#{colData.DDL_DEPT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_DEPT_CODE$caption}" />
+						</f:facet>
+						
+							<h:outputText value="#{colData.DDL_DEPT_CODE}" />
+						
+					</rich:column>
+
+					<rich:column filterBy="#{colData.DDL_TXN_TYPE_FM}"
+						sortBy="#{colData.DDL_TXN_TYPE_FM}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_TXN_TYPE_FM$caption}" />
+						</f:facet>
+						
+							<h:outputText value="#{colData.DDL_TXN_TYPE_FM}" />
+						
+					</rich:column>
+
+					<rich:column filterBy="#{colData.DDL_TXN_TYPE_TO}"
+						sortBy="#{colData.DDL_TXN_TYPE_FM}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText
+								value="#{message.PLM006_APAC$PM_DEPT_DRCR_LINK$DDL_TXN_TYPE_TO$caption}" />
+						</f:facet>
+						
+							<h:outputText value="#{colData.DDL_TXN_TYPE_TO}" />
+					
+					</rich:column>
+
+				</rich:dataTable> <h:commandButton id="insertLink"
+					value="#{commonmsg.insertButton$caption}"
+					action="#{PLM006_APAC_PM_DEPT_DRCR_LINK_SEARCH_ACTION.insert}" styleClass="button" /></td>
+			</tr>
+		</h:form>
+		<!-- add footer to the page-->
+		<tr>
+			
+		</tr>
+	</table>
+
+</f:view>
+
+</ui:define>
+</ui:composition>

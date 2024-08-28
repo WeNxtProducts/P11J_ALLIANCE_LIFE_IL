@@ -1,0 +1,958 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+		<f:view
+			beforePhase="#{PILQ004_APAC_ASSRD_DTLS_ACTION.loadingBaseValues}">
+			<f:loadBundle basename="messageProperties_PILQ004_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="ASSRD_DTLS">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<!--   <tr>
+						<td colspan="3" vAlign="top" width="100%">
+					  	<table class="noborder" id="toolbartable" width="100%">
+						<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink id="AUTO_ID_1" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_2"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_4" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_10" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_18"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table> 
+						</td>
+					</tr> -->
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILQ004_APAC_ASSRD_DTLS_ACTION.messageStyle}"
+									value="Notification:#{PILQ004_APAC_ASSRD_DTLS_ACTION.errorMap['current'] !=null? PILQ004_APAC_ASSRD_DTLS_ACTION.errorMap['current']:PILQ004_APAC_ASSRD_DTLS_ACTION.warningMap['current']}" />
+
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILQ004_APAC_ASSRD_DTLS_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td align="right"><h:commandButton
+							binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_UI_M_QUERY}"
+							disabled="false" id="UI_M_BUT_QUERY" rendered="true"
+							style="width:96px" styleClass="button" title="" value="Query"
+							action="#{PILQ004_APAC_ASSRD_DTLS_ACTION.buttonPressQuery}" /></td>
+					</tr>
+
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><a href=""><font color="White" size="2px"><b
+									style="background-color: #004080;">Assured Query Form</b></font></a></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+
+						<table align="center" class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+								<td vAlign="top" width="100%"><h:panelGroup
+									id="sectionDtls" style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td class="oddrowright" width="20%"><h:outputLabel
+												binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POAD_ASSR_CODE_LABEL}"
+												for="POAD_ASSR_CODE" id="POAD_ASSR_CODE_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message.PILQ004_APAC$ASSRD_DTLS$POAD_ASSR_CODE$caption}" />
+											</td>
+											<td class="oddrow" width="28%"><h:inputText
+												binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POAD_ASSR_CODE}"
+												disabled="false" id="POAD_ASSR_CODE" maxlength="12"
+												rendered="true" required="false"
+												styleClass="inputsmall"
+												validator="#{PILQ004_APAC_ASSRD_DTLS_ACTION.whenValidatePOAD_ASSR_CODE}"
+												title="Enter Assured Code"
+												value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.ASSRD_DTLS_BEAN.POAD_ASSR_CODE}">
+												<a4j:support
+													actionListener="#{PILQ004_APAC_ASSRD_DTLS_ACTION.fireFieldValidation}"
+													event="onblur" id="AUTO_ID_25" immediate="true"
+													oncomplete="setFocus('ASSRD_DTLS:POAD_ASSRD_REF_ID1','ASSRD_DTLS:POAD_ASSR_CODE')"
+													reRender="errorPanel,POAD_ASSURED_NAME,POAD_ASSRD_REF_ID1,POAD_ASSRD_REF_ID2" />
+											</h:inputText> <rich:suggestionbox for="POAD_ASSR_CODE" height="200"
+												id="AUTO_ID_22" immediate="true"
+												suggestionAction="#{PILQ004_APAC_ASSRD_DTLS_ACTION.displayLov}"
+												value="" var="suggesion" width="300">
+												<h:column>
+													<h:outputText id="AUTO_ID_23" value="#{suggesion.code}" />
+												</h:column>
+												<h:column>
+													<h:outputText id="AUTO_ID_24" value="#{suggesion.name}" />
+												</h:column>
+												<a4j:support event="onselect" immediate="true"
+													ajaxSingle="true" id="COMP_1_POAD_ASSR_CODE_SUGG_SUPPORT"
+													reRender="errorPanel,POAD_ASSURED_NAME">
+													<f:setPropertyActionListener value="#{suggesion.name}"
+														target="#{PILQ004_APAC_ASSRD_DTLS_ACTION.ASSRD_DTLS_BEAN.POAD_ASSURED_NAME}" />
+												</a4j:support>
+											</rich:suggestionbox> <h:inputText
+												binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POAD_ASSURED_NAME}"
+												disabled="true" id="POAD_ASSURED_NAME" maxlength="2000"
+												rendered="true" required="false" styleClass="input"
+												title="Assured Name"
+												value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.ASSRD_DTLS_BEAN.POAD_ASSURED_NAME}" />
+
+											<h:graphicImage id="AUTO_ID_26" style=""
+												styleClass="searchimg" value="./../../images/Lov.gif" /></td>
+											<td class="oddrowright" width="4%">&nbsp;</td>
+											<td class="oddrowright" width="20%"><h:outputLabel
+												binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POAD_ASSRD_REF_ID1_LABEL}"
+												for="POAD_ASSRD_REF_ID1" id="POAD_ASSRD_REF_ID1_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message.PILQ004_APAC$ASSRD_DTLS$POAD_ASSRD_REF_ID1$caption}" />
+											</td>
+											<td class="oddrow" width="28%"><h:inputText
+												binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POAD_ASSRD_REF_ID1}"
+												disabled="true" id="POAD_ASSRD_REF_ID1" maxlength="12"
+												rendered="true" required="false" styleClass="input"
+												immediate="true"
+												title="#{message.PILQ004_APAC$ASSRD_DTLS$POAD_ASSRD_REF_ID1$tooltip}"
+												validator="#{PILQ004_APAC_ASSRD_DTLS_ACTION.whenValidatePOAD_ASSRD_REF_ID1}"
+												value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.ASSRD_DTLS_BEAN.POAD_ASSRD_REF_ID1}">
+												<a4j:support
+													actionListener="#{PILQ004_APAC_ASSRD_DTLS_ACTION.fireFieldValidation}"
+													event="onblur" id="AUTO_ID_7812"
+													immediate="true" reRender="errorPanel" />
+											</h:inputText> <rich:suggestionbox for="POAD_ASSRD_REF_ID1" height="250"
+												id="AUTO_ID_22123" immediate="true"
+												suggestionAction="#{PILQ004_APAC_ASSRD_DTLS_ACTION.poadAssrRefID1}"
+												var="suggesion" width="250">
+												<h:column>
+													<h:outputText id="AUTO_ID_278343" value="#{suggesion.code}" />
+												</h:column>
+												<h:column>
+													<h:outputText id="AUTO_ID_2423213"
+														value="#{suggesion.name}" />
+												</h:column>
+											</rich:suggestionbox></td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POAD_ASSRD_REF_ID2_LABEL}"
+												for="POAD_ASSRD_REF_ID2" id="POAD_ASSRD_REF_ID2_LABEL"
+												rendered="true" styleClass="label"
+												value="#{message.PILQ004_APAC$ASSRD_DTLS$POAD_ASSRD_REF_ID2$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POAD_ASSRD_REF_ID2}"
+												disabled="true" id="POAD_ASSRD_REF_ID2" maxlength="12"
+												rendered="true" required="false" styleClass="input"
+												title="#{message.PILQ004_APAC$ASSRD_DTLS$POAD_ASSRD_REF_ID2$tooltip}"
+												immediate="true"
+												validator="#{PILQ004_APAC_ASSRD_DTLS_ACTION.whenValidatePOAD_ASSRD_REF_ID2}"
+												value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.ASSRD_DTLS_BEAN.POAD_ASSRD_REF_ID2}">
+												<a4j:support
+													actionListener="#{PILQ004_APAC_ASSRD_DTLS_ACTION.fireFieldValidation}"
+													event="onblur"
+													oncomplete="setFocus('ASSRD_DTLS:UI_M_BUT_QUERY','ASSRD_DTLS:POAD_ASSRD_REF_ID2')"
+													id="AUTO_ID_71212" immediate="true" reRender="errorPanel" />
+											</h:inputText> <rich:suggestionbox for="POAD_ASSRD_REF_ID2" height="200"
+												id="AUTO_ID_67531" immediate="true"
+												suggestionAction="#{PILQ004_APAC_ASSRD_DTLS_ACTION.poadAssrRefID2}"
+												var="suggesion" width="250">
+												<h:column>
+													<h:outputText id="AUTO_ID_21223" value="#{suggesion.code}" />
+												</h:column>
+												<h:column>
+													<h:outputText id="AUTO_ID_2114" value="#{suggesion.name}" />
+												</h:column>
+											</rich:suggestionbox> </td>
+											<td class="evenrow" colspan="3">&nbsp;</td>
+										</tr>
+
+										<tr>
+											<td colspan="5"><rich:tabPanel switchType="ajax">
+												<rich:tab label="Policy Details">
+													<table align="left" class="noborder" id="bordertable"
+														width="100%">
+
+														<tr>
+															<td colspan="5"><rich:dataTable
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.dataTable}"
+																border="0" cellpadding="0" id="POLICY_DETAILS" rows="5"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.policyDetailList}"
+																var="table" width="100%">
+
+																<rich:column filterBy="#{table.POL_NO}"
+																	filterEvent="onkeyup"
+																	filterValue="#{PILQ004_APAC_ASSRD_DTLS_ACTION.filterByPOL_NO}"
+																	sortBy="#{table.POL_NO}"
+																	styleClass="#{table.rowSelected}">
+																	<f:facet name="header">
+																		<h:outputText id="AUTO_ID_29"
+																			styleClass="forumRowHighlight"
+																			value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_NO$caption}" />
+																	</f:facet>
+
+																	<a4j:commandLink
+																		action="#{PILQ004_APAC_ASSRD_DTLS_ACTION.getDetails}"
+																		immediate="true" reRender="sectionDtls">
+																		<h:outputText id="AUTO_ID_30" value="#{table.POL_NO} " />
+																	</a4j:commandLink>
+
+																</rich:column>
+
+																<rich:column filterBy="#{table.POL_PLAN_CODE}"
+																	filterEvent="onkeyup"
+																	filterValue="#{PILQ004_APAC_ASSRD_DTLS_ACTION.filterByPOL_PLAN_CODE}"
+																	sortBy="#{table.POL_PLAN_CODE}"
+																	styleClass="#{table.rowSelected}">
+																	<f:facet name="header">
+																		<h:outputText id="AUTO_ID_31"
+																			styleClass="forumRowHighlight"
+																			value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_PLAN_CODE$caption}" />
+																	</f:facet>
+
+																	<h:outputText id="POL_PLAN_CODE" rendered="true"
+																		style="width:100px;" value="#{table.POL_PLAN_CODE}">
+																	</h:outputText>
+																</rich:column>
+
+																<f:facet name="footer">
+																	<h:panelGroup id="footerpanel" style="border:0">
+																		<rich:datascroller align="right" />
+																	</h:panelGroup>
+																</f:facet>
+															</rich:dataTable></td>
+
+														</tr>
+														<tr>
+															<td class="oddrowright" width="20%"><h:outputLabel for="PG_CODE"
+																id="PG_CODE_LABEL" styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_NO$caption}" /></td>
+															<td class="oddrow" width="28%"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_NO}"
+																id="POL_NO" readonly="true" styleClass="input"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_NO$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_NO}">
+															</h:inputText></td>
+															<td class="oddrowright" width="4%"/>
+															<td class="oddrowright" width="20%"><h:outputLabel
+																for="POL_PERIOD" id="POL_PERIOD_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_PERIOD$caption}" /></td>
+															<td class="oddrow" width="28%"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_PERIOD}"
+																id="POL_PERIOD" readonly="true"
+																styleClass="inputNumeric"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_PERIOD$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_PERIOD}">
+															</h:inputText></td>
+														</tr>
+
+														<tr>
+														<td class="evenrowright"><h:outputLabel
+																for="POL_FC_SUM_ASSURED" id="POL_FC_SUM_ASSURED_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_FC_SUM_ASSURED$caption}" /></td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_FC_SUM_ASSURED}"
+																id="POL_FC_SUM_ASSURED" readonly="true"
+																styleClass="input"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_FC_SUM_ASSURED$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_FC_SUM_ASSURED}" />
+															</td>
+															<td class="evenrowright"/>
+															<td class="evenrowright"><h:outputLabel
+																for="POL_LC_SUM_ASSURED" id="POL_LC_SUM_ASSURED_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_LC_SUM_ASSURED$caption}" /></td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_LC_SUM_ASSURED}"
+																id="POL_LC_SUM_ASSURED" readonly="true"
+																styleClass="inputNumeric"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_LC_SUM_ASSURED$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_LC_SUM_ASSURED}">
+															</h:inputText></td>
+															
+														</tr>
+
+														<tr>
+															<td class="oddrowright"><h:outputLabel
+																for="POL_START_DT" id="POL_START_DT_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_START_DT$caption}" /></td>
+															<td class="oddrow"><rich:calendar
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_START_DT}"
+																datePattern="#{PILQ004_APAC_ASSRD_DTLS_ACTION.datePattern}"
+																id="POL_START_DT" inputClass="calendarinput"
+																inputSize="14" disabled="true"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_START_DT$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_START_DT}">
+																<a4j:support event="oninputblur" id="date_1"
+																	onsubmit="formatDate('ASSRD_DTLS:POL_START_DT')" />
+															</rich:calendar></td>
+															<td class="oddrowright"/>
+															<td class="oddrowright"><h:outputLabel
+																for="POL_EXPIRY_DT" id="POL_EXPIRY_DT_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_EXPIRY_DT$caption}" /></td>
+															<td class="oddrow"><rich:calendar
+																datePattern="#{PILQ004_APAC_ASSRD_DTLS_ACTION.datePattern}"
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_EXPIRY_DT}"
+																id="POL_EXPIRY_DT" inputClass="calendarinput"
+																inputSize="14" disabled="true"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_EXPIRY_DT$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_EXPIRY_DT}">
+																<a4j:support event="oninputblur" id="date_4"
+																	onsubmit="formatDate('ASSRD_DTLS:POL_EXPIRY_DT')" />
+															</rich:calendar></td>
+														</tr>
+
+														<tr>
+															<td class="evenrowright"><h:outputLabel
+																for="POL_FC_FIRST_PREM" id="POL_FC_FIRST_PREM_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_FC_FIRST_PREM$caption}" /></td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_FC_FIRST_PREM}"
+																id="POL_FC_FIRST_PREM" readonly="true"
+																styleClass="inputNumeric"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_FC_FIRST_PREM$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_FC_FIRST_PREM}">
+															</h:inputText></td>
+															<td class="evenrowright"/>
+															<td class="evenrowright"><h:outputLabel
+																for="POL_LC_FIRST_PREM" id="POL_LC_FIRST_PREM_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_LC_FIRST_PREM$caption}" /></td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_LC_FIRST_PREM}"
+																id="POL_LC_FIRST_PREM" readonly="true"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_LC_FIRST_PREM$tooltip}"
+																styleClass="inputNumeric"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_LC_FIRST_PREM}" />
+															</td>
+														</tr>
+
+														<tr>
+															<td class="oddrowright"><h:outputLabel
+																for="POL_ADDL_STATUS" id="POL_ADDL_STATUS_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_ADDL_STATUS$caption}" /></td>
+															<td class="oddrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_ADDL_STATUS}"
+																id="POL_ADDL_STATUS" readonly="true" styleClass="input"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_ADDL_STATUS$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_ADDL_STATUS}">
+															</h:inputText></td>
+															<td class="oddrowright"/>
+															<td class="oddrowright"><h:outputLabel
+																for="POL_PREM_PAY_YRS" id="POL_PREM_PAY_YRS_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_PREM_PAY_YRS$caption}" /></td>
+															<td class="oddrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_PREM_PAY_YRS}"
+																id="POL_PREM_PAY_YRS" readonly="true"
+																styleClass="inputNumeric"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_PREM_PAY_YRS$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_PREM_PAY_YRS}">
+															</h:inputText></td>
+															</tr>
+															<tr>
+																<td class="evenrowright" ><h:outputLabel
+																for="POL_PLAN_CODE" id="POL_PLAN_CODE_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_PLAN_CODE$caption}" /></td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_PLAN_CODE}"
+																id="POL_PLAN_CODE" readonly="true" styleClass="input"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_PLAN_CODE$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_PLAN_CODE}">
+															</h:inputText></td>
+															<td class="evenrowright">&nbsp;</td>
+															<td class="evenrowright"><h:outputLabel
+																for="UI_M_POL_PLAN_DESC" id="UI_M_POL_PLAN_DESC_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$UI_M_POL_PLAN_DESC$caption}" /></td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_UI_M_POL_PLAN_DESC}"
+																id="UI_M_POL_PLAN_DESC" readonly="true"
+																styleClass="input"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$UI_M_POL_PLAN_DESC$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.UI_M_POL_PLAN_DESC}" />
+															</td>
+														</tr>
+
+														<tr>
+															<td class="oddrowright"><h:outputLabel
+																for="NEXT_DUE_DATE" id="NEXT_DUE_DATE_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$NEXT_DUE_DATE$caption}" /></td>
+															<td class="oddrow"><rich:calendar
+																datePattern="#{PILQ004_APAC_ASSRD_DTLS_ACTION.datePattern}"
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_NEXT_DUE_DATE}"
+																id="NEXT_DUE_DATE" inputClass="calendarinput"
+																inputSize="14" disabled="true"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$NEXT_DUE_DATE$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.NEXT_DUE_DATE}">
+																<a4j:support event="oninputblur" id="date_3"
+																	onsubmit="formatDate('ASSRD_DTLS:NEXT_DUE_DATE')" />
+															</rich:calendar></td>
+															<td class="oddrowright">&nbsp;</td>
+															<td class="oddrowright"><h:outputLabel
+																for="POL_TRAN_DT" id="POL_TRAN_DT_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_TRAN_DT$caption}" /></td>
+															<td class="oddrow"><rich:calendar
+																datePattern="#{PILQ004_APAC_ASSRD_DTLS_ACTION.datePattern}"
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_TRAN_DT}"
+																id="POL_TRAN_DT" inputClass="calendarinput"
+																inputSize="14" disabled="true"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_TRAN_DT$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_TRAN_DT}">
+																<a4j:support event="oninputblur" id="date_2"
+																	onsubmit="formatDate('ASSRD_DTLS:POL_TRAN_DT')" />
+															</rich:calendar></td>
+														</tr>
+
+														<tr>
+															<td class="evenrowright"><h:outputLabel
+																for="UI_M_POAD_LC_THRESOLD_LMT"
+																id="UI_M_POAD_LC_THRESOLD_LMT_LABEL" styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$UI_M_POAD_LC_THRESOLD_LMT$caption}" /></td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_UI_M_POAD_LC_THRESOLD_LMT}"
+																id="UI_M_POAD_LC_THRESOLD_LMT" readonly="true"
+																styleClass="inputNumeric"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$UI_M_POAD_LC_THRESOLD_LMT$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.UI_M_POAD_LC_THRESOLD_LMT}">
+															</h:inputText></td>
+															<td class="evenrowright"/>
+															<td class="evenrowright"><h:outputLabel
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_UI_M_POAD_TOT_THRESOLD_LMT_LABEL}"
+																for="UI_M_TYPE_LABEL" id="UI_M_POAD_TOT_THRESOLD_LMT_LABEL" styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$UI_M_POAD_TOT_THRESOLD_LMT_LABEL$caption}" /></td>
+															<td class="evenrow"><h:inputText
+																id="UI_M_POAD_TOT_THRESOLD_LMT" 
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_UI_M_POAD_TOT_THRESOLD_LMT}"
+																readonly="true" styleClass="inputNumeric"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$UI_M_POAD_TOT_THRESOLD_LMT$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.UI_M_POAD_TOT_THRESOLD_LMT}">
+															</h:inputText></td>
+														</tr>
+
+														<tr>
+															<td class="oddrowright"><h:outputLabel
+																for="POL_STATUS_DESC" id="POL_STATUS_DESC_LABEL"
+																styleClass="label" value="Policy Status" /></td>
+															<td class="oddrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_STATUS_DESC}"
+																id="POL_STATUS_DESC" readonly="true" styleClass="input"
+																title="Policy Status"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_STATUS_DESC}">
+															</h:inputText></td>
+															<td class="oddrowright"/>
+															<td class="oddrowright"><h:outputLabel
+																for="POL_MODE_OF_PYMT_DESC"
+																id="POL_MODE_OF_PYMT_DESC_LABEL" styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_MODE_OF_PYMT_DESC$caption}" /></td>
+															<td class="oddrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_MODE_OF_PYMT_DESC}"
+																id="POL_MODE_OF_PYMT_DESC" readonly="true"
+																styleClass="input"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_MODE_OF_PYMT_DESC$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_MODE_OF_PYMT_DESC}" />
+															</td>
+															
+														</tr>
+
+														<tr>
+															
+															<td class="evenrowright"><h:outputLabel
+																for="POL_REMARKS" id="POL_REMARKS_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_REMARKS$caption}" /></td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_REMARKS}"
+																id="POL_REMARKS" readonly="true" styleClass="input"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_REMARKS$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_REMARKS}" />
+															</td>
+																<td class="evenrowright">&nbsp;</td>
+																 
+															<td class="evenrowright"><h:outputLabel
+																for="UI_M_TYPE" id="UI_M_TYPE_LABEL" styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$UI_M_TYPE$caption}" /></td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_UI_M_TYPE}"
+																id="UI_M_TYPE" readonly="true" styleClass="input"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$UI_M_TYPE$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.UI_M_TYPE}">
+															</h:inputText></td>
+															
+														</tr>
+													 	<tr>
+															<td class="oddrowright"><h:outputLabel
+																for="POL_FC_BASIC_PREM" id="POL_FC_BASIC_PREM_LABEL"
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POLICY_DETAILS$POL_FC_BASIC_PREM$caption}" /></td>
+															<td class="oddrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POL_FC_BASIC_PREM}"
+																id="POL_FC_BASIC_PREM" readonly="true"
+																styleClass="inputNumeric"
+																title="#{message.PILQ004_APAC$POLICY_DETAILS$POL_FC_BASIC_PREM$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POLICY_DETAILS_BEAN.POL_FC_BASIC_PREM}">
+															</h:inputText></td>
+															<td class="oddrow"></td>
+															<td class="oddrow"></td>
+															<td class="oddrow"></td>
+															</tr>
+															
+													</table>
+
+
+												</rich:tab>
+
+												<rich:tab label="Cover Details">
+
+													<table align="left" class="noborder" id="bordertable"
+														width="100%">
+
+														<tr>
+															<td colspan="5"><rich:dataTable
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.addtionalCoverDataTable}"
+																border="0" cellpadding="0" id="POL_ADDL_COVER" rows="5"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.coverList}"
+																var="table" width="100%">
+
+																<f:facet name="header">
+																	<h:outputText id="AUTO_ID_32"
+																		value="Policy Additional Cover" />
+																</f:facet>
+
+																<rich:column filterBy="#{table.POAC_COVER_CODE}"
+																	filterEvent="onkeyup"
+																	filterValue="#{PILQ004_APAC_ASSRD_DTLS_ACTION.filterByPOAC_COVER_CODE}"
+																	sortBy="#{table.POAC_COVER_CODE}"
+																	styleClass="#{table.rowSelected}">
+																	<f:facet name="header">
+																		<h:outputText id="AUTO_ID_33"
+																			styleClass="forumRowHighlight"
+																			value="#{message.PILQ004_APAC$POL_ADDL_COVER$POAC_COVER_CODE$caption}" />
+																	</f:facet>
+
+																	<a4j:commandLink
+																		action="#{PILQ004_APAC_ASSRD_DTLS_ACTION.getDetailsAddtionial}"
+																		immediate="true" reRender="sectionDtls">
+																		<h:outputText id="AUTO_ID_34"
+																			value="#{table.POAC_COVER_CODE} " />
+																	</a4j:commandLink>
+
+																</rich:column>
+
+																<rich:column filterBy="#{table.POAC_LC_SA}"
+																	filterEvent="onkeyup"
+																	filterValue="#{PILQ004_APAC_ASSRD_DTLS_ACTION.filterByPOAC_LC_SA}"
+																	sortBy="#{table.POAC_LC_SA}"
+																	styleClass="#{table.rowSelected}">
+																	<f:facet name="header">
+																		<h:outputText id="AUTO_ID_35"
+																			styleClass="forumRowHighlight"
+																			value="#{message.PILQ004_APAC$POL_ADDL_COVER$POAC_LC_SA$caption}" />
+																	</f:facet>
+
+																	<h:outputText id="POAC_LC_SA" rendered="true"
+																		style="width:100px;" value="#{table.POAC_LC_SA}">
+																	</h:outputText>
+																</rich:column>
+
+																<f:facet name="footer">
+																	<h:panelGroup id="footerpanel" style="border:0">
+																		<rich:datascroller align="right" />
+																	</h:panelGroup>
+																</f:facet>
+															</rich:dataTable></td>
+														</tr>
+
+														<tr>
+															<td class="oddrowright" width="20%"><h:outputLabel
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POL_ADDL_COVER$UI_M_POAC_TOTAL_LC_SUM$caption}" />
+															</td>
+															<td class="oddrow" width="28%"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_UI_M_POAC_TOTAL_LC_SUM}"
+																id="UI_M_POAC_TOTAL_LC_SUM" readonly="true"
+																styleClass="input"
+																title="#{message.PILQ004_APAC$POL_ADDL_COVER$UI_M_POAC_TOTAL_LC_SUM$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POL_ADDL_COVER_BEAN.UI_M_POAC_TOTAL_LC_SUM}" />
+															</td>
+															<td class="oddrowright" width="4%"/>
+															<td class="oddrowright" width="20%"><h:outputLabel
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POL_ADDL_COVER$UI_M_TOT_LC_SA$caption}" />
+															</td>
+															<td class="oddrow" width="28%"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_UI_M_TOT_LC_SA}"
+																id="UI_M_TOT_LC_SA" readonly="true" styleClass="input"
+																title="#{message.PILQ004_APAC$POL_ADDL_COVER$UI_M_TOT_LC_SA$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POL_ADDL_COVER_BEAN.UI_M_TOT_LC_SA}" /></td>
+														</tr>
+
+														<tr>
+															<td class="evenrowright"><h:outputLabel
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POL_ADDL_COVER$POAC_PERIOD$caption}" />
+															</td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POAC_PERIOD}"
+																id="POAC_PERIOD" readonly="true" styleClass="input"
+																title="#{message.PILQ004_APAC$POL_ADDL_COVER$POAC_PERIOD$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POL_ADDL_COVER_BEAN.POAC_PERIOD}" />
+															</td>
+															<td class="evenrowright"/>
+															<td class="evenrowright"><h:outputLabel
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POL_ADDL_COVER$POAC_PREM_PAY_YRS$caption}" />
+															</td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POAC_PREM_PAY_YRS}"
+																id="POAC_PREM_PAY_YRS" readonly="true"
+																title="#{message.PILQ004_APAC$POL_ADDL_COVER$POAC_PREM_PAY_YRS$tooltip}"
+																styleClass="input"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POL_ADDL_COVER_BEAN.POAC_PREM_PAY_YRS}" />
+															</td>
+														</tr>
+
+														<tr>
+															<td class="oddrowright"><h:outputLabel
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POL_ADDL_COVER$POAC_FM_DT$caption}" />
+															</td>
+															<td class="oddrow"><rich:calendar
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POAC_FM_DT}"
+																title="#{message.PILQ004_APAC$POL_ADDL_COVER$POAC_FM_DT$tooltip}"
+																datePattern="#{PILQ004_APAC_ASSRD_DTLS_ACTION.datePattern}"
+																disabled="true" id="POAC_FM_DT"
+																inputClass="calendarinput" inputSize="11"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POL_ADDL_COVER_BEAN.POAC_FM_DT}">
+																<a4j:support event="oninputblur" id="date_5"
+																	onsubmit="formatDate('ASSRD_DTLS:POAC_FM_DT')" />
+															</rich:calendar></td>
+															<td class="oddrowright"/>
+															<td class="oddrowright"><h:outputLabel
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POL_ADDL_COVER$POAC_LC_PREM$caption}" />
+															</td>
+															<td class="oddrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_POAC_LC_PREM}"
+																id="POAC_LC_PREM" readonly="true" styleClass="input"
+																title="#{message.PILQ004_APAC$POL_ADDL_COVER$POAC_LC_PREM$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POL_ADDL_COVER_BEAN.POAC_LC_PREM}" />
+															</td>
+														</tr>
+
+														<tr>
+															<td class="evenrowright"><h:outputLabel
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POL_ADDL_COVER$UI_M_POAC_COVER_DESC$caption}" />
+															</td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_UI_M_POAC_COVER_DESC}"
+																id="UI_M_POAC_COVER_DESC" readonly="true"
+																styleClass="input"
+																title="#{message.PILQ004_APAC$POL_ADDL_COVER$UI_M_POAC_COVER_DESC$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POL_ADDL_COVER_BEAN.UI_M_POAC_COVER_DESC}" />
+															</td>
+															<td class="evenrow" colspan="3"/>
+														</tr>
+													</table>
+												</rich:tab>
+
+												<rich:tab label="Discount/Loading Dlts.">
+													<table align="left" class="noborder" id="bordertable"
+														width="100%">
+
+														<tr>
+															<td colspan="5"><rich:dataTable
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.discountDataTable}"
+																border="0" cellpadding="0" id="POL_DISC_LOAD" rows="5"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.loadList}"
+																var="table" width="100%">
+
+																<f:facet name="header">
+																	<h:outputText id="AUTO_ID_36"
+																		value="Discount/Loading Dtls" />
+																</f:facet>
+
+																<rich:column filterBy="#{table.PDL_DISC_LOAD_CODE}"
+																	filterEvent="onkeyup"
+																	filterValue="#{PILQ004_APAC_ASSRD_DTLS_ACTION.filterByPDL_DISC_LOAD_CODE}"
+																	sortBy="#{table.PDL_DISC_LOAD_CODE}"
+																	styleClass="#{table.rowSelected}">
+																	<f:facet name="header">
+																		<h:outputText id="AUTO_ID_37"
+																			styleClass="forumRowHighlight"
+																			value="#{message.PILQ004_APAC$POL_DISC_LOAD$PDL_DISC_LOAD_CODE$caption}" />
+																	</f:facet>
+
+																	<a4j:commandLink
+																		action="#{PILQ004_APAC_ASSRD_DTLS_ACTION.getDiscountDetails}"
+																		immediate="true" reRender="sectionDtls">
+																		<h:outputText id="AUTO_ID_38"
+																			value="#{table.PDL_DISC_LOAD_CODE} " />
+																	</a4j:commandLink>
+
+																</rich:column>
+
+																<rich:column filterBy="#{table.PDL_RATE}"
+																	filterEvent="onkeyup"
+																	filterValue="#{PILQ004_APAC_ASSRD_DTLS_ACTION.filterByPDL_RATE}"
+																	sortBy="#{table.PDL_RATE}"
+																	styleClass="#{table.rowSelected}">
+																	<f:facet name="header">
+																		<h:outputText id="AUTO_ID_39"
+																			styleClass="forumRowHighlight"
+																			value="#{message.PILQ004_APAC$POL_DISC_LOAD$PDL_RATE$caption}" />
+																	</f:facet>
+
+																	<h:outputText id="PDL_RATE" rendered="true"
+																		style="width:100px;" value="#{table.PDL_RATE}">
+																	</h:outputText>
+																</rich:column>
+
+																<f:facet name="footer">
+																	<h:panelGroup id="footerpanel" style="border:0">
+																		<rich:datascroller align="right" />
+																	</h:panelGroup>
+																</f:facet>
+															</rich:dataTable></td>
+														</tr>
+
+														<tr>
+															<td class="oddrowright" width="20%"><h:outputLabel
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POL_DISC_LOAD$PDL_RATE_PER$caption}" />
+															</td>
+															<td class="oddrow" width="28%"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_PDL_RATE_PER}"
+																id="PDL_RATE_PER" readonly="true" styleClass="input"
+																title="#{message.PILQ004_APAC$POL_DISC_LOAD$PDL_RATE_PER$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POL_DISC_LOAD_BEAN.PDL_RATE_PER}" />
+															</td>
+															<td class="oddrow" width="4%"/>
+															<td class="oddrowright" width="20%"><h:outputLabel
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POL_DISC_LOAD$PDL_LC_DISC_LOAD_VALUE$caption}" />
+															</td>
+															<td class="oddrow" width="28%"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_PDL_LC_DISC_LOAD_VALUE}"
+																id="PDL_LC_DISC_LOAD_VALUE" readonly="true"
+																title="#{message.PILQ004_APAC$POL_DISC_LOAD$PDL_LC_DISC_LOAD_VALUE$tooltip}"
+																styleClass="input"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POL_DISC_LOAD_BEAN.PDL_LC_DISC_LOAD_VALUE}" /></td>
+														</tr>
+
+														<tr>
+															<td class="evenrowright"><h:outputLabel
+																styleClass="label"
+																value="#{message.PILQ004_APAC$POL_DISC_LOAD$UI_M_DISCLOAD_DESC$caption}" />
+															</td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILQ004_APAC_ASSRD_DTLS_ACTION.COMP_UI_M_DISCLOAD_DESC}"
+																id="UI_M_DISCLOAD_DESC" readonly="true"
+																styleClass="input"
+																title="#{message.PILQ004_APAC$POL_DISC_LOAD$UI_M_DISCLOAD_DESC$tooltip}"
+																value="#{PILQ004_APAC_ASSRD_DTLS_ACTION.POL_DISC_LOAD_BEAN.UI_M_DISCLOAD_DESC}" />
+															</td>
+															<td class="evenrow" colspan="3"/>
+														</tr>
+													</table>
+
+												</rich:tab>
+											</rich:tabPanel></td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+								<td vAlign="top"><!-- <table cellpadding="0" cellspacing="0" border="0">
+							<tr>
+								<td><h:commandButton
+									binding="#{PILQ004_APAC_POLICY_DETAILS_ACTION.COMP_UI_M_BUT_MAIN}"
+									disabled="false" id="UI_M_BUT_MAIN" rendered="true"
+									style="height:16px;width:54px;" styleClass="button" title=""
+									value="#{message.PILQ004_APAC$POLICY_DETAILS$UI_M_BUT_MAIN$caption}" />
+								</td>
+							</tr>
+						</table> --></td>
+							</tr>
+						</table>
+
+						</td>
+					</tr>
+					<!--  <tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="AUTO_ID_40" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_41"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/save.gif" />
+									<h:outputText id="AUTO_ID_42"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_43" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_44"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/savenext.GIF" />
+									<h:outputText id="AUTO_ID_45"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_46" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_47"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/deleteRecord.gif" />
+									<h:outputText id="AUTO_ID_48"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_49" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_50"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/firstrec.gif" />
+									<h:outputText id="AUTO_ID_51"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_52" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_53"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/prevpage.gif" />
+									<h:outputText id="AUTO_ID_54"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_55" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_56"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/nextpage.gif" />
+									<h:outputText id="AUTO_ID_57"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_58" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_59"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText id="AUTO_ID_60"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>-->
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

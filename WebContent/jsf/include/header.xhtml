@@ -1,0 +1,525 @@
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+      xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:f="http://java.sun.com/jsf/core">
+	<f:subview id="header_body">
+	<!-- <script src="../../resources/js/jquery.min.js"></script>
+<script>
+$(function(){ 
+	$('#nav li.top a').on('click', function(e) {
+		$(this).parent().siblings().removeClass('submenu');
+		  $(this).parent().toggleClass('submenu');  
+		  e.stopPropagation();
+	});
+
+	
+	$('html').click(function(){
+	 $("#nav li.submenu").removeClass("submenu");
+	    });
+	}); 
+</script>
+<style>
+#nav li.top ul.sub, #nav li:hover ul.sub, .submenu:focus a ~ ul.sub{
+display:none;
+}
+#nav li {
+    float: left;
+    position: relative;
+}
+#nav li.submenu ul.sub{
+display:block;
+left: 1px;
+    top: 35px;
+    background: #9cb1ce;
+    padding: 3px;
+    border: 1px solid #253448;
+    white-space: nowrap;
+    width: 200px;
+    height: auto;
+    z-index: 300;
+}
+#nav li.submenu ul.sub li a {
+    display: block;
+    font-size: 11px;
+    height: 18px;
+    width: 200px;
+    line-height: 18px;
+    text-indent: 5px;
+    color: #000;
+    text-decoration: none;
+    border: 1px solid #9cb1ce;
+}
+</style> -->
+
+<!-- Added by saritha on 05-04-2018 for KIC Calendar Display -->
+<style>
+.rich-calendar-editor-btn {
+    cursor: pointer;
+    color: #222;
+}
+.rich-calendar-time-btn {
+    color: #222;
+}
+</style>
+<!-- End -->
+   		<table width="100%" border="0" cellpadding="0" cellspacing="0"
+			id="menuhead">
+			<tr>
+				<td width="50%">
+					<h:outputLabel value="#{property.project_name}"/>
+					<sup><h:outputLabel value="#{property.trade_mark}"/></sup>
+					<h:outputLabel value="#{property.product_name}"></h:outputLabel>
+				</td>
+				
+				<td width="10%">
+					<a4j:status layout="block" startStyle="background-color:;height: 20px;font-weight: bold; color: #004080" >
+						<f:facet name="start">
+							<h:graphicImage  value="./../../resources/images/fadingArrowIndicator.gif"/>
+						</f:facet>
+					</a4j:status>
+				</td>
+				
+				<td width="15%" align="center">
+					<h:outputLabel value="Skins:"></h:outputLabel>
+					<rich:spacer width="5"></rich:spacer>
+					<h:selectOneMenu id="COMP_SKINS"										
+											styleClass="forumRowHighlight" title="" onchange="submit();" 											
+											value="#{skinInfoBean.skin}">											
+											<f:selectItem itemLabel="Blue Sky" itemValue="blueSky"  />
+											<f:selectItem itemLabel="Deep Marine" itemValue="deepMarine"  />
+											<f:selectItem itemLabel="Maroon" itemValue="maroon"  />
+											<f:selectItem itemLabel="Wine" itemValue="wine"  />
+					</h:selectOneMenu>
+				</td>
+				
+				<td width="15%" align="right">
+					<rich:dropDownMenu direction="auto" jointPoint="auto">
+						<f:facet name="label">
+							<h:panelGroup>
+								<h:graphicImage value="/resources/images/usericon.gif" styleClass="pic" width="17" height="17"/>
+								<rich:spacer width="3"></rich:spacer>
+								<h:outputText value="#{property.premia_login_label_welcome} #{sessionScope['GLOBAL.M_USER_ID']} :::"/>
+							</h:panelGroup>
+						</f:facet>
+						<rich:menuItem value="Home" id="HOME_MENU" submitMode="ajax" 
+							style="text-align:left"
+							icon="./../../resources/images/homeicon.png">
+							<rich:componentControl
+								id="HOME_COMP_CONTROL1"
+								for="HOME_PANEL" 
+								attachTo="HOME_MENU" 
+								operation="show" 
+								event="onclick"/>
+						</rich:menuItem>
+						<rich:menuItem rendered="false" value="Interface Creator" id="INTERFACE_MENU" action="INTERFACE_CREATOR"></rich:menuItem>
+						<rich:menuItem value="Dashboard Manager" id="DASHBOARD_MANAGER_MENU" style="text-align:left" action="CHART_CREATOR"></rich:menuItem>
+						
+						<!-- Added by Ram on 08/11/2016 for FALCONLIFE-1347884 -->
+						<rich:menuItem value="Change Password" id="CHNG_PW_MENU" style="text-align:left" action="#{SSOAction.changePassword}"></rich:menuItem>
+						<!-- End -->
+						
+						<rich:menuItem value="SSO Setup" id="SSO_MANAGER_MENU" style="text-align:left" action="SSO_MANAGER_SEARCH"></rich:menuItem>
+						<!--<rich:menuItem value="ILLUSTRATOR" id="ILLUSTRATOR" style="text-align:left" action="#{SSOAction.illuslatorAction}"></rich:menuItem>-->
+					<!-- 	<rich:menuItem value="Finance" id="FIN_MENU" submitMode="ajax"  style="text-align:left">
+							<rich:componentControl
+								id="FIN_COMP_CONTROL1"
+								for="FIN_PANEL" 
+								attachTo="FIN_MENU" 
+								operation="show" 
+								event="onclick"/> 
+						</rich:menuItem> -->
+						<!-- [ Dynamic Application Links -->
+						<!-- <ui:repeat id="MENU_APP_LIST"
+							value="#{SSOAction.appDetailList}"
+							var="appDetails"> -->
+						<!-- <c:forEach items="${SSOAction.appDetailList}" var="appDetails"> -->
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 0}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[0].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[0].company},#{SSOAction.ssoDetails.toAppDetailsList[0].branch},#{SSOAction.ssoDetails.toAppDetailsList[0].department}" 
+								id="APP_MENU" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[0].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 1}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[1].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[1].company},#{SSOAction.ssoDetails.toAppDetailsList[1].branch},#{SSOAction.ssoDetails.toAppDetailsList[1].department}" 
+								id="APP_MENU1" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL1"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[1].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL1"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU1" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 2}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[2].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[2].company},#{SSOAction.ssoDetails.toAppDetailsList[2].branch},#{SSOAction.ssoDetails.toAppDetailsList[2].department}" 
+								id="APP_MENU2" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL2"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[2].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL2"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU2" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 3}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[3].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[3].company},#{SSOAction.ssoDetails.toAppDetailsList[3].branch},#{SSOAction.ssoDetails.toAppDetailsList[3].department}" 
+								id="APP_MENU3" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL3"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[3].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL3"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU3" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 4}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[4].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[4].company},#{SSOAction.ssoDetails.toAppDetailsList[4].branch},#{SSOAction.ssoDetails.toAppDetailsList[4].department}" 
+								id="APP_MENU4" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL4"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[4].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL4"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU4" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 5}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[5].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[5].company},#{SSOAction.ssoDetails.toAppDetailsList[5].branch},#{SSOAction.ssoDetails.toAppDetailsList[5].department}" 
+								id="APP_MENU5" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL5"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[5].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL5"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU5" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 6}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[6].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[6].company},#{SSOAction.ssoDetails.toAppDetailsList[6].branch},#{SSOAction.ssoDetails.toAppDetailsList[6].department}" 
+								id="APP_MENU6" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL6"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[6].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL6"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU6" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 7}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[7].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[7].company},#{SSOAction.ssoDetails.toAppDetailsList[7].branch},#{SSOAction.ssoDetails.toAppDetailsList[7].department}" 
+								id="APP_MENU7" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL7"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[7].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL7"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU7" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 8}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[8].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[8].company},#{SSOAction.ssoDetails.toAppDetailsList[8].branch},#{SSOAction.ssoDetails.toAppDetailsList[8].department}" 
+								id="APP_MENU8" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL8"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[8].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL8"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU8" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 9}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[9].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[9].company},#{SSOAction.ssoDetails.toAppDetailsList[9].branch},#{SSOAction.ssoDetails.toAppDetailsList[9].department}" 
+								id="APP_MENU9" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL9"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[9].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL9"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU9" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 10}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[10].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[10].company},#{SSOAction.ssoDetails.toAppDetailsList[10].branch},#{SSOAction.ssoDetails.toAppDetailsList[10].department}" 
+								id="APP_MENU10" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL10"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[10].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL10"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU10" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 11}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[11].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[11].company},#{SSOAction.ssoDetails.toAppDetailsList[11].branch},#{SSOAction.ssoDetails.toAppDetailsList[11].department}" 
+								id="APP_MENU11" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL11"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[11].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL11"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU11" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 12}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[12].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[12].company},#{SSOAction.ssoDetails.toAppDetailsList[12].branch},#{SSOAction.ssoDetails.toAppDetailsList[12].department}" 
+								id="APP_MENU12" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL12"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[12].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL12"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU12" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 13}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[13].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[13].company},#{SSOAction.ssoDetails.toAppDetailsList[13].branch},#{SSOAction.ssoDetails.toAppDetailsList[13].department}" 
+								id="APP_MENU13" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL13"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[13].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL13"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU13" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+							<rich:menuItem
+								rendered="#{SSOAction.ssoDetails.toAppDetailsListSize > 14}" 
+								value="#{SSOAction.ssoDetails.toAppDetailsList[14].appDescription}- #{SSOAction.ssoDetails.toAppDetailsList[14].company},#{SSOAction.ssoDetails.toAppDetailsList[14].branch},#{SSOAction.ssoDetails.toAppDetailsList[14].department}" 
+								id="APP_MENU14" submitMode="ajax" style="text-align:left">
+								<f:setPropertyActionListener 
+									id="APP_URL14"
+									value="#{SSOAction.ssoDetails.toAppDetailsList[14].appHomeURL}" 
+									target="#{SSOAction.selectedAppURL}" />
+								<rich:componentControl
+									id="APP_MENU_COMP_CONTROL14"
+									for="FIN_PANEL" 
+									attachTo="APP_MENU14" 
+									operation="show" 
+									event="onclick"/>
+							</rich:menuItem>
+						<!-- </c:forEach>  -->
+						<!-- </ui:repeat>  -->
+						<!-- Dynamic Application Links ] -->
+						
+						<rich:menuSeparator id="LOGOUT_MENU_SEPARATOR"/>
+						<rich:menuItem value="Logout" id="LOGOUT_MENU" 
+							submitMode="ajax"  style="text-align:left"
+							icon="./../../resources/images/logout.gif">
+							<rich:componentControl
+								id="LOGOUT_COMP_CONTROL"
+								for="LOGOUT_PANEL" 
+								attachTo="LOGOUT_MENU" 
+								operation="show" 
+								event="onclick"/>
+						</rich:menuItem>
+					</rich:dropDownMenu>
+
+					<!-- Confirmation to goto home -->
+					<rich:modalPanel id="FIN_PANEL" width="350" height="120">
+					     <f:facet name="header">
+					         <h:panelGroup>
+					              <h:outputText value="Goto Finance" style="color: #FFFFFF; font-size: 14px;font-weight: bold;"></h:outputText>
+					         </h:panelGroup>
+					     </f:facet>
+					     <f:facet name="controls">
+					         <h:panelGroup>
+					              <h:graphicImage value="./../../resources/images/close.png" 
+					              		style="cursor:pointer" id="FIN_PANEL_hidelink"/>
+					              <rich:componentControl for="FIN_PANEL" 
+						              	attachTo="FIN_PANEL_hidelink" 
+						              	operation="hide" event="onclick"/>
+					         </h:panelGroup>
+					     </f:facet>
+						<table align="center">
+							<tr align="center">
+								<td>
+									<h:outputText value="#{commonmsg.premia$broker$homelink$confirmation$message}"/>
+								</td>
+							</tr>
+							<tr align="center">
+							<td>
+						          <h:commandButton value="OK" id="FIN_PANEL_continuebutton" 
+						          		   styleClass="button"
+						          		   style="width:65px;height:20px;"
+						                   action="#{SSOAction.redirectApplication}">
+						              <rich:componentControl for="FIN_PANEL" 
+						                  attachTo="FIN_PANEL_continuebutton" 
+						                  operation="hide" event="onclick"/>
+						          </h:commandButton>
+						          <rich:spacer width="10" height="25"></rich:spacer>
+						          <a4j:commandButton value="Cancel"
+						          		styleClass="button" 
+						          		style="width:65px;height:20px;"
+						          		id="FIN_PANEL_cancelbutton" immediate="true">
+						               <rich:componentControl for="FIN_PANEL" 
+						               			attachTo="FIN_PANEL_cancelbutton" 
+						               			operation="hide" event="onclick"/>
+						          </a4j:commandButton>
+						          <br/>
+							</td>
+							</tr>
+						</table>
+					</rich:modalPanel>
+					
+					<!-- Confirmation to goto home -->
+					<rich:modalPanel id="HOME_PANEL" width="350" height="120">
+					     <f:facet name="header">
+					         <h:panelGroup>
+					              <h:outputText value="Goto Home" style="color: #FFFFFF; font-size: 14px;font-weight: bold;"></h:outputText>
+					         </h:panelGroup>
+					     </f:facet>
+					     <f:facet name="controls">
+					         <h:panelGroup>
+					              <h:graphicImage value="./../../resources/images/close.png" 
+					              		style="cursor:pointer" id="HOME_PANEL_hidelink"/>
+					              <rich:componentControl for="HOME_PANEL" 
+						              	attachTo="HOME_PANEL_hidelink" 
+						              	operation="hide" event="onclick"/>
+					         </h:panelGroup>
+					     </f:facet>
+						<table align="center">
+							<tr align="center">
+								<td>
+									<h:outputText value="#{commonmsg.premia$broker$homelink$confirmation$message}"/>
+								</td>
+							</tr>
+							<tr align="center">
+							<td>
+						          <h:commandButton value="OK" id="HOME_PANEL_continuebutton" 
+						          		   styleClass="button"
+						          		   style="width:65px;height:20px;"
+						                   action="premia-home">
+						              <rich:componentControl for="HOME_PANEL" 
+						                  attachTo="HOME_PANEL_continuebutton" 
+						                  operation="hide" event="onclick"/>
+						          </h:commandButton>
+						          <rich:spacer width="10" height="25"></rich:spacer>
+						          <a4j:commandButton value="Cancel"
+						          		styleClass="button" 
+						          		style="width:65px;height:20px;"
+						          		id="HOME_PANEL_cancelbutton" immediate="true">
+						               <rich:componentControl for="HOME_PANEL" 
+						               			attachTo="HOME_PANEL_cancelbutton" 
+						               			operation="hide" event="onclick"/>
+						          </a4j:commandButton>
+						          <br/>
+							</td>
+							</tr>
+						</table>
+					</rich:modalPanel>
+
+					<!-- Logout Confirmation -->					
+					<rich:modalPanel id="LOGOUT_PANEL" width="350" height="100">
+					     <f:facet name="header">
+					         <h:panelGroup>
+					              <h:outputText value="Logout" style="color: #FFFFFF; font-size: 14px;font-weight: bold;"></h:outputText>
+					         </h:panelGroup>
+					     </f:facet>
+					     <f:facet name="controls">
+					         <h:panelGroup>
+					              <h:graphicImage value="./../../resources/images/close.png" 
+					              		style="cursor:pointer" id="LOGOUT_PANEL_hidelink"/>
+					              <rich:componentControl for="LOGOUT_PANEL" 
+						              	attachTo="LOGOUT_PANEL_hidelink" 
+						              	operation="hide" event="onclick"/>
+					         </h:panelGroup>
+					     </f:facet>
+						<table align="center">
+							<tr align="center">
+								<td>
+									<h:outputText value="Do you want to exit from the application?"/>
+								</td>
+							</tr>
+							<tr align="center">
+							<td>
+						          <h:commandButton value="OK" id="LOGOUT_PANEL_continuebutton" 
+						          		   styleClass="button"
+						          		   style="width:65px;height:20px;"
+						                   action="#{PremiaMenuToolbar.logoutAction}">
+						              <rich:componentControl for="LOGOUT_PANEL" 
+						                  attachTo="LOGOUT_PANEL_continuebutton" 
+						                  operation="hide" event="onclick"/>
+						          </h:commandButton>
+						          &amp;nbsp;
+						          <a4j:commandButton value="Cancel"
+						          		styleClass="button" 
+						          		style="width:65px;height:20px;"
+						          		id="LOGOUT_PANEL_cancelbutton" immediate="true">
+						               <rich:componentControl for="LOGOUT_PANEL" 
+						               			attachTo="LOGOUT_PANEL_cancelbutton" 
+						               			operation="hide" event="onclick"/>
+						          </a4j:commandButton>
+							</td>
+							</tr>
+						</table>
+					</rich:modalPanel>
+				</td>
+			</tr>
+		</table>
+   </f:subview>
+</ui:composition>

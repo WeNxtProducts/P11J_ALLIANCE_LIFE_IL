@@ -1,0 +1,603 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view beforePhase="#{PILT018_CompositeAction.childAction.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILT018" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 24-Feb-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PT_IL_BROK_ADV_DTL" onkeypress="return event.keyCode != 13">
+				<table class="noborder" width="100%">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILT018_CompositeAction.childAction.saveRecord}"
+											id="AUTO_ID_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_2" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_4" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_10" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILT018_CompositeAction.childAction.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILT018_CompositeAction.childAction.errorMap['current'] !=null? PILT018_CompositeAction.childAction.errorMap['current']:PILT018_CompositeAction.childAction.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILT018_CompositeAction.childAction.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILT018_CompositeAction.childAction.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILT018_CompositeAction.childAction.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+
+						<table class="noborder" id="globalLink" width="100%">
+							<tr>
+								<td><!-- Tab implementation --> <h:inputHidden
+									id="myhidden"
+									value="#{PILT018_CompositeAction.tabbedBar.tabClicked}" /> <h:panelGroup
+									id="mypanel" style="border:0">
+									<table class="noborder" width="100%">
+										<tr>
+											<td width="100%" colspan="2"><a4j:repeat
+												value="#{PILT018_CompositeAction.tabbedBar.currentTabList}"
+												var="currtab">
+
+												<h:commandLink
+													action="#{PILT018_CompositeAction.tabbedBar.tabAction}"
+													disabled="#{currtab.disabled}" id="AUTO_ID_22"
+													onclick="document.getElementById('PT_IL_BROK_ADV_DTL:myhidden').value='#{currtab.id}'"
+													styleClass="#{currtab.styleString}"
+													value="#{currtab.value}" />
+
+											</a4j:repeat></td>
+											
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="3" vAlign="top" width="100%"><h:commandButton
+							action="#{PILT018_CompositeAction.childAction.approveButtonPressed}"
+							binding="#{PILT018_CompositeAction.childAction.COMP_UI_M_BUT_APPOVE_DTL}"
+							disabled="false"
+							id="UI_M_BUT_APPOVE_DTL" immediate="true" rendered="true"
+							styleClass="button" title=""
+							value="#{message.PILT018$PT_IL_BROK_ADV_HDR$UI_M_BUT_APPROVE$caption}">
+						</h:commandButton></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td class="oddrowright">Advance Details</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 460px; overflow: auto;">
+						<table align="center" class="noborder" width="100%">
+							<tr>
+
+								<td vAlign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+
+									<tr>
+										<td colspan="3">
+										<div style="height: 420px; overflow: auto;">
+										<table class="noborder" width="100%">
+											<tr>
+												<td vAlign="top" width="100%"><h:panelGroup
+													id="sectionDtls" style="border:0;height:15%;">
+													<table align="left" class="noborder" width="100%">
+
+														<tr>
+															<td colspan="5"><rich:dataTable
+																binding="#{PILT018_CompositeAction.childAction.dataTable}"
+																id="dataTableId" rows="5"
+																value="#{PILT018_CompositeAction.childAction.beanList}"
+																var="dataTable" width="100%">
+																<!-- next column -->
+																<rich:column filterBy="#{dataTable.BAD_FC_AMT}"
+																	filterEvent="onkeyup"
+																	filterValue="#{PILT018_CompositeAction.childAction.filterByBAD_FC_AMT}"
+																	sortBy="#{dataTable.BAD_FC_AMT}"
+																	styleClass="#{dataTable.rowSelected}">
+																	<f:facet name="header">
+																		<h:outputText id="AUTO_ID_27"
+																			styleClass="forumRowHighlight"
+																			value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_FC_AMT$caption}" />
+																	</f:facet>
+																	<a4j:commandLink
+																		action="#{PILT018_CompositeAction.childAction.displayRecords}"
+																		immediate="true" reRender="sectionDtls">
+
+																		<h:outputText id="AUTO_ID_28"
+																			value="#{dataTable.BAD_FC_AMT} " />
+
+																	</a4j:commandLink>
+																</rich:column>
+																<!-- next column -->
+
+																<!-- next column -->
+																<rich:column filterBy="#{dataTable.BAD_LC_AMT}"
+																	filterEvent="onkeyup"
+																	filterValue="#{PILT018_CompositeAction.childAction.filterByBAD_LC_AMT}"
+																	sortBy="#{dataTable.BAD_LC_AMT}"
+																	styleClass="#{dataTable.rowSelected}">
+																	<f:facet name="header">
+																		<h:outputText id="AUTO_ID_29"
+																			styleClass="forumRowHighlight"
+																			value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_LC_AMT$caption}" />
+																	</f:facet>
+																	<h:outputText id="AUTO_ID_30"
+																		value="#{dataTable.BAD_LC_AMT} " />
+																</rich:column>
+																<!-- Attach scroller as footer of the table-->
+																<f:facet name="footer">
+																	<h:panelGroup id="footerpanel" style="border:0">
+																		<rich:datascroller align="right" id="d1" />
+																		<a4j:commandButton
+																			actionListener="#{PILT018_CompositeAction.childAction.addRow}"
+																			binding="#{PILT018_CompositeAction.childAction.UI_M_BUT_ADD}"
+																			id="AUTO_ID_31" immediate="true"
+																			reRender="errorPanel,sectionDtls" rendered="true"
+																			style="width:81px" styleClass="button"
+																			value="#{commonmsg.addNewButtonCaption}" />
+																		<a4j:commandButton
+																			actionListener="#{PILT018_CompositeAction.childAction.deleteRow}"
+																			binding="#{PILT018_CompositeAction.childAction.UI_M_BUT_DELETE}"
+																			disabled="false" id="AUTO_ID_32" immediate="true"
+																			reRender="errorPanel,sectionDtls" rendered="true"
+																			style="width:81px" styleClass="button"
+																			value="#{commonmsg.deleteButtonCaption}" />
+																		<a4j:commandButton
+																			actionListener="#{PILT018_CompositeAction.childAction.postRecord}"
+																			binding="#{PILT018_CompositeAction.childAction.UI_M_BUT_POST}"
+																			disabled="false" id="AUTO_ID_33" immediate="true"
+																			reRender="errorPanel,sectionDtls" rendered="true"
+																			style="width:81px" styleClass="button"
+																			value="#{commonmsg.postButtonCaption}" />
+																	</h:panelGroup>
+																</f:facet>
+															</rich:dataTable></td>
+														</tr>
+														<tr>
+															<td class="oddrowright"><h:outputLabel
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_DUE_DT_LABEL}"
+																for="BAD_DUE_DT" id="BAD_DUE_DT_LABEL"
+																styleClass="label"
+																value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_DUE_DT$caption}" />
+															</td>
+															<td class="oddrow"><rich:calendar
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_DUE_DT}"
+																datePattern="#{PILT018_CompositeAction.childAction.datePattern}"
+																disabled="true" enableManualInput="true" id="BAD_DUE_DT"
+																styleClass="calendarinput" title="Enter Repayment Due Date"
+																inputSize="18" 
+																validator="#{PILT018_CompositeAction.childAction.bad_due_dt_when_validate_item}"
+																value="#{PILT018_CompositeAction.childAction.PT_IL_BROK_ADV_DTL_BEAN.BAD_DUE_DT}">
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="oninputblur" id="BAH_INST_FM_DT_AJAX_SUPPORT"
+																	immediate="true"
+																	onsubmit="formatDate('PT_IL_BROK_ADV_DTL:BAD_DUE_DT')"
+																	reRender="errorPanel" />
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="oninputchanged" id="BAH_INST_FM_DT_AJAX_SUPPORT1"
+																	immediate="true"
+																	reRender="errorPanel" />
+															</rich:calendar></td>
+															<td class="oddrowright"><h:outputLabel
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_FC_AMT_LABEL}"
+																for="BAD_FC_AMT" id="BAD_FC_AMT_LABEL"
+																styleClass="label"
+																value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_FC_AMT$caption}" />
+															</td>
+															<td class="oddrow"><h:inputText
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_FC_AMT}"
+																disabled="true" id="BAD_FC_AMT" styleClass="inputNumeric"
+																title="Enter the value of FC Amt" maxlength="7" 
+																validator="#{PILT018_CompositeAction.childAction.bad_fc_amt_when_validate_item}"
+																value="#{PILT018_CompositeAction.childAction.PT_IL_BROK_ADV_DTL_BEAN.BAD_FC_AMT}">
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="onblur" id="AUTO_ID_34" immediate="true"
+																	reRender="errorPanel,BAD_LC_AMT" 
+																	oncomplete="setFocus('PT_IL_BROK_ADV_DTL:BAD_LC_AMT','PT_IL_BROK_ADV_DTL:BAD_FC_AMT')"/>
+															</h:inputText></td>
+														</tr>
+
+														<tr>
+															<td class="evenrowright"><h:outputLabel
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_LC_AMT_LABEL}"
+																for="BAD_LC_AMT" id="BAD_LC_AMT_LABEL"
+																styleClass="label"
+																value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_LC_AMT$caption}" />
+															</td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_LC_AMT}"
+																disabled="true" id="BAD_LC_AMT" styleClass="inputNumeric"
+																title="Enter the value of LC Amount"
+																maxlength="7" 
+																validator="#{PILT018_CompositeAction.childAction.bad_lc_amt_when_validate_item}"
+																value="#{PILT018_CompositeAction.childAction.PT_IL_BROK_ADV_DTL_BEAN.BAD_LC_AMT}">
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="onblur" id="AUTO_ID_35" immediate="true"
+																	reRender="errorPanel" />
+															</h:inputText></td>
+															<td class="evenrowright"><h:outputLabel
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_PAID_DT_LABEL}"
+																for="BAD_PAID_DT" id="BAD_PAID_DT_LABEL"
+																styleClass="label"
+																value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_PAID_DT$caption}" />
+															</td>
+															<td class="evenrow"><rich:calendar
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_PAID_DT}"
+																datePattern="#{PILT018_CompositeAction.childAction.datePattern}"
+																disabled="true" id="BAD_PAID_DT" title="Enter Paid Date"
+																inputClass="calendarinput" inputSize="18"
+																validator="#{PILT018_CompositeAction.childAction.bad_paid_dt_when_validate_item}"
+																value="#{PILT018_CompositeAction.childAction.PT_IL_BROK_ADV_DTL_BEAN.BAD_PAID_DT}">
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="oninputblur" id="BAH_BAD_PAID_DT_AJAX_SUPPORT"
+																	immediate="true"
+																	onsubmit="formatDate('PT_IL_BROK_ADV_DTL:BAD_PAID_DT')"
+																	reRender="errorPanel" />
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="oninputchanged" id="BAH_BAD_PAID_DT_AJAX_SUPPORT1"
+																	immediate="true"
+																	reRender="errorPanel" />
+															</rich:calendar></td>
+														</tr>
+
+														<tr>
+															<td class="oddrowright"><h:outputLabel
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_FC_COMM_AMT_LABEL}"
+																for="BAD_FC_COMM_AMT" id="BAD_FC_COMM_AMT_LABEL"
+																styleClass="label"
+																value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_FC_COMM_AMT$caption}" />
+															</td>
+															<td class="oddrow"><h:inputText
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_FC_COMM_AMT}"
+																disabled="true"  
+																id="BAD_FC_COMM_AMT" styleClass="inputNumeric"
+																maxlength="7" 
+																validator="#{PILT018_CompositeAction.childAction.bad_fc_comm_amt_when_validate_item}"
+																title="Enter the value of FC Commission Amt"
+																value="#{PILT018_CompositeAction.childAction.PT_IL_BROK_ADV_DTL_BEAN.BAD_FC_COMM_AMT}">
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="onblur" id="AUTO_ID_36" immediate="true"
+																	reRender="BAD_LC_COMM_AMT,BAD_STATUS,errorPanel" 
+																	oncomplete="setFocus('PT_IL_BROK_ADV_DTL:BAD_LC_COMM_AMT','PT_IL_BROK_ADV_DTL:BAD_FC_COMM_AMT')"/>
+															<f:converter converterId="PELNumberFormatter" />
+															</h:inputText></td>
+															<td class="oddrowright"><h:outputLabel
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_LC_COMM_AMT_LABEL}"
+																for="BAD_LC_COMM_AMT" id="BAD_LC_COMM_AMT_LABEL"
+																styleClass="label"
+																value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_LC_COMM_AMT$caption}" />
+															</td>
+															<td class="oddrow"><h:inputText
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_LC_COMM_AMT}"
+																disabled="true" id="BAD_LC_COMM_AMT" styleClass="inputNumeric"
+																maxlength="7" 
+																title="Enter the value of LC Comm Amr"
+																validator="#{PILT018_CompositeAction.childAction.bad_lc_comm_amt_when_validate_item}"
+																value="#{PILT018_CompositeAction.childAction.PT_IL_BROK_ADV_DTL_BEAN.BAD_LC_COMM_AMT}">
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="onblur" id="AUTO_ID_37" immediate="true"
+																	reRender="errorPanel" />
+																<f:converter converterId="PELNumberFormatter" />
+															</h:inputText></td>
+														</tr>
+														<tr>
+															<td class="evenrowright"><h:outputLabel
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_STATUS_LABEL}"
+																for="BAD_STATUS" id="BAD_STATUS_LABEL"
+																styleClass="label"
+																value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_STATUS$caption}" />
+															</td>
+															<td class="evenrow"><h:selectOneMenu
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_STATUS}"
+																id="BAD_STATUS" styleClass="input"
+																title="Select the Recovered Yes/No"
+																value="#{PILT018_CompositeAction.childAction.PT_IL_BROK_ADV_DTL_BEAN.BAD_STATUS}"
+																validator="#{PILT018_CompositeAction.childAction.bad_status_validator}">
+																<f:selectItems id="AUTO_ID_38"
+																	value="#{PILT018_CompositeAction.childAction.SELECT_BAD_STATUS_LIST}" />
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.bad_status_when_list_changed}"
+																	event="onchange" id="AUTO_ID_39" immediate="true"
+																	reRender="errorPanel,BAD_PAID_DT,BAD_FC_COMM_AMT,BAD_LC_COMM_AMT" />
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="onblur" id="AUTO_ID_3719012" immediate="true"
+																	reRender="errorPanel" />
+															</h:selectOneMenu></td>
+															<td class="evenrowright"><h:outputLabel
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_REMARKS_LABEL}"
+																for="BAD_REMARKS" id="BAD_REMARKS_LABEL"
+																styleClass="label"
+																value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_REMARKS$caption}" />
+															</td>
+															<td class="evenrow"><h:inputText
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_REMARKS}"
+																id="BAD_REMARKS" styleClass="input" maxlength="2000" 
+																title="Enter the value of Remarks"
+																validator="#{PILT018_CompositeAction.childAction.bad_remarks_when_validate_item}"
+																value="#{PILT018_CompositeAction.childAction.PT_IL_BROK_ADV_DTL_BEAN.BAD_REMARKS}">
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="onblur" id="AUTO_ID_3790212" immediate="true"
+																	reRender="errorPanel" />
+																</h:inputText>
+															</td>
+														</tr>
+														<tr>
+															<td class="oddrowright"><h:outputLabel
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_TXN_CODE_LABEL}"
+																for="BAD_TXN_CODE" id="BAD_TXN_CODE_LABEL"
+																styleClass="label"
+																value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_TXN_CODE$caption}" />
+															</td>
+															<td class="oddrow"><h:inputText
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_TXN_CODE}"
+																disabled="true" id="BAD_TXN_CODE" styleClass="inputNumeric" maxlength="12"
+																title="Enter the value of Txn Code"
+																validator="#{PILT018_CompositeAction.childAction.bad_txn_code_when_validate_item}"
+																value="#{PILT018_CompositeAction.childAction.PT_IL_BROK_ADV_DTL_BEAN.BAD_TXN_CODE}">
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="onblur" id="AUTO_ID_367212" immediate="true"
+																	reRender="errorPanel" />
+																</h:inputText>
+															</td>
+															<td class="oddrowright"><h:outputLabel
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_DOC_NO_LABEL}"
+																for="BAD_DOC_NO" id="BAD_DOC_NO_LABEL"
+																styleClass="label"
+																value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_DOC_NO$caption}" />
+															</td>
+															<td class="oddrow"><h:inputText
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_DOC_NO}"
+																disabled="true" id="BAD_DOC_NO" styleClass="inputNumeric" maxlength="7"
+																validator="#{PILT018_CompositeAction.childAction.bad_doc_no_when_validate_item}"
+																title="Enter the value of Doc No"
+																value="#{PILT018_CompositeAction.childAction.PT_IL_BROK_ADV_DTL_BEAN.BAD_DOC_NO}">
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="onblur" id="AUTO_ID_371212" immediate="true"
+																	reRender="errorPanel"
+																	oncomplete="setFocus('PT_IL_BROK_ADV_DTL:BAD_FC_AMT','PT_IL_BROK_ADV_DTL:BAD_DOC_NO')" />
+																</h:inputText></td>
+														</tr>
+														<tr>
+															<td class="evenrowright"><h:outputLabel
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_DOC_DT_LABEL}"
+																for="BAD_DOC_DT" id="BAD_DOC_DT_LABEL"
+																styleClass="label"
+																value="#{message.PILT018$PT_IL_BROK_ADV_DTL$BAD_DOC_DT$caption}" />
+															</td>
+															<td class="evenrow"><rich:calendar
+																binding="#{PILT018_CompositeAction.childAction.COMP_BAD_DOC_DT}"
+																datePattern="#{PILT018_CompositeAction.childAction.datePattern}"
+																disabled="true" id="BAD_DOC_DT"
+																title="Enter the Document Date"
+																validator="#{PILT018_CompositeAction.childAction.bad_doc_date_when_validate_item}"
+																inputClass="calendarinput" inputSize="18"
+																value="#{PILT018_CompositeAction.childAction.PT_IL_BROK_ADV_DTL_BEAN.BAD_DOC_DT}">
+																<a4j:support
+																	actionListener="#{PILT018_CompositeAction.childAction.fireFieldValidation}"
+																	event="onblur" id="AUTO_ID_37121212" immediate="true"
+																	reRender="errorPanel"
+																	/>
+																
+																</rich:calendar></td>
+														</tr>
+
+
+													</table>
+												</h:panelGroup></td>
+											</tr>
+										</table>
+										</div>
+										</td>
+									</tr>
+								</table>
+
+								</td>
+
+							</tr>
+							<tr>
+								<td colspan="3" width="100%"><rich:toolBar
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILT018_CompositeAction.childAction.when_PressSave_Button}"
+											id="AUTO_ID_43" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_44"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_45"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_46" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_47"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_48"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_49" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_50"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_51"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_52" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_53"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_54"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_55" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_56"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_57"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_58" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_59"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_60"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_61" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_62"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_63"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+
+						</table>
+
+						</div>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

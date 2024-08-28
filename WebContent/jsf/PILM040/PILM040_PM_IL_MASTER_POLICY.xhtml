@@ -1,0 +1,536 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM040_PM_IL_MASTER_POLICY_ACTION.onLoad}"
+		 locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM040" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+
+			<h:form id="PM_IL_MASTER_POLICY">
+				<table class="noborder" width="100%">
+					<tr>
+					</tr>
+
+
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM040_PM_IL_MASTER_POLICY_ACTION.back}"
+											id="AUTO_ID_1" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_2"
+												styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM040_PM_IL_MASTER_POLICY_ACTION.save}"
+											id="AUTO_ID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_5"
+												styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM040_PM_IL_MASTER_POLICY_ACTION.Update}"
+											id="AUTO_ID_7" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_8"
+												styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM040_PM_IL_MASTER_POLICY_ACTION.Delete}"
+											id="AUTO_ID_10" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_11"
+												styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM040_PM_IL_MASTER_POLICY_ACTION.fetch}"
+											id="AUTO_ID_13" immediate="true" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_14"
+												styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_17"
+												styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_20"
+												styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_22" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_23"
+												styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_24"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM040_PM_IL_MASTER_POLICY_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM040_PM_IL_MASTER_POLICY_ACTION.errorMap['current'] !=null? PILM040_PM_IL_MASTER_POLICY_ACTION.errorMap['current']:PILM040_PM_IL_MASTER_POLICY_ACTION.warningMap['current']}" />
+
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM040_PM_IL_MASTER_POLICY_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.warningMessages}" />
+
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="width: 100%; height: 490px; overflow: auto;">
+						<table align="center" class="noborder" width="100%">
+							<tr>
+								<td vAlign="top" width="90%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_CUST_CODE_LABEL}"
+											for="MP_CUST_CODE" id="MP_CUST_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM040$PM_IL_MASTER_POLICY$MP_CUST_CODE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_CUST_CODE}"
+											disabled="true" id="MP_CUST_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$MP_CUST_CODE$tooltip}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.MP_CUST_CODE}">
+											<a4j:support
+												actionListener="#{PILM040_PM_IL_MASTER_POLICY_ACTION.MP_PROD_CODE_EVENT}"
+												event="onblur" id="AUTO_ID_25" immediate="true"
+												reRender="errorPanel,MP_CUST_CODE">
+											</a4j:support>
+										</h:inputText> <h:inputText
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_UI_M_MP_CUST_CODE_DESC}"
+											disabled="true" id="UI_M_MP_CUST_CODE_DESC" maxlength="60"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$UI_M_MP_CUST_CODE_DESC$prompt}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.UI_M_MP_CUST_CODE_DESC}" />
+										</td>
+										<td class="oddrow" />
+										<td class="oddrow" />
+										<td class="oddrow" />
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_PROD_CODE_LABEL}"
+											for="MP_PROD_CODE" id="MP_PROD_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM040$PM_IL_MASTER_POLICY$MP_PROD_CODE$caption}" />
+										<h:graphicImage id="AUTO_ID_26" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><h:inputText required="true"
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_PROD_CODE}"
+											id="MP_PROD_CODE" immediate="true" maxlength="12"
+											rendered="true" styleClass="inputsmall"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$MP_PROD_CODE$tooltip}"
+											validator="#{PILM040_PM_IL_MASTER_POLICY_ACTION.validateMP_PRODUCT_CODE}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.MP_PROD_CODE}">
+											<a4j:support
+												actionListener="#{PILM040_PM_IL_MASTER_POLICY_ACTION.MP_PROD_CODE_EVENT}"
+												event="onblur" id="AUTO_ID_27" immediate="true"
+												reRender="errorPanel,UI_M_MP_PROD_CODE_DESC,MP_PROD_CODE_SUGG">
+											</a4j:support>
+										</h:inputText> <rich:suggestionbox for="MP_PROD_CODE" height="400"
+											id="MP_PROD_CODE_SUGG"
+											suggestionAction="#{PILM040_PM_IL_MASTER_POLICY_ACTION.getLovForProductCode}"
+											var="MP_PROD_CODE" width="225">
+											<h:column>
+												<h:outputText id="AUTO_ID_28"
+													value="#{MP_PROD_CODE.MP_PROD_CODE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTO_ID_29"
+													value="#{MP_PROD_CODE.UI_M_MP_PROD_CODE_DESC}" />
+											</h:column>
+											<a4j:support ajaxSingle="true" event="onselect"
+															id="COMP_1_MP_PROD_CODE_SUGG" immediate="true"
+															reRender="errorPanel,UI_M_MP_PROD_CODE_DESC">
+															<f:setPropertyActionListener id="AUTOID_12VB"
+																target="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.UI_M_MP_PROD_CODE_DESC}"
+																value="#{MP_PROD_CODE.MP_PROD_CODE}" />
+														</a4j:support>
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_UI_M_MP_PROD_CODE_DESC}"
+											disabled="false" id="UI_M_MP_PROD_CODE_DESC" maxlength="60"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$UI_M_MP_PROD_CODE_DESC$tooltip}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.UI_M_MP_PROD_CODE_DESC}" />
+										<h:graphicImage id="AUTO_ID_30" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+										<td class="evenrow" />
+										<td class="evenrow" />
+										<td class="evenrow" />
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_POL_NO_LABEL}"
+											for="MP_POL_NO" id="MP_POL_NO_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM040$PM_IL_MASTER_POLICY$MP_POL_NO$caption}" />
+										<h:graphicImage id="AUTO_ID_31" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_POL_NO}"
+											disabled="false" id="MP_POL_NO" immediate="true"
+											maxlength="15" rendered="true" required="true"
+											styleClass="input"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$MP_POL_NO$prompt}"
+											validator="#{PILM040_PM_IL_MASTER_POLICY_ACTION.validateMP_MP_POL_NO}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.MP_POL_NO}" />
+										</td>
+										<td class="oddrowright"></td>
+										<td class="oddrowright"></td>
+										<td class="oddrowright"></td>
+
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_ISSUE_DT_LABEL}"
+											for="MP_ISSUE_DT" id="MP_ISSUE_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM040$PM_IL_MASTER_POLICY$MP_ISSUE_DT$caption}" />
+										<h:graphicImage id="AUTO_ID_32" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_ISSUE_DT}"
+											datePattern="#{PILM040_PM_IL_MASTER_POLICY_ACTION.datePattern}"
+											disabled="false" enableManualInput="true" id="MP_ISSUE_DT"
+											inputClass="calendarinput" inputSize="11" rendered="true"
+											required="true"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$MP_ISSUE_DT$tooltip}"
+											validator="#{PILM040_PM_IL_MASTER_POLICY_ACTION.validateMP_ISSUE_DATE}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.MP_ISSUE_DT}">
+											<a4j:support
+												actionListener="#{PILM040_PM_IL_MASTER_POLICY_ACTION.MP_PROD_CODE_EVENT}"
+												event="oninputblur" id="date_1" immediate="true"
+												onsubmit="formatDate('PM_IL_MASTER_POLICY:MP_ISSUE_DT')"
+												reRender="err,errorMessages,errorPanel,MP_ISSUE_DT">
+											</a4j:support>
+											<a4j:support
+												actionListener="#{PILM040_PM_IL_MASTER_POLICY_ACTION.MP_PROD_CODE_EVENT}"
+												event="oninputchanged" id="date_2" immediate="true"
+												reRender="err,errorMessages,errorPanel,MP_ISSUE_DT">
+											</a4j:support>
+										</rich:calendar></td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_POL_FM_DT_LABEL}"
+											for="MP_POL_FM_DT" id="MP_POL_FM_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM040$PM_IL_MASTER_POLICY$MP_POL_FM_DT$caption}" />
+										</td>
+										<td class="evenrow"><rich:calendar
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_POL_FM_DT}"
+											datePattern="#{PILM040_PM_IL_MASTER_POLICY_ACTION.datePattern}"
+											disabled="false" enableManualInput="true" id="MP_POL_FM_DT"
+											inputClass="calendarinput" inputSize="11" rendered="true"
+											required="false"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$MP_POL_FM_DT$tooltip}"
+											validator="#{PILM040_PM_IL_MASTER_POLICY_ACTION.validateMP_POL_FROM_DATE}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.MP_POL_FM_DT}">
+											<a4j:support
+												actionListener="#{PILM040_PM_IL_MASTER_POLICY_ACTION.MP_PROD_CODE_EVENT}"
+												event="oninputblur" id="date_3" immediate="true"
+												onsubmit="formatDate('PM_IL_MASTER_POLICY:MP_POL_FM_DT')"
+												reRender="err,errorMessages,errorPanel,MP_POL_FM_DT">
+											</a4j:support>
+											<a4j:support
+												actionListener="#{PILM040_PM_IL_MASTER_POLICY_ACTION.MP_PROD_CODE_EVENT}"
+												event="oninputchanged" id="date_4" immediate="true"
+												reRender="err,errorMessages,errorPanel,MP_POL_FM_DT">
+											</a4j:support>
+										</rich:calendar></td>
+										<td class="evenrowright"></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_LC_MAX_TPD_BNF_LABEL}"
+											for="MP_LC_MAX_TPD_BNF" id="MP_LC_MAX_TPD_BNF_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM040$PM_IL_MASTER_POLICY$MP_LC_MAX_TPD_BNF$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_LC_MAX_TPD_BNF}"
+											disabled="false" id="MP_LC_MAX_TPD_BNF" immediate="true"
+											maxlength="15" rendered="true" required="false"
+											styleClass="inputNumeric" title="Enter Maximum TPD Benefit"
+											validator="#{PILM040_PM_IL_MASTER_POLICY_ACTION.validateMP_LC_MAX_TPD_BNF}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.MP_LC_MAX_TPD_BNF}" />
+										</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_PRE_TPD_BNF_MONTHS_LABEL}"
+											for="MP_PRE_TPD_BNF_MONTHS" id="MP_PRE_TPD_BNF_MONTHS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM040$PM_IL_MASTER_POLICY$MP_PRE_TPD_BNF_MONTHS$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_PRE_TPD_BNF_MONTHS}"
+											disabled="false" id="MP_PRE_TPD_BNF_MONTHS" immediate="true"
+											maxlength="3" rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$MP_PRE_TPD_BNF_MONTHS$prompt}"
+											validator="#{PILM040_PM_IL_MASTER_POLICY_ACTION.validateMP_PRE_TPD_BNF_MONTHS}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.MP_PRE_TPD_BNF_MONTHS}" />
+										</td>
+										<td class="oddrowright"></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_LC_FUNERAL_EXP_LMT_LABEL}"
+											for="MP_LC_FUNERAL_EXP_LMT" id="MP_LC_FUNERAL_EXP_LMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM040$PM_IL_MASTER_POLICY$MP_LC_FUNERAL_EXP_LMT$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_LC_FUNERAL_EXP_LMT}"
+											disabled="false" id="MP_LC_FUNERAL_EXP_LMT" immediate="true"
+											maxlength="15" rendered="true" required="false"
+											styleClass="inputNumeric"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$MP_LC_FUNERAL_EXP_LMT$tooltip}"
+											validator="#{PILM040_PM_IL_MASTER_POLICY_ACTION.validateMP_LC_FUNERAL_EXP_LMT}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.MP_LC_FUNERAL_EXP_LMT}" />
+										</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_LC_FUNERAL_EXP_AMT_LABEL}"
+											for="MP_LC_FUNERAL_EXP_AMT" id="MP_LC_FUNERAL_EXP_AMT_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM040$PM_IL_MASTER_POLICY$MP_LC_FUNERAL_EXP_AMT$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_LC_FUNERAL_EXP_AMT}"
+											disabled="false" id="MP_LC_FUNERAL_EXP_AMT" immediate="true"
+											maxlength="15" rendered="true" required="false"
+											styleClass="inputNumeric"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$MP_LC_FUNERAL_EXP_AMT$tooltip}"
+											validator="#{PILM040_PM_IL_MASTER_POLICY_ACTION.validateMP_LC_FUNERAL_EXP_AMT}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.MP_LC_FUNERAL_EXP_AMT}" />
+										</td>
+										<td class="evenrowright"></td>
+
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_CLM_INTM_DAYS_LABEL}"
+											for="MP_CLM_INTM_DAYS" id="MP_CLM_INTM_DAYS_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PILM040$PM_IL_MASTER_POLICY$MP_CLM_INTM_DAYS$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_CLM_INTM_DAYS}"
+											disabled="false" id="MP_CLM_INTM_DAYS" immediate="true"
+											maxlength="3" rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$MP_CLM_INTM_DAYS$prompt}"
+											validator="#{PILM040_PM_IL_MASTER_POLICY_ACTION.validateMP_CLM_INTM_DAYS}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.MP_CLM_INTM_DAYS}" />
+										</td>
+										<td class="oddrowright"></td>
+										<td class="oddrowright"></td>
+										<td class="oddrowright"></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_NOTICE_PRD_LABEL}"
+											for="MP_NOTICE_PRD" id="MP_NOTICE_PRD_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM040$PM_IL_MASTER_POLICY$MP_NOTICE_PRD$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_NOTICE_PRD}"
+											disabled="false" id="MP_NOTICE_PRD" immediate="true"
+											maxlength="3" rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$MP_NOTICE_PRD$tooltip}"
+											validator="#{PILM040_PM_IL_MASTER_POLICY_ACTION.validateMP_NOTICE_PRD}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.MP_NOTICE_PRD}" />
+										</td>
+										<td class="evenrowright"></td>
+										<td class="evenrowright"></td>
+										<td class="evenrowright"></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_LC_FCL_LABEL}"
+											for="MP_LC_FCL" id="MP_LC_FCL_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM040$PM_IL_MASTER_POLICY$MP_LC_FCL$caption}" />
+										<h:graphicImage id="AUTO_ID_33" style=""
+											styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM040_PM_IL_MASTER_POLICY_ACTION.COMP_MP_LC_FCL}"
+											disabled="false" id="MP_LC_FCL" maxlength="15"
+											rendered="true" required="true" styleClass="inputNumeric"
+											title="#{message.PILM040$PM_IL_MASTER_POLICY$MP_LC_FCL$prompt}"
+											value="#{PILM040_PM_IL_MASTER_POLICY_ACTION.PM_IL_MASTER_POLICY_BEAN.MP_LC_FCL}" />
+										</td>
+										<td class="oddrowright"></td>
+										<td class="oddrowright"></td>
+										<td class="oddrowright"></td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup location="right"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM040_PM_IL_MASTER_POLICY_ACTION.save}"
+											id="AUTO_ID_34" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_35"
+												styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_36"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM040_PM_IL_MASTER_POLICY_ACTION.Update}"
+											id="AUTO_ID_37" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_38"
+												styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_39"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM040_PM_IL_MASTER_POLICY_ACTION.Delete}"
+											id="AUTO_ID_40" style="text-decoration:none" rendered="false"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_41"
+												styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_42"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM040_PM_IL_MASTER_POLICY_ACTION.fetch}"
+											id="AUTO_ID_43" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_44"
+												styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_45"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_46" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_47"
+												styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_48"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_49" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_50"
+												styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_51"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_52" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_53"
+												styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_54"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

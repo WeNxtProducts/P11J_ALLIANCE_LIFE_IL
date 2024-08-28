@@ -1,0 +1,654 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+		beforePhase="#{PP_LIST_ITEM_ACTION.onLoad}">
+			<f:loadBundle basename="messageProperties_PP_LIST_ITEM" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<h:form id="PP_LIST_ITEM">
+				<table class="noborder" width="100%">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink action="#{PP_LIST_ITEM_ACTION.backToSearch}"
+											id="AUTO_ID_1" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_2"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="AUTO_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink action="#{PP_LIST_ITEM_ACTION.saveAndCommit}"
+											id="AUTO_ID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTO_ID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTO_ID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_10" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTO_ID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTO_ID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_16" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_17"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/prevpage.gif" />
+											<h:outputText id="AUTO_ID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_19" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_20"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTO_ID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTO_ID_22" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTO_ID_23"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTO_ID_24"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PP_LIST_ITEM_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PP_LIST_ITEM_ACTION.errorMap['current'] !=null? PP_LIST_ITEM_ACTION.errorMap['current']:PP_LIST_ITEM_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PP_LIST_ITEM_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PP_LIST_ITEM_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PP_LIST_ITEM_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><h:outputText id="HDR_ID_1" value="PP List Item" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%">
+						<div style="width: 100%; height: 460px; overflow: auto;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td />
+								<td vAlign="top" width="100%"><h:panelGroup id="pplistitem"
+									style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+
+
+										<!-- Data Table -->
+										<tr>
+											<td colspan="5"><rich:dataTable
+												binding="#{PP_LIST_ITEM_ACTION.listItemDataTable}"
+												id="PP_LIST_ITEM_DATA" rendered="true" rows="2"
+												value="#{PP_LIST_ITEM_ACTION.listItemList}" var="LIST_ITEM"
+												width="100%">
+												<rich:column filterBy="#{LIST_ITEM.LI_MODULE_NAME}"
+													filterEvent="onkeyup" id="COLUMN_LI_MODULE_NAME"
+													rendered="true" sortBy="#{LIST_ITEM.LI_MODULE_NAME}"
+													styleClass="#{LIST_ITEM.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_LI_MODULE_NAME_1"
+															styleClass="forumRowHighlight"
+															value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_MODULE_NAME$caption }" />
+													</f:facet>
+													<a4j:commandLink
+														action="#{PP_LIST_ITEM_ACTION.displayRecords}"
+														immediate="true" reRender="pplistitem,pplistitemfooter">
+
+														<h:outputText id="AUTO_ID_25"
+															value="#{LIST_ITEM.LI_MODULE_NAME}" />
+
+													</a4j:commandLink>
+												</rich:column>
+
+												<rich:column filterBy="#{LIST_ITEM.LI_BLOCK_NAME}"
+													filterEvent="onkeyup" id="COLUMN_LI_BLOCK_NAME"
+													rendered="true" sortBy="#{LIST_ITEM.LI_BLOCK_NAME}"
+													styleClass="#{LIST_ITEM.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_26"
+															styleClass="forumRowHighlight"
+															value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_BLOCK_NAME$caption}" />
+													</f:facet>
+													<h:outputText id="AUTO_ID_27"
+														value="#{LIST_ITEM.LI_BLOCK_NAME}" />
+
+												</rich:column>
+
+												<rich:column filterBy="#{LIST_ITEM.LI_ITEM_NAME}"
+													filterEvent="onkeyup" id="COLUMN_LI_ITEM_NAME"
+													rendered="true" sortBy="#{LIST_ITEM.LI_ITEM_NAME}"
+													styleClass="#{LIST_ITEM.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_28"
+															styleClass="forumRowHighlight"
+															value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_ITEM_NAME$caption}" />
+													</f:facet>
+													<h:outputText id="AUTO_ID_29"
+														value="#{LIST_ITEM.LI_ITEM_NAME}" />
+
+												</rich:column>
+
+												<rich:column filterBy="#{LIST_ITEM.LI_SYS_PARAM}"
+													filterEvent="onkeyup" id="COLUMN_LI_SYS_PARAM"
+													rendered="true" sortBy="#{LIST_ITEM.LI_SYS_PARAM}"
+													styleClass="#{LIST_ITEM.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_30"
+															styleClass="forumRowHighlight"
+															value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_SYS_PARAM$caption}" />
+													</f:facet>
+													<h:outputText id="AUTO_ID_31"
+														value="#{LIST_ITEM.LI_SYS_PARAM}" />
+
+												</rich:column>
+												<f:facet name="footer">
+													<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+														<rich:datascroller align="right" />
+														<a4j:commandButton
+															actionListener="#{PP_LIST_ITEM_ACTION.addRow}"
+															id="addRow" immediate="true"
+															reRender="pplistitem,pplistitemfooter,errorPanel"
+															rendered="true" style="width:80px;" styleClass="button"
+															value="#{commonmsg.addNewButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PP_LIST_ITEM_ACTION.deleteRow}"
+															id="deleteRow" immediate="true"
+															reRender="pplistitem,pplistitemfooter,errorPanel"
+															rendered="true" style="width:80px;" styleClass="button"
+															value="Delete" />
+														<a4j:commandButton
+															actionListener="#{PP_LIST_ITEM_ACTION.post}"
+															id="postRecord" reRender="pplistitem,errorPanel"
+															rendered="true" style="width:80px;" styleClass="button"
+															value="Post" />
+													</h:panelGroup>
+												</f:facet>
+											</rich:dataTable></td>
+										</tr>
+										<tr>
+											<td class="oddrowright" width="20%"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_MODULE_NAME_LABEL}"
+												for="LI_MODULE_NAME" id="Serial_No_1" styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_MODULE_NAME$caption}" />
+											</td>
+											<td class="oddrow" width="28%"><h:inputText
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_MODULE_NAME}"
+												id="LI_MODULE_NAME" styleClass="input"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_MODULE_NAME$tooltip}"
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_BEAN.LI_MODULE_NAME}" />
+											</td>
+											<td class="oddrow" width="4%">&nbsp;</td>
+											<td class="oddrowright" width="20%"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_BLOCK_NAME_LABEL}"
+												for="LI_BLOCK_NAME" id="Serial_No_2" styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_BLOCK_NAME$caption}" />
+											</td>
+											<td class="oddrow" width="28%"><h:inputText
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_BLOCK_NAME}"
+												id="LI_BLOCK_NAME" styleClass="input"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_BLOCK_NAME$tooltip}"
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_BEAN.LI_BLOCK_NAME}" />
+											</td>
+										</tr>
+
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_ITEM_NAME_LABEL}"
+												for="LI_ITEM_NAME" id="LI_ITEM_NAME_LABEL"
+												styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_ITEM_NAME$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_ITEM_NAME}"
+												id="LI_ITEM_NAME" styleClass="input"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_ITEM_NAME$tooltip}"
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_BEAN.LI_ITEM_NAME}" />
+											</td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_SYS_PARAM_LABEL}"
+												for="LI_SYS_PARAM" id="LI_SYS_PARAM_LABEL"
+												styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_SYS_PARAM$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_SYS_PARAM}"
+												id="LI_SYS_PARAM" styleClass="input"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_SYS_PARAM$tooltip}"
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_BEAN.LI_SYS_PARAM}">
+												<a4j:support
+													actionListener="#{PP_LIST_ITEM_ACTION.paramListener}"
+													event="onblur" id="SUPPORT_LI_SYS_PARAM" immediate="true"
+													reRender="pplistitemfooter,errorPanel" />
+											</h:inputText> <h:graphicImage id="LI_SYS_PARAM_SUGGESTION_IMAGE12"
+												style="" styleClass="searchimg"
+												value="./../../images/Lov.gif" /> <rich:suggestionbox
+												for="LI_SYS_PARAM" height="200" id="LI_SYS_PARAM_LOV"
+												immediate="true"
+												suggestionAction="#{PP_LIST_ITEM_ACTION.LIV_SYS_PARAM_Suggestions}"
+												var="lov" width="200">
+												<h:column id="SYS_PARAM_CODE_LOV_column">
+													<h:outputText id="outputtxt_lovcode" value="#{lov.code}" />
+												</h:column>
+												<h:column id="SYS_PARAM_CODE_LOV_name">
+													<h:outputText id="outputtxt_lovName" value="#{lov.name}" />
+												</h:column>
+											</rich:suggestionbox></td>
+										</tr>
+
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_REMARKS_LABEL}"
+												for="LI_REMARKS" id="Serial_No_5" styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_REMARKS$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_REMARKS}"
+												id="LI_REMARKS" styleClass="input"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_REMARKS$tooltip}"			
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_BEAN.LI_REMARKS}" />
+											</td>
+											<td class="oddrow">&nbsp;</td>
+											<td class="oddrowright"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_EXTERNAL_TABLE_YN_LABEL}"
+												for="LI_EXTERNAL_TABLE_YN" id="LI_EXTERNAL_TABLE_YN_LABEL"
+												styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_EXTERNAL_TABLE_YN$caption}" />
+											</td>
+											<td class="oddrow"><h:selectBooleanCheckbox
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_EXTERNAL_TABLE_YN}"
+												disabled="false" id="LI_EXTERNAL_TABLE_YN" rendered="true"
+												styleClass="checkstyleclass"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_EXTERNAL_TABLE_YN$tooltip}"
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_BEAN.checkBoxSelected}">
+											</h:selectBooleanCheckbox></td>
+										</tr>
+
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_WHERE_CLAUSE_LABEL}"
+												for="LI_WHERE_CLAUSE" id="LI_WHERE_CLAUSE_LABEL"
+												styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_WHERE_CLAUSE$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_WHERE_CLAUSE}"
+												id="LI_WHERE_CLAUSE" styleClass="input"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_WHERE_CLAUSE$tooltip}"
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_BEAN.LI_WHERE_CLAUSE}" />
+											</td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrowright"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_DFLT_VALUE_LABEL}"
+												for="LI_DFLT_VALUE" id="Serial_No_8" styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_DFLT_VALUE$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LI_DFLT_VALUE}"
+												id="LI_DFLT_VALUE" styleClass="input"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM$LI_DFLT_VALUE$tooltip}"
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_BEAN.LI_DFLT_VALUE}" />
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+							<tr>
+								<td />
+								<td vAlign="top" width="100%"><h:panelGroup
+									id="pplistitemfooter" style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<!-- Data Table -->
+										<tr>
+											<td colspan="5"><rich:dataTable
+												binding="#{PP_LIST_ITEM_ACTION.listItemValuesDataTable}"
+												id="PP_LIST_ITEM_DATA_1" rendered="true" rows="2"
+												value="#{PP_LIST_ITEM_ACTION.listItemValuesList}"
+												var="LIST_ITEM_1" width="100%">
+												<rich:column filterBy="#{LIST_ITEM_1.LIV_SYS_PARAM}"
+													filterEvent="onkeyup" id="COLUMN_LIV_SYS_PARAM"
+													rendered="true" sortBy="#{LIST_ITEM_1.LIV_SYS_PARAM}"
+													styleClass="#{LIST_ITEM_1.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_LIV_SYS_PARAM_1"
+															styleClass="forumRowHighlight"
+															value="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_SYS_PARAM$caption}" />
+													</f:facet>
+													<a4j:commandLink
+														action="#{PP_LIST_ITEM_ACTION.displayChildRecords}"
+														immediate="true" reRender="pplistitemfooter">
+
+														<h:outputText id="AUTO_ID_32"
+															value="#{LIST_ITEM_1.LIV_SYS_PARAM}" />
+
+													</a4j:commandLink>
+												</rich:column>
+
+												<rich:column filterBy="#{LIST_ITEM_1.LIV_DESC}"
+													filterEvent="onkeyup" id="COLUMN_LIV_DESC" rendered="true"
+													sortBy="#{LIST_ITEM_1.LIV_DESC}"
+													styleClass="#{LIST_ITEM_1.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_33"
+															styleClass="forumRowHighlight"
+															value="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_DESC$caption}" />
+													</f:facet>
+													<h:outputText id="AUTO_ID_34"
+														value="#{LIST_ITEM_1.LIV_DESC}" />
+												</rich:column>
+
+												<rich:column filterBy="#{LIST_ITEM_1.LIV_CODE}"
+													filterEvent="onkeyup" id="COLUMN_LIV_CODE" rendered="true"
+													sortBy="#{LIST_ITEM_1.LIV_CODE}"
+													styleClass="#{LIST_ITEM_1.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_35"
+															styleClass="forumRowHighlight"
+															value="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_CODE$caption}" />
+													</f:facet>
+													<h:outputText id="AUTO_ID_36"
+														value="#{LIST_ITEM_1.LIV_CODE}" />
+
+												</rich:column>
+
+												<rich:column filterBy="#{LIST_ITEM_1.LIV_CODE_DESC}"
+													filterEvent="onkeyup" id="COLUMN_LIV_CODE_DESC"
+													rendered="true" sortBy="#{LIST_ITEM_1.LIV_CODE_DESC}"
+													styleClass="#{LIST_ITEM_1.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="AUTO_ID_37"
+															styleClass="forumRowHighlight"
+															value="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_CODE_DESC$caption}" />
+													</f:facet>
+													<h:outputText id="AUTO_ID_38"
+														value="#{LIST_ITEM_1.LIV_CODE_DESC}" />
+
+												</rich:column>
+
+												<f:facet name="footer">
+													<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+														<rich:datascroller align="right" />
+														<a4j:commandButton
+															actionListener="#{PP_LIST_ITEM_ACTION.addChildRow}"
+															id="addRow1" immediate="true"
+															reRender="pplistitemfooter,errorPanel" rendered="true"
+															style="width:80px;" styleClass="button"
+															value="#{commonmsg.addNewButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PP_LIST_ITEM_ACTION.deleteChildRow}"
+															id="deleteRow1" immediate="true"
+															reRender="pplistitemfooter,pplistitem,errorPanel"
+															rendered="true" style="width:80px;" styleClass="button"
+															value="Delete" />
+														<a4j:commandButton
+															actionListener="#{PP_LIST_ITEM_ACTION.postChild}"
+															id="postRecord" reRender="pplistitemfooter,errorPanel"
+															rendered="true" style="width:80px;" styleClass="button"
+															value="Post" />
+													</h:panelGroup>
+												</f:facet>
+											</rich:dataTable></td>
+										</tr>
+
+										<tr>
+											<td class="oddrow" width="20%"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LIV_SYS_PARAM_LABEL}"
+												for="LIV_SYS_PARAM" id="LIV_SYS_PARAM_LABEL"
+												styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_SYS_PARAM$caption}" />
+											</td>
+											<td class="oddrow" width="28%"><h:inputText
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LIV_SYS_PARAM}"
+												id="LIV_SYS_PARAM" styleClass="input"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_SYS_PARAM$tooltip}"
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_VALUES_BEAN.LIV_SYS_PARAM}">
+												<a4j:support
+													actionListener="#{PP_LIST_ITEM_ACTION.getLIV_SYS_PARAM}"
+													event="onblur" id="AUTO_ID_39" immediate="true"
+													reRender="errorMessages,errorPanel,err" />
+											</h:inputText></td>
+											<td class="oddrow" width="4%"></td>
+											<td class="oddrow" width="20%"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LIV_DESC_LABEL}"
+												for="LIV_DESC" id="LIV_DESC_LABEL" styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_DESC$caption}" />
+											</td>
+											<td class="oddrow" width="28%"><h:inputText
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LIV_DESC}"
+												styleClass="input" id="LIV_DESC"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_DESC$tooltip}"
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_VALUES_BEAN.LIV_DESC}">
+												<a4j:support
+													actionListener="#{PP_LIST_ITEM_ACTION.getLIV_DESC}"
+													event="onblur" id="AUTO_ID_40" immediate="true"
+													reRender="errorMessages,errorPanel,err" />
+											</h:inputText></td>
+										</tr>
+
+										<tr>
+											<td class="evenrow"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LIV_CODE_LABEL}"
+												for="LIV_CODE" id="LIV_CODE_LABEL" styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_CODE$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LIV_CODE}"
+												styleClass="input" id="LIV_CODE"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_CODE$tooltip}"
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_VALUES_BEAN.LIV_CODE}">
+												<a4j:support
+													actionListener="#{PP_LIST_ITEM_ACTION.getLIV_CODE}"
+													event="onblur" id="AUTO_ID_41" immediate="true"
+													reRender="errorMessages,errorPanel,err" />
+											</h:inputText></td>
+											<td class="evenrow">&nbsp;</td>
+											<td class="evenrow"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LIV_CODE_DESC_LABEL}"
+												for="LIV_CODE_DESC" id="LIV_CODE_DESC_LABEL"
+												styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_CODE_DESC$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LIV_CODE_DESC}"
+												id="LIV_CODE_DESC" styleClass="input"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_CODE_DESC$tooltip}"
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_VALUES_BEAN.LIV_CODE_DESC}">
+												<a4j:support
+													actionListener="#{PP_LIST_ITEM_ACTION.getLIV_CODE_DESC}"
+													event="onblur" id="AUTO_ID_42" immediate="true"
+													reRender="errorMessages,errorPanel,err" />
+											</h:inputText></td>
+										</tr>
+										<tr>
+											<td class="oddrow"><h:outputLabel
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LIV_BL_CODE_DESC_LABEL}"
+												for="LIV_BL_CODE_DESC" id="LIV_BL_CODE_DESC_LABEL"
+												styleClass="label"
+												value="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_BL_CODE_DESC$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PP_LIST_ITEM_ACTION.COMP_LIV_BL_CODE_DESC}"
+												id="LIV_BL_CODE_DESC" styleClass="input"
+												title="#{message.PP_LIST_ITEM$PP_LIST_ITEM_VALUES$LIV_BL_CODE_DESC$tooltip}"
+												value="#{PP_LIST_ITEM_ACTION.PP_LIST_ITEM_VALUES_BEAN.LIV_BL_CODE_DESC}">
+												<a4j:support
+													actionListener="#{PP_LIST_ITEM_ACTION.getLIV_BL_CODE_DESC}"
+													event="onblur" id="AUTO_ID_43" immediate="true"
+													reRender="errorMessages,errorPanel,err" />
+											</h:inputText></td>
+											<td class="oddrow" colspan="3" />
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink action="#{PP_LIST_ITEM_ACTION.backToSearch}"
+									id="AUTO_ID_44" immediate="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_45"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/back.png" />
+									<h:outputText id="AUTO_ID_46"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$back}" />
+								</h:commandLink>
+								<h:commandLink action="#{PP_LIST_ITEM_ACTION.saveAndCommit}"
+									id="AUTO_ID_47" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_48"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/save.gif" />
+									<h:outputText id="AUTO_ID_49"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_50" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_51"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/savenext.GIF" />
+									<h:outputText id="AUTO_ID_52"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_53" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_54"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/deleteRecord.gif" />
+									<h:outputText id="AUTO_ID_55"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$deleteRecord}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_56" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_57"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/firstrec.gif" />
+									<h:outputText id="AUTO_ID_58"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_59" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_60"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/prevpage.gif" />
+									<h:outputText id="AUTO_ID_61"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_62" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_63"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/nextpage.gif" />
+									<h:outputText id="AUTO_ID_64"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink id="AUTO_ID_65" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTO_ID_66"
+										style="border: thin solid white" styleClass="searchimg"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText id="AUTO_ID_67"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

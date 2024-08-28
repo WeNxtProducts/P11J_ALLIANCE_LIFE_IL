@@ -1,0 +1,1895 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.loadBaseValue}">
+			<f:loadBundle basename="messageProperties_PILT024" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<table cellpadding="0" cellspacing="0" width="100%" border="0">
+				<h:form id="PT_IL_PYMT_DTLS">
+					<tr>
+						<td colspan="3" width="100%" vAlign="top">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILT024_COMPOSITE_ACTION.navigationEnabled}"
+											rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table cellspacing="0" width="100%" id="errormsgtable">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.errorMap['current'] !=null? PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.errorMap['current']: PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.globalMsgRender}" />
+									<h:outputText id="warningMessages"
+										value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="15%">
+						<table width="100%" cellspacing="0" cellpadding="0"
+							id="globalLink">
+							<tr>
+								<td><h:inputHidden
+									value="#{PILT024_COMPOSITE_ACTION.tabbedBar.tabClicked}"
+									id="myhidden" /> <h:panelGroup id="mypanel"
+									style="border:0;height:15%;">
+									<table width="100%">
+										<tr>
+											<td width="90%"><a4j:repeat
+												value="#{PILT024_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													onclick="document.getElementById('PT_IL_PYMT_DTLS:myhidden').value='#{currtab.id}'"
+													value="#{currtab.value}" disabled="#{currtab.disabled}"
+													action="#{PILT024_COMPOSITE_ACTION.tabbedBar.tabAction}"
+													styleClass="#{currtab.styleString}" />
+											</a4j:repeat></td>
+											<td width="*"><a4j:commandButton immediate="true"
+												disabled="#{PILT024_COMPOSITE_ACTION.tabbedBar.navigable}"
+												alt="first" image=".\..\..\images\firstrec.gif"
+												action="#{PILT024_COMPOSITE_ACTION.tabbedBar.gotoFirstTab}"
+												reRender="mypanel" /> <a4j:commandButton immediate="true"
+												disabled="#{PILT024_COMPOSITE_ACTION.tabbedBar.navigable}"
+												alt="previous" image=".\..\..\images\prevpage.gif"
+												action="#{PILT024_COMPOSITE_ACTION.tabbedBar.gotoPrevTab}"
+												reRender="mypanel" /> <a4j:commandButton immediate="true"
+												disabled="#{PILT024_COMPOSITE_ACTION.tabbedBar.navigable}"
+												alt="next" image=".\..\..\images\nextpage.gif"
+												action="#{PILT024_COMPOSITE_ACTION.tabbedBar.gotoNextTab}"
+												reRender="mypanel" /> <a4j:commandButton immediate="true"
+												disabled="#{PILT024_COMPOSITE_ACTION.tabbedBar.navigable}"
+												alt="last" image=".\..\..\images\lastRecord.gif"
+												action="#{PILT024_COMPOSITE_ACTION.tabbedBar.gotoLastTab}"
+												reRender="mypanel" /></td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PILT024$PT_IL_PYMT_DTLS$displayCaption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 500px; overflow: auto;">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td width="90%" vAlign="top"><h:panelGroup
+									id="PT_IL_PYMT_DTLS_PANEL" style="border:0;height:15%;">
+									<table id="bordertable" align="left" width="100%">
+										<tr>
+											<td><rich:panel style="width:960px;overflow:auto">
+												<rich:dataTable
+													binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.dataTable}"
+													id="PT_IL_PYMT_DTLS_DATA_GRID" rows="5"
+													value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.dataList_PT_IL_PYMT_DTLS}"
+													var="tableVar">
+													<rich:column filterBy="#{tableVar.PD_SR_NO}"
+														filterEvent="onkeyup" id="COLUMN_PD_SR_NO" rendered="true"
+														sortBy="#{tableVar.PD_SR_NO}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_PD_SR_NO"
+																value=".\..\..\images\mandatory.jpg">
+																<h:outputText id="COLUMN_CAPTION_PD_SR_NO"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_SR_NO$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<a4j:commandLink
+															action="#{PILT024_PT_IL_PYMT_DTLS_ACTION.displayRecords}"
+															id="GOTO_LINK_PD_SR_NO" immediate="true"
+															reRender="errorPanel,PT_IL_PYMT_DTLS_PANEL">
+															<h:outputText id="LINK_CAPTION_PD_SR_NO"
+																value="#{tableVar.PD_SR_NO}" />
+														</a4j:commandLink>
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_PAY_MODE}"
+														filterEvent="onkeyup" id="COLUMN_PD_PAY_MODE"
+														rendered="true" sortBy="#{tableVar.PD_PAY_MODE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_PD_PAY_MODE"
+																value=".\..\..\images\mandatory.jpg">
+																<h:outputText id="COLUMN_CAPTION_PD_PAY_MODE"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_PAY_MODE$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_PAY_MODE"
+															value="#{tableVar.PD_PAY_MODE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_DPD_REF_ID}"
+														filterEvent="onkeyup" id="COLUMN_PD_DPD_REF_ID"
+														rendered="true" sortBy="#{tableVar.PD_DPD_REF_ID}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_DPD_REF_ID"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_DPD_REF_ID$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_DPD_REF_ID"
+															value="#{tableVar.PD_DPD_REF_ID}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PD_FC_AMT"
+														rendered="true" sortBy="#{tableVar.PD_FC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_PD_FC_AMT"
+																value=".\..\..\images\mandatory.jpg">
+																<h:outputText id="COLUMN_CAPTION_PD_FC_AMT"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FC_AMT$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FC_AMT"
+															value="#{tableVar.PD_FC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_LC_AMT}"
+														filterEvent="onkeyup" id="COLUMN_PD_LC_AMT"
+														rendered="true" sortBy="#{tableVar.PD_LC_AMT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_PD_LC_AMT"
+																value=".\..\..\images\mandatory.jpg">
+																<h:outputText id="COLUMN_CAPTION_PD_LC_AMT"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_LC_AMT$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_LC_AMT"
+															value="#{tableVar.PD_LC_AMT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_PAID_FOR}"
+														filterEvent="onkeyup" id="COLUMN_PD_PAID_FOR"
+														rendered="true" sortBy="#{tableVar.PD_PAID_FOR}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_PD_PAID_FOR"
+																value=".\..\..\images\mandatory.jpg">
+																<h:outputText id="COLUMN_CAPTION_PD_PAID_FOR"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_PAID_FOR$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_PAID_FOR"
+															value="#{tableVar.PD_PAID_FOR}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_CHQ_NO}"
+														filterEvent="onkeyup" id="COLUMN_PD_CHQ_NO"
+														rendered="true" sortBy="#{tableVar.PD_CHQ_NO}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_CHQ_NO"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CHQ_NO$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_CHQ_NO"
+															value="#{tableVar.PD_CHQ_NO}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_CHQ_DT}"
+														filterEvent="onkeyup" id="COLUMN_PD_CHQ_DT"
+														rendered="true" sortBy="#{tableVar.PD_CHQ_DT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_CHQ_DT"
+																styleClass="label"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CHQ_DT$caption}" />
+														</f:facet>
+														<rich:calendar
+															datePattern="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.datePattern}"
+															id="COLUMN_CAL_PD_CHQ_DT" inputSize="11"
+															value="#{tableVar.PD_CHQ_DT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_BANK_NAME}"
+														filterEvent="onkeyup" id="COLUMN_PD_BANK_NAME"
+														rendered="true" sortBy="#{tableVar.PD_BANK_NAME}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_BANK_NAME"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_BANK_NAME$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_BANK_NAME"
+															value="#{tableVar.PD_BANK_NAME}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.UI_M_BANK_NAME_DESC}"
+														filterEvent="onkeyup" id="COLUMN_UI_M_BANK_NAME_DESC"
+														rendered="true" sortBy="#{tableVar.UI_M_BANK_NAME_DESC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_M_BANK_NAME_DESC"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$UI_M_BANK_NAME_DESC$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_UI_M_BANK_NAME_DESC"
+															value="#{tableVar.UI_M_BANK_NAME_DESC}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_BRANCH_NAME}"
+														filterEvent="onkeyup" id="COLUMN_PD_BRANCH_NAME"
+														rendered="true" sortBy="#{tableVar.PD_BRANCH_NAME}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_BRANCH_NAME"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_BRANCH_NAME$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_BRANCH_NAME"
+															value="#{tableVar.PD_BRANCH_NAME}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_CUST_NAME}"
+														filterEvent="onkeyup" id="COLUMN_PD_CUST_NAME"
+														rendered="true" sortBy="#{tableVar.PD_CUST_NAME}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_CUST_NAME"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CUST_NAME$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_CUST_NAME"
+															value="#{tableVar.PD_CUST_NAME}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_ADDR_01}"
+														filterEvent="onkeyup" id="COLUMN_PD_ADDR_01"
+														rendered="true" sortBy="#{tableVar.PD_ADDR_01}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_ADDR_01"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_ADDR_01$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_ADDR_01"
+															value="#{tableVar.PD_ADDR_01}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_ADDR_02}"
+														filterEvent="onkeyup" id="COLUMN_PD_ADDR_02"
+														rendered="true" sortBy="#{tableVar.PD_ADDR_02}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_ADDR_02"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_ADDR_02$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_ADDR_02"
+															value="#{tableVar.PD_ADDR_02}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_ADDR_03}"
+														filterEvent="onkeyup" id="COLUMN_PD_ADDR_03"
+														rendered="true" sortBy="#{tableVar.PD_ADDR_03}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_ADDR_03"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_ADDR_03$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_ADDR_03"
+															value="#{tableVar.PD_ADDR_03}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_REMARKS}"
+														filterEvent="onkeyup" id="COLUMN_PD_REMARKS"
+														rendered="true" sortBy="#{tableVar.PD_REMARKS}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_REMARKS"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_REMARKS$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_REMARKS"
+															value="#{tableVar.PD_REMARKS}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_CURR_CODE}"
+														filterEvent="onkeyup" id="COLUMN_PD_CURR_CODE"
+														rendered="true" sortBy="#{tableVar.PD_CURR_CODE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_CURR_CODE"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CURR_CODE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_CURR_CODE"
+															value="#{tableVar.PD_CURR_CODE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.UI_M_PD_CURR_CODE_DESC}"
+														filterEvent="onkeyup" id="COLUMN_UI_M_PD_CURR_CODE_DESC"
+														rendered="true"
+														sortBy="#{tableVar.UI_M_PD_CURR_CODE_DESC}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_UI_M_PD_CURR_CODE_DESC"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$UI_M_PD_CURR_CODE_DESC$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_UI_M_PD_CURR_CODE_DESC"
+															value="#{tableVar.UI_M_PD_CURR_CODE_DESC}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_LC_CHARGE}"
+														filterEvent="onkeyup" id="COLUMN_PD_LC_CHARGE"
+														rendered="true" sortBy="#{tableVar.PD_LC_CHARGE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_LC_CHARGE"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_LC_CHARGE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_LC_CHARGE"
+															value="#{tableVar.PD_LC_CHARGE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FC_CHARGE}"
+														filterEvent="onkeyup" id="COLUMN_PD_FC_CHARGE"
+														rendered="true" sortBy="#{tableVar.PD_FC_CHARGE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FC_CHARGE"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FC_CHARGE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FC_CHARGE"
+															value="#{tableVar.PD_FC_CHARGE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_04}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_04"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_04}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_04"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_04$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_04"
+															value="#{tableVar.PD_FLEX_04}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_05}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_05"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_05}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_05"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_05$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_05"
+															value="#{tableVar.PD_FLEX_05}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_06}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_06"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_06}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_06"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_06$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_06"
+															value="#{tableVar.PD_FLEX_06}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_07}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_07"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_07}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_07"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_07$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_07"
+															value="#{tableVar.PD_FLEX_07}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_08}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_08"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_08}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_08"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_08$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_08"
+															value="#{tableVar.PD_FLEX_08}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_09}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_09"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_09}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_09"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_09$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_09"
+															value="#{tableVar.PD_FLEX_09}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_10}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_10"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_10}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_10"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_10$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_10"
+															value="#{tableVar.PD_FLEX_10}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_11}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_11"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_11}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_11"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_11$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_11"
+															value="#{tableVar.PD_FLEX_11}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_12}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_12"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_12}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_12"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_12$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_12"
+															value="#{tableVar.PD_FLEX_12}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_13}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_13"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_13}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_13"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_13$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_13"
+															value="#{tableVar.PD_FLEX_13}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_14}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_14"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_14}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_14"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_14$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_14"
+															value="#{tableVar.PD_FLEX_14}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_15}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_15"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_15}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_15"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_15$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_15"
+															value="#{tableVar.PD_FLEX_15}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_16}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_16"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_16}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_16"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_16$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_16"
+															value="#{tableVar.PD_FLEX_16}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_17}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_17"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_17}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_17"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_17$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_17"
+															value="#{tableVar.PD_FLEX_17}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_18}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_18"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_18}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_18"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_18$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_18"
+															value="#{tableVar.PD_FLEX_18}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_19}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_19"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_19}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_19"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_19$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_19"
+															value="#{tableVar.PD_FLEX_19}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_20}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_20"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_20}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_20"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_20$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_20"
+															value="#{tableVar.PD_FLEX_20}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_21}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_21"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_21}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_21"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_21$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_21"
+															value="#{tableVar.PD_FLEX_21}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_22}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_22"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_22}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_22"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_22$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_22"
+															value="#{tableVar.PD_FLEX_22}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_23}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_23"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_23}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_23"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_23$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_23"
+															value="#{tableVar.PD_FLEX_23}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_24}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_24"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_24}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_24"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_24$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_24"
+															value="#{tableVar.PD_FLEX_24}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_25}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_25"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_25}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_25"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_25$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_25"
+															value="#{tableVar.PD_FLEX_25}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_26}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_26"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_26}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_26"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_26$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_26"
+															value="#{tableVar.PD_FLEX_26}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_27}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_27"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_27}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_27"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_27$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_27"
+															value="#{tableVar.PD_FLEX_27}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_28}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_28"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_28}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_28"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_28$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_28"
+															value="#{tableVar.PD_FLEX_28}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_29}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_29"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_29}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_29"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_29$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_29"
+															value="#{tableVar.PD_FLEX_29}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_30}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_30"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_30}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_30"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_30$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_30"
+															value="#{tableVar.PD_FLEX_30}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_03}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_03"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_03}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_03"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_03$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_03"
+															value="#{tableVar.PD_FLEX_03}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_01}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_01"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_01}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_01"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_01$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_01"
+															value="#{tableVar.PD_FLEX_01}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_FLEX_02}"
+														filterEvent="onkeyup" id="COLUMN_PD_FLEX_02"
+														rendered="false" sortBy="#{tableVar.PD_FLEX_02}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_FLEX_02"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_02$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_FLEX_02"
+															value="#{tableVar.PD_FLEX_02}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_CC_TYPE}"
+														filterEvent="onkeyup" id="COLUMN_PD_CC_TYPE"
+														rendered="true" sortBy="#{tableVar.PD_CC_TYPE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:graphicImage id="MNDTRY_IMAGE_PD_CC_TYPE"
+																value=".\..\..\images\mandatory.jpg">
+																<h:outputText id="COLUMN_CAPTION_PD_CC_TYPE"
+																	styleClass="forumRowHighlight"
+																	value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CC_TYPE$caption}" />
+															</h:graphicImage>
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_CC_TYPE"
+															value="#{tableVar.PD_CC_TYPE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_CC_NO}"
+														filterEvent="onkeyup" id="COLUMN_PD_CC_NO" rendered="true"
+														sortBy="#{tableVar.PD_CC_NO}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_CC_NO"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CC_NO$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_CC_NO"
+															value="#{tableVar.PD_CC_NO}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_CC_NAME}"
+														filterEvent="onkeyup" id="COLUMN_PD_CC_NAME"
+														rendered="true" sortBy="#{tableVar.PD_CC_NAME}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_CC_NAME"
+																styleClass="forumRowHighlight"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CC_NAME$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PD_CC_NAME"
+															value="#{tableVar.PD_CC_NAME}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.PD_CC_EXP_DT}"
+														filterEvent="onkeyup" id="COLUMN_PD_CC_EXP_DT"
+														rendered="true" sortBy="#{tableVar.PD_CC_EXP_DT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PD_CC_EXP_DT"
+																styleClass="label"
+																value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CC_EXP_DT$caption}" />
+														</f:facet>
+														<rich:calendar
+															datePattern="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.datePattern}"
+															id="COLUMN_CAL_PD_CC_EXP_DT" inputSize="11"
+															value="#{tableVar.PD_CC_EXP_DT}" />
+													</rich:column>
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PT_IL_PYMT_DTLS_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.addRow}"
+																id="addRow" reRender="PT_IL_PYMT_DTLS_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.deleteRow}"
+																id="deleteRow"
+																reRender="PT_IL_PYMT_DTLS_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.postRecord}"
+																id="postRecord"
+																reRender="PT_IL_PYMT_DTLS_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</rich:panel></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table width="100%">
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_SR_NO_LABEL}"
+														for="PD_SR_NO" id="PD_SR_NO_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_SR_NO$caption}" />
+													<h:graphicImage style=""
+														value=".\..\..\images\mandatory.jpg" /></td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_SR_NO}"
+														disabled="false" id="PD_SR_NO" maxlength="4"
+														rendered="true" required="true"
+														style="height:23px;width:36px;"
+														styleClass="forumRowHighlightNumeric"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_SR_NO$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_SR_NO}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_PAY_MODE_LABEL}"
+														for="PD_PAY_MODE" id="PD_PAY_MODE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_PAY_MODE$caption}" />
+													<h:graphicImage style=""
+														value=".\..\..\images\mandatory.jpg" /></td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_PAY_MODE}"
+														disabled="false" id="PD_PAY_MODE" maxlength="30"
+														rendered="true" required="true"
+														style="height:23px;width:96px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_PAY_MODE$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_PAY_MODE}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_DPD_REF_ID_LABEL}"
+														for="PD_DPD_REF_ID" id="PD_DPD_REF_ID_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_DPD_REF_ID$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_DPD_REF_ID}"
+														disabled="false" id="PD_DPD_REF_ID" maxlength="60"
+														rendered="true" required="false"
+														style="height:23px;width:82px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_DPD_REF_ID$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_DPD_REF_ID}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FC_AMT_LABEL}"
+														for="PD_FC_AMT" id="PD_FC_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FC_AMT$caption}" />
+													<h:graphicImage style=""
+														value=".\..\..\images\mandatory.jpg" /></td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FC_AMT}"
+														disabled="false" id="PD_FC_AMT" maxlength="18"
+														rendered="true" required="true"
+														style="height:23px;width:93px;"
+														styleClass="forumRowHighlightNumeric"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_LC_AMT_LABEL}"
+														for="PD_LC_AMT" id="PD_LC_AMT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_LC_AMT$caption}" />
+													<h:graphicImage style=""
+														value=".\..\..\images\mandatory.jpg" /></td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_LC_AMT}"
+														disabled="false" id="PD_LC_AMT" maxlength="18"
+														rendered="true" required="true"
+														style="height:23px;width:89px;"
+														styleClass="forumRowHighlightNumeric"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_LC_AMT$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_LC_AMT}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_PAID_FOR_LABEL}"
+														for="PD_PAID_FOR" id="PD_PAID_FOR_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_PAID_FOR$caption}" />
+													<h:graphicImage style=""
+														value=".\..\..\images\mandatory.jpg" /></td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_PAID_FOR}"
+														disabled="false" id="PD_PAID_FOR" maxlength="1"
+														rendered="true" required="true"
+														style="height:23px;width:106px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_PAID_FOR$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_PAID_FOR}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CHQ_NO_LABEL}"
+														for="PD_CHQ_NO" id="PD_CHQ_NO_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CHQ_NO$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CHQ_NO}"
+														disabled="false" id="PD_CHQ_NO" maxlength="30"
+														rendered="true" required="false"
+														style="height:23px;width:134px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CHQ_NO$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_CHQ_NO}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CHQ_DT_LABEL}"
+														for="PD_CHQ_DT" id="PD_CHQ_DT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CHQ_DT$caption}" />
+													</td>
+													<td align="left"><rich:calendar
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CHQ_DT}"
+														datePattern="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.datePattern}"
+														disabled="false" enableManualInput="true" id="PD_CHQ_DT"
+														inputSize="11" rendered="true" required="false"
+														style="height:px;width:px;"
+														styleClass="calendarstyleclass"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_CHQ_DT}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_BANK_NAME_LABEL}"
+														for="PD_BANK_NAME" id="PD_BANK_NAME_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_BANK_NAME$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_BANK_NAME}"
+														disabled="false" id="PD_BANK_NAME" maxlength="60"
+														rendered="true" required="false"
+														style="height:23px;width:84px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_BANK_NAME$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_BANK_NAME}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_UI_M_BANK_NAME_DESC_LABEL}"
+														for="UI_M_BANK_NAME_DESC" id="UI_M_BANK_NAME_DESC_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$UI_M_BANK_NAME_DESC$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_UI_M_BANK_NAME_DESC}"
+														disabled="false" id="UI_M_BANK_NAME_DESC" maxlength="30"
+														rendered="true" required="false"
+														style="height:23px;width:165px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$UI_M_BANK_NAME_DESC$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.UI_M_BANK_NAME_DESC}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_BRANCH_NAME_LABEL}"
+														for="PD_BRANCH_NAME" id="PD_BRANCH_NAME_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_BRANCH_NAME$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_BRANCH_NAME}"
+														disabled="false" id="PD_BRANCH_NAME" maxlength="60"
+														rendered="true" required="false"
+														style="height:23px;width:249px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_BRANCH_NAME$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_BRANCH_NAME}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CUST_NAME_LABEL}"
+														for="PD_CUST_NAME" id="PD_CUST_NAME_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CUST_NAME$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CUST_NAME}"
+														disabled="false" id="PD_CUST_NAME" maxlength="60"
+														rendered="true" required="false"
+														style="height:23px;width:250px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CUST_NAME$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_CUST_NAME}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_ADDR_01_LABEL}"
+														for="PD_ADDR_01" id="PD_ADDR_01_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_ADDR_01$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_ADDR_01}"
+														disabled="false" id="PD_ADDR_01" maxlength="60"
+														rendered="true" required="false"
+														style="height:23px;width:250px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_ADDR_01$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_ADDR_01}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_ADDR_02_LABEL}"
+														for="PD_ADDR_02" id="PD_ADDR_02_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_ADDR_02$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_ADDR_02}"
+														disabled="false" id="PD_ADDR_02" maxlength="60"
+														rendered="true" required="false"
+														style="height:23px;width:250px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_ADDR_02$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_ADDR_02}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_ADDR_03_LABEL}"
+														for="PD_ADDR_03" id="PD_ADDR_03_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_ADDR_03$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_ADDR_03}"
+														disabled="false" id="PD_ADDR_03" maxlength="60"
+														rendered="true" required="false"
+														style="height:23px;width:250px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_ADDR_03$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_ADDR_03}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_REMARKS_LABEL}"
+														for="PD_REMARKS" id="PD_REMARKS_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_REMARKS$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_REMARKS}"
+														disabled="false" id="PD_REMARKS" maxlength="4000"
+														rendered="true" required="false"
+														style="height:23px;width:250px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_REMARKS$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_REMARKS}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CURR_CODE_LABEL}"
+														for="PD_CURR_CODE" id="PD_CURR_CODE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CURR_CODE$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CURR_CODE}"
+														disabled="false" id="PD_CURR_CODE" maxlength="12"
+														rendered="true" required="false"
+														style="height:23px;width:96px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CURR_CODE$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_CURR_CODE}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_UI_M_PD_CURR_CODE_DESC_LABEL}"
+														for="UI_M_PD_CURR_CODE_DESC"
+														id="UI_M_PD_CURR_CODE_DESC_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$UI_M_PD_CURR_CODE_DESC$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_UI_M_PD_CURR_CODE_DESC}"
+														disabled="false" id="UI_M_PD_CURR_CODE_DESC"
+														maxlength="15" rendered="true" required="false"
+														style="height:23px;width:120px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$UI_M_PD_CURR_CODE_DESC$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.UI_M_PD_CURR_CODE_DESC}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_LC_CHARGE_LABEL}"
+														for="PD_LC_CHARGE" id="PD_LC_CHARGE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_LC_CHARGE$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_LC_CHARGE}"
+														disabled="false" id="PD_LC_CHARGE" maxlength="17"
+														rendered="true" required="false"
+														style="height:23px;width:120px;"
+														styleClass="forumRowHighlightNumeric"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_LC_CHARGE$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_LC_CHARGE}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FC_CHARGE_LABEL}"
+														for="PD_FC_CHARGE" id="PD_FC_CHARGE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FC_CHARGE$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FC_CHARGE}"
+														disabled="false" id="PD_FC_CHARGE" maxlength="17"
+														rendered="true" required="false"
+														style="height:23px;width:120px;"
+														styleClass="forumRowHighlightNumeric"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FC_CHARGE$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FC_CHARGE}">
+														<f:converter converterId="PELNumberFormatter" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_04_LABEL}"
+														for="PD_FLEX_04" id="PD_FLEX_04_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_04$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_04}"
+														disabled="false" id="PD_FLEX_04" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_04$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_04}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_05_LABEL}"
+														for="PD_FLEX_05" id="PD_FLEX_05_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_05$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_05}"
+														disabled="false" id="PD_FLEX_05" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_05$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_05}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_06_LABEL}"
+														for="PD_FLEX_06" id="PD_FLEX_06_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_06$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_06}"
+														disabled="false" id="PD_FLEX_06" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_06$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_06}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_07_LABEL}"
+														for="PD_FLEX_07" id="PD_FLEX_07_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_07$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_07}"
+														disabled="false" id="PD_FLEX_07" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_07$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_07}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_08_LABEL}"
+														for="PD_FLEX_08" id="PD_FLEX_08_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_08$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_08}"
+														disabled="false" id="PD_FLEX_08" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_08$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_08}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_09_LABEL}"
+														for="PD_FLEX_09" id="PD_FLEX_09_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_09$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_09}"
+														disabled="false" id="PD_FLEX_09" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_09$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_09}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_10_LABEL}"
+														for="PD_FLEX_10" id="PD_FLEX_10_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_10$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_10}"
+														disabled="false" id="PD_FLEX_10" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_10$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_10}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_11_LABEL}"
+														for="PD_FLEX_11" id="PD_FLEX_11_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_11$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_11}"
+														disabled="false" id="PD_FLEX_11" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_11$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_11}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_12_LABEL}"
+														for="PD_FLEX_12" id="PD_FLEX_12_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_12$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_12}"
+														disabled="false" id="PD_FLEX_12" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_12$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_12}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_13_LABEL}"
+														for="PD_FLEX_13" id="PD_FLEX_13_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_13$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_13}"
+														disabled="false" id="PD_FLEX_13" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_13$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_13}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_14_LABEL}"
+														for="PD_FLEX_14" id="PD_FLEX_14_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_14$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_14}"
+														disabled="false" id="PD_FLEX_14" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_14$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_14}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_15_LABEL}"
+														for="PD_FLEX_15" id="PD_FLEX_15_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_15$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_15}"
+														disabled="false" id="PD_FLEX_15" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_15$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_15}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_16_LABEL}"
+														for="PD_FLEX_16" id="PD_FLEX_16_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_16$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_16}"
+														disabled="false" id="PD_FLEX_16" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_16$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_16}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_17_LABEL}"
+														for="PD_FLEX_17" id="PD_FLEX_17_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_17$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_17}"
+														disabled="false" id="PD_FLEX_17" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_17$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_17}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_18_LABEL}"
+														for="PD_FLEX_18" id="PD_FLEX_18_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_18$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_18}"
+														disabled="false" id="PD_FLEX_18" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_18$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_18}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_19_LABEL}"
+														for="PD_FLEX_19" id="PD_FLEX_19_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_19$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_19}"
+														disabled="false" id="PD_FLEX_19" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_19$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_19}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_20_LABEL}"
+														for="PD_FLEX_20" id="PD_FLEX_20_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_20$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_20}"
+														disabled="false" id="PD_FLEX_20" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_20$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_20}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_21_LABEL}"
+														for="PD_FLEX_21" id="PD_FLEX_21_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_21$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_21}"
+														disabled="false" id="PD_FLEX_21" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_21$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_21}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_22_LABEL}"
+														for="PD_FLEX_22" id="PD_FLEX_22_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_22$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_22}"
+														disabled="false" id="PD_FLEX_22" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_22$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_22}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_23_LABEL}"
+														for="PD_FLEX_23" id="PD_FLEX_23_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_23$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_23}"
+														disabled="false" id="PD_FLEX_23" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_23$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_23}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_24_LABEL}"
+														for="PD_FLEX_24" id="PD_FLEX_24_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_24$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_24}"
+														disabled="false" id="PD_FLEX_24" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_24$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_24}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_25_LABEL}"
+														for="PD_FLEX_25" id="PD_FLEX_25_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_25$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_25}"
+														disabled="false" id="PD_FLEX_25" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_25$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_25}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_26_LABEL}"
+														for="PD_FLEX_26" id="PD_FLEX_26_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_26$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_26}"
+														disabled="false" id="PD_FLEX_26" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_26$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_26}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_27_LABEL}"
+														for="PD_FLEX_27" id="PD_FLEX_27_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_27$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_27}"
+														disabled="false" id="PD_FLEX_27" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_27$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_27}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_28_LABEL}"
+														for="PD_FLEX_28" id="PD_FLEX_28_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_28$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_28}"
+														disabled="false" id="PD_FLEX_28" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_28$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_28}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_29_LABEL}"
+														for="PD_FLEX_29" id="PD_FLEX_29_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_29$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_29}"
+														disabled="false" id="PD_FLEX_29" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_29$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_29}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_30_LABEL}"
+														for="PD_FLEX_30" id="PD_FLEX_30_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_30$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_30}"
+														disabled="false" id="PD_FLEX_30" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_30$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_30}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_03_LABEL}"
+														for="PD_FLEX_03" id="PD_FLEX_03_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_03$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_03}"
+														disabled="false" id="PD_FLEX_03" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_03$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_03}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_01_LABEL}"
+														for="PD_FLEX_01" id="PD_FLEX_01_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_01$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_01}"
+														disabled="false" id="PD_FLEX_01" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_01$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_01}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_02_LABEL}"
+														for="PD_FLEX_02" id="PD_FLEX_02_LABEL" rendered="false"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_02$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_FLEX_02}"
+														disabled="false" id="PD_FLEX_02" maxlength="240"
+														rendered="false" required="false"
+														style="height:23px;width:412px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_FLEX_02$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_FLEX_02}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CC_TYPE_LABEL}"
+														for="PD_CC_TYPE" id="PD_CC_TYPE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CC_TYPE$caption}" />
+													<h:graphicImage style=""
+														value=".\..\..\images\mandatory.jpg" /></td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CC_TYPE}"
+														disabled="false" id="PD_CC_TYPE" maxlength="30"
+														rendered="true" required="true"
+														style="height:23px;width:53px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CC_TYPE$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_CC_TYPE}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CC_NO_LABEL}"
+														for="PD_CC_NO" id="PD_CC_NO_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CC_NO$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CC_NO}"
+														disabled="false" id="PD_CC_NO" maxlength="20"
+														rendered="true" required="false"
+														style="height:23px;width:156px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CC_NO$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_CC_NO}" />
+													</td>
+												</tr>
+												<tr>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CC_NAME_LABEL}"
+														for="PD_CC_NAME" id="PD_CC_NAME_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CC_NAME$caption}" />
+													</td>
+													<td align="left"><h:inputText
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CC_NAME}"
+														disabled="false" id="PD_CC_NAME" maxlength="60"
+														rendered="true" required="false"
+														style="height:23px;width:215px;"
+														styleClass="forumRowHighlight"
+														title="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CC_NAME$tooltip}"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_CC_NAME}" />
+													</td>
+													<td>&nbsp;</td>
+													<td id="td-background" align="left"><h:outputLabel
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CC_EXP_DT_LABEL}"
+														for="PD_CC_EXP_DT" id="PD_CC_EXP_DT_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PILT024$PT_IL_PYMT_DTLS$PD_CC_EXP_DT$caption}" />
+													</td>
+													<td align="left"><rich:calendar
+														binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_PD_CC_EXP_DT}"
+														datePattern="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.datePattern}"
+														disabled="false" enableManualInput="true"
+														id="PD_CC_EXP_DT" inputSize="11" rendered="true"
+														required="false" style="height:px;width:px;"
+														styleClass="calendarstyleclass"
+														value="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.PT_IL_PYMT_DTLS_BEAN.PD_CC_EXP_DT}" />
+													</td>
+												</tr>
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+								<td width="10%" vAlign="top">
+								<table>
+									<tr>
+										<td><h:commandButton
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_UI_M_BUT_MORE}"
+											disabled="false" id="UI_M_BUT_MORE" rendered=""
+											styleClass="button"
+											title="#{message.PILT024$PT_IL_PYMT_DTLS$UI_M_BUT_MORE$tooltip}"
+											value="#{message.PILT024$PT_IL_PYMT_DTLS$UI_M_BUT_MORE$caption}" />
+										</td>
+									</tr>
+									<tr>
+										<td><h:commandButton
+											binding="#{PILT024_COMPOSITE_ACTION.PT_IL_PYMT_DTLS_ACTION_BEAN.COMP_UI_M_BUT_PYMT_DTLS_MAIN}"
+											disabled="false" id="UI_M_BUT_PYMT_DTLS_MAIN" rendered=""
+											styleClass="button"
+											title="#{message.PILT024$PT_IL_PYMT_DTLS$UI_M_BUT_PYMT_DTLS_MAIN$tooltip}"
+											value="#{message.PILT024$PT_IL_PYMT_DTLS$UI_M_BUT_PYMT_DTLS_MAIN$caption}" />
+										</td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\save.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\savenext.GIF" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\firstrec.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\prevpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\nextpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\lastRecord.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\navigation.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</h:form>
+			</table>
+		</f:view>
+	</ui:define>
+</ui:composition>

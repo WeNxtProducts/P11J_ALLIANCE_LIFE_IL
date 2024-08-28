@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:fmt="http://java.sun.com/jsp/jstl/fmt"
+      xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:f="http://java.sun.com/jsf/core">
+   <f:subview id="header_body">
+   	<h:form id="PEL_HEADER">
+   		<table width="100%" border="0" cellpadding="0" cellspacing="0"
+			id="menuhead">
+			<tr>
+				<td width="38%">
+					<h:outputLabel value="#{property.project_name}"/>
+					<sup><h:outputLabel value="#{property.trade_mark}"/></sup>
+					<h:outputLabel value="#{property.product_name}"></h:outputLabel>
+				</td>
+				
+				<td width="15%" align="center">
+					<h:outputLabel value="Skins:"></h:outputLabel>
+					<rich:spacer width="5"></rich:spacer>
+					<h:selectOneMenu id="COMP_SKINS"										
+											styleClass="forumRowHighlight" title="" onchange="submit();" 											
+											value="#{skinInfoBean.skin}">											
+											<f:selectItem itemLabel="Blue Sky" itemValue="blueSky"  />
+											<f:selectItem itemLabel="Deep Marine" itemValue="deepMarine"  />
+											<f:selectItem itemLabel="Maroon" itemValue="maroon"  />
+											<f:selectItem itemLabel="Wine" itemValue="wine"  />
+					</h:selectOneMenu>
+				</td>
+				
+				<td width="22%" align="right">	
+					<!-- no search -->									
+				</td>
+				
+				<td width="10%">
+					<a4j:status layout="block" startStyle="background-color:;height: 20px;font-weight: bold; color: #004080" >
+						<f:facet name="start">
+							<h:graphicImage  value="./../../resources/images/fadingArrowIndicator.gif"/>
+						</f:facet>
+					</a4j:status>
+				</td>
+				
+				<td width="15%" align="right">
+					<rich:dropDownMenu direction="bottom-left" jointPoint="bl">
+						<f:facet name="label">
+							<h:panelGroup>
+								<h:graphicImage value="/resources/images/usericon.gif" styleClass="pic" width="17" height="17"/>
+								<rich:spacer width="3"></rich:spacer>
+								<h:outputText value="#{property.premia_login_label_welcome} #{sessionScope['GLOBAL.M_USER_ID']} :::"/>
+							</h:panelGroup>
+						</f:facet>
+						<rich:menuItem value="Logout" id="LOGOUT_MENU" 
+							submitMode="ajax"  style="text-align:left"
+							icon="./../../resources/images/logout.gif">
+							<rich:componentControl
+								id="LOGOUT_COMP_CONTROL"
+								for="LOGOUT_PANEL" 
+								attachTo="LOGOUT_MENU" 
+								operation="show" 
+								event="onclick"/>
+						</rich:menuItem>
+					</rich:dropDownMenu>
+
+					<!-- Logout Confirmation -->					
+					<rich:modalPanel id="LOGOUT_PANEL" width="350" height="100">
+					     <f:facet name="header">
+					         <h:panelGroup>
+					              <h:outputText value="Logout" style="color: #FFFFFF; font-size: 14px;font-weight: bold;"></h:outputText>
+					         </h:panelGroup>
+					     </f:facet>
+					     <f:facet name="controls">
+					         <h:panelGroup>
+					              <h:graphicImage value="./../../resources/images/close.png" 
+					              		style="cursor:pointer" id="LOGOUT_PANEL_hidelink"/>
+					              <rich:componentControl for="LOGOUT_PANEL" 
+						              	attachTo="LOGOUT_PANEL_hidelink" 
+						              	operation="hide" event="onclick"/>
+					         </h:panelGroup>
+					     </f:facet>
+						<table align="center">
+							<tr align="center">
+								<td>
+									<h:outputText value="Do you want to exit from the application?"/>
+								</td>
+							</tr>
+							<tr align="center">
+							<td>
+						          <h:commandButton value="OK" id="LOGOUT_PANEL_continuebutton" 
+						          		   styleClass="button"
+						          		   style="width:65px;height:20px;"
+						                   action="#{PremiaMenuToolbar.logoutAction}">
+						              <rich:componentControl for="LOGOUT_PANEL" 
+						                  attachTo="LOGOUT_PANEL_continuebutton" 
+						                  operation="hide" event="onclick"/>
+						          </h:commandButton>
+						          &amp;nbsp;
+						          <a4j:commandButton value="Cancel"
+						          		styleClass="button" 
+						          		style="width:65px;height:20px;"
+						          		id="LOGOUT_PANEL_cancelbutton" immediate="true">
+						               <rich:componentControl for="LOGOUT_PANEL" 
+						               			attachTo="LOGOUT_PANEL_cancelbutton" 
+						               			operation="hide" event="onclick"/>
+						          </a4j:commandButton>
+							</td>
+							</tr>
+						</table>
+					</rich:modalPanel>
+				</td>
+			</tr>
+		</table>
+	</h:form>
+   </f:subview>
+</html>

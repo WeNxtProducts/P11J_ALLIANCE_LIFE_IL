@@ -1,0 +1,50 @@
+package com.iii.pel.forms.PILP004;
+
+import java.util.Date;
+
+import com.iii.apps.persistence.Table;
+import com.iii.premia.common.bean.BaseValueBean;
+
+@Table(name = "")
+public class MATURITY extends BaseValueBean {
+
+	private String UI_M_POL_NO_FM;
+
+	private String UI_M_POL_NO_TO;
+
+	private Date UI_M_POL_DT_FM;
+
+	private Date UI_M_POL_DT_TO;
+
+	public String getUI_M_POL_NO_FM() {
+		return UI_M_POL_NO_FM;
+	}
+
+	public void setUI_M_POL_NO_FM(String UI_M_POL_NO_FM) {
+		this.UI_M_POL_NO_FM = UI_M_POL_NO_FM;
+	}
+
+	public String getUI_M_POL_NO_TO() {
+		return UI_M_POL_NO_TO;
+	}
+
+	public void setUI_M_POL_NO_TO(String UI_M_POL_NO_TO) {
+		this.UI_M_POL_NO_TO = UI_M_POL_NO_TO;
+	}
+
+	public Date getUI_M_POL_DT_FM() {
+		return UI_M_POL_DT_FM;
+	}
+
+	public void setUI_M_POL_DT_FM(Date UI_M_POL_DT_FM) {
+		this.UI_M_POL_DT_FM = UI_M_POL_DT_FM;
+	}
+
+	public Date getUI_M_POL_DT_TO() {
+		return UI_M_POL_DT_TO;
+	}
+
+	public void setUI_M_POL_DT_TO(Date UI_M_POL_DT_TO) {
+		this.UI_M_POL_DT_TO = UI_M_POL_DT_TO;
+	}
+}

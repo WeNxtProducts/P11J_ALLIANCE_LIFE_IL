@@ -1,0 +1,1177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:c="http://java.sun.com/jsp/core"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.onLoad}">
+			<!-- <f:loadBundle basename="messageProperties_PILM205" var="message" />  -->
+			<f:loadBundle
+				basename="#{sessionScope['GLOBAL.SITE_CODE']}messageProperties_PILM205"
+				var="message_PILM205" />
+
+			<h:form id="AGENT_PROCESS" onkeypress="return event.keyCode != 13">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+							<table class="noborder" width="100%">
+
+								<!-- Warning Messages/Error Messages Section -->
+								<tr>
+									<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+											id="errorPanel" opened="false" switchType="client">
+											<f:facet name="header">
+												<h:outputLabel id="err"
+													styleClass="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.messageStyle}"
+													value="#{commonmsg.errorPanel$heading}#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.errorMap['current'] !=null? PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.errorMap['current']: PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.warningMap['current']}" />
+											</f:facet>
+											
+											<h:messages id="msg"
+												rendered="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.globalMsgRender}"
+												styleClass="ErrorMessages" />
+											<h:outputLabel escape="false" id="warningMessages"
+												styleClass="WarningMessages"
+												value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.warningMessages}" />
+												<h:outputLabel escape="false" id="errorMessages"
+												styleClass="ErrorMessages"
+												value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.errorMessages}" />
+										</rich:simpleTogglePanel></td>
+								</tr>
+								
+
+								<!-- <tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+								id="errorPanel" opened="false" switchType="client">
+								<f:facet name="header">
+									<h:outputText id="err"
+										styleClass="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_ASSR_OCCU_DTLS_ACTION_BEAN.messageStyle}"
+										value="#{commonmsg.errorPanel$heading}#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_ASSR_OCCU_DTLS_ACTION_BEAN.errorMap['current'] !=null? PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_ASSR_OCCU_DTLS_ACTION_BEAN.errorMap['current']: PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_ASSR_OCCU_DTLS_ACTION_BEAN.warningMap['current']}" />
+								</f:facet>
+								<h:outputText escape="false" id="errorMessages"
+									styleClass="ErrorMessages"
+									value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_ASSR_OCCU_DTLS_ACTION_BEAN.errorMessages}" />
+								<h:messages id="msg"
+									rendered="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_ASSR_OCCU_DTLS_ACTION_BEAN.globalMsgRender}"
+									styleClass="ErrorMessages" />
+								<h:outputText escape="false" id="warningMessages"
+									styleClass="WarningMessages"
+									value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_ASSR_OCCU_DTLS_ACTION_BEAN.warningMessages}" />
+							</rich:simpleTogglePanel></td>
+					</tr> -->
+							
+
+								<tr>
+									<td colspan="0" height="20" valign="top" width="100%">
+
+										<table cellspacing="0" cellpadding="0" class="noborder"
+											id="linkstable" width="100%">
+											<tr>
+												<td><h:outputLabel value="Customized Report Details" /></td>
+											</tr>
+
+
+
+										</table>
+										<table align="center" class="noborder" width="100%">
+
+											<tr>
+
+												<td class="oddrowright" width="100%" colspan="5">
+													<table class="noborder" width="100%">
+														<tr>
+															<td width="100%"><rich:tabPanel
+																	headerAlignment="left" height="25%" id="tabpanel1"
+																	switchType="ajax" width="100%">
+
+																	<!-- Tab 1 Report Screen Mapping -->
+
+																	<rich:tab id="tab1" label="Report Screen Mapping"
+																		rendered="true" reRender="errorPanel">
+
+																		<table class="noborder" width="100%">
+
+																			<tr>
+																				<td colspan="5"><rich:dataTable
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.dataTable}"
+																						border="0" cellpadding="0" id="datatableId"
+																						rows="5"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.tableList}"
+																						var="table" width="100%">
+
+																						<rich:column filterBy="#{table.REP_ID}"
+																							filterEvent="onkeyup" sortBy="#{table.REP_ID}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column1_label"
+																									styleClass="forumRowHighlight" value="REP_ID" />
+																							</f:facet>
+
+																							<!-- 	<a4j:commandLink
+																								action="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.getDetails}"
+																								id="AUTOID_4" style="text-decoration:none"
+																								styleClass="toolbarCommandLinkStyle">
+																								<h:outputText id="column1_value"
+																									value="#{table.REP_ID} " />
+																							</a4j:commandLink> -->
+
+																							<a4j:commandLink
+																								action="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.getDetails}"
+																								immediate="true" reRender="tabpanel1">
+																								<h:outputText id="AUTOID_26"
+																									value="#{table.REP_ID} " />
+																							</a4j:commandLink>
+
+																						</rich:column>
+
+
+
+																						<rich:column filterBy="#{table.PARAM_NAME}"
+																							filterEvent="onkeyup"
+																							sortBy="#{table.PARAM_NAME}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column2_label"
+																									styleClass="forumRowHighlight"
+																									value="PARAM_NAME" />
+																							</f:facet>
+																							<h:outputText id="column2_value"
+																								value="#{table.PARAM_NAME} " />
+																						</rich:column>
+
+
+																						<rich:column filterBy="#{table.PARAM_TYPE}"
+																							filterEvent="onkeyup"
+																							sortBy="#{table.PARAM_TYPE}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column3_label"
+																									styleClass="forumRowHighlight"
+																									value="PARAM_TYPE" />
+																							</f:facet>
+																							<h:outputText id="column3_value"
+																								value="#{table.PARAM_TYPE} " />
+																						</rich:column>
+
+
+																						<rich:column filterBy="#{table.PARAM_ORDER}"
+																							filterEvent="onkeyup"
+																							sortBy="#{table.PARAM_ORDER}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column4_label"
+																									styleClass="forumRowHighlight"
+																									value="PARAM_ORDER" />
+																							</f:facet>
+																							<h:outputText id="column4_value"
+																								value="#{table.PARAM_ORDER} " />
+																						</rich:column>
+
+																						<rich:column filterBy="#{table.SRNO}"
+																							filterEvent="onkeyup" sortBy="#{table.SRNO}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column5_label"
+																									styleClass="forumRowHighlight" value="SRNO" />
+																							</f:facet>
+																							<h:outputText id="column5_value"
+																								value="#{table.SRNO} " />
+																						</rich:column>
+
+																						<rich:column filterBy="#{table.PARAM_IP_REP_COL}"
+																							filterEvent="onkeyup"
+																							sortBy="#{table.PARAM_IP_REP_COL}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column6_label"
+																									styleClass="forumRowHighlight"
+																									value="PARAM_IP_REP_COL" />
+																							</f:facet>
+																							<h:outputText id="column6_value"
+																								value="#{table.PARAM_IP_REP_COL} " />
+																						</rich:column>
+
+
+																						<f:facet name="footer">
+																							<h:panelGroup id="footerpanel" style="border:0">
+																								<rich:datascroller align="right" />
+																								<h:commandButton
+																									actionListener="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.AddRow}"
+																									binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.UI_M_BUT_ADD}"
+																									id="AUTOID_31" immediate="true"
+																									reRender="errorPanel,sectionDtls"
+																									rendered="true" style="width:81px"
+																									styleClass="button" value="Create" />
+																								<h:commandButton
+															binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.UI_M_BUT_DELETE}"
+															actionListener="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.deleteRow}"
+															id="AUTOID_32" immediate="true" disabled="true"
+															reRender="errorPanel,sectionDtls" rendered="true"
+															style="width:81px" styleClass="button"
+															value="Delete" />
+																								<h:commandButton
+																									actionListener="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.postRecord}"
+																									binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.UI_M_BUT_POST}"
+																									id="AUTOID_33"
+																									reRender="errorPanel,sectionDtls"
+																									rendered="true" style="width:81px"
+																									styleClass="button" value="Post" />
+
+																							</h:panelGroup>
+																						</f:facet>
+
+																					</rich:dataTable></td>
+																			</tr>
+
+
+
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_REP_ID_LABEL}"
+																						for="REP_ID" value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_REPORT_ID$caption}"
+																						 /></td>
+																				<td class="oddrow"><h:inputText id="REP_ID"
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_REP_ID_TEXT}"
+																						rendered="true" styleClass="inputsmall"
+																						title="REP_ID" maxlength="25"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidateReportId}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.REP_ID}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_13" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrowright"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_NAME_LABEL}"
+																						for="PARAM_NAME" value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PARAM_NAME$caption}" /></td>
+																				<td class="oddrow"><h:inputText id="PARAM_NAME"
+																						title="PARAM_NAME"
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_NAME_TEXT}"
+																						rendered="true" styleClass="inputsmall" maxlength="40"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidateReportParamName}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.PARAM_NAME}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_3" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																			</tr>
+
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_TYPE_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PARAM_TYPE$caption}" /></td>
+																				<td class="oddrow"><h:selectOneMenu
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_TYPE_TEXT}"
+																						disabled="false" id="PARAM_TYPE" rendered="true"
+																						title="PARAM_TYPE"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidateParamType}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.PARAM_TYPE}">
+																						<f:selectItem itemLabel="DATE" itemValue="DATE" />
+																						<f:selectItem itemLabel="LOV" itemValue="LOV" />
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_4" immediate="true"
+																							reRender="errorPanel" />
+																					</h:selectOneMenu></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrowright"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_ORDER_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PARAM_ORDER$caption}" /></td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_ORDER_TEXT}"
+																						rendered="true" styleClass="inputsmall"
+																						title="PARAM_ORDER" maxlength="2"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidateReportParamOrder}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.PARAM_ORDER}" /></td>
+
+																			</tr>
+
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_LOV_QUERY_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PARAM_LOV_QUERY$caption}" /></td>
+																				<td class="oddrow"><h:inputTextarea
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_LOV_QUERY_INPUT_TEXT}"
+																						id="PARAM_LOV_QUERY" maxlength="5000"
+																						title="PARAM_LOV_QUERY"
+																						rendered="true" required="false"
+																						styleClass="input" cols="50" rows="4"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.PARAM_LOV_QUERY}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_5" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputTextarea></td>
+
+																				<td class="oddrow">&nbsp;</td>
+<!-- value="Serial No" -->
+																				<td class="oddrowright"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_SRNO_LABEL}"
+																						  for="SRNO"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$SRNO$caption}"
+																						
+																						/>
+																						<h:graphicImage id="Mandatory_1" style=""
+																		styleClass="searchimg"
+																		value="./../../images/mandatory.gif" /></td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_SRNO_TEXT}"
+																						rendered="true" styleClass="inputsmall" required="true"
+																						title="SRNO" id="SRNO"
+																						maxlength="10"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidateSRNO}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.SRNO}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_6" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText>
+																					
+																					</td>
+
+																			</tr>
+
+
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_ID_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PARAM_ID$caption}" /></td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_ID_TEXT}"
+																						rendered="true" styleClass="inputsmall"
+																						title="PARAM_ID"
+																						maxlength="40"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePARAM_ID}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.PARAM_ID}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_7" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrowright"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_IP_REP_COL_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PARAM_IP_REP_COL$caption}" /></td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_IP_REP_COL_TEXT}"
+																						rendered="true" styleClass="inputsmall" maxlength="20"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePARAM_IP_REP_COL}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.PARAM_IP_REP_COL}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_8" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																			</tr>
+
+
+
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_UI_PARAM_IP_REP_COL_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_UI_PARAM_IP_REP_COL$caption}" /></td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_UI_PARAM_IP_REP_COL_TEXT}"
+																						rendered="true" styleClass="inputsmall" maxlength="20"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidateUI_PARAM_IP_REP_COL}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.UI_PARAM_IP_REP_COL}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_9" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrowright"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PM_REQUIRED_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PM_REQUIRED$caption}" /></td>
+																				<td class="oddrow"><h:selectOneMenu
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_TYPE_MENU}"
+																						disabled="false" id="PM_REQUIRED" rendered="true" 
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePM_REQUIRED}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.PM_REQUIRED}">
+																						<f:selectItem itemLabel="TRUE" itemValue="TRUE" />
+																						<f:selectItem itemLabel="FALSE" itemValue="FALSE" />
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_10" immediate="true"
+																							reRender="errorPanel" />
+																					</h:selectOneMenu></td>
+
+																			</tr>
+
+
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARM_FROMTO_REL_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PARM_FROMTO_REL$caption}" /></td>
+																				<td class="oddrow"><h:selectOneMenu
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARM_FROMTO_REL_MENU}"
+																						disabled="false" id="PARM_FROMTO_REL"
+																						rendered="true"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePARM_FROMTO_REL}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.PARM_FROMTO_REL}">
+																						<f:selectItem itemLabel="1" itemValue="1" />
+																						<f:selectItem itemLabel="2" itemValue="2" />
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_11" immediate="true"
+																							reRender="errorPanel" />
+																					</h:selectOneMenu></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrowright"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_DEPEN_ID_INPUT_TEXT_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PARAM_DEPEN_ID$caption}" /></td>
+																				<td class="oddrow"><h:inputTextarea
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_DEPEN_ID_INPUT_TEXT}"
+																						id="PARAM_DEPEN_ID" maxlength="250"
+																						rendered="true" required="false"
+																						styleClass="input" cols="50" rows="4"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePARAM_DEPEN_ID}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.PARAM_DEPEN_ID}" /></td>
+
+																			</tr>
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_DEPEND_COL_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PARAM_DEPEND_COL$caption}" /></td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PARAM_DEPEND_COL_TEXT}"
+																						rendered="true" styleClass="inputsmall" maxlength="20"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePARAM_DEPEND_COL}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_COMMON_RI_CONFIG_DTL_BEAN.PARAM_DEPEND_COL}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_12" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrow">&nbsp;</td>
+																				<td class="oddrow">&nbsp;</td>
+
+																			</tr>
+
+
+
+																		</table>
+																	</rich:tab>
+
+																	<!-- Tab 2 Report Header Details -->
+																	<rich:tab id="tab2" label="Report Header Details"
+																		rendered="true" reRender="errorPanel">
+
+																		<table class="noborder" width="100%">
+																		
+																		<tr>
+																				<td colspan="5"><rich:dataTable
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.dataTable2}"
+																						border="0" cellpadding="0" id="datatableId2"
+																						rows="5"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_TAB_HDR_LIST}"
+																						var="table" width="100%">
+																						
+																						
+																						
+																						<rich:column filterBy="#{table.PMRTH_REP_ID}"
+																							filterEvent="onkeyup" sortBy="#{table.PMRTH_REP_ID}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column7_label"
+																									styleClass="forumRowHighlight" value="PMRTH_REP_ID" />
+																							</f:facet>
+																							
+																							
+																							<a4j:commandLink
+																								action="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.getDetailsForRepTabHdr}"
+																								immediate="true" reRender="tabpanel1">
+																								<h:outputText id="column7_value"
+																								value="#{table.PMRTH_REP_ID} " />
+																							</a4j:commandLink>
+																							
+																						</rich:column>
+																						
+																						
+																						<rich:column filterBy="#{table.PMRTH_REP_NAME}"
+																							filterEvent="onkeyup"
+																							sortBy="#{table.PMRTH_REP_NAME}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column8_label"
+																									styleClass="forumRowHighlight"
+																									value="PMRTH_REP_NAME" />
+																							</f:facet>
+																							<h:outputText id="column8_value"
+																								value="#{table.PMRTH_REP_NAME} " />
+																						</rich:column>
+																						
+
+																						<rich:column filterBy="#{table.PMRTH_SR_NO}"
+																							filterEvent="onkeyup" sortBy="#{table.PMRTH_SR_NO}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column9_label"
+																									styleClass="forumRowHighlight" value="PMRTH_SR_NO" />
+																							</f:facet>
+
+																							
+
+																							
+																								<h:outputText id="column9_value"
+																									value="#{table.PMRTH_SR_NO} " />
+																							
+
+																						</rich:column>
+
+
+
+																						<rich:column filterBy="#{table.PMRTH_MODULE_ID}"
+																							filterEvent="onkeyup"
+																							sortBy="#{table.PMRTH_MODULE_ID}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column10_label"
+																									styleClass="forumRowHighlight"
+																									value="PMRTH_MODULE_ID" />
+																							</f:facet>
+																							<h:outputText id="column10_value"
+																								value="#{table.PMRTH_MODULE_ID} " />
+																						</rich:column>
+
+
+																					
+
+
+																						<rich:column filterBy="#{table.PMRTH_REP_CATG}"
+																							filterEvent="onkeyup"
+																							sortBy="#{table.PMRTH_REP_CATG}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column11_label"
+																									styleClass="forumRowHighlight"
+																									value="PMRTH_REP_CATG" />
+																							</f:facet>
+																							<h:outputText id="column11_value"
+																								value="#{table.PMRTH_REP_CATG} " />
+																						</rich:column>
+
+																						
+
+																						
+
+
+																						<f:facet name="footer">
+																							<h:panelGroup id="footerpanel" style="border:0">
+																								<rich:datascroller align="right" />
+																								<h:commandButton
+																									actionListener="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.AddRowForRePTabHdr}"
+																									binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.UI_M_BUT_ADD_REP_TAB_HDR}"
+																									id="AUTOID_tab20" immediate="true"
+																									reRender="errorPanel"
+																									rendered="true" style="width:81px"
+																									styleClass="button" value="Create" />
+
+
+																								<h:commandButton
+																									binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.UI_M_BUT_DELETE_REP_TAB_HDR}"
+																									actionListener="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.deleteRowForRepTabHdr}"
+																									id="AUTOID_del_2" immediate="true" disabled="true"
+																									reRender="errorPanel,sectionDtls"
+																									rendered="true" style="width:81px"
+																									styleClass="button" value="Delete" />
+
+																								<h:commandButton
+																									actionListener="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.postRecordForRepTabHdr}"
+																									binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.UI_M_BUT_POST_REP_TAB_HDR}"
+																									id="AUTOID_tab21"
+																									reRender="errorPanel,tabpanel1"
+																									rendered="true" style="width:81px"
+																									styleClass="button" value="Post" />
+
+																							</h:panelGroup>
+																						</f:facet>
+
+																					</rich:dataTable></td>
+																			</tr>
+																		
+																		
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_SR_NUM_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$SRNO$caption}" />
+																						<h:graphicImage id="Mandatory_2" style=""
+																		styleClass="searchimg"
+																		value="./../../images/mandatory.gif" /></td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_SR_NUM_TEXT}"
+																						rendered="true" styleClass="inputsmall" maxlength="12" required="true"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_SR_NUM}"
+																						title="PMRTH_SR_NO column in PM_REP_TAB_HDR table"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_TAB_HDR_BEAN.PMRTH_SR_NO}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_14" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrowright"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_MODULE_ID_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PMRTH_MODULE_ID$caption}" />
+																						<h:graphicImage id="Mandatory_3" style=""
+																		styleClass="searchimg"
+																		value="./../../images/mandatory.gif" />
+																						</td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_MODULE_ID_TEXT}"
+																						rendered="true" styleClass="inputsmall" required="true"
+																						title="PMRTH_MODULE_ID" maxlength="25"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_MODULE_ID}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_TAB_HDR_BEAN.PMRTH_MODULE_ID}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_15" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																			</tr>
+
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REP_NAME_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PMRTH_REP_NAME$caption}" />
+																						<h:graphicImage id="Mandatory_4" style=""
+																		styleClass="searchimg"
+																		value="./../../images/mandatory.gif" />
+																						</td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REP_NAME_TEXT}"
+																						rendered="true" styleClass="inputsmall" required="true"
+																						title="PMRTH_REP_NAME" maxlength="100"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_REP_NAME}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_TAB_HDR_BEAN.PMRTH_REP_NAME}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_16" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrowright"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REP_CATG_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PMRTH_REP_CATG$caption}" /></td>
+																				<td class="oddrow"><!-- <h:selectOneMenu
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REP_CATG_MENU}"
+																						disabled="false" id="PMRTH_REP_CATG"
+																						rendered="true"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_REP_CATG}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_TAB_HDR_BEAN.PMRTH_REP_CATG}">
+																						<f:selectItem itemLabel="1" itemValue="1" />
+																						<f:selectItem itemLabel="2" itemValue="2" />
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_17" immediate="true"
+																							reRender="errorPanel" />
+																					</h:selectOneMenu> -->
+																					<h:selectOneMenu
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REP_CATG_MENU}"
+																						disabled="false" id="PMRTH_REP_CATG"
+																						rendered="true"
+																						title="PMRTH_REP_CATG"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_REP_CATG}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_TAB_HDR_BEAN.PMRTH_REP_CATG}">
+																						<f:selectItems value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.repCatgSelectList}" 
+																						var="list" itemLabel="#{list.label}" itemValue="#{list.value}"
+																						></f:selectItems>
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_17" immediate="true"
+																							reRender="errorPanel" />
+																					</h:selectOneMenu>
+																					</td>
+
+																			</tr>
+
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REP_ID_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_REPORT_ID$caption}" />
+																						<h:graphicImage id="Mandatory_5" style=""
+																		styleClass="searchimg"
+																		value="./../../images/mandatory.gif" />
+																						</td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REP_ID_TEXT}"
+																						rendered="true" styleClass="inputsmall"
+																						title="PMRTH_REP_ID" maxlength="60"
+																						required="true"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_REP_ID}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_TAB_HDR_BEAN.PMRTH_REP_ID}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_18" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrowright"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REP_TEMP_NAME_ID_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PMRTH_REP_TEMP_NAME_ID$caption}" /></td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REP_TEMP_NAME_ID_TEXT}"
+																						rendered="true" styleClass="inputsmall"
+																						title="PMRTH_REP_TEMP_NAME_ID" maxlength="180"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_REP_TEMP_NAME_ID}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_TAB_HDR_BEAN.PMRTH_REP_TEMP_NAME_ID}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_19" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																			</tr>
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_CONN_REQD_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PMRTH_CONN_REQD$caption}" /></td>
+																				<td class="oddrow"><h:selectOneMenu
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_CONN_REQD_MENU}"
+																						disabled="false" id="PMRTH_CONN_REQD"
+																						rendered="true"
+																						title="PMRTH_CONN_REQD"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_CONN_REQD}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_TAB_HDR_BEAN.PMRTH_CONN_REQD}">
+																						<f:selectItem itemLabel="YES" itemValue="Y" />
+																						<f:selectItem itemLabel="NO" itemValue="N" />
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_20" immediate="true"
+																							reRender="errorPanel" />
+																					</h:selectOneMenu></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrowright"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_PROC_REQD_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PMRTH_PROC_REQD$caption}" /></td>
+																				<td class="oddrow"><h:selectOneMenu
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_PROC_REQD_MENU}"
+																						disabled="false" id="PMRTH_PROC_REQD"
+																						rendered="true"
+																						title="PMRTH_PROC_REQD"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_PROC_REQD}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_TAB_HDR_BEAN.PMRTH_PROC_REQD}">
+																						<f:selectItem itemLabel="YES" itemValue="Y" />
+																						<f:selectItem itemLabel="NO" itemValue="N" />
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_21" immediate="true"
+																							reRender="errorPanel" />
+																					</h:selectOneMenu></td>
+
+																			</tr>
+
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REPORT_CATG_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_REP_SUB_CATG$caption}" /></td>
+																				<td class="oddrow"><h:selectOneMenu
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REPORT_CATG_MENU}"
+																						disabled="false" id="PMRTH_REPORT_CATG"
+																						rendered="true"
+																						title="PMRTH_REPORT_CATG"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_REPORT_CATG}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_TAB_HDR_BEAN.PMRTH_REPORT_CATG}">
+																						<f:selectItems value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.repCatgSelectList1}" 
+																						var="list" itemLabel="#{list.label}" itemValue="#{list.value}"
+																						></f:selectItems>
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_22" immediate="true"
+																							reRender="errorPanel" />
+																					</h:selectOneMenu></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrow">&nbsp;</td>
+																				<td class="oddrow">&nbsp;</td>
+
+																			</tr>
+
+
+																		</table>
+																	</rich:tab>
+
+
+																	<!-- Tab 3 Report Procedure Params -->
+																	<rich:tab id="tab3" label="Report Procedure Params"
+																	binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_REP_PROC_PARAMS}"
+																		rendered="true" reRender="errorPanel">
+
+																		<table class="noborder" width="100%">
+																		
+																		<tr>
+																				<td colspan="5"><rich:dataTable
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.dataTable3}"
+																						border="0" cellpadding="0" id="datatableId3"
+																						rows="5"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_PROC_PARAMS_LIST}"
+																						var="table" width="100%">
+																						
+																						
+																						
+																						<rich:column filterBy="#{table.PMRTH_REP_ID}"
+																							filterEvent="onkeyup" sortBy="#{table.PMRTH_REP_ID}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column12_label"
+																									styleClass="forumRowHighlight" value="PMRTH_REP_ID" />
+																							</f:facet>
+																							
+																							
+																							<a4j:commandLink
+																								action="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.getDetailsForRepProcParams}"
+																								immediate="true" reRender="tabpanel1">
+																								<h:outputText id="column12_value"
+																								value="#{table.PMRTH_REP_ID} " />
+																							</a4j:commandLink>
+																							
+																						</rich:column>
+																						
+																						
+																						<rich:column filterBy="#{table.PMRTH_PROC_NAME}"
+																							filterEvent="onkeyup"
+																							sortBy="#{table.PMRTH_PROC_NAME}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column8_label"
+																									styleClass="forumRowHighlight"
+																									value="PMRTH_PROC_NAME" />
+																							</f:facet>
+																							<h:outputText id="column8_value"
+																								value="#{table.PMRTH_PROC_NAME} " />
+																						</rich:column>
+																						
+
+																						<rich:column filterBy="#{table.PMRTH_SR_NO}"
+																							filterEvent="onkeyup" sortBy="#{table.PMRTH_SR_NO}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column9_label"
+																									styleClass="forumRowHighlight" value="PMRTH_SR_NO" />
+																							</f:facet>
+
+																							
+
+																							
+																								<h:outputText id="column9_value"
+																									value="#{table.PMRTH_SR_NO} " />
+																							
+
+																						</rich:column>
+
+
+
+																						<rich:column filterBy="#{table.PMRTH_PARAM_TYPE}"
+																							filterEvent="onkeyup"
+																							sortBy="#{table.PMRTH_PARAM_TYPE}"
+																							styleClass="#{table.rowSelected}">
+																							<f:facet name="header">
+																								<h:outputText id="column10_label"
+																									styleClass="forumRowHighlight"
+																									value="PMRTH_PARAM_TYPE" />
+																							</f:facet>
+																							<h:outputText id="column10_value"
+																								value="#{table.PMRTH_PARAM_TYPE} " />
+																						</rich:column>
+
+
+																					
+
+
+																						
+
+																						
+
+
+																						<f:facet name="footer">
+																							<h:panelGroup id="footerpanel" style="border:0">
+																								<rich:datascroller align="right" />
+																								<h:commandButton
+																									actionListener="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.AddRowForRePRepProcParams}"
+																									binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.UI_M_BUT_ADD_REP_PROC_PARAMS}"
+																									id="AUTOID_tab22" immediate="true"
+																									reRender="errorPanel"
+																									rendered="true" style="width:81px"
+																									styleClass="button" value="Create" />
+																									
+																									<h:commandButton
+																									binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.UI_M_BUT_DELETE_REP_PROC_PARAMS}"
+																									actionListener="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.deleteRowForProcParams}"
+																									id="AUTOID_del_3" immediate="true" disabled="true"
+																									reRender="errorPanel,sectionDtls"
+																									rendered="true" style="width:81px"
+																									styleClass="button" value="Delete" />
+																								
+																								<h:commandButton
+																									actionListener="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.postRecordForRepProcParams}"
+																									binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.UI_M_BUT_POST_REP_PROC_PARAMS}"
+																									id="AUTOID_tab23"
+																									reRender="errorPanel,tabpanel1"
+																									rendered="true" style="width:81px"
+																									styleClass="button" value="Post" />
+
+																							</h:panelGroup>
+																						</f:facet>
+
+																					</rich:dataTable></td>
+																			</tr>
+																		
+																		
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_SR_NO_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$SRNO$caption}" />
+																						<h:graphicImage id="Mandatory_6" style=""
+																		styleClass="searchimg"
+																		value="./../../images/mandatory.gif" />
+																						</td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_SR_NO_TEXT}"
+																						rendered="true" styleClass="inputsmall" maxlength="12"
+																						title="PMRTH_SR_NO" required="true"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_SR_NO}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_PROC_PARAMS_BEAN.PMRTH_SR_NO}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_23" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrowright"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REP_IDEN_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_REPORT_ID$caption}" />
+																						<h:graphicImage id="Mandatory_7" style=""
+																		styleClass="searchimg"
+																		value="./../../images/mandatory.gif" />
+																						</td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_REP_IDEN_TEXT}"
+																						rendered="true" styleClass="inputsmall" maxlength="60"
+																						title="PMRTH_REP_ID" required="true"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_REP_IDEN}"
+																						disabled="false"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_PROC_PARAMS_BEAN.PMRTH_REP_ID}">
+
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_24" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																			</tr>
+
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_PROC_NAME_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PMRTH_PROC_NAME$caption}" /></td>
+																				<td class="oddrow"><h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_PROC_NAME_TEXT}"
+																						rendered="true" styleClass="inputsmall" maxlength="64"
+																						title="PMRTH_PROC_NAME"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_PROC_NAME}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_PROC_PARAMS_BEAN.PMRTH_PROC_NAME}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_25" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText></td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrowright"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_PARAM_TYPE_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PARAM_TYPE$caption}" /></td>
+																				<td class="oddrow"><!-- <h:inputText
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_PARAM_TYPE_TEXT}"
+																						rendered="true" styleClass="inputsmall"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_PARAM_TYPE}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_PROC_PARAMS_BEAN.PMRTH_PARAM_TYPE}">
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_26" immediate="true"
+																							reRender="errorPanel" />
+																					</h:inputText> -->
+																					
+																					<h:selectOneMenu
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_PARAM_TYPE_TEXT}"
+																						disabled="false" 
+																						rendered="true"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_PARAM_TYPE}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_PROC_PARAMS_BEAN.PMRTH_PARAM_TYPE}">
+																						<f:selectItem itemLabel="IN" itemValue="IN" />
+																						<f:selectItem itemLabel="OUT" itemValue="OUT" />
+																						<f:selectItem itemLabel="IN OUT" itemValue="IN OUT" />
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_26" immediate="true"
+																							reRender="errorPanel" />
+																					</h:selectOneMenu>
+																					
+																					
+																					</td>
+
+																			</tr>
+
+
+
+																			<tr>
+																				<td class="oddrowright" width="20%"><h:outputLabel
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_PARAM_DATATYPE_LABEL}"
+																						value="#{message_PILM205.PILM205$PM_CUSTOMER_REPORTS$UI_M_PMRTH_PARAM_DATATYPE$caption}" /></td>
+																				<td class="oddrow"><!-- <h:selectOneMenu
+																						binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_PARAM_DATATYPE_MENU}"
+																						disabled="false" id="PMRTH_PARAM_DATATYPE"
+																						rendered="true"
+																						validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_PARAM_DATATYPE}"
+																						value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_PROC_PARAMS_BEAN.PMRTH_PARAM_DATATYPE}">
+																						<f:selectItem itemLabel="INT" itemValue="NUMBER" />
+																						<f:selectItem itemLabel="STRING" itemValue="VARCHAR" />
+																						<f:selectItem itemLabel="DATE" itemValue="DATE" />
+																						<a4j:support
+																							actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																							event="onblur" id="style_27" immediate="true"
+																							reRender="errorPanel" />
+																					</h:selectOneMenu> -->
+																					
+																					<h:inputText
+																								binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_PARAM_DATATYPE_MENU}"
+																								id="PMRTH_PARAM_DATATYPE" maxlength="12"
+																								
+																								rendered="true" required="false"
+																								styleClass="inputsmall"
+																								
+																								validator="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doValidatePMRTH_PARAM_DATATYPE}"
+																								value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_PROC_PARAMS_BEAN.PMRTH_PARAM_DATATYPE}">
+																								<a4j:support
+																									actionListener="#{PM023_A_COMPOSITE_ACTION.PM_IL_CUSTOM_MASTER_REPORT_ACTION_BEAN.fireFieldValidation}"
+																									event="onblur"
+																									id="POL_SA_CURR_CODE_AJAX_SUPPORT"
+																									immediate="true"
+																									
+																									reRender="errorPanel,PMRTH_PARAM_DATATYPE,PMRTH_PARAM_DATATYPE_DESC,POL_SA_CURR_CODE_LOV" />
+																							</h:inputText> <h:inputText
+																								binding="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.COMP_PMRTH_PARAM_DATATYPE_DESC}"
+																								disabled="true" id="PMRTH_PARAM_DATATYPE_DESC"
+																								maxlength="240" rendered="true" required="false"
+																								styleClass="input"
+																								value="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_PROC_PARAMS_BEAN.PMRTH_PARAM_DATATYPE_DESC}" />
+																							<rich:suggestionbox for="PMRTH_PARAM_DATATYPE"
+																								height="200" id="POL_SA_CURR_CODE_LOV"
+																								suggestionAction="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.doGetLovCustomReport}"
+																								var="panelCode" width="250">
+																								<h:column id="COLUMN_SUGG_1">
+																									<h:outputText id="AUTOID_65"
+																										value="#{panelCode.code}" />
+																								</h:column>
+																								<h:column id="COLUMN_SUGG_2">
+																									<h:outputText id="AUTOID_66"
+																										value="#{panelCode.name}" />
+																								</h:column>
+																								<a4j:support ajaxSingle="true" event="onselect"
+																									id="POL_SA_CURR_CODE_SUGG_SUPPORT"
+																									immediate="true"
+																									reRender="errorPanel,UI_M_POL_SA_CURR_DESC">
+																									<f:setPropertyActionListener id="AUTOID_67"
+																										target="#{PILM205_COMPOSITE_ACTION.PILM205_CUSTOMIZED_REPORT_ACTION_BEAN.PM_REP_PROC_PARAMS_BEAN.PMRTH_PARAM_DATATYPE_DESC}"
+																										value="#{panelCode.name}" />
+																								</a4j:support>
+																							</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_22"
+																								styleClass="searchimg"
+																								value="./../../resources/images/Lov.gif" />
+																					
+																					
+																					</td>
+
+																				<td class="oddrow">&nbsp;</td>
+
+																				<td class="oddrow">&nbsp;</td>
+																				<td class="oddrow">&nbsp;</td>
+
+																			</tr>
+
+
+																		</table>
+																	</rich:tab>
+
+																</rich:tabPanel></td>
+														</tr>
+
+
+
+
+
+
+
+
+													</table>
+												</td>
+											</tr>
+
+										</table>
+									</td>
+								</tr>
+
+
+
+
+
+
+
+							</table>
+						</td>
+					</tr>
+				</table>
+			</h:form>
+
+
+		</f:view>
+	</ui:define>
+</ui:composition>

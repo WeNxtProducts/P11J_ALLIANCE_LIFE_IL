@@ -1,0 +1,601 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+			beforePhase="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.onLoad}">
+			<f:loadBundle basename="messageProperties_PM001_A" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<table cellpadding="0" cellspacing="0" width="100%" border="0">
+				<tr>
+					<td colspan="3"></td>
+				</tr>
+				<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+				<h:form id="PM_DIVISION" onkeypress="return event.keyCode != 13">
+				<!-- End -->
+					<tr>
+						<td colspan="3" width="100%" valign="top">
+						<table width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+									<h:commandLink
+											action="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.backButton}"
+											id="AUTOID_1" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="AUTOID_2"
+												styleClass="toolbarButtonStyle"
+												image="./../../resources/images/back.png" accesskey="b" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+									
+										<h:commandLink
+											action="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.saveRecord}"
+											rendered="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value=".\..\..\images\savenext.GIF" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value=".\..\..\images\deleteRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value=".\..\..\images\firstrec.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value=".\..\..\images\prevpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value=".\..\..\images\nextpage.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value=".\..\..\images\lastRecord.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink 
+											action="#{PM001_A_COMPOSITE_ACTION.navigationEnabled}"
+											immediate="true" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage styleClass="toolbarImageStyle"
+												value=".\..\..\images\navigation.gif" />
+											<h:outputText styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.errorMap['current'] !=null? PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.errorMap['current']: PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.globalMsgRender}" />
+									<h:outputText id="warningMessages"
+										value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel>
+						</td>
+					</tr>
+					<tr>
+				<td colspan="3" width="100%" vAlign="top" height="15%">
+				<table width="100%" cellspacing="0" cellpadding="0" id="globalLink">
+					<tr>
+						<td><h:inputHidden
+							value="#{PM001_A_COMPOSITE_ACTION.tabbedBar.tabClicked}"
+							id="myhidden" /> <h:panelGroup id="mypanel"
+							style="border:0;height:15%;">
+							<table width="100%">
+								<tr>
+									<td width="90%"><a4j:repeat
+										value="#{PM001_A_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+										var="currtab">
+										<h:commandLink
+											onclick="document.getElementById('PM_DIVISION:myhidden').value='#{currtab.id}'"
+											value="#{currtab.value}" disabled="#{currtab.disabled}"
+											action="#{PM001_A_COMPOSITE_ACTION.tabbedBar.tabAction}"
+											styleClass="#{currtab.styleString}"
+											immediate="#{currtab.immediate}">
+											<f:param name="tabid" value="#{currtab.id}" />
+										</h:commandLink>
+									</a4j:repeat></td>
+								</tr>
+							</table>
+						</h:panelGroup></td>
+					</tr>
+				</table>
+				</td>
+			</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PM001_A$PM_DIVISION$displayCaption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td>
+						<table width="100%">
+							<tr>
+								<td width="100%" valign="top">
+								<table class="noborder" width="100%">
+									<tr>
+										<td class="oddrowfreeze" colspan="5"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_FRZ_FLAG_LABEL}"
+											for="DIVN_FRZ_FLAG" id="DIVN_FRZ_FLAG_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_FRZ_FLAG$caption}" />
+										<h:selectBooleanCheckbox
+											title="#{message.PM001_A$PM_DIVISION$DIVN_FRZ_FLAG$$tooltip}"
+											id="DIVN_FRZ_FLAG" rendered="true"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.UI_DIVN_FRZ_FLAG}" /></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_CODE_LABEL}"
+											for="DIVN_CODE" id="DIVN_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_CODE$caption}" /> <h:graphicImage
+											style="" styleClass="searchimg" value="./../../images/mandatory.gif" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_CODE}"
+											disabled="false" id="DIVN_CODE" maxlength="36"
+											rendered="true" required="true"
+											styleClass="input"
+											validator="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.validateDIV_CODE}"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_CODE$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_CODE}">
+												<a4j:support
+															actionListener="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="DIVN_CODE_AJAX_SUPPORT"
+															immediate="true" reRender="errorPanel" />
+															</h:inputText>
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_NAME_LABEL}"
+											for="DIVN_NAME" id="DIVN_NAME_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_NAME$caption}" /> <h:graphicImage
+											style="" value="./../../images/mandatory.gif" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_NAME}"
+											disabled="false" id="DIVN_NAME" maxlength="720"
+											rendered="true" required="true"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_NAME$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_NAME}" />
+										</td>
+										<td>&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_SHORT_NAME_LABEL}"
+											for="DIVN_SHORT_NAME" id="DIVN_SHORT_NAME_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_SHORT_NAME$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.gif" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_SHORT_NAME}"
+											disabled="false" id="DIVN_SHORT_NAME" maxlength="90"
+											rendered="true" required="true"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_SHORT_NAME$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_SHORT_NAME}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_COMP_CODE_LABEL}"
+											for="DIVN_COMP_CODE" id="DIVN_COMP_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_COMP_CODE$caption}" />
+										<h:graphicImage style="" styleClass="searchimg" value="./../../images/mandatory.gif" /></td>
+										<td class="oddrow">
+										
+										<!-- Added by janani on 17.8.2016 for company code suggestion box -->
+										
+											<h:inputText
+													binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_COMP_CODE}"
+													disabled="false" id="DIVN_COMP_CODE" maxlength="12"
+													rendered="true" required="true" styleClass="input"
+													onfocus="currFocus('PT_IL_POLICY:POL_PLAN_CODE')"
+													title="#{message.PM001_A$PM_DIVISION$DIVN_COMP_CODE$tooltip}"
+											         value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_COMP_CODE}">
+													<a4j:support
+														actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.fireFieldValidation}"
+														event="onblur" id="DIVN_COMP_CODE_AJAX_SUPPORT"
+														immediate="true"
+														reRender="errorPanel" />
+												</h:inputText> <h:inputText
+													binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_UI_M_COMP_NAME}"
+													disabled="true" id="UI_M_COMP_NAME" maxlength="30"
+													rendered="true" required="false" styleClass="input"
+													title="#{message.PM001_A$PM_DIVISION$UI_M_COMP_NAME$tooltip}"
+													value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.UI_M_COMP_NAME}" />
+												<rich:suggestionbox for="DIVN_COMP_CODE" height="200"
+													id="DIVN_COMP_CODE_LOV"
+													suggestionAction="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.lovDIVN_COMP_CODE}"
+													var="panelCode" width="250">
+													<h:column id="COLUMN_SUGG_1">
+														<h:outputText id="AUTOID_40" value="#{panelCode.code}" />
+													</h:column>
+													<h:column id="COLUMN_SUGG_2">
+														<h:outputText id="AUTOID_41" value="#{panelCode.name}" />
+													</h:column>
+													<a4j:support ajaxSingle="true" event="onselect"
+														id="POL_PLAN_CODE_SUGG_SUPPORT" immediate="true"
+														reRender="errorPanel,UI_M_COMP_NAME">
+														<f:setPropertyActionListener id="AUTOID_42"
+															target="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.UI_M_COMP_NAME}"
+															value="#{panelCode.name}" />
+													</a4j:support>
+												</rich:suggestionbox> <h:graphicImage id="IMAGE_SUGG_3" styleClass="searchimg"
+													value="./../../resources/images/Lov.gif" /></td>
+										
+										<!-- end -->
+										
+										
+										
+										<!-- Commented by Janani on 17.8.2016 for Company code suggestion box 
+										
+										 <h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_COMP_CODE}"
+											disabled="false" id="DIVN_COMP_CODE" maxlength="12"
+											rendered="true" required="true"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_COMP_CODE$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_COMP_CODE}" />
+										<h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_UI_M_COMP_NAME}"
+											disabled="false" maxlength="720" rendered="true"
+											required="false" 
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$UI_M_COMP_NAME$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.UI_M_COMP_NAME}" /> 
+											
+											
+											end   -->
+																	
+										
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_ADDR1_LABEL}"
+											for="DIVN_ADDR1" id="DIVN_ADDR1_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_ADDR1$caption}" />
+										<h:graphicImage style="" value="./../../images/mandatory.gif" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_ADDR1}"
+											disabled="false" id="DIVN_ADDR1" maxlength="90"
+											rendered="true" required="true"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_ADDR1$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_ADDR1}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_ADDR2_LABEL}"
+											for="DIVN_ADDR2" id="DIVN_ADDR2_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_ADDR2$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_ADDR2}"
+											disabled="false" id="DIVN_ADDR2" maxlength="90"
+											rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_ADDR2$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_ADDR2}" />
+										</td>
+										<td>&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_ADDR3_LABEL}"
+											for="DIVN_ADDR3" id="DIVN_ADDR3_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_ADDR3$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_ADDR3}"
+											disabled="false" id="DIVN_ADDR3" maxlength="90"
+											rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_ADDR3$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_ADDR3}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_MGR_NAME_LABEL}"
+											for="DIVN_MGR_NAME" id="DIVN_MGR_NAME_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_MGR_NAME$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_MGR_NAME}"
+											disabled="false" id="DIVN_MGR_NAME" maxlength="180"
+											rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_MGR_NAME$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_MGR_NAME}" />
+										</td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_PHONE_LABEL}"
+											for="DIVN_PHONE" id="DIVN_PHONE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_PHONE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_PHONE}"
+											disabled="false" id="DIVN_PHONE" maxlength="45"
+											rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_PHONE$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_PHONE}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_FAX_LABEL}"
+											for="DIVN_FAX" id="DIVN_FAX_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_FAX$caption}" /></td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_FAX}"
+											disabled="false" id="DIVN_FAX" maxlength="45" rendered="true"
+											required="false" 
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_FAX$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_FAX}" />
+										</td>
+										<td>&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_CONTRA_ACNT_CODE_LABEL}"
+											for="DIVN_CONTRA_ACNT_CODE" id="DIVN_CONTRA_ACNT_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_CONTRA_ACNT_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_CONTRA_ACNT_CODE}"
+											disabled="false" id="DIVN_CONTRA_ACNT_CODE" maxlength="36"
+											rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_CONTRA_ACNT_CODE$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_CONTRA_ACNT_CODE}" />
+
+										<h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_UI_M_CONTRA_ACNT_DESC}"
+											disabled="false" maxlength="90" rendered="true"
+											required="false" 
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$UI_M_CONTRA_ACNT_DESC$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.UI_M_CONTRA_ACNT_DESC}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_BL_NAME_LABEL}"
+											for="DIVN_BL_NAME" id="DIVN_BL_NAME_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_BL_NAME$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_BL_NAME}"
+											disabled="false" id="DIVN_BL_NAME" maxlength="720"
+											rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_BL_NAME$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_BL_NAME}" />
+										</td>
+										<td class="oddrow"></td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_BL_SHORT_NAME_LABEL}"
+											for="DIVN_BL_SHORT_NAME" id="DIVN_BL_SHORT_NAME_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_BL_SHORT_NAME$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_BL_SHORT_NAME}"
+											disabled="false" id="DIVN_BL_SHORT_NAME" maxlength="90"
+											rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_BL_SHORT_NAME$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_BL_SHORT_NAME}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_BL_ADDR1_LABEL}"
+											for="DIVN_BL_ADDR1" id="DIVN_BL_ADDR1_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_BL_ADDR1$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_BL_ADDR1}"
+											disabled="false" id="DIVN_BL_ADDR1" maxlength="90"
+											rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_BL_ADDR1$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_BL_ADDR1}" />
+										</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_BL_ADDR2_LABEL}"
+											for="DIVN_BL_ADDR2" id="DIVN_BL_ADDR2_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_BL_ADDR2$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_BL_ADDR2}"
+											disabled="false" id="DIVN_BL_ADDR2" maxlength="90"
+											rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_BL_ADDR2$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_BL_ADDR2}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_BL_ADDR3_LABEL}"
+											for="DIVN_BL_ADDR3" id="DIVN_BL_ADDR3_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_BL_ADDR3$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_BL_ADDR3}"
+											disabled="false" id="DIVN_BL_ADDR3" maxlength="90"
+											rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_BL_ADDR3$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_BL_ADDR3}" />
+										</td>
+										<td class="oddrow"></td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_BL_MGR_NAME_LABEL}"
+											for="DIVN_BL_MGR_NAME" id="DIVN_BL_MGR_NAME_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM001_A$PM_DIVISION$DIVN_BL_MGR_NAME$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.COMP_DIVN_BL_MGR_NAME}"
+											disabled="false" id="DIVN_BL_MGR_NAME" maxlength="180"
+											rendered="true" required="false"
+											styleClass="input"
+											title="#{message.PM001_A$PM_DIVISION$DIVN_BL_MGR_NAME$tooltip}"
+											value="#{PM001_A_COMPOSITE_ACTION.PM_DIVISION_ACTION_BEAN.PM_DIVISION_BEAN.DIVN_BL_MGR_NAME}" />
+										</td>
+									</tr>
+								</table>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value="./../../resources/images/save.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\savenext.GIF" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\firstrec.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\prevpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\nextpage.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\lastRecord.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage styleClass="toolbarImageStyle"
+										value=".\..\..\images\navigation.gif" />
+									<h:outputText styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</h:form>
+				</table>
+		</f:view>
+	</ui:define>
+</ui:composition>

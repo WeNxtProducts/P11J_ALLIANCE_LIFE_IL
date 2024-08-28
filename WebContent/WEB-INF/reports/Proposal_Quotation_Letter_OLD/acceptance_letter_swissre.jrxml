@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="cover_confirmation" pageWidth="595" pageHeight="842" columnWidth="525" leftMargin="40" rightMargin="30" topMargin="20" bottomMargin="20" uuid="6bcb5d2d-8af0-44bd-9382-ba85e2d83d12">
+	<property name="ireport.zoom" value="1.1"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<subDataset name="cover_desc" uuid="d89b6bca-46b3-4af4-98a0-134e1d78b957">
+		<parameter name="POL_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT COVER_DESC, POAC_LC_SA, POAC_PERIOD
+FROM (
+SELECT COVER_long_DESC           COVER_DESC,
+       POL_LC_SUM_ASSURED   POAC_LC_SA,
+       POL_PERIOD       POAC_PERIOD
+  FROM PT_IL_POLICY, PM_IL_COVER
+ WHERE POL_SYS_ID = $P{POL_SYS_ID}
+ AND   COVER_CODE = POL_PLAN_CODE
+UNION ALL
+  SELECT COVER_long_DESC COVER_DESC, POAC_LC_SA, POAC_PERIOD
+  FROM PT_IL_POL_ADDL_COVER, PM_IL_COVER
+  WHERE POAC_POL_SYS_ID = $P{POL_SYS_ID}
+  AND   COVER_CODE = POAC_COVER_CODE)]]>
+		</queryString>
+		<field name="COVER_DESC" class="java.lang.String"/>
+		<field name="POAC_LC_SA" class="java.math.BigDecimal"/>
+		<field name="POAC_PERIOD" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset1" uuid="e87bb0d0-3792-4e4f-b52c-a052e7778ff1"/>
+	<subDataset name="PREMIUM_AMOUNT_RO" uuid="5efa8f4e-379e-49d8-8dbd-6419828aafe2">
+		<parameter name="POL_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT SUM(TOT_PREM)
+  FROM (SELECT SUM(POL_LC_BASIC_PREM) TOT_PREM
+          FROM PT_IL_POLICY
+       WHERE POL_SYS_ID = $P{POL_SYS_ID}
+   UNION ALL
+       SELECT SUM(NVL(POAC_LC_PREM,0)) TOT_PREM
+       FROM PT_IL_POL_ADDL_COVER
+       WHERE POAC_POL_SYS_ID = $P{POL_SYS_ID}
+   UNION ALL
+       SELECT SUM(NVL(POC_LC_VALUE, 0)) TOT_PREM
+       FROM PT_IL_POL_CHARGE
+       WHERE POC_POL_SYS_ID = $P{POL_SYS_ID})]]>
+		</queryString>
+		<field name="SUM(TOT_PREM)" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset2" uuid="8e41c975-7e2e-4f4b-b15a-a5eb31a5d34e"/>
+	<subDataset name="dataset3" uuid="52ccb7bf-9d4a-47d4-80da-e72277e43a9d"/>
+	<parameter name="POL_SYS_ID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT POL_NO,
+       POL_SYS_ID,
+      (SELECT CUST_NAME FROM PM_CUSTOMER
+       WHERE CUST_CODE = POL_CUST_CODE) CUST_NAME,
+        POAD_DOB,
+        (SELECT PBEN_BNF_NAME FROM PT_IL_POL_BENEFICIARY
+         WHERE PBEN_POL_SYS_ID = POL_SYS_ID) ASSIGNEE_NAME,
+       (SELECT CBAD_ACNT_NO FROM PM_CUST_BANK_ACNT_DTLS
+       WHERE CBAD_CUST_CODE = POL_CUST_CODE)  POL_BANK_ACNT,
+       POL_CUST_CURR_CODE,
+       (SELECT CBAD_DIVISION FROM PM_CUST_BANK_ACNT_DTLS
+         WHERE CBAD_CUST_CODE = POL_CUST_CODE)   POL_BANK_DIVN,
+        (SELECT DIVN_NAME FROM FM_DIVISION
+         WHERE DIVN_CODE = POL_DIVN_CODE) POL_BRANCH,
+       (DECODE(POL_MODE_OF_PYMT,
+               'S',
+               'SINGLE',
+               'Y',
+               'YEARLY',
+               'M',
+               'MONTHLY',
+               'Q',
+               'QUARTERLY',
+               'HALF-YEARLY')) PREM_MOD,
+       POL_PERIOD,
+       POL_LC_BASIC_PREM,
+       POL_LC_SUM_ASSURED,
+       POL_LC_FIRST_PREM,
+       (SELECT PS_CODE_DESC
+          FROM PM_IL_PLAN, PP_SYSTEM
+         WHERE PLAN_CODE = POL_PLAN_CODE
+           AND PS_TYPE = 'ILPLANTYPE'
+           AND PS_CODE = PLAN_TYPE) PLAN_TYPE,
+         (SELECT CBAD_BANK_CODE FROM PM_CUST_BANK_ACNT_DTLS
+         WHERE CBAD_CUST_CODE = POL_CUST_CODE)   BANK_CODE,
+   (SELECT BAD_ACNT_NO
+      FROM FM_BANK_ACNT_DETAIL, FM_BANK
+     WHERE BANK_CODE = BAD_BANK_CODE
+       AND BANK_NAME = POL_BANK_BRANCH_NAME
+       AND BAD_CURR_CODE = '001') ACNT_NO,
+       NULL     LOAN_TYPE
+  FROM PT_IL_POLICY, PT_IL_POL_ASSURED_DTLS
+ WHERE POAD_POL_SYS_ID = POL_SYS_ID
+ AND POL_SYS_ID = $P{POL_SYS_ID}]]>
+	</queryString>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POL_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="CUST_NAME" class="java.lang.String"/>
+	<field name="POAD_DOB" class="java.sql.Timestamp"/>
+	<field name="ASSIGNEE_NAME" class="java.lang.String"/>
+	<field name="POL_BANK_ACNT" class="java.lang.String"/>
+	<field name="POL_CUST_CURR_CODE" class="java.lang.String"/>
+	<field name="POL_BANK_DIVN" class="java.lang.String"/>
+	<field name="POL_BRANCH" class="java.lang.String"/>
+	<field name="PREM_MOD" class="java.lang.String"/>
+	<field name="POL_PERIOD" class="java.math.BigDecimal"/>
+	<field name="POL_LC_BASIC_PREM" class="java.math.BigDecimal"/>
+	<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<field name="POL_LC_FIRST_PREM" class="java.math.BigDecimal"/>
+	<field name="PLAN_TYPE" class="java.lang.String"/>
+	<field name="BANK_CODE" class="java.lang.String"/>
+	<field name="ACNT_NO" class="java.lang.String"/>
+	<field name="LOAN_TYPE" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="100"/>
+	</title>
+	<pageHeader>
+		<band height="70">
+			<printWhenExpression><![CDATA[$V{PAGE_NUMBER}==1?false:true]]></printWhenExpression>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="343" splitType="Stretch">
+			<staticText>
+				<reportElement x="389" y="36" width="48" height="23" uuid="d4c0b5c1-5cbf-481e-88a6-5d7c2f046478"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="9" y="90" width="107" height="20" uuid="8f03b6b6-8b80-448e-8425-ea472a512ecb"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[After Compliments,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="115" width="287" height="20" uuid="e375faff-3f85-4486-ab14-966c48032ce7"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Re:  LIFE INSURANCE ACCEPTANCE LETTER.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="135" width="510" height="17" uuid="1b28bc39-dcad-4deb-9a44-1639a002eef4"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[We are pleased to inform you that the Proposal for Life Assurance has been accepted on the following basis:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="152" width="145" height="20" uuid="6a6284b2-9b98-47cd-b0a8-0aa867819976"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Please pay the premium.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="175" width="107" height="20" uuid="b9a8e61e-931c-4d2e-ba29-4a61c53d816d"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Life Assured:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="195" width="107" height="26" uuid="63c64b85-799d-4eef-9068-b8a36c5dc652"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Assignee Bank]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="221" width="107" height="26" uuid="41c274e3-0a99-4576-8437-ec079f128ab8"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Account #- Customer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="247" width="107" height="26" uuid="a8bac693-6dd2-428c-8352-af6448d9af8d"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Branch]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="273" width="107" height="26" uuid="ee2f49aa-1985-4159-93c8-491d711ee67d"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Policy type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="195" width="130" height="26" uuid="58aa769f-f521-4f32-804f-430a4ca3e465"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Proposal number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="221" width="130" height="26" uuid="f0384ca0-0bc5-40a9-9eb8-2f7fde45b202"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Loan / Policy Term Years]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="247" width="130" height="26" uuid="fa4c329e-9529-48f6-8bdd-bd32e7f669b5"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Premium amount RO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="273" width="130" height="26" uuid="542f0063-927c-49a3-a622-bfd2d41cd0d6"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Mode of payment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="299" width="130" height="21" uuid="c0032e21-fca2-4d6f-855e-501e33547926"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Sum Assured RO]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement positionType="Float" stretchType="RelativeToTallestObject" x="9" y="321" width="510" height="18" isPrintWhenDetailOverflows="true" uuid="f8c5787c-2e52-4731-939a-c04b3e6a9e81"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="cover_desc" uuid="7c760257-7f3a-42a2-b77d-9c2b58c4745a">
+						<datasetParameter name="POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$F{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="18" width="510">
+						<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToTallestObject" x="1" y="0" width="265" height="18" isPrintWhenDetailOverflows="true" uuid="ed37f9f4-34cd-4310-befc-7fd6a31f3dfb"/>
+							<box leftPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement>
+								<font fontName="SansSerif" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{COVER_DESC}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" pattern="###0.000" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToTallestObject" x="266" y="0" width="130" height="18" isPrintWhenDetailOverflows="true" uuid="a1d3864c-d6b1-4e4b-9417-104ade751478"/>
+							<box rightPadding="4">
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.5"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Right">
+								<font fontName="SansSerif" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POAC_LC_SA}]]></textFieldExpression>
+						</textField>
+						<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+							<reportElement stretchType="RelativeToTallestObject" x="396" y="0" width="114" height="18" isPrintWhenDetailOverflows="true" uuid="3561641e-b586-4c99-8fea-e4c4c2dc46d9"/>
+							<box leftPadding="4">
+								<pen lineWidth="0.0"/>
+								<topPen lineWidth="0.5"/>
+								<leftPen lineWidth="0.0"/>
+								<bottomPen lineWidth="0.5"/>
+								<rightPen lineWidth="0.5"/>
+							</box>
+							<textElement textAlignment="Center">
+								<font fontName="SansSerif" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POAC_PERIOD}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="430" y="36" width="100" height="20" uuid="e40742d3-06ef-43d8-b9e6-16f4bca3ad03"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="9" y="39" width="217" height="20" uuid="a0818156-0498-4c7c-9278-0a4faf59c7f3"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ASSIGNEE_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="222" y="115" width="242" height="20" uuid="f24ba64e-7f28-4e8b-974d-730c9c08a66a"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ADVICE FOR PAYMENT OF PREMIUM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="117" y="175" width="400" height="20" uuid="b4427ea2-3b83-44d2-a94d-ed50f7da42f0"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="117" y="195" width="158" height="26" uuid="31c344d8-0f10-4f34-a6ff-d2d14fefd098"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ASSIGNEE_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="10" y="300" width="265" height="20" uuid="a4b44449-9e53-4bb0-b2bc-8614351ed897"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Benefits covered]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="405" y="274" width="114" height="26" uuid="8694e7af-c5fb-4ffe-a263-d8787dd6e741"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PREM_MOD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="117" y="273" width="158" height="26" uuid="c900085c-0f4d-4729-b822-173a806c8d44"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLAN_TYPE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="405" y="299" width="114" height="21" uuid="47739c90-f307-4543-9fd3-915a479ebd61"/>
+				<box>
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Term of cover-yrs]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="117" y="175" width="405" height="20" uuid="bd79f64b-d419-4150-a642-edb4a0767c74"/>
+				<box leftPadding="4"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CUST_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="117" y="221" width="158" height="26" uuid="408d397e-9d45-414e-a4a5-d14ff4398b0d"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_BANK_ACNT}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="117" y="247" width="158" height="26" uuid="dc2ff86c-595d-4c81-a802-4ad1a6b2f1de"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_BANK_DIVN}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="405" y="195" width="114" height="26" uuid="5ead2b6b-c877-41fd-83cd-d21ddb8757d7"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="405" y="221" width="114" height="26" uuid="423ba404-6999-4af1-aea1-e2718a4346f6"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_PERIOD}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="8" y="65" width="217" height="20" uuid="b6573b7b-ff89-4207-8aa1-a732e4efa027"/>
+				<textElement>
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_BRANCH}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000">
+				<reportElement x="405" y="247" width="114" height="26" uuid="0146926e-defd-4f5d-a17e-6e9468b93f17"/>
+				<box rightPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement textAlignment="Right">
+					<font fontName="SansSerif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_LC_FIRST_PREM}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="299">
+			<rectangle>
+				<reportElement x="277" y="211" width="238" height="80" uuid="bb5400de-219f-4f8f-9255-d9a229fd4759"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="10" y="87" width="510" height="75" uuid="51a6f26c-8cef-4896-9dcc-8e615bbebb5c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="10" y="4" width="400" height="20" uuid="a028ba7e-42e3-42db-bd65-471a90249161"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[The Insurance risk will commence after the premium is received by us.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="114" width="266" height="20" uuid="097d4614-11c2-48eb-9f43-74b9e74b3bc4"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Bank Details for payment of premium]]></text>
+			</staticText>
+			<line>
+				<reportElement x="10" y="135" width="510" height="1" uuid="b3c505f2-3d4a-408d-b8a6-2a56f6249d72"/>
+			</line>
+			<line>
+				<reportElement x="10" y="109" width="510" height="1" uuid="c640fc08-64e3-4611-a51d-8c3f6c34662e"/>
+			</line>
+			<staticText>
+				<reportElement x="142" y="136" width="166" height="26" uuid="7214ffad-4925-4e8b-8f97-05a31c566890"/>
+				<box leftPadding="4">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Falcon Insurance Account No  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="270" width="133" height="20" uuid="57d785bf-6274-4590-97f8-7ea9a071da79"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Authorised Signatory]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="24" width="480" height="20" uuid="83d8b934-a4e4-4d4e-8481-819298ecd86c"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[If payment is not made within 15 days from the date of this letter, satisfactory evidence ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="45" width="338" height="20" uuid="9dfc711a-f292-44b5-a6b3-9208fbabda90"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[of continued good health of the Life Assured will be required.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="142" y="135" width="1" height="27" uuid="2d6cd2f0-5367-4dbe-adee-7bfbc8b7ea18"/>
+			</line>
+			<staticText>
+				<reportElement x="11" y="89" width="510" height="20" uuid="71b34602-d07d-46b2-9c6a-c67cbfc7d3c9"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Cover Confirmed Subject to payment of Premium to the Falcon account number given below.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="66" width="243" height="20" uuid="ec44dd65-77ea-491e-9996-a7c91929c1e0"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Policy document will be issued seperately.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="187" width="119" height="20" uuid="8da11e1e-2e9c-4eac-b0f5-c2172eae05e6"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Yours faithfully,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="211" width="230" height="20" uuid="942101ef-1cdf-48a3-9082-a9d9fd73a94c"/>
+				<textElement>
+					<font fontName="SansSerif" size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[For Falcon Insurance Co SAOC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="212" width="56" height="19" uuid="39572d72-1b2d-404d-8071-6fb7b832c9a1"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[AGREED]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="231" width="188" height="20" uuid="1f4c65ae-0ed7-489f-bdcc-368c9118dd2c"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Premium transferred on------------]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="296" y="270" width="136" height="20" uuid="95a5e21c-2a37-490f-a1b1-bd7d36ca3f3e"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<text><![CDATA[Signature of the  Bank]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="308" y="136" width="212" height="26" uuid="df1887c3-b01d-4f67-aa7d-8a622e7a32db"/>
+				<box topPadding="4" leftPadding="4" bottomPadding="0">
+					<topPen lineWidth="0.5"/>
+					<leftPen lineWidth="0.5"/>
+					<bottomPen lineWidth="0.5"/>
+					<rightPen lineWidth="0.5"/>
+				</box>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ACNT_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="9" y="136" width="133" height="26" uuid="318e603f-d97b-4ca4-8338-0c262abd9080"/>
+				<box topPadding="4" leftPadding="3"/>
+				<textElement>
+					<font fontName="SansSerif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ASSIGNEE_NAME}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="120"/>
+	</pageFooter>
+</jasperReport>

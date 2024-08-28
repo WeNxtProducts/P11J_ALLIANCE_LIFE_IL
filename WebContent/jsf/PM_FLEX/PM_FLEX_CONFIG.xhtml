@@ -1,0 +1,668 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}" >
+			<f:loadBundle basename="messageProperties_PM_FLEX"
+				var="message_PM_FLEX" />
+			<h:form id="PM_FLEX_CONFIG">
+				<table cellpadding="0" cellspacing="0" width="100%" border="0" class="noborder">
+					<tr>
+						<td colspan="3" width="100%" vAlign="top">
+						<table width="100%" cellpadding="0" cellspacing="0" class="noborder">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM_FLEX_CONFIG_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+                                       <!-- Delete Link -->
+										<a4j:commandLink id="DELETERECORD_TOOL_HEADER1"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="DELETERECORD_TOOL_IMAGE_HEADER1"
+												styleClass="searchimg" accesskey="r"
+												image="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER1"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+											<rich:componentControl attachTo="DELETERECORD_TOOL_HEADER1"
+												event="onclick" for="DELETE_PANEL" id="DELETE_COMP_CONTROL"
+												operation="show" />
+										</a4j:commandLink>
+										<!-- Delete confirmation Confirmation popup -->
+										<rich:modalPanel height="110" id="DELETE_PANEL" width="300">
+											<f:facet name="header">
+												<h:panelGroup>
+													<h:outputText id="AUTOID_R_1"
+														style="color: #FFFFFF; font-size: 14px;font-weight: bold;"
+														value="#{commonmsg.premia$broker$delete$confirmation$caption}" />
+												</h:panelGroup>
+											</f:facet>
+											<f:facet name="controls">
+												<h:panelGroup>
+													<h:graphicImage id="DELETE_PANEL_hidelink"
+														style="cursor:pointer" styleClass="searchimg"
+														value="./../../resources/images/close.png" />
+													<rich:componentControl attachTo="DELETE_PANEL_hidelink"
+														event="onclick" for="DELETE_PANEL" operation="hide" />
+												</h:panelGroup>
+											</f:facet>
+											<table align="center" class="noborder">
+												<tr align="center">
+													<td><h:outputText id="AUTOID_R_2"
+														value="#{commonmsg.premia$broker$delete$confirmation$message}" />
+													</td>
+												</tr>
+												<tr align="center">
+													<td><h:commandButton
+														action="#{PM_FLEX_CONFIG_ACTION_BEAN.deleteRow}"
+														id="DELETE_PANEL_continuebutton"
+														style="width:65px;height:20px;" styleClass="button"
+														value="#{commonmsg.premia$broker$delete$confirmation$ok}">
+														<rich:componentControl
+															attachTo="DELETE_PANEL_continuebutton" event="onclick"
+															for="DELETE_PANEL" operation="hide" />
+													</h:commandButton> <rich:spacer height="25" id="AUTOID_R-3" width="10" /> <a4j:commandButton
+														id="DELETE_PANEL_cancelbutton" immediate="true"
+														style="width:65px;height:20px;" styleClass="button"
+														value="#{commonmsg.premia$broker$delete$confirmation$cancel}">
+														<rich:componentControl
+															attachTo="DELETE_PANEL_cancelbutton" event="onclick"
+															for="DELETE_PANEL" operation="hide" />
+													</a4j:commandButton> <br />
+													</td>
+												</tr>
+											</table>
+										</rich:modalPanel>
+										
+										<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										
+
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="toolbarImageStyle"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" vAlign="top" height="20">
+						<table cellspacing="0" width="100%" id="errormsgtable" class="noborder">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel"
+									switchType="client" opened="false">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PM_FLEX_CONFIG_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading}#{PM_FLEX_CONFIG_ACTION_BEAN.errorMap['current'] !=null? PM_FLEX_CONFIG_ACTION_BEAN.errorMap['current']: PM_FLEX_CONFIG_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText id="errorMessages"
+										value="#{PM_FLEX_CONFIG_ACTION_BEAN.errorMessages}"
+										styleClass="ErrorMessages" escape="false" />
+									<h:messages styleClass="ErrorMessages" id="msg"
+										rendered="#{PM_FLEX_CONFIG_ACTION_BEAN.globalMsgRender}" />
+									<h:outputText id="warningMessages"
+										value="#{PM_FLEX_CONFIG_ACTION_BEAN.warningMessages}"
+										styleClass="WarningMessages" escape="false" />
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" cellpadding="0" cellspacing="0" class="noborder"
+							id="linkstable">
+							<tr>
+								<td><h:outputLabel id="FORM_CAPTION"
+									value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+						<tr>
+							<td width="100%" colspan="3" align="right">
+								<a4j:commandButton
+									actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.fetchDetails}"
+									id="addRow" reRender="PM_FLEX_CONFIG_PANEL,errorPanel" 
+									rendered="true" immediate="true"
+									style="width:80px;" styleClass="button"
+									value="Details" />
+							</td>
+						</tr>
+					
+					<tr>
+						<td colspan="3">
+						<table cellpadding="0" cellspacing="0" width="100%" class="noborder">
+							<tr>
+									<td class="oddrow">
+												<h:outputLabel
+													binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_IFD_PROG_CODE_LABEL}"
+													for="IFD_PROG_CODE" id="IFD_PROG_CODE_LABEL"
+													rendered="true" styleClass="label"
+													value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_PROG_CODE$caption}" >
+													<h:graphicImage id="serial_20A" styleClass="searchimg"
+															value="./../../resources/images/mandatory.jpg" />
+													</h:outputLabel>
+											</td>
+											<td class="oddrowright">
+												<h:inputText
+														binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_IFD_PROG_CODE}"
+														disabled="false" id="IFD_PROG_CODE" maxlength="40"
+														rendered="true" required="true"
+														styleClass="input"
+														title="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_PROG_CODE$tooltip}"
+														validator="#{PM_FLEX_CONFIG_ACTION_BEAN.validate_IFD_PROG_CODE}"
+														value="#{PM_FLEX_CONFIG_ACTION_BEAN.PM_FLEX_CONFIG_BEAN.UI_IFD_PROG_CODE}" >
+														<a4j:support
+															actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="IFD_PROG_CODE_SUPPORT"
+															immediate="true"
+															reRender="errorPanel">
+														</a4j:support>
+													</h:inputText>
+												<h:graphicImage id="IFD_PROG_CODE_LOV" styleClass="searchimg"
+													value=".\..\..\images\Lov.gif" /> <rich:suggestionbox
+													for="IFD_PROG_CODE" height="200"
+													id="IFD_PROG_CODE_SUGGEST" immediate="true"
+													suggestionAction="#{PM_FLEX_CONFIG_ACTION_BEAN.lovProgCode}"
+													var="lov" width="250">
+													<h:column>
+														<h:outputText id="SUGG_1" value="#{lov.lovCode}" />
+													</h:column>
+												</rich:suggestionbox>
+											</td>
+											<td class="oddrow">&nbsp;</td>
+											<td class="oddrow">
+												<h:outputLabel
+													binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_IFD_BLOCK_CODE_LABEL}"
+													for="IFD_BLOCK_CODE" id="IFD_BLOCK_CODE_LABEL"
+													rendered="true" styleClass="label"
+													value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_BLOCK_CODE$caption}" >
+													<h:graphicImage id="serial_20B" styleClass="searchimg"
+															value="./../../resources/images/mandatory.jpg" />
+													</h:outputLabel>
+												
+											</td>
+											<td class="oddrowright">
+												<h:inputText
+														binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_IFD_BLOCK_CODE}"
+														disabled="false" id="IFD_BLOCK_CODE" maxlength="40"
+														rendered="true" required="true"
+														styleClass="input"
+														validator="#{PM_FLEX_CONFIG_ACTION_BEAN.validate_IFD_BLOCK_CODE}"
+														title="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_BLOCK_CODE$tooltip}"
+														value="#{PM_FLEX_CONFIG_ACTION_BEAN.PM_FLEX_CONFIG_BEAN.UI_IFD_PB_BLK_NAME}" >
+														<a4j:support
+															actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="IFD_BLOCK_CODE_SUPPORT"
+															immediate="true"
+															reRender="errorPanel">
+													</a4j:support>
+														</h:inputText>
+											<h:graphicImage id="IFD_BLOCK_CODE_LOV" styleClass="searchimg"
+													value=".\..\..\images\Lov.gif" /> <rich:suggestionbox
+													for="IFD_BLOCK_CODE" height="200"
+													id="IFD_BLOCK_CODE_SUGGEST" immediate="true"
+													suggestionAction="#{PM_FLEX_CONFIG_ACTION_BEAN.lovBlockCode}"
+													var="lov" width="250">
+													<h:column>
+														<h:outputText id="SUGG_3" value="#{lov.lovCode}" />
+													</h:column>
+													
+												</rich:suggestionbox>
+											</td>
+										</tr>
+								 <tr>
+									<td width="100%" valign="top" colspan="5"><h:panelGroup
+										id="PM_FLEX_CONFIG_PANEL" style="border:0;height:15%;">
+									<table id="bordertable" align="left" width="100%" class="noborder">
+										<tr>
+											<td>
+												<rich:dataTable
+													binding="#{PM_FLEX_CONFIG_ACTION_BEAN.dataTable}"
+													id="PM_FLEX_CONFIG_DATA_GRID" rows="5"
+													value="#{PM_FLEX_CONFIG_ACTION_BEAN.dataList_PM_FLEX_CONFIG}"
+													var="tableVar" width="100%">
+													<rich:column filterBy="#{tableVar.IFD_PBF_FLD_NAME}"
+														filterEvent="onkeyup" id="COLUMN_IFD_PBF_FLD_NAME"
+														rendered="true" sortBy="#{tableVar.IFD_PBF_FLD_NAME}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_IFD_PBF_FLD_NAME"
+																styleClass="forumRowHighlight"
+																value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_PBF_FLD_NAME$caption}" />
+														</f:facet>
+														<a4j:commandLink
+															action="#{PM_FLEX_CONFIG_ACTION_BEAN.displayRecords}"
+															id="GOTO_LINK_PACOND_COND_CODE" immediate="true"
+															reRender="errorPanel,PM_FLEX_CONFIG_PANEL">
+															<h:outputText id="LINK_CAPTION_PACOND_COND_CODE"
+																value="#{tableVar.IFD_PBF_FLD_NAME}" />
+														</a4j:commandLink>
+													</rich:column>
+													<rich:column filterBy="#{tableVar.IFD_PROMPT}"
+														filterEvent="onkeyup" id="COLUMN_IFD_PROMPT"
+														rendered="true" sortBy="#{tableVar.IFD_PROMPT}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_IFD_PROMPT"
+																styleClass="forumRowHighlight"
+																value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_PROMPT$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_IFD_PROMPT"
+															value="#{tableVar.IFD_PROMPT}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.IFD_DATA_TYPE}"
+														filterEvent="onkeyup" id="COLUMN_IFD_DATA_TYPE"
+														rendered="true" sortBy="#{tableVar.IFD_DATA_TYPE}" 
+														styleClass="#{tableVar.rowSelected}" >
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_IFD_DATA_TYPE"
+																styleClass="forumRowHighlight"
+																value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_DATA_TYPE$caption}" />
+														</f:facet>
+															<h:outputText id="LINK_CAPTION_IFD_DATA_TYPE"
+																value="#{tableVar.IFD_DATA_TYPE}" />
+													</rich:column>
+													
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PM_FLEX_CONFIG_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.addRow}"
+																id="addRow" reRender="PM_FLEX_CONFIG_PANEL,errorPanel"
+																rendered="true"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.deleteRow}"
+																id="deleteRow" reRender="PM_FLEX_CONFIG_PANEL,errorPanel"
+																style="width:80px;" styleClass="button" rendered="false"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.postRecord}"
+																id="postRecord" rendered="true"
+																reRender="PM_FLEX_CONFIG_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</td>
+										</tr>
+										<tr>
+											<td colspan="5" width="100%">
+												<table id="bordertable" align="left" width="100%" class="noborder">
+													<tr>
+														<td class="oddrow">
+																<h:outputLabel
+																	binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_FLD_NAME_LABEL}"
+																	for="PFD_FLD_NAME" id="PFD_FLD_NAME_LABEL"
+																	rendered="true" styleClass="label"
+																	value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_PBF_FLD_NAME$caption}" >
+																	</h:outputLabel>
+													</td>
+													<td class="oddrowright">
+														<h:inputText
+																binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_FLD_NAME}"
+																disabled="false" id="PFD_FLD_NAME" 
+																rendered="true" 
+																styleClass="input"
+																validator="#{PM_FLEX_CONFIG_ACTION_BEAN.validate_IFD_PBF_FLD_NAME}"
+																title="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_PROG_CODE$tooltip}"
+																value="#{PM_FLEX_CONFIG_ACTION_BEAN.PM_FLEX_CONFIG_BEAN.IFD_PBF_FLD_NAME}" >
+																<a4j:support
+																	actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.fireFieldValidation}"
+																	event="onblur" id="SUPPORT_PFD_FLD_NAME" reRender="errorPanel"
+																	immediate="true">
+																</a4j:support>
+															</h:inputText>
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrow">
+														<h:outputLabel
+															binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_DATA_TYPE_LABEL}"
+															for="PFD_DATA_TYPE" id="PFD_DATA_TYPE_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_DATA_TYPE$caption}" >
+														</h:outputLabel>
+														
+													</td>
+													<td class="oddrowright">
+														<h:selectOneMenu
+																binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_DATA_TYPE}"
+																disabled="false" id="PFD_DATA_TYPE" rendered="true"
+																 styleClass="input" 
+																title="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_DATA_TYPE$tooltip}"
+																validator="#{PM_FLEX_CONFIG_ACTION_BEAN.Validate_PFD_DATA_TYPE}"
+																value="#{PM_FLEX_CONFIG_ACTION_BEAN.PM_FLEX_CONFIG_BEAN.IFD_DATA_TYPE}">
+																<f:selectItems id="SEL_ITEMS_IFD_DATA_TYPE"
+																	value="#{PM_FLEX_CONFIG_ACTION_BEAN.listDataType}" />
+																<a4j:support
+																	actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.fireFieldValidation}"
+																	event="onblur" id="SUPPORT_PFD_DATA_TYPE" reRender="errorPanel"
+																	immediate="true">
+																</a4j:support>
+																<a4j:support
+																	actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.fireFieldValidation}"
+																	event="onchange" id="SUPPORT_PFD_DATA_TYPE_1" reRender="errorPanel"
+																	immediate="true">
+																</a4j:support>
+															</h:selectOneMenu>
+													</td>
+												</tr>
+												
+												
+												
+												<tr>
+													<td class="evenrow">
+															<h:outputLabel
+																binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_IFD_PROMPT_LABEL}"
+																for="IFD_PROMPT" id="IFD_PROMPT_LABEL"
+																rendered="true" styleClass="label"
+																value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_PROMPT$caption}" >
+																</h:outputLabel>
+													</td>
+													<td class="evenrowright">
+														<h:inputText
+																binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_IFD_PROMPT}"
+																disabled="false" id="IFD_PROMPT" 
+																rendered="true" 
+																styleClass="input"
+																title="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$IFD_PROMPT$tooltip}"
+																validator="#{PM_FLEX_CONFIG_ACTION_BEAN.validate_IFD_PROMPT}"
+																value="#{PM_FLEX_CONFIG_ACTION_BEAN.PM_FLEX_CONFIG_BEAN.IFD_PROMPT}" >
+																<a4j:support
+																	actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.fireFieldValidation}"
+																	event="onblur" id="SUPPORT_IFD_PROMPT" reRender="errorPanel"
+																	immediate="true">
+																</a4j:support>	
+														</h:inputText>
+													</td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrow">
+														<h:outputLabel
+															binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_DFLT_VALUE_LABEL}"
+															for="PFD_DFLT_VALUE" id="PFD_DFLT_VALUE_LABEL"
+															rendered="true" styleClass="label"
+															value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$PFD_DFLT_VALUE$caption}" >
+														</h:outputLabel>
+														
+													</td>
+													<td class="evenrowright">
+														<h:inputText
+																binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_DFLT_VALUE}"
+																disabled="false" id="PFD_DFLT_VALUE" rendered="true"
+																 styleClass="input"
+																title="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$PFD_DFLT_VALUE$tooltip}"
+																validator="#{PM_FLEX_CONFIG_ACTION_BEAN.Validate_PFD_DFLT_VALUE}"
+																value="#{PM_FLEX_CONFIG_ACTION_BEAN.PM_FLEX_CONFIG_BEAN.IFD_DFLT_VALUE}">
+																<a4j:support
+																	actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.fireFieldValidation}"
+																	event="onblur" id="SUPPORT_PFD_DFLT_VALUE" reRender="errorPanel"
+																	immediate="true">
+																</a4j:support>
+														</h:inputText>	
+													</td>
+												</tr>
+												
+												<tr>
+													<td class="oddrowright" ><h:outputLabel
+														binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_ENTERABLE_YN_NUM_LABEL}"
+														for="PFD_ENTERABLE_YN_NUM" id="PFD_ENTERABLE_YN_NUM_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$PFD_ENTERABLE_YN_NUM$caption}" />
+													<h:selectBooleanCheckbox
+														binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_ENTERABLE_YN_NUM}"
+														id="PFD_ENTERABLE_YN_NUM"
+														title="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$PFD_ENTERABLE_YN_NUM$caption}"
+														validator="#{PM_FLEX_CONFIG_ACTION_BEAN.validate_UI_PFD_ENTERABLE_YN_NUM}"
+														value="#{PM_FLEX_CONFIG_ACTION_BEAN.PM_FLEX_CONFIG_BEAN.UI_PFD_ENTERABLE_YN_NUM}" >
+														<a4j:support
+															actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.fireFieldValidation}"
+															event="onclick" id="SUPPORT_PFD_ENTERABLE_YN_NUM" immediate="true"
+															reRender="errorPanel" />
+													</h:selectBooleanCheckbox>
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright" ><h:outputLabel
+														binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_UPDATEABLE_YN_NUM_LABEL}"
+														for="PFD_UPDATEABLE_YN_NUM" id="PFD_UPDATEABLE_YN_NUM_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$PFD_UPDATEABLE_YN_NUM$caption}" />
+													<h:selectBooleanCheckbox
+														binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_UPDATEABLE_YN_NUM}"
+														id="PFD_UPDATEABLE_YN_NUM"
+														title="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$PFD_UPDATEABLE_YN_NUM$caption}"
+														validator="#{PM_FLEX_CONFIG_ACTION_BEAN.validate_PFD_UPDATEABLE_YN_NUM}"
+														value="#{PM_FLEX_CONFIG_ACTION_BEAN.PM_FLEX_CONFIG_BEAN.UI_PFD_UPDATEABLE_YN_NUM}" >
+														<a4j:support
+															actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.fireFieldValidation}"
+															event="onclick" id="SUPPORT_PFD_UPDATEABLE_YN_NUM" immediate="true"
+															reRender="errorPanel" />
+													</h:selectBooleanCheckbox>
+													</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrowright" ><h:outputLabel
+														binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_MANDATORY_YN_NUM_LABEL}"
+														for="PFD_MANDATORY_YN_NUM" id="PFD_MANDATORY_YN_NUM_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$PFD_MANDATORY_YN_NUM$caption}" />
+													<h:selectBooleanCheckbox
+														binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_MANDATORY_YN_NUM}"
+														id="PFD_MANDATORY_YN_NUM"
+														title="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$PFD_MANDATORY_YN_NUM$caption}"
+														validator="#{PM_FLEX_CONFIG_ACTION_BEAN.validate_PFD_MANDATORY_YN_NUM}"
+														value="#{PM_FLEX_CONFIG_ACTION_BEAN.PM_FLEX_CONFIG_BEAN.UI_IFD_MANDATORY_YN_NUM}" >
+														<a4j:support
+															actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.fireFieldValidation}"
+															event="onclick" id="SUPPORT_PFD_MANDATORY_YN_NUM" immediate="true"
+															reRender="errorPanel" />
+													</h:selectBooleanCheckbox>
+													</td>
+												</tr>
+												<tr>
+													<td class="oddrowright" colspan="5">
+													<h:outputLabel
+														binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_HIDE_YN_NUM_LABEL}"
+														for="PFD_HIDE_YN_NUM" id="PFD_HIDE_YN_NUM_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$PFD_HIDE_YN_NUM$caption}" />
+													<h:selectBooleanCheckbox
+														binding="#{PM_FLEX_CONFIG_ACTION_BEAN.COMP_PFD_HIDE_YN_NUM}"
+														id="PFD_HIDE_YN_NUM"
+														title="#{message_PM_FLEX.PM_FLEX$PM_FLEX_CONFIG$PFD_HIDE_YN_NUM$caption}"
+														validator="#{PM_FLEX_CONFIG_ACTION_BEAN.validate_PFD_HIDE_YN_NUM}"
+														value="#{PM_FLEX_CONFIG_ACTION_BEAN.PM_FLEX_CONFIG_BEAN.UI_IFD_HIDE_YN_NUM}" >
+														<a4j:support
+															actionListener="#{PM_FLEX_CONFIG_ACTION_BEAN.fireFieldValidation}"
+															event="onclick" id="SUPPORT_PFD_HIDE_YN_NUM" immediate="true"
+															reRender="errorPanel" />
+													</h:selectBooleanCheckbox>
+													</td>
+												</tr>
+												</table>
+											</td>
+										</tr>	
+									</table>
+								</h:panelGroup></td>
+								<td></td>
+							</tr>
+						</table>
+						</td>
+						</tr>						
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+								action="#{PM_FLEX_CONFIG_ACTION_BEAN.saveRecord}"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle" value="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="toolbarImageStyle"
+										value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

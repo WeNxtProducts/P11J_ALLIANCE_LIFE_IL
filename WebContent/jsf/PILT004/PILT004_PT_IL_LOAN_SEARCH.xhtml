@@ -1,0 +1,133 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+
+	<f:loadBundle basename="messageProperties" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+
+	<table width="100%" border="0" cellpadding="0" cellspacing="0"	>
+		<tr>
+		
+		</tr>
+		<h:form id="LoanDisborsementSetUpSearchPage">
+			<tr>
+            <td colspan="3" width="100%" vAlign="top" height="20">
+                    <rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err"
+									value="#{commonmsg.errorPanel$heading} #{PILT004_PT_IL_LOAN_SEARCH.errorMap['current'] !=null? PILT004_PT_IL_LOAN_SEARCH.errorMap['current']: PILT004_PT_IL_LOAN_SEARCH.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages"
+								value="#{PILT004_PT_IL_LOAN_SEARCH.errorMessages}"
+								style="color: red; font-style: italic;font-weight:bold;"
+								escape="false" />
+							<h:messages
+								 styleClass="ErrorMessages" id="msg"
+								rendered="#{PILT004_PT_IL_LOAN_SEARCH.globalMsgRender}" />
+							<h:outputText id="warningMessages"
+								value="#{PILT004_PT_IL_LOAN_SEARCH.warningMessages}"
+								style="color: green; font-style: italic;font-weight:bold;"
+								escape="false" />
+						</rich:simpleTogglePanel>
+            </td>
+          </tr>
+			
+			<tr>
+				<td>
+				<table border="0" width="100%"  cellpadding="0"
+					cellspacing="0" id="masthead">
+
+					<tr>
+						<td><h:outputLabel
+							value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td><h:outputLabel value="Policy Number" /> <h:inputText
+							id="LOAN_POL_NO"
+							value="#{PILT004_PT_IL_LOAN_SEARCH.searchBean.LOAN_POL_NO}"
+							binding="#{PILT004_PT_IL_LOAN_SEARCH.LOAN_POL_NO}" /></td>
+
+						<td><h:outputLabel value="Loan Referecne Number" /> <h:inputText
+							id="LOAN_REF_NO"
+							value="#{PILT004_PT_IL_LOAN_SEARCH.searchBean.LOAN_REF_NO}"
+							binding="#{PILT004_PT_IL_LOAN_SEARCH.LOAN_REF_NO}" /></td>
+
+						<td><a4j:commandButton value="#{commonmsg.searchButton$caption}" id="fetch"
+							actionListener="#{PILT004_PT_IL_LOAN_SEARCH.searchedData}"
+							reRender="loanSerarchList"  styleClass="button">
+						</a4j:commandButton></td>
+					</tr>
+
+				</table>
+				</td>
+			</tr>
+			<rich:dataTable id="loanSerarchList"
+				value="#{PILT004_PT_IL_LOAN_SEARCH.searchList}"
+				binding="#{PILT004_PT_IL_LOAN_SEARCH.searchTable}" width="100%"
+				var="colData" cellpadding="5px" rows="15" border="1">
+
+				<rich:column filterBy="#{colData.LOAN_POL_NO}"
+					filterValue="#{PILT004_PT_IL_LOAN_SEARCH.searchBean.filterText}"
+					sortBy="#{colData.LOAN_POL_NO}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Policy Number" />
+					</f:facet>
+
+					<h:commandLink action="#{PILT004_PT_IL_LOAN_SEARCH.executeQuery}"
+						id="LOAN_POL_NO_LINK">
+					
+							<h:outputText value="#{colData.LOAN_POL_NO}" />
+				
+						<f:param name="rowID" value="#{colData.rowId}" />
+						<f:param name="LOAN_POL_NO" value="#{colData.LOAN_POL_NO}" />
+					</h:commandLink>
+				</rich:column>
+
+				<rich:column filterBy="#{colData.LOAN_REF_NO}"
+					sortBy="#{colData.LOAN_REF_NO}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Loan Reference Number" />
+					</f:facet>
+					
+						<h:outputText value="#{colData.LOAN_REF_NO}" />
+		
+					<f:param name="LOAN_REF_NO" value="#{colData.LOAN_REF_NO}" />
+				</rich:column>
+				
+				<rich:column filterBy="#{colData.LOAN_STATUS}"
+					sortBy="#{colData.LOAN_STATUS}" filterEvent="onkeyup">
+					<f:facet name="header">
+						<h:outputText value="Loan Approve Status" />
+					</f:facet>
+				
+						<h:outputText value="#{colData.LOAN_STATUS}" />
+					
+					<f:param name="LOAN_STATUS" value="#{colData.LOAN_STATUS}" />
+				</rich:column>
+				
+				
+				
+				<f:facet name="footer">
+					<rich:datascroller for="loanSerarchList" align="right" />
+				</f:facet>
+			</rich:dataTable>
+			<!-- [ Changed as a button Added by: S.Mallika, Dated: 23-Mar-2009-->
+			 <a4j:commandButton value="#{message.insertButton$caption}"
+			  id="insert" action="#{PILT004_PT_IL_LOAN_SEARCH.insertNavigation}" styleClass="button"/>
+
+		</h:form>
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+
+</ui:define>
+</ui:composition>

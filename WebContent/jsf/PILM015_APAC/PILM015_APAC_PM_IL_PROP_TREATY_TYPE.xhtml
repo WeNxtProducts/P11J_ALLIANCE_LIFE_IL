@@ -1,0 +1,827 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+		<f:view
+			beforePhase="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM015_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_PROP_TREATY_TYPE" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.previousIconAction}"
+											id="SELF_ID_1" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SELF_ID_2"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="SELF_ID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.saveData}"
+											id="SELF_ID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SELF_ID_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="SELF_ID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.firstIconAction}"
+											id="SELF_ID_7" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SELF_ID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="SELF_ID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.nextIconAction}"
+											id="SELF_ID_10" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SELF_ID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="SELF_ID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.lastIconAction}"
+											id="SELF_ID_13" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SELF_ID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="SELF_ID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD"
+										location="right">
+										<w:treeWizard
+											binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.wizard}"
+											id="wizard" rendered="true" />
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.errorMap['current'] !=null? PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.errorMap['current']:PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								style="color: red; font-style: italic;font-weight:bold;"
+								styleClass="ErrorMessages"
+								value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								style="color: green; font-style: italic;font-weight:bold;"
+								styleClass="WarningMessages"
+								value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+					<tr>
+						<td align="right"><!-- <h:commandButton
+							action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.companyDetails}"
+							binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_BUTTON_PART_CUST}"
+							id="COMP_PART_CUST" immediate="true" style=" width : 100px;"
+							styleClass="button"
+							value="#{message.PILM015_APAC_TREATY_TYPE_COMPANY_DETAILS}" /> --> <rich:spacer
+							id="SELF_ID_16" width="5" /> <h:commandButton
+							action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.typeWiseCoverdetails}"
+							binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_BUTTON_TYPE_TTY_COVER_DETIALS}"
+							id="COMP_TYPEWISE_COVER_DTLS" immediate="true"
+							style=" width : 140px;" styleClass="button"
+							value="#{message.PILM015_APAC_TREATY_TYPE_TYPE_WISE_COVER_DETILAS}" />
+						<rich:spacer id="SELF_ID_17" width="5" /> <h:commandButton
+							action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.coverDetails}"
+							binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_BUTTON_TYPE_COVER}"
+							id="COMP_TYPE_COVER" immediate="true" style=" width : 120px;"
+							styleClass="button"
+							value="#{message.PILM015_APAC_TREATY_TYPE_COVER_DETAILS}" /></td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%">
+							<tr>
+								<td><h:outputText id="SELF_ID_18"
+									value="#{message.TreatyTypeHeading}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div id="tablecontainer">
+						<div id="sidebar" style="width: 21%; vertical-align: top">
+						<div align="center" id="handle" style="width: 5%;"><a4j:commandLink
+							actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.wizard.toggle}"
+							id="BACK_TOOL_FOOTER1" immediate="true" rendered="true"
+							style="text-decoration:none;align:left"
+							styleClass="toolbarCommandLinkStyle">
+							<img align="left" alt="Click to toggle the sidebar" height="123"
+								onclick="toggleSideBar();"
+								src="./../../resources/images/toggle.jpg" style="border: 0;"
+								width="14" />
+						</a4j:commandLink></div>
+
+						<div id="sbText" style="display: compact;">
+						<div id="linkstable1" style="vertical-align: top; width: 95%">
+						<w:treeWizardPanel
+							binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.wizard.wizardPanel}"
+							id="wizardPanel" /></div>
+						</div>
+						</div>
+
+						<div id="content" style="width: 79%;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td valign="top" width="100%"><h:panelGroup
+									id="sectionDtls">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td colspan="7"><rich:dataTable
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.dataTable}"
+												border="0" cellpadding="0" id="PM_IL_PROP_TREATY_TYPE"
+												rows="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.recordsPerPage}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.dataTableList}"
+												var="table" width="100%">
+
+												<!-- next column -->
+												<rich:column filterBy="#{table.PTT_TREATY_TYPE}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.filterByPTT_TREATY_TYPE}"
+													id="COLUMN_PTT_TREATY_TYPE"
+													sortBy="#{table.PTT_TREATY_TYPE}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PTT_TREATY_TYPE"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_TREATY_TYPE$caption}" />
+													</f:facet>
+													<a4j:commandLink
+														action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.getDetails}"
+														id="GOTO_LINK_PTT_TREATY_TYPE" immediate="true"
+														reRender="sectionDtls">
+														<h:outputText id="LINK_CAPTION_PTT_TREATY_TYPE"
+															value="#{table.PTT_TREATY_TYPE} " />
+													</a4j:commandLink>
+												</rich:column>
+												<!-- next column -->
+
+												<!-- next column -->
+												<rich:column filterBy="#{table.PTT_PROFIT_COMM}"
+													filterEvent="onkeyup"
+													filterValue="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.filterByPTT_PROFIT_COMM}"
+													id="COLUMN_PTT_PROFIT_COMM"
+													sortBy="#{table.PTT_PROFIT_COMM}"
+													styleClass="#{table.rowSelected}">
+													<f:facet name="header">
+														<h:outputText id="COLUMN_CAPTION_PTT_PROFIT_COMM"
+															styleClass="forumRowHighlight"
+															value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_PROFIT_COMM$caption}" />
+													</f:facet>
+													<h:outputText id="LINK_CAPTION_PTT_PROFIT_COMM"
+														value="#{table.PTT_PROFIT_COMM} " />
+												</rich:column>
+
+												<!-- Attach scroller as footer of the table-->
+												<f:facet name="footer">
+													<h:panelGroup id="footerpanel" style="border:0">
+														<rich:datascroller align="right" id="myscr"
+															page="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.currentPage}" />
+														<a4j:commandButton
+															actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.addNew}"
+															id="addRow" immediate="true"
+															reRender="errorPanel,sectionDtls" rendered="true"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.addNewButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.deleteRow}"
+															id="deleteRow" immediate="true"
+															reRender="errorPanel,sectionDtls" rendered="false"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.deleteButtonCaption}" />
+														<a4j:commandButton
+															actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.post}"
+															id="postRecord" reRender="errorPanel,sectionDtls"
+															style="width:81px" styleClass="button"
+															value="#{commonmsg.postButtonCaption}" />
+
+													</h:panelGroup>
+												</f:facet>
+
+											</rich:dataTable></td>
+										</tr>
+
+
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_SRNO$caption}">
+												</h:outputLabel>
+												<h:graphicImage id="SELF_ID_197" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_SRNO}"
+												disabled="false" id="PTT_SRNO" maxlength="2" required="true"
+												styleClass="input"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_SRNO$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.validatePTT_SRNO}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_SRNO}">
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PT_SRNO_WHEN_VALIDATE}"
+													event="onblur" id="style_1" immediate="true"
+													reRender="err,errorMessages,warningMessages">
+												</a4j:support>
+											</h:inputText></td>
+											<td class="oddrowright" colspan="2">&nbsp;</td>
+											<td class="oddrowfreeze"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_FRZ_FLAG$caption}" />
+											<h:selectBooleanCheckbox
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_FRZ_FLAG}"
+												id="PTT_FRZ_FLAG" rendered="true"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_FRZ_FLAG$tooltip}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.freeze}">
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_2" immediate="true"
+													reRender="err,errorMessages,warningMessages">
+												</a4j:support>
+												<a4j:support
+													action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.lastColumnListener}"
+													event="onblur" id="style_3" />
+											</h:selectBooleanCheckbox></td>
+
+
+										</tr>
+										<tr>
+											<td class="evenrowright" width="20%"><h:outputLabel
+												rendered="true" styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_TREATY_TYPE$caption}" />
+											<h:graphicImage id="SELF_ID_19" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+											<td class="evenrow" width="28%"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_TREATY_TYPE}"
+												id="PTT_TREATY_TYPE" maxlength="12" required="true"
+												styleClass="inputsmall"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_TREATY_TYPE$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.validatePTT_TREATY_TYPE}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_TREATY_TYPE}">
+												<rich:suggestionbox for="PTT_TREATY_TYPE" height="250"
+													id="SELF_ID_20"
+													suggestionAction="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.suggestionAction}"
+													value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.treatyCodeList}"
+													var="treatycode" width="250">
+													<h:column>
+														<h:outputText id="SELF_ID_21"
+															value="#{treatycode.PTT_TREATY_TYPE}" />
+													</h:column>
+													<h:column>
+														<h:outputText id="SELF_ID_22"
+															value="#{treatycode.UI_M_TREATY_DESC}" />
+													</h:column>
+													<a4j:support
+														actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.gettreatyCodeDesc}"
+														event="onselect" id="style_4" immediate="true"
+														reRender="UI_M_TREATY_DESC" />
+												</rich:suggestionbox>
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_4" immediate="true"
+													reRender="PTT_LINK_TREATY_CODE,UI_M_LINK_TREATY_DESC,PM_IL_PROP_TREATY_TYPE" />
+											</h:inputText> <h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_UI_M_TREATY_DESC}"
+												disabled="true" id="UI_M_TREATY_DESC" maxlength="30"
+												required="false" styleClass="input"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.UI_M_TREATY_DESC}">
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_5" immediate="true">
+												</a4j:support>
+											</h:inputText> <h:graphicImage id="SELF_ID_23" styleClass="searchimg"
+												value="./../../images/Lov.gif" /></td>
+											<td class="evenrowright" width="4%" />
+											<td class="evenrowright" width="20%"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_PROFIT_COMM$caption}" />
+											</td>
+											<td class="evenrow" width="28%"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_PROFIT_COMM}"
+												disabled="false" id="PTT_PROFIT_COMM" maxlength="9"
+												styleClass="inputNumeric"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_PROFIT_COMM$$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.profitPercValidate}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_PROFIT_COMM}">
+
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_6" immediate="true"
+													reRender="err,errorMessages,warningMessages">
+												</a4j:support>
+												<f:validateDoubleRange id="SELF_ID_1" minimum="0.00" />
+											</h:inputText></td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_MGT_EXP_RATIO$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_MGT_EXP_RATIO}"
+												disabled="false" id="PTT_MGT_EXP_RATIO" maxlength="9"
+												rendered="true" required="false" styleClass="inputNumeric"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_MGT_EXP_RATIO$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.mangExpRatioValidate}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_MGT_EXP_RATIO}">
+
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_7" immediate="true"
+													reRender="err,errorMessages,warningMessages">
+												</a4j:support>
+												<f:validateDoubleRange id="SELF_ID_2" minimum="0.00" />
+											</h:inputText></td>
+											<td class="oddrowright" />
+											<td class="oddrowright"><h:outputLabel rendered="true"
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_REINS_TAX_PERC$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_REINS_TAX_PERC}"
+												disabled="false" id="PTT_REINS_TAX_PERC" maxlength="9"
+												rendered="true" required="false" styleClass="inputNumeric"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_REINS_TAX_PERC$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.reinsTaxPercValidate}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_REINS_TAX_PERC}">
+
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_8" immediate="true"
+													reRender="err,errorMessages,warningMessages">
+												</a4j:support>
+												<f:validateDoubleRange id="SELF_ID_3" minimum="0.00" />
+											</h:inputText></td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_INT_ON_RES_REL$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_INT_ON_RES_REL}"
+												disabled="false" id="PTT_INT_ON_RES_REL" maxlength="9"
+												rendered="true" required="false" styleClass="inputNumeric"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_INT_ON_RES_REL$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.insOnResRel}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_INT_ON_RES_REL}">
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_9" immediate="true"
+													reRender="err,errorMessages,warningMessages">
+												</a4j:support>
+												<f:validateDoubleRange id="SELF_ID_4" minimum="0.00" />
+											</h:inputText></td>
+											<td class="evenrowright" />
+											<td class="evenrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_PREM_RES_RATIO$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_PREM_RES_RATIO}"
+												disabled="false" id="PTT_PREM_RES_RATIO" maxlength="9"
+												rendered="true" required="false" styleClass="inputNumeric"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_PREM_RES_RATIO$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.premResRatioValidate}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_PREM_RES_RATIO}">
+
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_10" immediate="true"
+													reRender="err,errorMessages,warningMessages">
+												</a4j:support>
+												<f:validateDoubleRange id="SELF_ID_5" minimum="0.00" />
+											</h:inputText></td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_LOSS_CF_YEARS$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_LOSS_CF_YEARS}"
+												disabled="false" id="PTT_LOSS_CF_YEARS" maxlength="3"
+												rendered="true" required="false" styleClass="inputNumeric"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_LOSS_CF_YEARS$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.lossCFYearsValidate}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_LOSS_CF_YEARS}">
+
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_11" immediate="true"
+													reRender="err,errorMessages,warningMessages">
+												</a4j:support>
+												<f:validateDoubleRange id="SELF_ID_6" minimum="0.00" />
+											</h:inputText></td>
+											<td class="oddrowright" />
+											<td class="oddrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_OS_CLM_RES_RATIO$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_OS_CLM_RES_RATIO}"
+												disabled="false" id="PTT_OS_CLM_RES_RATIO" maxlength="9"
+												rendered="true" required="false" styleClass="inputNumeric"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_OS_CLM_RES_RATIO$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.osClaimsResvRatioValidate}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_OS_CLM_RES_RATIO}">
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_12" immediate="true"
+													reRender="err,errorMessages,warningMessages">
+												</a4j:support>
+												<f:validateDoubleRange id="SELF_ID_7" minimum="0.00" />
+											</h:inputText></td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_EXCLUSION$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_EXCLUSION}"
+												disabled="false" id="PTT_EXCLUSION" maxlength="240"
+												rendered="true" required="false" styleClass="input"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_EXCLUSION$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.exclusionValidate}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_EXCLUSION}">
+
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_13" immediate="true">
+												</a4j:support>
+											</h:inputText></td>
+											<td class="evenrowright" />
+											<td class="evenrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_DEPOSIT_PREM$caption}" />
+											</td>
+											<td class="evenrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_DEPOSIT_PREM}"
+												disabled="false" id="PTT_DEPOSIT_PREM" maxlength="15"
+												rendered="true" required="false" styleClass="inputNumeric"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_DEPOSIT_PREM$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.depPremValidate}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_DEPOSIT_PREM}">
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_14" immediate="true"
+													reRender="err,errorMessages,warningMessages">
+												</a4j:support>
+												<f:validateDoubleRange id="SELF_ID_8" minimum="0.00" />
+											</h:inputText></td>
+
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_NOTICE_CANCEL_DAYS$caption}" />
+											</td>
+											<td class="oddrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_NOTICE_CANCEL_DAYS}"
+												disabled="false" id="PTT_NOTICE_CANCEL_DAYS" maxlength="3"
+												rendered="true" required="false" styleClass="inputNumeric"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_NOTICE_CANCEL_DAYS$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.noticeCancelDayValidate}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_NOTICE_CANCEL_DAYS}">
+
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_15" immediate="true"
+													reRender="errorPanel">
+												</a4j:support>
+												<f:validateDoubleRange id="SELF_ID_9" minimum="0.00" />
+											</h:inputText></td>
+											<td class="oddrowright" />
+											<td class="oddrowright"><h:outputLabel id="style_35"
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_ACCOUNTS_SUBMIT_PERIOD$caption}" /></td>
+											<td class="oddrow"><h:selectOneMenu
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_ACCOUNTS_SUBMIT_PERIOD}"
+												disabled="false" id="PTT_ACCOUNTS_SUBMIT_PERIOD"
+												rendered="true" required="false" styleClass="input"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_ACCOUNTS_SUBMIT_PERIOD$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.validatePTT_ACCOUNTS_SUBMIT_PERIOD}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_ACCOUNTS_SUBMIT_PERIOD}">
+												<f:selectItems id="style_17"
+													value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.accSubList}" />
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_18" immediate="true"
+													reRender="PTT_ACCOUNTS_SUBMIT_PERIOD">
+												</a4j:support>
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onchange" id="style_19" immediate="true"
+													reRender="PTT_ACCOUNTS_SUBMIT_PERIOD">
+												</a4j:support>
+											</h:selectOneMenu> <h:commandButton
+												action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.goToPeriod}"
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_BUTTON_PERIOD_DETAILS}"
+												disabled="false" immediate="true" style="width:50px"
+												styleClass="button" value="Details" /></td>
+										</tr>
+										<tr>
+											<td class="evenrowright"><h:outputLabel id="style_36"
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_LINK_TREATY_CODE$caption}" /></td>
+											<td class="evenrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_LINK_TREATY_CODE}"
+												disabled="false" id="PTT_LINK_TREATY_CODE" maxlength="12"
+												rendered="true" required="true" styleClass="inputsmall"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_LINK_TREATY_CODE$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.validatePTT_LINK_TREATY_CODE}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_LINK_TREATY_CODE}">
+												<rich:suggestionbox for="PTT_LINK_TREATY_CODE" height="250"
+													id="style_29"
+													suggestionAction="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.suggestionActionForLinkTreaty}"
+													value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.treatyLinkCodeList}"
+													var="treatyLinkcode" width="250">
+													<h:column>
+														<h:outputText id="SELF_ID_24"
+															value="#{treatyLinkcode.PTT_LINK_TREATY_CODE}" />
+													</h:column>
+													<h:column>
+														<h:outputText id="SELF_ID_25"
+															value="#{treatyLinkcode.UI_M_LINK_TREATY_DESC}" />
+													</h:column>
+													<a4j:support
+														actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.gettreatyCodeLinkDesc}"
+														event="onselect" id="style_20" immediate="true"
+														reRender="UI_M_LINK_TREATY_DESC" />
+												</rich:suggestionbox>
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_21" immediate="true"
+													reRender="UI_M_LINK_TREATY_DESC,COMP_PART_CUST">
+												</a4j:support>
+											</h:inputText> <h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_UI_M_LINK_TREATY_DESC}"
+												disabled="true" id="UI_M_LINK_TREATY_DESC" maxlength="30"
+												rendered="true" required="false" styleClass="input"
+												title="#{message.linkTreatyDescToolTip}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.UI_M_LINK_TREATY_DESC}" />
+											<h:graphicImage id="SELF_ID_26" styleClass="searchimg"
+												value="./../../images/Lov.gif" /></td>
+											<td class="evenrowright" />
+											<td class="evenrowright"><h:outputLabel id="style_37"
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_NET_SURPLUS_AMT$caption}" />
+											<h:graphicImage id="SELF_ID_27" style=""
+												styleClass="searchimg" value="./../../images/mandatory.jpg" /></td>
+											<td class="evenrow"><h:inputText
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_NET_SURPLUS_AMT}"
+												disabled="false" id="PTT_NET_SURPLUS_AMT" maxlength="20"
+												rendered="true" required="true" styleClass="inputNumeric"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_NET_SURPLUS_AMT$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.netSurValidate}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_NET_SURPLUS_AMT}">
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_22" immediate="true"
+													reRender="errorMessages,err,warningMessages" />
+												<f:validateDoubleRange id="SELF_ID_10" minimum="0.00" />
+												<f:converter converterId="PELNumberFormatter" />
+											</h:inputText></td>
+										</tr>
+										<tr>
+											<td class="oddrowright"><h:outputLabel
+												styleClass="label"
+												value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_ACCOUNTS_CLOSE_PERIOD$caption}" />
+											</td>
+											<td class="oddrow"><h:selectOneMenu
+												binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_ACCOUNTS_CLOSE_PERIOD}"
+												disabled="false" id="PTT_ACCOUNTS_CLOSE_PERIOD"
+												rendered="true" required="false" styleClass="input"
+												title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_ACCOUNTS_CLOSE_PERIOD$tooltip}"
+												validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.acClosePercValidate}"
+												value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_ACCOUNTS_CLOSE_PERIOD}">
+												<f:selectItems id="style_23"
+													value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.accSubList}" />
+												<a4j:support
+													actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+													event="onblur" id="style_24" immediate="true"
+													reRender="err,errorMessages,warningMessages">
+												</a4j:support>
+											</h:selectOneMenu></td>
+											<td class="oddrowright" colspan="3" />
+
+										</tr>
+										<tr>
+											<td class="evenrowright" colspan="5">
+											<fieldset><legend><h:outputLabel
+												id="cvrGrpDtl" styleClass="label" value="Portfolio Details" /></legend>
+											<table class="noborder" width="100%">
+												<tr>
+													<td class="oddrowright"><h:outputLabel id="style_38"
+														styleClass="label"
+														value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_PREM_PF_ENT_PERC$caption}" /></td>
+													<td class="oddrow"><h:inputText
+														binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_PREM_PF_ENT_PERC}"
+														disabled="false" id="PTT_PREM_PF_ENT_PERC" maxlength="9"
+														rendered="true" required="false" styleClass="inputNumeric"
+														title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_PREM_PF_ENT_PERC$tooltip}"
+														validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.premPFEntryValidate}"
+														value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_PREM_PF_ENT_PERC}">
+														<a4j:support
+															actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+															event="onblur" id="style_25" immediate="true"
+															reRender="err,errorMessages,warningMessages" />
+														<f:validateDoubleRange id="SELF_ID_11" minimum="0.00" />
+													</h:inputText></td>
+													<td class="oddrowright" />
+													<td class="oddrowright"><h:outputLabel id="style_39"
+														styleClass="label"
+														value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_PREM_PF_WD_PERC$caption}" /></td>
+													<td class="oddrow"><h:inputText
+														binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_PREM_PF_WD_PERC}"
+														disabled="false" id="PTT_PREM_PF_WD_PERC" maxlength="9"
+														rendered="true" required="false" styleClass="inputNumeric"
+														title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_PREM_PF_WD_PERC$tooltip}"
+														validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.premPFWithDValidate}"
+														value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_PREM_PF_WD_PERC}">
+														<a4j:support
+															actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+															event="onblur" id="style_26" immediate="true"
+															reRender="err,errorMessages,warningMessages" />
+														<f:validateDoubleRange id="SELF_ID_12" minimum="0.00" />
+													</h:inputText></td>
+
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel id="style_40"
+														styleClass="label"
+														value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_LOSS_PF_ENT_PERC$caption}" /></td>
+													<td class="evenrow"><h:inputText
+														binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_LOSS_PF_ENT_PERC}"
+														disabled="false" id="PTT_LOSS_PF_ENT_PERC" maxlength="9"
+														rendered="true" required="false" styleClass="inputNumeric"
+														title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_LOSS_PF_ENT_PERC$tooltip}"
+														validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.lossPFEntryValidate}"
+														value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_LOSS_PF_ENT_PERC}">
+														<a4j:support
+															actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.fireFieldValidation}"
+															event="onblur" id="style_27" immediate="true"
+															reRender="err,errorMessages,warningMessages" />
+														<f:validateDoubleRange id="SELF_ID_13" minimum="0.00" />
+													</h:inputText></td>
+													<td class="evenrowright" />
+													<td class="evenrowright"><h:outputLabel
+														styleClass="label"
+														value="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_LOSS_PF_WD_PERC$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.COMP_PTT_LOSS_PF_WD_PERC}"
+														disabled="false" id="PTT_LOSS_PF_WD_PERC" maxlength="9"
+														rendered="true" required="false" styleClass="inputNumeric"
+														title="#{message.PILM015_APAC$PM_IL_PROP_TREATY_TYPE$PTT_LOSS_PF_WD_PERC$tooltip}"
+														validator="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.lossPFWidthValidate}"
+														value="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.PM_IL_PROP_TREATY_TYPE_BEAN.PTT_LOSS_PF_WD_PERC}">
+														<a4j:support
+															actionListener="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.lastColumnListenerEvent}"
+															event="onblur" id="style_28" immediate="true"
+															reRender="err,errorMessages,warningMessages" />
+														<f:validateDoubleRange id="SELF_ID_14" minimum="0.00" />
+													</h:inputText></td>
+												</tr>
+											</table>
+											</fieldset>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</div>
+						</div>
+						</td>
+					</tr>
+
+					<tr>
+						<td><rich:toolBar id="style_41" styleClass="toolBarStyle"
+							width="100%">
+							<rich:toolBarGroup id="style_42" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.saveData}"
+									id="style_30" rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="style_44" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="SELF_ID_28"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.firstIconAction}"
+									id="style_31" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="style_45" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="SELF_ID_29"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.previousIconAction}"
+									id="style_32" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="style_46" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="SELF_ID_30"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.nextIconAction}"
+									id="style_33" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="style_47" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="SELF_ID_31"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.PM_IL_PROP_TREATY_TYPE_ACTION.lastIconAction}"
+									id="style_34" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="style_48" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="SELF_ID_32"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+							<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM"
+								location="right">
+								<w:wizardPanelFooter
+									binding="#{PM_IL_PROP_TREATY_COMPOSITE_ACTION.wizard.wizardPanelFooter}" />
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

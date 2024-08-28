@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0">
+		<!-- add header row -->
+		<tr>
+			
+		</tr>
+		
+		<!-- Body row -->
+		<tr>
+		<td>
+			<h:form id="pf_account_setup_form">
+				
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%"  cellpadding="0" cellspacing="0" id="masthead">
+					<tr>
+						<td>Initial Search Criteria
+						</td>
+						<td>
+							 Init Apis Code: <h:inputText value="#{PM_102_A_TISB_PM_AGENT_PF_SEARCH_PAGE_DETAILS_ACTION.initAPAT_CODE}"/>
+						</td>
+						<td>
+							Init Apis Rate per: <h:inputText value="#{PM_102_A_TISB_PM_AGENT_PF_SEARCH_PAGE_DETAILS_ACTION.initAPAT_RATE}"/>
+						</td>
+						<td>
+							<h:commandButton value="Fetch list" id="a4link">
+								<a4j:support action="#{PM_102_A_TISB_PM_AGENT_PF_SEARCH_PAGE_DETAILS_ACTION.fetchPolicyDetails}" event="onclick" reRender="dataTableId"></a4j:support>
+							</h:commandButton>
+						</td>
+					</tr>
+				</table>
+				
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId" value="#{PM_102_A_TISB_PM_AGENT_PF_SEARCH_PAGE_DETAILS_ACTION.policyList}"
+					var="policy" cellpadding="5px" rows="10" border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index" align="right">
+						</rich:datascroller>
+					</f:facet>
+			
+					<!-- next column -->				
+					<rich:column filterBy="#{policy.APAT_CODE}" sortBy="#{policy.APAT_CODE}" filterEvent="onkeyup" >
+						<f:facet name="header">
+							<h:outputText value="APAT_CODE" />
+						</f:facet>
+						<h:outputText value="#{policy.APAT_CODE} " />
+					</rich:column>
+					
+					<rich:column filterBy="#{policy.APAT_RATE}" sortBy="#{policy.APAT_RATE}">
+						<f:facet name="header">
+							<h:outputText value="APAT_RATE" />
+						</f:facet>
+						 <h:commandLink action="#{PM_102_A_TISB_PM_AGENT_PF_SEARCH_PAGE_DETAILS_ACTION.clearList}" >
+						<f:param name="ROWID" value="#{policy.ROWID}"/>
+						<h:outputText value="#{policy.APAT_RATE}" />
+						 </h:commandLink>
+					</rich:column>
+					
+					<rich:column filterBy="#{policy.APAT_AGE}" sortBy="#{policy.APAT_AGE}">
+						<f:facet name="header">
+							<h:outputText value="APAT_AGE" />
+						</f:facet>
+						<h:outputText value="#{policy.APAT_AGE}" />
+					</rich:column>
+					</rich:dataTable>
+				<tr><h:commandButton id="InsertLink"  styleClass="button" value="InsertRecord" action="#{PM_102_A_TISB_PM_AGENT_PF_SEARCH_PAGE_DETAILS_ACTION.clearSession}"/>
+			</tr></h:form>
+		</td>
+		</tr>
+
+		<!-- add footer to the page-->
+		<tr>
+			
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

@@ -1,0 +1,2895 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="PolicySchedule" pageWidth="595" pageHeight="842" columnWidth="550" leftMargin="25" rightMargin="20" topMargin="18" bottomMargin="18" uuid="ffd8f9ed-0f58-4507-8e7e-97e9042e7753">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="2933"/>
+	<subDataset name="PolicyCover_Dataset" uuid="ed239053-8756-46bc-9e09-cfd8626cd9eb">
+		<parameter name="POL_SYS_ID" class="java.lang.String"/>
+		<parameter name="SUB_POL_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT COVER_DESC, ROWNUM ANNEX_NO, POAC_LC_SA,POAC_PERIOD, POAC_LC_PREM
+FROM (
+SELECT COVER_DESC         COVER_DESC,
+       POL_LC_SUM_ASSURED POAC_LC_SA,
+       POL_PERIOD         POAC_PERIOD,
+       (POL_LC_BASIC_PREM * POL_MODE_OF_PYMT_RATE) POAC_LC_PREM
+  FROM PT_IL_POLICY, PM_IL_COVER
+ WHERE POL_SYS_ID =$P{POL_SYS_ID}
+   AND COVER_CODE = POL_PLAN_CODE
+UNION ALL
+SELECT COVER_DESC   COVER_DESC,
+       POAC_LC_SA   POAC_LC_SA,
+       POAC_PERIOD  POAC_PERIOD,
+       (POAC_LC_PREM  * POL_MODE_OF_PYMT_RATE) POAC_LC_PREM
+   FROM PT_IL_POL_ADDL_COVER, PM_IL_COVER,PT_IL_POLICY
+ WHERE POL_SYS_ID = POAC_POL_SYS_ID
+   AND POAC_POL_SYS_ID =$P{POL_SYS_ID}
+   AND COVER_CODE = POAC_COVER_CODE
+   )]]>
+		</queryString>
+		<field name="COVER_DESC" class="java.lang.String"/>
+		<field name="ANNEX_NO" class="java.math.BigDecimal"/>
+		<field name="POAC_LC_SA" class="java.math.BigDecimal"/>
+		<field name="POAC_PERIOD" class="java.math.BigDecimal"/>
+		<field name="POAC_LC_PREM" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="BeneficiaryDetails_Dataset" uuid="ed239053-8756-46bc-9e09-cfd8626cd9eb">
+		<parameter name="POL_SYS_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT pben_bnf_name pben_bnf_name,
+       (SELECT PS_CODE_DESC
+          FROM PP_SYSTEM
+         WHERE PS_TYPE = 'ILBENFTYPE'
+           AND PS_CODE = pben_bnf_type) pben_bnf_type,
+       PC_DESC PC_DESC
+  FROM PT_IL_POL_BENEFICIARY, PM_CODES
+ WHERE PBEN_POL_SYS_ID = $P{POL_SYS_ID}
+   AND PC_CODE = PBEN_RELATION_CODE]]>
+		</queryString>
+		<field name="PBEN_BNF_NAME" class="java.lang.String"/>
+		<field name="PBEN_BNF_TYPE" class="java.lang.String"/>
+		<field name="PC_DESC" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="INTERMEDIARY" uuid="9637d133-6a98-41f2-9ee1-094955e1e35c">
+		<parameter name="POL_SYS_ID" class="java.lang.String"/>
+		<queryString>
+			<![CDATA[SELECT POBH_BROKER_CODE  FROM PT_IL_POL_BROKER_HEAD, PT_IL_POLICY
+                         WHERE POBH_POL_SYS_ID = POL_SYS_ID
+                           AND POBH_ACTING_AGENT_YN = 'Y'
+                           AND POL_NO = '111730']]>
+		</queryString>
+		<field name="POBH_BROKER_CODE" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataset1" uuid="b41fd791-7c27-49f6-ab25-319af3d1ffd0"/>
+	<subDataset name="GOVT_FEE" uuid="83b1e773-af5a-462f-9515-16823a208ab6">
+		<parameter name="SUB_POL_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT POC_LC_VALUE
+FROM PT_IL_POL_CHARGE, PT_IL_POLICY
+WHERE POC_POL_SYS_ID = POL_SYS_ID
+AND POL_SYS_ID = $P{SUB_POL_SYS_ID}
+AND POC_CHRG_CODE = 'GOV.FEE']]>
+		</queryString>
+		<field name="POC_LC_VALUE" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset2" uuid="e8292681-4c81-4618-8464-7615b25d933b"/>
+	<subDataset name="POLICY_FEE" uuid="c705cbf5-4d04-41bf-9c2c-83753b82167f">
+		<parameter name="SUB_POL_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT POC_LC_VALUE
+FROM PT_IL_POL_CHARGE, PT_IL_POLICY
+WHERE POC_POL_SYS_ID = POL_SYS_ID
+AND POL_SYS_ID = $P{SUB_POL_SYS_ID}
+AND POC_CHRG_CODE = 'POL-FEE']]>
+		</queryString>
+		<field name="POC_LC_VALUE" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset3" uuid="a317499f-9617-463f-ad51-f43520159925"/>
+	<subDataset name="dataset4" uuid="6ff4a42f-353b-4a27-8f49-d7e3e8ae4601"/>
+	<subDataset name="dataset5" uuid="f1892a91-6286-4d26-ae43-dc072bd17d6a"/>
+	<subDataset name="dataset6" uuid="614f1aa2-778a-465c-a680-7d41c303e0a0"/>
+	<subDataset name="dataset7" uuid="c621a15f-0a0f-496b-8699-5c423a1ddd94"/>
+	<subDataset name="dataset8" uuid="0bfaec2d-bc3f-4ae1-b4ab-723ca9bc319c"/>
+	<subDataset name="dataset9" uuid="b896d10f-8a04-4f20-8eed-e984749d22bd"/>
+	<subDataset name="DSA" uuid="186fcc06-16a0-4e79-8388-ac55e8db9f6a">
+		<parameter name="pol_sys_id" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<parameter name="POL_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT POL_LC_SUM_ASSURED, POL_PERIOD , PRS_MONTH, PRS_LC_SA
+FROM PT_IL_POL_RED_SA, PT_IL_POLICY
+WHERE POL_SYS_ID = PRS_POL_SYS_ID
+AND POL_sys_id =$P{POL_SYS_ID}]]>
+		</queryString>
+		<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+		<field name="POL_PERIOD" class="java.math.BigDecimal"/>
+		<field name="PRS_MONTH" class="java.math.BigDecimal"/>
+		<field name="PRS_LC_SA" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="TOTAL_PREMIUM" uuid="dbb429f4-1a2b-4be3-988f-3e85c9c1294d">
+		<parameter name="SUB_POL_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT TOT_PREM * MOP TOT_PREMIUM
+  FROM (SELECT (NVL(POL_LC_BASIC_PREM, 0) + NVL(POL_LC_ADDL_PREM, 0) +
+               nvl((SELECT SUM(POC_LC_VALUE)
+                      FROM PT_IL_POL_CHARGE
+                     WHERE POC_POL_SYS_ID = $P{SUB_POL_SYS_ID}
+                       AND POC_CHRG_CODE IN ('GOV.FEE', 'POL-FEE')),
+                    0)) TOT_PREM,
+               POL_MODE_OF_PYMT_RATE MOP
+          FROM PT_IL_POLICY
+         WHERE POL_SYS_ID = $P{SUB_POL_SYS_ID})]]>
+		</queryString>
+		<field name="TOT_PREMIUM" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset10" uuid="618ea2ab-f81b-4277-83ca-48d37b99296d"/>
+	<subDataset name="dataset11" uuid="e99cfae6-e512-42cc-8a05-ce7faea60980"/>
+	<subDataset name="dataset12" uuid="54fc7b78-1d4d-4ca2-b7b7-e50f664e90c3"/>
+	<subDataset name="surrender" uuid="3aff9170-3b7a-4893-afda-c1bd237b5aa5">
+		<parameter name="POL_SYS_ID" class="java.lang.String">
+			<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+		</parameter>
+		<queryString>
+			<![CDATA[SELECT TD_PARA_01_FM,TD_RATE FROM PM_IL_TAR_DTL
+WHERE TD_TH_CODE =(SELECT POL_PLAN_CODE FROM PT_IL_POLICY WHERE POL_SYS_ID =$P{POL_SYS_ID})
+AND TD_PARAM_TYPE  ='S']]>
+		</queryString>
+		<field name="TD_PARA_01_FM" class="java.lang.String"/>
+		<field name="TD_RATE" class="java.math.BigDecimal"/>
+	</subDataset>
+	<subDataset name="dataset13" uuid="3859445e-1491-4c02-926c-9118542e814f"/>
+	<parameter name="POL_SYS_ID" class="java.lang.String"/>
+	<parameter name="Intermediary" class="java.lang.String"/>
+	<parameter name="param0" class="java.lang.String"/>
+	<parameter name="param1" class="java.lang.String"/>
+	<parameter name="param2" class="java.lang.String"/>
+	<parameter name="param3" class="java.lang.String"/>
+	<parameter name="param4" class="java.lang.String"/>
+	<parameter name="param5" class="java.lang.String"/>
+	<parameter name="param6" class="java.lang.String"/>
+	<parameter name="param7" class="java.lang.String"/>
+	<parameter name="param8" class="java.lang.String"/>
+	<parameter name="param9" class="java.lang.String"/>
+	<parameter name="param10" class="java.lang.String"/>
+	<parameter name="param11" class="java.lang.String"/>
+	<parameter name="param12" class="java.lang.String"/>
+	<parameter name="param13" class="java.lang.String"/>
+	<parameter name="param14" class="java.lang.String"/>
+	<parameter name="param15" class="java.lang.String"/>
+	<parameter name="Flag_Status" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[SELECT POL_SYS_ID,
+       POL_PROP_NO,
+       POL_NO,
+       POL_CUST_CODE,
+       ROWNUM ANNEX_NO,
+       POL_ASSURED_NAME,
+       POL_SYS_ID,
+       (POL_RES_ADDRESS_1 ||','|| POL_RES_ADDRESS_2||','|| POL_RES_ADDRESS_3) ADDRESS,
+       POL_PERIOD,
+       POAD_REF_ID1,
+       POL_CONT_CODE,
+       POL_PREM_PAY_YRS,
+       POL_START_DT,
+       POL_LC_SUM_ASSURED,
+       DECODE(POL_MODE_OF_PYMT,
+              'M',
+              'MONTHLY',
+              'Q',
+              'QUARTERLY',
+              'H',
+              'HALF-YEARLY',
+              'Y',
+              'YEARLY',
+              'SINGLE'),
+       (SELECT PROD_DESC FROM PM_IL_PRODUCT WHERE PROD_CODE = POL_PROD_CODE) PROD_NAME,
+       POL_LAST_INST_DT,
+       (POL_EXPIRY_DT) MATU_DT,
+       POL_LC_FIRST_PREM TOT_PREM,
+       POAD_DOB,
+       POAD_AGE,
+       (POL_RES_AREA_CODE || '-' || POL_RES_PHONE_NO) POL_PHONE,
+       POL_MOBILE_NO,pol_res_phone_no,
+       (SELECT CUST_NAME FROM PM_CUSTOMER WHERE CUST_CODE = POL_CUST_CODE) PROPOSER_NAME,
+       POL_MOBILE_NO,
+       (SELECT COVER_LONG_DESC
+          FROM PM_IL_COVER
+         WHERE COVER_CODE = POL_PLAN_CODE) PLAN_DESC
+  FROM PT_IL_POLICY, PT_IL_POL_ASSURED_DTLS
+ WHERE POL_SYS_ID = $P{POL_SYS_ID}
+   AND POL_SYS_ID = POAD_POL_SYS_ID
+   AND POAD_POL_SYS_ID = POL_SYS_ID
+      ---AND POBH_POL_SYS_ID= POL_SYS_ID
+      ---AND POAD_POL_SYS_ID =POBH_POL_SYS_ID
+   AND POL_SRC_OF_BUS IN ('001', '075')
+---AND POL_APPRV_STATUS ='N']]>
+	</queryString>
+	<field name="POL_SYS_ID" class="java.math.BigDecimal"/>
+	<field name="POL_PROP_NO" class="java.lang.String"/>
+	<field name="POL_NO" class="java.lang.String"/>
+	<field name="POL_CUST_CODE" class="java.lang.String"/>
+	<field name="ANNEX_NO" class="java.math.BigDecimal"/>
+	<field name="POL_ASSURED_NAME" class="java.lang.String"/>
+	<field name="ADDRESS" class="java.lang.String"/>
+	<field name="POL_PERIOD" class="java.math.BigDecimal"/>
+	<field name="POAD_REF_ID1" class="java.lang.String"/>
+	<field name="POL_CONT_CODE" class="java.lang.String"/>
+	<field name="POL_PREM_PAY_YRS" class="java.math.BigDecimal"/>
+	<field name="POL_START_DT" class="java.sql.Timestamp"/>
+	<field name="POL_LC_SUM_ASSURED" class="java.math.BigDecimal"/>
+	<field name="DECODE(POL_MODE_OF_PYMT,&apos;M&apos;,&apos;MONTHLY&apos;,&apos;Q&apos;,&apos;QUARTERLY&apos;,&apos;H&apos;,&apos;HALF-YEARLY&apos;,&apos;Y&apos;,&apos;YEARLY&apos;,&apos;SINGLE&apos;)" class="java.lang.String"/>
+	<field name="PROD_NAME" class="java.lang.String"/>
+	<field name="POL_LAST_INST_DT" class="java.sql.Timestamp"/>
+	<field name="MATU_DT" class="java.sql.Timestamp"/>
+	<field name="TOT_PREM" class="java.math.BigDecimal"/>
+	<field name="POAD_DOB" class="java.sql.Timestamp"/>
+	<field name="POAD_AGE" class="java.math.BigDecimal"/>
+	<field name="POL_PHONE" class="java.lang.String"/>
+	<field name="POL_MOBILE_NO" class="java.lang.String"/>
+	<field name="POL_RES_PHONE_NO" class="java.lang.String"/>
+	<field name="PROPOSER_NAME" class="java.lang.String"/>
+	<field name="PLAN_DESC" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="33" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="11" width="555" height="20" uuid="b784f22b-9b21-4b11-8502-9ed8d5022d4f"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14" isBold="true" isUnderline="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[Preamble]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<detail>
+		<band height="261" splitType="Stretch">
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="119" width="557" height="23" isPrintWhenDetailOverflows="true" uuid="aa7cb0fc-c865-4554-97a5-3100d7306572"/>
+				<box bottomPadding="4">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Schedule]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="142" width="126" height="15" uuid="cb221da3-4d23-4fbb-aa9d-9e41294b39cd"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Proposal Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="142" width="130" height="15" uuid="ba081126-b7a4-48ff-8597-a5a74e9f12be"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Policy Number]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="157" width="144" height="15" uuid="8c697553-b53b-40c1-9778-486a3493e533"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name of the Life Assured]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="171" width="126" height="15" uuid="665b59c6-5283-4e06-a78b-38ed607545cc"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name of the Proposer]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="186" width="126" height="15" uuid="9aee643b-d2d5-494d-9698-fd7dea3c1b16"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Intermediary #]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="186" width="130" height="15" uuid="4ed57806-b344-4f0c-8dbd-ad51d85917bc"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Residence Card No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="201" width="126" height="60" uuid="3dced7fd-2037-40d4-abdc-743bfae57fea"/>
+				<box leftPadding="5">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Address ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="201" width="75" height="15" uuid="3a5f1c87-51ce-486a-aeac-9a957577435f"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date of Birth]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="201" width="27" height="15" uuid="3512447e-e1ff-41f2-a1ab-13c6598bb07c"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Age]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="201" width="99" height="15" uuid="32d3a0ec-d7fa-4598-99ba-d20dfc9be13e"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GSM]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="201" width="79" height="15" uuid="528f17ad-7f7c-4efe-9222-7276179c8fbe"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Phone]]></text>
+			</staticText>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="126" y="142" width="150" height="15" isPrintWhenDetailOverflows="true" uuid="69c95b5b-ca34-4da9-acf0-e241c7a8d02f"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_PROP_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="406" y="142" width="150" height="15" uuid="2f2c8be6-bf80-42f4-9bd2-b8bede035972"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="126" y="157" width="430" height="15" uuid="ae399e1d-4224-4cc8-8b5d-399295e0b77c"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_ASSURED_NAME}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="126" y="201" width="150" height="60" uuid="f4a2680a-19bb-4d46-a53d-f6b6081c83a6"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="378" y="216" width="99" height="45" uuid="043c9085-7574-4d79-8f6c-26f8931d3f75"/>
+				<box leftPadding="5">
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="216" width="79" height="45" uuid="b47fa526-1673-4ebc-bd04-c0e15bac759b"/>
+				<box leftPadding="5">
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement>
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="276" y="216" width="75" height="45" uuid="9044ec94-0f05-4749-a046-8fd5c7c4fdd7"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POAD_DOB}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="351" y="216" width="27" height="45" uuid="1f240aff-ac1f-45af-bf54-30e26d213a4e"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POAD_AGE}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="69" width="556" height="46" uuid="2bc06cd5-cc33-4901-8bdc-2b7ea89a2df9"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[       And it is hereby declared that this policy of Insurance shall be subject to the terms and conditions printed on the following pages hereof  and that the following schedule and every endorsement placed on the policy by the company shall be deemed part of the policy.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="-1" y="0" width="557" height="70" isPrintWhenDetailOverflows="true" uuid="b5be778d-0f19-4683-95c1-1a8395ecc9e8"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isBold="false"/>
+				</textElement>
+				<text><![CDATA[                                                                           (herein after referred to as "the company")  has received a proposal and declaration and premium from the Life Assured/proposer named in the schedule referred to herein below. The said proposal and declaration, with any statements contained and referred to therein,  having been agreed to, by the said Life Assured and the company as the basis of this Insurance, do by the policy agree to pay the benefits in terms of the said schedule, on proof to the satisfaction of the company, in case the benefits becomes payable as set out in schedule. ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="126" y="186" width="150" height="15" uuid="c0f3c783-c41d-4916-a83e-e63b3bf8597f"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Justified" verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_CONT_CODE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="406" y="186" width="150" height="16" uuid="4116e06f-0465-4137-ab41-027d5258ba7f"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POAD_REF_ID1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="52" y="0" width="180" height="18" uuid="e433b601-2961-4163-96ba-0a0604a2f486"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Falcon Insurance Company SAOC ]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="126" y="171" width="430" height="15" uuid="42446681-b5bf-42d0-a1eb-5c127626f732"/>
+				<box leftPadding="5">
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROPOSER_NAME}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="31" y="1" width="41" height="20" uuid="814a8e47-b418-4369-8eb7-8eb1af1efbca"/>
+				<text><![CDATA[The]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="476" y="-139" width="100" height="20" uuid="7c13442f-988d-49fd-9ad1-a6a8379962ec"/>
+				<textFieldExpression><![CDATA[$F{POL_PHONE}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="477" y="233" width="79" height="20" uuid="d46af4aa-c663-48f9-8d6b-42e03ebbef39"/>
+				<box leftPadding="4"/>
+				<textFieldExpression><![CDATA[$F{POL_RES_PHONE_NO}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="378" y="233" width="98" height="20" uuid="43b9357c-a273-4045-b0ff-309ea218ff86"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{POL_MOBILE_NO}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="62">
+			<staticText>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="556" height="32" isPrintWhenDetailOverflows="true" uuid="121774c7-8dd9-400c-bdb5-2eebf771bb22"/>
+				<box leftPadding="1">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font fontName="Calibri" size="14" isBold="true" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Plan & Cover Details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="17" width="110" height="15" uuid="31621bbf-90a1-4a67-93dc-d1f71083cea0"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<text><![CDATA[Product/Cover Type : ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="0" width="75" height="32" uuid="46010a6b-1050-46d9-b074-ff544aa7370e"/>
+				<box leftPadding="5" bottomPadding="0">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Product Name:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="32" width="216" height="15" uuid="49f34509-aa20-488e-9f94-027af5540974"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.0"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Schedule of Benefits]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="216" y="32" width="60" height="15" uuid="ed2acd01-8d17-4ba9-a053-f4b0121f1bea"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Annex No]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="275" y="32" width="103" height="15" uuid="22867480-28e1-418f-85c5-dd66d191ad18"/>
+				<box>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sum Assured OMR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="377" y="32" width="100" height="15" uuid="866de8aa-632d-43e3-be5c-42367a1cbcb2"/>
+				<box leftPadding="5">
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Term Years]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="476" y="32" width="80" height="15" uuid="70d8a717-19ec-47b7-8687-916eaabae6bf"/>
+				<box leftPadding="5">
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Premium]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="351" y="0" width="205" height="32" uuid="4ce97009-03b2-4999-abcc-532d126e3008"/>
+				<box leftPadding="5" bottomPadding="0">
+					<topPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PROD_NAME}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="-1" y="47" width="558" height="15" uuid="48a04896-db56-4eaa-acf8-e65ac72a848a"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="PolicyCover_Dataset" uuid="2676bbb9-443a-4588-a334-1550323d8f3e">
+						<datasetParameter name="POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="15" width="558">
+						<textField>
+							<reportElement x="1" y="0" width="216" height="15" uuid="93e36128-bfaa-4fea-a0ac-4e84fcee6ac9"/>
+							<box leftPadding="5">
+								<leftPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement verticalAlignment="Bottom">
+								<font fontName="Calibri" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{COVER_DESC}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="217" y="0" width="60" height="15" uuid="e69b2842-6f83-429d-846f-15eecaadd04a"/>
+							<box leftPadding="10">
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Bottom">
+								<font fontName="Calibri" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{ANNEX_NO}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="379" y="0" width="99" height="15" uuid="52cf264c-aad5-4600-9ae7-f4705f424434"/>
+							<box leftPadding="10" rightPadding="2">
+								<leftPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center" verticalAlignment="Bottom">
+								<font fontName="Calibri" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POAC_PERIOD}]]></textFieldExpression>
+						</textField>
+						<textField pattern="###0.000">
+							<reportElement x="277" y="0" width="102" height="15" uuid="39d05492-7a6e-4596-aea8-70a1e3da5ae8"/>
+							<box rightPadding="2">
+								<leftPen lineWidth="0.0"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Bottom">
+								<font fontName="Calibri" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POAC_LC_SA}.doubleValue()]]></textFieldExpression>
+						</textField>
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="477" y="0" width="80" height="15" uuid="2f92007e-05ee-48cf-ba79-575261c08cbe"/>
+							<box leftPadding="10" rightPadding="2">
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Bottom">
+								<font fontName="Calibri" size="10"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POAC_LC_PREM}.doubleValue()]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" x="110" y="17" width="166" height="15" isPrintWhenDetailOverflows="true" uuid="a2dc17e1-369c-4295-a0a7-302a8789aba8"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Calibri" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PLAN_DESC}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="32">
+			<staticText>
+				<reportElement x="0" y="0" width="124" height="15" uuid="fb71040b-afd3-4f98-96e6-2c27c29a7480"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Policy Term]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="0" width="152" height="15" uuid="54fc5d00-fbc7-4596-969b-f93efea18770"/>
+				<box leftPadding="15">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Premium Term]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="0" width="99" height="15" uuid="2072689b-e332-49a6-a2e5-b1e0f47e600c"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Policy Charges]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="0" width="102" height="15" uuid="6665cfef-fa2d-4169-a5de-ef16e67a19e4"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Govt. Fee]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="0" width="79" height="15" uuid="ea64ccee-d91f-4901-b39b-57dee1cfa765"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.0"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Total Premium]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="15" width="124" height="17" uuid="7f063b3c-2b68-48e9-83c8-05012916fbe7"/>
+				<box leftPadding="5">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_PERIOD}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="124" y="15" width="152" height="17" uuid="1988bfba-9717-4312-8e6a-c8e7b8f9a222"/>
+				<box leftPadding="5">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom">
+					<font fontName="Calibri"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{POL_PREM_PAY_YRS}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement x="276" y="15" width="102" height="17" uuid="70f434de-5f97-46ff-b2dd-a7952380a464"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="GOVT_FEE" uuid="21c0a964-eed9-4a86-b6e8-094239ae7b2b">
+						<datasetParameter name="SUB_POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="17" width="102">
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="101" height="16" uuid="422ab298-7db4-4d18-bf3a-7ed57007b223"/>
+							<box leftPadding="10" rightPadding="2">
+								<bottomPen lineWidth="0.0"/>
+								<rightPen lineWidth="0.0"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Bottom">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POC_LC_VALUE}.doubleValue()]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="378" y="15" width="99" height="17" uuid="102aea46-13dc-4d63-b5ed-c74644b23f8a"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="POLICY_FEE" uuid="e553b65b-05a6-4eb0-80c6-55cc8fefe3c6">
+						<datasetParameter name="SUB_POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="17" width="99">
+						<textField pattern="###0.000" isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="96" height="16" uuid="ffe68434-b212-4a8b-ae92-54aa7b715478"/>
+							<box leftPadding="10" rightPadding="2">
+								<leftPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right" verticalAlignment="Bottom">
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{POC_LC_VALUE}.doubleValue()]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<componentElement>
+				<reportElement x="477" y="15" width="88" height="16" uuid="f063d06b-c351-44b6-9c29-e5e7d265f1ba"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="TOTAL_PREMIUM" uuid="7ee9dfe1-c6c3-455c-b216-10f32ae54fd1">
+						<datasetParameter name="SUB_POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="16" width="88">
+						<textField pattern="###0.000">
+							<reportElement x="0" y="0" width="79" height="16" uuid="631518f6-fb66-4bb3-9f9f-e21f6b1ecdf7"/>
+							<box leftPadding="10" rightPadding="3">
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Right"/>
+							<textFieldExpression><![CDATA[$F{TOT_PREMIUM}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="415">
+			<componentElement>
+				<reportElement x="0" y="65" width="556" height="16" uuid="48a04896-db56-4eaa-acf8-e65ac72a848a"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="BeneficiaryDetails_Dataset" uuid="2676bbb9-443a-4588-a334-1550323d8f3e">
+						<datasetParameter name="POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="16" width="556">
+						<textField isBlankWhenNull="true">
+							<reportElement x="0" y="0" width="157" height="15" uuid="7ff72b45-6353-478d-ba64-ef3511f39e9e"/>
+							<box leftPadding="3">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBEN_BNF_NAME}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="157" y="0" width="195" height="15" uuid="09f058bb-a423-4af8-9bd1-be09d2f91c67"/>
+							<box leftPadding="3">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.0"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PBEN_BNF_TYPE}]]></textFieldExpression>
+						</textField>
+						<textField isBlankWhenNull="true">
+							<reportElement x="352" y="0" width="204" height="15" uuid="8985981c-1816-426b-a11e-65f4b58e1690"/>
+							<box leftPadding="3" bottomPadding="0">
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement>
+								<font fontName="Calibri"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{PC_DESC}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+			<staticText>
+				<reportElement x="0" y="50" width="157" height="15" uuid="9f8e6a5d-8bf4-4a79-8566-702e9dbd2366"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="50" width="195" height="15" uuid="5fad2459-a77e-48b6-ab97-dd4a84deda60"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="351" y="50" width="205" height="15" uuid="3f581399-2223-4032-a72e-3b5d73e0d455"/>
+				<box leftPadding="10">
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Relationship]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="378" y="-1" width="99" height="15" uuid="4537589c-f224-4555-82d0-5d7199156c52"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mode of payment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="276" y="-1" width="102" height="15" uuid="d3ede670-7db3-413d-a17b-ee1acf43dc65"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date of Maturity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="477" y="-1" width="79" height="15" uuid="734f8654-47ec-4cd6-9abd-8825332b606e"/>
+				<box leftPadding="5">
+					<pen lineWidth="0.25"/>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Sum Insured]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="276" y="14" width="102" height="15" uuid="b8514596-5fb3-498e-999e-d8cb62048f3c"/>
+				<box leftPadding="5">
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{MATU_DT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="###0.000" isBlankWhenNull="true">
+				<reportElement x="477" y="14" width="79" height="15" uuid="deb77807-83bb-478a-ba0c-ce8832a72a22"/>
+				<box leftPadding="10" rightPadding="2">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Right" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{POL_LC_SUM_ASSURED}.doubleValue()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="378" y="15" width="99" height="14" uuid="8d33f65b-89b1-4d3a-affc-2e4d54f7a215"/>
+				<box>
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<text><![CDATA[]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="0" y="14" width="124" height="15" uuid="06879e08-fa6b-4bff-9a5d-525e4fec3abc"/>
+				<box leftPadding="5">
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{POL_START_DT}]]></textFieldExpression>
+			</textField>
+			<textField pattern="" isBlankWhenNull="true">
+				<reportElement x="378" y="14" width="98" height="15" uuid="2abb9e14-18f4-4807-9eab-6fca61069440"/>
+				<box leftPadding="10"/>
+				<textElement verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{DECODE(POL_MODE_OF_PYMT,'M','MONTHLY','Q','QUARTERLY','H','HALF-YEARLY','Y','YEARLY','SINGLE')}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy" isBlankWhenNull="true">
+				<reportElement x="124" y="14" width="152" height="15" uuid="1d850237-32cb-402c-9067-c2bae93104ff"/>
+				<box leftPadding="5">
+					<topPen lineWidth="0.0"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Bottom"/>
+				<textFieldExpression><![CDATA[$F{POL_LAST_INST_DT}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="138" y="125" width="259" height="15" uuid="5eab6ef6-3f54-4e70-92c5-367e41bdd374"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Signed on behalf of Falcon Insurance Company SAOC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="178" width="79" height="15" uuid="b3e16fee-8462-410d-b4e1-df1acbfd7eed"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="204" y="179" width="100" height="15" uuid="e4e283e7-90e4-40f9-bcad-82ab28d76d23"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Examined By]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="389" y="178" width="142" height="15" uuid="890132e0-4b3f-4ae7-abf9-f9f8ca05394f"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Authorised Signatory]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="95" width="377" height="15" uuid="0ca3a938-5f97-4548-b219-dc00bf0e2e48"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[The attached General Provisions and Annexures form part of the Policy Contract.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="-1" width="124" height="15" uuid="c8471e6f-71c5-455d-874e-5c475f4bdd53"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ Date of Commencement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="124" y="-1" width="152" height="15" uuid="0afcd373-2afe-48c0-afc4-e4461810b625"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[  Date of Last Payment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="29" width="556" height="21" uuid="c4c158bf-b767-4058-baaa-ffe3eba3af0e"/>
+				<box>
+					<leftPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="14" isBold="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Beneficiary Details]]></text>
+			</staticText>
+		</band>
+		<band height="217">
+			<staticText>
+				<reportElement x="11" y="57" width="536" height="33" uuid="d6d49293-110a-443e-82e5-a03d804c6527"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Now this Policy witnesses that in consideration of the payment already made of the first premium stated in the Schedule and of the subsequent premium or premiums if any to be paid to the Company and on proof satisfactory to the Company of
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="93" width="536" height="58" uuid="e4cc2b40-9cb7-46bf-b3e1-167aac07876f"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[
+1)   the happening of any event on which, as provided in this Policy, an amount is to become payable.
+2)   the title of the person or persons claiming payment and
+3)   the age of the Life Insured named in Schedule (where such age has not been admitted)
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="189" width="534" height="27" uuid="238b55d9-47d1-484f-9ad1-bdba5486ec77"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[And it is hereby declared that this Policy shall be subject to the Schedule, General Provisions and Special Provisions set out herein or endorsed by the Company or at any future time are to be deemed as part of this Policy.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="26" y="7" width="180" height="13" uuid="5c24f259-5745-44eb-ae78-4d5747917e9f"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Falcon Insurance Company SAOC ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="6" width="539" height="46" uuid="ba4896e7-2e45-4736-8748-b505fa66baab"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[                                                                                   (hereinafter called ‘the Company’) having received a Proposal and Declaration and the First Premium from the Proposer and the Life Insured named in the Schedule and the said Proposal and Declaration with the statements contained and referred to therein having been agreed to by the Proposer and the Company as the basis of this insurance.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="151" width="535" height="35" uuid="aacf33d3-6543-414c-bdcc-1a04ceae3138"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[the Company will pay,  as stated in the  Schedule, the amount (or amounts) provided under the Policy to the person or persons to whom the same is stated in Schedule to be payable.
+]]></text>
+			</staticText>
+		</band>
+		<band height="153">
+			<printWhenExpression><![CDATA[$P{param0}.equals("RSP-100")? true:
+$P{param1}.equals("RSP-100")? true:
+$P{param2}.equals("RSP-100")? true:
+$P{param3}.equals("RSP-100")? true:
+$P{param4}.equals("RSP-100")? true:
+$P{param5}.equals("RSP-100")? true:
+$P{param6}.equals("RSP-100")? true:
+$P{param7}.equals("RSP-100")? true:
+$P{param8}.equals("RSP-100")? true:
+$P{param9}.equals("RSP-100")? true:
+$P{param10}.equals("RSP-100")? true:
+$P{param11}.equals("RSP-100")? true:
+$P{param12}.equals("RSP-100")? true:
+$P{param13}.equals("RSP-100")? true:
+$P{param14}.equals("RSP-100")? true:
+$P{param15}.equals("RSP-100")? true:false]]></printWhenExpression>
+			<staticText>
+				<reportElement x="77" y="73" width="310" height="15" uuid="7e478a87-bf24-4060-a008-b0226bc5dbdd"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Sum assured plus accrued Bonuses as declared]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="118" width="124" height="15" uuid="dfab5b11-40aa-4457-b2e9-7c073101b0de"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Maturity Benefit payable:	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="5" width="373" height="20" uuid="1a8dde83-7850-489d-ac6e-e4ca05a7cc40"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[REGULAR SAVINGS PLAN (Endowment )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="103" width="100" height="15" uuid="bc2a28a0-a9f4-4688-8f8e-99e3ea6d815a"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Endowment plans]]></text>
+			</staticText>
+			<line>
+				<reportElement x="13" y="101" width="456" height="1" uuid="b0959b49-7e55-4eaa-a896-ab786021d3d8"/>
+			</line>
+			<staticText>
+				<reportElement x="13" y="32" width="386" height="15" uuid="874e94c4-bef7-47f4-a64b-dba6bb1099c0"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[“THE EVENT(S) UPON THE HAPPENING OF WHICH THE BENEFITS UNDER ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="83" width="100" height="15" uuid="c8878328-f165-4905-8120-c0efa1316253"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[from time to time]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="73" width="100" height="15" uuid="5d4db47c-6993-43e5-b796-538f0b6055d1"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[Death Benefit:	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="46" width="309" height="15" uuid="7988d4d5-a4f6-4bbe-bbd8-f1e1971e11cb"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[THE POLICY ARE PAYABLE:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="138" width="332" height="15" uuid="ea216bba-fb89-4f63-9e75-f8cd0eadf44a"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Sum assured plus accrued Bonuses as declared from time to time.]]></text>
+			</staticText>
+		</band>
+		<band height="99">
+			<printWhenExpression><![CDATA[$P{param0}.equals("PTDA")? true:
+$P{param1}.equals("PTDA")? true:
+$P{param2}.equals("PTDA")? true:
+$P{param3}.equals("PTDA")? true:
+$P{param4}.equals("PTDA")? true:
+$P{param5}.equals("PTDA")? true:
+$P{param6}.equals("PTDA")? true:
+$P{param7}.equals("PTDA")? true:
+$P{param8}.equals("PTDA")? true:
+$P{param9}.equals("PTDA")? true:
+$P{param10}.equals("PTDA")? true:
+$P{param11}.equals("PTDA")? true:
+$P{param12}.equals("PTDA")? true:
+$P{param13}.equals("PTDA")? true:
+$P{param14}.equals("PTDA")? true:
+$P{param15}.equals("PTDA")? true:false]]></printWhenExpression>
+			<elementGroup>
+				<line>
+					<reportElement x="13" y="87" width="456" height="1" uuid="b01878fc-b3ec-4b2d-9bc8-a929751b26cc"/>
+				</line>
+				<staticText>
+					<reportElement x="13" y="70" width="456" height="13" uuid="d6cbfc98-183f-4498-9c0c-f1f38481a8d0"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Calibri"/>
+					</textElement>
+					<text><![CDATA[Sum Assured after a waiting period of 365 days from the onset of Disability. ”]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="13" y="10" width="49" height="20" uuid="1405b631-292f-435a-829e-3e5a4715825d"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Calibri" isUnderline="true"/>
+					</textElement>
+					<text><![CDATA[PTD Rider ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="13" y="30" width="456" height="40" uuid="fde5ed7d-0cf6-4a58-8342-e5994b8d1e0a"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Calibri"/>
+					</textElement>
+					<text><![CDATA[On Total and Permanent Disability due to accident or sickness during the Policy Term that prevents the Life Insured from ever again performing the duties of any occupation or business whatsoever for remuneration or profit:  ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="61" y="10" width="165" height="20" uuid="943e4e3e-2099-4603-a8d6-044b0770775e"/>
+					<textElement textAlignment="Justified">
+						<font fontName="Calibri"/>
+					</textElement>
+					<text><![CDATA[(Total and Permanent Disability)]]></text>
+				</staticText>
+			</elementGroup>
+		</band>
+		<band height="81">
+			<printWhenExpression><![CDATA[$P{param0}.equals("ADB")? true:
+$P{param1}.equals("ADB")? true:
+$P{param2}.equals("ADB")? true:
+$P{param3}.equals("ADB")? true:
+$P{param4}.equals("ADB")? true:
+$P{param5}.equals("ADB")? true:
+$P{param6}.equals("ADB")? true:
+$P{param7}.equals("ADB")? true:
+$P{param8}.equals("ADB")? true:
+$P{param9}.equals("ADB")? true:
+$P{param10}.equals("ADB")? true:
+$P{param11}.equals("ADB")? true:
+$P{param12}.equals("ADB")? true:
+$P{param13}.equals("ADB")? true:
+$P{param14}.equals("ADB")? true:
+$P{param15}.equals("ADB")? true:false]]></printWhenExpression>
+			<staticText>
+				<reportElement positionType="FixRelativeToBottom" x="12" y="0" width="456" height="74" uuid="371d0f87-1b1e-464a-9682-b6748afc3948"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[
+
+On Death during the Policy Term resulting from bodily injury inflicted solely by accidental, external and violent means within 90 days of such injury:
+“Sum Assured.”]]></text>
+			</staticText>
+			<line>
+				<reportElement x="14" y="69" width="456" height="1" uuid="04d3d348-3f38-435c-9ced-b2ef2c1fa5b5"/>
+			</line>
+			<staticText>
+				<reportElement x="12" y="3" width="100" height="20" uuid="cbcb461c-f737-46c5-8cc5-89e4d8e42d3a"/>
+				<textElement>
+					<font fontName="Calibri" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[ADB Rider]]></text>
+			</staticText>
+		</band>
+		<band height="767">
+			<printWhenExpression><![CDATA[$P{param0}.equals("PA")? true:
+$P{param1}.equals("PA")? true:
+$P{param2}.equals("PA")? true:
+$P{param3}.equals("PA")? true:
+$P{param4}.equals("PA")? true:
+$P{param5}.equals("PA")? true:
+$P{param6}.equals("PA")? true:
+$P{param7}.equals("PA")? true:
+$P{param8}.equals("PA")? true:
+$P{param9}.equals("PA")? true:
+$P{param10}.equals("PA")? true:
+$P{param11}.equals("PA")? true:
+$P{param12}.equals("PA")? true:
+$P{param13}.equals("PA")? true:
+$P{param14}.equals("PA")? true:
+$P{param15}.equals("PA")? true:false]]></printWhenExpression>
+			<staticText>
+				<reportElement x="420" y="557" width="21" height="15" uuid="d1c67eca-b73c-40b6-80c4-2e08fe035289"/>
+				<box leftPadding="1"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[100]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="702" width="22" height="15" uuid="6ed1002f-6c8d-4fec-a0b4-ebbf5c093309"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="673" width="22" height="15" uuid="76b50707-01ca-4875-bd5a-5c12bc27d1e6"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[15]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="85" width="201" height="48" uuid="8669cbaf-0332-44dc-8546-3aad9bed3bb9"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Sum Assured or the appropriate proportion thereof as shown in the Disability Scale]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="529" width="21" height="15" uuid="20d08b61-fea0-434f-82e2-af75ab41fa6d"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[100]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="0" width="100" height="15" uuid="9ec76f3f-465b-4322-b954-ea1e4b9197e4"/>
+				<textElement>
+					<font fontName="Calibri" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PA Rider]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="85" width="216" height="48" uuid="03a6ca65-abcb-4101-b6e7-bef0644968f2"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[On Permanent Partial Disability during the Policy Term
+(As per scale attached)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="731" width="22" height="15" uuid="bcd9b93e-8aef-4c9b-b9b3-e1e5dff19ac1"/>
+				<box leftPadding="5"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[5]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="133" width="216" height="64" uuid="b48427dd-7b50-44c4-9f83-42d3b720f17f"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[On Total and Permanent Disability during the Policy Term that prevents the Life Insured from ever again performing the duties of any occupation or business whatsoever for remuneration or profit ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="570" width="272" height="15" uuid="d8d7be28-cacf-413f-954f-0c97adc3124d"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of right arm or hand	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="585" width="181" height="15" uuid="006bfd96-14eb-400d-bc04-9079c3a988b3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of left arm or hand	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="453" width="20" height="15" uuid="d516823d-0d5b-4045-98c2-70f69a6e0537"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[100]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="357" width="418" height="26" uuid="0c29bb05-e1a1-4732-829e-3fdcdad0196b"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Claims under this rider are fully integrated with each other so that no more than 100% of the Sum Assured is payable.”]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="585" width="20" height="15" uuid="5893f202-d539-4330-81a2-3cee8352e7ab"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[50]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="746" width="397" height="15" uuid="7f70a007-141a-4783-bc6e-9f1953d9e33b"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of any other toe]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="643" width="397" height="15" uuid="92df4605-8298-4049-b7a8-f71c47444ef1"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of thumb of right hand	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="628" width="22" height="15" uuid="71b4841f-e8e8-4e53-a77b-298e548868d2"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[40]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="688" width="181" height="15" uuid="570d5498-8cd4-45fc-b2c5-3e64bfdf23b0"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of index finger of left hand]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="453" width="100" height="15" uuid="c47bd66d-c69a-475a-b2f2-84778b127f71"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of both hands]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="139" y="53" width="211" height="16" uuid="57ed9b3f-ec34-470d-9a26-57e6d93d0fe2"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PERSONAL ACCIDENT RIDER ADDENDUM
+　　　　	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="512" width="380" height="15" uuid="8601c7ff-4851-4b83-88ca-140cfb784b7e"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of one hand or one foot together with the complete and irrecoverable loss of sight]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="732" width="181" height="15" uuid="606c433f-21a5-46a5-a800-8ab58998407d"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of big toe	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="571" width="21" height="15" uuid="1332217d-e9cd-4209-bf87-31f647e42334"/>
+				<box leftPadding="3"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[60]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="643" width="22" height="15" uuid="810d7215-4842-4282-aed4-399cec138355"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[20]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="556" width="397" height="15" uuid="6dbaea36-3678-46dc-acf5-44dec204cdba"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Complete and incurable paralysis]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="673" width="272" height="15" uuid="89f9566d-59b4-46d1-9c09-6d87b722db26"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of index finger of right hand	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="614" width="22" height="15" uuid="a7da1057-b0b5-4f6c-bfa5-5fcdcb8ee6da"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[50]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="688" width="23" height="15" uuid="43f31358-008f-48b5-965e-0be70756a6f8"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[10]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="658" width="22" height="15" uuid="9805d532-49cf-4758-b0a5-618692b95739"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[15]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="467" width="20" height="15" uuid="6be066e2-c4e5-4578-b3fc-03d9d82a6ce7"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[100]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="423" width="253" height="26" uuid="bfcc07a0-4e42-4ed4-9571-a6a3dd93fab9"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Description of Maximum % of Sum Assured Payable
+Disablement]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="133" width="201" height="64" uuid="dff8dfad-d65b-4018-ab18-e58208f914d4"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Sum Assured after a waiting  period of 365 days from the onset of Disability]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="527" width="272" height="15" uuid="cb5dbd55-ac46-402c-84ef-223bed8e5dba"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[of one eye]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="717" width="23" height="15" uuid="09b398de-28f2-4bbf-af5c-42390180841c"/>
+				<box leftPadding="5"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[6]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="717" width="272" height="15" uuid="31d4e598-69ea-47cc-bbab-a542687a4f33"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of index finger of right hand	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="468" width="100" height="15" uuid="9a31fc92-0cf8-4cfb-b55b-ee5b2beea1f7"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of both feet	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="483" width="272" height="15" uuid="80459dec-3ba7-4eb4-b09b-84d584914bb3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Complete and irrecoverable loss of sight in both eyes]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="599" width="22" height="15" uuid="ddae0937-6718-43df-b506-644e7258da33"/>
+				<box leftPadding="3"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[50]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="702" width="397" height="15" uuid="050b904c-aafa-4f43-ae3f-5a5f9338243e"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Complete and irrecoverable loss of hearing in one ear]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="197" width="216" height="91" uuid="1bd2f5a2-00e2-4bc3-91a9-69dbf1dadc9e"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[On the Temporary Total Disability during the Policy Term
+(i.e., the disability prevents the Life Insured, temporarily from following his normal or usual occupation)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="187" y="397" width="100" height="15" uuid="740386e5-009b-4af6-98e9-905ba9195e5a"/>
+				<textElement>
+					<font fontName="Calibri" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[DISABILITY SCALE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="629" width="181" height="15" uuid="91cffe92-5f63-49c9-bf41-aa214ea63dd2"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Complete and irrecoverable loss of hearing in both ears]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="498" width="181" height="15" uuid="89367996-58d6-4f9b-a662-ef704dddc557"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of one hand and one foot]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="658" width="397" height="15" uuid="7952cbfa-f4ca-4586-9345-e3ff16a6483e"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of thumb of left hand	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="482" width="20" height="15" uuid="b1a0d031-8137-4b49-8c39-1fee746ab292"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[100]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="288" width="216" height="64" uuid="dc39192e-dab9-49bf-b6fd-0434647570eb"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[On incurring Medical or Hospital expenses upon the advice of a qualified medical practitioner acceptable to the company.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="197" width="201" height="91" uuid="7135f869-40e5-4709-b57b-e5b72dfaf912"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[1% of the Sum Assured per week (subject to a maximum of RO 500 per week or 90% of salary/earned income whichever is lower) payable from the 8th consecutive day of disablement for a maximum or 52 weeks. No payment shall be made in respect of first 7 days.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="497" width="20" height="15" uuid="a51b062b-1dbc-4492-837a-42aa477e12fb"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[100]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="239" y="288" width="201" height="64" uuid="f2c12e43-088a-4ab5-ad60-51ae23ef8c7b"/>
+				<box leftPadding="1" rightPadding="1">
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.25"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Reimbursement of reasonable and customary expenses subject to a maximum total payment of 10% of the Sum Assured or RO 5,000, which ever is less.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="614" width="272" height="15" uuid="a89bddec-d143-4387-933d-88c5542d4f1d"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Complete and irrecoverable loss of sight in one eye]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="543" width="21" height="15" uuid="b816b475-c872-4927-86ea-6c8feb60aec9"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[100]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="542" width="181" height="15" uuid="542a7946-2d3a-43b3-b392-9db6601362cc"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Complete and incurable insanity]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="23" y="599" width="397" height="15" uuid="b0fd2d2d-f944-41e9-ac9c-98ebbccf5c7c"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loss of one leg or one foot	]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="12" y="17" width="458" height="26" uuid="c5f1095d-6dea-4fcd-885e-834f99644eb4"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[On PPD, PTD, TTD or Medical Expenses during the Policy Term resulting from bodily injury inflicted solely by accidental, external and violent means within 90 days of such injury:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="419" y="746" width="22" height="15" uuid="5d878255-cced-48b3-8bf4-41e46457cb9f"/>
+				<box leftPadding="5"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[3]]></text>
+			</staticText>
+		</band>
+		<band height="377">
+			<printWhenExpression><![CDATA[$P{param0}.equals("PWR")? true:
+$P{param1}.equals("PWR")? true:
+$P{param2}.equals("PWR")? true:
+$P{param3}.equals("PWR")? true:
+$P{param4}.equals("PWR")? true:
+$P{param5}.equals("PWR")? true:
+$P{param6}.equals("PWR")? true:
+$P{param7}.equals("PWR")? true:
+$P{param8}.equals("PWR")? true:
+$P{param9}.equals("PWR")? true:
+$P{param10}.equals("PWR")? true:
+$P{param11}.equals("PWR")? true:
+$P{param12}.equals("PWR")? true:
+$P{param13}.equals("PWR")? true:
+$P{param14}.equals("PWR")? true:
+$P{param15}.equals("PWR")? true:false]]></printWhenExpression>
+			<staticText>
+				<reportElement x="46" y="297" width="449" height="15" uuid="57d2a84a-1f73-443a-ad5d-ff266044ea6d"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[security or body guard services,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="341" width="482" height="33" uuid="5b32afcb-57bf-4355-a712-157e60ba7ac6"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If the Insurer alleges that by reason of this exclusion, any loss, damage, cost or expense is not covered by this insurance the burden of proving the contrary shall be upon the Insured.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="237" width="449" height="15" uuid="35809cae-d4a7-4463-9fe1-5f7f0021df24"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[taking an active part in any of the above mentioned events,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="267" width="449" height="15" uuid="5e656244-039b-4767-8100-e5ef344b37f6"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[resisting arrest,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="0" width="177" height="20" uuid="3c33b809-d407-4eb7-aca6-32bca468c112"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[PASSIVE WAR RISK - RIDER BENEFIT]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="312" width="449" height="15" uuid="24ced3d7-6b24-4333-b64c-67a7e3d52b1b"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Traveling to a country after war has been declared or after it has been recognize as a war ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="282" width="18" height="15" uuid="330d9ce5-9c86-4d09-a669-da39ea21fe73"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[4.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="251" width="18" height="15" uuid="06974213-95b9-4b54-aa72-505f08f8a77b"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[2.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="267" width="18" height="15" uuid="f71d4b7d-760d-4b0a-a473-bcbb04767037"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[3.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="326" width="449" height="15" uuid="5bca57b1-db1e-421c-baad-aa4e72eb6b7c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[zone by the United Nations or where there’re any of the event described above.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="282" width="449" height="15" uuid="8eb3c2fe-5555-4b99-bf50-db4ffaf3cd15"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[member of any armed force or serving in any armed force or member of any police or ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="11" y="375" width="480" height="1" uuid="fdd66d09-bc6d-4833-977d-8607d8fdb100"/>
+			</line>
+			<staticText>
+				<reportElement x="11" y="73" width="485" height="101" uuid="7f8c1640-4ec8-4feb-af85-5ef63cde6b6b"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Invasion or acts perpetrated by foreign enemies (whether war be declared or not), hostilities, civil war, martial law or declaration of a state of siege, state of siege or any of the events or causes which determine the proclamation or maintenance of martial law or state or siege, civil disobedience, general mobilization, revolution, usurpation of power (military or politically), insurrection, rebellion, mutiny, riots, civil commotion, revolution, conspiracy, mutiny, strike, pillage, any kind of military projectile or explosive including booby trapped vehicles or objects, cannon shells, rockets or other weapon of war, whatever their origin and type, any act unlawful act perpetrated by armed individual be they members of political, military or paramilitary organizations or parties or not and be they acting on their behalf or on behalf of any other organizations.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="173" width="485" height="64" uuid="a100ba87-dfb3-4a82-b3ef-47b93ca71210"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[The Company's liability under this Supplementary Contract shall be at any time limited to the benefit payable at the time on the disability of the said Insured provided such benefits shall not exceed a maximum amount as described in the basic policy.
+However, this extension will not apply and no benefit will be payable if at the time of occurrence, the insured member(s) is directly or indirectly:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="11" y="33" width="485" height="40" uuid="7e70db93-f5a4-4dc2-a686-72560a74171f"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[It is hereby agreed that, notwithstanding the terms and provisions of the basic policy Contract, the Company will cover the insured member of the group against Death and or disability occurring as a direct or indirect consequence of any of the following:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="46" y="252" width="449" height="15" uuid="4a638823-b401-4643-9732-e17d96ccd594"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[engaged in any quarrel or dispute whether armed or not,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="237" width="18" height="15" uuid="7ee38dbb-8800-4a17-8b96-fd5e277c1141"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[1.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="310" width="18" height="15" uuid="f2f5f918-888d-416f-abdb-aa971e4af493"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[5.]]></text>
+			</staticText>
+		</band>
+		<band height="139">
+			<staticText>
+				<reportElement x="13" y="24" width="487" height="110" uuid="30d76e75-eeb9-4510-b562-4a1800946c03"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[The Policy Benefits shall be incontestable after it has been in force for  2 years; from its Effective Date or date of reinstatement whichever is later; except where there has been a deliberate attempt to obtain Coverage Benefit through misrepresentation or non-disclosure of material facts or nonpayment of premium.
+Any misrepresentation or non-disclosure of material fact by the Insured shall render Benefit under this Plan null and void  ab initio (from its inception). A material fact is the one that would have affected the Company’s judgment in deciding whether or not a risk would have beenacceptable, and if it would been acceptable the terms on which it would have been acceptable (this could include accepting the applicant with a loading or applying an exclusion/s or declining the policy altogether).
+This clause shall not be applicable to disability or accident benefits. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="0" width="160" height="20" uuid="ab5b6133-bde8-4556-895b-cb6933b0b19f"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[Noncontestibility Clause]]></text>
+			</staticText>
+			<line>
+				<reportElement x="13" y="138" width="486" height="1" uuid="7ed944b7-b88e-4bb9-a9d7-b6e541956a40"/>
+			</line>
+		</band>
+		<band height="122">
+			<printWhenExpression><![CDATA[$P{param0}.equals("122")? true:
+$P{param1}.equals("122")? true:
+$P{param2}.equals("122")? true:
+$P{param3}.equals("122")? true:
+$P{param4}.equals("122")? true:
+$P{param5}.equals("122")? true:
+$P{param6}.equals("122")? true:
+$P{param7}.equals("122")? true:
+$P{param8}.equals("122")? true:
+$P{param9}.equals("122")? true:
+$P{param10}.equals("122")? true:
+$P{param11}.equals("122")? true:
+$P{param12}.equals("122")? true:
+$P{param13}.equals("122")? true:
+$P{param14}.equals("122")? true:
+$P{param15}.equals("122")? true:false]]></printWhenExpression>
+			<staticText>
+				<reportElement x="13" y="35" width="487" height="86" uuid="9074bb09-7678-4308-a6e1-d6196643265c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[This Policy can be cancelled in whole before the expiry of the term provided the loan, for which this policy was secured, is fully repaid to the Bank/Financial Institution.On such cancellation, the Single Premium paid (excluding Policy Fee, Insurance Fee or other fixed fees) will be proportionately refunded according to the following calculation: Surrender value =
+50% of Single Premium x [Remaining Term on next Policy Anniversary/Original Term] x [Reduced Sum Assured on next Policy Anniversary/Original Sum Assured]
+This Policy has no refund value after the Policy Term is over.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="13" y="120" width="486" height="1" uuid="d022e715-1b2d-4fea-9ea6-db7af5655745"/>
+			</line>
+			<staticText>
+				<reportElement x="13" y="15" width="281" height="20" uuid="8424d48e-a99a-4d53-b1c9-96eb757dea0d"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SPECIAL PROVISIONS FOR SURRENDER OF POLICIES.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="0" width="241" height="15" uuid="8c45ee6f-5e58-42de-b351-154cfa667957"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SURRENDER CLAUSE-(LPP-MPP)]]></text>
+			</staticText>
+		</band>
+		<band height="208">
+			<printWhenExpression><![CDATA[$P{param0}.equals("122")? false:
+$P{param1}.equals("122")? false:
+$P{param2}.equals("122")? false:
+$P{param3}.equals("122")? false:
+$P{param4}.equals("122")? false:
+$P{param5}.equals("122")? false:
+$P{param6}.equals("122")? false:
+$P{param7}.equals("122")? false:
+$P{param8}.equals("122")? false:
+$P{param9}.equals("122")? false:
+$P{param10}.equals("122")? false:
+$P{param11}.equals("122")? false:
+$P{param12}.equals("122")? false:
+$P{param13}.equals("122")? false:
+$P{param14}.equals("122")? false:
+$P{param15}.equals("122")? false:true]]></printWhenExpression>
+			<staticText>
+				<reportElement x="13" y="73" width="487" height="28" uuid="ab91a548-9ad6-4f2e-a03b-7c37a080696d"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Paid-up Value shall be calculated proportionately as (Number of premiums paid/Total number of premiums payable)*Sum Assured.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="1" width="224" height="18" uuid="ea99c199-2fc8-4b87-ae0f-fdddd5fa9d0d"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isUnderline="true"/>
+				</textElement>
+				<text><![CDATA[SURRENDER CLAUSE-(RSP)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="156" width="487" height="52" uuid="7f8d4813-8d5f-430d-81fd-6d77b15cab59"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[The Surrender Value will be calculated by applying a Factor (based on Policy term at inception and the remaining years to maturity from the last policy anniversary at the time of surrender)to the Paid-up Value of the policy.These Factors are not guaranteed and the currently applicable Factors are:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="19" width="487" height="52" uuid="f7e09d04-021b-4972-9a26-88c406863a69"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[A Paid –up Policy will be granted after at least 2(Two)full years premium have been paid for policy with term to maturity less than 10(Ten) Years and after at least 3(three) full years premium have been paid for Policy with term to maturity 10(Ten) years or above for regular premium paying policies.Such paid –up Policy will not participate in bonuses declared thereafter.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="101" width="487" height="16" uuid="8f0b16f6-831c-4f44-8ff8-261fe3ed4fdf"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[A Single premium policy will be fully paid up at inception]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="13" y="116" width="487" height="40" uuid="d06cff75-30c9-4a0f-beed-78d2ac863530"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[A regular premium paying policy can be surrendered by entire cancellation of policy only if it has acquired a Paid-up Value. A single premium policy can be surrendered only after 1(one) year from the date of risk.]]></text>
+			</staticText>
+		</band>
+		<band height="59">
+			<printWhenExpression><![CDATA[$P{Flag_Status}.equals("Y")? true:false]]></printWhenExpression>
+			<staticText>
+				<reportElement x="277" y="0" width="123" height="35" uuid="a025d74d-3aa0-42ae-a8a5-b2ba37b4c0af"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Percent of paid up        Value]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="151" y="0" width="126" height="35" uuid="953a841a-43a6-4c0b-b41c-9ef0d14d8311"/>
+				<box>
+					<topPen lineWidth="0.25"/>
+					<leftPen lineWidth="0.25"/>
+					<bottomPen lineWidth="0.0"/>
+					<rightPen lineWidth="0.25"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Remaining Years to Maturity]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement x="124" y="33" width="296" height="26" uuid="e641a56a-b5c5-46be-870e-f9d1b01a9dae"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="surrender" uuid="18cd98c4-72f2-4969-b2fa-ca06eaa9ca16">
+						<datasetParameter name="POL_SYS_ID">
+							<datasetParameterExpression><![CDATA[$P{POL_SYS_ID}]]></datasetParameterExpression>
+						</datasetParameter>
+					</datasetRun>
+					<jr:listContents height="26" width="296">
+						<textField>
+							<reportElement x="27" y="0" width="126" height="26" uuid="0df68abc-8da7-4e4a-a188-ab32be9f1b38"/>
+							<box>
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$F{TD_PARA_01_FM}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement x="153" y="0" width="123" height="26" uuid="99df3033-049b-48ce-ae3f-1d9861590213"/>
+							<box>
+								<topPen lineWidth="0.25"/>
+								<leftPen lineWidth="0.25"/>
+								<bottomPen lineWidth="0.25"/>
+								<rightPen lineWidth="0.25"/>
+							</box>
+							<textElement textAlignment="Center"/>
+							<textFieldExpression><![CDATA[$F{TD_RATE}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+		<band height="339">
+			<staticText>
+				<reportElement x="20" y="275" width="525" height="41" uuid="8441c005-9809-4e9c-b546-2406ae61cf09"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[A grace period of 30 days from the due date will be allowed for payment of premiums. If death occurs within this period, the Policy will still be valid and benefit will be paid after deduction of the due premium. If the premium is not paid within this grace period, the Policy lapses without any risk cover. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="120" y="262" width="425" height="15" uuid="42fba176-ef6a-4099-ba2c-b2bb63d9cf40"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[All premium payments will, unless otherwise agreed to in writing by the Company, be paid in Omani Rials. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="208" width="15" height="15" uuid="bc61bf28-b3de-4153-8be4-f3226cc95633"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[5)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="208" width="227" height="15" uuid="9188d26d-325c-4118-98f7-1939eaf56a98"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mis-statement of Age: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="79" width="28" height="15" uuid="0d8e2ed6-146f-41f9-bcf1-622338253e1d"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Loan:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="7" y="33" width="537" height="21" uuid="f2295842-9bc2-46d7-92be-9a31b2f26af8"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[(These General Provisions may be varied by Special Provisions in the Schedule or Endorsements to this Policy) ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="57" width="237" height="15" uuid="2649604c-6803-422c-a79c-f9bb2d87999b"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Surrender and Paid-up values:
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="49" y="79" width="496" height="15" uuid="2fa8a79e-f119-47ff-b53b-81ee93a86d99"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Loan can be   granted against  the security of the Policy  provided if the  Policy has a Surrender Value. The rate of interest ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="177" y="116" width="371" height="15" uuid="c8d228a9-fc69-441c-a102-c176e6614780"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[This Policy is free of all  restrictions as to  residence, occupation  or travel, including ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="130" width="523" height="29" uuid="1a5fe3a0-d4f0-4fbf-a083-b2acef6e50cb"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[aviation,  except  as provided in any Special Provision on any of the  Schedules or any Endorsements to this Policy; however risks in respect of military service are not covered under this Policy unless specially stated as a Special Provision
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="58" width="15" height="15" uuid="770209d7-af86-4ec6-908d-59f7b4385a7f"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[1)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="119" y="208" width="446" height="15" uuid="e3b7efb7-5ccf-4181-b8e0-2e98fb63b3a4"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[If the age of the Life Insured has  been overstated the Company  will  refund any consequential  overpayment]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="262" width="111" height="15" uuid="8247ea21-5a55-4d5d-bb4a-817c902427ca"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment of Premiums:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="324" width="72" height="15" uuid="ee9bd74a-7a01-416d-9859-4316a1103081"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Proof of Claim:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="116" width="162" height="15" uuid="0341ea00-7e95-4ec1-b318-5b405c15fa59"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Residence, Occupation and Travel:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="169" width="168" height="15" uuid="906c850a-521f-4825-a893-41bb8df95cd6"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Evidence of Age: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="116" width="15" height="15" uuid="d313abef-a49c-4a9b-91bc-6008ce10560c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[3)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="79" width="15" height="15" uuid="5a3c4160-0518-41f8-b704-02f1853e37b9"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[2)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="181" width="517" height="17" uuid="42116247-f62f-4377-a331-aa046f12057c"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[ has   been accepted, either at the time of Proposal or at the time of claim ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="322" width="14" height="15" uuid="dbb947ec-b5d5-40c3-adcd-704f155f2197"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[7)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="20" y="222" width="524" height="29" uuid="eab00228-a853-456e-ba67-1b511ed92728"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[of premium; if understated, the Company’s liability will be reduced to the amount that the premium paid would have purchased at the correct age according to the Company’s premium rates at the commencement of this Policy.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="157" y="57" width="388" height="15" uuid="0929f459-f17a-4f3c-a0ce-dff0f7136d53"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[This Policy shall acquire any Paid-up or Surrender value only if specified  so in the Schedule.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="1" y="169" width="15" height="15" uuid="8fcdf52b-2b3b-490c-b7f4-6042466cdc22"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[4)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="91" y="324" width="463" height="15" uuid="971efb6f-c053-4b27-be6e-6b21306a254f"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Before making any payment under  this Policy  which becomes  due as a result of the death,accident or  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="93" width="520" height="15" uuid="3f444c04-0157-475e-a125-123e14464ea1"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[loan will be as determined by the Company from time to time.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="95" y="169" width="457" height="15" uuid="342aefab-9944-4bce-816a-82e2c942c536"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[ No claim  will  be paid  under this Policy until evidence  of age  of the Life Insured  satisfactory to the Company ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="147" y="8" width="247" height="20" uuid="3fddc7f3-c61f-41bd-88c2-3225378c06b3"/>
+				<textElement textAlignment="Center">
+					<font fontName="Calibri" size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[GENERAL PROVISIONS OF THE POLICY
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="262" width="15" height="15" uuid="722c56c4-2a90-44c9-9b2e-e01d1dee803c"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[6)]]></text>
+			</staticText>
+		</band>
+		<band height="782">
+			<staticText>
+				<reportElement x="27" y="750" width="26" height="15" uuid="03fec51e-f91e-450c-969b-a34fc05bcb1f"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[c)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="632" width="11" height="15" uuid="492d7a5c-2d7c-4c2f-8603-12efdb07fd3d"/>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[ii.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="304" width="19" height="15" uuid="99333f15-90ae-4961-8951-45022b3f3286"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[13)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="559" width="504" height="15" uuid="dad2054e-971d-4c46-a969-868a15197775"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[AIDS: No benefit shall be payable under this policy in respect of a claim as defined in the policy ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="767" width="26" height="15" uuid="bf1d499b-a676-43c4-b3aa-aa3946b565d6"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[d)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="19" y="1" width="524" height="33" uuid="5f7b4016-9092-41c6-833d-b9224abd43a4"/>
+				<box leftPadding="0"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[ illness of the Life Insured the Company will require evidence, satisfactory to the Company, of the happening of the event resulting in the claim.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="709" width="28" height="15" uuid="f674b32f-dcbd-4079-8a8e-206950b4dded"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[a)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="730" width="491" height="15" uuid="fc641101-a626-4a87-8dcd-a118a1322b99"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[A claim occurring  whilst the Life Insured was under the influence of or due wholly or ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="39" y="353" width="516" height="15" uuid="b3c9296f-0288-4fc1-97ec-6d24aff0eb84"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[War  and  Kindred  Risks: Full  payment will be made under  this Policy even if  the death of as a result of  war or kindred risk,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="680" width="522" height="15" uuid="0c4f6ac5-8830-4e1c-8a80-68ae582d2ac6"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXCLUSIONS FOR DISABILITY BENEFITS ONLY (in addition to the above exclusions under clause 13)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="305" width="310" height="15" uuid="5815cad7-58d0-4f8a-8ca8-5515dda495be"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No  benefit will be payable under this  Policy  if the event under which  a]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="60" width="194" height="15" uuid="71ad08c3-3699-48b1-a2a3-367171c8883c"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Payment of Policy Proceeds:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="79" y="174" width="470" height="15" uuid="bdee73fa-b24c-4720-9d6d-9c96c4246c8a"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[ Unless the Proposer has issued an Assignment which is registered by the ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="97" y="37" width="440" height="15" uuid="a0fbd57c-532a-40c7-bd96-e24a4dcc99be"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[As specified in the Schedule of Benefits attached]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="319" width="522" height="26" uuid="f514085f-f35b-4c02-b7f1-e334722b7371"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[claim occurs directly or indirectly from any of the following causes which are enumerated in the appropriate Section of the Schedule of Benefits as being exclusions under that Section.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="492" width="22" height="14" uuid="b3437553-189d-48c3-b1a5-ed72abfea117"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[b)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="189" width="521" height="70" uuid="adeeca92-394e-4318-a248-b1824c8e3b21"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Company, he/she remains the owner of the Policy and all benefits under the Policy will be payable to the Proposer or as stated in the Schedule to the Policy. If the Proposer has transferred ownership of the Policy by an Assignment registered by the Company then that Assignee shall replace the Proposer in connection with benefits payable under this Policy. The Company assumes no responsibility for the validity of any Assignment and payment to an Assignee will be subject to the prior charge of any indebtedness under the Policy.
+]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="767" width="491" height="15" uuid="f33bf626-b5cb-4687-a7c4-23b95d4828e7"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Diving, scuba diving, or any under water activity involving any breathing devices.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="504" width="504" height="33" uuid="1d7428c0-815c-4a4b-b584-484fa8fdc194"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[as a  result of suicide within 1 year of the start of Policy or at the hands of justice. The maximum liability of the Company in these circumstances shall be to refund the premiums paid less any amounts owed to the Company.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="60" width="14" height="15" uuid="d6240e51-91e8-4714-be5a-11239cc1eccb"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[9)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="632" width="491" height="15" uuid="96c77d95-c479-427f-a130-b2e4d0de7657"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[The presence of the AIDS (or HIV) virus as revealed by any positive AIDS or HIV antibody virus test, or ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="69" y="261" width="475" height="15" uuid="a916305d-f276-4cc6-85eb-19b62f521c00"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[In no  case whatever shall the Company be  liable for any claim reported after the expiration of  12 months from the]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="41" y="368" width="504" height="118" uuid="2c01391a-999d-4813-9184-636284cdf89d"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[except  as provided in any Special Provision on any of the Schedules or any Endorsement to this Policy. If the Life Insured is in Military Service at the time that the event resulting in a claim occurs and if that event occurs directly of indirectly from War, Invasion, Act of Foreign Enemy, Hostilities or Warlike Operations (whether war be declared or not) Civil War, Rebellion, Revolution, Insurrection, Military or Usurped Power or Popular Rising, Martial Law, Strike, Riot, Civil Commotion or Mutiny the total amount payable under this Policy shall be limited to the total amount of premiums actually paid under the Policy (less all extra premiums and any amount already paid by the Company under the policy) together with compound interest to the date of  the said event at a rate to be determined by the Company provided always that the total amount so payable under the Policy shall not be less than the surrender value nor more than the claim value of the sum or sums otherwise stated in the Schedule to this Policy to be payable as calculated on the date of the said event occurring. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="261" width="19" height="15" uuid="8a9c0e86-68e9-4ae8-bd39-a0377b1cc6e6"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[12)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="137" width="123" height="15" uuid="85a5e865-f400-4a92-bded-827684b6951d"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Endorsement:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="573" width="504" height="15" uuid="60e59418-738e-4a48-8f36-65d535962487"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[which arises or is in any way associated with:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="148" y="60" width="397" height="15" uuid="8aba2ceb-da8e-4135-b420-92de16587bcf"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[All claim payments will, unless otherwise agreed to in ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="137" width="18" height="15" uuid="9a1f0881-f760-4c2c-8cac-7b7b12fa400c"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[10)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="537" width="19" height="15" uuid="96f3cc20-d00c-45ae-90bf-91667de3099a"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[c)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="653" width="491" height="15" uuid="a8849bb1-df76-44c3-a6bc-30a2073c5147"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Any illness arising from the above.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="353" width="19" height="15" uuid="6f6d77ba-f19a-4fd9-bb49-ad700b22c61d"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[a)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="730" width="26" height="15" uuid="7c1ba098-4449-40be-91c1-8b6df3aeb245"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[b)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="83" y="137" width="481" height="15" uuid="0e86eda0-3815-42db-b248-bb948d8fd38b"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[No variation in the terms and conditions of this Policy, either by Endorsement or otherwise,shall bind the Company  ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="21" y="37" width="163" height="15" uuid="0d7b8548-e236-439a-a5d2-7b47a61d5d5b"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Benefits Payable:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="680" width="19" height="15" uuid="0bfa551c-26e0-492f-93f2-ca63c3e7a116"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[14)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="559" width="19" height="15" uuid="349c6687-c526-4902-9a8b-151cf19fb612"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[d)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="174" width="98" height="15" uuid="e4b8ac27-7d98-4444-b509-ae0852355b38"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Assignments: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="492" width="506" height="15" uuid="29897127-2f43-4e61-a6ce-af4221fc7d33"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Suicide:  The Company will not be liable to pay the Death Benefit under this Policy if the event resulting in any claim occurs ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="709" width="491" height="15" uuid="4c8415c1-ebef-4d11-a909-d2ac2fc871bd"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Attempted suicide or self - inflicted injury whilst sane or insane, or]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="588" width="8" height="15" uuid="5acaf783-da85-41f4-8c01-7dc622466ebb"/>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[i.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="275" width="521" height="18" uuid="264f29c9-f97c-4dea-b1fb-f1ca5b92e622"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[happening of the claim event unless the claim is the subject of pending action or arbitration.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="601" width="474" height="26" uuid="ccf98ce0-c72f-44dd-bc75-dbd68e25dec1"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[condition of a similar kind howsoever it may be named, which is diagnosed by a licensed medial practitioner, doctor or  surgeon, or ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="2" y="37" width="14" height="15" uuid="edbe432f-b601-4c20-9375-823c6612c4f2"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[8)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="174" width="19" height="15" uuid="9815e690-3e0f-4db9-b6ec-3fd3ef8e0077"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[11)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="537" width="504" height="15" uuid="423152d3-056d-479b-bf3d-2d772e04e0bc"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Engaging in or training for any dangerous or hazardous sport or competition.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="750" width="491" height="15" uuid="234eb15c-0145-47f5-b504-4a43f6844b87"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[A claim involving any intentional breach of the law by the Life Insured or an assault provoked by him.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="261" width="47" height="15" uuid="dbceb4cb-ca74-403a-ad15-535d1c8b64ae"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Limitation:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="47" y="587" width="492" height="15" uuid="f5dabae9-032c-47d5-aebd-273c255ab861"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[The acquired  immune deficiency syndrome (AIDS)  as recognised by the World Health Organisation  or any syndrome or ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="149" width="339" height="13" uuid="af690c6c-90fa-42ca-89e7-3531b2267890"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[in any way unless it be made by a duly Authorised Official of the Company.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="304" width="324" height="15" uuid="5ab30669-01f3-4bf4-878b-4c922e4c7771"/>
+				<textElement>
+					<font fontName="Calibri" isBold="true"/>
+				</textElement>
+				<text><![CDATA[EXCLUSIONS FOR DEATH AND DISABILITY BENEFITS.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="22" y="77" width="525" height="49" uuid="7688dae3-e776-47a6-9879-10e776a46602"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[writing by the Company, be paid in Omani Rials from the Principal Office of the Company stated in the Schedule. Any Sum Insured indicated in any Schedule as a lump sum payment may be payable in instalments from the due date subject to the terms and conditions of the Company applying at that time for payments by instalments and an application from the Proposer or other Beneficiary accepted in writing by the Company.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="36" y="653" width="12" height="15" uuid="c3b6f281-2aa1-4e85-b97d-75381a1d4d1c"/>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[iii.]]></text>
+			</staticText>
+		</band>
+		<band height="433">
+			<staticText>
+				<reportElement x="0" y="168" width="521" height="30" uuid="eccc044c-586c-42fd-ac11-3e7c91fffc75"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[
+In witness whereof this Policy has been issued for and on behalf of the Company on the date shown on the Schedule. ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="93" width="26" height="19" uuid="920848c3-559c-4d42-bc20-501667528c9f"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[h)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="93" width="491" height="19" uuid="7106ae35-b1a7-4373-8c2d-3e6150485040"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Engaging in aviation other than as a fare paying passenger on a regular route of a recognized airline.]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="328" width="521" height="1" uuid="091d0d18-cd6c-49b2-97ec-a27672b5b553"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="211" width="205" height="19" uuid="a18443de-e0ef-486b-bebf-dfa76a5ed868"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[FALCON INSURANCE COMPANY SAOC]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="59" width="474" height="26" uuid="5bd35c37-9a82-4542-8197-00168b6a84a9"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Mental illness: No benefit shall be payable under the Policy in the event of any claim arising directly or indirectly due to Mental illness or insanity.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="22" width="26" height="15" uuid="54a961ad-cb96-4600-8586-ef8102c4287f"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[f)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="240" width="207" height="31" uuid="9a5d38ae-bd28-4f55-b6c7-a9126c5b116e"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[
+Authorised Signatory ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="0" width="26" height="15" uuid="757f848f-4183-4feb-a57f-d9f9abca98bd"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[e)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="0" width="491" height="15" uuid="903fb615-a5db-4a31-b3b0-e44f0c7fca16"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Pregnancy, child birth or abortion or any complications arising there from.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="36" width="491" height="17" uuid="23fd11d2-c94c-41b9-937a-3c7afccc018b"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[commencing  date of this Policy or any  Pre existing conditions of illness or injury which results in the disability.]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="27" y="59" width="26" height="15" uuid="e4fb993d-ca67-491c-a82c-b4a228554ec1"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[g)]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="356" width="528" height="76" uuid="67e2dac5-e1a6-4390-b67b-4ad4481023d7"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[
+The Proposer is requested to read this Policy and to return it immediately if any error is found. In all communications the Policy Number appearing in the Schedules of the Policy should be quoted. In the event that any change affecting the risks insured by this Policy has taken after the proposal was submitted, please inform the Company.
+ ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="285" width="100" height="19" uuid="a7478756-5f69-4ad3-8055-50291ed37e07"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Date:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="340" width="174" height="14" uuid="e4b6d6ab-0844-4a6a-a0fb-cba075c41848"/>
+				<textElement>
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[IMPORTANT NOTE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="40" y="22" width="491" height="15" uuid="d0f73784-797c-4341-a963-949175f46ba7"/>
+				<textElement textAlignment="Justified">
+					<font fontName="Calibri"/>
+				</textElement>
+				<text><![CDATA[Disease or medical impairment from which the Life Insured was suffering or had a serious  past history of on the ]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -1,0 +1,474 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM007"
+				var="message_PILM007" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_IL_CLM_LIEN" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+									<!--  	<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>-->
+
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILM007_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.errorMap['current'] !=null? PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.errorMap['current']: PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td align="right" colspan="3" valign="top" width="100%"><h:commandButton
+							action="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.callPM_IL_CLM_REPAY}"
+							binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.COMP_UI_M_BUT_LIEN_MAIN}"
+							disabled="false" id="UI_M_BUT_LIEN_MAIN" immediate="true"
+							rendered="true" styleClass="button" style="width:96px"
+							title="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$UI_M_BUT_LIEN_MAIN$tooltip}"
+							value="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$UI_M_BUT_LIEN_MAIN$caption}" />
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><h:outputLabel id="FORM_CAPTION"
+									value="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$displayCaption}" />
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 400px; overflow: auto;">
+						<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td valign="top" width="100%"><h:panelGroup
+									id="PM_IL_CLM_LIEN_PANEL" style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td><rich:panel style="width:100%;overflow:auto">
+												<rich:dataTable
+													binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.dataTable}"
+													id="PM_IL_CLM_LIEN_DATA_GRID" rows="5"
+													value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.dataList_PM_IL_CLM_LIEN}"
+													var="tableVar" width="100%">
+													<rich:column filterBy="#{tableVar.CL_FM_AGE}"
+														filterEvent="onkeyup" id="COLUMN_CL_FM_AGE"
+														rendered="true" sortBy="#{tableVar.CL_FM_AGE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+																<h:outputText id="COLUMN_CAPTION_CL_FM_AGE"
+																	styleClass="forumRowHighlight"
+																	value="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_FM_AGE$caption}" />
+														</f:facet>
+														<a4j:commandLink
+															action="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.displayRecords}"
+															id="GOTO_LINK_CL_FM_AGE" immediate="true"
+															reRender="errorPanel,PM_IL_CLM_LIEN_PANEL">
+															<h:outputText id="LINK_CAPTION_CL_FM_AGE"
+																value="#{tableVar.CL_FM_AGE}" />
+														</a4j:commandLink>
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CL_TO_AGE}"
+														filterEvent="onkeyup" id="COLUMN_CL_TO_AGE"
+														rendered="true" sortBy="#{tableVar.CL_TO_AGE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+																<h:outputText id="COLUMN_CAPTION_CL_TO_AGE"
+																	styleClass="forumRowHighlight"
+																	value="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_TO_AGE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CL_TO_AGE"
+															value="#{tableVar.CL_TO_AGE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CL_RATE}"
+														filterEvent="onkeyup" id="COLUMN_CL_RATE" rendered="true"
+														sortBy="#{tableVar.CL_RATE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+																<h:outputText id="COLUMN_CAPTION_CL_RATE"
+																	styleClass="forumRowHighlight"
+																	value="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_RATE$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CL_RATE"
+															value="#{tableVar.CL_RATE}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CL_RATE_PER}"
+														filterEvent="onkeyup" id="COLUMN_CL_RATE_PER"
+														rendered="true" sortBy="#{tableVar.CL_RATE_PER}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+																<h:outputText id="COLUMN_CAPTION_CL_RATE_PER"
+																	styleClass="forumRowHighlight"
+																	value="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_RATE_PER$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_CL_RATE_PER"
+															value="#{tableVar.CL_RATE_PER}" />
+													</rich:column>
+													<rich:column filterBy="#{tableVar.CL_APPLIED_ON}"
+														filterEvent="onkeyup" id="COLUMN_CL_APPLIED_ON"
+														rendered="false" sortBy="#{tableVar.CL_APPLIED_ON}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_CL_APPLIED_ON"
+																styleClass="label"
+																value="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_APPLIED_ON$caption}" />
+														</f:facet>
+														<h:selectOneMenu id="SEL_ONE_MENU_CL_APPLIED_ON"
+															value="#{tableVar.CL_APPLIED_ON}" />
+													</rich:column>
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PM_IL_CLM_LIEN_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.addRow}"
+																id="addRow" immediate="true"
+																reRender="PM_IL_CLM_LIEN_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.deleteRow}"
+																id="deleteRow" immediate="true"
+																reRender="PM_IL_CLM_LIEN_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.postRecord}"
+																id="postRecord"
+																reRender="PM_IL_CLM_LIEN_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</rich:panel></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table class="noborder" width="100%">
+												<tr>
+													<td class="oddrowright" width="20%"><h:outputLabel
+														binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.COMP_CL_FM_AGE_LABEL}"
+														for="CL_FM_AGE" id="CL_FM_AGE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_FM_AGE$caption}" />
+													<h:graphicImage id="AUTOID_1" style=""
+														styleClass="searchimg"
+														value="./../../images/mandatory.gif" /></td>
+													<td class="oddrow" width="28%"><h:inputText
+														binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.COMP_CL_FM_AGE}"
+														disabled="false" id="CL_FM_AGE" maxlength="3"
+														rendered="true" required="true" styleClass="inputNumeric"
+														title="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_FM_AGE$tooltip}"
+														validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.CL_FM_AGE_Validator}"
+														value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.PM_IL_CLM_LIEN_BEAN.CL_FM_AGE}">
+														<a4j:support
+															actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="SUPPORT_CL_FM_AGE" immediate="true"
+															reRender="errorPanel" />
+													</h:inputText></td>
+													<td class="oddrow" width="4%">&nbsp;</td>
+													<td class="oddrowright" width="20%"><h:outputLabel
+														binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.COMP_CL_TO_AGE_LABEL}"
+														for="CL_TO_AGE" id="CL_TO_AGE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_TO_AGE$caption}" />
+													<h:graphicImage id="AUTOID_2" style=""
+														styleClass="searchimg"
+														value="./../../images/mandatory.gif" /></td>
+													<td class="oddrow" width="28%"><h:inputText
+														binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.COMP_CL_TO_AGE}"
+														disabled="false" id="CL_TO_AGE" maxlength="3"
+														rendered="true" required="true" styleClass="inputNumeric"
+														title="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_TO_AGE$tooltip}"
+														validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.CL_TO_AGE_Validator}"
+														value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.PM_IL_CLM_LIEN_BEAN.CL_TO_AGE}">
+														<a4j:support
+															actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="SUPPORT_CL_TO_AGE" immediate="true"
+															reRender="errorPanel" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.COMP_CL_RATE_LABEL}"
+														for="CL_RATE" id="CL_RATE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_RATE$caption}" />
+													<h:graphicImage id="AUTOID_3" style=""
+														styleClass="searchimg"
+														value="./../../images/mandatory.gif" /></td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.COMP_CL_RATE}"
+														disabled="false" id="CL_RATE" maxlength="15"
+														rendered="true" required="true" styleClass="inputNumeric"
+														title="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_RATE$tooltip}"
+														validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.CL_RATE_Validator}"
+														value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.PM_IL_CLM_LIEN_BEAN.CL_RATE}">
+														<a4j:support
+															actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="SUPPORT_CL_RATE" immediate="true"
+															reRender="errorPanel" />
+													</h:inputText></td>
+													<td class="evenrow">&nbsp;</td>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.COMP_CL_RATE_PER_LABEL}"
+														for="CL_RATE_PER" id="CL_RATE_PER_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_RATE_PER$caption}" />
+													<h:graphicImage id="AUTOID_4" style=""
+														styleClass="searchimg"
+														value="./../../images/mandatory.gif" /></td>
+													<td class="evenrow"><h:inputText
+														binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.COMP_CL_RATE_PER}"
+														disabled="false" id="CL_RATE_PER" maxlength="15"
+														rendered="true" required="true" styleClass="inputNumeric"
+														title="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_RATE_PER$tooltip}"
+														validator="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.CL_RATE_PER_Validator}"
+														value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.PM_IL_CLM_LIEN_BEAN.CL_RATE_PER}">
+														<a4j:support
+															actionListener="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="SUPPORT_CL_RATE_PER" immediate="true"
+															reRender="errorPanel" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.COMP_CL_APPLIED_ON_LABEL}"
+														for="CL_APPLIED_ON" id="CL_APPLIED_ON_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_APPLIED_ON$caption}" />
+													</td>
+													<td class="oddrow"><h:selectOneMenu
+														binding="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.COMP_CL_APPLIED_ON}"
+														disabled="false" id="CL_APPLIED_ON" rendered="true"
+														required="false" styleClass="input"
+														title="#{message_PILM007.PILM007$PM_IL_CLM_LIEN$CL_APPLIED_ON$tooltip}"
+														value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.PM_IL_CLM_LIEN_BEAN.CL_APPLIED_ON}">
+														<f:selectItems id="SEL_ITEMS_CL_APPLIED_ON"
+															value="#{PILM007_COMPOSITE_ACTION.PM_IL_CLM_LIEN_ACTION_BEAN.listCL_APPLIED_ON}" />
+													</h:selectOneMenu></td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrow">&nbsp;</td>
+													<td class="oddrow">&nbsp;</td>
+												</tr>
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</div>
+						</td>
+
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

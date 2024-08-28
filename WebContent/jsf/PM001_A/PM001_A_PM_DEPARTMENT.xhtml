@@ -1,0 +1,559 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PM001_A" var="message" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_DEPARTMENT" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" width="100%">
+							<tr>
+								<td><rich:toolBar id="TOOLBAR_HEADER"
+									styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+										styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.saveRecord}"
+											id="SAVE_TOOL_HEADER" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="SAVE_TOOL_IMAGE_HEADER"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../resources/images/save.gif" />
+											<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/savenext.GIF" />
+											<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink id="DELETERECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/deleteRecord.gif" />
+											<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/firstrec.gif" />
+											<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+										<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/prevpage.gif" />
+											<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$prevpage}" />
+										</h:commandLink>
+										<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/nextpage.gif" />
+											<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+												styleClass="searchimg"
+												value="./../../resources/images/lastRecord.gif" />
+											<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+										<!-- changed PILT002_APAC_COMPOSITE_ACTION to PM001_A_COMPOSITE_ACTION by  raja for ZBILQC-1717934   -->
+										<h:commandLink
+											action="#{PM001_A_COMPOSITE_ACTION.navigationEnabled}"
+											id="NAVIGATION_TOOL_HEADER" immediate="true" rendered="true"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="NAVIGATION_TOOL_IMAGE_HEADER"
+												styleClass="toolbarButtonStyle" accesskey="u"
+												image="./../../resources/images/navigation.gif" />
+											<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$undo}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading}#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.errorMap['current'] !=null? PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.errorMap['current']: PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="15%">
+						<table width="100%" cellspacing="0" cellpadding="0"
+							id="globalLink">
+							<tr>
+								<td><h:inputHidden
+									value="#{PM001_A_COMPOSITE_ACTION.tabbedBar.tabClicked}"
+									id="myhidden" /> <h:panelGroup id="mypanel"
+									style="border:0;height:15%;">
+									<table width="100%">
+										<tr>
+											<td width="90%"><a4j:repeat
+												value="#{PM001_A_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													onclick="document.getElementById('PM_DEPARTMENT:myhidden').value='#{currtab.id}'"
+													value="#{currtab.value}" disabled="#{currtab.disabled}"
+													action="#{PM001_A_COMPOSITE_ACTION.tabbedBar.tabAction}"
+													styleClass="#{currtab.styleString}"
+													immediate="#{currtab.immediate}">
+													<f:param name="tabid" value="#{currtab.id}" />
+												</h:commandLink>
+											</a4j:repeat></td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%" valign="top" height="20">
+						<table width="100%" id="linkstable">
+							<tr>
+								<td><h:outputLabel
+									value="#{message.PM001_A$PM_DEPARTMENT$displayCaption}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<div style="height: 500px; overflow: auto;">
+						<table class="noborder" width="100%">
+							<tr>
+								<td>&nbsp;</td>
+								<td valign="top" width="100%"><h:panelGroup
+									id="PM_DEPARTMENT_PANEL" style="border:0;height:15%;">
+									<table align="left" class="noborder" id="bordertable"
+										width="100%">
+										<tr>
+											<td><rich:panel style="width:100%;overflow:auto">
+												<rich:dataTable
+													binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.dataTable}"
+													id="PM_DEPARTMENT_DATA_GRID" rows="5"
+													value="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.dataList_PM_DEPARTMENT}"
+													var="tableVar" width="100%">
+													<rich:column filterBy="#{tableVar.DEPT_CODE}"
+														filterEvent="onkeyup" id="COLUMN_DEPT_CODE"
+														rendered="true" sortBy="#{tableVar.DEPT_CODE}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_DEPT_CODE"
+																styleClass="forumRowHighlight"
+																value="#{message.PM001_A$PM_DEPARTMENT$DEPT_CODE$caption}" />
+														</f:facet>
+														<a4j:commandLink
+															action="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.displayRecords}"
+															id="GOTO_LINK_DEPT_CODE" immediate="true"
+															reRender="errorPanel,PM_DEPARTMENT_PANEL">
+															<h:outputText id="LINK_CAPTION_DEPT_CODE"
+																value="#{tableVar.DEPT_CODE}" />
+														</a4j:commandLink>
+													</rich:column>
+
+													<rich:column filterBy="#{tableVar.DEPT_NAME}"
+														filterEvent="onkeyup" id="COLUMN_DEPT_NAME"
+														rendered="true" sortBy="#{tableVar.DEPT_NAME}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_DEPT_NAME"
+																styleClass="forumRowHighlight"
+																value="#{message.PM001_A$PM_DEPARTMENT$DEPT_NAME$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_DEPT_NAME"
+															value="#{tableVar.DEPT_NAME}" />
+													</rich:column>
+													<f:facet name="footer">
+														<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+															<rich:datascroller align="right"
+																id="PM_DEPARTMENT_SCROLL" page="1" />
+															<a4j:commandButton
+																actionListener="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.addRow}"
+																id="addRow" immediate="true" accesskey="c"
+																reRender="PM_DEPARTMENT_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.addNewButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.deleteRow}"
+																id="deleteRow" immediate="true" accesskey="r"
+																reRender="PM_DEPARTMENT_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.deleteButtonCaption}" />
+															<a4j:commandButton
+																actionListener="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.postRecord}"
+																id="postRecord" accesskey="p"
+																reRender="PM_DEPARTMENT_PANEL,errorPanel"
+																style="width:80px;" styleClass="button"
+																value="#{commonmsg.postButtonCaption}" />
+														</h:panelGroup>
+													</f:facet>
+												</rich:dataTable>
+											</rich:panel></td>
+										</tr>
+										<tr>
+											<td colspan="3">
+											<table class="noborder" width="100%">
+												<tr>
+													<td class="oddrowfreeze" colspan="5"><h:outputLabel
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_FRZ_FLAG_LABEL}"
+														for="DEPT_FRZ_FLAG" id="DEPT_FRZ_FLAG_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM001_A$PM_DEPARTMENT$DEPT_FRZ_FLAG$caption}" />
+													<h:selectBooleanCheckbox
+														title="#{message.PM001_A$PM_DEPARTMENT$DEPT_FRZ_FLAG$$tooltip}"
+														id="DIVN_FRZ_FLAG" rendered="true"
+														value="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.PM_DEPARTMENT_BEAN.UI_DEPT_FRZ_FLAG}" /></td>
+												</tr>
+												<tr>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_BL_NAME_LABEL}"
+														for="DEPT_BL_NAME" id="DEPT_BL_NAME_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PM001_A$PM_DEPARTMENT$DEPT_BL_NAME$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_BL_NAME}"
+														disabled="false" id="DEPT_BL_NAME" maxlength="720"
+														rendered="true" required="false"
+														validator="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.validateDEPT_BL_NAME}"
+														styleClass="input"
+														title="#{message.PM001_A$PM_DEPARTMENT$DEPT_BL_NAME$tooltip}"
+														value="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.PM_DEPARTMENT_BEAN.DEPT_BL_NAME}">
+														<a4j:support
+															actionListener="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="DEPT_BL_NAME_AJAX_SUPPORT"
+															immediate="true" reRender="errorPanel" />
+													</h:inputText></td>
+													<td class="oddrowright"></td>
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_BL_SHORT_NAME_LABEL}"
+														for="DEPT_BL_SHORT_NAME" id="DEPT_BL_SHORT_NAME_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM001_A$PM_DEPARTMENT$DEPT_BL_SHORT_NAME$caption}" />
+													</td>
+													<td class="oddrow"><h:inputText
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_BL_SHORT_NAME}"
+														disabled="false" id="DEPT_BL_SHORT_NAME" maxlength="90"
+														rendered="true" required="false"
+														validator="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.validateDEPT_BL_SHORT_NAME}"
+														styleClass="input"
+														title="#{message.PM001_A$PM_DEPARTMENT$DEPT_BL_SHORT_NAME$tooltip}"
+														value="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.PM_DEPARTMENT_BEAN.DEPT_BL_SHORT_NAME}">
+														<a4j:support
+															actionListener="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="DEPT_BL_SHORT_NAME_AJAX_SUPPORT"
+															immediate="true" reRender="errorPanel" />
+													</h:inputText></td>
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_BL_MGR_NAME_LABEL}"
+														for="DEPT_BL_MGR_NAME" id="DEPT_BL_MGR_NAME_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM001_A$PM_DEPARTMENT$DEPT_BL_MGR_NAME$caption}" />
+													</td>
+
+													<td class="evenrow"><h:inputText
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_BL_MGR_NAME}"
+														disabled="false" id="DEPT_BL_MGR_NAME" maxlength="180"
+														rendered="true" required="false" styleClass="input"
+														title="#{message.PM001_A$PM_DEPARTMENT$DEPT_BL_MGR_NAME$tooltip}"
+														validator="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.validateDEPT_BL_MGR_NAME}"
+														value="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.PM_DEPARTMENT_BEAN.DEPT_BL_MGR_NAME}">
+														<a4j:support
+															actionListener="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="DEPT_BL_MGR_NAME_AJAX_SUPPORT"
+															immediate="true" reRender="errorPanel" />
+													</h:inputText></td>
+													<td class="evenrow"></td>
+													<td class="evenrow"></td>
+													<td class="evenrow"></td>
+												</tr>
+												<tr>
+												
+												<!-- department name could be seperated by raja on 13-07-2017  for ZBILQC-1724477-->
+													<td class="oddrowright"><h:outputLabel
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_CODE_LABEL}"
+														for="DEPT_CODE" id="DEPT_CODE_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PM001_A$PM_DEPARTMENT$DEPT_CODE$caption}" />
+													<h:graphicImage style=""
+														value="./../../images/mandatory.gif" /></td>
+													<td class="oddrow">
+													
+													<!-- focus attribute added by raja on 30-05-2017 for ZBILQC-1724477  -->
+													<!-- rerendered DEPT_NAME removed by Ameen on 15-06-2017 for ZBILQC-1724477 -->
+													<!-- modified department code as lov by Ameen on 21-06-2017 for ZBILQC-1717934 -->
+													<h:inputText
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_CODE}"
+														id="DEPT_CODE" disabled="false" maxlength="36"
+														rendered="true" required="true" styleClass="input"
+														validator="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.validateDEPT_COMP_CODE}"
+														title="#{message.PM001_A$PM_DEPARTMENT$DEPT_CODE$tooltip}"
+														value="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.PM_DEPARTMENT_BEAN.DEPT_CODE}">
+														<a4j:support
+															actionListener="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" immediate="true"
+															id="DEPT_CODE_AJAX_SUPPORT"
+															reRender="errorPanel" />
+													</h:inputText>
+													<!-- department name could be seperated by raja on 13-07-2017  for ZBILQC-1724477-->
+													<!-- <h:graphicImage id="GRAPH_IMG_SUGG_2" style=""
+														styleClass="searchimg" value="./../../images/Lov.gif" /> --><!-- <rich:suggestionbox
+														for="DEPT_CODE" height="200"
+														id="DEPT_CODE_SUGGESTION_BOX" immediate="true"
+														suggestionAction="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.deptCodeLov}"
+														var="DEPT_CODE" width="250">
+														<h:column>
+															<h:outputText id="SUGG_COL_0_DEPT_CODE"
+																value="#{DEPT_CODE.code}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="SUGG_COL_1_DEPT_CODE"
+																value="#{DEPT_CODE.name}" />
+														</h:column>
+														<h:column>
+															<h:outputText id="SUGG_COL_2_DEPT_CODE"
+																value="#{DEPT_CODE.name1}" />
+														</h:column>
+													<a4j:support ajaxSingle="true" event="onselect"
+														id="DEPT_CODE_SUGG_SUPPORT" immediate="true"
+														reRender="errorPanel,DEPT_NAME,DEPT_SHORT_NAME">
+														<f:setPropertyActionListener id="AUTOID_042"
+															target="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.PM_DEPARTMENT_BEAN.DEPT_NAME}"
+															value="#{DEPT_CODE.name}" />
+														<f:setPropertyActionListener id="AUTOID_142"
+															target="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.PM_DEPARTMENT_BEAN.DEPT_SHORT_NAME}"
+															value="#{DEPT_CODE.name1}" />
+													</a4j:support>
+													
+													</rich:suggestionbox> --></td>
+													<td class="oddrow"></td>
+													<!-- department name could be seperated by raja on 13-07-2017  for ZBILQC-1724477-->
+													<td class="oddrowright"><h:outputLabel
+														for="DEPT_NAME" id="DEPT_NAME_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM001_A$PM_DEPARTMENT$DEPT_NAME$caption}" />
+														</td>
+														<td class="oddrow">
+														<h:inputText
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_NAME}"
+														disabled="false" id="DEPT_NAME" maxlength="720"
+														rendered="true" required="false"
+														styleClass="input"
+														value="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.PM_DEPARTMENT_BEAN.DEPT_NAME}">
+														<a4j:support
+															actionListener="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="DEPT_NAME_AJAX_SUPPORT"
+															immediate="true" reRender="errorPanel" />
+													</h:inputText>
+														
+														</td>
+														<!-- end -->
+													<!-- <h:outputLabel
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_NAME_LABEL}"
+														for="DEPT_NAME" id="DEPT_NAME_LABEL" rendered="true"
+														styleClass="label"
+														value="#{message.PM001_A$PM_DEPARTMENT$DEPT_NAME$caption}" />
+													<h:graphicImage style=""
+														value="./../../images/mandatory.gif" /></td>
+													<td class="oddrow"><h:inputText
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_NAME}"
+														disabled="false" id="DEPT_NAME" maxlength="720"
+														rendered="true" required="true" styleClass="input"
+														validator="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.validateDEPT_NAME}"
+														title="#{message.PM001_A$PM_DEPARTMENT$DEPT_NAME$tooltip}"
+														value="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.PM_DEPARTMENT_BEAN.DEPT_NAME}">
+														<a4j:support
+															actionListener="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="DEPT_NAME_AJAX_SUPPORT"
+															immediate="true" reRender="errorPanel" />
+													</h:inputText> -->
+													<!-- department name could be seperated by raja on 13-07-2017  for ZBILQC-1724477-->
+												</tr>
+												<tr>
+													<td class="evenrowright"><h:outputLabel
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_SHORT_NAME_LABEL}"
+														for="DEPT_SHORT_NAME" id="DEPT_SHORT_NAME_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM001_A$PM_DEPARTMENT$DEPT_SHORT_NAME$caption}" />
+													<h:graphicImage style=""
+														value="./../../images/mandatory.gif" /></td>
+													<td class="evenrow"><h:inputText
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_SHORT_NAME}"
+														disabled="false" id="DEPT_SHORT_NAME" maxlength="90"
+														rendered="true" required="true" styleClass="input"
+														title="#{message.PM001_A$PM_DEPARTMENT$DEPT_SHORT_NAME$tooltip}"
+														value="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.PM_DEPARTMENT_BEAN.DEPT_SHORT_NAME}" />
+													</td>
+													<td class="evenrowright"></td>
+													<td class="evenrowright">
+													<h:outputLabel
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_MGR_NAME_LABEL}"
+														for="DEPT_MGR_NAME" id="DEPT_MGR_NAME_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message.PM001_A$PM_DEPARTMENT$DEPT_MGR_NAME$caption}" />
+													</td>
+													<td class="evenrow"><h:inputText
+														binding="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.COMP_DEPT_MGR_NAME}"
+														disabled="false" id="DEPT_MGR_NAME" maxlength="180"
+														rendered="true" required="false"
+														validator="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.validateDEPT_SHORT_NAME}"
+														styleClass="input"
+														title="#{message.PM001_A$PM_DEPARTMENT$DEPT_MGR_NAME$tooltip}"
+														value="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.PM_DEPARTMENT_BEAN.DEPT_MGR_NAME}">
+														<a4j:support
+															actionListener="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="DEPT_SHORT_NAME_AJAX_SUPPORT"
+															immediate="true" reRender="errorPanel" />
+													</h:inputText>
+													</td>
+												</tr>
+											</table>
+											</td>
+										</tr>
+									</table>
+								</h:panelGroup></td>
+								<td />
+							</tr>
+						</table>
+						</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+							id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink id="SAVE_TOOL_FOOTER" rendered="true"
+									action="#{PM001_A_COMPOSITE_ACTION.PM_DEPARTMENT_ACTION_BEAN.saveRecord}"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:commandButton id="SAVE_TOOL_IMAGE_FOOTER" accesskey="s"
+										styleClass="toolbarButtonStyle"
+										image="./../../images/save.gif" />
+									<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+								<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+										styleClass="searchimg" value="./../../images/navigation.gif" />
+									<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$navigation}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

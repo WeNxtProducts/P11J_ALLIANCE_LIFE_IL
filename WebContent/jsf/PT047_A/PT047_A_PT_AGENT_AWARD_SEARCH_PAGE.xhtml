@@ -1,0 +1,139 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PT047_A" var="message" />
+		<table width="100%" border="0">
+		<!-- add header row -->
+		
+
+		<!-- Body row -->
+		<tr>
+			<td><h:form id="AgentAwards">
+				
+				<tr>
+				<td colspan="3" width="100%" vAlign="top" height="20">
+				<rich:simpleTogglePanel id="errorPanel"
+							switchType="client" opened="false">
+							<f:facet name="header">
+								<h:outputText id="err" styleClass="#{PT047_PT_AGENT_AWARD_DTL_ACTION.messageStyle}"
+								value="#{commonmsg.errorPanel$heading} #{PT047_PT_AGENT_AWARD_SEARCH.errorMap['current'] !=null? PT047_PT_AGENT_AWARD_SEARCH.errorMap['current']:PT047_PT_AGENT_AWARD_SEARCH.warningMap['current']}" />
+							</f:facet>
+							<h:outputText id="errorMessages" styleClass="ErrorMessages"
+							value="#{PT047_PT_AGENT_AWARD_SEARCH.errorMessages}"
+								
+								escape="false" />
+							<h:outputText id="warningMessages" 	styleClass="WarningMessages"
+								value="#{PT047_PT_AGENT_AWARD_SEARCH.warningMessages}"
+						
+								escape="false" />		
+						</rich:simpleTogglePanel>
+				</td>
+			</tr>	
+				
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%"  cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td>
+							<h:outputText value="#{commonmsg.intialSearchCriteria$Caption}" />
+						</td>
+						<td>
+							<h:outputText value="#{message.PT047_A$PT_AGENT_AWARD_SEARCH$CUST_CODE$caption}" />
+							<h:inputText
+							value="#{PT047_PT_AGENT_AWARD_SEARCH.agentCode}" />
+						</td>
+						<td>
+							<h:outputText value="#{message.PT047_A$PT_AGENT_AWARD_SEARCH$AGENCY_CODE$caption}" />
+							<h:inputText
+							value="#{PT047_PT_AGENT_AWARD_SEARCH.agencyCode}" />
+						</td>
+						<td><a4j:commandButton styleClass="button"
+							value="#{commonmsg.searchButton$caption}" id="a4link">
+							<a4j:support
+								action="#{PT047_PT_AGENT_AWARD_SEARCH.fetchAgentDetails}"
+								event="onclick" reRender="dataTableId">
+							</a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{PT047_PT_AGENT_AWARD_SEARCH.dataList}"
+					var="PT_AGENT_AWARD" cellpadding="5px" rows="10"
+					border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column -->
+					<rich:column
+						filterBy="#{PT_AGENT_AWARD.CUST_CODE}"
+						sortBy="#{PT_AGENT_AWARD.CUST_CODE}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PT047_A$PT_AGENT_AWARD_SEARCH$CUST_CODE$caption}" />
+						</f:facet>
+						<h:commandLink
+							action="#{PT047_PT_AGENT_AWARD_SEARCH.displayAgentAwardHeaderDetails}">
+						
+								<h:outputText value="#{PT_AGENT_AWARD.CUST_CODE}" />
+							
+							<f:param name="CURRENT_ROWID"
+								value="#{PT_AGENT_AWARD.ROWID}" />
+						</h:commandLink>
+					</rich:column>
+
+					<rich:column
+						filterBy="#{PT_AGENT_AWARD.CUST_NAME}"
+						sortBy="#{PT_AGENT_AWARD.CUST_NAME}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PT047_A$PT_AGENT_AWARD_SEARCH$CUST_NAME$caption}" />
+						</f:facet>
+						<h:outputText value="#{PT_AGENT_AWARD.CUST_NAME} " />
+					</rich:column>
+
+					<rich:column filterBy="#{PT_AGENT_AWARD.CUST_AGENCY_CODE}"
+						sortBy="#{PT_AGENT_AWARD.CUST_AGENCY_CODE}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PT047_A$PT_AGENT_AWARD_SEARCH$AGENCY_CODE$caption}" />							
+						</f:facet>
+						<h:outputText value="#{PT_AGENT_AWARD.CUST_AGENCY_CODE} " />
+					</rich:column>
+
+					<rich:column filterBy="#{PT_AGENT_AWARD.CUST_AGENT_RANK_CODE}"
+						sortBy="#{PT_AGENT_AWARD.CUST_AGENT_RANK_CODE}"
+						filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="#{message.PT047_A$PT_AGENT_AWARD_SEARCH$RANK_CODE$caption}" />
+						</f:facet>
+						<h:outputText value="#{PT_AGENT_AWARD.CUST_AGENT_RANK_CODE} " />
+					</rich:column>
+
+				</rich:dataTable>
+				
+			</h:form></td>
+		</tr>
+
+		<!-- add footer to the page-->
+		<tr>
+		
+		</tr>
+	</table>
+</f:view>
+
+</ui:define>
+</ui:composition>

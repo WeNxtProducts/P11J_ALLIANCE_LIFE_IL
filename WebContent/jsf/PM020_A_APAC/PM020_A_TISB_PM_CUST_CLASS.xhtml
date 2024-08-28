@@ -1,0 +1,486 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view locale="#{sessionScope['pageLocale']}"
+		 beforePhase="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.onLoad}">
+			<f:loadBundle basename="messageProperties_PM020_A_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+			<!-- onkeypress Added by saritha on 07-02-2017 for ssp call id ZBILQC-1718596 On pressing the Enter key the application is coming to main page. -->
+			<h:form id="PM_CUST_CLASS" onkeypress="return event.keyCode != 13">
+			<!-- End -->
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.backToSearch}"
+											id="AUTOID_1" immediate="true" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_2"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/back.png" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.saveRecord}"
+											id="AUTOID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_5"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/save.gif" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM020_A_TISB_HEADER_saveAndNext}"
+											id="AUTOID_7" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_8"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM020_A_TISB_HEADER_Next}"
+											id="AUTOID_10" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_11"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_13" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_14"
+												style="border: thin solid white" styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="errormsgtable" width="100%">
+							<tr>
+								<td><rich:simpleTogglePanel id="errorPanel" opened="false"
+									switchType="client">
+									<f:facet name="header">
+										<h:outputText id="err"
+											styleClass="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.messageStyle}"
+											value="#{commonmsg.errorPanel$heading} #{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.errorMap['current'] !=null? PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.errorMap['current']: PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.warningMap['current']}" />
+									</f:facet>
+									<h:outputText escape="false" id="errorMessages"
+										styleClass="ErrorMessages"
+										value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.errorMessages}" />
+									<h:messages id="msg"
+										rendered="# {PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.globalMsgRender}"
+										styleClass="ErrorMessages" />
+									<h:outputText escape="false" id="warningMessages"
+										styleClass="WarningMessages"
+										value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.warningMessages}" />
+
+								</rich:simpleTogglePanel></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%">
+						<table class="noborder" id="linkstable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td ><h:outputLabel
+									value="#{message.CustomerClassMasterHeading}" /></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right"  valign="top" >
+						<h:commandButton
+								disabled="false" id="UI_CTRL_ACNTS" 
+								rendered="true"
+								style="width:96px;" 
+								styleClass="button"
+								value="Ctrl Acnts Details"
+								action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.goCtrlAccnt}" />
+								<rich:spacer width="5px"></rich:spacer>
+							<h:commandButton
+								disabled="false" id="UI_M_BUT_BL_DETAILS" 
+								rendered="true"
+								style="width:96px;" 
+								styleClass="button"
+								value="Applicable User"
+								action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.appUser}" />
+							
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									
+									<tr>
+										
+										<td class="oddrowfreeze" colspan="5"><h:outputLabel
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_FRZ_FLAG_LABEL}"
+											for="CCLAS_FRZ_FLAG" id="CCLAS_FRZ_FLAG_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_FRZ_FLAG$caption}" />
+										<h:selectBooleanCheckbox
+											id="CCLAS_FRZ_FLAG"
+											title="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_FRZ_FLAG$tooltip}"
+											validator="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.validateCLASS_FRZ_FLAG}"
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.freezeFlag}" >
+											<a4j:support
+												actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.fireFieldValidation}"
+												event="onclick" id="SUPPORT_CCLAS_FRZ_FLAG" immediate="true"
+												reRender="errorPanel" />
+											</h:selectBooleanCheckbox>
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_CODE_LABEL}"
+											for="CCLAS_CODE" id="CCLAS_CODE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_CODE$caption}" />
+										<h:graphicImage id="AUTOID_16" style="" styleClass="searchimg"
+											value="./../../images/mandatory.gif"/></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_CODE}"
+											disabled="#{!PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.insertMode}"
+											id="CCLAS_CODE" maxlength="12" rendered="true"
+											required="true" styleClass="input"
+											title="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_CODE$tooltip}"
+											validator="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.custClassCodeValidator}"
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.CCLAS_CODE}">
+											<a4j:support
+												actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.validateNullValues}"
+												event="onblur" id="AUTOID_17" immediate="true"
+												reRender="errorPanel" />
+
+										</h:inputText></td>
+
+
+										<td class="evenrow" width="4%">&nbsp;</td>
+										<td class="evenrowright" width="20%"><h:outputLabel
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_CLASS_DESC_LABEL}"
+											for="CCLAS_CLASS_DESC" id="CCLAS_CLASS_DESC_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_CLASS_DESC$caption}" />
+										<h:graphicImage id="AUTOID_18" style="" styleClass="searchimg"
+											value="./../../images/mandatory.gif"/></td>
+										<td class="evenrow" width="28%"><h:inputText
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_CLASS_DESC}"
+											disabled="false" id="CCLAS_CLASS_DESC" maxlength="30"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_CLASS_DESC$tooltip}"
+											validator="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.Cclas_short_class_desc_pre_text_item}"
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.CCLAS_CLASS_DESC}">
+											<a4j:support
+												actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.validateNullValues}"
+												event="onblur" focus="CCLAS_TYPE" id="AUTOID_19"
+												immediate="true"
+												reRender="errorPanel,CCLAS_SHORT_CLASS_DESC" />
+										</h:inputText></td>
+									</tr>
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_SHORT_CLASS_DESC_LABEL}"
+											for="CCLAS_SHORT_CLASS_DESC"
+											id="CCLAS_SHORT_CLASS_DESC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_SHORT_CLASS_DESC$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_SHORT_CLASS_DESC}"
+											disabled="false" id="CCLAS_SHORT_CLASS_DESC" maxlength="15"
+											rendered="true" required="true" styleClass="input"
+											title="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_BL_SHORT_CLASS_DESC$tooltip}"
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.CCLAS_SHORT_CLASS_DESC}">
+											<a4j:support
+												actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.validateNullValues}"
+												event="onblur" id="AUTOID_20" immediate="true"
+												reRender="errorPanel" />
+
+										</h:inputText></td>
+										<td class="oddrow">&nbsp;</td>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_TYPE_LABEL}"
+											for="CCLAS_TYPE" id="CCLAS_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_TYPE$caption}" />
+										<h:graphicImage id="AUTOID_21" style="" styleClass="searchimg"
+											value="./../../images/mandatory.gif"/></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_TYPE}"
+											disabled="#{!PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.insertMode}"
+											id="CCLAS_TYPE" maxlength="12" rendered="true"
+											required="true" styleClass="inputsmall"
+											title="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_TYPE$tooltip}"
+											validator="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.cust_class_cclas_type_when_validate_item}"
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.CCLAS_TYPE}">
+											<a4j:support
+												actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.classTypeDesc}"
+												event="onblur" focus="CCLAS_NGS_CODE" id="AUTOID_22"
+												immediate="true" reRender="errorPanel,CCLAS_BROK_AGENT_YN" />
+											<rich:suggestionbox for="CCLAS_TYPE" height="200"
+												id="AUTOID_23"
+												suggestionAction="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.suggestionAction}"
+												var="classType" width="250">
+												<h:column>
+													<h:outputLabel value="#{classType.code}" />
+												</h:column>
+												<h:column>
+													<h:outputLabel value="#{classType.name}" />
+												</h:column>
+												<a4j:support
+													actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.classTypeDesc}"
+													event="onselect" id="AUTOID_24" immediate="true"
+													reRender="UI_M_PS_CODE_DESC" />
+											</rich:suggestionbox>
+											<f:validator validatorId="PsCodeValidator" />
+										</h:inputText><h:inputText
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_UI_M_PS_CODE_DESC}"
+											disabled="true" id="UI_M_PS_CODE_DESC" maxlength="30"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM020_A_APAC$PM_CUST_CLASS$UI_M_PS_CODE_DESC$tooltip}"
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.UI_M_PS_CODE_DESC}" />
+										<h:graphicImage id="AUTOID_25" style="" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_NGS_CODE_LABEL}"
+											for="CCLAS_NGS_CODE" id="CCLAS_NGS_CODE_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_NGS_CODE$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_NGS_CODE}"
+											disabled="false" id="CCLAS_NGS_CODE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_NGS_CODE$tooltip}"
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.CCLAS_NGS_CODE}">
+											<rich:suggestionbox height="250" id="AUTOID_26"
+												suggestionAction="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.ngs_suggestionAction}"
+												value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.nsgCodeList}"
+												var="ngsCode" width="200">
+												<h:column>
+													<h:outputLabel value="#{ngsCode.code}" />
+												</h:column>
+												<h:column>
+													<h:outputLabel value="#{ngsCode.name}" />
+												</h:column>
+												<a4j:support
+													actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.ngsCodeDesc}"
+													event="onselect" id="AUTOID_27" immediate="true"
+													reRender="UI_M_CCLAS_NGS_CODE_DESC" />
+											</rich:suggestionbox>
+											<a4j:support
+												actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.ngsCodeValidator}"
+												event="onblur" id="AUTOID_28" immediate="true"
+												reRender="errorPanel,UI_M_CCLAS_NGS_CODE_DESC" />
+											<f:validator validatorId="NgsCodeValidator" />
+										</h:inputText><h:inputText
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_UI_M_CCLAS_NGS_CODE_DESC}"
+											disabled="true" id="UI_M_CCLAS_NGS_CODE_DESC" maxlength="30"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PM020_A_TISB$PM_CUST_CLASS$UI_M_CCLAS_NGS_CODE_DESC$tooltip}"
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.UI_M_CCLAS_NGS_CODE_DESC}" />
+										<h:graphicImage id="AUTOID_29" style="" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+
+										<td class="evenrow">&nbsp;</td>
+										<!-- Added by saritha on 06-07-2017 ssp call id ZBILQC-1723755 -->
+										<!-- <td class="evenrow">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td> -->
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_MAX_COMM_PERC_LABEL}"
+											for="CCLAS_MAX_COMM_PERC" id="CCLAS_MAX_COMM_PERC_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_MAX_COMM_PERC$caption}" />
+										<h:graphicImage id="AUTOID_58" style="" styleClass="searchimg"
+											value="./../../images/mandatory.jpg" /></td>
+										<td class="oddrow"><h:inputText
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_MAX_COMM_PERC}"
+											disabled="false"
+											id="CCLAS_MAX_COMM_PERC" maxlength="12" rendered="true"
+											required="true" styleClass="inputNumeric"
+											title="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_MAX_COMM_PERC$tooltip}"
+											validator="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.maxcommpersentValidator}"
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.CCLAS_MAX_COMM_PERC}">
+											<a4j:support
+												actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.validateNullValues}"
+												event="onblur" id="AUTOID_59" immediate="true"
+												reRender="errorPanel,CCLAS_MAX_COMM_PERC" />
+										</h:inputText></td>
+									<!-- End -->
+									</tr>
+									<!-- [ BugId:PREMIAGDC-000078 Shankar Bodduluri 26-Feb-09 Commented CCLAS_BROK_AGENT_YN  field  ] -->
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_VAL_IC_YN_LABEL}"
+											for="CCLAS_VAL_IC_YN" id="CCLAS_VAL_IC_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_VAL_IC_YN$caption}" />
+										</td>
+										<td class="oddrow"><h:selectBooleanCheckbox
+											id="CCLAS_VAL_IC_YN" rendered="true"
+											title="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_VAL_IC_YN$tooltip}"
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.valStatus}" /></td>
+										<td class="oddrow">&nbsp;</td>
+										
+										<td class="oddrow"><h:outputLabel
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_BROK_AGENT_YN_LABEL}"
+											for="CCLAS_BROK_AGENT_YN" id="CCLAS_BROK_AGENT_YN_LABEL"
+											rendered="true" styleClass="label"
+											value="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_BROK_AGENT_YN$caption}" />
+										</td>
+										<td class="oddrowright"><h:selectOneMenu
+											binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_BROK_AGENT_YN}"
+											id="CCLAS_BROK_AGENT_YN" rendered="true" styleClass="input"											
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.CCLAS_BROK_AGENT_YN}"
+											title="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_BROK_AGENT_YN$tooltip}">
+											
+											<f:selectItems
+												value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.brokerAgentList}" />
+											<a4j:support event="onblur" immediate="true"
+												reRender="errorPanel"
+												actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.agentYNEvent}" />
+										</h:selectOneMenu>
+										</td>
+								
+							 </tr>
+							<tr>
+									<td class="evenrow"><h:outputLabel
+										binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_CBC_YN_LABEL}"
+										for="CCLAS_CBC_YN" 
+										id="CCLAS_CBC_YN_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_CBC_YN$caption}" />
+									</td>
+									<td class="evenrowright"><h:selectOneMenu
+										binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_CBC_YN}"
+										id="CCLAS_CBC_YN" rendered="true" styleClass="input"
+										value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.CCLAS_CBC_YN}"
+										title="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_CBC_YN$tooltip}">
+										<f:selectItems
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.cbcList}" />
+										<a4j:support event="onblur" immediate="true"
+											reRender="errorPanel"
+											actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.cbcYNEvent}" />
+									</h:selectOneMenu></td>
+									<td class="evenrow">&nbsp;</td> 
+									<td class="evenrow"><h:outputLabel
+										binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_DOB_YN_LABEL}"
+										for="CCLAS_DOB_YN" 
+										id="CCLAS_DOB_YN_LABEL"
+										rendered="true" styleClass="label"
+										value="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_DOB_YN$caption}" />
+									</td>
+									<td class="evenrowright"><h:selectOneMenu
+										binding="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.COMP_CCLAS_DOB_YN}"
+										id="CCLAS_DOB_YN" rendered="true"  styleClass="input"
+										value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM_CUST_CLASS_BEAN.CCLAS_DOB_YN}"
+										title="#{message.PM020_A_APAC$PM_CUST_CLASS$CCLAS_DOB_YN$tooltip}">
+										<f:selectItems
+											value="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.dobList}" />
+									</h:selectOneMenu></td>
+							</tr> 
+						
+							<!-- Grid implement  start -->
+							
+						</table>
+					</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="5" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									actionListener="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.saveRecord}"
+									id="AUTOID_35" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_36" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="AUTOID_37"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM020_A_TISB_HEADER_saveAndNext}"
+									id="AUTOID_38" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_39" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="AUTOID_40"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.searchPage}"
+									id="AUTOID_41" immediate="true" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_42" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/back.png" />
+									<h:outputText id="AUTOID_43"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$back}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PM020_A_TISB_COMPOSITE_ACTION.PM_CUST_CLASS_ACTION_BEAN.PM020_A_TISB_HEADER_Next}"
+									id="AUTOID_44" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_45" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="AUTOID_46"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink id="AUTOID_47" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_48" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="AUTOID_49"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>
+

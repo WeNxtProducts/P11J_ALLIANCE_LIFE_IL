@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+<f:view locale="#{sessionScope['pageLocale']}">
+	<f:loadBundle basename="messageProperties_PILM021" var="message" />
+	<f:loadBundle basename="menu" var="menumessage" />
+	<table width="100%" cellpadding="0" cellspacing="0"	border="0" >
+		<!-- add header row -->
+	
+		<!-- Body row -->
+		<tr>
+			<td><h:form id="CUSTACCOUNTSETUP">
+				<tr>
+					<td colspan="3" width="100%" vAlign="top" height="20">
+					<rich:simpleTogglePanel id="errorPanel"
+								switchType="client" opened="false">
+								<f:facet name="header">
+									<h:outputText id="err" styleClass="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.messageStyle}" 
+										value="#{commonmsg.errorPanel$heading} #{PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.errorMap['current'] !=null? PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.errorMap['current']:PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.warningMap['current']}" />
+								</f:facet>
+								<h:outputText id="errorMessages" styleClass="ErrorMessages"
+									value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.errorMessages}"
+									escape="false" />
+								<h:messages styleClass="ErrorMessages" id="msg"
+									rendered="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.globalMsgRender}" />
+								<h:outputText id="warningMessages" styleClass="WarningMessages"
+									value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.warningMessages}"
+									escape="false" />
+							</rich:simpleTogglePanel>
+					</td>
+				</tr>
+
+				<!-- initial filter to search and list -->
+				<table border="0" width="100%"  cellpadding="0"
+					cellspacing="0" id="masthead">
+					<tr>
+						<td><h:outputLabel
+								value="#{commonmsg.intialSearchCriteria$Caption}"/></td>
+						<td>CustomerAccountCode: <h:inputText
+							value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.initControlAccountcode}"
+							immediate="true" /></td>
+						<td>BranchCode: <h:inputText
+							value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.initBranchcode}"
+							immediate="true" /></td>
+						<td><a4j:commandButton styleClass="button"
+							value="#{commonmsg.searchButton$caption}"
+							id="a4link">
+							<a4j:support immediate="true"
+								action="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.fetchPolicyDetails}"
+								event="onclick" reRender="dataTableId, errorPanel"></a4j:support>
+						</a4j:commandButton></td>
+					</tr>
+				</table>
+
+				<!-- using rich data table -->
+				<rich:dataTable id="dataTableId"
+					value="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.policyList}"
+					var="customer" cellpadding="5px" rows="10" border="1" width="100%">
+					<!-- Attach scroller as footer of the table-->
+					<f:facet name="footer">
+						<rich:datascroller id="dsID" pagesVar="pages" pageIndexVar="index"
+							align="right">
+						</rich:datascroller>
+					</f:facet>
+
+					<!-- next column 
+					<rich:column width="5">
+						<f:facet name="header">
+						</f:facet>
+						<h:selectBooleanCheckbox id="checkBox"
+							value="#{customer.CHECK_BOX}" rendered="false">
+							<a4j:support event="onclick"
+								actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_ACTION.checkBoxStatus}">
+							</a4j:support>
+						</h:selectBooleanCheckbox>
+					</rich:column> -->
+					<rich:column filterBy="#{customer.CAS_MAIN_ACNT_CODE}"
+						sortBy="#{customer.CAS_MAIN_ACNT_CODE}" filterEvent="onkeyup">
+						<f:facet name="header">
+							<h:outputText value="CUST ACCOUNT CODE" />
+						</f:facet>
+						<h:commandLink
+							action="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.clearList}">
+							<f:param name="ROWID" value="#{customer.ROWID}" />
+								<h:outputText value="#{customer.CAS_MAIN_ACNT_CODE}" />
+						</h:commandLink>
+
+					</rich:column>
+					<rich:column filterBy="#{customer.CAS_DIVN_CODE}"
+						sortBy="#{customer.CAS_DIVN_CODE}" filterEvent="onkeyup"
+						filterValue="#{PILM024_PM_IL_CLM_ACCOUNT_SETUP_SEARCH.searchedName}">
+						<f:facet name="header">
+							<h:outputText value="BRANCH CODE" />
+						</f:facet>
+						<h:outputText value="#{customer.CAS_DIVN_CODE}" />
+					</rich:column>
+				</rich:dataTable>
+				<tr>
+					<td><h:commandButton id="InsertLink" styleClass="button"
+						value="#{message.PILM021$PM_IL_CUST_ACCOUNT_SETUP$insertclick}"
+						action="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.clearSession}" />
+					<h:commandButton id="delete" value="Delete" rendered="false" styleClass="button"
+						actionListener="#{PILM021_PM_IL_CUST_ACCOUNT_SETUP_SEARCH.deleteRow}" />
+					</td>
+				</tr>
+			</h:form></td>
+		</tr>
+
+		<!-- add footer to the page-->
+		<tr>
+		</tr>
+	</table>
+</f:view>
+</ui:define>
+</ui:composition>

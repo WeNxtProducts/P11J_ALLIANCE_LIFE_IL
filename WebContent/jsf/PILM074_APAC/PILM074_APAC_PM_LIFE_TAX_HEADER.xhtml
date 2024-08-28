@@ -1,0 +1,589 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+
+		<f:view locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="messageProperties_PILM074_APAC" var="message" />
+			<f:loadBundle basename="menu" var="menumessage" />
+
+			<h:form id="PM_LIFE_TAX_HEADER" onkeypress="return event.keyCode != 13">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" vAlign="top" width="100%">
+						<table class="noborder" id="toolbartable" width="100%" cellpadding="0" cellspacing="0">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+										<h:commandLink
+											action="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.navigateToSearchPage}"
+											id="AUTOID_1" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_2"
+												styleClass="toolbarButtonStyle" accesskey="b"
+												image="./../../images/back.png" />
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+										<h:commandLink
+											actionListener="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.insertHeaderData}"
+											id="AUTOID_4" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton id="AUTOID_5"
+												styleClass="toolbarButtonStyle" accesskey="s"
+												image="./../../images/save.gif" />
+											<h:outputText id="AUTOID_6"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$save}" />
+										</h:commandLink>
+										<h:commandLink id="AUTOID_7" rendered="false"
+											style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_8"
+												styleClass="searchimg"
+												value="./../../images/savenext.GIF" />
+											<h:outputText id="AUTOID_9"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$savenext}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.deleteLifeTaxSetup}"
+											id="AUTOID_10" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:commandButton  id="AUTOID_11"
+												styleClass="toolbarButtonStyle" accesskey="r"
+												image="./../../images/deleteRecord.gif" />
+											<h:outputText id="AUTOID_12"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$deleteRecord}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.navigateToSearchPage}"
+											id="AUTOID_13" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_14"
+												styleClass="searchimg"
+												value="./../../images/firstrec.gif" />
+											<h:outputText id="AUTOID_15"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$firstrec}" />
+										</h:commandLink>
+
+										<h:commandLink
+											action="#{PILM074_APAC_COMPOSITE_ACTION.navigateToProduct}"
+											id="AUTOID_16" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_17"
+												styleClass="searchimg"
+												value="./../../images/nextpage.gif" />
+											<h:outputText id="AUTOID_18"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$nextpage}" />
+										</h:commandLink>
+										<h:commandLink
+											action="#{PILM074_APAC_COMPOSITE_ACTION.navigateToClass}"
+											id="AUTOID_19" rendered="false" style="text-decoration:none"
+											styleClass="toolbarCommandLinkStyle">
+											<h:graphicImage id="AUTOID_20"
+												styleClass="searchimg"
+												value="./../../images/lastRecord.gif" />
+											<h:outputText id="AUTOID_21"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$lastRecord}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText id="err"
+									styleClass="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.errorMap['current'] !=null? PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.errorMap['current']:PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.warningMap['current']}" />
+
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.globalMsgRender}"
+								styleClass="ErrorMessages" />
+
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.warningMessages}" />
+
+						</rich:simpleTogglePanel></td>
+					</tr>
+
+					<tr>
+						<td colspan="3" height="20" vAlign="top" width="100%">
+						<table class="noborder" id="globalLink" width="100%">
+							<tr>
+								<td><!-- Tab implementation --> <h:inputHidden
+									id="myhidden"
+									value="#{PILM074_APAC_COMPOSITE_ACTION.tabbedBar.tabClicked}" />
+								<h:panelGroup id="mypanel" style="border:0">
+									<table class="noborder" width="90%">
+										<tr>
+											<td width="90%"><a4j:repeat
+												value="#{PILM074_APAC_COMPOSITE_ACTION.tabbedBar.currentTabList}"
+												var="currtab">
+												<h:commandLink
+													action="#{PILM074_APAC_COMPOSITE_ACTION.tabbedBar.tabAction}"
+													disabled="#{currtab.disabled}" id="AUTOID_22"
+													onclick="document.getElementById('PM_LIFE_TAX_HEADER:myhidden').value='#{currtab.id}'"
+													styleClass="#{currtab.styleString}"
+													value="#{currtab.value}" />
+											</a4j:repeat></td>
+											<!-- <td width="*"><a4j:commandButton
+												action="#{PILM074_APAC_COMPOSITE_ACTION.tabbedBar.gotoFirstTab}"
+												alt="first"
+												disabled="#{PILM074_APAC_COMPOSITE_ACTION.tabbedBar.navigable}"
+												id="AUTOID_23" image="./../../images/firstrec.gif"
+												immediate="true" reRender="mypanel" /> <a4j:commandButton
+												action="#{PILM074_APAC_COMPOSITE_ACTION.tabbedBar.gotoPrevTab}"
+												alt="previous"
+												disabled="#{PILM074_APAC_COMPOSITE_ACTION.tabbedBar.navigable}"
+												id="AUTOID_24" image="./../../images/prevpage.gif"
+												immediate="true" reRender="mypanel" /> <a4j:commandButton
+												action="#{PILM074_APAC_COMPOSITE_ACTION.tabbedBar.gotoNextTab}"
+												alt="next"
+												disabled="#{PILM074_APAC_COMPOSITE_ACTION.tabbedBar.navigable}"
+												id="AUTOID_25" image="./../../images/nextpage.gif"
+												immediate="true" reRender="mypanel" /> <a4j:commandButton
+												action="#{PILM074_APAC_COMPOSITE_ACTION.tabbedBar.gotoLastTab}"
+												alt="last"
+												disabled="#{PILM074_APAC_COMPOSITE_ACTION.tabbedBar.navigable}"
+												id="AUTOID_26" image="./../../images/lastRecord.gif"
+												immediate="true" reRender="mypanel" /></td>-->
+										</tr>
+									</table>
+								</h:panelGroup></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3">
+						<table align="left" class="noborder" width="100%">
+							<tr>
+								<td vAlign="top" width="100%">
+								<table align="left" class="noborder" id="bordertable"
+									width="100%">
+									<tr>
+										<td class="oddrowright"><h:outputLabel
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_TAX_TYPE_LABEL}"
+											for="TH_TAX_TYPE" id="TH_TAX_TYPE_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_TAX_TYPE$caption}" />
+										</td>
+										<td class="oddrow"><h:inputText
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_TAX_TYPE}"
+											disabled="false" id="TH_TAX_TYPE" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="Enter the tax type"
+											validator="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.validateTH_TAX_TYPE}"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_TAX_TYPE}">
+											<a4j:support
+												actionListener="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.TH_TAX_TYPE_ACTION}"
+												event="onblur" id="style_9" immediate="true"
+												reRender="TH_TAX_DESC,errorPanel" />
+										</h:inputText> <rich:suggestionbox for="TH_TAX_TYPE" height="200"
+											id="TH_TAX_TYPE_SUGGESTION_BOX"
+											nothingLabel="No Value Available"
+											suggestionAction="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.lovForTaxType}"
+											var="taxtype" width="350">
+											<h:column>
+												<h:outputText id="AUTOID_27" value="#{taxtype.TH_TAX_TYPE}" />
+											</h:column>
+											<h:column>
+												<h:outputText id="AUTOID_28" value="#{taxtype.TH_TAX_DESC}" />
+											</h:column>
+											<a4j:support
+												actionListener="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.getTaxTypeDesc}"
+												event="onselect" id="style_8" immediate="true"
+												reRender="TH_TAX_DESC" />
+										</rich:suggestionbox> <h:inputText
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_TAX_DESC}"
+											disabled="false" id="TH_TAX_DESC" maxlength="150"
+											rendered="true" required="false" styleClass="input"
+											title="Enter the tax type description" readonly="true"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_TAX_DESC}" />
+										<h:graphicImage id="AUTOID_29" styleClass="searchimg"
+											value="./../../images/Lov.gif" /></td>
+											<td class="oddrow">&nbsp;</td>
+											<td class="oddrow">
+											<h:outputLabel
+													binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_LOCATION_LABEL}"
+													for="TH_LOCATION"
+													id="TH_LOCATION_LABEL" rendered="true"
+													styleClass="label"
+													value="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_LOCATION$caption}" />
+											</td>
+											<td class="oddrowright">
+											<h:selectOneMenu
+													binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_LOCATION}"
+													disabled="false" id="TH_LOCATION"
+													rendered="true" required="false" styleClass="input"
+													title="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_LOCATION$tooltip}"
+													validator="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.validateTH_LOCATION}"
+													value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_LOCATION}">
+													<f:selectItems id="SEL_ITEMS_TH_LOCATION"
+															value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.listTH_LOCATION}" />
+														<a4j:support id="SUPP_TH_LOCATION" event="onselect"
+																immediate="true" reRender="errorPanel"/>
+													</h:selectOneMenu>
+											</td>
+											
+									</tr>
+									<tr>
+									<td class="evenrowright">
+									<h:outputLabel
+												binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_VAT_YN_LABEL}"
+												for="TH_VAT_YN"
+												id="TH_VAT_YN_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_VAT_YN$caption}" />
+									</td>
+									<td class="evenrow">
+									<h:selectOneMenu
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_VAT_YN}"
+											disabled="false" id="TH_VAT_YN"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_VAT_YN$tooltip}"
+											validator="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.validateTH_VAT_YN}"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_VAT_YN}">
+										<f:selectItems id="SEL_ITEMS_TH_VAT_YN"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.listTH_VAT_YN}" />
+											<a4j:support id="SUPP_TH_VAT_YN" event="onselect"
+													immediate="true" reRender="errorPanel"/>
+										</h:selectOneMenu>
+									
+									
+									</td>
+									
+									<td class="evenrow">&nbsp;</td>
+									<td class="evenrow">
+									<h:outputLabel
+												binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_VAT_PERC_LABEL}"
+												for="TH_VAT_PERC"
+												id="TH_VAT_PERC_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_VAT_PERC$caption}" />
+									</td>
+									<td class="evenrowright"><h:inputText
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_VAT_PERC}"
+											disabled="false" id="TH_VAT_PERC" maxlength="12"
+											rendered="true" required="false" styleClass="inputsmall"
+											title="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_VAT_PERC$tooltip}"
+											validator="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.validateTH_VAT_PERC}"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_VAT_PERC}">
+											<a4j:support
+												actionListener="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.fireFieldValidation}"
+												event="onblur" id="style_9A" immediate="true"
+												reRender="errorPanel" />
+										</h:inputText>
+									
+									</td>
+									
+									</tr>
+									
+									<tr>
+									
+									<td class="oddrowright">
+									<h:outputLabel
+												binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_VAT_TRTMT_LABEL}"
+												for="TH_VAT_TRTMT"
+												id="TH_VAT_TRTMT_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_VAT_TRTMT$caption}" />
+									</td>
+									<td class="oddrow">
+									<h:selectOneMenu
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_VAT_TRTMT}"
+											disabled="false" id="TH_VAT_TRTMT"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_VAT_TRTMT$tooltip}"
+											validator="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.validateTH_VAT_TRTMT}"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_VAT_TRTMT}">
+										<f:selectItems id="SEL_ITEMS_TH_VAT_TRTMT"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.listTH_VAT_TRTMT}" />
+											<a4j:support id="SUPP_TH_VAT_TRTMT" event="onselect"
+													immediate="true" reRender="errorPanel"/>
+										</h:selectOneMenu>
+									
+									
+									</td>
+									<td class="oddrow">&nbsp;</td>
+									
+									<td class="oddrow">
+									<h:outputLabel
+												binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_SELF_INVOICE_YN_LABEL}"
+												for="TH_SELF_INVOICE_YN"
+												id="TH_SELF_INVOICE_YN_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_SELF_INVOICE_YN$caption}" />
+									</td>
+									<td class="oddrowright">
+									<h:selectOneMenu
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_SELF_INVOICE_YN}"
+											disabled="false" id="TH_SELF_INVOICE_YN"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_SELF_INVOICE_YN$tooltip}"
+											validator="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.validateTH_SELF_INVOICE_YN}"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_SELF_INVOICE_YN}">
+										<f:selectItems id="SEL_ITEMS_TH_SELF_INVOICE_YN"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.listTH_SELF_INVOICE_YN}" />
+											<a4j:support id="SUPP_TH_SELF_INVOICE_YN" event="onselect"
+													immediate="true" reRender="errorPanel"/>
+										</h:selectOneMenu>
+									
+									</td>
+									
+									
+									
+									
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_EFF_FM_DT_LABEL}"
+											for="TH_EFF_FM_DT" id="TH_EFF_FM_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_EFF_FM_DT$caption}" />
+										</td>
+										<td class="evenrow"><span title="Enter From date" /><rich:calendar
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_EFF_FM_DT}"
+											datePattern="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true" id="TH_EFF_FM_DT"
+											title="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_EFF_FM_DT$tooltip}"
+											inputClass="calendarinput" inputSize="13" rendered="true"
+											required="false"
+											validator="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.validateTH_EFF_FM_DT}"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_EFF_FM_DT}">
+											<a4j:support
+												actionListener="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.TH_EFF_FM_DT_ACTION}"
+												event="onchanged" id="style_6" immediate="true"
+												reRender="TH_EFF_FM_DT,TH_EFF_TO_DT,errorPanel" />
+											<a4j:support
+												actionListener="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.TH_EFF_FM_DT_ACTION}"
+												event="oninputchanged" id="style_1" immediate="true"
+												reRender="TH_EFF_FM_DT,TH_EFF_TO_DT,errorPanel" />
+											<a4j:support
+												actionListener="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.TH_EFF_FM_DT_ACTION}"
+												event="oninputblur" id="style_2" immediate="true"
+												onsubmit="formatDate('PM_LIFE_TAX_HEADER:TH_EFF_FM_DT')"
+												reRender="TH_EFF_FM_DT,TH_EFF_TO_DT,errorPanel" />
+										</rich:calendar></td>
+										
+											<td class="evenrow">&nbsp;</td>
+										<td class="evenrow"><h:outputLabel
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_EFF_TO_DT_LABEL}"
+											for="TH_EFF_TO_DT" id="TH_EFF_TO_DT_LABEL" rendered="true"
+											styleClass="label"
+											value="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_EFF_TO_DT$caption}" />
+										</td>
+										<td class="evenrowright"><span title="Enter To date" /><rich:calendar
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_EFF_TO_DT}"
+											datePattern="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.datePattern}"
+											disabled="false" enableManualInput="true" id="TH_EFF_TO_DT"
+											inputClass="calendarinput" inputSize="13" rendered="true"
+											required="false"
+											title="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_EFF_TO_DT$tooltip}"
+											validator="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.validateTH_EFF_TO_DT}"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_EFF_TO_DT}">
+											<a4j:support
+												actionListener="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.TH_EFF_TO_DT_ACTION}"
+												event="onchanged" id="style_3" immediate="true"
+												reRender="TH_EFF_FM_DT,TH_EFF_TO_DT,errorPanel" />
+											<a4j:support
+												actionListener="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.TH_EFF_TO_DT_ACTION}"
+												event="oninputchanged" id="style_4" immediate="true"
+												reRender="TH_EFF_FM_DT,TH_EFF_TO_DT,errorPanel" />
+											<a4j:support
+												actionListener="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.TH_EFF_TO_DT_ACTION}"
+												event="oninputblur" id="style_5" immediate="true"
+												onsubmit="formatDate('PM_LIFE_TAX_HEADER:TH_EFF_TO_DT')"
+												reRender="TH_EFF_FM_DT,TH_EFF_TO_DT,errorPanel" />
+										</rich:calendar></td>
+										<!-- <td class="evenrow">&nbsp;</td> -->
+									</tr>
+									<tr>
+									<td class="oddrowright">
+									<h:outputLabel
+												binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_VAT_RECOVER_YN_LABEL}"
+												for="TH_VAT_RECOVER_YN"
+												id="TH_VAT_RECOVER_YN_LABEL" rendered="true"
+												styleClass="label"
+												value="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_VAT_RECOVER_YN$caption}" />
+									</td>
+									<td class="oddrow">
+									<h:selectOneMenu
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_VAT_RECOVER_YN}"
+											disabled="false" id="TH_VAT_RECOVER_YN"
+											rendered="true" required="false" styleClass="input"
+											title="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_VAT_RECOVER_YN$tooltip}"
+											validator="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.validateTH_VAT_RECOVER_YN}"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_VAT_RECOVER_YN}">
+										<f:selectItems id="SEL_ITEMS_TH_VAT_RECOVER_YN"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.listTH_VAT_RECOVER_YN}" />
+											<a4j:support id="SUPP_TH_VAT_RECOVER_YN" event="onselect"
+													immediate="true" reRender="errorPanel"/>
+										</h:selectOneMenu>
+									
+									
+									</td>
+									
+									<td class="oddrow">&nbsp;</td>
+									<td class="oddrow"></td>
+									<td class="oddrow"></td>
+									</tr>
+									
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_TAX_LONG_DESC_LABEL}"
+											for="TH_TAX_LONG_DESC" id="TH_TAX_LONG_DESC_LABEL"
+											rendered="false" styleClass="label"
+											value="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_TAX_LONG_DESC$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_TAX_LONG_DESC}"
+											disabled="false" id="TH_TAX_LONG_DESC" maxlength="2000"
+											rendered="false" required="false" styleClass="input"
+											title="Enter the long description"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_TAX_LONG_DESC}" />
+										</td>
+									</tr>
+									<tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_TAX_SHORT_DESC_LABEL}"
+											for="TH_TAX_SHORT_DESC" id="TH_TAX_SHORT_DESC_LABEL"
+											rendered="false" styleClass="label"
+											value="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_TAX_SHORT_DESC$caption}" />
+										</td>
+										<td class="evenrow"><h:inputText
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_TAX_SHORT_DESC}"
+											disabled="false" id="TH_TAX_SHORT_DESC" maxlength="30"
+											rendered="false" required="false" styleClass="input"
+											title="Enter the short description"
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_TAX_SHORT_DESC}" />
+										</td>
+										<td class="evenrow">&nbsp;</td>
+										<td class="evenrow">&nbsp;</td>
+											<td class="evenrowright">&nbsp;</td>
+											
+									</tr>
+									
+
+									
+									
+									
+									
+									
+									<!--  <tr>
+										<td class="evenrowright"><h:outputLabel
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_TAX_CALC_TYPE_LABEL}"
+											for="TH_TAX_CALC_TYPE" id="TH_TAX_CALC_TYPE_LABEL"
+											rendered="false" styleClass="label"
+											value="#{message.PILM074_APAC$PM_LIFE_TAX_HEADER$TH_TAX_CALC_TYPE$caption}" />
+										</td>
+										<td class="evenrow"><h:selectOneMenu
+											binding="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.COMP_TH_TAX_CALC_TYPE}"
+											disabled="false" id="TH_TAX_CALC_TYPE" rendered="false"
+											required="false" styleClass="input" 	title="Select tax calculation type" 
+											value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.PM_LIFE_TAX_HEADER_BEAN.TH_TAX_CALC_TYPE}">
+											<f:selectItems id="style_7"
+												value="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.taxCalcType}" />
+										</h:selectOneMenu></td>
+									</tr>-->
+									
+								</table>
+								</td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td align="right" colspan="5" width="100%"><rich:toolBar
+							styleClass="toolBarStyle" width="100%">
+							<rich:toolBarGroup location="right"
+								styleClass="toolBarGroupStyle">
+								<h:commandLink
+									actionListener="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.insertHeaderData}"
+									id="AUTOID_30" rendered="true" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_31"
+										styleClass="searchimg" value="./../../images/save.gif" />
+									<h:outputText id="AUTOID_32"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$save}" />
+								</h:commandLink>
+								<h:commandLink id="AUTOID_33" rendered="false"
+									style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_34" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/savenext.GIF" />
+									<h:outputText id="AUTOID_35"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$savenext}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.navigateToSearchPage}"
+									id="AUTOID_36" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_37" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/firstrec.gif" />
+									<h:outputText id="AUTOID_38"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$firstrec}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PILM074_APAC_COMPOSITE_ACTION.PM_LIFE_TAX_HEADER_ACTION_BEAN.navigateToSearchPage}"
+									id="AUTOID_39" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_40" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/prevpage.gif" />
+									<h:outputText id="AUTOID_41"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$prevpage}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PILM074_APAC_COMPOSITE_ACTION.navigateToProduct}"
+									id="AUTOID_42" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_43" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/nextpage.gif" />
+									<h:outputText id="AUTOID_44"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$nextpage}" />
+								</h:commandLink>
+								<h:commandLink
+									action="#{PILM074_APAC_COMPOSITE_ACTION.navigateToClass}"
+									id="AUTOID_45" rendered="false" style="text-decoration:none"
+									styleClass="toolbarCommandLinkStyle">
+									<h:graphicImage id="AUTOID_46" style="border: thin solid white"
+										styleClass="searchimg" value="./../../images/lastRecord.gif" />
+									<h:outputText id="AUTOID_47"
+										styleClass="toolbaroutputTextStyle"
+										value="#{menumessage.jsf$header$image$lastRecord}" />
+								</h:commandLink>
+							</rich:toolBarGroup>
+						</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+
+	</ui:define>
+</ui:composition>

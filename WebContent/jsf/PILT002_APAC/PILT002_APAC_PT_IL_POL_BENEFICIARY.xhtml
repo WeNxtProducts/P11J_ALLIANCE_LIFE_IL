@@ -1,0 +1,1645 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:a4j="http://richfaces.org/a4j"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:rich="http://richfaces.org/rich"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:w="http://3i-infotech.com/premia"
+	template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:view
+			beforePhase="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.onLoad}"
+			locale="#{sessionScope['pageLocale']}">
+			<f:loadBundle basename="#{sessionScope['GLOBAL.SITE_CODE']}messageProperties_PILT002_APAC"
+				var="message_PILT002_APAC" />
+			<h:form id="PT_IL_POL_BENEFICIARY"
+				onkeypress="return event.keyCode != 13">
+
+
+				<style>
+#PBEN_CITY_CODE_CSPAN input:nth-child(1) {
+	width: 66px;
+}
+
+.stylesetlist li {
+	height: 25px;
+}
+
+.stylesetlist li span {
+	float: left;
+	width: 50% !important;
+}
+
+/* Added by raja on 06-03-2016 FOR RM018T - FSD_IL_ZB Life_013_Underwriting changes  */
+.mandatory_lableset label {
+	float: left;
+}
+
+.mandatory_lableset .mandatory {
+	font-weight: 400;
+	font-size: 14px;
+	color: #f00;
+}
+/* End */
+
+
+/* Added by Janani on 11.04.2017 for issues reported by Siva */
+
+.lengthfield {
+	    width: 100%;
+    max-width: 234px;
+    
+  
+}
+
+.address {
+	width: 42%;
+}
+
+/* End */
+
+/* Added by saritha on 05-04-2018 for KIC Calendar Display */
+	.rich-calendar-exterior {
+    color: #333;
+}
+
+/* End */
+
+
+</style>
+
+
+				<script type="text/javascript"> 
+		
+												   window.onload = function() {
+													   
+												 //  document.getElementById('PT_IL_POLICY:POL_PROD_CODE').focus();
+													   loadDoc();
+													   } 
+
+												   function loadDoc() {
+													   var className = "";
+													  var componentCount = 0;
+													   var xmlObj = null;
+													   if(window.XMLHttpRequest){
+													       xmlObj = new XMLHttpRequest();
+													   } else if(window.ActiveXObject){
+													       xmlObj = new ActiveXObject("Microsoft.XMLHTTP");
+													   } else {
+													       return;
+													   }
+													   xmlObj.onreadystatechange = function()
+													   {
+														      
+														   if(xmlObj.readyState == 4){
+
+																 if(xmlObj.status == 200)
+																	 {
+ 
+														       var hideIds = xmlObj.responseText;
+														     
+ 
+														       
+														       var hideIdsArray = hideIds.split(",")
+														         var hideIdsLength = hideIdsArray.length;
+														       
+														      
+														        
+														    for (var componentId in hideIdsArray) {
+															   
+															     if(componentId == 'each')
+																     {
+ 
+																	break;
+																     }
+															     else
+																     {
+															    	 
+															    	var idValues = hideIdsArray[componentId].split("$$$");
+															    	var componentid = idValues[0];
+																	var liId = idValues[1];
+																	
+																	var defaultValue = idValues[2];
+																	var fieldVisibility = idValues[3];
+																	 
+															    	  if(document.getElementById(liId) != null)
+																    	  {
+															    		  
+																    	  if(fieldVisibility == "1")
+																	    	  {
+																    		  document.getElementById(liId).style.display = "none";
+																		    	 
+																	    		document.getElementById("PT_IL_POL_BENEFICIARY:"+componentid).value = defaultValue;
+																	    	  }
+																    	  else if(fieldVisibility == "2")
+																	    	  {
+																    	  
+																    	
+																    		  componentCount = componentCount + 1;
+																    		  if(document.getElementById(liId+"_LSPAN") != null)
+																    		  {
+																    			 
+																				  var LabelidName = liId+"_LSPAN";
+																    			  var CompidName = liId+"_CSPAN";
+																    			    if((componentCount % 2) == "1")
+																	    			  {
+																		    			    if(className == "")
+																			    			  {
+																		    				  className = "oddrowright";
+																					    	  }
+																    			    	  else
+																	    			    	  {
+																	    			    	  if(className == "oddrowright")
+																		    			    	  {
+																	    			    		  className = "evenrowright";
+																		    			    	  }
+																    			    		  else if(className == "evenrowright")
+																	    			    		  {
+																    			    			  className = "oddrowright";
+																	    			    		  }
+																	    			    		  
+																	    			    	  }  
+																		    	        
+																	    			  }  
+																    			 
+																    			      document.getElementById(LabelidName).className=className;
+																    				  document.getElementById(CompidName).className=className;  
+																	    		  }
+																    		  else
+																	    		  {
+																    			  
+																	    		  }
+																	    	  }
+																    	  }
+															    	   
+																    	
+															    	  
+															    	 
+																     }
+														        
+														    }
+														    	    
+															       
+														       
+													     }
+
+													   }
+													    }
+													    var currentURL = window.location.href;
+													    var currentURLsplit = currentURL.split("/");
+													   
+													    var url = currentURLsplit[0]+"//"+currentURLsplit[1]+"/"+currentURLsplit[2]+"/"+currentURLsplit[3]+"/DynamicPremiaScreen";
+													   
+													    var data="BLOCK_NAME=PT_IL_POL_BENEFICIARY&amp;MODULE_NAME=PILT002_APAC"
+													    xmlObj.open ('POST', url, true);
+													    xmlObj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+													     
+ 
+													    xmlObj.send (data);
+													  }
+													  
+												
+													</script>
+
+				<style>
+.stylesetlist {
+	list-style-type: none;
+	padding: 15px;
+	margin: 0;
+	display: inherit-block;
+	width: 100%;
+}
+
+.stylesetlist li {
+	float: left;
+	width: 50%
+}
+
+.stylesetlist li span {
+	float: left;
+	width: 45%;
+	padding: 0;
+	padding: 0;
+	display: inline-block;
+}
+
+/* changed by raja 15-05-2017 */
+
+#PBEN_BNF_NAME_LI span input, #UI_M_BANK_CODE_LI span input {
+	/* width: 66px !important; */
+}
+
+#PBEN_BNF_NAME_LI span input:nth-child(2), #UI_M_BANK_CODE_LI span input:nth-child(2)
+	{
+	/* width: 147px !important; */
+}
+
+.bigTextBox {
+	
+	width: 81%
+}
+</style>
+
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+					<tr>
+						<td colspan="3" valign="top" width="100%">
+							<table class="noborder" width="100%">
+								<tr>
+									<td><rich:toolBar id="TOOLBAR_HEADER"
+											styleClass="toolBarStyle" width="100%">
+											<rich:toolBarGroup id="TOOLBARGROUP_HEADER"
+												styleClass="toolBarGroupStyle">
+												<!-- Modified by saranya for Avoidance of POST button required in all screens on 22-02-2017 -->
+												<h:commandLink
+													action="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.saveRecord}"
+													id="SAVE_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:commandButton id="SAVE_TOOL_IMAGE_HEADER"
+														styleClass="toolbarButtonStyle" accesskey="s"
+														image="./../../resources/images/save.gif" />
+													<h:outputText id="SAVE_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$save}" />
+												</h:commandLink>
+												<!-- End -->
+												<h:commandLink id="SAVENEXT_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="SAVENEXT_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/savenext.GIF" />
+													<h:outputText id="SAVENEXT_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$savenext}" />
+												</h:commandLink>
+												<h:commandLink id="DELETERECORD_TOOL_HEADER"
+													rendered="false" style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="DELETERECORD_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/deleteRecord.gif" />
+													<h:outputText id="DELETERECORD_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$deleteRecord}" />
+												</h:commandLink>
+												<h:commandLink id="FIRSTREC_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="FIRSTREC_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/firstrec.gif" />
+													<h:outputText id="FIRSTREC_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$firstrec}" />
+												</h:commandLink>
+												<h:commandLink id="PREVPAGE_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="PREVPAGE_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/prevpage.gif" />
+													<h:outputText id="PREVPAGE_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$prevpage}" />
+												</h:commandLink>
+												<h:commandLink id="NEXTPAGE_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/nextpage.gif" />
+													<h:outputText id="NEXTPAGE_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$nextpage}" />
+												</h:commandLink>
+												<h:commandLink id="LASTRECORD_TOOL_HEADER" rendered="false"
+													style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:graphicImage id="LASTRECORD_TOOL_IMAGE_HEADER"
+														styleClass="searchimg"
+														value="./../../resources/images/lastRecord.gif" />
+													<h:outputText id="LASTRECORD_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$lastRecord}" />
+												</h:commandLink>
+												<h:commandLink
+													action="#{PILT002_APAC_COMPOSITE_ACTION.navigationEnabled}"
+													id="NAVIGATION_TOOL_HEADER" immediate="true"
+													rendered="true" style="text-decoration:none"
+													styleClass="toolbarCommandLinkStyle">
+													<h:commandButton id="NAVIGATION_TOOL_IMAGE_HEADER"
+														styleClass="toolbarButtonStyle" accesskey="u"
+														image="./../../resources/images/navigation.gif" />
+													<h:outputText id="NAVIGATION_TOOL_CAPTION_HEADER"
+														styleClass="toolbaroutputTextStyle"
+														value="#{menumessage.jsf$header$image$undo}" />
+												</h:commandLink>
+											</rich:toolBarGroup>
+											<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD"
+												location="right">
+												<w:treeWizard
+													binding="#{PILT002_APAC_COMPOSITE_ACTION.wizard}" />
+											</rich:toolBarGroup>
+											<rich:toolBarGroup>
+												<h:outputLabel styleClass="toolbarCommandLinkStyle"
+													style="color:black;text-decoration:none"
+													value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POLICY$POL_NO1$caption}"></h:outputLabel>
+												
+												<!-- Style Modified by Janani on 31.07.2017 for ZBILQC-1733494
+												style="color:blue;align:right" 
+												 -->
+												<h:outputText
+													value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.PT_IL_POLICY_BEAN.POL_NO}"
+													class="prop_pol_no"	
+													rendered="true" id="polnum" />
+											<!-- End -->
+											
+											</rich:toolBarGroup>
+										</rich:toolBar></td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+								id="errorPanel" opened="false" switchType="client">
+								<f:facet name="header">
+									<h:outputText id="err"
+										styleClass="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.messageStyle}"
+										value="#{commonmsg.errorPanel$heading}#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.errorMap['current'] !=null? PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.errorMap['current']: PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.warningMap['current']}" />
+								</f:facet>
+								<h:outputText escape="false" id="errorMessages"
+									styleClass="ErrorMessages"
+									value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.errorMessages}" />
+								<h:messages id="msg"
+									rendered="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.globalMsgRender}"
+									styleClass="ErrorMessages" />
+								<h:outputText escape="false" id="warningMessages"
+									styleClass="WarningMessages"
+									value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.warningMessages}" />
+							</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<div id="sidebar" style="width: 21%; vertical-align: top">
+								<div align="center" id="handle" style="width: 5%;">
+									<a4j:commandLink
+										actionListener="#{PILT002_APAC_COMPOSITE_ACTION.wizard.toggle}"
+										id="BACK_TOOL_FOOTER1" immediate="true" rendered="true"
+										style="text-decoration:none;align:left"
+										styleClass="toolbarCommandLinkStyle">
+										<img align="left" alt="Click to toggle the sidebar"
+											height="123" onclick="toggleSideBar();"
+											src="./../../resources/images/toggle.jpg" style="border: 0;"
+											width="14" />
+									</a4j:commandLink>
+								</div>
+								<div id="sbText" style="display: compact;">
+									<div id="linkstable1" style="vertical-align: top; width: 95%">
+										<w:summary binding="#{PILT002_APAC_COMPOSITE_ACTION.comp}"
+											id="summary" />
+										<w:treeWizardPanel
+											binding="#{PILT002_APAC_COMPOSITE_ACTION.wizard.wizardPanel}"
+											id="wizardPanel" />
+									</div>
+								</div>
+							</div>
+							<div id="content" style="width: 79%;">
+								<table width="100%">
+									<tr>
+										<td>&nbsp;</td>
+										<td valign="top" width="100%"><h:panelGroup
+												id="PT_IL_POL_BENEFICIARY_PANEL"
+												style="border:0;height:15%;">
+												<table align="left" class="noborder" id="bordertable"
+													width="100%">
+													<tr>
+														<td><rich:panel style="width:100%;overflow:auto">
+																<rich:dataTable
+																	binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.dataTable}"
+																	id="PT_IL_POL_BENEFICIARY_DATA_GRID" rows="5"
+																	value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.dataList_PT_IL_POL_BENEFICIARY}"
+																	var="tableVar" width="100%">
+																	<rich:column filterBy="#{tableVar.PBEN_SR_NO}"
+																		filterEvent="onkeyup" id="COLUMN_PBEN_SR_NO"
+																		rendered="true" sortBy="#{tableVar.PBEN_SR_NO}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PBEN_SR_NO"
+																				styleClass="forumRowHighlight"
+																				value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_SR_NO$caption}" />
+																		</f:facet>
+																		<a4j:commandLink
+																			action="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.displayRecords}"
+																			id="GOTO_LINK_PBEN_SR_NO" immediate="true" oncomplete="loadDoc()"
+																			reRender="errorPanel,PT_IL_POL_BENEFICIARY_PANEL">
+																			<h:outputText id="LINK_CAPTION_PBEN_SR_NO"
+																				value="#{tableVar.PBEN_SR_NO}" />
+																		</a4j:commandLink>
+																	</rich:column>
+																	<rich:column filterBy="#{tableVar.PBEN_BNF_NAME}"
+																		filterEvent="onkeyup" id="COLUMN_PBEN_BNF_NAME"
+																		rendered="true" sortBy="#{tableVar.PBEN_BNF_NAME}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PBEN_BNF_NAME"
+																				styleClass="forumRowHighlight"
+																				value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_BNF_NAME$caption}" />
+																		</f:facet>
+																		<h:outputText id="LINK_CAPTION_PBEN_BNF_NAME"
+																			value="#{tableVar.PBEN_BNF_NAME}" />
+																	</rich:column>
+																	<rich:column filterBy="#{tableVar.PBEN_BNF_TYPE}"
+																		filterEvent="onkeyup" id="COLUMN_PBEN_BNF_TYPE"
+																		rendered="true" sortBy="#{tableVar.PBEN_BNF_TYPE}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PBEN_BNF_TYPE"
+																				styleClass="forumRowHighlight"
+																				value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_BNF_TYPE$caption}" />
+																		</f:facet>
+																		<h:outputText id="LINK_CAPTION_PBEN_BNF_TYPE"
+																			value="#{tableVar.PBEN_BNF_TYPE}" />
+																	</rich:column>
+																	<rich:column filterBy="#{tableVar.PBEN_PERC}"
+																		filterEvent="onkeyup" id="COLUMN_PBEN_PERC"
+																		rendered="true" sortBy="#{tableVar.PBEN_PERC}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PBEN_PERC"
+																				styleClass="forumRowHighlight"
+																				value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_PERC$caption}" />
+																		</f:facet>
+																		<h:outputText id="LINK_CAPTION_PBEN_PERC"
+																			value="#{tableVar.PBEN_PERC}" />
+																	</rich:column>
+
+																	<rich:column filterBy="#{tableVar.PBEN_REF_ID1}"
+																		filterEvent="onkeyup" id="COLUMN_PBEN_REF_ID1"
+																		rendered="true" sortBy="#{tableVar.PBEN_REF_ID1}"
+																		styleClass="#{tableVar.rowSelected}">
+																		<f:facet name="header">
+																			<h:outputText id="COLUMN_CAPTION_PBEN_REF_ID1"
+																				styleClass="forumRowHighlight"
+																				value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_REF_ID1$caption}" />
+																		</f:facet>
+																		<h:outputText id="LINK_CAPTION_PBEN_REF_ID1"
+																			value="#{tableVar.PBEN_REF_ID1}" />
+																	</rich:column>
+																	<!-- 	<rich:column filterBy="#{tableVar.PBEN_REF_ID2}"
+														filterEvent="onkeyup" id="COLUMN_PBEN_REF_ID2"
+														rendered="true" sortBy="#{tableVar.PBEN_REF_ID2}"
+														styleClass="#{tableVar.rowSelected}">
+														<f:facet name="header">
+															<h:outputText id="COLUMN_CAPTION_PBEN_REF_ID2"
+																styleClass="forumRowHighlight"
+																value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_REF_ID2$caption}" />
+														</f:facet>
+														<h:outputText id="LINK_CAPTION_PBEN_REF_ID2"
+															value="#{tableVar.PBEN_REF_ID2}" />
+													</rich:column>   -->
+																	<f:facet name="footer">
+																		<h:panelGroup id="PANEL_GROUP_GRID_FOOTER">
+																			<rich:datascroller align="right"
+																				id="PT_IL_POL_BENEFICIARY_SCROLL" page="1" />
+																			<a4j:commandButton  oncomplete="loadDoc()"
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.addRow}"
+																				id="addRow" immediate="true" accesskey="c"
+																				reRender="PT_IL_POL_BENEFICIARY_PANEL,errorPanel"
+																				style="width:80px;" styleClass="button"
+																				value="#{commonmsg.addNewButtonCaption}" />
+																			<a4j:commandButton  oncomplete="loadDoc()"
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.deleteRow}"
+																				id="deleteRow" immediate="true" accesskey="r"
+																				reRender="PT_IL_POL_BENEFICIARY_PANEL,errorPanel"
+																				style="width:80px;" styleClass="button"
+																				value="#{commonmsg.deleteButtonCaption}" />
+																			<!-- Modified by saranya for Avoidance of POST button required in all screens on 22-02-2017 -->
+																			<a4j:commandButton  oncomplete="loadDoc()"
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.postRecord}"
+																				id="postRecord" accesskey="p"
+																				reRender="PT_IL_POL_BENEFICIARY_PANEL,errorPanel"
+																				style="width:80px;" styleClass="button" value="Save" />
+																			<!-- End -->
+																		</h:panelGroup>
+																	</f:facet>
+																</rich:dataTable>
+															</rich:panel></td>
+													</tr>
+													<tr>
+														<td colspan="3">
+															<ul class="noborder stylesetlist" id="bordertable1"
+																width="100%">
+																<li id="PBEN_SR_NO_LI"><span
+																	id="PBEN_SR_NO_LI_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_SR_NO_LABEL}"
+																			for="PBEN_SR_NO" id="PBEN_SR_NO_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_SR_NO$caption}" />
+																</span> <span id="PBEN_SR_NO_LI_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_SR_NO}"
+																			disabled="true" id="PBEN_SR_NO" maxlength="6"
+																			rendered="true" required="false" styleClass="inputsmall"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_SR_NO$tooltip}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_SR_NO}" />
+																</span></li>
+																<li id="PBEN_BNF_TYPE_LI"><span
+																	id="PBEN_BNF_TYPE_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_BNF_TYPE_LABEL}"
+																			for="PBEN_BNF_TYPE" id="PBEN_BNF_TYPE_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_BNF_TYPE$caption}" />
+																		<h:graphicImage id="AUTOID_43_TYPE" style=""
+																			styleClass="searchimg"
+																			value="./../../images/mandatory.gif" /></span> <span
+																	id="PBEN_BNF_TYPE_CSPAN"> <!-- <h:inputText
+														binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_BNF_TYPE}"
+														id="PBEN_BNF_TYPE" maxlength="1" rendered="true"
+														required="true" styleClass="inputsmall"
+														title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_BNF_TYPE$tooltip}"
+														validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_BNF_TYPE_WHEN_VALIDATE_ITEM}"
+														value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_BNF_TYPE}">
+														<a4j:support
+															actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="PBEN_BNF_TYPE_a4jSupport"
+															immediate="true"
+															reRender="errorPanel,UI_M_PBEN_TYPE_DESC,PBEN_RELATION_CODE_required">
+														</a4j:support>
+													</h:inputText> --> <!-- Changed by Raja on 3/3/2016 for MIMC code hide and enable BankBranch,City fields.Add UI_M_CITY_CODE,UI_M_BRANCH_CODE,
+UI_M_BANK_CODE,COMP_UI_M_BANK_CODE_DESC,COMP_UI_M_BRANCH_CODE_DESC,COMP_UI_M_CITY_CODE_DESC(Start) -->
+
+																		<!-- change the validator method ane reRender by R. Raja on 02-12-2016 for RM018T - FSD_IL_ZB Life_020-Beneficiary and Assignee -->
+																		<!-- reRender="errorPanel,UI_M_CITY_CODE_SUGGESTION_BOX,UI_M_PBEN_TYPE_DESC,PBEN_RELATION_CODE_required,
+															UI_M_CITY_CODE,PBEN_RELATION_CODE,UI_M_PBEN_RELATION_DESC,PBEN_RELATION_CODE_SUGGESTION_BOX,UI_M_BRANCH_CODE,
+															PBEN_AGE,PBEN_CATG_CODE,UI_M_BANK_CODE,UI_M_BANK_CODE_SUGGESTION_BOX"> -->
+																		<!-- validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_BNF_TYPE_WHEN_VALIDATE_ITEM}" -->
+																	
+																	<!-- onchange added by Janani on 02.04.2018 for KIC -->
+																	
+																		<h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_BNF_TYPE}"
+																			id="PBEN_BNF_TYPE" maxlength="1" rendered="true"
+																			required="true" styleClass="inputsmall"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_BNF_TYPE$tooltip}"
+																		validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.Validate_type}"	
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_BNF_TYPE}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="PBEN_BNF_TYPE_a4jSupport"
+																				immediate="true"
+																				reRender="errorPanel,UI_M_CITY_CODE_SUGGESTION_BOX,UI_M_PBEN_TYPE_DESC,PBEN_RELATION_CODE_required,
+															UI_M_CITY_CODE,PBEN_RELATION_CODE,UI_M_PBEN_RELATION_DESC,PBEN_RELATION_CODE_SUGGESTION_BOX,UI_M_BRANCH_CODE,
+															PBEN_AGE,PBEN_CATG_CODE,UI_M_BANK_CODE,UI_M_BANK_CODE_SUGGESTION_BOX,PBEN_PERC,PBEN_REF_ID1_LABEL,UI_M_BANK_CODE_required,
+															UI_M_BRANCH_CODE_required,PBEN_REF_ID1,COMP_PBEN_DOB_required,PBEN_DOB,COMP_PBEN_AGE_required,PBEN_BNF_NAME,PBEN_GUARDIAN_NAME,PBEN_ACNT_NO,PBEN_EMAIL,PBEN_REMARKS,COMP_PBEN_NAME_MAND,UI_M_ASH_PBEN_REF_ID1_LOV">
+																			</a4j:support>
+																			
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onchange" id="PBEN_BNF_TYPE_a4jSupport1"
+																				immediate="true"
+																				reRender="errorPanel,UI_M_CITY_CODE_SUGGESTION_BOX,UI_M_PBEN_TYPE_DESC,PBEN_RELATION_CODE_required,
+															UI_M_CITY_CODE,PBEN_RELATION_CODE,UI_M_PBEN_RELATION_DESC,PBEN_RELATION_CODE_SUGGESTION_BOX,UI_M_BRANCH_CODE,
+															PBEN_AGE,PBEN_CATG_CODE,UI_M_BANK_CODE,UI_M_BANK_CODE_SUGGESTION_BOX,PBEN_PERC,PBEN_REF_ID1_LABEL,UI_M_BANK_CODE_required,
+															UI_M_BRANCH_CODE_required,PBEN_REF_ID1,COMP_PBEN_DOB_required,PBEN_DOB,COMP_PBEN_AGE_required,PBEN_BNF_NAME,PBEN_GUARDIAN_NAME,PBEN_ACNT_NO,PBEN_EMAIL,PBEN_REMARKS,COMP_PBEN_NAME_MAND">
+																			</a4j:support>
+																		</h:inputText> <!-- End --> <h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_PBEN_TYPE_DESC}"
+																			disabled="true" id="UI_M_PBEN_TYPE_DESC"
+																			maxlength="30" rendered="true" required="false"
+																			styleClass="input"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$UI_M_PBEN_TYPE_DESC$tooltip}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_PBEN_TYPE_DESC}">
+																		</h:inputText>
+																		<h:graphicImage id="GRAPH_IMG_SUGG_PBEN_BNF_TYPE"
+																			style="" styleClass="searchimg"
+																			value="./../../images/Lov.gif" /> <rich:suggestionbox
+																			for="PBEN_BNF_TYPE" height="300"
+																			id="PBEN_BNF_TYPE_SUGGESTION_BOX" immediate="true"
+																			suggestionAction="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.prepareSuggestionList_PBEN_BNF_TYPE}"
+																			var="PBEN_BNF_TYPE_LOV" width="250">
+																			<h:column>
+																				<h:outputText id="SUGG_COL_0_PBEN_BNF_TYPE"
+																					value="#{PBEN_BNF_TYPE_LOV.code}" />
+																			</h:column>
+																			<h:column>
+																				<h:outputText id="SUGG_COL_1_PBEN_BNF_TYPE"
+																					value="#{PBEN_BNF_TYPE_LOV.name}" />
+																			</h:column>
+																			<h:column>
+																				<h:outputText id="SUGG_COL_2_PBEN_BNF_TYPE"
+																					value="#{PBEN_BNF_TYPE_LOV.name1}" />
+																			</h:column>
+																		</rich:suggestionbox></span></li>
+																		<!-- Newly added by pidugu raj dt: 22-09-2020 for Alliance IL -->
+																		<li id="PBEN_BENF_ID_TYPE_LI">
+																	<span id="PBEN_BENF_ID_TYPE_LSPAN"><h:outputLabel
+														binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_BENEF_ID_TYPE_LABEL}"
+														for="PBEN_BENF_ID_TYPE" id="PBEN_BENF_ID_TYPE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_POL_BENEFICIARY$BENEF_ID_TYPE$caption}" />
+													<h:graphicImage id="AUTOID_PBEN_BENF_ID_TYPE" style=""
+														styleClass="searchimg" rendered="false"
+														value="./../../images/mandatory.gif" /></span>
+															<span
+															id="PBEN_BENF_ID_TYPE_CSPAN">
+															<h:selectOneMenu
+																					binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_BENEF_ID_TYPE}"
+																					id="PBEN_BENF_ID_TYPE" rendered="true"
+																					required="false" styleClass="input"
+																					onfocus="currFocus('PT_IL_POL_BENEFICIARY:PBEN_BENF_ID_TYPE')"
+																					title="#{message.PILT002_APAC$PT_IL_POL_POL_BENEFICIARY$GUARD_ID_TYPE$tooltip}"
+																					validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_BENF_ID_TYPE_WHEN_VALIDATE_ITEM}"
+																					value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_BENEF_ID_TYPE}">
+																					<f:selectItems id="PBEN_BENF_ID_TYPE_FLAG"
+																						value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.itemListBENF_IC_TYPE}" />
+
+																					<a4j:support
+																						actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																						event="onblur" id="PBEN_BENF_ID_TYPE_a4jSupport"
+																						 immediate="true"
+																						reRender="errorPanel">
+																					</a4j:support>
+																				</h:selectOneMenu>
+															</span>
+															</li>
+																		<!--End  Newly added by pidugu raj dt: 22-09-2020 for Alliance IL -->
+																		
+																<li id="PBEN_REF_ID1_LI"><span
+																	id="PBEN_REF_ID1_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REF_ID1_LABEL}"
+																			for="PBEN_REF_ID1" id="PBEN_REF_ID1_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_REF_ID1$caption}" />
+																			
+																			<!-- binding added by Janani on 02.04.2018 for KIC -->
+																			<h:graphicImage id="AUTOID_43_PERCE1" style=""
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REF_ID1_MAND}"
+																			styleClass="searchimg"
+																			value="./../../images/mandatory.gif" />
+																			
+																			<!-- End -->
+																</span> <span id="PBEN_REF_ID1_CSPAN"> <!-- change the validator method ane reRender by R. Raja on 02-12-2016 for RM018T - FSD_IL_ZB Life_020-Beneficiary and Assignee -->
+																		<!-- reRender="errorPanel,PBEN_CATG_CODE,PBEN_CATG_CODE_SUGGESTION_BOX,UI_M_CATG_DESC,PBEN_AGE"> -->
+																		<!-- validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_REF_ID1_WHEN_VALIDATE_ITEM}" -->
+																		<h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REF_ID1}"
+																			id="PBEN_REF_ID1" maxlength="20" rendered="true"
+																			onfocus="currFocus('PT_IL_POL_BENEFICIARY:PBEN_REF_ID1')"
+																			required="false" styleClass="input"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_REF_ID1$tooltip}"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_REF_ID1_WHEN_VALIDATE_ITEM}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_REF_ID1}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onchange" id="PBEN_REF_ID1_a4jSupport"
+																				immediate="true"
+																				reRender="errorPanel,PBEN_CATG_CODE,PBEN_CATG_CODE_SUGGESTION_BOX,
+															UI_M_CATG_DESC,PBEN_AGE,PBEN_BNF_CODE,PBEN_BNF_NAME,
+															PBEN_ADDRESS_1,PBEN_ADDRESS_2,PBEN_ADDRESS_3,PBEN_ADDRESS_5,PBEN_ADDRESS_4,UI_M_CITY_CODE,UI_M_BANK_CODE,
+															PBEN_ACNT_NO,PBEN_DOB,UI_M_BANK_CODE_SUGGESTION_BOX,UI_M_CITY_CODE_SUGGESTION_BOX,
+															UI_M_CITY_CODE_DESC,UI_M_BANK_CODE_DESC,UI_M_BRANCH_CODE,PBEN_EMAIL,PBEN_GUARDIAN_NAME,PBEN_GUARDIAN_NAME_required">
+																			</a4j:support>
+																			<!-- Added by Ganesh on 27-10-2017 for ssp call id ZBLIFE-1437658 -->
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="PBEN_REF_ID1_a4jSupport1"
+																				immediate="true"
+																				reRender="errorPanel,PBEN_CATG_CODE,PBEN_CATG_CODE_SUGGESTION_BOX,
+															UI_M_CATG_DESC,PBEN_AGE,PBEN_BNF_CODE,PBEN_BNF_NAME,
+															PBEN_ADDRESS_1,PBEN_ADDRESS_2,PBEN_ADDRESS_3,PBEN_ADDRESS_5,PBEN_ADDRESS_4,UI_M_CITY_CODE,UI_M_BANK_CODE,
+															PBEN_ACNT_NO,PBEN_DOB,UI_M_BANK_CODE_SUGGESTION_BOX,UI_M_CITY_CODE_SUGGESTION_BOX,
+															UI_M_CITY_CODE_DESC,UI_M_BANK_CODE_DESC,UI_M_BRANCH_CODE,PBEN_EMAIL,PBEN_GUARDIAN_NAME,PBEN_GUARDIAN_NAME_required">
+																			</a4j:support>
+																			<!-- End -->
+																		</h:inputText> <!-- /* changed by R. Raja on 02-12-2016 for RM018T - FSD_IL_ZB Life_020-Beneficiary and Assignee*/ -->
+
+
+																		<h:graphicImage id="GRAPH_IMG_SUGG_PBEN_CATG_CODE1"
+																			style="" styleClass="searchimg" rendered="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REF_ID1.rendered}"
+																			value="./../../images/Lov.gif" /> <rich:suggestionbox
+																			for="PBEN_REF_ID1" height="200"
+																			id="UI_M_ASH_PBEN_REF_ID1_LOV"
+																			suggestionAction="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.lovASH_CITIZEN_CODE}"
+																			var="panelCode" width="250">
+																			<h:column id="COLUMN_SUGG_1">
+																				<h:outputText id="AUTOID_321"
+																					value="#{panelCode.code}" />
+																			</h:column>
+																			<h:column id="COLUMN_SUGG_2">
+																				<h:outputText id="AUTOID_332"
+																					value="#{panelCode.name}" />
+																			</h:column>
+
+																		</rich:suggestionbox> <!-- /*End*/ -->
+																		<!-- added by Ameen on 15-02-2018 for KIC -->
+																		<h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REF_ID1_NEW}"
+																			id="PBEN_REF_ID1_NEW" maxlength="20" rendered="true"
+																			onfocus="currFocus('PT_IL_POL_BENEFICIARY:PBEN_REF_ID1')"
+																			required="false" styleClass="input"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_REF_ID1$tooltip}"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_REF_ID1_WHEN_VALIDATE_ITEM}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_REF_ID1}">
+																			
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="PBEN_REF_ID1_a4jSupport01"
+																				immediate="true"
+																				reRender="errorPanel,PBEN_CATG_CODE,PBEN_CATG_CODE_SUGGESTION_BOX,
+																					UI_M_CATG_DESC,PBEN_AGE,PBEN_BNF_CODE,PBEN_BNF_NAME,
+																					PBEN_ADDRESS_1,PBEN_ADDRESS_2,PBEN_ADDRESS_3,PBEN_ADDRESS_5,PBEN_ADDRESS_4,UI_M_CITY_CODE,UI_M_BANK_CODE,
+																					PBEN_ACNT_NO,PBEN_DOB,UI_M_BANK_CODE_SUGGESTION_BOX,UI_M_CITY_CODE_SUGGESTION_BOX,
+																					UI_M_CITY_CODE_DESC,UI_M_BANK_CODE_DESC,UI_M_BRANCH_CODE,PBEN_EMAIL,PBEN_GUARDIAN_NAME,PBEN_GUARDIAN_NAME_required">
+																			</a4j:support>
+																		</h:inputText>
+																		<!-- End -->
+																</span></li>
+																<li id="PBEN_BNF_NAME_LI"><span
+																	id="PBEN_BNF_NAME_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_BNF_NAME_LABEL}"
+																			for="PBEN_BNF_NAME" id="PBEN_BNF_NAME_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_BNF_NAME$caption}" />
+																	
+																	<!-- binding added by Janani on 02.04.2018 for KIC -->
+																		<h:graphicImage id="AUTOID_43_BENE_NAME" style=""
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_NAME_MAND}"
+																			styleClass="searchimg"
+																			value="./../../images/mandatory.gif" />
+																			
+																			<!-- End -->
+																			</span> <span
+																	id="PBEN_BNF_NAME_CSPAN"> <!-- changed by R. Raja on 02-12-2016 for RM018T - FSD_IL_ZB Life_020-Beneficiary and Assignee -->
+
+																		<h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_BNF_CODE}"
+																			id="PBEN_BNF_CODE" maxlength="240" rendered="true"
+																			width="60px" required="true" styleClass="inputsmall"
+																			disabled="true"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_BNF_CODE}">
+																		</h:inputText> <!-- End --> <h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_BNF_NAME}"
+																			id="PBEN_BNF_NAME" maxlength="240" rendered="true"
+																			required="true" styleClass="input" disabled="true"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_BNF_NAME$tooltip}"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.validatorPBEN_BNF_NAME}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_BNF_NAME}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="PBEN_BNF_a4jSupport"
+																				immediate="true" reRender="errorPanel">
+																			</a4j:support>
+																		</h:inputText>
+
+																</span></li>
+																<li id="PBEN_DOB_LI">
+																	<!-- <span class="evenrowright"><h:outputLabel
+														binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REF_ID2_LABEL}"
+														for="PBEN_REF_ID2" id="PBEN_REF_ID2_LABEL"
+														rendered="false" styleClass="label"
+														value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_REF_ID2$caption}" />
+													<h:graphicImage id="AUTOID_43ii_PERCE" style=""
+														styleClass="searchimg" rendered="false"
+														value="./../../images/mandatory.gif" /></span>
+													<span class="evenrow"><h:inputText
+													    onfocus="currFocus('PT_IL_POL_BENEFICIARY:PBEN_REF_ID2')"
+														binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REF_ID2}"
+														id="PBEN_REF_ID2" maxlength="60" rendered="false"
+														styleClass="input" required="false"
+														title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_REF_ID2$tooltip}"
+														validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_REF_ID2_WHEN_VALIDATE_ITEM}"
+														value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_REF_ID2}">
+														<a4j:support
+															actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="PBEN_REF_ID2_a4jSupport"
+															oncomplete="setFocus('PT_IL_POL_BENEFICIARY:PBEN_CATG_CODE','PT_IL_POL_BENEFICIARY:PBEN_REF_ID2')"
+															immediate="true" reRender="errorPanel">
+														</a4j:support>
+													</h:inputText></span> --> <!-- changed by R. Raja on 02-12-2016 for RM018T - FSD_IL_ZB Life_020-Beneficiary and Assignee -->
+
+																	<span id="PBEN_DOB_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_DOB_LABEL}"
+																			for="PBEN_DOB" id="PBEN_DOB_LABEL" rendered="true"
+																			styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_DOB$caption}" />
+																			<h:outputText id="COMP_PBEN_DOB_required"
+																			styleClass="mandatory"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_DOB.required?'*':'' }" />
+																			</span>
+																	<span id="PBEN_DOB_CSPAN"><rich:calendar
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_DOB}"
+																			datePattern="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.datePattern}"
+																			enableManualInput="true" id="PBEN_DOB"
+																			inputClass="calendarinput" inputSize="40"
+																			rendered="true" required="false" disabled="false"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.validatorPBEN_DOB}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_DOB}">
+																			<!-- onsubmit Added by saritha on 05-04-2018 for KIC Calendar Dispaly -->
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="oninputblur" id="PBEN_DOB_AJAX_SUPPORT"
+																				immediate="true" 
+																				onsubmit="formatDate('PT_IL_POL_BENEFICIARY:PBEN_DOB')"
+																				reRender="errorPanel,PBEN_AGE,PBEN_GUARDIAN_NAME_required" />
+																			<!-- End -->
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="oninputchanged" id="PBEN_DOB_AJAX_SUPPORT1"
+																				immediate="true" reRender="errorPanel,PBEN_AGE,PBEN_GUARDIAN_NAME_required" />
+																		</rich:calendar></span> <!-- End -->
+																</li>
+																<li id="PBEN_AGE_LI"><span id="PBEN_AGE_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_AGE_LABEL}"
+																			for="PBEN_AGE" id="PBEN_AGE_LABEL" rendered="true"
+																			styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_AGE$caption}" />
+																			<h:outputText id="COMP_PBEN_AGE_required"
+																			styleClass="mandatory"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_AGE.required?'*':'' }" />
+
+																</span> <span id="PBEN_AGE_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_AGE}"
+																			id="PBEN_AGE" maxlength="3" rendered="true"
+																			styleClass="inputNumeric" disabled="true" style="width: 25%;"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_AGE$tooltip}"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_AGE_WHEN_VALIDATE_ITEM}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_AGE}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="PBEN_AGE_a4jSupport"
+																				immediate="true"
+																				reRender="errorPanel,PBEN_GUARDIAN_NAME,PBEN_GUARDIAN_NAME_required">
+																			</a4j:support>
+																		</h:inputText></span></li>
+																<li id="PBEN_CATG_CODE_LI"><span
+																	id="PBEN_CATG_CODE_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_CATG_CODE_LABEL}"
+																			for="PBEN_CATG_CODE" id="PBEN_CATG_CODE_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_CATG_CODE$caption}" />
+
+																</span> <span id="PBEN_CATG_CODE_CSPAN"><h:inputText
+																			onfocus="currFocus('PT_IL_POL_BENEFICIARY:PBEN_CATG_CODE')"
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_CATG_CODE}"
+																			id="PBEN_CATG_CODE" maxlength="12" rendered="true"
+																			disabled="true" styleClass="inputsmall"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_CATG_CODE$tooltip}"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_CATG_CODE_WHEN_VALIDATE_ITEM}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_CATG_CODE}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="PBEN_CATG_CODE_a4jSupport"
+																				immediate="true"
+																				reRender="errorPanel,UI_M_CATG_DESC">
+																			</a4j:support>
+																		</h:inputText> <h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_CATG_DESC}"
+																			disabled="true" id="UI_M_CATG_DESC" maxlength="30"
+																			rendered="true" required="false" styleClass="input"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$UI_M_CATG_DESC$tooltip}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_CATG_DESC}">
+																		</h:inputText> <h:graphicImage id="GRAPH_IMG_SUGG_PBEN_CATG_CODE"
+																			style="" styleClass="searchimg"
+																			value="./../../images/Lov.gif" /> <rich:suggestionbox
+																			for="PBEN_CATG_CODE" height="50"
+																			id="PBEN_CATG_CODE_SUGGESTION_BOX" immediate="true"
+																			suggestionAction="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.prepareSuggestionList_PBEN_CATG_CODE}"
+																			var="PBEN_CATG_CODE_LOV" width="200">
+																			<h:column>
+																				<h:outputText id="SUGG_COL_0_PBEN_CATG_CODE"
+																					value="#{PBEN_CATG_CODE_LOV.code}" />
+																			</h:column>
+																			<h:column>
+																				<h:outputText id="SUGG_COL_1_PBEN_CATG_CODE"
+																					value="#{PBEN_CATG_CODE_LOV.name}" />
+																			</h:column>
+																			<h:column>
+																				<h:outputText id="SUGG_COL_2_PBEN_CATG_CODE"
+																					value="#{PBEN_CATG_CODE_LOV.name1}" />
+																			</h:column>
+																		</rich:suggestionbox></span></li>
+																
+																<li id="PBEN_RELATION_CODE_LI"><span
+																	id="PBEN_RELATION_CODE_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_RELATION_CODE_LABEL}"
+																			for="PBEN_RELATION_CODE"
+																			id="PBEN_RELATION_CODE_LABEL" rendered="true"
+																			styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_RELATION_CODE$caption}" />
+																		<h:outputText id="PBEN_RELATION_CODE_required"
+																			styleClass="mandatory"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_RELATION_CODE.required?'*':'' }" />
+																</span> <span id="PBEN_RELATION_CODE_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_RELATION_CODE}"
+																			id="PBEN_RELATION_CODE" maxlength="12"
+																			onfocus="currFocus('PT_IL_POL_BENEFICIARY:PBEN_RELATION_CODE')"
+																			rendered="true" styleClass="inputsmall"
+																			required="false"
+																			
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_RELATION_CODE$tooltip}"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_RELATION_CODE_WHEN_VALIDATE_ITEM}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_RELATION_CODE}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="PBEN_RELATION_CODE_a4jSupport"
+																				immediate="true" focus="PBEN_RELATION_OTHER"
+																				reRender="errorPanel,UI_M_PBEN_RELATION_DESC,PBEN_PERC,PBEN_RELATION_OTHER">
+																			</a4j:support>
+																		</h:inputText> <h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_PBEN_RELATION_DESC}"
+																			disabled="true" id="UI_M_PBEN_RELATION_DESC"
+																			maxlength="30" rendered="true" required="false"
+																			styleClass="input"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$UI_M_PBEN_RELATION_DESC$tooltip}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_PBEN_RELATION_DESC}">
+																		</h:inputText> <h:graphicImage
+																			id="GRAPH_IMG_SUGG_PBEN_RELATION_CODE" style=""
+																			styleClass="searchimg" value="./../../images/Lov.gif" />
+																		<rich:suggestionbox for="PBEN_RELATION_CODE"
+																			height="300" id="PBEN_RELATION_CODE_SUGGESTION_BOX"
+																			immediate="true"
+																			suggestionAction="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.prepareSuggestionList_PBEN_RELATION_CODE}"
+																			var="PBEN_RELATION_CODE_LOV" width="250">
+																			<h:column>
+																				<h:outputText id="SUGG_COL_0_PBEN_RELATION_CODE"
+																					value="#{PBEN_RELATION_CODE_LOV.code}" />
+																			</h:column>
+																			<h:column>
+																				<h:outputText id="SUGG_COL_1_PBEN_RELATION_CODE"
+																					value="#{PBEN_RELATION_CODE_LOV.name}" />
+																			</h:column>
+																			<h:column>
+																				<h:outputText id="SUGG_COL_2_PBEN_RELATION_CODE"
+																					value="#{PBEN_RELATION_CODE_LOV.name1}" />
+																			</h:column>
+																		</rich:suggestionbox></span></li>
+																		
+																		
+																		<!-- Newly added by piduguraj dt: 06-10-2020 for Alliance IL -->
+																		<li id="PBEN_RELATION_OTHER_LI"><span
+																	id="PBEN_RELATION_OTHER_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REL_OTHER_LABEL}"
+																			for="PBEN_RELATION_OTHER"
+																			id="PBEN_RELATION_OTHER_LABEL" rendered="true"
+																			styleClass="label"
+																			value="Other Relative" />
+																		<!-- <h:outputText id="PBEN_RELATION_OTHER_required"
+																			styleClass="mandatory"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_COMP_PBEN_REL_OTHER.required?'*':'' }" /> -->
+																</span> <span id="PBEN_RELATION_OTHER_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REL_OTHER}"
+																			id="PBEN_RELATION_OTHER" maxlength="12"
+																			onfocus="currFocus('PT_IL_POL_BENEFICIARY:PBEN_RELATION_OTHER')"
+																			rendered="true" styleClass="inputsmall"
+																			required="false"
+																			title="Other Relative"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REL_OTHER_WHEN_VALIDATE_ITEM}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_REL_OTHER}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="PBEN_RELATION_OTHER_a4jSupport"
+																				immediate="true" 
+																				reRender="errorPanel,PBEN_RELATION_OTHER">
+																			</a4j:support>
+																		</h:inputText>
+																		</span>
+																		</li>
+																		<!-- Newly added by piduguraj dt: 06-10-2020 for Alliance IL -->
+																		
+																		
+																		
+																		
+																		
+																<li id="PBEN_PERC_LI"><span id="PBEN_PERC_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_PERC_LABEL}"
+																			for="PBEN_PERC" id="PBEN_PERC_LABEL" rendered="true"
+																			styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_PERC$caption}" />
+																		<h:graphicImage id="AUTOID_43_PERCE" style=""
+																			styleClass="searchimg"
+																			value="./../../images/mandatory.gif" /></span> <span
+																	id="PBEN_PERC_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_PERC}"
+																			id="PBEN_PERC" maxlength="7" rendered="true"
+																			onfocus="currFocus('PT_IL_POL_BENEFICIARY:PBEN_PERC')"
+																			required="true" styleClass="inputNumeric" style="width: 25%;"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_PERC$tooltip}"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_PERC_WHEN_VALIDATE_ITEM}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_PERC}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="PBEN_PERC_a4jSupport"
+																				immediate="true" reRender="errorPanel">
+																			</a4j:support>
+																		</h:inputText></span></li>
+																<li id="PBEN_GUARDIAN_NAME_LI"><span
+																	id="PBEN_GUARDIAN_NAME_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_GUARDIAN_NAME_LABEL}"
+																			for="PBEN_GUARDIAN_NAME"
+																			id="PBEN_GUARDIAN_NAME_LABEL" rendered="true"
+																			styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_GUARDIAN_NAME$caption}" />
+																		<h:outputText id="PBEN_GUARDIAN_NAME_required"
+																			styleClass="mandatory"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_GUARDIAN_NAME.required?'*':'' }" />
+																</span> 
+																<!-- Added by Ganesh on 27-10-2017 for ssp call id ZBLIFE-1437658 -->
+																<span id="PBEN_GUARDIAN_NAME_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_GUARDIAN_NAME}"
+																			id="PBEN_GUARDIAN_NAME" maxlength="60"  disabled="true"
+																			rendered="true" required="false" styleClass="input bigTextBox"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_GUARDIAN_NAME$tooltip}"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.validatePBEN_GUARDIAN_NAME}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_GUARDIAN_NAME}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="PBEN_GUARDIAN_NAME_a4jSupport"
+																				immediate="true" reRender="errorPanel">
+																			</a4j:support>
+																			</h:inputText>
+																			<!-- End -->
+																</span></li>
+																<li id="UI_M_BANK_CODE_LI">
+																	<!-- mandatory field commented by gopi for ZBILQC_12-JAN-2017_Issue_Flow on 17/01/17 -->
+																	<span id="UI_M_BANK_CODE_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_BANK_CODE_LABEL}"
+																			for="UI_M_BANK_CODE" id="UI_M_BANK_CODE_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$UI_M_BANK_CODE$caption}" />
+																			<h:outputText id="UI_M_BANK_CODE_required"
+																			styleClass="mandatory"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_BANK_CODE.required?'*':'' }" />
+																		<!-- <h:graphicImage  style="" styleClass="searchimg" value="./../../images/mandatory.gif" /> -->
+																</span> <span id="UI_M_BANK_CODE_CSPAN">
+																		<!-- <h:inputText
+														binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_BANK_CODE}"
+														disabled="true" id="UI_M_BANK_CODE" rendered="true"
+														required="true" styleClass="input" maxlength="16"
+														value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_BANK_CODE}">
+														 --> 
+														 
+														 <!-- Modified by Janani on 02.04.2018 for KIC -->
+														 
+														 <h:inputText
+																title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$UI_M_BANK_CODE$tooltip}"
+																binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_BANK_CODE}"
+																	id="UI_M_BANK_CODE" rendered="true"
+																			required="false" styleClass="inputsmall" maxlength="16"
+														validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.UI_M_BANK_CODE_WHEN_VALIDATE_ITEM}"
+													value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_BANK_CODE}">
+																			<a4j:support
+																	actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="AUTOID_UI_M_BANK_CODE"
+																				immediate="true"
+																				reRender="errorPanel,UI_M_BANK_CODE_DESC" />
+																		</h:inputText> <h:inputText
+																	binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_BANK_CODE_DESC}"
+																			disabled="true" id="UI_M_BANK_CODE_DESC"
+																			rendered="true" required="true" styleClass="input"
+																			maxlength="16"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$UI_M_BANK_CODE_DESC$tooltip}"
+											value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_BANK_CODE_DESC}" />
+
+
+																		<!-- Added by Raja on 8/3/2016 for hide MICR field (Start) -->
+																		
+																		<rich:suggestionbox for="UI_M_BANK_CODE" height="200"
+															id="UI_M_BANK_CODE_SUGGESTION_BOX"
+												suggestionAction="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.prepareSuggestionList_UI_M_BANK_CODE}"
+															var="panelCode" width="200">
+															<h:column id="COLUMN_SUGG_1AQC_2">
+																<h:outputText id="AUTOID_8WE5" value="#{panelCode.code}" />
+															</h:column>
+															<h:column id="COLUMN_SUGGX_Z2_3">
+																<h:outputText id="AUTOAID_8ZA6"
+																	value="#{panelCode.name}" />
+															</h:column>
+															<a4j:support ajaxSingle="true" event="onselect"
+																id="UI_M_BANK_CODE_DESC_SUGG_SUPPORT" immediate="true"
+																reRender="errorPanel,UI_M_BANK_CODE_DESC">
+																<f:setPropertyActionListener id="AUTOIDC_8C7"
+										target="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_BANK_CODE_DESC}"
+																	value="#{panelCode.name}" />
+															</a4j:support>
+														</rich:suggestionbox>
+																		
+																	
+														 
+													<!-- 	 <h:inputText
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$UI_M_BANK_CODE$tooltip}"
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_BANK_CODE}"
+																			id="UI_M_BANK_CODE" rendered="true"
+																			required="false" styleClass="inputsmall" maxlength="16"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.UI_M_BANK_CODE_WHEN_VALIDATE_ITEM}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_BANK_CODE}">
+
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="AUTOID_UI_M_BANK_CODE"
+																				immediate="true"
+																				reRender="errorPanel,UI_M_BANK_CODE_DESC" />
+																		</h:inputText> <h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_BANK_CODE_DESC}"
+																			disabled="true" id="UI_M_BANK_CODE_DESC"
+																			rendered="true" required="true" styleClass="input"
+																			maxlength="16"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$UI_M_BANK_CODE_DESC$tooltip}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_BANK_CODE_DESC}" />
+
+
+																		 Added by Raja on 8/3/2016 for hide MICR field (Start) 
+																		<rich:suggestionbox for="UI_M_BANK_CODE" height="300"
+																			id="UI_M_BANK_CODE_SUGGESTION_BOX" immediate="true"
+																			suggestionAction="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.prepareSuggestionList_UI_M_BANK_CODE}"
+																			var="UI_M_BANK_CODE_LOV" width="250">
+																			<h:column>
+																				<h:outputText id="SUGG_COL_0_UI_M_BANK_CODE"
+																					value="#{UI_M_BANK_CODE_LOV.code}" />
+																			</h:column>
+																			<h:column>
+																				<h:outputText id="SUGG_COL_1_UI_M_BANK_CODE"
+																					value="#{UI_M_BANK_CODE_LOV.name}" />
+																			</h:column>
+																			<h:column>
+																				<h:outputText id="SUGG_COL_2_UI_M_BANK_CODE"
+																					value="#{UI_M_BANK_CODE_LOV.name1}" />
+																			</h:column>
+
+																		</rich:suggestionbox> --> <!-- End -->
+																</span> <!-- release -->
+																</li>
+																<!--starting commented by gopi for hands on feed back points,serial no 12 in zb on 07/02/17-->
+																<li id="PBEN_ADDRESS_1_LI"><span
+																	id="PBEN_ADDRESS_1_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_1_LABEL}"
+																			for="PBEN_ADDRESS_1" id="PBEN_ADDRESS_1_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_1$caption}" />
+																</span> <span id="PBEN_ADDRESS_1_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_1}"
+																			id="PBEN_ADDRESS_1" maxlength="60" rendered="true"
+																			required="false" styleClass="input address"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_1$tooltip}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_ADDRESS_1}" />
+																</span></li>
+																<li id="PBEN_ADDRESS_2_LI"><span id="PBEN_ADDRESS_2_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_2_LABEL}"
+																			for="PBEN_ADDRESS_2" id="PBEN_ADDRESS_2_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_2$caption}" />
+																</span> <span id="PBEN_ADDRESS_2_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_2}"
+																			id="PBEN_ADDRESS_2" maxlength="60" rendered="true"
+																			required="false" styleClass="input address"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_2$tooltip}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_ADDRESS_2}" />
+																</span></li>
+																<li  id="PBEN_ADDRESS_3_LI"><span id="PBEN_ADDRESS_3_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_3_LABEL}"
+																			for="PBEN_ADDRESS_3" id="PBEN_ADDRESS_3_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_3$caption}" />
+																</span> <span id="PBEN_ADDRESS_3_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_3}"
+																			id="PBEN_ADDRESS_3" maxlength="60" rendered="true"
+																			required="false" styleClass="input address"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_3$tooltip}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_ADDRESS_3}" />
+																</span></li>
+																<li  id="PBEN_CITY_CODE_LI"><span id="PBEN_CITY_CODE_LSPAN"> <h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_CITY_CODE_LABEL}"
+																			for="UI_M_CITY_CODE" id="UI_M_CITY_CODE_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$UI_M_CITY_CODE$caption}" /></span>
+
+																	<span id="PBEN_CITY_CODE_CSPAN"> <h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_CITY_CODE}"
+																			disabled="false" id="UI_M_CITY_CODE" rendered="true"
+																			required="false" styleClass="input" maxlength="16"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$UI_M_CITY_CODE$tooltip}"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.UI_M_CITY_CODE_WHEN_VALIDATE_ITEM}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_CITY_CODE}">
+
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="AUTOID_UI_M_CITY_CODE"
+																				immediate="true"
+																				reRender="errorPanel,UI_M_CITY_CODE_DESC" />
+																		</h:inputText> <h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_CITY_CODE_DESC}"
+																			disabled="true" id="UI_M_CITY_CODE_DESC"
+																			rendered="true" required="false" styleClass="input"
+																			maxlength="16"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$UI_M_CITY_CODE_DESC$tooltip}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_CITY_CODE_DESC}" />
+
+																		<!-- Added by Raja on 8/3/2016 for hide MICR field (Start) -->
+
+																		<rich:suggestionbox for="UI_M_CITY_CODE" height="300"
+																			id="UI_M_CITY_CODE_SUGGESTION_BOX" immediate="true"
+																			suggestionAction="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.prepareSuggestionList_UI_M_CITY_CODE}"
+																			var="UI_M_CITY_CODE_LOV" width="250">
+																			<h:column>
+																				<h:outputText id="SUGG_COL_0_UI_M_CITY_CODE"
+																					value="#{UI_M_CITY_CODE_LOV.code}" />
+																			</h:column>
+																			<h:column>
+																				<h:outputText id="SUGG_COL_1_UI_M_CITY_CODE"
+																					value="#{UI_M_CITY_CODE_LOV.name}" />
+																			</h:column>
+																			<h:column>
+																				<h:outputText id="SUGG_COL_2_UI_M_CITY_CODE"
+																					value="#{UI_M_CITY_CODE_LOV.name1}" />
+																			</h:column>
+																		</rich:suggestionbox>
+																</span></li>
+																<!--end above lines commented by gopi for hands on feed back points,serial no 12 in zb on 07/02/17-->
+																<li id="PBEN_ACNT_NO_LI"><span
+																	id="PBEN_ACNT_NO_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ACNT_NO_LABEL}"
+																			for="PBEN_ACNT_NO" id="PBEN_ACNT_NO_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_ACNT_NO$caption}" /></span>
+																	<span id="PBEN_ACNT_NO_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ACNT_NO}"
+																			id="PBEN_ACNT_NO" rendered="true" styleClass="input"
+																			maxlength="16"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.validatePBEN_ACNT_NO}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_ACNT_NO}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="AUTOID_UI_M_ACNT_CODWE"
+																				immediate="true" reRender="errorPanel" />
+																		</h:inputText></span></li>
+																
+
+
+
+																<li id="UI_M_BRANCH_CODE_LI"><span
+																	id="UI_M_BRANCH_CODE_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_BRANCH_CODE_LABEL}"
+																			for="UI_M_BRANCH_CODE" id="UI_M_BRANCH_CODE_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$UI_M_BRANCH_CODE$caption}" />
+																	<h:outputText id="UI_M_BRANCH_CODE_required"
+																			styleClass="mandatory"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_BRANCH_CODE.required?'*':'' }" />  </span> <span
+																	id="UI_M_BRANCH_CODE_CSPAN"> <!-- Changed by Raja on 8/3/2016 for hide MICR field (Start) -->
+																		<!-- <h:inputText
+														binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_BRANCH_CODE}"
+														disabled="true" id="UI_M_BRANCH_CODE" rendered="true"
+														required="true" styleClass="input" maxlength="16"
+														title="#{message.PM006_A_APAC$PM_CUST_BANK_ACNT_DTLS$UI_M_BRANCH_CODE$tooltip}"
+														value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_BRANCH_CODE}">
+														<a4j:support
+															actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="AUTOID_UI_M_BRANCH_CODE"
+															immediate="true" reRender="errorPanel" />
+													</h:inputText> <h:inputText
+														binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_BRANCH_CODE_DESC}"
+														disabled="true" id="UI_M_BRANCH_CODE_DESC" rendered="true"
+														required="true" styleClass="input" maxlength="16"
+														title="#{message.PM006_A_APAC$PM_CUST_BANK_ACNT_DTLS$UI_M_BRANCH_CODE_DESC$tooltip}"
+														value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.UI_M_BRANCH_CODE_DESC}" />
+													 --> <h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_UI_M_BRANCH_CODE}"
+																			id="UI_M_BRANCH_CODE" rendered="true"
+																			required="false" styleClass="input bigTextBox"
+																			maxlength="16"
+																			title="#{message.PM006_A_APAC$PM_CUST_BANK_ACNT_DTLS$UI_M_BRANCH_CODE$tooltip}"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.validatePBEN_DIVISION}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_DIVISION}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="AUTOID_UI_M_BRANCH_CODE"
+																				immediate="true" reRender="errorPanel" />
+																		</h:inputText> <!-- End -->
+																</span></li>
+																
+																<!-- Added by Ameen on 15-03-2017 as per Vinoth sugg. to capture Nominee Email ID -->
+																<li id="PBEN_EMAIL_LI"><span id="PBEN_EMAIL_LSPAN">
+																		<h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_EMAIL_LABEL}"
+																			for="PBEN_EMAIL" id="PBEN_EMAIL_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_EMAIL$caption}" />
+																</span> <span id="PBEN_EMAIL_CSPAN"> <!-- delete the disabled attribute on 24-03-2017 for ZBILQC-1721815 -->
+																		<h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_EMAIL}"
+																			id="PBEN_EMAIL" rendered="true" required="false"
+																			styleClass="input bigTextBox"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_EMAIL$tooltip}"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.validatorPBEN_EMAIL}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_EMAIL}">
+
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="onblur" id="AUTOID_PBEN_EMAIL"
+																				immediate="true" reRender="errorPanel" />
+																		</h:inputText>
+																</span></li>
+																<!-- End -->
+																
+																<!-- Newly added by pidugu raj dt: 28-09-2020 for Beneficiary Mobile Number in Allliance IL -->
+																<li id="PBEN_MOBILE_LI">
+																<span id="PBEN_MOBILE_LSPAN">
+																<h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_MOBILE_NUMBER_LABEL}"
+																			for="COMP_PBEN_AREA_CODE" id="PBEN_MOBILE_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_POL_BENEFICIARY$PBEN_MOBILE_NUMBER$caption}" />
+																</span>
+																<span id="PBEN_MOBILE_CSPAN">
+																<h:inputText
+																										binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_AREA_CODE}"
+																										id="COMP_PBEN_AREA_CODE" maxlength="4"
+																										disabled="false" rendered="true"
+																										required="false" styleClass="inputsmall"
+																										title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_POL_BENEFICIARY$PBEN_AREA_CODE$tooltip}"
+																										validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_AREA_CODE_WHEN_VALIDATE_ITEM}"
+																										value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_AREA_CODE}">
+																										<a4j:support
+																											actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																											event="onblur" id="style_area_code"
+																											immediate="true" reRender="errorPanel" />
+																										</h:inputText>
+																									<h:inputText
+																										binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_MOBILE_NO}"
+																										id="COMP_PBEN_MOBILE_NO" maxlength="10"
+																										rendered="true" required="false"
+																										styleClass="input"
+																										title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_POL_BENEFICIARY$PBEN_AREA_CODE$tooltip}"
+																										validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_MOBILE_NO_WHEN_VALIDATE_ITEM}"
+																										value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_MOBILE_NO}">
+																										<a4j:support
+																											actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																											event="onblur" id="style_mobile_no"
+																											immediate="true" reRender="errorPanel" />
+
+																									</h:inputText></span>
+																</li>
+																<!-- End Newly added by pidugu raj dt: 28-09-2020 for Beneficiary Mobile Number in Allliance IL -->
+
+																<!-- added by R. Raja on 02-12-2016 for RM018T - FSD_IL_ZB Life_020-Beneficiary and Assignee -->
+																<li id="PBEN_EFF_FM_DT_LI"><span
+																	id="PBEN_EFF_FM_DT_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_EFF_FM_DT_LABEL}"
+																			for="PBEN_EFF_FM_DT" id="PBEN_EFF_FM_DT_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_EFF_FM_DT$caption}" /></span>
+																	<span id="PBEN_EFF_FM_DT_CSPAN"> <!-- /*disable deleted  by raja on 16-03-2017 for Query screen issue*/ -->
+																		<rich:calendar
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_EFF_FM_DT}"
+																			datePattern="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.datePattern}"
+																			enableManualInput="true" id="PBEN_EFF_FM_DT"
+																			inputClass="calendarinput" inputSize="40"
+																			rendered="true" required="true"
+																			oninputfocus="currFocus('PT_IL_POL_BENEFICIARY:PBEN_EFF_FM_DT')"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.validatePBEN_EFF_FM_DT}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_EFF_FM_DT}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="oninputblur" id="PBEN_EFF_FM_DT_AJAX_SUPPORT"
+																				immediate="true" reRender="errorPanel" />
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="oninputchanged"
+																				id="PBEN_EFF_FM_DT_AJAX_SUPPORT1" immediate="true"
+																				reRender="errorPanel" />
+																		</rich:calendar></span></li>
+																<li id="PBEN_EFF_TO_DT_LI"><span
+																	id="PBEN_EFF_TO_DT_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_EFF_TO_DT_LABEL}"
+																			for="PBEN_EFF_TO_DT" id="PBEN_EFF_TO_DT_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_EFF_TO_DT$caption}" />
+																</span> <span id="PBEN_EFF_TO_DT_CSPAN"> <!-- /*disable deleted  by raja on 16-03-2017 for Query screen issue*/ -->
+																		<rich:calendar
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_EFF_TO_DT}"
+																			datePattern="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POLICY_ACTION_BEAN.datePattern}"
+																			enableManualInput="true" id="PBEN_EFF_TO_DT"
+																			inputClass="calendarinput" inputSize="40"
+																			oninputfocus="currFocus('PT_IL_POL_BENEFICIARY:PBEN_EFF_TO_DT')"
+																			rendered="true" required="true"
+																			validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.validatePBEN_EFF_TO_DT}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_EFF_TO_DT}">
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="oninputblur" id="PBEN_EFF_TO_DT_AJAX_SUPPORT"
+																				immediate="true" reRender="errorPanel" />
+																			<a4j:support
+																				actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																				event="oninputchanged"
+																				id="PBEN_EFF_TO_DT_AJAX_SUPPORT1" immediate="true"
+																				reRender="errorPanel" />
+																		</rich:calendar>
+																</span></li>
+
+																<li id="PBEN_REMARKS_LI"><span
+																	id="PBEN_REMARKS_LI_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REMARKS_LABEL}"
+																			for="PBEN_REMARKS" id="PBEN_REMARKS_LABEL"
+																			rendered="true" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_REMARKS$caption}" />
+																</span> <span id="PBEN_REMARKS_LI_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_REMARKS}"
+																			id="PBEN_REMARKS" maxlength="2000" rendered="true"
+																			required="false" styleClass="input bigTextBox"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_REMARKS$tooltip}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_REMARKS}" />
+																</span></li>
+																
+																
+																
+																<li id="PBEN_GUARDIAN_NATN_ID_TYPE_LI">
+																	<span><h:outputLabel
+														binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_GUARDIAN_NATN_ID_TYPE_LABEL}"
+														for="PBEN_GUARDIAN_NATN_ID_TYPE" id="PBEN_GUARDIAN_NATN_ID_TYPE_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_POL_BENEFICIARY$GUARD_ID_TYPE$caption}" />
+													<h:graphicImage id="AUTOID_43ii_PERCE_TYPE" style=""
+														styleClass="searchimg" rendered="false"
+														value="./../../images/mandatory.gif" /></span>
+															<span>
+															<h:selectOneMenu
+																					binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_GUARDIAN_NATN_ID_TYPE}"
+																					id="PBEN_GUARDIAN_NATN_ID_TYPE" rendered="true"
+																					required="false" styleClass="input"
+																					onfocus="currFocus('PT_IL_POL_BENEFICIARY:PBEN_GUARDIAN_NATN_ID_TYPE')"
+																					title="#{message.PILT002_APAC$PT_IL_POL_POL_BENEFICIARY$GUARD_NATIONAL_ID_TYPE$tooltip}"
+																					validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_GUARDIAN_NATN_ID_TYPE_WHEN_VALIDATE_ITEM}"
+																					value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_GUARDIAN_ID_TYPE}">
+																					<f:selectItems id="SEL_ITEMS_CUST_AGE_PROOF_FLAG"
+																						value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.itemListGUARD_IC_TYPE}" />
+
+																					<a4j:support
+																						actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+																						event="onblur" id="PBEN_GUARDIAN_NATN_ID_TYPE_a4jSupport"
+																						 immediate="true"
+																						reRender="errorPanel">
+																					</a4j:support>
+																				</h:selectOneMenu>
+															</span>
+															</li>
+																
+																<!--  Newly added by pidugu raj dt: 16-09-2020 as suggested by kk for Alliance IL -->
+																<li id="PBEN_GUARDIAN_NATN_ID_LI">
+																	<span><h:outputLabel
+														binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_GUARDIAN_NATN_ID_LABEL}"
+														for="PBEN_GUARDIAN_NATN_ID" id="PBEN_GUARDIAN_NATN_ID_LABEL"
+														rendered="true" styleClass="label"
+														value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_GUARDIAN_ID$caption}" />
+													<h:graphicImage id="AUTOID_43ii_PERCE" style=""
+														styleClass="searchimg" rendered="false"
+														value="./../../images/mandatory.gif" /></span>
+													<span><h:inputText
+													    onfocus="currFocus('PT_IL_POL_BENEFICIARY:PBEN_GUARDIAN_NATN_ID')"
+														binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_GUARDIAN_NATN_ID}"
+														id="PBEN_GUARDIAN_NATN_ID" maxlength="20" rendered="true"
+														styleClass="input" required="false"
+														title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_GUARDIAN_ID$tooltip}"
+														validator="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PBEN_GUARDIAN_NATN_ID_WHEN_VALIDATE_ITEM}"
+														value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_GUARDIAN_NATN_ID}">
+														<a4j:support
+															actionListener="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.fireFieldValidation}"
+															event="onblur" id="PBEN_REF_ID2_a4jSupport"
+															oncomplete="setFocus('PT_IL_POL_BENEFICIARY:PBEN_CATG_CODE','PT_IL_POL_BENEFICIARY:PBEN_GUARDIAN_NATN_ID')"
+															immediate="true" reRender="errorPanel">
+														</a4j:support>
+													</h:inputText></span></li>
+																
+																<!--  added by raja on 06-01-2016 for ssp call id - ZBILQC-1718558  -->
+
+																<li id="PBEN_ADDRESS_5_LI"><span
+																	id="PBEN_ADDRESS_5_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_5_LABEL}"
+																			for="PBEN_ADDRESS_5" id="PBEN_ADDRESS_5_LABEL"
+																			rendered="false" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_5$caption}" />
+																</span> <span id="PBEN_ADDRESS_5_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_5}"
+																			id="PBEN_ADDRESS_5" maxlength="60" rendered="false"
+																			required="false" styleClass="input"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_5$tooltip}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_ADDRESS_5}" />
+																</span></li>
+																<li id="PBEN_ADDRESS_4_LI"><span
+																	id="PBEN_ADDRESS_4_LSPAN"><h:outputLabel
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_4_LABEL}"
+																			for="PBEN_ADDRESS_4" id="PBEN_ADDRESS_4_LABEL"
+																			rendered="false" styleClass="label"
+																			value="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_4$caption}" />
+																</span> <span id="PBEN_ADDRESS_4_CSPAN"><h:inputText
+																			binding="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.COMP_PBEN_ADDRESS_4}"
+																			id="PBEN_ADDRESS_4" maxlength="60" rendered="false"
+																			required="false" styleClass="input"
+																			title="#{message_PILT002_APAC.PILT002_APAC$PT_IL_POL_BENEFICIARY$PBEN_ADDRESS_4$tooltip}"
+																			value="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.PT_IL_POL_BENEFICIARY_BEAN.PBEN_ADDRESS_4}" />
+																</span></li>
+
+																<!-- End -->
+
+
+
+
+
+															</ul>
+														</td>
+													</tr>
+												</table>
+											</h:panelGroup></td>
+										<td />
+									</tr>
+								</table>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" width="100%"><rich:toolBar
+								id="TOOLBAR_FOOTER" styleClass="toolBarStyle" width="100%">
+								<rich:toolBarGroup id="TOOLBARGROUP_FOOTER" location="right"
+									styleClass="toolBarGroupStyle">
+									<!-- Modified by saranya for Avoidance of POST button required in all screens on 22-02-2017 -->
+									<h:commandLink id="SAVE_TOOL_FOOTER" rendered="false"
+										action="#{PILT002_APAC_COMPOSITE_ACTION.PT_IL_POL_BENEFICIARY_ACTION_BEAN.saveRecord}"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:commandButton id="SAVE_TOOL_IMAGE_FOOTER" accesskey="s"
+											styleClass="toolbarButtonStyle"
+											image="./../../images/save.gif" />
+										<h:outputText id="SAVE_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$save}" />
+									</h:commandLink>
+									<!-- End -->
+									<h:commandLink id="SAVENEXT_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="SAVENEXT_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/savenext.GIF" />
+										<h:outputText id="SAVENEXT_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$savenext}" />
+									</h:commandLink>
+									<h:commandLink id="FIRSTREC_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="FIRSTREC_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/firstrec.gif" />
+										<h:outputText id="FIRSTREC_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$firstrec}" />
+									</h:commandLink>
+									<h:commandLink id="PREVPAGE_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="PREVPAGE_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/prevpage.gif" />
+										<h:outputText id="PREVPAGE_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$prevpage}" />
+									</h:commandLink>
+									<h:commandLink id="NEXTPAGE_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="NEXTPAGE_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/nextpage.gif" />
+										<h:outputText id="NEXTPAGE_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$nextpage}" />
+									</h:commandLink>
+									<h:commandLink id="LASTRECORD_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="LASTRECORD_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/lastRecord.gif" />
+										<h:outputText id="LASTRECORD_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$lastRecord}" />
+									</h:commandLink>
+									<h:commandLink id="NAVIGATION_TOOL_FOOTER" rendered="false"
+										style="text-decoration:none"
+										styleClass="toolbarCommandLinkStyle">
+										<h:graphicImage id="NAVIGATION_TOOL_IMAGE_FOOTER"
+											styleClass="searchimg" value="./../../images/navigation.gif" />
+										<h:outputText id="NAVIGATION_TOOL_CAPTION_FOOTER"
+											styleClass="toolbaroutputTextStyle"
+											value="#{menumessage.jsf$header$image$navigation}" />
+									</h:commandLink>
+								</rich:toolBarGroup>
+
+								<rich:toolBarGroup id="TOOLBARGROUP_HEADER_WIZARD_BOTTOM"
+									location="right">
+									<w:wizardPanelFooter
+										binding="#{PILT002_APAC_COMPOSITE_ACTION.wizard.wizardPanelFooter}" />
+								</rich:toolBarGroup>
+							</rich:toolBar></td>
+					</tr>
+				</table>
+			</h:form>
+		</f:view>
+	</ui:define>
+</ui:composition>

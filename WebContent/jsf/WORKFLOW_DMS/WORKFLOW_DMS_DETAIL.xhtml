@@ -1,0 +1,207 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition  xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:jsp="http://java.sun.com/JSP/Page"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:a4j="http://richfaces.org/a4j"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core"
+      template="/jsf/include/template.xhtml">
+	<ui:define name="body">
+		<f:loadBundle basename="messageProperties_SSO" var="message" />
+		<f:view  locale="#{sessionScope['pageLocale']}">
+		<style type="text/css">
+		.rich-filter-input {
+width: 70px;
+}</style>
+				<h:form id="workflowdms">
+				<table class="noborder" width="100%" cellpadding="0" cellspacing="0">
+				<tr>
+						<td colspan="3" valign="top" width="100%">
+						<table class="noborder" width="100%">
+							<tr>
+								<td><rich:toolBar styleClass="toolBarStyle" width="100%">
+									<rich:toolBarGroup styleClass="toolBarGroupStyle">
+
+										<h:commandLink
+											action="#{HomeAction.WORKFLOW_DMS_ACTION.backBtnAction}"
+											id="AUTOID_1" immediate="true" style="text-decoration:none;background: url(../../images/back.png) left top no-repeat;display: block;padding: 3px 20px 3px;"
+											styleClass="toolbarCommandLinkStyle">
+											<!-- <h:commandButton id="PT_GL_CLAIM_GRPIS_BACKBTN" accesskey="b"
+												styleClass="toolbarButtonStyle"
+												image="./../../resources/images/back.gif" /> -->
+											<h:outputText id="AUTOID_3"
+												styleClass="toolbaroutputTextStyle"
+												value="#{menumessage.jsf$header$image$back}" />
+										</h:commandLink>
+									</rich:toolBarGroup>
+								</rich:toolBar></td>
+							</tr>
+						</table>
+						</td>
+					</tr>
+					<tr>
+						<td colspan="3" height="20" valign="top" width="100%"><rich:simpleTogglePanel
+							id="errorPanel" opened="false" switchType="client">
+							<f:facet name="header">
+								<h:outputText escape="true" id="err"
+									styleClass="#{HomeAction.WORKFLOW_DMS_ACTION.messageStyle}"
+									value="#{commonmsg.errorPanel$heading} #{HomeAction.WORKFLOW_DMS_ACTION.errorMap['current'] !=null? HomeAction.WORKFLOW_DMS_ACTION.errorMap['current']: HomeAction.WORKFLOW_DMS_ACTION.warningMap['current']}" />
+							</f:facet>
+							<h:outputText escape="false" id="errorMessages"
+								styleClass="ErrorMessages"
+								value="#{HomeAction.WORKFLOW_DMS_ACTION.errorMessages}" />
+							<h:messages id="msg"
+								rendered="#{HomeAction.WORKFLOW_DMS_ACTION.globalMsgRender}"
+								styleClass="ErrorMessages" />
+							<h:outputText escape="false" id="warningMessages"
+								styleClass="WarningMessages"
+								value="#{HomeAction.WORKFLOW_DMS_ACTION.warningMessages}" />
+						</rich:simpleTogglePanel></td>
+					</tr>
+					<tr>
+						<td colspan="3">
+							<rich:dataTable
+								border="1" cellpadding="5px" id="PolicyLedgerQuery" rows="15"
+								value="#{HomeAction.WORKFLOW_DMS_ACTION.pgiwList}"
+								var="colData" width="100%">
+								
+								<rich:column filterBy="#{colData.createUserDate}" filterEvent="onkeyup"
+									sortBy="#{colData.createUserDate}">
+									<f:facet name="header">
+										<h:outputText id="AUTOID_1"
+											value="Request From" />
+									</f:facet>
+									<h:commandLink
+										action="#{HomeAction.WORKFLOW_DMS_ACTION.executePolicyScreen}"
+										id="POL_CUST_CODE">
+										<h:outputText id="AUTOID_4_rPC" value="#{colData.createUserName}" />
+										<f:param name="PWTH_DOC_NO" value="#{colData.policyNumber}" />
+										<f:param name="OUT_COME" value="WORKFLOW_DMS_DETAIL"/>
+									</h:commandLink>
+								</rich:column>
+								<rich:column filterBy="#{colData.createUserName}" filterEvent="onkeyup"
+									sortBy="#{colData.createUserName}" >
+									<f:facet name="header">
+										<h:outputText id="AUTOID_POL_CUST_NAME"
+											value="Request Date" />
+									</f:facet>
+									<h:outputText id="AUTOID_2" value="#{colData.createUserDate}" />
+								</rich:column>
+				
+								<rich:column filterBy="#{colData.customerName}" filterEvent="onkeyup"
+									sortBy="#{colData.customerName}">
+									<f:facet name="header">
+										<h:outputText id="asdf"
+											value="Customer Name" />
+									</f:facet>
+									<h:outputText id="AUTOID_3_rPC" value="#{colData.customerName}" />
+								</rich:column>
+								
+								
+								
+								<rich:column filterBy="#{colData.divisionName}" filterEvent="onkeyup"
+									sortBy="#{colData.divisionName}" >
+									<f:facet name="header">
+									<!--#changed by raja on 24-07-2017 for ZBILQC-1724477-->
+									
+										<h:outputText id="asdf1"
+											value="Branch Name" />
+									</f:facet>
+									<h:outputText id="AUTOID_4_4PC" value="#{colData.divisionName}" />
+								</rich:column>
+								
+								
+								<rich:column filterBy="#{colData.fromDate}" filterEvent="onkeyup"
+									sortBy="#{colData.fromDate}" >
+									<f:facet name="header">
+										<h:outputText id="asdf5"
+											value="Policy From Date" />
+									</f:facet>
+									<h:outputText id="AUTOID_54_PC" value="#{colData.fromDate}" />
+								</rich:column>
+								
+								
+								<rich:column filterBy="#{colData.policyNumber}" filterEvent="onkeyup"
+									sortBy="#{colData.policyNumber}" >
+									<f:facet name="header">
+										<h:outputText id="asdf6"
+											value="Policy Number" />
+									</f:facet>
+									<h:outputText id="AUTOID_64_PC" value="#{colData.policyNumber}" />
+								</rich:column>
+								
+								
+								<rich:column filterBy="#{colData.productName}" filterEvent="onkeyup"
+									sortBy="#{colData.productName}"  >
+									<f:facet name="header">
+										<h:outputText id="asdf7"
+											value="Product Name" />
+									</f:facet>
+									<h:outputText id="AUTOID_74_PC" value="#{colData.productName}" />
+								</rich:column>
+								
+								
+								<rich:column filterBy="#{colData.quotationNumber}" filterEvent="onkeyup"
+									sortBy="#{colData.quotationNumber}" >
+									<f:facet name="header">
+										<h:outputText id="asdf8"
+											value="Proposal Number" />
+									</f:facet>
+									<h:outputText id="AUTOID_84_PC" value="#{colData.quotationNumber}" />
+								</rich:column>
+								
+								
+								<rich:column filterBy="#{colData.toDate}" filterEvent="onkeyup"
+									sortBy="#{colData.toDate}">
+									<f:facet name="header">
+										<h:outputText id="asdf9"
+											value="Policy To Date" />
+									</f:facet>
+									<h:outputText id="AUTOID_94_PC" value="#{colData.toDate}" />
+								</rich:column>
+								<rich:column  filterBy="#{colData.UI_M_TASK_ASSIGNED_DT}" filterEvent="onkeyup"
+									sortBy="#{colData.UI_M_TASK_ASSIGNED_DT}">
+									<f:facet name="header">
+										<h:outputText id="asdf61"
+											value="Task Assigned Date" />
+									</f:facet>
+									<h:outputText id="AUTOID_55_PC" value="#{colData.UI_M_TASK_ASSIGNED_DT}" >
+									</h:outputText>
+								</rich:column>
+								
+								<rich:column filterBy="#{colData.taskDueDate}" filterEvent="onkeyup"
+									sortBy="#{colData.taskDueDate}">
+									<f:facet name="header">
+										<h:outputText id="asdf71"
+											value="Task Due Date" />
+									</f:facet>
+									<h:outputText id="AUTOID_56_PC" value="#{colData.UI_M_TASK_DUE_DT}" />
+								</rich:column>
+								
+								<f:facet name="footer">
+									<rich:datascroller align="right" for="PolicyLedgerQuery" />
+								</f:facet>
+							</rich:dataTable>
+						</td>
+					</tr>
+				</table>
+				</h:form>
+		</f:view>
+		<script type="text/javascript">
+		onclickback = function(){
+			localStorage.setItem("clickback",true);
+			if(typeof jsfcljs == 'function'){jsfcljs(document.getElementById('workflowdms'),{'workflowdms:AUTOID_1':'workflowdms:AUTOID_1'},'');}return false
+
+			}
+		window.onload = function(){
+			var obj = document.getElementById("workflowdms:AUTOID_1")
+    		obj.setAttribute("onclick","onclickback(this)")
+
+		}
+		</script>
+		
+		
+	</ui:define>
+</ui:composition>
