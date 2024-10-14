@@ -990,7 +990,8 @@ public class PT_IL_POL_MED_EXAM_DTL_ACTION extends CommonAction {
 				 }
 				 
 				/*End*/
-				 if(getListCLINIC_CODE() != null && PT_IL_POL_MED_EXAM_DTL_BEAN.getPMED_CLINIC_CODE() != null){
+				 //below condition changed like pmed_cliniccode == null--- earlier it is !=null changed by Mani confirmed by KK Sir
+				 if(getListCLINIC_CODE() != null && PT_IL_POL_MED_EXAM_DTL_BEAN.getPMED_CLINIC_CODE() == null){
 					 PT_IL_POL_MED_EXAM_DTL_BEAN.setPMED_CLINIC_CODE(getListCLINIC_CODE().get(0).getValue().toString());
 					 PT_IL_POL_MED_EXAM_DTL_BEAN.setUI_M_CLINIC_CODE_DESC(getListCLINIC_CODE().get(0).getLabel().toString());
 				 }

@@ -645,7 +645,7 @@ System.out.println("appr_status--------->"+appr_status);
 			
 		 String smv_type=null;
 			try {	
-				String query="SELECT SMV_TYPE FROM PT_IL_SURR_MAT_VALUES WHERE SMV_POL_SYS_ID = ? AND SMV_SYS_ID = ? AND SMV_TYPE IN ('S', 'R', 'M', 'P')";
+				String query="SELECT SMV_TYPE FROM PT_IL_SURR_MAT_VALUES WHERE SMV_POL_SYS_ID = ? AND SMV_SYS_ID = ? AND SMV_TYPE IN ('S', 'R', 'M', 'P', 'PM')";
 				ResultSet resultset=new CRUDHandler().executeSelectStatement(query, CommonUtils.getConnection(), 
 						new Object[]{smv_Pol_sys_id,smv_sys_id});
 				System.out.println("****smvpolsysid****" + smv_Pol_sys_id + "****smvsysid*****" + smv_sys_id);

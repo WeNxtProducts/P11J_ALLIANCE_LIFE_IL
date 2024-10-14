@@ -2192,7 +2192,7 @@ public class PT_IL_POL_BENEFICIARY_ACTION extends CommonAction {
 				eduAge = eduPlanRS.getInt("PS_VALUE");
 			}
 			
-			if("EDU".equalsIgnoreCase(compositeAction.getPT_IL_POLICY_ACTION_BEAN().getUnit_link_typ())){
+			if("END".equalsIgnoreCase(compositeAction.getPT_IL_POLICY_ACTION_BEAN().getUnit_link_typ())){
 				if(PT_IL_POL_BENEFICIARY_BEAN.getPBEN_AGE() > eduAge){
 					
 					/*Modified by ganesh on 27-10-2017 as suggested by thiyags*/

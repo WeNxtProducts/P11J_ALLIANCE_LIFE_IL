@@ -85,6 +85,15 @@ public class INTERNAL_TRANSFER_ACTION extends CommonReportAction {
 	
 	private List<SelectItem> listAL_STATUS = new ArrayList<SelectItem>();
 	
+	private String smv_type;
+	
+	
+	public String getSmv_type() {
+		return smv_type;
+	}
+	public void setSmv_type(String smv_type) {
+		this.smv_type = smv_type;
+	}
 	public List<PT_IL_ADJ_LOAN> getDataList_PT_IL_ADJ_LOAN() {
 		return dataList_PT_IL_ADJ_LOAN;
 	}

@@ -61,7 +61,7 @@ public class PILT013_COMPOSITE_ACTION {
 	/*End*/
 
 	public String backButtonAction() {
-		return SearchConstants.BACK_TO_SEARCH_PAGE;
+		return SearchConstants.BACK_TO_SEARCH_PAGE_NEW;
 
 	}
 

@@ -2932,7 +2932,7 @@ public class PT_IL_SURR_MAT_VALUES_ACTION extends CommonAction {
 		try {	
 			String smv_apprv_flag=null;
 			String smv_type=null;
-			String query="SELECT SMV_APPRV_FLAG,SMV_TYPE FROM PT_IL_SURR_MAT_VALUES WHERE SMV_POL_SYS_ID = ? AND SMV_SYS_ID = ? AND SMV_TYPE IN ('S', 'R', 'M', 'P')";
+			String query="SELECT SMV_APPRV_FLAG,SMV_TYPE FROM PT_IL_SURR_MAT_VALUES WHERE SMV_POL_SYS_ID = ? AND SMV_SYS_ID = ? AND SMV_TYPE IN ('S', 'R', 'M', 'P', 'PM')";
 			ResultSet resultset=new CRUDHandler().executeSelectStatement(query, CommonUtils.getConnection(), 
 					new Object[]{smv_Pol_sys_id,smv_sys_id});
 					String Custcode=null;

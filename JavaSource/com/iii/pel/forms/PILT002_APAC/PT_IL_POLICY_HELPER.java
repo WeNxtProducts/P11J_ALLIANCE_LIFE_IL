@@ -19306,7 +19306,8 @@ Commeneted by Saranya on 07/04/2017
 				}
 				if(UI_M_SUM_POBH_SHARE_PERC != null){
 					if (!(UI_M_SUM_POBH_SHARE_PERC == 100.00)){
-						throw new Exception("Total Broker Share Ratio % Should be 100%");
+//						throw new Exception("Total Broker Share Ratio % Should be 100%");
+						System.out.println("Total Broker Share Ratio % Should be 100%");
 					}
 				}
 			}

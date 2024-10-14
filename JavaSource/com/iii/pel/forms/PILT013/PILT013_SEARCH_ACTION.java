@@ -10,7 +10,12 @@ import com.iii.premia.common.utils.CommonUtils;
 public class PILT013_SEARCH_ACTION extends CommonAction {
 	public String updateButtonAction(String rowId) throws Exception{
 		PILT013_COMPOSITE_ACTION compositeAction = new PILT013_COMPOSITE_ACTION();
-		String outcome = null;
+		   String[] res = rowId.split(":::");
+		   System.out.println(res[0].toString());
+		   rowId = res[0];
+//		   compositeAction.getPT_IL_POLICY_ACTION_BEAN().getPT_IL_POLICY_BEAN().setPOL_FLEX_08(res[1]);
+		   compositeAction.getINTERNAL_TRANSFER_ACTION_BEAN().setSmv_type(res[1]);
+		   String outcome = null;
 		CommonUtils
 				.setGlobalObject("PILT013_COMPOSITE_ACTION", compositeAction);
 		compositeAction.getPT_IL_POLICY_ACTION_BEAN().getPT_IL_POLICY_BEAN()

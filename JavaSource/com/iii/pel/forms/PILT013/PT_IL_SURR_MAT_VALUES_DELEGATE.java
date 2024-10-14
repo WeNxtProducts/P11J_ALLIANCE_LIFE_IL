@@ -11,11 +11,35 @@ public class PT_IL_SURR_MAT_VALUES_DELEGATE {
 	public void executeSelectStatement(
 			PILT013_COMPOSITE_ACTION PILT013_COMPOSITE_ACTION_BEAN)
 			throws Exception {
+		String processType = PILT013_COMPOSITE_ACTION_BEAN.getINTERNAL_TRANSFER_ACTION_BEAN().getSmv_type();
 		//added by saranya for ssp call_id FALCONQC-1715555  paidup issue
 		PT_IL_POLICY pt_il_policy_bean = PILT013_COMPOSITE_ACTION_BEAN.getPT_IL_POLICY_ACTION_BEAN().getPT_IL_POLICY_BEAN();
 		//modified,smv_sys_id added.. by gopi for ssp call id ZBLIFE-1465513
-		String selectStatement = "SELECT ROWID, PT_IL_SURR_MAT_VALUES.* FROM PT_IL_SURR_MAT_VALUES WHERE SMV_POL_SYS_ID = ? AND SMV_TYPE IN ('S','R','M','P','PM') ORDER BY SMV_SYS_ID ";
+		
 		//end
+		
+		switch (processType) {
+		  case "Matured":
+		    processType = "MAT";
+		    System.out.println("Listing processtype-->"+processType);
+		    break;
+		  case "Partial Maturity":
+			    processType = "PM";
+			    System.out.println("Listing processtype-->"+processType);
+		    break;
+		  case "Cashback":
+			    processType = "CASHBCK";
+			    System.out.println("Listing processtype-->"+processType);
+		    break;
+		  case "Surrendered":
+			    processType = "SUR";
+			    System.out.println("Listing processtype-->"+processType);
+		    break;
+		  default:
+			  processType = "";
+			  System.out.println("Listing processtype--> EMPTY"+processType);
+		}
+		String selectStatement = "SELECT ROWID, PT_IL_SURR_MAT_VALUES.* FROM PT_IL_SURR_MAT_VALUES WHERE SMV_POL_SYS_ID = ? AND SMV_TYPE IN ('S','R','M','P','PM') AND SMV_DS_CODE like '%"+processType+"%' ORDER BY SMV_SYS_ID ";
 		Connection connection = null;
 		ResultSet resultSet = null;
 		PILT013_COMPOSITE_ACTION_BEAN.getPT_IL_SURR_MAT_VALUES_ACTION_BEAN()

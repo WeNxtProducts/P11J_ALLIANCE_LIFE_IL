@@ -1705,7 +1705,8 @@ try {
 		{
 		if(brokerBean.getPOBH_SHARE_PERC()>100)
 		{
-			throw new Exception("Share percentage should be less than 100");
+//			throw new Exception("Share percentage should be less than 100");
+			System.out.println("Share percentage should be less than 100");
 		}
 		
 		int shareRatioSystemParam = ((BigDecimal)CommonUtils.getPPSystemParameterValue("IL_BRKR_SHAR")).intValue();
@@ -1720,7 +1721,8 @@ try {
 			}
 			if(UI_M_SUM_POBH_SHARE_PERC != null){
 				if (UI_M_SUM_POBH_SHARE_PERC+brokerBean.getPOBH_SHARE_PERC()>100){
-					throw new Exception("Total Share Ratio % Should be 100%");
+//					throw new Exception("Total Share Ratio % Should be 100%");
+					System.out.println("Total Share Ratio % Should be 100%");
 				}
 			}
 		}
